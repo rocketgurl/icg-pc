@@ -1,0 +1,21 @@
+.plugin {
+	
+	#content {
+		height: 100%;
+		padding: 0;
+	}
+	
+	overflow: hidden;
+	
+	[role='main'] {
+		border: none;
+		@include border-radius(0px);
+		margin: 0 auto;
+		height: 100%;
+	}
+	
+	h1 {
+		position: relative;
+		top: 25%;
+	}
+}
