@@ -1,6 +1,6 @@
-$baseDarkColor: #26272C;
-$bgColor: lighten($baseDarkColor, 4%);
-$lighterBg: lighten($baseDarkColor, 18%);
+$baseDarkColor : #26272C;
+$bgColor       : lighten($baseDarkColor, 4%);
+$lighterBg     : lighten($baseDarkColor, 18%);
 
 [role='navigation'] {
 	background-color: $bgColor;
