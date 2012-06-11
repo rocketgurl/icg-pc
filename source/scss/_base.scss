@@ -1,4 +1,5 @@
 // Policy Central 2.0 - SCSS Globals
+
 @import "compass/reset";
 @import "susy";
 
@@ -43,12 +44,4 @@ body {
 }
 */
 
-// Default Body Font Size - needed for rem support
-// http://snook.ca/archives/html_and_css/font-size-with-rem
-body { font-size:62.5%; }
 
-// Susy Settings on page
-#page {
-	@include container; 
-	@include susy-grid-background; 
-}
