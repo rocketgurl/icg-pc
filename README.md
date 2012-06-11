@@ -14,3 +14,8 @@ Initial client side build for the new unified Insight policy management applicat
 	* RequireJS (if you want to use the r.js optimizations w/Node)
 	* UglifyJS (for Require Optimizations)
 	* CoffeeScript
+* __Ruby Libraries__
+	* Rake
+	* Bundler
+	* Compass / SASS
+	* Susy
