@@ -63,77 +63,12 @@ article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, 
   display: block;
 }
 
-/* Usage
-body {
-	@include font-size(14);
-}
-*/
-/* line 17, /Users/shibuya/.rvm/gems/ruby-1.9.3-p0/gems/compass-0.13.alpha.0/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
-html, body, div, span, applet, object, iframe,
-h1, h2, h3, h4, h5, h6, p, blockquote, pre,
-a, abbr, acronym, address, big, cite, code,
-del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var,
-b, u, i, center,
-dl, dt, dd, ol, ul, li,
-fieldset, form, label, legend,
-table, caption, tbody, tfoot, thead, tr, th, td,
-article, aside, canvas, details, embed,
-figure, figcaption, footer, header, hgroup,
-menu, nav, output, ruby, section, summary,
-time, mark, audio, video {
-  margin: 0;
-  padding: 0;
-  border: 0;
-  font: inherit;
-  font-size: 100%;
-  vertical-align: baseline;
-}
-
-/* line 22, /Users/shibuya/.rvm/gems/ruby-1.9.3-p0/gems/compass-0.13.alpha.0/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
+/* line 5, /Users/shibuya/github/arc90/policy-central/source/scss/screen.scss */
 html {
-  line-height: 1;
+  background: #ededed;
 }
 
-/* line 24, /Users/shibuya/.rvm/gems/ruby-1.9.3-p0/gems/compass-0.13.alpha.0/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
-ol, ul {
-  list-style: none;
-}
-
-/* line 26, /Users/shibuya/.rvm/gems/ruby-1.9.3-p0/gems/compass-0.13.alpha.0/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
-table {
-  border-collapse: collapse;
-  border-spacing: 0;
-}
-
-/* line 28, /Users/shibuya/.rvm/gems/ruby-1.9.3-p0/gems/compass-0.13.alpha.0/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
-caption, th, td {
-  text-align: left;
-  font-weight: normal;
-  vertical-align: middle;
-}
-
-/* line 30, /Users/shibuya/.rvm/gems/ruby-1.9.3-p0/gems/compass-0.13.alpha.0/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
-q, blockquote {
-  quotes: none;
-}
-/* line 103, /Users/shibuya/.rvm/gems/ruby-1.9.3-p0/gems/compass-0.13.alpha.0/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
-q:before, q:after, blockquote:before, blockquote:after {
-  content: "";
-  content: none;
-}
-
-/* line 32, /Users/shibuya/.rvm/gems/ruby-1.9.3-p0/gems/compass-0.13.alpha.0/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
-a img {
-  border: none;
-}
-
-/* line 116, /Users/shibuya/.rvm/gems/ruby-1.9.3-p0/gems/compass-0.13.alpha.0/frameworks/compass/stylesheets/compass/reset/_utilities.scss */
-article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section, summary {
-  display: block;
-}
-
-/* line 6, /Users/shibuya/github/arc90/policy-central/source/scss/screen.scss */
+/* line 11, /Users/shibuya/github/arc90/policy-central/source/scss/screen.scss */
 body {
   font-size: 62.5%;
 }
@@ -141,12 +76,41 @@ body {
 /* Page */
 /* line 2, /Users/shibuya/github/arc90/policy-central/source/scss/_page.scss */
 #page {
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzE2NTc4OCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzA4MWYzMCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #165788), color-stop(100%, #081f30));
+  background-image: -webkit-linear-gradient(top, #165788, #081f30);
+  background-image: -moz-linear-gradient(top, #165788, #081f30);
+  background-image: -o-linear-gradient(top, #165788, #081f30);
+  background-image: -ms-linear-gradient(top, #165788, #081f30);
+  background-image: linear-gradient(top, #165788, #081f30);
+}
+
+/* line 1, /Users/shibuya/github/arc90/policy-central/source/scss/_header.scss */
+#header {
+  color: white;
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzE2NTc4OCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzA4MWYzMCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #165788), color-stop(100%, #081f30));
+  background-image: -webkit-linear-gradient(top, #165788, #081f30);
+  background-image: -moz-linear-gradient(top, #165788, #081f30);
+  background-image: -o-linear-gradient(top, #165788, #081f30);
+  background-image: -ms-linear-gradient(top, #165788, #081f30);
+  background-image: linear-gradient(top, #165788, #081f30);
+  overflow: hidden;
+  height: 70px;
+}
+
+/* line 8, /Users/shibuya/github/arc90/policy-central/source/scss/_header.scss */
+#header-container {
   *zoom: 1;
   width: 95%;
   margin-left: auto;
   margin-right: auto;
   padding-left: 1em;
   padding-right: 1em;
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjAlIiB5MT0iNTAlIiB4Mj0iMTAwJSIgeTI9IjUwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0icmdiYSgwLCAwLCAwLCAwKSIvPjxzdG9wIG9mZnNldD0iMCUiIHN0b3AtY29sb3I9InJnYmEoMTAwLCAxMDAsIDIyNSwgMC4yNSkiLz48c3RvcCBvZmZzZXQ9IjYuNzglIiBzdG9wLWNvbG9yPSJyZ2JhKDEwMCwgMTAwLCAyMjUsIDAuMjUpIi8+PHN0b3Agb2Zmc2V0PSI2Ljc4JSIgc3RvcC1jb2xvcj0icmdiYSgwLCAwLCAwLCAwKSIvPjxzdG9wIG9mZnNldD0iOC40NzUlIiBzdG9wLWNvbG9yPSJyZ2JhKDAsIDAsIDAsIDApIi8+PHN0b3Agb2Zmc2V0PSI4LjQ3NSUiIHN0b3AtY29sb3I9InJnYmEoMTAwLCAxMDAsIDIyNSwgMC4yNSkiLz48c3RvcCBvZmZzZXQ9IjE1LjI1NCUiIHN0b3AtY29sb3I9InJnYmEoMTAwLCAxMDAsIDIyNSwgMC4yNSkiLz48c3RvcCBvZmZzZXQ9IjE1LjI1NCUiIHN0b3AtY29sb3I9InJnYmEoMCwgMCwgMCwgMCkiLz48c3RvcCBvZmZzZXQ9IjE2Ljk0OSUiIHN0b3AtY29sb3I9InJnYmEoMCwgMCwgMCwgMCkiLz48c3RvcCBvZmZzZXQ9IjE2Ljk0OSUiIHN0b3AtY29sb3I9InJnYmEoMTAwLCAxMDAsIDIyNSwgMC4yNSkiLz48c3RvcCBvZmZzZXQ9IjIzLjcyOSUiIHN0b3AtY29sb3I9InJnYmEoMTAwLCAxMDAsIDIyNSwgMC4yNSkiLz48c3RvcCBvZmZzZXQ9IjIzLjcyOSUiIHN0b3AtY29sb3I9InJnYmEoMCwgMCwgMCwgMCkiLz48c3RvcCBvZmZzZXQ9IjI1LjQyNCUiIHN0b3AtY29sb3I9InJnYmEoMCwgMCwgMCwgMCkiLz48c3RvcCBvZmZzZXQ9IjI1LjQyNCUiIHN0b3AtY29sb3I9InJnYmEoMTAwLCAxMDAsIDIyNSwgMC4yNSkiLz48c3RvcCBvZmZzZXQ9IjMyLjIwMyUiIHN0b3AtY29sb3I9InJnYmEoMTAwLCAxMDAsIDIyNSwgMC4yNSkiLz48c3RvcCBvZmZzZXQ9IjMyLjIwMyUiIHN0b3AtY29sb3I9InJnYmEoMCwgMCwgMCwgMCkiLz48c3RvcCBvZmZzZXQ9IjMzLjg5OCUiIHN0b3AtY29sb3I9InJnYmEoMCwgMCwgMCwgMCkiLz48c3RvcCBvZmZzZXQ9IjMzLjg5OCUiIHN0b3AtY29sb3I9InJnYmEoMTAwLCAxMDAsIDIyNSwgMC4yNSkiLz48c3RvcCBvZmZzZXQ9IjQwLjY3OCUiIHN0b3AtY29sb3I9InJnYmEoMTAwLCAxMDAsIDIyNSwgMC4yNSkiLz48c3RvcCBvZmZzZXQ9IjQwLjY3OCUiIHN0b3AtY29sb3I9InJnYmEoMCwgMCwgMCwgMCkiLz48c3RvcCBvZmZzZXQ9IjQyLjM3MyUiIHN0b3AtY29sb3I9InJnYmEoMCwgMCwgMCwgMCkiLz48c3RvcCBvZmZzZXQ9IjQyLjM3MyUiIHN0b3AtY29sb3I9InJnYmEoMTAwLCAxMDAsIDIyNSwgMC4yNSkiLz48c3RvcCBvZmZzZXQ9IjQ5LjE1MyUiIHN0b3AtY29sb3I9InJnYmEoMTAwLCAxMDAsIDIyNSwgMC4yNSkiLz48c3RvcCBvZmZzZXQ9IjQ5LjE1MyUiIHN0b3AtY29sb3I9InJnYmEoMCwgMCwgMCwgMCkiLz48c3RvcCBvZmZzZXQ9IjUwLjg0NyUiIHN0b3AtY29sb3I9InJnYmEoMCwgMCwgMCwgMCkiLz48c3RvcCBvZmZzZXQ9IjUwLjg0NyUiIHN0b3AtY29sb3I9InJnYmEoMTAwLCAxMDAsIDIyNSwgMC4yNSkiLz48c3RvcCBvZmZzZXQ9IjU3LjYyNyUiIHN0b3AtY29sb3I9InJnYmEoMTAwLCAxMDAsIDIyNSwgMC4yNSkiLz48c3RvcCBvZmZzZXQ9IjU3LjYyNyUiIHN0b3AtY29sb3I9InJnYmEoMCwgMCwgMCwgMCkiLz48c3RvcCBvZmZzZXQ9IjU5LjMyMiUiIHN0b3AtY29sb3I9InJnYmEoMCwgMCwgMCwgMCkiLz48c3RvcCBvZmZzZXQ9IjU5LjMyMiUiIHN0b3AtY29sb3I9InJnYmEoMTAwLCAxMDAsIDIyNSwgMC4yNSkiLz48c3RvcCBvZmZzZXQ9IjY2LjEwMiUiIHN0b3AtY29sb3I9InJnYmEoMTAwLCAxMDAsIDIyNSwgMC4yNSkiLz48c3RvcCBvZmZzZXQ9IjY2LjEwMiUiIHN0b3AtY29sb3I9InJnYmEoMCwgMCwgMCwgMCkiLz48c3RvcCBvZmZzZXQ9IjY3Ljc5NyUiIHN0b3AtY29sb3I9InJnYmEoMCwgMCwgMCwgMCkiLz48c3RvcCBvZmZzZXQ9IjY3Ljc5NyUiIHN0b3AtY29sb3I9InJnYmEoMTAwLCAxMDAsIDIyNSwgMC4yNSkiLz48c3RvcCBvZmZzZXQ9Ijc0LjU3NiUiIHN0b3AtY29sb3I9InJnYmEoMTAwLCAxMDAsIDIyNSwgMC4yNSkiLz48c3RvcCBvZmZzZXQ9Ijc0LjU3NiUiIHN0b3AtY29sb3I9InJnYmEoMCwgMCwgMCwgMCkiLz48c3RvcCBvZmZzZXQ9Ijc2LjI3MSUiIHN0b3AtY29sb3I9InJnYmEoMCwgMCwgMCwgMCkiLz48c3RvcCBvZmZzZXQ9Ijc2LjI3MSUiIHN0b3AtY29sb3I9InJnYmEoMTAwLCAxMDAsIDIyNSwgMC4yNSkiLz48c3RvcCBvZmZzZXQ9IjgzLjA1MSUiIHN0b3AtY29sb3I9InJnYmEoMTAwLCAxMDAsIDIyNSwgMC4yNSkiLz48c3RvcCBvZmZzZXQ9IjgzLjA1MSUiIHN0b3AtY29sb3I9InJnYmEoMCwgMCwgMCwgMCkiLz48c3RvcCBvZmZzZXQ9Ijg0Ljc0NiUiIHN0b3AtY29sb3I9InJnYmEoMCwgMCwgMCwgMCkiLz48c3RvcCBvZmZzZXQ9Ijg0Ljc0NiUiIHN0b3AtY29sb3I9InJnYmEoMTAwLCAxMDAsIDIyNSwgMC4yNSkiLz48c3RvcCBvZmZzZXQ9IjkxLjUyNSUiIHN0b3AtY29sb3I9InJnYmEoMTAwLCAxMDAsIDIyNSwgMC4yNSkiLz48c3RvcCBvZmZzZXQ9IjkxLjUyNSUiIHN0b3AtY29sb3I9InJnYmEoMCwgMCwgMCwgMCkiLz48c3RvcCBvZmZzZXQ9IjkzLjIyJSIgc3RvcC1jb2xvcj0icmdiYSgwLCAwLCAwLCAwKSIvPjxzdG9wIG9mZnNldD0iOTMuMjIlIiBzdG9wLWNvbG9yPSJyZ2JhKDEwMCwgMTAwLCAyMjUsIDAuMjUpIi8+PHN0b3Agb2Zmc2V0PSIxMDAuMCUiIHN0b3AtY29sb3I9InJnYmEoMTAwLCAxMDAsIDIyNSwgMC4yNSkiLz48c3RvcCBvZmZzZXQ9IjEwMC4wJSIgc3RvcC1jb2xvcj0icmdiYSgwLCAwLCAwLCAwKSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0icmdiYSgwLCAwLCAwLCAwKSIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
   background-image: -webkit-gradient(linear, 0% 50%, 100% 50%, color-stop(0%, rgba(0, 0, 0, 0)), color-stop(0%, rgba(100, 100, 225, 0.25)), color-stop(6.78%, rgba(100, 100, 225, 0.25)), color-stop(6.78%, rgba(0, 0, 0, 0)), color-stop(8.475%, rgba(0, 0, 0, 0)), color-stop(8.475%, rgba(100, 100, 225, 0.25)), color-stop(15.254%, rgba(100, 100, 225, 0.25)), color-stop(15.254%, rgba(0, 0, 0, 0)), color-stop(16.949%, rgba(0, 0, 0, 0)), color-stop(16.949%, rgba(100, 100, 225, 0.25)), color-stop(23.729%, rgba(100, 100, 225, 0.25)), color-stop(23.729%, rgba(0, 0, 0, 0)), color-stop(25.424%, rgba(0, 0, 0, 0)), color-stop(25.424%, rgba(100, 100, 225, 0.25)), color-stop(32.203%, rgba(100, 100, 225, 0.25)), color-stop(32.203%, rgba(0, 0, 0, 0)), color-stop(33.898%, rgba(0, 0, 0, 0)), color-stop(33.898%, rgba(100, 100, 225, 0.25)), color-stop(40.678%, rgba(100, 100, 225, 0.25)), color-stop(40.678%, rgba(0, 0, 0, 0)), color-stop(42.373%, rgba(0, 0, 0, 0)), color-stop(42.373%, rgba(100, 100, 225, 0.25)), color-stop(49.153%, rgba(100, 100, 225, 0.25)), color-stop(49.153%, rgba(0, 0, 0, 0)), color-stop(50.847%, rgba(0, 0, 0, 0)), color-stop(50.847%, rgba(100, 100, 225, 0.25)), color-stop(57.627%, rgba(100, 100, 225, 0.25)), color-stop(57.627%, rgba(0, 0, 0, 0)), color-stop(59.322%, rgba(0, 0, 0, 0)), color-stop(59.322%, rgba(100, 100, 225, 0.25)), color-stop(66.102%, rgba(100, 100, 225, 0.25)), color-stop(66.102%, rgba(0, 0, 0, 0)), color-stop(67.797%, rgba(0, 0, 0, 0)), color-stop(67.797%, rgba(100, 100, 225, 0.25)), color-stop(74.576%, rgba(100, 100, 225, 0.25)), color-stop(74.576%, rgba(0, 0, 0, 0)), color-stop(76.271%, rgba(0, 0, 0, 0)), color-stop(76.271%, rgba(100, 100, 225, 0.25)), color-stop(83.051%, rgba(100, 100, 225, 0.25)), color-stop(83.051%, rgba(0, 0, 0, 0)), color-stop(84.746%, rgba(0, 0, 0, 0)), color-stop(84.746%, rgba(100, 100, 225, 0.25)), color-stop(91.525%, rgba(100, 100, 225, 0.25)), color-stop(91.525%, rgba(0, 0, 0, 0)), color-stop(93.22%, rgba(0, 0, 0, 0)), color-stop(93.22%, rgba(100, 100, 225, 0.25)), color-stop(100.0%, rgba(100, 100, 225, 0.25)), color-stop(100.0%, rgba(0, 0, 0, 0)), color-stop(100%, rgba(0, 0, 0, 0)));
   background-image: -webkit-linear-gradient(left, rgba(0, 0, 0, 0) 0%, rgba(100, 100, 225, 0.25) 0%, rgba(100, 100, 225, 0.25) 6.78%, rgba(0, 0, 0, 0) 6.78%, rgba(0, 0, 0, 0) 8.475%, rgba(100, 100, 225, 0.25) 8.475%, rgba(100, 100, 225, 0.25) 15.254%, rgba(0, 0, 0, 0) 15.254%, rgba(0, 0, 0, 0) 16.949%, rgba(100, 100, 225, 0.25) 16.949%, rgba(100, 100, 225, 0.25) 23.729%, rgba(0, 0, 0, 0) 23.729%, rgba(0, 0, 0, 0) 25.424%, rgba(100, 100, 225, 0.25) 25.424%, rgba(100, 100, 225, 0.25) 32.203%, rgba(0, 0, 0, 0) 32.203%, rgba(0, 0, 0, 0) 33.898%, rgba(100, 100, 225, 0.25) 33.898%, rgba(100, 100, 225, 0.25) 40.678%, rgba(0, 0, 0, 0) 40.678%, rgba(0, 0, 0, 0) 42.373%, rgba(100, 100, 225, 0.25) 42.373%, rgba(100, 100, 225, 0.25) 49.153%, rgba(0, 0, 0, 0) 49.153%, rgba(0, 0, 0, 0) 50.847%, rgba(100, 100, 225, 0.25) 50.847%, rgba(100, 100, 225, 0.25) 57.627%, rgba(0, 0, 0, 0) 57.627%, rgba(0, 0, 0, 0) 59.322%, rgba(100, 100, 225, 0.25) 59.322%, rgba(100, 100, 225, 0.25) 66.102%, rgba(0, 0, 0, 0) 66.102%, rgba(0, 0, 0, 0) 67.797%, rgba(100, 100, 225, 0.25) 67.797%, rgba(100, 100, 225, 0.25) 74.576%, rgba(0, 0, 0, 0) 74.576%, rgba(0, 0, 0, 0) 76.271%, rgba(100, 100, 225, 0.25) 76.271%, rgba(100, 100, 225, 0.25) 83.051%, rgba(0, 0, 0, 0) 83.051%, rgba(0, 0, 0, 0) 84.746%, rgba(100, 100, 225, 0.25) 84.746%, rgba(100, 100, 225, 0.25) 91.525%, rgba(0, 0, 0, 0) 91.525%, rgba(0, 0, 0, 0) 93.22%, rgba(100, 100, 225, 0.25) 93.22%, rgba(100, 100, 225, 0.25) 100.0%, rgba(0, 0, 0, 0) 100.0%, rgba(0, 0, 0, 0) 100%);
   background-image: -moz-linear-gradient(left, rgba(0, 0, 0, 0) 0%, rgba(100, 100, 225, 0.25) 0%, rgba(100, 100, 225, 0.25) 6.78%, rgba(0, 0, 0, 0) 6.78%, rgba(0, 0, 0, 0) 8.475%, rgba(100, 100, 225, 0.25) 8.475%, rgba(100, 100, 225, 0.25) 15.254%, rgba(0, 0, 0, 0) 15.254%, rgba(0, 0, 0, 0) 16.949%, rgba(100, 100, 225, 0.25) 16.949%, rgba(100, 100, 225, 0.25) 23.729%, rgba(0, 0, 0, 0) 23.729%, rgba(0, 0, 0, 0) 25.424%, rgba(100, 100, 225, 0.25) 25.424%, rgba(100, 100, 225, 0.25) 32.203%, rgba(0, 0, 0, 0) 32.203%, rgba(0, 0, 0, 0) 33.898%, rgba(100, 100, 225, 0.25) 33.898%, rgba(100, 100, 225, 0.25) 40.678%, rgba(0, 0, 0, 0) 40.678%, rgba(0, 0, 0, 0) 42.373%, rgba(100, 100, 225, 0.25) 42.373%, rgba(100, 100, 225, 0.25) 49.153%, rgba(0, 0, 0, 0) 49.153%, rgba(0, 0, 0, 0) 50.847%, rgba(100, 100, 225, 0.25) 50.847%, rgba(100, 100, 225, 0.25) 57.627%, rgba(0, 0, 0, 0) 57.627%, rgba(0, 0, 0, 0) 59.322%, rgba(100, 100, 225, 0.25) 59.322%, rgba(100, 100, 225, 0.25) 66.102%, rgba(0, 0, 0, 0) 66.102%, rgba(0, 0, 0, 0) 67.797%, rgba(100, 100, 225, 0.25) 67.797%, rgba(100, 100, 225, 0.25) 74.576%, rgba(0, 0, 0, 0) 74.576%, rgba(0, 0, 0, 0) 76.271%, rgba(100, 100, 225, 0.25) 76.271%, rgba(100, 100, 225, 0.25) 83.051%, rgba(0, 0, 0, 0) 83.051%, rgba(0, 0, 0, 0) 84.746%, rgba(100, 100, 225, 0.25) 84.746%, rgba(100, 100, 225, 0.25) 91.525%, rgba(0, 0, 0, 0) 91.525%, rgba(0, 0, 0, 0) 93.22%, rgba(100, 100, 225, 0.25) 93.22%, rgba(100, 100, 225, 0.25) 100.0%, rgba(0, 0, 0, 0) 100.0%, rgba(0, 0, 0, 0) 100%);
@@ -164,8 +128,107 @@ body {
   background-clip: content-box;
 }
 /* line 38, /Users/shibuya/.rvm/gems/ruby-1.9.3-p0/gems/compass-0.13.alpha.0/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
-#page:after {
+#header-container:after {
   content: "";
   display: table;
   clear: both;
+}
+
+/* line 14, /Users/shibuya/github/arc90/policy-central/source/scss/_header.scss */
+.header-group {
+  width: 100%;
+  float: right;
+  margin-right: 0;
+  #margin-left: -1em;
+  display: inline;
+}
+
+/* line 18, /Users/shibuya/github/arc90/policy-central/source/scss/_header.scss */
+#header-logo {
+  width: 15.254%;
+  float: left;
+  margin-right: 1.695%;
+  display: inline;
+  padding: 10px 0;
+  font-size: 18px;
+  font-size: 1.4rem;
+}
+
+/* line 24, /Users/shibuya/github/arc90/policy-central/source/scss/_header.scss */
+#header-controls {
+  width: 57.627%;
+  float: left;
+  margin-right: 1.695%;
+  display: inline;
+}
+
+/* line 28, /Users/shibuya/github/arc90/policy-central/source/scss/_header.scss */
+#header-admin {
+  width: 23.729%;
+  float: right;
+  margin-right: 0;
+  #margin-left: -1em;
+  display: inline;
+}
+
+/* line 32, /Users/shibuya/github/arc90/policy-central/source/scss/_header.scss */
+#header-workspace-nav {
+  height: 200px;
+}
+
+/* line 1, /Users/shibuya/github/arc90/policy-central/source/scss/_workspace.scss */
+#workspace {
+  position: relative;
+  margin-top: -10px;
+  z-index: 100;
+}
+/* line 5, /Users/shibuya/github/arc90/policy-central/source/scss/_workspace.scss */
+#workspace nav {
+  *zoom: 1;
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1em;
+  padding-right: 1em;
+  background: transparent;
+}
+/* line 38, /Users/shibuya/.rvm/gems/ruby-1.9.3-p0/gems/compass-0.13.alpha.0/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
+#workspace nav:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+/* line 9, /Users/shibuya/github/arc90/policy-central/source/scss/_workspace.scss */
+#workspace nav ul li {
+  display: inline-block;
+}
+/* line 11, /Users/shibuya/github/arc90/policy-central/source/scss/_workspace.scss */
+#workspace nav ul li a {
+  padding: 20px;
+  background: #ededed;
+}
+/* line 18, /Users/shibuya/github/arc90/policy-central/source/scss/_workspace.scss */
+#workspace article {
+  background: #ededed;
+  *zoom: 1;
+  width: 95%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1em;
+  padding-right: 1em;
+  padding: 20px 0;
+}
+/* line 38, /Users/shibuya/.rvm/gems/ruby-1.9.3-p0/gems/compass-0.13.alpha.0/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
+#workspace article:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* line 26, /Users/shibuya/github/arc90/policy-central/source/scss/_workspace.scss */
+#workspace footer {
+  margin: 20px 0;
+  padding: 20px 0;
+  border-top: white 1px solid;
+  box-shadow: #bababa 0 -1px 0;
 }

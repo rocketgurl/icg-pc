@@ -1,9 +1,18 @@
 @import "base";
 @import "compass/reset";
 
+
+html {
+	background: $lightgray;
+}
+
 // Default Body Font Size - needed for rem support
 // http://snook.ca/archives/html_and_css/font-size-with-rem
-body { font-size:62.5%; }
+body { 
+	font-size:62.5%;
+}
 
 // Now begin importing our partials
 @import "page";
+@import "header";
+@import "workspace";
