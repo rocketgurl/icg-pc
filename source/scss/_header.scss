@@ -1,0 +1,34 @@
+#header {
+	color: $white;
+	@include background-image(linear-gradient(top, $blue, darken($blue, 20)));
+	overflow: hidden;
+	height: 70px;
+}
+
+#header-container {
+	@include container;
+	@include susy-grid-background;
+	
+}
+
+.header-group {
+	@include span-columns(12 omega, 12);
+}
+
+#header-logo {
+	@include span-columns(2, 12);
+	padding: 10px 0;
+	@include font-size(18);
+}
+
+#header-controls {
+	@include span-columns(7, 12);
+}
+
+#header-admin {
+	@include span-columns(3 omega, 12);
+}
+
+#header-workspace-nav {
+	height: 200px;
+}
