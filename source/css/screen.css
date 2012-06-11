@@ -151,7 +151,7 @@ body {
   display: inline;
   padding: 10px 0;
   font-size: 18px;
-  font-size: 1.4rem;
+  font-size: 1.8rem;
 }
 
 /* line 24, /Users/shibuya/github/arc90/policy-central/source/scss/_header.scss */
@@ -176,13 +176,7 @@ body {
   height: 200px;
 }
 
-/* line 1, /Users/shibuya/github/arc90/policy-central/source/scss/_workspace.scss */
-#workspace {
-  position: relative;
-  margin-top: -10px;
-  z-index: 100;
-}
-/* line 5, /Users/shibuya/github/arc90/policy-central/source/scss/_workspace.scss */
+/* line 2, /Users/shibuya/github/arc90/policy-central/source/scss/_workspace.scss */
 #workspace nav {
   *zoom: 1;
   width: 95%;
@@ -191,6 +185,8 @@ body {
   padding-left: 1em;
   padding-right: 1em;
   background: transparent;
+  position: relative;
+  top: -26px;
 }
 /* line 38, /Users/shibuya/.rvm/gems/ruby-1.9.3-p0/gems/compass-0.13.alpha.0/frameworks/compass/stylesheets/compass/utilities/general/_clearfix.scss */
 #workspace nav:after {
@@ -198,16 +194,114 @@ body {
   display: table;
   clear: both;
 }
-/* line 9, /Users/shibuya/github/arc90/policy-central/source/scss/_workspace.scss */
+/* line 7, /Users/shibuya/github/arc90/policy-central/source/scss/_workspace.scss */
+#workspace nav ul {
+  margin: 0;
+  padding: 0 10px;
+  line-height: 20px;
+  height: 27px;
+  overflow: hidden;
+  position: relative;
+}
+/* line 14, /Users/shibuya/github/arc90/policy-central/source/scss/_workspace.scss */
 #workspace nav ul li {
   display: inline-block;
+  margin: 0 -5px;
+  padding: 0 10px;
+  border: 1px solid #bababa;
+  background: #c7c7c7;
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSI1MCUiIHN0b3AtY29sb3I9IiNkM2QzZDMiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNhMWExYTEiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyYWQpIiAvPjwvc3ZnPiA=');
+  background-size: 100%;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(50%, #d3d3d3), color-stop(100%, #a1a1a1));
+  background-image: -webkit-linear-gradient(top, #d3d3d3 50%, #a1a1a1);
+  background-image: -moz-linear-gradient(top, #d3d3d3 50%, #a1a1a1);
+  background-image: -o-linear-gradient(top, #d3d3d3 50%, #a1a1a1);
+  background-image: -ms-linear-gradient(top, #d3d3d3 50%, #a1a1a1);
+  background-image: linear-gradient(top, #d3d3d3 50%, #a1a1a1);
+  position: relative;
+  z-index: 0;
+  border-top-left-radius: 6px;
+  border-top-right-radius: 6px;
+  box-shadow: 0 3px 3px rgba(0, 0, 0, 0.4), inset 0 1px 0 white;
 }
-/* line 11, /Users/shibuya/github/arc90/policy-central/source/scss/_workspace.scss */
+/* line 26, /Users/shibuya/github/arc90/policy-central/source/scss/_workspace.scss */
 #workspace nav ul li a {
-  padding: 20px;
-  background: #ededed;
+  display: inline-block;
+  padding: 2px 20px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 8px;
+  font-size: 0.8rem;
+  font-weight: bold;
+  text-decoration: none;
+  color: #363636;
+  text-shadow: 0 1px #FFF;
 }
-/* line 18, /Users/shibuya/github/arc90/policy-central/source/scss/_workspace.scss */
+/* line 37, /Users/shibuya/github/arc90/policy-central/source/scss/_workspace.scss */
+#workspace nav ul li.selected {
+  background: #ededed;
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIxMCUiIHN0b3AtY29sb3I9IiNmZmZmZmYiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNlZGVkZWQiLz48L2xpbmVhckdyYWRpZW50PjwvZGVmcz48cmVjdCB4PSIwIiB5PSIwIiB3aWR0aD0iMTAwJSIgaGVpZ2h0PSIxMDAlIiBmaWxsPSJ1cmwoI2dyYWQpIiAvPjwvc3ZnPiA=');
+  background-size: 100%;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(10%, #ffffff), color-stop(100%, #ededed));
+  background-image: -webkit-linear-gradient(top, #ffffff 10%, #ededed);
+  background-image: -moz-linear-gradient(top, #ffffff 10%, #ededed);
+  background-image: -o-linear-gradient(top, #ffffff 10%, #ededed);
+  background-image: -ms-linear-gradient(top, #ffffff 10%, #ededed);
+  background-image: linear-gradient(top, #ffffff 10%, #ededed);
+  z-index: 3;
+  border-bottom: 1px solid #ededed;
+  box-shadow: #3a3a3a 0 0 6px;
+}
+/* line 43, /Users/shibuya/github/arc90/policy-central/source/scss/_workspace.scss */
+#workspace nav ul li.selected a {
+  color: #165788;
+}
+/* line 47, /Users/shibuya/github/arc90/policy-central/source/scss/_workspace.scss */
+#workspace nav ul li.selected:before {
+  box-shadow: 2px 2px 0 #ededed;
+}
+/* line 50, /Users/shibuya/github/arc90/policy-central/source/scss/_workspace.scss */
+#workspace nav ul li.selected:after {
+  box-shadow: -2px 2px 0 #ededed;
+}
+/* line 54, /Users/shibuya/github/arc90/policy-central/source/scss/_workspace.scss */
+#workspace nav ul li:before,
+#workspace nav ul li:after {
+  position: absolute;
+  bottom: -1px;
+  width: 6px;
+  height: 6px;
+  content: " ";
+  border: 1px solid lightgrey;
+}
+/* line 62, /Users/shibuya/github/arc90/policy-central/source/scss/_workspace.scss */
+#workspace nav ul li:before {
+  left: -6px;
+  border-bottom-right-radius: 6px;
+  border-width: 0 1px 1px 0;
+  box-shadow: 2px 2px 0 #adadad;
+}
+/* line 68, /Users/shibuya/github/arc90/policy-central/source/scss/_workspace.scss */
+#workspace nav ul li:after {
+  right: -6px;
+  border-bottom-left-radius: 6px;
+  border-width: 0 0 1px 1px;
+  box-shadow: -2px 2px 0 #adadad;
+}
+/* line 75, /Users/shibuya/github/arc90/policy-central/source/scss/_workspace.scss */
+#workspace nav ul:after {
+  position: absolute;
+  content: "";
+  width: 100%;
+  bottom: 0;
+  left: 0;
+  border-bottom: 1px solid #bababa;
+  z-index: 1;
+}
+/* line 84, /Users/shibuya/github/arc90/policy-central/source/scss/_workspace.scss */
+#workspace nav ul:before {
+  z-index: 1;
+}
+/* line 88, /Users/shibuya/github/arc90/policy-central/source/scss/_workspace.scss */
 #workspace article {
   background: #ededed;
   *zoom: 1;
@@ -225,7 +319,7 @@ body {
   clear: both;
 }
 
-/* line 26, /Users/shibuya/github/arc90/policy-central/source/scss/_workspace.scss */
+/* line 96, /Users/shibuya/github/arc90/policy-central/source/scss/_workspace.scss */
 #workspace footer {
   margin: 20px 0;
   padding: 20px 0;
