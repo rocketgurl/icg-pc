@@ -1,7 +1,9 @@
 // Policy Central 2.0 - SCSS Globals
-
-@import "compass/reset";
 @import "susy";
+@import "compass/css3";
+
+// SVG Backgrounds
+$experimental-support-for-svg: true;
 
 // SUSY Settings
 // http://susy.oddbird.net
@@ -14,12 +16,13 @@ $container-style: fluid;
 $container-width: 95%;
 
 // Core color definitions
-$blue      : #00639c; // Insight blue
+$blue      : #165788; // Insight blue
 $darkblue  : #002857; // Good for text
 $lightgray : #ededed; // Background gray
 $darkgray  : #696969; // Good for text
 $orange    : #fe8400;
 $darkgreen : #4d6c00;
+$white     : #fff;
 
 // Core font stacks
 @mixin sans {
@@ -38,10 +41,10 @@ $darkgreen : #4d6c00;
 	font-size: size(14);
 }
 
-/* Usage
-body {
-	@include font-size(14);
+// Divider line for light gray backgrounds
+@mixin divider {
+	border-top: $white 1px solid;
+	box-shadow: darken($lightgray, 20) 0 -1px 0;
 }
-*/
 
 
