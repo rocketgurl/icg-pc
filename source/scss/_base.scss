@@ -1,0 +1,54 @@
+// Policy Central 2.0 - SCSS Globals
+@import "compass/reset";
+@import "susy";
+
+// SUSY Settings
+// http://susy.oddbird.net
+// Using a 12-col very fluid layout
+//
+$total-columns  : 12;
+$gutter-width   : 1em;           
+$grid-padding   : $gutter-width;
+$container-style: fluid;
+$container-width: 95%;
+
+// Core color definitions
+$blue      : #00639c; // Insight blue
+$darkblue  : #002857; // Good for text
+$lightgray : #ededed; // Background gray
+$darkgray  : #696969; // Good for text
+$orange    : #fe8400;
+$darkgreen : #4d6c00;
+
+// Core font stacks
+@mixin sans {
+	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+// Generate pixel & rem size (for IE & everyone else)
+@function size($pixels) {
+	$rem : $pixels / 10;
+	@return #{$rem}rem;
+}
+
+// Generate font-size stack using px/rem
+@mixin font-size($pixels) {
+	font-size: #{$pixels}px;
+	font-size: size(14);
+}
+
+/* Usage
+body {
+	@include font-size(14);
+}
+*/
+
+// Default Body Font Size - needed for rem support
+// http://snook.ca/archives/html_and_css/font-size-with-rem
+body { font-size:62.5%; }
+
+// Susy Settings on page
+#page {
+	@include container; 
+	@include susy-grid-background; 
+}
