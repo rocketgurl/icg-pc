@@ -5,6 +5,8 @@
 // Note: Each element that has PIE enabled on it will add about 10ms to your page load.
 @import "compass/css3/pie";
 @import "compass/css3";
+@import "base";
+
 
 // Set this to wherever you end up putting your behavior file.
 //
@@ -72,3 +74,61 @@ $pie-base-class: pie-element;
   @include pie-element(relative);
   @include background(linear-gradient(#f00, #00f));
 }
+
+// Header BG
+#header {
+  @include pie-element(relative);
+  @include background(linear-gradient(top, $blue, darken($blue, 20)));
+}
+
+#header-controls {
+  font-size: 12px;
+}
+
+#header-admin {
+  font-size: 12px;
+}
+
+#button-workspace {
+  @include pie-element(relative);
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: bold;
+  line-height: 18px;
+  padding: 5px 12px;
+}
+
+// Tabs
+#workspace {
+  nav {
+    ul {
+      li {
+        @include pie-element(relative);
+        @include background(linear-gradient(top, darken($lightgray, 10) 50%, darken($lightgray, 30)));
+        border-radius: 4px 4px 0 0; //  (top-left, top-right, bottom-right, bottom-left).
+        a {
+          font-size: 14px;
+        }
+        i {
+          font-size: 16px;
+        }
+      }
+      li.selected {
+        @include pie-element(relative);
+        @include background(linear-gradient(top, $white 10%, $lightgray));
+        box-shadow: darken($lightgray, 70) 0 0 6px 1px;
+      }
+      li:before,
+      li.selected:before {
+        border-width: 0px;
+        box-shadow: none;
+      }
+      li:after,
+      li.selected:after {
+        border-width: 0px;
+        box-shadow: none;
+      }
+    }
+  }
+}
+

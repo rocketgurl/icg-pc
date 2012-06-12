@@ -7,14 +7,14 @@
 		ul {
 			margin: 0;
 			padding: 0 4px;
-			line-height: 25px;
+			line-height: 26px;
 			height: 32px;
 			overflow: hidden;
 			position: relative;
 			li {
 				display: inline-block;
 				margin: 0 -2px;
-				padding: 0 10px;
+				padding: 0 12px;
 				border: 1px solid darken($lightgray, 20);
 				background: darken($lightgray, 15);
 				@include background-image(linear-gradient(top, darken($lightgray, 10) 50%, darken($lightgray, 30)));
@@ -25,13 +25,31 @@
 				box-shadow: 0 3px 3px rgba(0, 0, 0, 0.4), inset 0 1px 0 $lightgray;
 				a {
 					display: inline-block;
-					padding: 2px 10px;
+					padding: 2px 0;
 					@include sans;
 					@include font-size(10);
 					font-weight: bold;
 					text-decoration: none;
 					color: darken($darkgray, 10);
 					text-shadow: 0 1px #FFF;
+				}
+				a:hover {
+					color: darken($darkgray, 40);
+				}
+				i {
+					padding: 0;
+					@include font-size(12);
+					font-weight: normal;
+					color: lighten($darkgray, 10);
+					text-shadow: 0 1px #FFF;
+					position: relative;
+					top: 2px;
+					left: 5px;
+					display: inline-block;
+					cursor: pointer;
+				}
+				i:hover {
+					color: darken($darkgray, 20);
 				}
 			}
 			li.selected {
@@ -41,6 +59,15 @@
 				border-bottom: 1px solid $lightgray;
 				box-shadow: darken($lightgray, 70) 0 0 6px 1px;
 				a {
+					color: $blue;
+				}
+				a:hover {
+					color: darken($blue, 30);
+				}
+				i {
+					color: lighten($blue, 30);
+				}
+				i:hover {
 					color: $blue;
 				}
 			}

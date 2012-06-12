@@ -13,9 +13,13 @@
     <meta name="viewport" content="width=device-width">
 
     <link href="/css/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+    <link href="/css/font-awesome.css" media="screen, projection" rel="stylesheet" type="text/css" />
 
 	<!--[if IE]>
 		<link href="css/ie.css" media="screen, projection" rel="stylesheet" type="text/css" />
+	<![endif]-->
+	<!--[if IE 8]>
+		<link href="css/pie.css" media="screen, projection" rel="stylesheet" type="text/css" />
 	<![endif]-->
 
     <script src="/js/lib/modernizr.custom.53344.js"></script>
@@ -26,12 +30,12 @@
 		<div id="header-container">
 			<div class="header-group">
 				<div id="header-logo">
-					
+					<img src="/img/logo_header.png" width="166" height="50" alt="">
 				</div>
 				<div id="header-controls">
 					<a href="" title="Click to change workspace" id="button-workspace">Change Workspace</a>
 					<span>Workspace: </span>
-					<ul>
+					<ul id="breadcrumb">
 						<li><em>CRU</em></li>
 						<li><em>OFCC HO (CRU4)</em></li>
 						<li><em>Policies</em></li>
@@ -56,8 +60,8 @@
 		<nav>
 			<ul>
 				<li><a href="">Search</a></li>
-				<li class="selected"><a href="">Crazy Search</a></li>
-				<li><a href="">Secret Squirrel</a></li>
+				<li class="selected"><a href="">Crazy Search</a><i class="icon-remove-sign" title="close this tab"></i></li>
+				<li><a href="">Secret Squirrel</a><i class="icon-remove-sign" title="close this tab"></i></li>
 			</ul>
 		</nav>
 		<article>

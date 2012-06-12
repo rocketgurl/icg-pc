@@ -11,6 +11,8 @@ html {
 body { 
 	font-size:62.5%;
 	@include sans;
+	min-width: 1000px;
+	text-rendering: optimizeLegibility;
 }
 
 // Now begin importing our partials
