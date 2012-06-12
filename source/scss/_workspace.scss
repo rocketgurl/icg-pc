@@ -52,6 +52,19 @@
 					color: darken($darkgray, 20);
 				}
 			}
+			li#tab-search {
+				padding: 0 6px;
+				a i {
+					top: 1px;
+					left: 0;
+					@include font-size(12);
+					line-height: 23px;
+					color: darken($darkgray, 10);
+				}
+				a:hover i {
+					color: darken($darkgray, 30);
+				}
+			}
 			li.selected {
 				background: $lightgray;
 				@include background-image(linear-gradient(top, $white 10%, $lightgray));

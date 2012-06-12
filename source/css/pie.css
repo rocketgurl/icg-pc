@@ -95,6 +95,9 @@
 #workspace nav ul li i {
   font-size: 16px;
 }
+#workspace nav ul li#tab-search a i {
+  font-size: 16px;
+}
 #workspace nav ul li.selected {
   behavior: url("/css/PIE.htc");
   position: relative;

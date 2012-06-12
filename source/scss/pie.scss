@@ -113,6 +113,13 @@ $pie-base-class: pie-element;
           font-size: 16px;
         }
       }
+      li#tab-search {
+        a {
+          i {
+            font-size: 16px;
+          }
+        }
+      }
       li.selected {
         @include pie-element(relative);
         @include background(linear-gradient(top, $white 10%, $lightgray));
