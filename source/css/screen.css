@@ -423,3 +423,10 @@ body {
 #workspace footer ul li:last-child {
   border: 0px;
 }
+
+/*
+Module: Search
+*/
+.module-search h1 {
+  font-weight: bold;
+}
