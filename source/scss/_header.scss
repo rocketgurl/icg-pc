@@ -18,7 +18,7 @@
 #header-logo {
 	@include span-columns(2, 12);
 	padding: 10px 0;
-	@include font-size(18);
+	@include font-size(14);
 }
 
 #header-controls {
