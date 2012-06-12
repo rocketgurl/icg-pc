@@ -2,7 +2,7 @@
 	color: $white;
 	@include background-image(linear-gradient(top, $blue, darken($blue, 20)));
 	overflow: hidden;
-	height: 92px;
+	height: 95px;
 }
 
 #header-container {
