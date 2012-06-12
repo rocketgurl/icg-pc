@@ -45,6 +45,10 @@
   background: linear-gradient(#ff0000, #0000ff);
 }
 
+body {
+  font-size: 12px;
+}
+
 #header {
   behavior: url("/css/PIE.htc");
   position: relative;
@@ -120,4 +124,7 @@
 #workspace nav ul li.selected:after {
   border-width: 0px;
   box-shadow: none;
+}
+#workspace footer ul {
+  font-size: 12px;
 }

@@ -78,7 +78,7 @@
 					color: darken($blue, 30);
 				}
 				i {
-					color: lighten($blue, 30);
+					color: desaturate(lighten($blue, 30), 20);
 				}
 				i:hover {
 					color: $blue;
@@ -131,6 +131,8 @@
 		background: $lightgray;
 		@include container;
 		padding: 20px 0;
+		margin-top: -32px; // Correct position offset from tabs
+		@include font-size(9); // Generalized font-size for workspace
 	}
 }
 
@@ -139,5 +141,30 @@
 		margin: 20px 0;
 		padding: 20px 0;
 		@include divider;
+		ul {
+			margin: 0;
+			padding: 0;
+			color: $darkgray;
+			@include font-size(8);
+			li {
+				display: inline-block;
+				padding: 0 8px 0 6px;
+				margin: 0;
+				border-right: darken($lightgray,20) 1px solid;
+				a {
+					color: $blue;
+					text-decoration: none;
+				}
+				a:hover {
+					text-decoration: underline;
+				}
+			}
+			li:first-child {
+				padding: 0 8px 0 0;
+			}
+			li:last-child {
+				border: 0px;
+			}
+		}
 	}
 }

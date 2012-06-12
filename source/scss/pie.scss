@@ -75,6 +75,10 @@ $pie-base-class: pie-element;
   @include background(linear-gradient(#f00, #00f));
 }
 
+body {
+  font-size: 12px;
+}
+
 // Header BG
 #header {
   @include pie-element(relative);
@@ -135,6 +139,11 @@ $pie-base-class: pie-element;
         border-width: 0px;
         box-shadow: none;
       }
+    }
+  }
+  footer {
+    ul {
+      font-size: 12px;
     }
   }
 }

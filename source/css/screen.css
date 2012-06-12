@@ -326,7 +326,7 @@ body {
   color: #010304;
 }
 #workspace nav ul li.selected i {
-  color: #54a6e3;
+  color: #68a3cf;
 }
 #workspace nav ul li.selected i:hover {
   color: #165788;
@@ -381,6 +381,9 @@ body {
   padding-left: 1em;
   padding-right: 1em;
   padding: 20px 0;
+  margin-top: -32px;
+  font-size: 9px;
+  font-size: 0.9rem;
 }
 #workspace article:after {
   content: "";
@@ -393,4 +396,30 @@ body {
   padding: 20px 0;
   border-top: white 1px solid;
   box-shadow: #bababa 0 -1px 0;
+}
+#workspace footer ul {
+  margin: 0;
+  padding: 0;
+  color: dimgrey;
+  font-size: 8px;
+  font-size: 0.8rem;
+}
+#workspace footer ul li {
+  display: inline-block;
+  padding: 0 8px 0 6px;
+  margin: 0;
+  border-right: #bababa 1px solid;
+}
+#workspace footer ul li a {
+  color: #165788;
+  text-decoration: none;
+}
+#workspace footer ul li a:hover {
+  text-decoration: underline;
+}
+#workspace footer ul li:first-child {
+  padding: 0 8px 0 0;
+}
+#workspace footer ul li:last-child {
+  border: 0px;
 }
