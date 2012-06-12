@@ -10,6 +10,7 @@ html {
 // http://snook.ca/archives/html_and_css/font-size-with-rem
 body { 
 	font-size:62.5%;
+	@include sans;
 }
 
 // Now begin importing our partials

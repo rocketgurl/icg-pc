@@ -7,7 +7,7 @@
 		ul {
 			margin: 0;
 			padding: 0 4px;
-			line-height: 20px;
+			line-height: 21px;
 			height: 27px;
 			overflow: hidden;
 			position: relative;
@@ -39,7 +39,7 @@
 				@include background-image(linear-gradient(top, $white 10%, $lightgray));
 				z-index: 3;
 				border-bottom: 1px solid $lightgray;
-				box-shadow: darken($lightgray, 70) 0 0 6px;
+				box-shadow: darken($lightgray, 70) 0 0 6px 1px;
 				a {
 					color: $blue;
 				}
@@ -80,7 +80,7 @@
 			width: 100%;
 			bottom: 0;
 			left: 0;
-			border-bottom: 1px solid darken($lightgray, 20);
+			border-bottom: 1px solid $lightgray, 20;
 			z-index: 1;
 		}
 		ul:before {

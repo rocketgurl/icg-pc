@@ -2,33 +2,105 @@
 	color: $white;
 	@include background-image(linear-gradient(top, $blue, darken($blue, 20)));
 	overflow: hidden;
-	height: 70px;
+	height: 92px;
 }
 
 #header-container {
 	@include container;
 //	@include susy-grid-background;
-	
+	padding: 0;
 }
 
 .header-group {
 	@include span-columns(12 omega, 12);
+	padding: 0;
 }
 
 #header-logo {
 	@include span-columns(2, 12);
-	padding: 10px 0;
-	@include font-size(14);
+	padding: 5px 0;
+	background: url(/img/logo_header.png) no-repeat left;
+	height: 50px;
 }
 
 #header-controls {
-	@include span-columns(7, 12);
+	@include span-columns(6, 12);
+	@include font-size(9);
+	padding-top: 16px;
+	span {
+		color: lighten($blue, 40);
+	}
+
+	ul {
+		margin: 0;
+		padding: 0;
+		display: inline;
+		li {
+			display: inline-block;
+			color: lighten($blue, 40);
+			em {
+				color: lighten($blue, 60);
+			}
+		}
+		li:after {
+			content: ' \/ ';
+		}
+		li:last-child:after {
+			content: ' ';
+		}
+	}
+}
+
+#button-workspace {
+	display: inline-block;
+	padding: 5px 12px 8px 12px;
+	margin: 0 10px 0 0;
+	background: #648fb0;
+	border-radius: 4px;
+	color: $white;
+	@include font-size(10);
+	font-weight: bold;
+	text-shadow: $darkblue 0 1px 1px;
+	text-decoration: none;
+}
+
+#button-workspace:hover {
+	background: darken($blue, 40);
+	text-shadow: none 0 0 0;
+	color: lighten($blue, 60);
 }
 
 #header-admin {
-	@include span-columns(3 omega, 12);
+	@include span-columns(4 omega, 12);
+	@include font-size(9);
+	color: lighten($blue, 40);
+	ul {
+		padding: 24px 0 5px 0;
+		text-align: right;
+		li {
+			margin: 0;
+			padding: 0 10px;
+			display: inline-block;
+			border-right: darken($blue, 20) 1px solid;
+			border-left: lighten($blue, 10) 1px solid;
+			a {
+				color: $white;
+				text-decoration: none;
+			}
+			a:hover {
+				text-decoration: underline;
+			}
+		}
+		li:first-child {
+			border-left: 0px;
+		}
+		li:last-child {
+			border-right: 0px;
+		}
+	}
 }
 
 #header-workspace-nav {
 	height: 200px;
+	margin-top: 50px;
 }
