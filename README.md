@@ -17,5 +17,14 @@ Initial client side build for the new unified Insight policy management applicat
 * __Ruby Libraries__
 	* Rake
 	* Bundler
-	* Compass / SASS
+	* Compass / SASS / CSS3-Pie (requires an Apache header)
 	* Susy
+
+### Browser Compatability List
+
+* IE 8-9 (No support for IE7)
+* Firefox 12+
+* Chrome
+* Safari 5+
+
+Vast majority of users are coming in on Windows IE 8, keep that in mind when testing.
