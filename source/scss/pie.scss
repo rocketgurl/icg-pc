@@ -110,12 +110,6 @@ body {
         @include pie-element(relative);
         @include background(linear-gradient(top, darken($lightgray, 10) 50%, darken($lightgray, 30)));
         border-radius: 4px 4px 0 0; //  (top-left, top-right, bottom-right, bottom-left).
-        a {
-          
-        }
-        i {
-          
-        }
       }
       li#tab-search {
         a {
@@ -152,6 +146,8 @@ body {
 }
 
 // Search table
-table.module-search {
-  
+.module-search.pagination {
+  @include pie-element(relative);
+  @include background(linear-gradient(#b4b4b4, #8f8f8f));
+  @include border-radius(6px);
 }

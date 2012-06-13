@@ -43,7 +43,8 @@
 				</div>
 				<div id="header-admin">
 					<ul>
-						<li>Welcome back <a href="">Boatswain Miller</a></li><li><a href="">Logout</a></li>
+						<li>Welcome back <a href="">Boatswain Miller</a></li>
+						<li><a href="">Logout</a></li>
 					</ul>
 				</div>
 			</div>
@@ -70,10 +71,20 @@
 					<h1>Policy Search</h1>
 					<ul>
 						<li>control</li>
+						<li>control</li>
+						<li>control</li>
+						<li>control</li>
 					</ul>
 				</header>
 				<div id="search-filters" class="module-search filters">
-					<h2>Filter policies</h2>
+					<form action="search_submit" method="get" accept-charset="utf-8">
+						<label for="">Filter policies</label>
+						<select name="">
+							<option value="">Quotes &amp; policies</option>
+						</select>
+						<input type="search" name="" value="" placeholder="Enter search terms" />
+						<a href=""><i class="icon-refresh"></i> Refresh results</a>
+					</form>
 				</div>
 				<table class="module-search">
 					<thead>
@@ -152,7 +163,23 @@
 					</tbody>
 				</table>
 				<div id="search-pagination" class="module-search pagination">
-					Pagination
+					<form action="pagination" method="get" accept-charset="utf-8">
+						<div class="pagination-a">
+							<span>Items 1 - 15 of 100</span>
+						</div>
+						<div class="pagination-b">
+							<label for="">Jump to page:</label>
+							<select name="">
+								<option value="">5</option>
+							</select>
+						</div>
+						<div class="pagination-c">
+							<label for="">Result count:</label>
+							<select name="">
+								<option value="">100 per page</option>
+							</select>
+						</div>
+					</form>
 				</div>
 			</section>
 			<footer>

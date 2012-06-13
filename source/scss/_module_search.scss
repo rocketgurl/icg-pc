@@ -1,9 +1,57 @@
 /*
 Module: Search
 */
-.module-search {
+header.module-search {
+	margin: 0 0 20px 0;
 	h1 {
 		font-weight: bold;
+		color: $darkblue;
+		@include font-size(24);
+		@include emboss;
+		display: inline-block;
+		margin: 0 20px 0 0;
+	}
+	ul {
+		display: inline-block;
+		font-size: 0; // fixes white space issues in inline-block
+		li {
+			display: inline-block;
+			border-right: darken($lightgray, 20) 1px solid;
+			border-left: $white 1px solid;
+			padding: 0 10px;
+			@include font-size(14);
+		}
+		li:first-child {
+			border-left: 0px;
+		}
+		li:last-child {
+			border-right: 0px;
+		}
+	}
+}
+
+.module-search.filters {
+	margin: 0 0 20px 0;
+	label {
+		font-weight: bold;
+		color: $darkblue;
+		@include font-size(18);
+		@include emboss;
+		display: inline-block;
+		position: relative;
+		top: 1px;
+	}
+	input[type=search] {
+		width: 250px;
+	}
+	a {
+		@include font-size(14);
+		color: $darkgray;
+		text-decoration: none;
+		padding: 0 10px;
+	}
+	a:hover {
+		color: $blue;
 	}
 }
 
@@ -12,6 +60,7 @@ table.module-search {
 	width: 100%;
 	color: darken($darkgray, 10);
 	@include font-size(13);
+	@include divider(top);
 	td,
 	th {
 		padding: 9px 5px;
@@ -62,5 +111,39 @@ table.module-search {
 				text-decoration: underline;
 			}
 		}
+	}
+}
+
+.module-search.pagination {
+	@include span-columns(12 omega, 12);
+	@include font-size(14);
+	@include background-image(linear-gradient(#b4b4b4, #8f8f8f));
+	border: darken(#8f8f8f, 10) 1px solid;
+	padding: 6px 0;
+	@include border-radius(6px);
+	form {
+		padding: 0 10px;
+	}
+	span {
+		position: relative;
+		top: 3px;
+	}
+	span,
+	label {
+		color: darken($darkgray, 20);
+		font-weight: bold;
+		@include emboss(darken($lightgray, 10));
+	}
+	.pagination-a,
+	.pagination-b,
+	.pagination-c  {
+		@include span-columns(4, 12);
+	}
+	.pagination-b {
+		text-align: center;
+	}
+	.pagination-c {
+		@include omega();
+		text-align: right;
 	}
 }
