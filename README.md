@@ -4,6 +4,8 @@ Initial client side build for the new unified Insight policy management applicat
 
 ### Dependencies
 
+Ruby dependencies are handled by Bundler (`$ gem install bundler; bundle install`) via the Gemfile.
+
 * __JavaScript Libraries__
 	* jQuery
 	* Require.js
