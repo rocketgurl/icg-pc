@@ -1,4 +1,4 @@
 /* Page */
 #page {
-	@include background-image(linear-gradient(top, $blue, darken($blue, 20)));	
+	@include background-image(linear-gradient(top, $blue, darken($blue, 10)));	
 }

@@ -1,6 +1,6 @@
 #header {
 	color: $white;
-	@include background-image(linear-gradient(top, $blue, darken($blue, 20)));
+	@include background-image(linear-gradient(top, $blue, darken($blue, 10)));
 	overflow: hidden;
 	height: 95px;
 }
@@ -106,7 +106,63 @@
 	}
 }
 
+// Main workspace navigation
 #header-workspace-nav {
-	height: 200px;
 	margin-top: 50px;
+	ul.main-nav {
+		@include span-columns(3, 12);
+		li {
+			@include font-size(14);
+			padding: 5px 8px;
+			a {
+				color: $white;
+				text-decoration: none;
+			}
+		}
+		li.open {
+			background: darken($blue, 15);
+			width: 133%;
+			a {
+				font-weight: bold;
+			}
+			a:after {
+				content: " \2023";
+			}
+		}
+	}
+}
+#workspace-subnav {
+	@include span-columns(9 omega, 12);
+	background: darken($blue, 15);
+	ul {
+		padding: 5px 8px;
+		margin: 0 0 10px 0;
+		li {
+			display: inline-block;
+			ul {
+				min-width: 150px;
+				li {
+					display: block;
+					@include font-size(14);
+					margin: 0 0 10px 0;
+					padding: 0 0 5px 0;
+					color: desaturate(lighten($blue, 30), 20);
+					font-weight: bold;
+					a {
+						text-decoration: none;
+						color: $white;
+						font-weight: normal;
+						padding: 3px 5px;
+					}
+					a:hover {
+						background: desaturate(lighten($blue, 20), 20);
+						@include border-radius(4px);
+					}
+				}
+				li:first-child {
+					border-bottom: desaturate(lighten($blue, 30), 20) 1px solid;
+				}
+			}
+		}
+	}
 }

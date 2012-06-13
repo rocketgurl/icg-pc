@@ -82,15 +82,7 @@ body {
 // Header BG
 #header {
   @include pie-element(relative);
-  @include background(linear-gradient(top, $blue, darken($blue, 20)));
-}
-
-#header-controls {
-  
-}
-
-#header-admin {
-  
+  @include background(linear-gradient(top, $blue, darken($blue, 10)));
 }
 
 #button-workspace {
@@ -100,6 +92,21 @@ body {
   font-weight: bold;
   line-height: 18px;
   padding: 5px 12px;
+}
+
+#workspace-subnav {
+  ul {
+    li {
+      ul {
+        li {
+          a {
+            @include pie-element(relative);
+            border-radius: 4px;
+          }
+        }
+      }
+    }
+  }
 }
 
 // Tabs
