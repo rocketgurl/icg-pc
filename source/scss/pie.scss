@@ -111,13 +111,6 @@ body {
         @include background(linear-gradient(top, darken($lightgray, 10) 50%, darken($lightgray, 30)));
         border-radius: 4px 4px 0 0; //  (top-left, top-right, bottom-right, bottom-left).
       }
-      li#tab-search {
-        a {
-          i {
-            
-          }
-        }
-      }
       li.selected {
         @include pie-element(relative);
         @include background(linear-gradient(top, $white 10%, $lightgray));
