@@ -229,7 +229,7 @@ body {
 #header-workspace-nav ul.main-nav li {
   font-size: 14px;
   font-size: 1.4rem;
-  padding: 5px 8px;
+  padding: 8px;
 }
 #header-workspace-nav ul.main-nav li a {
   color: white;
@@ -256,28 +256,37 @@ body {
 }
 #workspace-subnav ul {
   padding: 5px 8px;
-  margin: 0 0 10px 0;
+  margin: 10px 0 10px 0;
 }
 #workspace-subnav ul li {
+  font-size: 0;
   display: inline-block;
+  vertical-align: top;
 }
 #workspace-subnav ul li ul {
   min-width: 150px;
+  margin: 0;
 }
 #workspace-subnav ul li ul li {
   display: block;
   font-size: 14px;
   font-size: 1.4rem;
+}
+#workspace-subnav ul li ul li span {
   margin: 0 0 10px 0;
-  padding: 0 0 5px 0;
+  padding: 0 0 10px 5px;
   color: #68a3cf;
   font-weight: bold;
+  display: block;
+  border-bottom: #32709f 1px solid;
 }
 #workspace-subnav ul li ul li a {
   text-decoration: none;
   color: white;
   font-weight: normal;
-  padding: 3px 5px;
+  padding: 5px 5px;
+  margin: 0 0 2px 0;
+  display: block;
 }
 #workspace-subnav ul li ul li a:hover {
   background: #418bc3;
@@ -286,9 +295,6 @@ body {
   -ms-border-radius: 4px;
   -o-border-radius: 4px;
   border-radius: 4px;
-}
-#workspace-subnav ul li ul li:first-child {
-  border-bottom: #68a3cf 1px solid;
 }
 
 #workspace nav {
