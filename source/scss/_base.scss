@@ -47,10 +47,10 @@ $rowselect : #ffccff;
 // $position == top if you need divider above an elements
 // $position == bottom if you need it below
 @mixin divider($position) {
-	$pos : -1;
-	@if $position == bottom {
-	    $pos : 1;
-	  }
 	border-#{$position}: $white 1px solid;
-	box-shadow: darken($lightgray, 20) 0 #{$pos}px 0;
+	box-shadow: darken($lightgray, 20) 0 -1px 0;
+}
+
+@mixin emboss($color : #ffffff) {
+	text-shadow: 0 1px $color;
 }
