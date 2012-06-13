@@ -45,10 +45,6 @@
   background: linear-gradient(#ff0000, #0000ff);
 }
 
-body {
-  font-size: 12px;
-}
-
 #header {
   behavior: url("/css/PIE.htc");
   position: relative;
@@ -62,19 +58,10 @@ body {
   background: linear-gradient(top, #165788, #081f30);
 }
 
-#header-controls {
-  font-size: 12px;
-}
-
-#header-admin {
-  font-size: 12px;
-}
-
 #button-workspace {
   behavior: url("/css/PIE.htc");
   position: relative;
   border-radius: 4px;
-  font-size: 12px;
   font-weight: bold;
   line-height: 18px;
   padding: 5px 12px;
@@ -92,15 +79,6 @@ body {
   -pie-background: linear-gradient(top, #d3d3d3 50%, #a1a1a1);
   background: linear-gradient(top, #d3d3d3 50%, #a1a1a1);
   border-radius: 4px 4px 0 0;
-}
-#workspace nav ul li a {
-  font-size: 14px;
-}
-#workspace nav ul li i {
-  font-size: 16px;
-}
-#workspace nav ul li#tab-search a i {
-  font-size: 16px;
 }
 #workspace nav ul li.selected {
   behavior: url("/css/PIE.htc");
@@ -130,11 +108,4 @@ body {
   position: relative;
   box-shadow: #bababa 0 -1px 0;
   background: #ededed;
-}
-#workspace footer ul {
-  font-size: 12px;
-}
-
-table.module-search {
-  font-size: 12px;
 }

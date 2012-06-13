@@ -13,7 +13,7 @@ $total-columns  : 12;
 $gutter-width   : 1em;           
 $grid-padding   : $gutter-width;
 $container-style: fluid;
-$container-width: 95%;
+$container-width: 97%;
 
 // Core color definitions
 $blue      : #165788; // Insight blue
@@ -44,7 +44,13 @@ $rowselect : #ffccff;
 }
 
 // Divider line for light gray backgrounds
-@mixin divider {
-	border-top: $white 1px solid;
-	box-shadow: darken($lightgray, 20) 0 -1px 0;
+// $position == top if you need divider above an elements
+// $position == bottom if you need it below
+@mixin divider($position) {
+	$pos : -1;
+	@if $position == bottom {
+	    $pos : 1;
+	  }
+	border-#{$position}: $white 1px solid;
+	box-shadow: darken($lightgray, 20) 0 #{$pos}px 0;
 }

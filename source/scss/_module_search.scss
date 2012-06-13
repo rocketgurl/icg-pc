@@ -11,6 +11,7 @@ table.module-search {
 	margin: 0 0 20px 0;
 	width: 100%;
 	color: darken($darkgray, 10);
+	@include font-size(13);
 	td,
 	th {
 		padding: 9px 5px;

@@ -76,7 +76,7 @@ $pie-base-class: pie-element;
 }
 
 body {
-  font-size: 12px;
+  
 }
 
 // Header BG
@@ -86,17 +86,17 @@ body {
 }
 
 #header-controls {
-  font-size: 12px;
+  
 }
 
 #header-admin {
-  font-size: 12px;
+  
 }
 
 #button-workspace {
   @include pie-element(relative);
   border-radius: 4px;
-  font-size: 12px;
+  
   font-weight: bold;
   line-height: 18px;
   padding: 5px 12px;
@@ -111,16 +111,16 @@ body {
         @include background(linear-gradient(top, darken($lightgray, 10) 50%, darken($lightgray, 30)));
         border-radius: 4px 4px 0 0; //  (top-left, top-right, bottom-right, bottom-left).
         a {
-          font-size: 14px;
+          
         }
         i {
-          font-size: 16px;
+          
         }
       }
       li#tab-search {
         a {
           i {
-            font-size: 16px;
+            
           }
         }
       }
@@ -146,12 +146,12 @@ body {
     box-shadow: darken($lightgray, 20) 0 -1px 0;
     background: $lightgray;
     ul {
-      font-size: 12px;
+      
     }
   }
 }
 
 // Search table
 table.module-search {
-  font-size: 12px;
+  
 }

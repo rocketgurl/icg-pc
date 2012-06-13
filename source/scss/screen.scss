@@ -3,13 +3,13 @@
 
 
 html {
+	font-size:62.5%;
 	background: $lightgray;
 }
 
 // Default Body Font Size - needed for rem support
 // http://snook.ca/archives/html_and_css/font-size-with-rem
 body { 
-	font-size:62.5%;
 	@include sans;
 	min-width: 1000px;
 	text-rendering: optimizeLegibility;
