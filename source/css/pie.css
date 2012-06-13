@@ -125,6 +125,16 @@ body {
   border-width: 0px;
   box-shadow: none;
 }
+#workspace footer {
+  behavior: url("/css/PIE.htc");
+  position: relative;
+  box-shadow: #bababa 0 -1px 0;
+  background: #ededed;
+}
 #workspace footer ul {
+  font-size: 12px;
+}
+
+table.module-search {
   font-size: 12px;
 }

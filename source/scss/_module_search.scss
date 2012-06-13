@@ -6,3 +6,60 @@ Module: Search
 		font-weight: bold;
 	}
 }
+
+table.module-search {
+	margin: 0 0 20px 0;
+	width: 100%;
+	color: darken($darkgray, 10);
+	td,
+	th {
+		padding: 9px 5px;
+	}
+	th {
+		font-weight: bold;
+		a {
+			color: $colblue;
+			text-decoration: none;
+		}
+		a:hover {
+			color: $blue;
+		}
+	}
+	thead tr th {
+		border-bottom: darken($lightgray, 10) 1px solid;
+	}
+	tbody {
+		tr {
+			background: none;
+			border: 1px solid transparent;
+		}
+		tr:nth-child(odd) {
+			background-color: $white;
+		}
+		tr:last-child {
+			td {
+				border-bottom: darken($lightgray, 10) 1px solid;
+			}
+		}
+		tr:hover td {
+			background-color: $rowselect;
+			border-top: darken($rowselect, 10) 1px solid;
+			border-bottom: darken($rowselect, 10) 1px solid;
+			color: darken($rowselect, 70);
+			cursor: pointer;
+			a {
+				color: darken($rowselect, 70);
+			}
+		}
+		td {
+			a {
+				color: darken($darkgray, 10);
+				text-decoration: none;
+				text-transform: uppercase;
+			}
+			a:hover {
+				text-decoration: underline;
+			}
+		}
+	}
+}

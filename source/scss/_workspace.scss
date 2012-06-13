@@ -134,10 +134,14 @@
 		margin-top: -32px; // Correct position offset from tabs
 		@include font-size(9); // Generalized font-size for workspace
 	}
+	#canvas {
+		@include span-columns(12 omega, 12);
+	}
 }
 
 #workspace {
 	footer {
+		@include span-columns(12 omega, 12);
 		margin: 20px 0;
 		padding: 20px 0;
 		@include divider;

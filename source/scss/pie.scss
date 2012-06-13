@@ -142,9 +142,16 @@ body {
     }
   }
   footer {
+    @include pie-element(relative);
+    box-shadow: darken($lightgray, 20) 0 -1px 0;
+    background: $lightgray;
     ul {
       font-size: 12px;
     }
   }
 }
 
+// Search table
+table.module-search {
+  font-size: 12px;
+}

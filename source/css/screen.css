@@ -390,8 +390,20 @@ body {
   display: table;
   clear: both;
 }
+#workspace #canvas {
+  width: 100%;
+  float: right;
+  margin-right: 0;
+  #margin-left: -1em;
+  display: inline;
+}
 
 #workspace footer {
+  width: 100%;
+  float: right;
+  margin-right: 0;
+  #margin-left: -1em;
+  display: inline;
   margin: 20px 0;
   padding: 20px 0;
   border-top: white 1px solid;
@@ -429,4 +441,55 @@ Module: Search
 */
 .module-search h1 {
   font-weight: bold;
+}
+
+table.module-search {
+  margin: 0 0 20px 0;
+  width: 100%;
+  color: #4f4f4f;
+}
+table.module-search td,
+table.module-search th {
+  padding: 9px 5px;
+}
+table.module-search th {
+  font-weight: bold;
+}
+table.module-search th a {
+  color: #007ac9;
+  text-decoration: none;
+}
+table.module-search th a:hover {
+  color: #165788;
+}
+table.module-search thead tr th {
+  border-bottom: lightgrey 1px solid;
+}
+table.module-search tbody tr {
+  background: none;
+  border: 1px solid transparent;
+}
+table.module-search tbody tr:nth-child(odd) {
+  background-color: white;
+}
+table.module-search tbody tr:last-child td {
+  border-bottom: lightgrey 1px solid;
+}
+table.module-search tbody tr:hover td {
+  background-color: #ffccff;
+  border-top: #ff99ff 1px solid;
+  border-bottom: #ff99ff 1px solid;
+  color: #660066;
+  cursor: pointer;
+}
+table.module-search tbody tr:hover td a {
+  color: #660066;
+}
+table.module-search tbody td a {
+  color: #4f4f4f;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+table.module-search tbody td a:hover {
+  text-decoration: underline;
 }
