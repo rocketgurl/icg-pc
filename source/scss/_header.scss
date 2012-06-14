@@ -112,11 +112,21 @@
 	ul.main-nav {
 		@include span-columns(3, 12);
 		li {
-			@include font-size(14);
+			@include font-size(10);
 			padding: 8px;
 			a {
 				color: $white;
 				text-decoration: none;
+				span {
+					@include font-size(14);
+					padding: 0 5px 0 0;
+				}
+			}
+			a:hover {
+				color: lighten($colblue, 30);
+			}
+			a:hover:after {
+				content: " \25B6";
 			}
 		}
 		li.open {
@@ -126,11 +136,15 @@
 				font-weight: bold;
 			}
 			a:after {
-				content: " \2023";
+				content: " \25B6";
+			}
+			a:hover {
+				color: $white;
 			}
 		}
 	}
 }
+
 #workspace-subnav {
 	@include span-columns(9 omega, 12);
 	background: darken($blue, 15);

@@ -227,13 +227,24 @@ body {
   display: inline;
 }
 #header-workspace-nav ul.main-nav li {
-  font-size: 14px;
-  font-size: 1.4rem;
+  font-size: 10px;
+  font-size: 1rem;
   padding: 8px;
 }
 #header-workspace-nav ul.main-nav li a {
   color: white;
   text-decoration: none;
+}
+#header-workspace-nav ul.main-nav li a span {
+  font-size: 14px;
+  font-size: 1.4rem;
+  padding: 0 5px 0 0;
+}
+#header-workspace-nav ul.main-nav li a:hover {
+  color: #63c2ff;
+}
+#header-workspace-nav ul.main-nav li a:hover:after {
+  content: " \25B6";
 }
 #header-workspace-nav ul.main-nav li.open {
   background: #0b2d46;
@@ -243,7 +254,10 @@ body {
   font-weight: bold;
 }
 #header-workspace-nav ul.main-nav li.open a:after {
-  content: " \2023";
+  content: " \25B6";
+}
+#header-workspace-nav ul.main-nav li.open a:hover {
+  color: white;
 }
 
 #workspace-subnav {
