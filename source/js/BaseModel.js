@@ -12,7 +12,9 @@
       xmlParse: function(response) {
         var tree;
         tree = new XML.ObjTree().parseDOM(response);
-        return tree['#document'];
+        return {
+          document: tree['#document']
+        };
       },
       sync: this.backboneSync,
       switch_sync: function(sync_adapater) {

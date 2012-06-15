@@ -31,7 +31,7 @@ define [
     xmlSync  : XMLSync
     xmlParse : (response) ->
       tree = new XML.ObjTree().parseDOM(response)
-      tree['#document']
+      { document : tree['#document'] }
 
     # Explicitly set sync for this model to Backbone default
     sync : @backboneSync
