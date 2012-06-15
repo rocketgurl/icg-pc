@@ -1,0 +1,787 @@
+<Identity id="tim@arc90.com" version="1523" archived="false" createdBy="tim@arc90.com" createdTimestamp="2012-04-18T10:56:09.166-04:00" passwordHash="PjQPJ4B4nxgIDURq729iwA==" apiVersion="2">
+  <Name>Timothy Meaney</Name>
+  <Email>tim@arc90.com</Email>
+  <Affiliation target="arc" type="employee_company" side="employee" targetName="Arc90, Inc." primary="1" />
+  <Affiliation target="cru" type="employee_company" side="employee" targetName="Coastal Risk Underwriters" primary="0" />
+  <Affiliation target="fnic" type="employee_company" side="employee" targetName="Federated National Insurance Company" primary="0" />
+  <Affiliation target="hwi" type="employee_company" side="employee" targetName="HomeWise Insurance Company" primary="0" />
+  <Affiliation target="icg" type="employee_company" side="employee" targetName="Insight Catastrophe Group" primary="0" />
+  <Affiliation target="ics" type="employee_company" side="employee" targetName="Insight" primary="0" />
+  <Affiliation target="nsm" type="employee_company" side="employee" targetName="NSM Insurance Group" primary="0" />
+  <Affiliation target="ofcc" type="employee_company" side="employee" targetName="Occidental Fire and Casualty Company of North Caro" primary="0" />
+  <Affiliation target="pcg" type="employee_company" side="employee" targetName="AIG Private Client Group" primary="0" />
+  <ApplicationSettings applicationName="agencyadmin" organizationId="cru" environmentName="dev">
+    <roles>admin</roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="agencyadmin" organizationId="cru" environmentName="production">
+    <roles>admin</roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="agencyadmin" organizationId="cru" environmentName="staging">
+    <roles>admin</roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="agencyadmin" organizationId="cru" environmentName="test">
+    <roles>admin</roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="agencyadmin" organizationId="homewise" environmentName="dev">
+    <roles>admin</roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="agencyadmin" organizationId="homewise" environmentName="production">
+    <roles>admin</roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="agencyadmin" organizationId="homewise" environmentName="staging">
+    <roles>admin</roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="agencyadmin" organizationId="homewise" environmentName="test">
+    <roles>admin</roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="cxlogic" organizationId="cru" environmentName="dev">
+    <roles>admin</roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="cxlogic" organizationId="cru" environmentName="product-dev">
+    <roles>admin</roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="cxlogic" organizationId="cru" environmentName="production">
+    <roles>admin</roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="cxlogic" organizationId="cru" environmentName="staging">
+    <roles>admin</roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="cxlogic" organizationId="cru" environmentName="test">
+    <roles>admin</roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="cxlogic" organizationId="ics" environmentName="demo">
+    <roles>admin</roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="cxlogic" organizationId="ics" environmentName="dev">
+    <roles>admin</roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="cxlogic" organizationId="ics" environmentName="product-dev">
+    <roles>admin</roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="cxlogic" organizationId="ics" environmentName="production">
+    <roles>admin</roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="cxlogic" organizationId="ics" environmentName="staging">
+    <roles>admin</roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="cxlogic" organizationId="ics" environmentName="test">
+    <roles>admin</roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="cxserver" organizationId="ics" environmentName="dev">
+    <roles>superadmin</roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="cxserver" organizationId="ics" environmentName="production">
+    <roles>superadmin</roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="cxserver" organizationId="ics" environmentName="staging">
+    <roles>superadmin</roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="cxserver" organizationId="ics" environmentName="test">
+    <roles>superadmin</roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="ixadmin" organizationId="ics" environmentName="production">
+    <DashboardPreferences controlPanelOpen="true" helpDrawerOpen="true">
+      <Widgets>
+        <Widget type="policySearch" x="67" y="60.5" width="190" height="150">
+          <Settings>
+            <Setting name="policyID" value="131849" />
+            <Setting name="allowRemove" value="" />
+            <Setting name="resizable" value="" />
+          </Settings>
+        </Widget>
+      </Widgets>
+    </DashboardPreferences>
+    <PoliciesModule>
+      <Rights>
+        <Right>ARCHIVE_POLICY</Right>
+        <Right>UNBIND_POLICY</Right>
+        <Right>ENTER_UW_TASK</Right>
+        <Right>RESOLVE_UW_TASK</Right>
+        <Right>REMOVE_FLAG</Right>
+        <Right>SHOW_REPLY_BUTTON</Right>
+        <Right>VIEW_ADVANCED</Right>
+      </Rights>
+    </PoliciesModule>
+    <tentacleLink path="production-cru-rulesets_cruwic" />
+    <tentacleLink path="production-cru-policies_cruwic" />
+    <tentacleLink path="staging-cru-policies_cruwic" />
+    <tentacleLink path="staging-cru-rulesets_cruwic" />
+    <tentacleLink path="test-ics-xformvalidator" />
+    <tentacleLink path="staging-ics-xformvalidator" />
+    <tentacleLink path="production-ics-xformvalidator" />
+    <tentacleLink path="test-cru-rulesets_icsnyho" />
+    <tentacleLink path="staging-cru-rulesets_icsnyho" />
+    <tentacleLink path="production-cru-rulesets_icsnyho" />
+    <tentacleLink path="production-cru-rulesets_cru" />
+    <tentacleLink path="staging-cru-rulesets_cru" />
+    <tentacleLink path="staging-cru-rulesets_cruflho" />
+    <tentacleLink path="staging-cru-policies_cruflho" />
+    <tentacleLink path="production-cru-rulesets_cruflho" />
+    <tentacleLink path="production-cru-policies_cruflho" />
+    <tentacleLink path="product-dev-cru-rulesets_cruflho" />
+    <tentacleLink path="product-dev-cru-policies_cruflho" />
+    <tentacleLink path="production-fnic-rulesets_fnic" />
+    <tentacleLink path="staging-fnic-rulesets_fnic" />
+    <tentacleLink path="staging-fnic-rulesets_fnicfl" />
+    <tentacleLink path="staging-fnic-policies_fnicfl" />
+    <tentacleLink path="production-fnic-rulesets_fnicfl" />
+    <tentacleLink path="production-fnic-policies_fnicfl" />
+    <tentacleLink path="product-dev-fnic-rulesets_fnicfl" />
+    <tentacleLink path="product-dev-fnic-policies_fnicfl" />
+    <tentacleLink path="staging-cru-rulesets_crunyho" />
+    <tentacleLink path="staging-cru-policies_crunyho" />
+    <tentacleLink path="production-cru-rulesets_crunyho" />
+    <tentacleLink path="production-cru-policies_crunyho" />
+    <tentacleLink path="product-dev-cru-rulesets_crunyho" />
+    <tentacleLink path="product-dev-cru-policies_crunyho" />
+    <tentacleLink path="test-cru-transmissionlogs_icsnyho" />
+    <tentacleLink path="staging-cru-transmissionlogs_icsnyho" />
+    <tentacleLink path="production-cru-transmissionlogs_icsnyho" />
+    <tentacleLink path="test-ics-vocab" />
+    <tentacleLink path="staging-ics-vocab" />
+    <tentacleLink path="production-ics-vocab" />
+    <tentacleLink path="production-homewise-agentportal" />
+    <tentacleLink path="product-dev-homewise-agentportal" />
+    <tentacleLink path="staging-homewise-agentportal" />
+    <tentacleLink path="production-cru-agentportal" />
+    <tentacleLink path="product-dev-cru-agentportal" />
+    <tentacleLink path="staging-cru-agentportal" />
+    <tentacleLink path="production-ics-monitors" />
+    <tentacleLink path="production-ics-cxriskonline" />
+    <tentacleLink path="staging-ics-cxriskonline" />
+    <tentacleLink path="test-homewise-transmissionlogs" />
+    <tentacleLink path="staging-homewise-transmissionlogs" />
+    <tentacleLink path="production-homewise-transmissionlogs" />
+    <tentacleLink path="test-cru-agenciesV2" />
+    <tentacleLink path="staging-cru-agenciesV2" />
+    <tentacleLink path="production-cru-agenciesV2" />
+    <tentacleLink path="production-cru-registrations_crunyho" />
+    <tentacleLink path="test-niu-agenciesV2" />
+    <tentacleLink path="test-niu-rulesets" />
+    <tentacleLink path="staging-niu-agenciesV2" />
+    <tentacleLink path="production-niu-agenciesV2" />
+    <tentacleLink path="test-dashboard" />
+    <tentacleLink path="staging-dashboard" />
+    <tentacleLink path="production-dashboard" />
+    <tentacleLink path="test-ics-identities" />
+    <tentacleLink path="staging-ics-identities" />
+    <tentacleLink path="production-ics-identities" />
+    <tentacleLink path="test-ics-scoringscenarios" />
+    <tentacleLink path="staging-ics-scoringscenarios" />
+    <tentacleLink path="production-ics-scoringscenarios" />
+    <tentacleLink path="test-ics-packages" />
+    <tentacleLink path="staging-ics-packages" />
+    <tentacleLink path="production-ics-packages" />
+    <tentacleLink path="test-homewise-policies" />
+    <tentacleLink path="production-homewise-policies" />
+    <tentacleLink path="product-dev-homewise-policies" />
+    <tentacleLink path="staging-homewise-policies" />
+    <tentacleLink path="production-cru-policies" />
+    <tentacleLink path="product-dev-cru-policies" />
+    <tentacleLink path="staging-cru-policies" />
+    <tentacleLink path="production-sic-products" />
+    <tentacleLink path="production-homewise-products" />
+    <tentacleLink path="product-dev-homewise-products" />
+    <tentacleLink path="staging-homewise-products" />
+    <tentacleLink path="production-cru-products" />
+    <tentacleLink path="product-dev-cru-products" />
+    <tentacleLink path="staging-cru-products" />
+    <tentacleLink path="production-niu-products" />
+    <tentacleLink path="product-dev-niu-products" />
+    <tentacleLink path="staging-niu-products" />
+    <tentacleLink path="production-homewise-reports" />
+    <tentacleLink path="product-dev-homewise-reports" />
+    <tentacleLink path="staging-homewise-reports" />
+    <tentacleLink path="production-cru-reports" />
+    <tentacleLink path="production-niu-reports" />
+    <tentacleLink path="staging-homewise-modify" />
+    <tentacleLink path="product-dev-homewise-modify" />
+    <tentacleLink path="production-homewise-modify" />
+    <tentacleLink path="production-fnic-modify" />
+    <tentacleLink path="staging-fnic-modify" />
+    <tentacleLink path="staging-cru-modify" />
+    <tentacleLink path="product-dev-cru-modify" />
+    <tentacleLink path="production-cru-modify" />
+    <tentacleLink path="production-cru-view all" />
+    <tentacleLink path="staging-homewise-view all" />
+    <tentacleLink path="product-dev-homewise-view all" />
+    <tentacleLink path="production-homewise-view all" />
+    <tentacleLink path="production-cru-policies_icsnyho" />
+    <tentacleLink path="production-fnic-policies_fnicfl" />
+    <tentacleLink path="staging-cru-view all" />
+    <tentacleLink path="product-dev-cru-view all" />
+    <tentacleLink path="production-sic-modify" />
+    <tentacleLink path="production-sic-view all" />
+    <tentacleLink path="staging-homewise-payment logs" />
+    <tentacleLink path="product-dev-homewise-payment logs" />
+    <tentacleLink path="production-homewise-payment logs" />
+    <tentacleLink path="staging-cru-agencies" />
+    <tentacleLink path="product-dev-cru-agencies" />
+    <tentacleLink path="production-cru-agencies" />
+    <tentacleLink path="staging-homewise-agencies" />
+    <tentacleLink path="product-dev-homewise-agencies" />
+    <tentacleLink path="production-homewise-agencies" />
+    <tentacleLink path="production-fnic-modify" />
+    <tentacleLink path="production-fnic-view all" />
+    <tentacleLink path="test-cru-policies_sic" />
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="ixadmin" organizationId="ics" environmentName="staging">
+    <DashboardPreferences controlPanelOpen="true" helpDrawerOpen="false">
+      <Widgets>
+        <Widget type="policySearch" x="493" y="366" width="190" height="150">
+          <Settings>
+            <Setting name="allowRemove" value="true" />
+            <Setting name="policyID" value="" />
+            <Setting name="resizable" value="" />
+          </Settings>
+        </Widget>
+        <Widget type="reportViewer" x="719" y="159.5" width="375" height="150">
+          <Settings>
+            <Setting name="allowRemove" value="true" />
+            <Setting name="reportURL" value="" />
+            <Setting name="resizable" value="true" />
+          </Settings>
+        </Widget>
+        <Widget type="reportViewer" x="288" y="78" width="375" height="150">
+          <Settings>
+            <Setting name="allowRemove" value="true" />
+            <Setting name="reportURL" value="" />
+            <Setting name="resizable" value="true" />
+          </Settings>
+        </Widget>
+        <Widget type="feedReader" x="18" y="355" width="375" height="350">
+          <Settings>
+            <Setting name="feedURL" value="" />
+            <Setting name="allowRemove" value="true" />
+            <Setting name="resizable" value="true" />
+          </Settings>
+        </Widget>
+        <Widget type="reportViewer" x="626" y="483" width="375" height="150">
+          <Settings>
+            <Setting name="allowRemove" value="true" />
+            <Setting name="reportURL" value="" />
+            <Setting name="resizable" value="true" />
+          </Settings>
+        </Widget>
+        <Widget type="policySearch" x="461" y="699" width="190" height="150">
+          <Settings>
+            <Setting name="allowRemove" value="true" />
+            <Setting name="policyID" value="" />
+            <Setting name="resizable" value="" />
+          </Settings>
+        </Widget>
+        <Widget type="reportViewer" x="368" y="411" width="375" height="150">
+          <Settings>
+            <Setting name="allowRemove" value="true" />
+            <Setting name="reportURL" value="" />
+            <Setting name="resizable" value="true" />
+          </Settings>
+        </Widget>
+        <Widget type="policySearch" x="40" y="110" width="190" height="150">
+          <Settings>
+            <Setting name="allowRemove" value="" />
+            <Setting name="policyID" value="HPXQ1-203024" />
+            <Setting name="resizable" value="" />
+          </Settings>
+        </Widget>
+      </Widgets>
+    </DashboardPreferences>
+    <PoliciesModule>
+      <Rights>
+        <Right>ARCHIVE_POLICY</Right>
+        <Right>UNBIND_POLICY</Right>
+        <Right>ENTER_UW_TASK</Right>
+        <Right>RESOLVE_UW_TASK</Right>
+        <Right>REMOVE_FLAG</Right>
+        <Right>SHOW_REPLY_BUTTON</Right>
+        <Right>MANAGE_ASSIGNEES</Right>
+      </Rights>
+    </PoliciesModule>
+    <tentacleLink path="test-ics-xformvalidator" />
+    <tentacleLink path="staging-ics-xformvalidator" />
+    <tentacleLink path="production-ics-xformvalidator" />
+    <tentacleLink path="staging-cru-rulesets_cruflho" />
+    <tentacleLink path="staging-cru-policies_cruflho" />
+    <tentacleLink path="production-cru-rulesets_cruflho" />
+    <tentacleLink path="production-cru-policies_cruflho" />
+    <tentacleLink path="product-dev-cru-rulesets_cruflho" />
+    <tentacleLink path="product-dev-cru-policies_cruflho" />
+    <tentacleLink path="production-fnic-modify" />
+    <tentacleLink path="staging-fnic-modify" />
+    <tentacleLink path="production-fnic-rulesets_fnic" />
+    <tentacleLink path="staging-fnic-rulesets_fnic" />
+    <tentacleLink path="staging-fnic-rulesets_fnicfl" />
+    <tentacleLink path="staging-fnic-policies_fnicfl" />
+    <tentacleLink path="production-fnic-rulesets_fnicfl" />
+    <tentacleLink path="production-fnic-policies_fnicfl" />
+    <tentacleLink path="product-dev-fnic-rulesets_fnicfl" />
+    <tentacleLink path="product-dev-fnic-policies_fnicfl" />
+    <tentacleLink path="production-fnic-policies_fnicfl" />
+    <tentacleLink path="staging-cru-rulesets_crunyho" />
+    <tentacleLink path="staging-cru-policies_crunyho" />
+    <tentacleLink path="production-cru-rulesets_crunyho" />
+    <tentacleLink path="production-cru-policies_crunyho" />
+    <tentacleLink path="product-dev-cru-rulesets_crunyho" />
+    <tentacleLink path="product-dev-cru-policies_crunyho" />
+    <tentacleLink path="production-cru-rulesets_icsnyho" />
+    <tentacleLink path="production-cru-rulesets_cru" />
+    <tentacleLink path="staging-cru-rulesets_cru" />
+    <tentacleLink path="production-niu-agencies" />
+    <tentacleLink path="staging-niu-agencies" />
+    <tentacleLink path="test-ics-vocab" />
+    <tentacleLink path="staging-ics-vocab" />
+    <tentacleLink path="test-cru-rulesets_cruflho" />
+    <tentacleLink path="staging-cru-rulesets_cruflho" />
+    <tentacleLink path="production-cru-rulesets_cruflho" />
+    <tentacleLink path="test-cru-rulesets_icsnyho" />
+    <tentacleLink path="staging-cru-rulesets_icsnyho" />
+    <tentacleLink path="test-cru-transmissionlogs_icsnyho" />
+    <tentacleLink path="staging-cru-transmissionlogs_icsnyho" />
+    <tentacleLink path="production-homewise-agentportal" />
+    <tentacleLink path="product-dev-homewise-agentportal" />
+    <tentacleLink path="staging-homewise-agentportal" />
+    <tentacleLink path="production-cru-agentportal" />
+    <tentacleLink path="product-dev-cru-agentportal" />
+    <tentacleLink path="staging-cru-agentportal" />
+    <tentacleLink path="production-ics-monitors" />
+    <tentacleLink path="production-ics-cxriskonline" />
+    <tentacleLink path="staging-ics-cxriskonline" />
+    <tentacleLink path="test-homewise-transmissionlogs" />
+    <tentacleLink path="staging-homewise-transmissionlogs" />
+    <tentacleLink path="test-cru-agenciesV2" />
+    <tentacleLink path="staging-cru-agenciesV2" />
+    <tentacleLink path="test-cru-agenciesV2" />
+    <tentacleLink path="staging-cru-agenciesV2" />
+    <tentacleLink path="test-pic-agenciesV2" />
+    <tentacleLink path="staging-pic-agenciesV2" />
+    <tentacleLink path="production-pic-agenciesV2" />
+    <tentacleLink path="staging-cru-marketing" />
+    <tentacleLink path="test-dashboard" />
+    <tentacleLink path="staging-dashboard" />
+    <tentacleLink path="production-dashboard" />
+    <tentacleLink path="test-ics-identities" />
+    <tentacleLink path="staging-ics-identities" />
+    <tentacleLink path="production-ics-identities" />
+    <tentacleLink path="test-ics-scoringscenarios" />
+    <tentacleLink path="staging-ics-scoringscenarios" />
+    <tentacleLink path="production-ics-scoringscenarios" />
+    <tentacleLink path="test-ics-packages" />
+    <tentacleLink path="staging-ics-packages" />
+    <tentacleLink path="production-ics-packages" />
+    <tentacleLink path="test-homewise-policies" />
+    <tentacleLink path="production-homewise-policies" />
+    <tentacleLink path="product-dev-homewise-policies" />
+    <tentacleLink path="staging-homewise-policies" />
+    <tentacleLink path="production-cru-policies_cru" />
+    <tentacleLink path="product-dev-cru-policies_cru" />
+    <tentacleLink path="staging-cru-policies_cru" />
+    <tentacleLink path="staging-cru-policies_lasurplus" />
+    <tentacleLink path="staging-cru-policies_icsnyho" />
+    <tentacleLink path="staging-cru-policies_crunyho" />
+    <tentacleLink path="staging-cru-policies_cruflho" />
+    <tentacleLink path="production-cru-policies_cruflho" />
+    <tentacleLink path="product-dev-cru-policies_cruflho" />
+    <tentacleLink path="test-cru-policies_cruflho" />
+    <tentacleLink path="production-sic-products" />
+    <tentacleLink path="production-homewise-products" />
+    <tentacleLink path="product-dev-homewise-products" />
+    <tentacleLink path="staging-homewise-products" />
+    <tentacleLink path="production-cru-products" />
+    <tentacleLink path="product-dev-cru-products" />
+    <tentacleLink path="staging-cru-products" />
+    <tentacleLink path="production-niu-products" />
+    <tentacleLink path="product-dev-niu-products" />
+    <tentacleLink path="staging-niu-products" />
+    <tentacleLink path="production-homewise-reports" />
+    <tentacleLink path="product-dev-homewise-reports" />
+    <tentacleLink path="staging-homewise-reports" />
+    <tentacleLink path="production-cru-reports" />
+    <tentacleLink path="product-dev-cru-reports" />
+    <tentacleLink path="staging-cru-reports" />
+    <tentacleLink path="production-niu-reports" />
+    <tentacleLink path="staging-homewise-modify" />
+    <tentacleLink path="product-dev-homewise-modify" />
+    <tentacleLink path="production-homewise-modify" />
+    <tentacleLink path="staging-cru-modify" />
+    <tentacleLink path="product-dev-cru-modify" />
+    <tentacleLink path="production-cru-modify" />
+    <tentacleLink path="production-cru-view all" />
+    <tentacleLink path="staging-homewise-view all" />
+    <tentacleLink path="product-dev-homewise-view all" />
+    <tentacleLink path="production-homewise-view all" />
+    <tentacleLink path="staging-cru-view all" />
+    <tentacleLink path="product-dev-cru-view all" />
+    <tentacleLink path="staging-homewise-view logs" />
+    <tentacleLink path="production-homewise-view logs" />
+    <tentacleLink path="product-dev-homewise-view logs" />
+    <tentacleLink path="staging-cru-view logs" />
+    <tentacleLink path="product-dev-cru-view logs" />
+    <tentacleLink path="production-cru-view logs" />
+    <tentacleLink path="production-sic-modify" />
+    <tentacleLink path="production-sic-view all" />
+    <tentacleLink path="production-sic-view logs" />
+    <tentacleLink path="staging-homewise-payment logs" />
+    <tentacleLink path="product-dev-homewise-payment logs" />
+    <tentacleLink path="production-homewise-payment logs" />
+    <tentacleLink path="staging-cru-agencies" />
+    <tentacleLink path="product-dev-cru-agencies" />
+    <tentacleLink path="production-cru-agencies" />
+    <tentacleLink path="staging-homewise-agencies" />
+    <tentacleLink path="product-dev-homewise-agencies" />
+    <tentacleLink path="production-homewise-agencies" />
+    <tentacleLink path="production-niu-agencies" />
+    <tentacleLink path="staging-niu-agencies" />
+    <tentacleLink path="staging-niu-agenciesV2" />
+    <tentacleLink path="staging-niu-products" />
+    <tentacleLink path="staging-niu-rulesets" />
+    <tentacleLink path="staging-niu-policies" />
+    <tentacleLink path="staging-niu-agentportal" />
+    <tentacleLink path="test-niu-agentportal" />
+    <tentacleLink path="production-cru-rulesets_cruwic" />
+    <tentacleLink path="production-cru-policies_cruwic" />
+    <tentacleLink path="staging-cru-policies_cruwic" />
+    <tentacleLink path="staging-cru-rulesets_cruwic" />
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="ixadmin" organizationId="ics" environmentName="test">
+    <DashboardPreferences controlPanelOpen="false" helpDrawerOpen="false">
+      <Widgets>
+        <Widget type="policySearch" x="177" y="97.5" width="190" height="150">
+          <Settings>
+            <Setting name="allowRemove" value="" />
+            <Setting name="policyID" value="CRU4Q-10873" />
+            <Setting name="resizable" value="" />
+          </Settings>
+        </Widget>
+      </Widgets>
+    </DashboardPreferences>
+    <PoliciesModule>
+      <Rights>
+        <Right>ARCHIVE_POLICY</Right>
+        <Right>UNBIND_POLICY</Right>
+        <Right>ENTER_UW_TASK</Right>
+        <Right>RESOLVE_UW_TASK</Right>
+        <Right>REMOVE_FLAG</Right>
+        <Right>SHOW_REPLY_BUTTON</Right>
+      </Rights>
+    </PoliciesModule>
+    <tentacleLink path="test-ics-xformvalidator" />
+    <tentacleLink path="staging-ics-xformvalidator" />
+    <tentacleLink path="production-ics-xformvalidator" />
+    <tentacleLink path="test.niu.modify" />
+    <tentacleLink path="test.ics.products" />
+    <tentacleLink path="test-cru-programWorkbench" />
+    <tentacleLink path="staging-cru-programWorkbench" />
+    <tentacleLink path="production-cru-programWorkbench" />
+    <tentacleLink path="test-ics-vocab" />
+    <tentacleLink path="test-cru-rulesets_cruflho" />
+    <tentacleLink path="test-cru-products" />
+    <tentacleLink path="staging-cru-rulesets_cruflho" />
+    <tentacleLink path="production-cru-rulesets_cruflho" />
+    <tentacleLink path="production-fnic-modify" />
+    <tentacleLink path="staging-fnic-modify" />
+    <tentacleLink path="production-fnic-rulesets_fnic" />
+    <tentacleLink path="staging-fnic-rulesets_fnic" />
+    <tentacleLink path="staging-fnic-rulesets_fnicfl" />
+    <tentacleLink path="staging-fnic-policies_fnicfl" />
+    <tentacleLink path="production-fnic-rulesets_fnicfl" />
+    <tentacleLink path="production-fnic-policies_fnicfl" />
+    <tentacleLink path="product-dev-fnic-rulesets_fnicfl" />
+    <tentacleLink path="product-dev-fnic-policies_fnicfl" />
+    <tentacleLink path="test-cru-rulesets_icsnyho" />
+    <tentacleLink path="staging-cru-rulesets_icsnyho" />
+    <tentacleLink path="test-cru-transmissionlogs_icsnyho" />
+    <tentacleLink path="staging-cru-transmissionlogs_icsnyho" />
+    <tentacleLink path="staging-cru-rulesets_crunyho" />
+    <tentacleLink path="staging-cru-policies_crunyho" />
+    <tentacleLink path="production-cru-rulesets_crunyho" />
+    <tentacleLink path="production-cru-policies_crunyho" />
+    <tentacleLink path="product-dev-cru-rulesets_crunyho" />
+    <tentacleLink path="product-dev-cru-policies_crunyho" />
+    <tentacleLink path="test-cru-rulesets_crunyho" />
+    <tentacleLink path="test-cru-policies_crunyho" />
+    <tentacleLink path="test-cru-policies_cru" />
+    <tentacleLink path="test-cru-policies_lasurplus" />
+    <tentacleLink path="test-cru-policies_icsnyho" />
+    <tentacleLink path="test-cru-policies_crunyho" />
+    <tentacleLink path="production-homewise-agentportal" />
+    <tentacleLink path="product-dev-homewise-agentportal" />
+    <tentacleLink path="staging-homewise-agentportal" />
+    <tentacleLink path="production-cru-agentportal" />
+    <tentacleLink path="product-dev-cru-agentportal" />
+    <tentacleLink path="staging-cru-agentportal" />
+    <tentacleLink path="production-ics-monitors" />
+    <tentacleLink path="production-ics-cxriskonline" />
+    <tentacleLink path="staging-ics-cxriskonline" />
+    <tentacleLink path="test-homewise-transmissionlogs" />
+    <tentacleLink path="staging-homewise-transmissionlogs" />
+    <tentacleLink path="test-cru-agenciesV2" />
+    <tentacleLink path="test-niu-agenciesV2" />
+    <tentacleLink path="test-niu-products" />
+    <tentacleLink path="test-niu-rulesets" />
+    <tentacleLink path="test-niu-policies" />
+    <tentacleLink path="staging-niu-agenciesV2" />
+    <tentacleLink path="staging-niu-products" />
+    <tentacleLink path="staging-niu-rulesets" />
+    <tentacleLink path="staging-niu-policies" />
+    <tentacleLink path="staging-niu-agentportal" />
+    <tentacleLink path="test-niu-agentportal" />
+    <tentacleLink path="test-dashboard" />
+    <tentacleLink path="staging-dashboard" />
+    <tentacleLink path="production-dashboard" />
+    <tentacleLink path="test-ics-identities" />
+    <tentacleLink path="staging-ics-identities" />
+    <tentacleLink path="production-ics-identities" />
+    <tentacleLink path="test-ics-scoringscenarios" />
+    <tentacleLink path="staging-ics-scoringscenarios" />
+    <tentacleLink path="production-ics-scoringscenarios" />
+    <tentacleLink path="test-ics-packages" />
+    <tentacleLink path="staging-ics-packages" />
+    <tentacleLink path="production-ics-packages" />
+    <tentacleLink path="test-homewise-policies" />
+    <tentacleLink path="production-homewise-policies" />
+    <tentacleLink path="product-dev-homewise-policies" />
+    <tentacleLink path="staging-homewise-policies" />
+    <tentacleLink path="production-cru-policies" />
+    <tentacleLink path="product-dev-cru-policies" />
+    <tentacleLink path="staging-cru-policies" />
+    <tentacleLink path="staging-cru-policies_cruflho" />
+    <tentacleLink path="production-cru-policies_cruflho" />
+    <tentacleLink path="product-dev-cru-policies_cruflho" />
+    <tentacleLink path="test-cru-policies_cruflho" />
+    <tentacleLink path="production-sic-products" />
+    <tentacleLink path="production-homewise-products" />
+    <tentacleLink path="product-dev-homewise-products" />
+    <tentacleLink path="staging-homewise-products" />
+    <tentacleLink path="production-cru-products" />
+    <tentacleLink path="product-dev-cru-products" />
+    <tentacleLink path="staging-cru-products" />
+    <tentacleLink path="production-niu-products" />
+    <tentacleLink path="product-dev-niu-products" />
+    <tentacleLink path="staging-niu-products" />
+    <tentacleLink path="production-homewise-reports" />
+    <tentacleLink path="product-dev-homewise-reports" />
+    <tentacleLink path="staging-homewise-reports" />
+    <tentacleLink path="production-cru-reports" />
+    <tentacleLink path="product-dev-cru-reports" />
+    <tentacleLink path="staging-cru-reports" />
+    <tentacleLink path="production-niu-reports" />
+    <tentacleLink path="staging-homewise-modify" />
+    <tentacleLink path="product-dev-homewise-modify" />
+    <tentacleLink path="production-homewise-modify" />
+    <tentacleLink path="staging-cru-modify" />
+    <tentacleLink path="product-dev-cru-modify" />
+    <tentacleLink path="production-cru-modify" />
+    <tentacleLink path="production-cru-view all" />
+    <tentacleLink path="staging-homewise-view all" />
+    <tentacleLink path="product-dev-homewise-view all" />
+    <tentacleLink path="production-homewise-view all" />
+    <tentacleLink path="staging-cru-view all" />
+    <tentacleLink path="product-dev-cru-view all" />
+    <tentacleLink path="staging-homewise-view logs" />
+    <tentacleLink path="production-homewise-view logs" />
+    <tentacleLink path="product-dev-homewise-view logs" />
+    <tentacleLink path="staging-cru-view logs" />
+    <tentacleLink path="product-dev-cru-view logs" />
+    <tentacleLink path="production-cru-view logs" />
+    <tentacleLink path="production-sic-modify" />
+    <tentacleLink path="production-sic-view all" />
+    <tentacleLink path="production-sic-view logs" />
+    <tentacleLink path="staging-homewise-payment logs" />
+    <tentacleLink path="product-dev-homewise-payment logs" />
+    <tentacleLink path="production-homewise-payment logs" />
+    <tentacleLink path="staging-cru-agencies" />
+    <tentacleLink path="product-dev-cru-agencies" />
+    <tentacleLink path="production-cru-agencies" />
+    <tentacleLink path="staging-homewise-agencies" />
+    <tentacleLink path="product-dev-homewise-agencies" />
+    <tentacleLink path="production-homewise-agencies" />
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="ixconfig" organizationId="ics" environmentName="dev">
+    <access>
+      <role>Admin</role>
+    </access>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="ixconfig" organizationId="ics" environmentName="production">
+    <access>
+      <role>Admin</role>
+    </access>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="ixconfig" organizationId="ics" environmentName="staging">
+    <access>
+      <role>Admin</role>
+    </access>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="ixconfig" organizationId="ics" environmentName="test">
+    <access>
+      <role>Admin</role>
+    </access>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="ixdirectory" organizationId="ics" environmentName="production">
+    <roles>admin</roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="ixlibrary" organizationId="cru" environmentName="production">
+    <roles>
+      <role>Admin</role>
+    </roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="ixlibrary" organizationId="cru" environmentName="staging">
+    <roles>
+      <role>Admin</role>
+    </roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="ixlibrary" organizationId="fnic" environmentName="production">
+    <roles>
+      <role>Admin</role>
+    </roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="ixlibrary" organizationId="fnic" environmentName="staging">
+    <roles>
+      <role>Admin</role>
+    </roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="ixprofiler" organizationId="ics" environmentName="dev" />
+  <ApplicationSettings applicationName="ixprofiler" organizationId="ics" environmentName="production" />
+  <ApplicationSettings applicationName="ixprofiler" organizationId="ics" environmentName="staging" />
+  <ApplicationSettings applicationName="ixprofiler" organizationId="ics" environmentName="test" />
+  <ApplicationSettings applicationName="ixreport" organizationId="acme" environmentName="dev">
+    <access>
+      <role>acmeuser</role>
+      <role>acmeadmin</role>
+    </access>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="ixreport" organizationId="insight" environmentName="dev">
+    <access>
+      <role>InsightUser</role>
+      <role>InsightAdmin</role>
+    </access>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="ixreport" organizationId="insight" environmentName="production">
+    <access>
+      <role>InsightUser</role>
+    </access>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="ixvocab" organizationId="ics" environmentName="production">
+    <roles>user</roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="ixvocab" organizationId="ics" environmentName="staging">
+    <roles>user</roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="ixvocab" organizationId="ics" environmentName="test">
+    <roles>user</roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="mxServer" organizationId="cru-4" environmentName="dev">
+    <roles>
+      <role>admin</role>
+    </roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="mxServer" organizationId="cru-4" environmentName="production">
+    <roles>
+      <role>admin</role>
+    </roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="mxServer" organizationId="cru-4" environmentName="staging">
+    <roles>
+      <role>admin</role>
+    </roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="mxServer" organizationId="cru-4" environmentName="test">
+    <roles>
+      <role>admin</role>
+    </roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="mxServer" organizationId="cru-5" environmentName="production">
+    <roles>
+      <role>admin</role>
+    </roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="mxServer" organizationId="cru-5" environmentName="staging">
+    <roles>
+      <role>admin</role>
+    </roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="mxServer" organizationId="cru-6" environmentName="dev">
+    <roles>
+      <role>admin</role>
+    </roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="mxServer" organizationId="cru-6" environmentName="production">
+    <roles>
+      <role>admin</role>
+    </roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="mxServer" organizationId="cru-6" environmentName="staging">
+    <roles>
+      <role>admin</role>
+    </roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="mxServer" organizationId="sic-1" environmentName="test">
+    <roles>
+      <role>admin</role>
+    </roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="policiesmodule" organizationId="homewise" environmentName="product-dev">
+    <roles>admin</roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="policiesmodule" organizationId="homewise" environmentName="production">
+    <roles>admin</roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="policiesmodule" organizationId="homewise" environmentName="staging">
+    <roles>admin</roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="policiesmodule" organizationId="homewise" environmentName="test">
+    <roles>admin</roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="policiesmodule" organizationId="ics" environmentName="production">
+    <roles>
+      <role>admin</role>
+    </roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="pxbuilder" organizationId="ics" environmentName="dev">
+    <Roles>
+      <Role type="SYSTEM_ADMIN" />
+    </Roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="pxbuilder" organizationId="ics" environmentName="product-dev">
+    <Roles>
+      <Role type="SYSTEM_ADMIN" />
+    </Roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="pxbuilder" organizationId="ics" environmentName="production">
+    <Roles>
+      <Role type="SYSTEM_ADMIN" />
+    </Roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="pxbuilder" organizationId="ics" environmentName="staging">
+    <Roles>
+      <Role type="SYSTEM_ADMIN" />
+    </Roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="pxbuilder" organizationId="ics" environmentName="test">
+    <Roles>
+      <Role type="SYSTEM_ADMIN" />
+    </Roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="pxGateway" organizationId="ics" environmentName="production">
+    <roles>admin</roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="pxGateway" organizationId="ics" environmentName="staging">
+    <roles>admin</roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="pxGateway" organizationId="ics" environmentName="test">
+    <roles>admin</roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="pxprogram" organizationId="cru" environmentName="staging">
+    <roles>admin</roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="pxprogram" organizationId="fnic" environmentName="production">
+    <roles>admin</roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="pxprogram" organizationId="fnic" environmentName="staging">
+    <roles>admin</roles>
+  </ApplicationSettings>
+  <ApplicationSettings applicationName="pxserver" organizationId="cru" environmentName="production">
+    <roles>
+      <role id="PX_MANAGER" />
+    </roles>
+  </ApplicationSettings>
+</Identity>
