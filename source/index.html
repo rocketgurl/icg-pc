@@ -105,6 +105,7 @@
 		<article>
 			<section id="canvas">
 				<h1>I be the canvas!</h1>
+				yo!
 			</section>
 			<footer>
 				<ul>
@@ -123,5 +124,20 @@
         g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
         s.parentNode.insertBefore(g,s)}(document,'script'));
     </script>
+    <script type="text/template" id="tpl-ics-login">
+    	<form action="login" method="get" accept-charset="utf-8">
+    		<div>
+	    		<label for="username">Username: </label>
+	    		<input type="text" name="username" id="username" value="" placeholder="Please enter your username" />
+	    	</div>
+	    	<div>
+	    		<label for="password">Password: </label>
+	    		<input type="password" name="password" id="password" value="" placeholder="Please enter your password" />
+	    	</div>
+	    	<div>
+	    		<input type="submit" name="login-button" id="login-button" value="Login" />
+	    	</div>
+    	</form>
+    </script> 
 </body>
 </html>
