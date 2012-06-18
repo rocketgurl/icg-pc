@@ -6,10 +6,9 @@ define [
   'LocalStorageSync',
   'CrippledClientSync',
   'xmlSync',
-  'base64',
   'amplify_core',
   'amplify_store'
-], ($, _, Backbone, Store, LocalStorageSync, CrippledClientSync, XMLSync, Base64, amplify) ->
+], ($, _, Backbone, Store, LocalStorageSync, CrippledClientSync, XMLSync, amplify) ->
 
   #### BaseModel
   #
@@ -63,8 +62,3 @@ define [
     # Simple logger pubsub
     logger : (msg) ->
       @Amplify.publish 'log', msg
-
-    initialize : () ->
-       # @logger @sync
-       # @switch_sync 'localSync'
-       # @logger @sync
