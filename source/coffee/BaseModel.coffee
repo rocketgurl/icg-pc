@@ -4,10 +4,12 @@ define [
   'backbone',
   'Store',
   'LocalStorageSync',
+  'CrippledClientSync',
   'xmlSync',
+  'base64',
   'amplify_core',
   'amplify_store'
-], ($, _, Backbone, Store, LocalStorageSync, XMLSync, amplify) ->
+], ($, _, Backbone, Store, LocalStorageSync, CrippledClientSync, XMLSync, Base64, amplify) ->
 
   #### BaseModel
   #
@@ -27,8 +29,8 @@ define [
     localStorage : new Store 'ics_policy_central'
     localSync    : LocalStorageSync
 
-    # Setup XML parsing
-    xmlSync  : XMLSync
+    # Setup XML parsing using CrippledClient
+    xmlSync  : CrippledClientSync
     xmlParse : (response) ->
       tree = new XML.ObjTree().parseDOM(response)
       { document : tree['#document'] }
