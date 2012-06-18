@@ -9,6 +9,7 @@
       backbone: 'lib/backbone-min',
       amplify_core: 'lib/amplify.core.min',
       amplify_store: 'lib/amplify.store.min',
+      mustache: 'lib/requirejs.mustache.js',
       base64: 'lib/base64'
     },
     priority: ['jquery']
