@@ -10,6 +10,14 @@ define [
     amplify.subscribe 'log', (msg) ->
       console.log "LOG: " + msg
 
+    # Insight 360 Services
+    ics360 =
+      services :
+        ixdirectory : './ixdirectory/api/rest/v2/'
+        pxcentral   : './pxcentral/api/rest/v1/'
+        ixlibrary   : './ixlibrary/api/sdo/rest/v1/'
+        ixdoc       : './ixdoc/api/rest/v2/'
+
     model = new BaseModel()
 
     Workspace =
@@ -28,6 +36,7 @@ define [
       # model.logger model.get 'name'
       model.id = 'tim@arc90.com'
       model.url = 'mocks/user_tim_c.xml'
+      model.set({'digest' : 'dGltQGFyYzkwLmNvbTpwYXNzdGltMjI='})
       model.fetch()
       console.log model
 
