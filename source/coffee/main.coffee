@@ -5,7 +5,8 @@ require
     underscore    : 'lib/underscore-min'
     backbone      : 'lib/backbone-min'
     amplify_core  : 'lib/amplify.core.min'
-    amplify_store : 'lib/amplify.store.min'
+    amplify_store : 'lib/amplify.store.min',
+    base64        : 'lib/base64'
   priority: ['jquery']
 
 require [
