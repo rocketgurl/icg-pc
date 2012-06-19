@@ -6,7 +6,8 @@ define [
   'WorkspaceLoginView',
   'WorkspaceRouter',
   'amplify_core',
-  'amplify_store'
+  'amplify_store',
+  'cookie'
 ], ($, _, Backbone, UserModel, WorkspaceLoginView, WorkspaceRouter,  amplify) ->
 
   # Global log object for debugging
@@ -14,8 +15,8 @@ define [
   amplify.subscribe 'log', (msg) ->
     console.log msg
 
-  # Global Flash Message handling
-  #
+  #### Flash Message handling
+  #  
   $flash = $('#flash-message')
   amplify.subscribe 'flash', (type, msg) ->
     # set className
@@ -28,7 +29,6 @@ define [
   $flash.on 'click', 'i', (event) ->
     event.preventDefault()
     $flash.fadeOut 'fast'
-
 
   #### Services
   #
