@@ -10,7 +10,8 @@
       amplify_core: 'lib/amplify.core.min',
       amplify_store: 'lib/amplify.store.min',
       mustache: 'lib/requirejs.mustache',
-      base64: 'lib/base64'
+      base64: 'lib/base64',
+      cookie: 'lib/jquery.cookie'
     },
     priority: ['jquery']
   });
