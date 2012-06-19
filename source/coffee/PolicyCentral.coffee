@@ -3,8 +3,8 @@ define [
   'amplify_core',
   'WorkspaceController',
   'WorkspaceRouter',
-  'BaseModel'
-], ($, amplify, WorkspaceController, WorkspaceRouter, BaseModel) ->
+  'UserModel'
+], ($, amplify, WorkspaceController, WorkspaceRouter, UserModel) ->
 
     # Global log object
     amplify.subscribe 'log', (msg) ->
@@ -18,15 +18,25 @@ define [
         ixlibrary   : './ixlibrary/api/sdo/rest/v1/'
         ixdoc       : './ixdoc/api/rest/v2/'
 
-    model = new BaseModel()
-
     Workspace =
       Controller : WorkspaceController
       Router     : new WorkspaceRouter()
 
-    init: () ->      
-      model.switch_sync 'xmlSync'
-      model.parse = model.xmlParse
+    init: () ->
+
+      $ ->
+        Workspace.Controller.build_login()      
+      
+      # user = new UserModel
+      #   username : 'tim@arc90.com'
+      #   password : 'passtim22'
+
+      # user.url = ics360.services.ixdirectory + 'identities/' + 'tim@arc90.com'
+
+      # console.log user.attributes
+
+      # user.fetch()
+
       # model.id = 1
       # model.logger model.id
       # model.fetch()
@@ -34,13 +44,13 @@ define [
       #   name : 'Holmers'
       # console.log model.save()
       # model.logger model.get 'name'
-      model.id = 'tim@arc90.com'
-      model.url = 'mocks/user_tim_c.xml'
-      model.set({'digest' : 'dGltQGFyYzkwLmNvbTpwYXNzdGltMjI='})
-      model.fetch()
-      console.log model
+      # model.id = 'tim@arc90.com'
+      # model.url = 'mocks/user_tim_c.xml'
+      # model.set({'digest' : 'dGltQGFyYzkwLmNvbTpwYXNzdGltMjI='})
+      # model.fetch()
+      # console.log model
 
-      console.log model.attributes
+      # console.log model.attributes
 
       # model.use_localStorage()
       # model.id = 1
