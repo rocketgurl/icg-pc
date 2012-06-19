@@ -26,6 +26,16 @@ $white     : #fff;
 $colblue   : #007ac9; // Sortable column headers & such
 $rowselect : #ffccff;
 
+// Flash Msg. Colors
+$success-text   : #407241;
+$success-base   : #d5ebd6;
+$notice-text    : #934a00;
+$notice-base    : #eeec8b;
+$notice-bottom  : #d3c354;
+$warning-text   : #ffffff;
+$warning-base   : #ba6976;
+$warning-bottom : #72101b;
+
 // Core font stacks
 @mixin sans {
 	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;

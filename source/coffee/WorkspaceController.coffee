@@ -16,14 +16,19 @@ define [
 
   # Global Flash Message handling
   #
+  $flash = $('#flash-message')
   amplify.subscribe 'flash', (type, msg) ->
-    $el = $('#flash-message')
     # set className
     if type?
-      $el.attr 'class', type
+      $flash.attr 'class', type
     if msg?
-      $el.html(msg)
-      $el.fadeIn 'slow'
+      msg += ' <i class="icon-remove-sign"></i>'
+      $flash.html(msg).fadeIn('fast')
+
+  $flash.on 'click', 'i', (event) ->
+    event.preventDefault()
+    $flash.fadeOut 'fast'
+
 
   #### Services
   #
@@ -99,7 +104,7 @@ define [
       console.log @user
 
     login_fail : (model, resp, state) ->
-      @logger "SOWWEE you no enter cause #{state.text}"
+      @flash 'warning', "SOWWEE you no enter cause #{state.text}"
 
     # Kick off the show
     init : () ->

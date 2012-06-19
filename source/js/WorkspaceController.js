@@ -2,20 +2,23 @@
 (function() {
 
   define(['jquery', 'underscore', 'backbone', 'UserModel', 'WorkspaceLoginView', 'WorkspaceRouter', 'amplify_core', 'amplify_store'], function($, _, Backbone, UserModel, WorkspaceLoginView, WorkspaceRouter, amplify) {
-    var WorkspaceController, ics360;
+    var $flash, WorkspaceController, ics360;
     amplify.subscribe('log', function(msg) {
       return console.log(msg);
     });
+    $flash = $('#flash-message');
     amplify.subscribe('flash', function(type, msg) {
-      var $el;
-      $el = $('#flash-message');
       if (type != null) {
-        $el.attr('class', type);
+        $flash.attr('class', type);
       }
       if (msg != null) {
-        $el.html(msg);
-        return $el.fadeIn('slow');
+        msg += ' <i class="icon-remove-sign"></i>';
+        return $flash.html(msg).fadeIn('fast');
       }
+    });
+    $flash.on('click', 'i', function(event) {
+      event.preventDefault();
+      return $flash.fadeOut('fast');
     });
     ics360 = {
       services: {
@@ -78,7 +81,7 @@
         return console.log(this.user);
       },
       login_fail: function(model, resp, state) {
-        return this.logger("SOWWEE you no enter cause " + state.text);
+        return this.flash('warning', "SOWWEE you no enter cause " + state.text);
       },
       init: function() {
         return this.build_login();
