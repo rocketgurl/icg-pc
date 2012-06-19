@@ -15,8 +15,10 @@
     priority: ['jquery']
   });
 
-  require(["lib/text", "PolicyCentral"], function(text, PolicyCentral) {
-    return PolicyCentral.init();
+  require(["lib/text", "jquery", "WorkspaceController"], function(text, $, WorkspaceController) {
+    return $(function() {
+      return WorkspaceController.init();
+    });
   });
 
 }).call(this);

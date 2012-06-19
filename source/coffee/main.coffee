@@ -11,7 +11,9 @@ require
   priority: ['jquery']
 
 require [
-  "lib/text"
-  "PolicyCentral"
-], (text, PolicyCentral) ->
-  PolicyCentral.init()
+  "lib/text",
+  "jquery",
+  "WorkspaceController"
+], (text, $, WorkspaceController) ->
+  $ ->
+    WorkspaceController.init()
