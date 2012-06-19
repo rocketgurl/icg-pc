@@ -6,6 +6,7 @@
     UserModel = BaseModel.extend({
       initialize: function() {
         this.use_xml();
+        this.urlRoot = this.get('urlRoot');
         if (this.get('username')) {
           this.id = this.get('username');
         }
@@ -15,6 +16,31 @@
           });
           return delete this.attributes.password;
         }
+      },
+      parse_identity: function() {
+        var doc,
+          _this = this;
+        doc = this.get('document');
+        if (doc != null) {
+          return _.each(['Name', 'Email', '-passwordHash'], function(key) {
+            var name;
+            if (doc.Identity[key] != null) {
+              name = key.toLowerCase().replace(/-/, '');
+              return _this.set(name, doc.Identity[key]);
+            }
+          });
+        }
+      },
+      response_state: function() {
+        var fetch_state, xhr;
+        xhr = this.get('xhr');
+        fetch_state = {
+          text: xhr.getResponseHeader('X-True-Statustext'),
+          code: xhr.getResponseHeader('X-True-Statuscode')
+        };
+        return this.set({
+          'fetch_state': fetch_state
+        });
       }
     });
     return UserModel;

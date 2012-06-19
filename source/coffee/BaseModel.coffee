@@ -30,9 +30,14 @@ define [
 
     # Setup XML parsing using CrippledClient
     xmlSync  : CrippledClientSync
-    xmlParse : (response) ->
-      tree = new XML.ObjTree().parseDOM(response)
-      { document : tree['#document'] }
+    xmlParse : (response, xhr) ->
+      tree = new XML.ObjTree().parseDOM(response) if response?
+      out = { 'xhr' : xhr }
+      if tree?
+        if tree['#document']?
+          out.document = tree['#document']
+      out
+
 
     # Explicitly set sync for this model to Backbone default
     sync : @backboneSync
@@ -62,3 +67,7 @@ define [
     # Simple logger pubsub
     logger : (msg) ->
       @Amplify.publish 'log', msg
+
+    # Send Flash messages to UI
+    flash : (type, msg) ->
+      @Amplify.publish 'flash', type, msg

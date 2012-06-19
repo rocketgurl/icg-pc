@@ -9,12 +9,20 @@
       localStorage: new Store('ics_policy_central'),
       localSync: LocalStorageSync,
       xmlSync: CrippledClientSync,
-      xmlParse: function(response) {
-        var tree;
-        tree = new XML.ObjTree().parseDOM(response);
-        return {
-          document: tree['#document']
+      xmlParse: function(response, xhr) {
+        var out, tree;
+        if (response != null) {
+          tree = new XML.ObjTree().parseDOM(response);
+        }
+        out = {
+          'xhr': xhr
         };
+        if (tree != null) {
+          if (tree['#document'] != null) {
+            out.document = tree['#document'];
+          }
+        }
+        return out;
       },
       sync: this.backboneSync,
       switch_sync: function(sync_adapater) {
@@ -35,6 +43,9 @@
       Amplify: amplify,
       logger: function(msg) {
         return this.Amplify.publish('log', msg);
+      },
+      flash: function(type, msg) {
+        return this.Amplify.publish('flash', type, msg);
       }
     });
   });
