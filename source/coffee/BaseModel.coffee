@@ -34,11 +34,10 @@ define [
     # Setup XML parsing using CrippledClient
     xmlSync  : XMLSync
     xmlParse : (response, xhr) ->
-      tree = new XML.ObjTree().parseDOM(response) if response?
+      tree = $(response) if response?
       out = { 'xhr' : xhr }
       if tree?
-        if tree['#document']?
-          out.document = tree['#document']
+          out.document = tree
       out
 
     # Response state (Hackety hack hack)

@@ -29,10 +29,9 @@ define [
     parse_identity : () ->
       doc = @get 'document'
       if doc?
-        _.each ['Name', 'Email', '-passwordHash'], (key) =>
-          if doc.Identity[key]?
-            name = key.toLowerCase().replace /-/, ''
-            @set name, doc.Identity[key]
+        @set 'passwordHash', doc.find('Identity').attr('passwordHash')
+        @set 'name', doc.find('Identity Name').text()
+        @set 'email', doc.find('Identity Email').text()
       
   UserModel
 

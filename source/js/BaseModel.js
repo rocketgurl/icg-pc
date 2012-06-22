@@ -13,15 +13,13 @@
       xmlParse: function(response, xhr) {
         var out, tree;
         if (response != null) {
-          tree = new XML.ObjTree().parseDOM(response);
+          tree = $(response);
         }
         out = {
           'xhr': xhr
         };
         if (tree != null) {
-          if (tree['#document'] != null) {
-            out.document = tree['#document'];
-          }
+          out.document = tree;
         }
         return out;
       },

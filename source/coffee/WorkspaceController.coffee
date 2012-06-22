@@ -161,7 +161,7 @@ define [
         urlRoot : ics360.services.ixadmin
       @config.fetch(
         success : (model, resp) =>
-          MenuHelper.build_menu @user.get('document'), model.get('document')
+          #MenuHelper.build_menu @user.get('document'), model.get('document')
         error : (model, resp) =>
           @flash 'warning', "There was a problem retreiving the configuration file. Please contact support."
         )

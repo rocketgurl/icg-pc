@@ -18,17 +18,12 @@
         }
       },
       parse_identity: function() {
-        var doc,
-          _this = this;
+        var doc;
         doc = this.get('document');
         if (doc != null) {
-          return _.each(['Name', 'Email', '-passwordHash'], function(key) {
-            var name;
-            if (doc.Identity[key] != null) {
-              name = key.toLowerCase().replace(/-/, '');
-              return _this.set(name, doc.Identity[key]);
-            }
-          });
+          this.set('passwordHash', doc.find('Identity').attr('passwordHash'));
+          this.set('name', doc.find('Identity Name').text());
+          return this.set('email', doc.find('Identity Email').text());
         }
       }
     });

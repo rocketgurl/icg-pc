@@ -115,9 +115,7 @@
           urlRoot: ics360.services.ixadmin
         });
         return this.config.fetch({
-          success: function(model, resp) {
-            return MenuHelper.build_menu(_this.user.get('document'), model.get('document'));
-          },
+          success: function(model, resp) {},
           error: function(model, resp) {
             return _this.flash('warning', "There was a problem retreiving the configuration file. Please contact support.");
           }
