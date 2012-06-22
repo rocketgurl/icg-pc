@@ -10,7 +10,7 @@ define [
   UserModel = BaseModel.extend
 
     initialize : () ->
-      @use_xml()
+      @use_cripple() # Use CrippledClient XMLSync
 
       @urlRoot = @get 'urlRoot'
 
@@ -33,22 +33,6 @@ define [
           if doc.Identity[key]?
             name = key.toLowerCase().replace /-/, ''
             @set name, doc.Identity[key]
-
-
-    # Response state (Hackety hack hack)
-    # 
-    # Since we're on **Crippled Client**, all requests come back as
-    # 200's and we have to do header parsing to ascertain what 
-    # is actually going on. We stach the jqXHR in the model and
-    # do some checking to see what the error code really is, then
-    # stash that in the model as 'fetch_state'
-    #
-    response_state : () ->
-      xhr = @get 'xhr'
-      fetch_state =
-        text : xhr.getResponseHeader 'X-True-Statustext'
-        code : xhr.getResponseHeader 'X-True-Statuscode'
-      @set 'fetch_state' : fetch_state
       
   UserModel
 

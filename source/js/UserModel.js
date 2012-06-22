@@ -5,7 +5,7 @@
     var UserModel;
     UserModel = BaseModel.extend({
       initialize: function() {
-        this.use_xml();
+        this.use_cripple();
         this.urlRoot = this.get('urlRoot');
         if (this.get('username')) {
           this.id = this.get('username');
@@ -30,17 +30,6 @@
             }
           });
         }
-      },
-      response_state: function() {
-        var fetch_state, xhr;
-        xhr = this.get('xhr');
-        fetch_state = {
-          text: xhr.getResponseHeader('X-True-Statustext'),
-          code: xhr.getResponseHeader('X-True-Statuscode')
-        };
-        return this.set({
-          'fetch_state': fetch_state
-        });
       }
     });
     return UserModel;
