@@ -29,8 +29,8 @@ define [
     #
     build_menu : (identity, ixconfig) ->
 
-      @identity   = identity.Identity
-      @ixconfig   = ixconfig.ixConfig
+      @identity = identity.Identity
+      @ixconfig = ixconfig.ixConfig
 
       # Get a nice object of business names from ixConfig
       @businesses = @get_config_item(@ixconfig, 'businesses')
@@ -49,25 +49,59 @@ define [
       
       # Parse the tentacles from ixDirectory and build an
       # array of the valid ones
-      @tentacles  = @get_tentacles(@get_ixadmin(@identity)[0])
+      @tentacles = @get_tentacles(@get_ixadmin(@identity)[0])
 
-      # bc = {} # bidness collection
-      # for business_name, business_label of @businesses
-      #   bc[business_name] = { label : business_label, contexts : null }
-      #   for t_name, t_val of @tentacles
+      # Now assemble the building blocks into something usable
+      compiled_menu = @compile_menu_collection(@businesses, @tentacles, @contexts)
 
-      
+      @generate_menu compiled_menu
 
+      # @collection = @collect_tentacles_by_context(@contexts, @tentacles)
+      # console.log @collection
 
-      @collection = @collect_tentacles_by_context(@contexts, @tentacles)
-      console.log @collection
+      # #@menu     = @generate_menu(@ixadmin, @get_labels(@ixconfig))
+      # console.log @businesses
+      # console.log @contexts
+      # #console.log @context_map
+      # console.log @app_to_context_map
+      # console.log @tentacles
 
-      #@menu     = @generate_menu(@ixadmin, @get_labels(@ixconfig))
-      console.log @businesses
-      console.log @contexts
-      #console.log @context_map
-      console.log @app_to_context_map
-      console.log @tentacles
+    generate_menu : (tree) ->
+      console.log tree
+
+    #### Compile Menu Collection
+    #
+    # Iterate over our building blocks and create a tree
+    # of Businesses -> Contexts -> Applications
+    #
+    # @param **businesses** _Object_ businesses map
+    # @param **tentacles** _Object_ tentacle collection
+    # @param **contexts** _Object_ context collection
+    #
+    compile_menu_collection : (businesses, tentacles, contexts) ->
+      bc = {} # bidness collection
+      for business_name, business_label of businesses
+        bc[business_name] = { label : business_label, contexts : null }
+
+        # Get all apps in this business
+        apps = []
+        for t_name, t_val of tentacles          
+          if t_val.business? and t_val.business is business_name
+            apps.push t_val
+
+        # Get all contexts from these apps
+        groups = {}
+        for app in apps
+          if !_.has groups, app.context.context
+            groups[app.context.context] = 
+              label : contexts[app.context.context].label
+              apps : []
+            groups[app.context.context].apps.push app
+          else
+            groups[app.context.context].apps.push app
+        bc[business_name].contexts = groups
+
+      bc
 
     #### Collect Tentacles By Context
     #
@@ -131,12 +165,15 @@ define [
 
         if _.has @app_to_context_map, app
           app_label = @app_to_context_map[app].label
+        else
+          return null
 
         context = @app_to_context_map[app]
 
         # Introspect the contexts to get the real business unit
         # these tentacles belong to. We need this to round up
         # tentacle apps by context/business
+        #
         if context? and context.businesses?
           if _.isArray context.businesses
             business = _.pluck context.businesses, '-name'
@@ -158,6 +195,7 @@ define [
 
       out = {}
 
+      # format the object a little better
       for tentacle in processed_tentacles
         out[tentacle.app] = tentacle
 
@@ -222,7 +260,8 @@ define [
               if single_app['-name'] != 'undefined'
                 applications[single_app['-name']] = single_app.ConfigItem
 
-        # no fucking clue how this is getting in, but it is
+        # no fucking clue how stray undefined is getting in, but it is
+        # so it gots to die.
         delete applications['undefined']
 
         # Now we loop through all the application nodes and do a little
@@ -276,6 +315,7 @@ define [
       for context, applications of contexts
         for key, val of applications.applications
           out[key] = val
+          out[key]['context'] = context
       out
 
 
@@ -293,33 +333,6 @@ define [
         out[item['-name']] = item.ConfigItem
       out
 
-    #### Generate Menu
-    #
-    # Iterate over the ixDirectory tentacles and ixAdmin
-    # items to generate the workspace menu hierarchy
-    #
-    # @param **data** _Object_ tentacles
-    # @param **labels** _Object_ business names
-    #
-    generate_menu : (data, labels) ->
-      menu = {}
-      submenus = {}
-      _.each data, (item) ->
-
-        # Create the top level items (Coastal Risk Underwriters..)
-        if _.has labels, item.product
-          menu[labels[item.product]] = []
-
-        # Build up the sub-items for each top level item
-        if !_.has submenus, item.product
-          submenus[item.product] = []
-        else
-          submenus[item.product].push item
-
-        # Combine the top level with sub level
-        menu[labels[item.product]] = submenus[item.product]
-
-      menu
 
     #### Get Labels
     #
@@ -350,26 +363,17 @@ define [
         return item['-applicationName'] == 'ixadmin' && item['-environmentName'] == window.ICS360_ENV
 
     
-
-
-    format_context_data : (context, application_name) ->
-      out = {}
-      out.label = context[0]['-value'] ? null
-      console.log application_name
-      out.application = @get_config_item context[1], application_name
-      out
-      # results = @get_config_item @contexts, product_name
-      # if results?
-      #   results = @get_config_item results, 'applications'
-      #   @get_config_item results, app_name
-      # else
-      #   null
-
+    #### Get ConfigItem
+    #
+    # Iterate over ConfigItems looking for one with a specific name
+    #
+    # @param **collection** _Object_ object containing a ConfigItem array
+    # @param **name** _Object_ name of ConfigItem to return
+    #
     get_config_item : (collection, name) ->
       if collection? and collection.ConfigItem?
         _.find collection.ConfigItem, (item) ->
           item['-name'] == name
-
 
 
   MenuHelper

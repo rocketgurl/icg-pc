@@ -12,7 +12,7 @@
       businesses: null,
       app_to_context_map: null,
       build_menu: function(identity, ixconfig) {
-        var business_names;
+        var business_names, compiled_menu;
         this.identity = identity.Identity;
         this.ixconfig = ixconfig.ixConfig;
         this.businesses = this.get_config_item(this.ixconfig, 'businesses');
@@ -24,12 +24,44 @@
         this.contexts = this.build_context_map(this.get_config_item(this.ixconfig, 'contexts'));
         this.app_to_context_map = this.get_context_map(this.contexts);
         this.tentacles = this.get_tentacles(this.get_ixadmin(this.identity)[0]);
-        this.collection = this.collect_tentacles_by_context(this.contexts, this.tentacles);
-        console.log(this.collection);
-        console.log(this.businesses);
-        console.log(this.contexts);
-        console.log(this.app_to_context_map);
-        return console.log(this.tentacles);
+        compiled_menu = this.compile_menu_collection(this.businesses, this.tentacles, this.contexts);
+        return this.generate_menu(compiled_menu);
+      },
+      generate_menu: function(tree) {
+        return console.log(tree);
+      },
+      compile_menu_collection: function(businesses, tentacles, contexts) {
+        var app, apps, bc, business_label, business_name, groups, t_name, t_val, _i, _len;
+        bc = {};
+        for (business_name in businesses) {
+          business_label = businesses[business_name];
+          bc[business_name] = {
+            label: business_label,
+            contexts: null
+          };
+          apps = [];
+          for (t_name in tentacles) {
+            t_val = tentacles[t_name];
+            if ((t_val.business != null) && t_val.business === business_name) {
+              apps.push(t_val);
+            }
+          }
+          groups = {};
+          for (_i = 0, _len = apps.length; _i < _len; _i++) {
+            app = apps[_i];
+            if (!_.has(groups, app.context.context)) {
+              groups[app.context.context] = {
+                label: contexts[app.context.context].label,
+                apps: []
+              };
+              groups[app.context.context].apps.push(app);
+            } else {
+              groups[app.context.context].apps.push(app);
+            }
+          }
+          bc[business_name].contexts = groups;
+        }
+        return bc;
       },
       collect_tentacles_by_context: function(contexts, tentacles) {
         var collection,
@@ -78,6 +110,8 @@
           _ref = [pieces[0], pieces[1], pieces[2]], env = _ref[0], business = _ref[1], app = _ref[2];
           if (_.has(_this.app_to_context_map, app)) {
             app_label = _this.app_to_context_map[app].label;
+          } else {
+            return null;
           }
           context = _this.app_to_context_map[app];
           if ((context != null) && (context.businesses != null)) {
@@ -165,6 +199,7 @@
           for (key in _ref) {
             val = _ref[key];
             out[key] = val;
+            out[key]['context'] = context;
           }
         }
         return out;
@@ -177,23 +212,6 @@
           return out[item['-name']] = item.ConfigItem;
         });
         return out;
-      },
-      generate_menu: function(data, labels) {
-        var menu, submenus;
-        menu = {};
-        submenus = {};
-        _.each(data, function(item) {
-          if (_.has(labels, item.product)) {
-            menu[labels[item.product]] = [];
-          }
-          if (!_.has(submenus, item.product)) {
-            submenus[item.product] = [];
-          } else {
-            submenus[item.product].push(item);
-          }
-          return menu[labels[item.product]] = submenus[item.product];
-        });
-        return menu;
       },
       get_labels: function(data) {
         var labels, out;
@@ -211,14 +229,6 @@
         return _.filter(data.ApplicationSettings, function(item) {
           return item['-applicationName'] === 'ixadmin' && item['-environmentName'] === window.ICS360_ENV;
         });
-      },
-      format_context_data: function(context, application_name) {
-        var out, _ref;
-        out = {};
-        out.label = (_ref = context[0]['-value']) != null ? _ref : null;
-        console.log(application_name);
-        out.application = this.get_config_item(context[1], application_name);
-        return out;
       },
       get_config_item: function(collection, name) {
         if ((collection != null) && (collection.ConfigItem != null)) {
