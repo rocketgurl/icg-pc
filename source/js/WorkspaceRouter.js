@@ -4,8 +4,19 @@
   define(['BaseRouter'], function(BaseRouter) {
     var WorkspaceRouter;
     return WorkspaceRouter = BaseRouter.extend({
-      initialize: function(options) {
-        return this.logger('Router is ready!');
+      routes: {
+        'login': 'login',
+        'logout': 'logout'
+      },
+      initialize: function(options) {},
+      login: function() {
+        return this.controller.build_login();
+      },
+      logout: function() {
+        this.controller.logout();
+        return this.navigate('login', {
+          trigger: true
+        });
       }
     });
   });
