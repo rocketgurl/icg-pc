@@ -20,6 +20,3 @@ define [
       username = @$el.find('input:text').val()
       password = @$el.find('input:password').val()
       @options.controller.check_credentials(username, password)
-      
-      
-
