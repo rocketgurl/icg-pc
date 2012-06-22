@@ -28,8 +28,11 @@ define [
     localStorage : new Store 'ics_policy_central'
     localSync    : LocalStorageSync
 
+    # Deal with Crippled Clients
+    crippledClientSync  : CrippledClientSync
+
     # Setup XML parsing using CrippledClient
-    xmlSync  : CrippledClientSync
+    xmlSync  : XMLSync
     xmlParse : (response, xhr) ->
       tree = new XML.ObjTree().parseDOM(response) if response?
       out = { 'xhr' : xhr }
@@ -37,6 +40,21 @@ define [
         if tree['#document']?
           out.document = tree['#document']
       out
+
+    # Response state (Hackety hack hack)
+    # 
+    # Since we're on **Crippled Client**, all requests come back as
+    # 200's and we have to do header parsing to ascertain what 
+    # is actually going on. We stash the jqXHR in the model and
+    # do some checking to see what the error code really is, then
+    # stash that in the model as 'fetch_state'
+    #
+    response_state : () ->
+      xhr = @get 'xhr'
+      fetch_state =
+        text : xhr.getResponseHeader 'X-True-Statustext'
+        code : xhr.getResponseHeader 'X-True-Statuscode'
+      @set 'fetch_state' : fetch_state
 
 
     # Explicitly set sync for this model to Backbone default
@@ -49,6 +67,11 @@ define [
     # Tell model to fetch & parse XML data
     use_xml : () ->
       @sync  = @xmlSync
+      @parse = @xmlParse
+
+    # Tell model to fetch & parse XML data from Crippled Clients
+    use_cripple : () ->
+      @sync  = @crippledClientSync
       @parse = @xmlParse
 
     # Tell model to use localStorage

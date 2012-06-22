@@ -8,7 +8,8 @@
       backboneParse: Backbone.Model.prototype.parse,
       localStorage: new Store('ics_policy_central'),
       localSync: LocalStorageSync,
-      xmlSync: CrippledClientSync,
+      crippledClientSync: CrippledClientSync,
+      xmlSync: XMLSync,
       xmlParse: function(response, xhr) {
         var out, tree;
         if (response != null) {
@@ -24,12 +25,27 @@
         }
         return out;
       },
+      response_state: function() {
+        var fetch_state, xhr;
+        xhr = this.get('xhr');
+        fetch_state = {
+          text: xhr.getResponseHeader('X-True-Statustext'),
+          code: xhr.getResponseHeader('X-True-Statuscode')
+        };
+        return this.set({
+          'fetch_state': fetch_state
+        });
+      },
       sync: this.backboneSync,
       switch_sync: function(sync_adapater) {
         return this.sync = this[sync_adapater];
       },
       use_xml: function() {
         this.sync = this.xmlSync;
+        return this.parse = this.xmlParse;
+      },
+      use_cripple: function() {
+        this.sync = this.crippledClientSync;
         return this.parse = this.xmlParse;
       },
       use_localStorage: function() {
