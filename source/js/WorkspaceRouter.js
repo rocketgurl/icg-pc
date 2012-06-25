@@ -6,7 +6,8 @@
     return WorkspaceRouter = BaseRouter.extend({
       routes: {
         'login': 'login',
-        'logout': 'logout'
+        'logout': 'logout',
+        'workspace/:env/:business/:context/:app': 'workspace'
       },
       initialize: function(options) {},
       login: function() {
@@ -17,6 +18,22 @@
         return this.navigate('login', {
           trigger: true
         });
+      },
+      workspace: function(env, business, context, app) {
+        var _this = this;
+        this.controller.current_state = {
+          'env': env,
+          'business': business,
+          'context': context,
+          'app': app
+        };
+        if (this.controller.config != null) {
+          return this.controller.trigger('launch');
+        } else {
+          return this.controller.callback_delay(2000, function() {
+            return _this.controller.trigger('launch');
+          });
+        }
       }
     });
   });

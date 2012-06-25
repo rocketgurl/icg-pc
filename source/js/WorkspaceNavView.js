@@ -5,10 +5,20 @@
     var WorkspaceNavView;
     return WorkspaceNavView = BaseView.extend({
       events: {
-        "click li a": "toggle_main_nav"
+        "click li a": "toggle_main_nav",
+        "click #workspace-subnav li a": "toggle_sub_nav"
       },
       initialize: function(options) {
-        return this.$sub_el = $(options.sub_el);
+        var _this = this;
+        this.$sub_el = $(options.sub_el);
+        this.$header = this.options.controller.$workspace_header;
+        this.base_height = this.$header.height();
+        this.$sub_el.hide();
+        this.$el.hide();
+        return $('#header-controls').on('click', '#button-workspace', function(e) {
+          e.preventDefault();
+          return _this.toggle_nav_slide();
+        });
       },
       render: function() {
         this.$el.prepend(this.options.main_nav);
@@ -26,6 +36,37 @@
         $li.siblings().removeClass('open');
         this.$sub_el.find("#" + ($a.data('pc'))).removeClass();
         return this.$sub_el.find("#" + ($a.data('pc'))).siblings().addClass('sub_nav_off');
+      },
+      toggle_sub_nav: function(e) {
+        var $a, $li;
+        e.preventDefault();
+        $a = $(e.target);
+        $li = $a.parent();
+        this.$sub_el.find('a').removeClass();
+        $a.addClass('on');
+        return this.options.router.navigate($a.attr('href'), {
+          trigger: true
+        });
+      },
+      toggle_nav_slide: function() {
+        if (this.$header.height() === this.base_height) {
+          return this.$header.animate({
+            height: 300 + this.base_height
+          }, 200, 'swing', this.show_nav());
+        } else {
+          this.hide_nav();
+          return this.$header.animate({
+            height: this.base_height
+          }, 200, 'swing');
+        }
+      },
+      show_nav: function() {
+        this.$el.fadeIn('slow');
+        return this.$sub_el.fadeIn('slow');
+      },
+      hide_nav: function() {
+        this.$el.hide();
+        return this.$sub_el.hide();
       }
     });
   });

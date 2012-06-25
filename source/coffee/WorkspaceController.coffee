@@ -59,8 +59,9 @@ define [
   #
   WorkspaceController =
     Amplify               : amplify
+    $workspace_header     : $('#header')
     $workspace_button     : $('#button-workspace')
-    $workspace_breadcrumb : $('#breadcrump')
+    $workspace_breadcrumb : $('#breadcrumb')
     $workspace_admin      : $('#header-admin')
     $workspace_canvas     : $('#canvas')
     Router                : new WorkspaceRouter()
@@ -168,6 +169,7 @@ define [
           @config.set 'menu', MenuHelper.build_menu(@user.get('document'), model.get('document'))
           @config.set 'menu_html', MenuHelper.generate_menu(@config.get 'menu')
           @navigation_view = new WorkspaceNavView({
+              router     : @Router
               controller : @
               el         : '#header-workspace-nav'
               sub_el     : '#workspace-subnav'
@@ -175,10 +177,35 @@ define [
               sub_nav    : @config.get('menu_html').sub_nav
             })
           @navigation_view.render()
+          console.log @config.get 'menu'
 
         error : (model, resp) =>
           @flash 'warning', "There was a problem retreiving the configuration file. Please contact support."
         )
+
+    # Simple delay to wait until assets load
+    callback_delay : (ms, func) =>
+      setTimeout func, ms
+
+    #### Launch Workspace
+    #
+    # Attempt to setup and launch workspace
+    #
+    launch_workspace : () ->
+
+      menu = @config.get 'menu'
+
+      group_label = apps = menu[@current_state.business].contexts[@current_state.context].label
+      apps = menu[@current_state.business].contexts[@current_state.context].apps
+      app = _.find apps, (app) =>
+        app.app is @current_state.app
+      console.log app
+
+      console.log @current_state
+      $li = @$workspace_breadcrumb.find('li')
+      $li.first().html("<em>#{@current_state.business}</em>")
+      $li.first().next().html("<em>#{group_label}</em>")
+      $li.last().html("<em>#{app.app_label}</em>")
 
     # Kick off the show
     init : () ->
@@ -191,5 +218,8 @@ define [
 
   WorkspaceController.on "log", (msg) ->
     @logger msg
+
+  WorkspaceController.on "launch", () ->
+    @launch_workspace()
 
   

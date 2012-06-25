@@ -57,7 +57,10 @@
               a_obj = _ref1[index];
               out.sub_nav.push({
                 url: a_obj.app,
-                nav_label: a_obj.app_label
+                nav_label: a_obj.app_label,
+                business: a_obj.business,
+                env: a_obj.env,
+                context: a_obj.context.context
               });
             }
             submenu.submenu += Mustache.render(tpl_sub_nav_ul, out);

@@ -13,6 +13,7 @@ define [
     routes :
       'login'  : 'login'
       'logout' : 'logout'
+      'workspace/:env/:business/:context/:app' : 'workspace'
 
     initialize : (options) ->
 
@@ -24,3 +25,14 @@ define [
     logout : () ->
       @controller.logout()
       @navigate('login', { trigger : true })
+
+    workspace : (env, business, context, app) ->
+      @controller.current_state =
+        'env'      : env
+        'business' : business
+        'context'  : context
+        'app'      : app
+      if @controller.config?
+        @controller.trigger 'launch'
+      else
+        @controller.callback_delay 2000, => @controller.trigger 'launch'    

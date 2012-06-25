@@ -2,7 +2,8 @@
 (function() {
 
   define(['jquery', 'underscore', 'backbone', 'UserModel', 'ConfigModel', 'WorkspaceLoginView', 'WorkspaceNavView', 'WorkspaceRouter', 'base64', 'MenuHelper', 'amplify_core', 'amplify_store', 'cookie', 'xml2json'], function($, _, Backbone, UserModel, ConfigModel, WorkspaceLoginView, WorkspaceNavView, WorkspaceRouter, Base64, MenuHelper, amplify) {
-    var $flash, WorkspaceController, ics360;
+    var $flash, WorkspaceController, ics360,
+      _this = this;
     window.ICS360_ENV = 'staging';
     amplify.subscribe('log', function(msg) {
       return console.log(msg);
@@ -32,8 +33,9 @@
     };
     WorkspaceController = {
       Amplify: amplify,
+      $workspace_header: $('#header'),
       $workspace_button: $('#button-workspace'),
-      $workspace_breadcrumb: $('#breadcrump'),
+      $workspace_breadcrumb: $('#breadcrumb'),
       $workspace_admin: $('#header-admin'),
       $workspace_canvas: $('#canvas'),
       Router: new WorkspaceRouter(),
@@ -121,18 +123,39 @@
             _this.config.set('menu', MenuHelper.build_menu(_this.user.get('document'), model.get('document')));
             _this.config.set('menu_html', MenuHelper.generate_menu(_this.config.get('menu')));
             _this.navigation_view = new WorkspaceNavView({
+              router: _this.Router,
               controller: _this,
               el: '#header-workspace-nav',
               sub_el: '#workspace-subnav',
               main_nav: _this.config.get('menu_html').main_nav,
               sub_nav: _this.config.get('menu_html').sub_nav
             });
-            return _this.navigation_view.render();
+            _this.navigation_view.render();
+            return console.log(_this.config.get('menu'));
           },
           error: function(model, resp) {
             return _this.flash('warning', "There was a problem retreiving the configuration file. Please contact support.");
           }
         });
+      },
+      callback_delay: function(ms, func) {
+        return setTimeout(func, ms);
+      },
+      launch_workspace: function() {
+        var $li, app, apps, group_label, menu,
+          _this = this;
+        menu = this.config.get('menu');
+        group_label = apps = menu[this.current_state.business].contexts[this.current_state.context].label;
+        apps = menu[this.current_state.business].contexts[this.current_state.context].apps;
+        app = _.find(apps, function(app) {
+          return app.app === _this.current_state.app;
+        });
+        console.log(app);
+        console.log(this.current_state);
+        $li = this.$workspace_breadcrumb.find('li');
+        $li.first().html("<em>" + this.current_state.business + "</em>");
+        $li.first().next().html("<em>" + group_label + "</em>");
+        return $li.last().html("<em>" + app.app_label + "</em>");
       },
       init: function() {
         this.Router.controller = this;
@@ -141,8 +164,11 @@
       }
     };
     _.extend(WorkspaceController, Backbone.Events);
-    return WorkspaceController.on("log", function(msg) {
+    WorkspaceController.on("log", function(msg) {
       return this.logger(msg);
+    });
+    return WorkspaceController.on("launch", function() {
+      return this.launch_workspace();
     });
   });
 

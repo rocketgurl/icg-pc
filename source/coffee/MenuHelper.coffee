@@ -78,20 +78,23 @@ define [
       for name, obj of data
         # Main nav
         main_nav.main_nav.push {
-          url : name
-          label : obj.label
+          url      : name
+          label    : obj.label
           business : name
         }
 
         # Sub nav
         submenu = { sub_nav_id : name, submenu : '' }
         for context, c_obj of obj.contexts
-          out = { sub_nav : [] }
+          out       = { sub_nav : [] }
           out.label = c_obj.label
           for index, a_obj of c_obj.apps
             out.sub_nav.push {
-              url : a_obj.app
+              url       : a_obj.app
               nav_label : a_obj.app_label
+              business  : a_obj.business
+              env       : a_obj.env
+              context   : a_obj.context.context
             }
 
           submenu.submenu += Mustache.render tpl_sub_nav_ul, out
@@ -99,7 +102,7 @@ define [
 
       html =
         'main_nav' : Mustache.render tpl_main_nav, main_nav
-        'sub_nav' : sub_nav
+        'sub_nav'  : sub_nav
 
     #### Compile Menu Collection
     #

@@ -305,7 +305,8 @@ body {
   margin: 0 0 2px 0;
   display: block;
 }
-#workspace-subnav ul li ul li a:hover {
+#workspace-subnav ul li ul li a:hover,
+#workspace-subnav ul li ul li a.on {
   background: #418bc3;
   -webkit-border-radius: 4px;
   -moz-border-radius: 4px;

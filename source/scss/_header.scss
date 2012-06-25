@@ -180,7 +180,8 @@
 						margin: 0 0 2px 0;
 						display: block;
 					}
-					a:hover {
+					a:hover,
+					a.on {
 						background: desaturate(lighten($blue, 20), 20);
 						@include border-radius(4px);
 					}
