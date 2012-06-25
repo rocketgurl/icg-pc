@@ -5,6 +5,7 @@ define [
   'UserModel',
   'ConfigModel',
   'WorkspaceLoginView',
+  'WorkspaceNavView',
   'WorkspaceRouter',
   'base64',
   'MenuHelper',
@@ -12,7 +13,7 @@ define [
   'amplify_store',
   'cookie',
   'xml2json'
-], ($, _, Backbone, UserModel, ConfigModel, WorkspaceLoginView, WorkspaceRouter,  Base64, MenuHelper, amplify) ->
+], ($, _, Backbone, UserModel, ConfigModel, WorkspaceLoginView, WorkspaceNavView, WorkspaceRouter,  Base64, MenuHelper, amplify) ->
 
   #### Global ENV Setting
   #
@@ -166,8 +167,15 @@ define [
         success : (model, resp) =>
           @config.set 'menu', MenuHelper.build_menu(@user.get('document'), model.get('document'))
           @config.set 'menu_html', MenuHelper.generate_menu(@config.get 'menu')
-          console.log @config.get('menu_html').sub_nav
-          console.log @config.get 'menu'
+          @navigation_view = new WorkspaceNavView({
+              controller : @
+              el         : '#header-workspace-nav'
+              sub_el     : '#workspace-subnav'
+              main_nav   : @config.get('menu_html').main_nav
+              sub_nav    : @config.get('menu_html').sub_nav
+            })
+          @navigation_view.render()
+
         error : (model, resp) =>
           @flash 'warning', "There was a problem retreiving the configuration file. Please contact support."
         )

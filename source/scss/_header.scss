@@ -148,6 +148,9 @@
 #workspace-subnav {
 	@include span-columns(9 omega, 12);
 	background: darken($blue, 15);
+	ul.sub_nav_off {
+		display: none;
+	}
 	ul {
 		padding: 5px 8px;
 		margin: 10px 0 10px 0;
