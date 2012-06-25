@@ -91,7 +91,9 @@
         });
       },
       response_fail: function(model, resp) {
-        return this.logger("PHALE!");
+        this.flash('warning', "There was a problem retreiving the configuration file. Please contact support. Error: " + resp.status + " - " + resp.statusText);
+        this.logger("PHALE!");
+        return console.log(resp);
       },
       login_success: function(model, resp) {
         this.get_configs();
@@ -118,7 +120,7 @@
           success: function(model, resp) {
             _this.config.set('menu', MenuHelper.build_menu(_this.user.get('document'), model.get('document')));
             _this.config.set('menu_html', MenuHelper.generate_menu(_this.config.get('menu')));
-            console.log(_this.config.get('menu_html'));
+            console.log(_this.config.get('menu_html').sub_nav);
             return console.log(_this.config.get('menu'));
           },
           error: function(model, resp) {

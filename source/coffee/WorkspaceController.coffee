@@ -126,7 +126,9 @@ define [
 
     # Need to throw a nice error message
     response_fail : (model, resp) ->
+      @flash 'warning', "There was a problem retreiving the configuration file. Please contact support. Error: #{resp.status} - #{resp.statusText}"
       @logger "PHALE!"
+      console.log resp
 
     # On a successfull login have @user set some variables
     # and set an identity cookie to smooth logging in later.
@@ -164,7 +166,7 @@ define [
         success : (model, resp) =>
           @config.set 'menu', MenuHelper.build_menu(@user.get('document'), model.get('document'))
           @config.set 'menu_html', MenuHelper.generate_menu(@config.get 'menu')
-          console.log @config.get 'menu_html'
+          console.log @config.get('menu_html').sub_nav
           console.log @config.get 'menu'
         error : (model, resp) =>
           @flash 'warning', "There was a problem retreiving the configuration file. Please contact support."
