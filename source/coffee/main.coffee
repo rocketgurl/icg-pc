@@ -8,13 +8,14 @@ require
     amplify_store : 'lib/amplify.store.min',
     mustache      : 'lib/requirejs.mustache',
     base64        : 'lib/base64',
-    cookie        : 'lib/jquery.cookie'
+    cookie        : 'lib/jquery.cookie',
+    xml2json      : 'lib/jquery.xml2json',
+    text          : 'lib/text'
   priority: ['jquery']
 
 require [
-  "lib/text",
   "jquery",
   "WorkspaceController"
-], (text, $, WorkspaceController) ->
+], ($, WorkspaceController) ->
   $ ->
     WorkspaceController.init()
