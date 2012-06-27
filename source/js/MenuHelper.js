@@ -141,7 +141,7 @@
             'app': app,
             'app_label': app_label,
             'context': context,
-            'tentacle': tentacle
+            'tentacle': val
           };
         });
         processed_tentacles = _.filter(processed_tentacles, function(item) {

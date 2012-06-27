@@ -191,7 +191,7 @@ define [
           'app'       : app
           'app_label' : app_label
           'context'   : context
-          'tentacle'  : tentacle
+          'tentacle'  : val
         }
 
       # Return clean array
