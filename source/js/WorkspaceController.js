@@ -142,7 +142,7 @@
         return setTimeout(func, ms);
       },
       launch_workspace: function() {
-        var $li, app, apps, group_label, menu,
+        var app, apps, group_label, menu,
           _this = this;
         menu = this.config.get('menu');
         group_label = apps = menu[this.current_state.business].contexts[this.current_state.context].label;
@@ -151,11 +151,7 @@
           return app.app === _this.current_state.app;
         });
         console.log(app);
-        console.log(this.current_state);
-        $li = this.$workspace_breadcrumb.find('li');
-        $li.first().html("<em>" + this.current_state.business + "</em>");
-        $li.first().next().html("<em>" + group_label + "</em>");
-        return $li.last().html("<em>" + app.app_label + "</em>");
+        return this.$workspace_breadcrumb.html("        <li><em>" + this.current_state.business + "</em></li>        <li><em>" + group_label + "</em></li>        <li><em>" + app.app_label + "</em></li>      ");
       },
       init: function() {
         this.Router.controller = this;

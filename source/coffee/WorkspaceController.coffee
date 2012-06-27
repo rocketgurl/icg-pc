@@ -189,7 +189,7 @@ define [
 
     #### Launch Workspace
     #
-    # Attempt to setup and launch workspace
+    # Attempt to setup and launch workspace based on info in the menu Obj
     #
     launch_workspace : () ->
 
@@ -199,13 +199,15 @@ define [
       apps = menu[@current_state.business].contexts[@current_state.context].apps
       app = _.find apps, (app) =>
         app.app is @current_state.app
+
       console.log app
 
-      console.log @current_state
-      $li = @$workspace_breadcrumb.find('li')
-      $li.first().html("<em>#{@current_state.business}</em>")
-      $li.first().next().html("<em>#{group_label}</em>")
-      $li.last().html("<em>#{app.app_label}</em>")
+      # Set breadcrumb
+      @$workspace_breadcrumb.html("
+        <li><em>#{@current_state.business}</em></li>
+        <li><em>#{group_label}</em></li>
+        <li><em>#{app.app_label}</em></li>
+      ")
 
     # Kick off the show
     init : () ->

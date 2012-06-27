@@ -51,6 +51,9 @@
 		li:last-child:after {
 			content: ' ';
 		}
+		li:first-child {
+			text-transform: uppercase;
+		}
 	}
 
 }

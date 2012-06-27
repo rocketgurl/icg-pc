@@ -158,6 +158,9 @@ body {
 #header-controls #breadcrumb li:last-child:after {
   content: ' ';
 }
+#header-controls #breadcrumb li:first-child {
+  text-transform: uppercase;
+}
 
 #button-workspace {
   display: inline-block;
