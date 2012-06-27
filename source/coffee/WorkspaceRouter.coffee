@@ -26,6 +26,7 @@ define [
       @controller.logout()
       @navigate('login', { trigger : true })
 
+    # Parse workspace
     workspace : (env, business, context, app) ->
       @controller.current_state =
         'env'      : env
