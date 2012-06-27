@@ -1,6 +1,7 @@
 define [
-  'BaseView'
-], (BaseView) ->
+  'BaseView',
+  'WorkspaceCanvasView'
+], (BaseView, WorkspaceCanvasView) ->
 
   WorkspaceLoginView = BaseView.extend
 
@@ -8,7 +9,11 @@ define [
       "submit form" : "get_credentials"
 
     initialize : (options) ->
+      # Mixin Canvas View methods
+      @include WorkspaceLoginView, WorkspaceCanvasView
+      
       @template = options.template if options.template?
+      @render_tab(options.template_tab) if options.template_tab?
 
     # Render login form
     render : () ->

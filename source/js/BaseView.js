@@ -4,6 +4,18 @@
   define(['jquery', 'underscore', 'backbone', 'mustache', 'amplify_core', 'amplify_store'], function($, _, Backbone, Mustache, amplify) {
     var BaseView;
     return BaseView = Backbone.View.extend({
+      extend: function(obj, mixin) {
+        var method, name, _results;
+        _results = [];
+        for (name in mixin) {
+          method = mixin[name];
+          _results.push(obj[name] = method);
+        }
+        return _results;
+      },
+      include: function(klass, mixin) {
+        return this.extend(klass.prototype, mixin);
+      },
       Amplify: amplify,
       logger: function(msg) {
         return this.Amplify.publish('log', msg);
