@@ -49,12 +49,16 @@ define [
     # Remove tab and view
     #
     destroy : () ->
+      # Remove tab
       if @$tab_el?
-        @tab
-        console.log @$tab_el
+        delete @tab
         @$tab_el.find("li a[href=#{@app.app}]").parent().remove()
-      @$el.html('')
-      delete @
+
+      # Remove content
+      @$el.html('')     
 
       # Remove from the stack
       @options.controller.trigger 'stack_remove', @
+
+      # Clear memory
+      delete @

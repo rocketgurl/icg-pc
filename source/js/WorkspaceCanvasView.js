@@ -40,13 +40,12 @@
       },
       destroy: function() {
         if (this.$tab_el != null) {
-          this.tab;
-          console.log(this.$tab_el);
+          delete this.tab;
           this.$tab_el.find("li a[href=" + this.app.app + "]").parent().remove();
         }
         this.$el.html('');
-        delete this;
-        return this.options.controller.trigger('stack_remove', this);
+        this.options.controller.trigger('stack_remove', this);
+        return delete this;
       }
     });
   });
