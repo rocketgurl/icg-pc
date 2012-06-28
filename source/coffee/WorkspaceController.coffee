@@ -85,6 +85,13 @@ define [
       for index, obj of @workspace_stack
         if view.options.app == obj.options.app
           @workspace_stack.splice index
+          view.destroy()
+
+    # Remove all views from stack
+    stack_clear : () ->
+      for view in @workspace_stack
+        @stack_remove(view)
+
     
     # Simple logger
     logger : (msg) ->
@@ -183,7 +190,12 @@ define [
       @user = null
       @reset_admin_links()
 
-    # Grab ixAdmin information and load in ConfigModel
+    #### Get Configuration Files
+    #
+    # Grab ixAdmin information and load in `ConfigModel`
+    # Once its loaded pass it to `MenuHelper` to generate
+    # the tree for `WorkspaceNavView`
+    #
     get_configs : () ->
       @config = new ConfigModel
         urlRoot : ics360.services.ixadmin
@@ -200,13 +212,19 @@ define [
               sub_nav    : @config.get('menu_html').sub_nav
             })
           @navigation_view.render()
-          console.log @config.get 'menu'
+          
+          # If our current_state is set then we should go ahead and launch.
+          # We do this here to ensure we have @config set before attempting to
+          # launch, which would be... bad.
+          if @current_state?
+            @trigger 'launch'
 
+        # Try to throw a useful error message when possible.
         error : (model, resp) =>
           @flash 'warning', "There was a problem retreiving the configuration file. Please contact support."
         )
 
-    # Simple delay to wait until assets load
+    # Simple delay fund if we need it.
     callback_delay : (ms, func) =>
       setTimeout func, ms
 
@@ -223,8 +241,8 @@ define [
       app = _.find apps, (app) =>
         app.app is @current_state.app
 
-      # Clear the stack
-      @workspace_stack = []
+      # Clear the stack - for reals
+      @stack_clear()
 
       # Here is where you would launch the app
       @launch_app app
@@ -238,15 +256,16 @@ define [
 
     #### Launch App
     #
-    # Attempt to setup and launch app
+    # Attempt to setup and launch app. Apps are added
+    # to the stack from the `WorkspaceCanvasView` itself
+    # using events so that if for some reason the view
+    # doesn't load, we don't have to add it to the stack.
     #
     launch_app : (app) ->
       newapp = new WorkspaceCanvasView({
         controller : @
         'app' : app
         })
-      # @stack_add newapp
-      # @stack_remove newapp
       console.log @workspace_stack
 
     #### Set Admin Links

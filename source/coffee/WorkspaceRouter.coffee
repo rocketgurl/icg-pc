@@ -33,7 +33,8 @@ define [
         'business' : business
         'context'  : context
         'app'      : app
+
+      # If we already have a configuration file then we should be ready to go
       if @controller.config?
         @controller.trigger 'launch'
-      else
-        @controller.callback_delay 2000, => @controller.trigger 'launch'    
+

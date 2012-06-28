@@ -1,11 +1,11 @@
 define [
   'BaseView',
   'mustache'
-], (BaseView, mustache) ->
+], (BaseView, Mustache) ->
 
   WorkspaceCanvasView = BaseView.extend
 
-    $target    : $('#target')
+    $target   : $('#target')
     tagName   : 'section'
     className : 'canvas'
     tab       : null
@@ -13,7 +13,7 @@ define [
     initialize : (options) ->
       @$tab_el      = options.controller.$workspace_tabs
       @template     = options.template if options.template?
-      @template_tab = options.template_tab if options.template_tab?
+      @template_tab = if options.template_tab? then options.template_tab else $('#tpl-workspace-tab').html()
 
       if !options.app?
         return @Amplify.publish 'flash', 'warning', 'There was a problem locating that workspace.'
@@ -24,11 +24,15 @@ define [
       # Add to the stack
       @options.controller.trigger 'stack_add', @
 
+      @render()
+
 
     # Render login form
     render : () ->
-      # html = Mustache.render @template, 
-      @$target.append(@$el.html(@template.html()))
+      require ['modules/TestModule'], (TestModule) => 
+        TestModule.init @$el
+
+      @$target.append(@$el)
       @render_tab(@template_tab)
 
     #### Render Tab
@@ -36,7 +40,7 @@ define [
     # Create tab for this view
     #
     render_tab : (template) ->
-      @tab = Mustache.render template, { tab_class : ' class="selected"', tab_url : '#login', tab_label : 'Login' }
+      @tab = Mustache.render template, { tab_class : ' class="selected"', tab_url : @el.id, tab_label : @app.app_label }
       @$tab_el.append(@tab)
 
 
@@ -45,9 +49,12 @@ define [
     # Remove tab and view
     #
     destroy : () ->
-      if @$tab?
-        delete @tab
+      if @$tab_el?
+        @tab
+        console.log @$tab_el
+        @$tab_el.find("li a[href=#{@app.app}]").parent().remove()
       @$el.html('')
+      delete @
 
       # Remove from the stack
       @options.controller.trigger 'stack_remove', @

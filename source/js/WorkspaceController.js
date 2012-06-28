@@ -58,10 +58,21 @@
         for (index in _ref) {
           obj = _ref[index];
           if (view.options.app === obj.options.app) {
-            _results.push(this.workspace_stack.splice(index));
+            this.workspace_stack.splice(index);
+            _results.push(view.destroy());
           } else {
             _results.push(void 0);
           }
+        }
+        return _results;
+      },
+      stack_clear: function() {
+        var view, _i, _len, _ref, _results;
+        _ref = this.workspace_stack;
+        _results = [];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          view = _ref[_i];
+          _results.push(this.stack_remove(view));
         }
         return _results;
       },
@@ -160,7 +171,9 @@
               sub_nav: _this.config.get('menu_html').sub_nav
             });
             _this.navigation_view.render();
-            return console.log(_this.config.get('menu'));
+            if (_this.current_state != null) {
+              return _this.trigger('launch');
+            }
           },
           error: function(model, resp) {
             return _this.flash('warning', "There was a problem retreiving the configuration file. Please contact support.");
@@ -179,7 +192,7 @@
         app = _.find(apps, function(app) {
           return app.app === _this.current_state.app;
         });
-        this.workspace_stack = [];
+        this.stack_clear();
         this.launch_app(app);
         return this.$workspace_breadcrumb.html("<li><em>" + this.current_state.business + "</em></li>\n<li><em>" + group_label + "</em></li>\n<li><em>" + app.app_label + "</em></li>");
       },

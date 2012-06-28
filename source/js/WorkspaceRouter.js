@@ -20,7 +20,6 @@
         });
       },
       workspace: function(env, business, context, app) {
-        var _this = this;
         this.controller.current_state = {
           'env': env,
           'business': business,
@@ -29,10 +28,6 @@
         };
         if (this.controller.config != null) {
           return this.controller.trigger('launch');
-        } else {
-          return this.controller.callback_delay(2000, function() {
-            return _this.controller.trigger('launch');
-          });
         }
       }
     });
