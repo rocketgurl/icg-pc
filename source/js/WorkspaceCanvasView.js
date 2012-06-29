@@ -25,18 +25,31 @@
       render: function() {
         var _this = this;
         require(['modules/TestModule'], function(TestModule) {
-          return TestModule.init(_this.$el);
+          return TestModule.init(_this.$el, _this.app);
         });
+        this.$el.hide();
         this.$target.append(this.$el);
-        return this.render_tab(this.template_tab);
+        this.render_tab(this.template_tab);
+        return this.options.controller.trigger('new_tab', this.app.app);
       },
       render_tab: function(template) {
-        this.tab = Mustache.render(template, {
-          tab_class: ' class="selected"',
+        this.tab = $(Mustache.render(template, {
+          tab_class: '',
           tab_url: this.el.id,
           tab_label: this.app.app_label
-        });
+        }));
         return this.$tab_el.append(this.tab);
+      },
+      activate: function() {
+        this.tab.addClass('selected');
+        return this.$el.show();
+      },
+      deactivate: function() {
+        this.tab.removeClass('selected');
+        return this.$el.hide();
+      },
+      is_active: function() {
+        return this.tab.hasClass('selected');
       },
       destroy: function() {
         if (this.$tab_el != null) {

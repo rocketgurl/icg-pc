@@ -26,28 +26,38 @@ define [
 
       @render()
 
-
     # Render login form
     render : () ->
       require ['modules/TestModule'], (TestModule) => 
-        TestModule.init @$el
+        TestModule.init @$el, @app
 
+      @$el.hide();
       @$target.append(@$el)
       @render_tab(@template_tab)
 
-    #### Render Tab
-    #
+      # Alert the controller
+      @options.controller.trigger 'new_tab', @app.app
+
     # Create tab for this view
-    #
     render_tab : (template) ->
-      @tab = Mustache.render template, { tab_class : ' class="selected"', tab_url : @el.id, tab_label : @app.app_label }
+      @tab = $(Mustache.render template, { tab_class : '', tab_url : @el.id, tab_label : @app.app_label })
       @$tab_el.append(@tab)
 
+    # Put tab into active state 
+    activate : ->
+      @tab.addClass('selected')
+      @$el.show();
 
-    #### Destroy
-    #
+    # Put tab into inactive state
+    deactivate : ->
+      @tab.removeClass('selected')
+      @$el.hide();
+
+    # Is this view activated? (boolean) 
+    is_active : ->
+      @tab.hasClass('selected')
+
     # Remove tab and view
-    #
     destroy : () ->
       # Remove tab
       if @$tab_el?
