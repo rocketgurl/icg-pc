@@ -19,11 +19,11 @@ define [
 
     # Render login form
     login : () ->
-      @controller.build_login()
+      @controller.trigger 'login'
 
     # Delete any cookies and render login form
     logout : () ->
-      @controller.logout()
+      @controller.trigger 'logout'
       @navigate('login', { trigger : true })
 
     # Parse workspace
