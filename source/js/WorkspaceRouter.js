@@ -11,10 +11,10 @@
       },
       initialize: function(options) {},
       login: function() {
-        return this.controller.build_login();
+        return this.controller.trigger('login');
       },
       logout: function() {
-        this.controller.logout();
+        this.controller.trigger('logout');
         return this.navigate('login', {
           trigger: true
         });
