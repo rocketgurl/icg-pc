@@ -27,6 +27,10 @@
           'min-height': this.$el.height()
         });
       },
+      destroy: function() {
+        this.$el.html();
+        return this.$sub_el.html();
+      },
       toggle_main_nav: function(e) {
         var $a, $li;
         e.preventDefault();

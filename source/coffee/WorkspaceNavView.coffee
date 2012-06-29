@@ -32,6 +32,9 @@ define [
       @$sub_el.css 
         'min-height' : @$el.height()
 
+    destroy : () ->
+      @$el.html()
+      @$sub_el.html()
 
     #### Toggle Main Nav
     #
