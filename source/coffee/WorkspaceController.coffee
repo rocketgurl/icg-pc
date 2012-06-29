@@ -83,14 +83,19 @@ define [
     # Remove a view from the stack
     stack_remove : (view) ->
       for index, obj of @workspace_stack
-        if view.options.app == obj.options.app
-          @workspace_stack.splice index
-          view.destroy()
+        if view.app.app == obj.app.app
+          @workspace_stack.splice index, 1
 
     # Remove all views from stack
     stack_clear : () ->
       for view in @workspace_stack
         @stack_remove(view)
+
+    # Find a view in the stack and return it
+    stack_get : (app) ->
+      for index, obj of @workspace_stack
+        if app == obj.app.app
+          return obj
 
     
     # Simple logger
@@ -132,6 +137,8 @@ define [
           tab_label : 'Login'
         })
       @login_view.render()
+      if @navigation_view?
+        @navigation_view.destroy()
 
     # Instantiate a new user and check ixDirectory
     # for valid credentials
@@ -185,10 +192,12 @@ define [
       @flash 'warning', "SOWWEE you no enter cause #{state.text}"
 
     # Delete the identity cookie and nullify User
-    logout : () ->
+    # TODO: Need to teardown the main nav
+    logout : ->
       $.cookie(@COOKIE_NAME, null)
       @user = null
       @reset_admin_links()
+      @navigation_view.destroy()
 
     #### Get Configuration Files
     #
@@ -196,7 +205,7 @@ define [
     # Once its loaded pass it to `MenuHelper` to generate
     # the tree for `WorkspaceNavView`
     #
-    get_configs : () ->
+    get_configs : ->
       @config = new ConfigModel
         urlRoot : ics360.services.ixadmin
       @config.fetch(
@@ -232,7 +241,7 @@ define [
     #
     # Attempt to setup and launch workspace based on info in the menu Obj
     #
-    launch_workspace : () ->
+    launch_workspace : ->
 
       menu = @config.get 'menu'
 
@@ -266,13 +275,25 @@ define [
         controller : @
         'app' : app
         })
+      wenapp = new WorkspaceCanvasView({
+        controller : @
+        'app' : 
+          app : 'search'
+          app_label : 'Search'
+        })
+      wneapp = new WorkspaceCanvasView({
+        controller : @
+        'app' : 
+          app : 'extreme_snorkeling'
+          app_label : 'Extreme Snorkeling'
+        })
       console.log @workspace_stack
 
     #### Set Admin Links
     #
     # Set Admin links to user profile and logout
     #
-    set_admin_links : () ->
+    set_admin_links : ->
       # Save original state
       if !@$workspace_admin_initial?
         @$workspace_admin_initial = @$workspace_admin.find('ul').html()
@@ -286,14 +307,51 @@ define [
     #
     # Set Admin links back to original state
     #
-    reset_admin_links : () ->
+    reset_admin_links : ->
       @$workspace_admin.find('ul').html(@$workspace_admin_initial)
+
+    attach_tab_handlers : ->
+      # Tabs
+      @$workspace_tabs.on 'click', 'li a', (e) =>
+        e.preventDefault()
+        app_name = $(e.target).attr('href')
+        @toggle_apps app_name
+
+      # Tab close icon
+      @$workspace_tabs.on 'click', 'li i', (e) =>
+        e.preventDefault()
+        @stack_get($(e.target).prev().attr('href')).destroy()
+        @reassess_apps()
+
+    # Loop through app stack and switch app states
+    toggle_apps : (app_name) ->
+      for view in @workspace_stack
+        if app_name == view.app.app
+          view.activate()
+        else
+          view.deactivate()
+
+    # Look for active views in the stack, if there are none
+    # then activate the last one in the stack.
+    reassess_apps : ->
+      # No stack, no need
+      if @workspace_stack.length == 0
+        return false
+
+      active = _.filter @workspace_stack, (view) ->
+        return view.is_active()
+
+      if active.length == 0
+        last_view = _.last @workspace_stack
+        @toggle_apps last_view.app.app
+
 
     # Kick off the show
     init : () ->
       @Router.controller = @
       Backbone.history.start()
       @check_cookie_identity()
+      @attach_tab_handlers()
 
 
   _.extend WorkspaceController, Backbone.Events
@@ -304,7 +362,13 @@ define [
   WorkspaceController.on "log", (msg) ->
     @logger msg
 
-  WorkspaceController.on "launch", () ->
+  WorkspaceController.on "login", ->
+    @build_login()
+
+  WorkspaceController.on "logout", ->
+    @logout()
+
+  WorkspaceController.on "launch", ->
     @launch_workspace()
 
   WorkspaceController.on "stack_add", (view) ->
@@ -312,5 +376,8 @@ define [
 
   WorkspaceController.on "stack_remove", (view) ->
     @stack_remove(view)
+
+  WorkspaceController.on "new_tab", (app_name) ->
+    @toggle_apps app_name
 
   

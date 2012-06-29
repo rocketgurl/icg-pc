@@ -57,9 +57,8 @@
         _results = [];
         for (index in _ref) {
           obj = _ref[index];
-          if (view.options.app === obj.options.app) {
-            this.workspace_stack.splice(index);
-            _results.push(view.destroy());
+          if (view.app.app === obj.app.app) {
+            _results.push(this.workspace_stack.splice(index, 1));
           } else {
             _results.push(void 0);
           }
@@ -75,6 +74,16 @@
           _results.push(this.stack_remove(view));
         }
         return _results;
+      },
+      stack_get: function(app) {
+        var index, obj, _ref;
+        _ref = this.workspace_stack;
+        for (index in _ref) {
+          obj = _ref[index];
+          if (app === obj.app.app) {
+            return obj;
+          }
+        }
       },
       logger: function(msg) {
         return this.Amplify.publish('log', msg);
@@ -105,7 +114,10 @@
           template_tab: $('#tpl-workspace-tab').html(),
           tab_label: 'Login'
         });
-        return this.login_view.render();
+        this.login_view.render();
+        if (this.navigation_view != null) {
+          return this.navigation_view.destroy();
+        }
       },
       check_credentials: function(username, password) {
         var _this = this;
@@ -151,7 +163,8 @@
       logout: function() {
         $.cookie(this.COOKIE_NAME, null);
         this.user = null;
-        return this.reset_admin_links();
+        this.reset_admin_links();
+        return this.navigation_view.destroy();
       },
       get_configs: function() {
         var _this = this;
@@ -197,10 +210,24 @@
         return this.$workspace_breadcrumb.html("<li><em>" + this.current_state.business + "</em></li>\n<li><em>" + group_label + "</em></li>\n<li><em>" + app.app_label + "</em></li>");
       },
       launch_app: function(app) {
-        var newapp;
+        var newapp, wenapp, wneapp;
         newapp = new WorkspaceCanvasView({
           controller: this,
           'app': app
+        });
+        wenapp = new WorkspaceCanvasView({
+          controller: this,
+          'app': {
+            app: 'search',
+            app_label: 'Search'
+          }
+        });
+        wneapp = new WorkspaceCanvasView({
+          controller: this,
+          'app': {
+            app: 'extreme_snorkeling',
+            app_label: 'Extreme Snorkeling'
+          }
         });
         return console.log(this.workspace_stack);
       },
@@ -213,15 +240,63 @@
       reset_admin_links: function() {
         return this.$workspace_admin.find('ul').html(this.$workspace_admin_initial);
       },
+      attach_tab_handlers: function() {
+        var _this = this;
+        this.$workspace_tabs.on('click', 'li a', function(e) {
+          var app_name;
+          e.preventDefault();
+          app_name = $(e.target).attr('href');
+          return _this.toggle_apps(app_name);
+        });
+        return this.$workspace_tabs.on('click', 'li i', function(e) {
+          e.preventDefault();
+          _this.stack_get($(e.target).prev().attr('href')).destroy();
+          return _this.reassess_apps();
+        });
+      },
+      toggle_apps: function(app_name) {
+        var view, _i, _len, _ref, _results;
+        _ref = this.workspace_stack;
+        _results = [];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          view = _ref[_i];
+          if (app_name === view.app.app) {
+            _results.push(view.activate());
+          } else {
+            _results.push(view.deactivate());
+          }
+        }
+        return _results;
+      },
+      reassess_apps: function() {
+        var active, last_view;
+        if (this.workspace_stack.length === 0) {
+          return false;
+        }
+        active = _.filter(this.workspace_stack, function(view) {
+          return view.is_active();
+        });
+        if (active.length === 0) {
+          last_view = _.last(this.workspace_stack);
+          return this.toggle_apps(last_view.app.app);
+        }
+      },
       init: function() {
         this.Router.controller = this;
         Backbone.history.start();
-        return this.check_cookie_identity();
+        this.check_cookie_identity();
+        return this.attach_tab_handlers();
       }
     };
     _.extend(WorkspaceController, Backbone.Events);
     WorkspaceController.on("log", function(msg) {
       return this.logger(msg);
+    });
+    WorkspaceController.on("login", function() {
+      return this.build_login();
+    });
+    WorkspaceController.on("logout", function() {
+      return this.logout();
     });
     WorkspaceController.on("launch", function() {
       return this.launch_workspace();
@@ -229,8 +304,11 @@
     WorkspaceController.on("stack_add", function(view) {
       return this.stack_add(view);
     });
-    return WorkspaceController.on("stack_remove", function(view) {
+    WorkspaceController.on("stack_remove", function(view) {
       return this.stack_remove(view);
+    });
+    return WorkspaceController.on("new_tab", function(app_name) {
+      return this.toggle_apps(app_name);
     });
   });
 
