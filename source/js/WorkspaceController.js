@@ -198,7 +198,7 @@
         } else {
           this.launch_app(app);
         }
-        return this.$workspace_breadcrumb.html("<li><em>" + this.current_state.business + "</em></li>\n<li><em>" + group_label + "</em></li>\n<li><em>" + app.app_label + "</em></li>");
+        return this.$workspace_breadcrumb.html("<li><em>" + this.current_state.business + "</em></li>\n<li><em>" + (MenuHelper.check_length(group_label)) + "</em></li>\n<li><em>" + app.app_label + "</em></li>");
       },
       launch_app: function(app) {
         var b, search;

@@ -87,7 +87,7 @@ define [
         submenu = { sub_nav_id : name, submenu : '' }
         for context, c_obj of obj.contexts
           out       = { sub_nav : [] }
-          out.label = c_obj.label
+          out.label = @check_length c_obj.label
           for index, a_obj of c_obj.apps
             out.sub_nav.push {
               url       : a_obj.app
@@ -314,5 +314,13 @@ define [
           out[key]['context'] = context
       out
 
+    # Shortens a string to 25 chars and adds ellipses
+    #
+    # @param `label` _String_ text  
+    #  
+    check_length : (label) ->
+      if label.length > 25
+        return label.substr(0, 25) + '&hellip;'
+      label
 
   MenuHelper

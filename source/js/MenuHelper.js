@@ -51,7 +51,7 @@
             out = {
               sub_nav: []
             };
-            out.label = c_obj.label;
+            out.label = this.check_length(c_obj.label);
             _ref1 = c_obj.apps;
             for (index in _ref1) {
               a_obj = _ref1[index];
@@ -211,6 +211,12 @@
           }
         }
         return out;
+      },
+      check_length: function(label) {
+        if (label.length > 25) {
+          return label.substr(0, 25) + '&hellip;';
+        }
+        return label;
       }
     };
     return MenuHelper;

@@ -261,7 +261,7 @@ define [
       # Set breadcrumb
       @$workspace_breadcrumb.html("""
         <li><em>#{@current_state.business}</em></li>
-        <li><em>#{group_label}</em></li>
+        <li><em>#{MenuHelper.check_length group_label}</em></li>
         <li><em>#{app.app_label}</em></li>
       """)
 
