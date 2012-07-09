@@ -61,14 +61,13 @@ define [
     destroy : () ->
       # Remove tab
       if @$tab_el?
+        @tab = null
         delete @tab
         @$tab_el.find("li a[href=#{@app.app}]").parent().remove()
+        @$tab_el = null
 
       # Remove content
       @$el.html('')     
 
       # Remove from the stack
       @options.controller.trigger 'stack_remove', @
-
-      # Clear memory
-      delete @

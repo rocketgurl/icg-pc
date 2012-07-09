@@ -52,28 +52,15 @@
         }
       },
       stack_remove: function(view) {
-        var index, obj, _ref, _results;
-        _ref = this.workspace_stack;
-        _results = [];
-        for (index in _ref) {
-          obj = _ref[index];
+        var _this = this;
+        return _.each(this.workspace_stack, function(obj, index) {
           if (view.app.app === obj.app.app) {
-            _results.push(this.workspace_stack.splice(index, 1));
-          } else {
-            _results.push(void 0);
+            return _this.workspace_stack.splice(index, 1);
           }
-        }
-        return _results;
+        });
       },
       stack_clear: function() {
-        var view, _i, _len, _ref, _results;
-        _ref = this.workspace_stack;
-        _results = [];
-        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-          view = _ref[_i];
-          _results.push(this.stack_remove(view));
-        }
-        return _results;
+        return this.workspace_stack = [];
       },
       stack_get: function(app) {
         var index, obj, _ref;
@@ -205,8 +192,12 @@
         app = _.find(apps, function(app) {
           return app.app === _this.current_state.app;
         });
-        this.stack_clear();
-        this.launch_app(app);
+        if (this.workspace_stack.length > 0) {
+          this.teardown_workspace();
+          this.launch_workspace();
+        } else {
+          this.launch_app(app);
+        }
         return this.$workspace_breadcrumb.html("<li><em>" + this.current_state.business + "</em></li>\n<li><em>" + group_label + "</em></li>\n<li><em>" + app.app_label + "</em></li>");
       },
       launch_app: function(app) {
@@ -280,6 +271,12 @@
           last_view = _.last(this.workspace_stack);
           return this.toggle_apps(last_view.app.app);
         }
+      },
+      teardown_workspace: function() {
+        var _this = this;
+        return _.each(this.workspace_stack, function(view, index) {
+          return view.destroy();
+        });
       },
       init: function() {
         this.Router.controller = this;

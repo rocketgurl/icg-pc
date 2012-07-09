@@ -53,12 +53,13 @@
       },
       destroy: function() {
         if (this.$tab_el != null) {
+          this.tab = null;
           delete this.tab;
           this.$tab_el.find("li a[href=" + this.app.app + "]").parent().remove();
+          this.$tab_el = null;
         }
         this.$el.html('');
-        this.options.controller.trigger('stack_remove', this);
-        return delete this;
+        return this.options.controller.trigger('stack_remove', this);
       }
     });
   });

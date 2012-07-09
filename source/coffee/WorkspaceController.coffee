@@ -82,21 +82,19 @@ define [
 
     # Remove a view from the stack
     stack_remove : (view) ->
-      for index, obj of @workspace_stack
+      _.each @workspace_stack, (obj, index) =>
         if view.app.app == obj.app.app
           @workspace_stack.splice index, 1
 
     # Remove all views from stack
     stack_clear : () ->
-      for view in @workspace_stack
-        @stack_remove(view)
+      @workspace_stack = []
 
     # Find a view in the stack and return it
     stack_get : (app) ->
       for index, obj of @workspace_stack
         if app == obj.app.app
           return obj
-
     
     # Simple logger
     logger : (msg) ->
@@ -250,11 +248,15 @@ define [
       app = _.find apps, (app) =>
         app.app is @current_state.app
 
-      # Clear the stack - for reals
-      @stack_clear()
-
-      # Here is where you would launch the app
-      @launch_app app
+      # We need to destroy any existing tabs in the workspace
+      # before loading a new one. We do this recursively to prevent
+      # race conditions (new tabs pushing onto the stack as old ones pop off)
+      #
+      if @workspace_stack.length > 0
+        @teardown_workspace()
+        @launch_workspace() # recur
+      else
+        @launch_app app
 
       # Set breadcrumb
       @$workspace_breadcrumb.html("""
@@ -344,6 +346,11 @@ define [
       if active.length == 0
         last_view = _.last @workspace_stack
         @toggle_apps last_view.app.app
+
+    # Tell every app in the stack to commit seppuku
+    teardown_workspace : ->
+      _.each @workspace_stack, (view, index) =>
+        view.destroy()
 
 
     # Kick off the show
