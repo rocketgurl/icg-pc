@@ -29,6 +29,13 @@ define [
 
 
     # Render Canvas
+    #
+    # 1. Place loading image
+    # 2. Load external JS modules to setup app
+    # 3. Hide the canvas so our tabs "stack"
+    # 4. Inject all of this into DOM and add Tab
+    # 5. Tell the controller we're here.
+    #
     render : () ->
 
       # Drop loader image into place until our Module is good and ready
@@ -44,6 +51,10 @@ define [
       @render_tab(@template_tab)
 
       # Alert the controller
+      #
+      # There should prolly be some checking to make sure the app has
+      # loaded before telling the controller we're here?
+      #
       @options.controller.trigger 'new_tab', @app.app
 
     # Create tab for this view
@@ -67,22 +78,20 @@ define [
 
     # Remove tab and view
     destroy : () ->
-      # Remove tab
+      # Remove tab & nullify so GC can get it (?)
       if @$tab_el?
         @tab = null
-        delete @tab
         @$tab_el.find("li a[href=#{@app.app}]").parent().remove()
         @$tab_el = null
 
       # Remove content
-      @$el.html('')     
+      @$el.html('').remove()   
 
       # Remove from the stack
       @options.controller.trigger 'stack_remove', @
 
     # Remove loader image and tell module to render
     remove_loader : () ->
-      console.log @
       @$el.find('#module-loader').fadeOut('fast', =>
         @module.render()
         )

@@ -58,16 +58,14 @@
       destroy: function() {
         if (this.$tab_el != null) {
           this.tab = null;
-          delete this.tab;
           this.$tab_el.find("li a[href=" + this.app.app + "]").parent().remove();
           this.$tab_el = null;
         }
-        this.$el.html('');
+        this.$el.html('').remove();
         return this.options.controller.trigger('stack_remove', this);
       },
       remove_loader: function() {
         var _this = this;
-        console.log(this);
         return this.$el.find('#module-loader').fadeOut('fast', function() {
           return _this.module.render();
         });
