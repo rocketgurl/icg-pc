@@ -201,26 +201,21 @@
         return this.$workspace_breadcrumb.html("<li><em>" + this.current_state.business + "</em></li>\n<li><em>" + group_label + "</em></li>\n<li><em>" + app.app_label + "</em></li>");
       },
       launch_app: function(app) {
-        var newapp, wenapp, wneapp;
-        newapp = new WorkspaceCanvasView({
+        var b, search;
+        search = new WorkspaceCanvasView({
           controller: this,
-          'app': app
-        });
-        wenapp = new WorkspaceCanvasView({
-          controller: this,
+          module_type: 'SearchModule',
           'app': {
             app: 'search',
             app_label: 'Search'
           }
         });
-        wneapp = new WorkspaceCanvasView({
+        b = new WorkspaceCanvasView({
           controller: this,
-          'app': {
-            app: 'extreme_snorkeling',
-            app_label: 'Extreme Snorkeling'
-          }
+          module_type: 'TestModule',
+          'app': app
         });
-        return console.log(this.workspace_stack);
+        return console.log(app);
       },
       set_admin_links: function() {
         if (!(this.$workspace_admin_initial != null)) {

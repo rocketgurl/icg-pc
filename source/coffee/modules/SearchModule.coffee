@@ -7,7 +7,7 @@ define [
   'amplify_store'
 ], ($, _, Backbone, Mustache, amplify) ->
 
-  TestModule = 
+  SearchModule = 
 
     # Modules need to be able to call into the parent
     # WorkspaceCanvasView to manipulate the canvas area
@@ -21,7 +21,6 @@ define [
       @view   = view
       @app    = app
       @params = params
-      console.log @view
 
       # Kick off application
       @load()
@@ -30,12 +29,12 @@ define [
     # view.remove_loader will callback Module.render()
     #
     load: () ->
-      @callback_delay 3000, => 
+      @callback_delay 2000, => 
         @view.remove_loader()
 
     # Do whatever rendering animation needs to happen here
     render : () ->
-      @view.$el.html('TEST MODULE BE RENDERED!')
+      @view.$el.html('SEARCH MODULE BE RENDERED!')
 
     # Simple delay fund if we need it.
     callback_delay : (ms, func) ->

@@ -273,23 +273,21 @@ define [
     # doesn't load, we don't have to add it to the stack.
     #
     launch_app : (app) ->
-      newapp = new WorkspaceCanvasView({
-        controller : @
-        'app' : app
-        })
-      wenapp = new WorkspaceCanvasView({
-        controller : @
-        'app' : 
-          app : 'search'
+      # Open policy search for this workspace
+      search = new WorkspaceCanvasView({
+        controller  : @
+        module_type : 'SearchModule'
+        'app'       : 
+          app       : 'search'
           app_label : 'Search'
         })
-      wneapp = new WorkspaceCanvasView({
+      # Open application
+      b = new WorkspaceCanvasView({
         controller : @
-        'app' : 
-          app : 'extreme_snorkeling'
-          app_label : 'Extreme Snorkeling'
+        module_type : 'TestModule'
+        'app' : app
         })
-      console.log @workspace_stack
+      console.log app
 
     #### Set Admin Links
     #

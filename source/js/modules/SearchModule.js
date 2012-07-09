@@ -2,23 +2,22 @@
 (function() {
 
   define(['jquery', 'underscore', 'backbone', 'mustache', 'amplify_core', 'amplify_store'], function($, _, Backbone, Mustache, amplify) {
-    var TestModule;
-    return TestModule = {
+    var SearchModule;
+    return SearchModule = {
       init: function(view, app, params) {
         this.view = view;
         this.app = app;
         this.params = params;
-        console.log(this.view);
         return this.load();
       },
       load: function() {
         var _this = this;
-        return this.callback_delay(3000, function() {
+        return this.callback_delay(2000, function() {
           return _this.view.remove_loader();
         });
       },
       render: function() {
-        return this.view.$el.html('TEST MODULE BE RENDERED!');
+        return this.view.$el.html('SEARCH MODULE BE RENDERED!');
       },
       callback_delay: function(ms, func) {
         return setTimeout(func, ms);

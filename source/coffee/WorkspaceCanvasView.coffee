@@ -1,7 +1,8 @@
 define [
   'BaseView',
-  'mustache'
-], (BaseView, Mustache) ->
+  'mustache',
+  'text!templates/tpl_module_loader.html'
+], (BaseView, Mustache, tpl_module_loader) ->
 
   WorkspaceCanvasView = BaseView.extend
 
@@ -26,12 +27,19 @@ define [
 
       @render()
 
-    # Render login form
-    render : () ->
-      require ['modules/TestModule'], (TestModule) => 
-        TestModule.init @$el, @app
 
-      @$el.hide();
+    # Render Canvas
+    render : () ->
+
+      # Drop loader image into place until our Module is good and ready
+      @$el.html Mustache.render tpl_module_loader, {module_name : @app.app_label}
+
+      # Initialize module
+      require ["modules/#{@options.module_type}"], (Module) =>
+        @module = Module
+        @module.init @, @app
+
+      @$el.hide(); # We initially keep our contents hidden
       @$target.append(@$el)
       @render_tab(@template_tab)
 
@@ -71,3 +79,10 @@ define [
 
       # Remove from the stack
       @options.controller.trigger 'stack_remove', @
+
+    # Remove loader image and tell module to render
+    remove_loader : () ->
+      console.log @
+      @$el.find('#module-loader').fadeOut('fast', =>
+        @module.render()
+        )
