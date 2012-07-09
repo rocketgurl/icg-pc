@@ -21,7 +21,6 @@ define [
       @view   = view
       @app    = app
       @params = params
-      console.log @view
 
       # Kick off application
       @load()

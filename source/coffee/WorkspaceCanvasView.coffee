@@ -16,10 +16,11 @@ define [
       @template     = options.template if options.template?
       @template_tab = if options.template_tab? then options.template_tab else $('#tpl-workspace-tab').html()
 
+      # No app, throw a big error
       if !options.app?
         return @Amplify.publish 'flash', 'warning', 'There was a problem locating that workspace.'
 
-      @app = options.app
+      @app   = options.app
       @el.id = @app.app # Set container id to app name
 
       # Add to the stack

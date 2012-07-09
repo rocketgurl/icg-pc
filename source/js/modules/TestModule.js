@@ -8,7 +8,6 @@
         this.view = view;
         this.app = app;
         this.params = params;
-        console.log(this.view);
         return this.load();
       },
       load: function() {
