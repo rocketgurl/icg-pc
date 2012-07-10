@@ -4,6 +4,7 @@ define [
   'backbone',
   'UserModel',
   'ConfigModel',
+  'WorkspaceStateModel',
   'WorkspaceLoginView',
   'WorkspaceCanvasView',
   'WorkspaceNavView',
@@ -14,7 +15,7 @@ define [
   'amplify_store',
   'cookie',
   'xml2json'
-], ($, _, Backbone, UserModel, ConfigModel, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter,  Base64, MenuHelper, amplify) ->
+], ($, _, Backbone, UserModel, ConfigModel, WorkspaceStateModel, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter,  Base64, MenuHelper, amplify) ->
 
   #### Global ENV Setting
   #
@@ -223,8 +224,14 @@ define [
           # If our current_state is set then we should go ahead and launch.
           # We do this here to ensure we have @config set before attempting to
           # launch, which would be... bad.
+          #
+          # If current_state is not set, then we check localStorage to see if
+          # there was a previous state saved, and try to use that one.
+          #
           if @current_state?
             @trigger 'launch'
+          else
+            @check_workspace_state() # Check for localStorage state
 
         # Try to throw a useful error message when possible.
         error : (model, resp) =>
@@ -234,6 +241,33 @@ define [
     # Simple delay fund if we need it.
     callback_delay : (ms, func) =>
       setTimeout func, ms
+
+    #### Check Workplace State
+    #
+    # Attempt to setup and launch workspace based on localStorage
+    #
+    check_workspace_state : ->
+
+      # Hit localStorage directly with Amplify
+      raw_storage = @Amplify.store()
+
+      # If already a PC2 object then create model with its ID and fetch()
+      # otherwise create a new model (which will get a new GUID)
+      if raw_storage['ics_policy_central']?
+        raw_storage = raw_storage['ics_policy_central']
+        raw_id = _.keys(raw_storage)[0]
+        if raw_id?
+          @workspace_state = new WorkspaceStateModel(
+              id : raw_id
+            )
+          @workspace_state.fetch(
+              success : (model, resp) =>
+                @current_state = model.get 'workspace'
+                @launch_workspace()
+            )
+          
+      else
+        @workspace_state = new WorkspaceStateModel()
 
     #### Launch Workspace
     #
@@ -264,6 +298,15 @@ define [
         <li><em>#{MenuHelper.check_length group_label}</em></li>
         <li><em>#{app.app_label}</em></li>
       """)
+
+      # Store our workplace information in localStorage
+      @workspace_state.set 'workspace', {
+        env      : @current_state.env
+        business : @current_state.business
+        context  : @current_state.context
+        app      : @current_state.app
+      }
+      @workspace_state.save()
 
     #### Launch App
     #
