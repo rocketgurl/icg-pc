@@ -44,8 +44,7 @@ define [
 
       # Initialize module
       require ["modules/#{@options.module_type}"], (Module) =>
-        @module = Module
-        @module.init @, @app
+        @module = new Module(@, @app)
 
       @$el.hide(); # We initially keep our contents hidden
       @$target.append(@$el)

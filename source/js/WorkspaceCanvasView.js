@@ -28,8 +28,7 @@
           module_name: this.app.app_label
         }));
         require(["modules/" + this.options.module_type], function(Module) {
-          _this.module = Module;
-          return _this.module.init(_this, _this.app);
+          return _this.module = new Module(_this, _this.app);
         });
         this.$el.hide();
         this.$target.append(this.$el);

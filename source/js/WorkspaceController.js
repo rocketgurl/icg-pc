@@ -60,7 +60,8 @@
         });
       },
       stack_clear: function() {
-        return this.workspace_stack = [];
+        this.workspace_stack = [];
+        return this.workspace_state.set('apps', []);
       },
       stack_get: function(app) {
         var index, obj, _ref;
@@ -235,19 +236,29 @@
         return this.workspace_state.save();
       },
       launch_app: function(app) {
-        new WorkspaceCanvasView({
-          controller: this,
-          module_type: 'SearchModule',
-          'app': {
-            app: 'search',
-            app_label: 'Search'
-          }
+        var saved, saved_apps, _i, _len, _results,
+          _this = this;
+        saved_apps = this.workspace_state.get('apps');
+        saved_apps = _.reject(saved_apps, function(saved) {
+          return saved.app === app.app;
         });
-        return new WorkspaceCanvasView({
+        new WorkspaceCanvasView({
           controller: this,
           module_type: 'TestModule',
           'app': app
         });
+        if (saved_apps != null) {
+          _results = [];
+          for (_i = 0, _len = saved_apps.length; _i < _len; _i++) {
+            saved = saved_apps[_i];
+            _results.push(new WorkspaceCanvasView({
+              controller: this,
+              module_type: 'TestModule',
+              'app': saved
+            }));
+          }
+          return _results;
+        }
       },
       set_admin_links: function() {
         if (!(this.$workspace_admin_initial != null)) {

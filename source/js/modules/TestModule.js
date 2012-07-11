@@ -3,26 +3,35 @@
 
   define(['jquery', 'underscore', 'backbone', 'mustache', 'amplify_core', 'amplify_store'], function($, _, Backbone, Mustache, amplify) {
     var TestModule;
-    return TestModule = {
-      init: function(view, app, params) {
+    return TestModule = (function() {
+
+      function TestModule(view, app, params) {
         this.view = view;
         this.app = app;
         this.params = params;
-        return this.load();
-      },
-      load: function() {
-        var _this = this;
-        return this.callback_delay(3000, function() {
+        this.load();
+      }
+
+      TestModule.prototype.load = function() {
+        var rnd,
+          _this = this;
+        rnd = Math.floor(Math.random() * (4 - 1 + 1)) + 1;
+        return this.callback_delay(rnd * 1000, function() {
           return _this.view.remove_loader();
         });
-      },
-      render: function() {
-        return this.view.$el.html('TEST MODULE BE RENDERED!');
-      },
-      callback_delay: function(ms, func) {
+      };
+
+      TestModule.prototype.render = function() {
+        return this.view.$el.html(this.app.app_label + ' MODULE BE RENDERED!');
+      };
+
+      TestModule.prototype.callback_delay = function(ms, func) {
         return setTimeout(func, ms);
-      }
-    };
+      };
+
+      return TestModule;
+
+    })();
   });
 
 }).call(this);

@@ -90,6 +90,7 @@ define [
     # Remove all views from stack
     stack_clear : () ->
       @workspace_stack = []
+      @workspace_state.set 'apps', [] # maintain in state
 
     # Find a view in the stack and return it
     stack_get : (app) ->
@@ -103,7 +104,7 @@ define [
 
     # Display a flash message in the browser
     flash : (type, msg) ->
-      @Amplify.publish 'flash', type, msg
+      @Amplify.publish 'flash', type, msg     
 
     # Check for an identity cookie and check server for
     # validity. If no cookie present then just build the
@@ -322,20 +323,27 @@ define [
     # doesn't load, we don't have to add it to the stack.
     #
     launch_app : (app) ->
-      # Open policy search for this workspace
-      new WorkspaceCanvasView({
-        controller  : @
-        module_type : 'SearchModule'
-        'app'       : 
-          app       : 'search'
-          app_label : 'Search'
-        })
-      # Open application
+      # Find apps saved in localStorage that are not part of the initial
+      # workspace definition. We need to fire these up.
+      saved_apps = @workspace_state.get 'apps'
+      saved_apps = _.reject saved_apps, (saved) =>
+        saved.app is app.app
+
+      # Open workspace defined default application
       new WorkspaceCanvasView({
         controller : @
         module_type : 'TestModule'
         'app' : app
         })
+
+      # Open user triggered applications
+      if saved_apps?
+        for saved in saved_apps
+          new WorkspaceCanvasView({
+            controller : @
+            module_type : 'TestModule'
+            'app' : saved
+            })
 
     #### Set Admin Links
     #
@@ -425,7 +433,7 @@ define [
     @launch_workspace()
 
   WorkspaceController.on "stack_add", (view) ->
-    @stack_add(view)
+    @stack_add view
 
   WorkspaceController.on "stack_remove", (view) ->
     @stack_remove(view)
