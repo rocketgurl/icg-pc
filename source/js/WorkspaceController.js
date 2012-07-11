@@ -171,10 +171,9 @@
               sub_nav: _this.config.get('menu_html').sub_nav
             });
             _this.navigation_view.render();
+            _this.check_workspace_state();
             if (_this.current_state != null) {
               return _this.trigger('launch');
-            } else {
-              return _this.check_workspace_state();
             }
           },
           error: function(model, resp) {
@@ -199,9 +198,11 @@
             return this.workspace_state.fetch({
               success: function(model, resp) {
                 _this.current_state = model.get('workspace');
-                return _this.Router.navigate("workspace/" + _this.current_state.env + "/" + _this.current_state.business + "/" + _this.current_state.context + "/" + _this.current_state.app, {
-                  trigger: true
-                });
+                return _this.Router.navigate("workspace/" + _this.current_state.env + "/" + _this.current_state.business + "/" + _this.current_state.context + "/" + _this.current_state.app);
+              },
+              error: function(model, resp) {
+                _this.flash('notice', "We had an issue with your saved state. Not major, but we're starting from scratch.");
+                return _this.workspace_state = new WorkspaceStateModel();
               }
             });
           }
@@ -234,8 +235,7 @@
         return this.workspace_state.save();
       },
       launch_app: function(app) {
-        var b, search;
-        search = new WorkspaceCanvasView({
+        new WorkspaceCanvasView({
           controller: this,
           module_type: 'SearchModule',
           'app': {
@@ -243,12 +243,11 @@
             app_label: 'Search'
           }
         });
-        b = new WorkspaceCanvasView({
+        return new WorkspaceCanvasView({
           controller: this,
           module_type: 'TestModule',
           'app': app
         });
-        return console.log(app);
       },
       set_admin_links: function() {
         if (!(this.$workspace_admin_initial != null)) {

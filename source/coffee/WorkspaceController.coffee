@@ -228,10 +228,11 @@ define [
           # If current_state is not set, then we check localStorage to see if
           # there was a previous state saved, and try to use that one.
           #
+          @check_workspace_state() # Check for localStorage state
           if @current_state?
             @trigger 'launch'
-          else
-            @check_workspace_state() # Check for localStorage state
+          # else
+          #   @check_workspace_state() # Check for localStorage state
 
         # Try to throw a useful error message when possible.
         error : (model, resp) =>
@@ -263,10 +264,12 @@ define [
           @workspace_state.fetch(
               success : (model, resp) =>
                 @current_state = model.get 'workspace'
-
-                # Instead of using @launch_workspace we send trigger the router
-                # so we can get our address bar properly populated
-                @Router.navigate "workspace/#{@current_state.env}/#{@current_state.business}/#{@current_state.context}/#{@current_state.app}", { trigger : true}
+                # Make sure our address bar properly populated
+                @Router.navigate "workspace/#{@current_state.env}/#{@current_state.business}/#{@current_state.context}/#{@current_state.app}"
+              error : (model, resp) =>
+                # Make a new WorkspaceState as we had a problem.
+                @flash 'notice', "We had an issue with your saved state. Not major, but we're starting from scratch."
+                @workspace_state = new WorkspaceStateModel()
             )
           
       else
@@ -320,7 +323,7 @@ define [
     #
     launch_app : (app) ->
       # Open policy search for this workspace
-      search = new WorkspaceCanvasView({
+      new WorkspaceCanvasView({
         controller  : @
         module_type : 'SearchModule'
         'app'       : 
@@ -328,12 +331,11 @@ define [
           app_label : 'Search'
         })
       # Open application
-      b = new WorkspaceCanvasView({
+      new WorkspaceCanvasView({
         controller : @
         module_type : 'TestModule'
         'app' : app
         })
-      console.log app
 
     #### Set Admin Links
     #
