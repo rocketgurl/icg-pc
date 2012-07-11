@@ -199,7 +199,9 @@
             return this.workspace_state.fetch({
               success: function(model, resp) {
                 _this.current_state = model.get('workspace');
-                return _this.launch_workspace();
+                return _this.Router.navigate("workspace/" + _this.current_state.env + "/" + _this.current_state.business + "/" + _this.current_state.context + "/" + _this.current_state.app, {
+                  trigger: true
+                });
               }
             });
           }

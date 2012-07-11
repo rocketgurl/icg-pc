@@ -263,7 +263,10 @@ define [
           @workspace_state.fetch(
               success : (model, resp) =>
                 @current_state = model.get 'workspace'
-                @launch_workspace()
+
+                # Instead of using @launch_workspace we send trigger the router
+                # so we can get our address bar properly populated
+                @Router.navigate "workspace/#{@current_state.env}/#{@current_state.business}/#{@current_state.context}/#{@current_state.app}", { trigger : true}
             )
           
       else
