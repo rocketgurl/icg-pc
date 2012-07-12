@@ -409,7 +409,6 @@ define [
       saved_apps = @workspace_state.get 'apps'
       if saved_apps?
         for app in saved_apps
-          console.log app
           @launch_app app
 
     #### Set Admin Links
