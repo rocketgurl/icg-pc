@@ -302,7 +302,6 @@
           _results = [];
           for (_i = 0, _len = saved_apps.length; _i < _len; _i++) {
             app = saved_apps[_i];
-            console.log(app);
             _results.push(this.launch_app(app));
           }
           return _results;

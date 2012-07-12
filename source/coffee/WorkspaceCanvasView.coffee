@@ -105,6 +105,6 @@ define [
       # If it's already in the saved state stack, we don't
       # add it again
       if @options.controller.state_exists(app)?
-        return
+        @options.controller.toggle_apps app.app
       else
         @options.controller.launch_app app

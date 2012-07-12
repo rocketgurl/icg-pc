@@ -71,7 +71,7 @@
       },
       launch_child_app: function(app) {
         if (this.options.controller.state_exists(app) != null) {
-
+          return this.options.controller.toggle_apps(app.app);
         } else {
           return this.options.controller.launch_app(app);
         }
