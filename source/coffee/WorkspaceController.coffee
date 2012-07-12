@@ -70,6 +70,14 @@ define [
     Router                : new WorkspaceRouter()
     COOKIE_NAME           : 'ics360.PolicyCentral'
 
+    # Simple logger
+    logger : (msg) ->
+      @Amplify.publish 'log', msg
+
+    # Display a flash message in the browser
+    flash : (type, msg) ->
+      @Amplify.publish 'flash', type, msg    
+
     # Keep tabs on what's in our Workspace.
     # This should contain WorkspaceCanvasView-enabled objects
     workspace_stack : []
@@ -97,14 +105,56 @@ define [
       for index, obj of @workspace_stack
         if app == obj.app.app
           return obj
-    
-    # Simple logger
-    logger : (msg) ->
-      @Amplify.publish 'log', msg
 
-    # Display a flash message in the browser
-    flash : (type, msg) ->
-      @Amplify.publish 'flash', type, msg     
+    # If app is not saved in @workspace_state and is not the 
+    # workspace defined app then we need to add it to our
+    # stack of saved apps
+    #
+    # @param `app` _Object_ application config object
+    #
+    state_add : (app) ->
+      # No workspace default apps allowed
+      if app.app is @current_state.app
+        return
+
+      saved_apps = @workspace_state.get 'apps'
+
+      if saved_apps?
+        # Check to see if this app is already in the array.
+        # If its not, add it.
+        exists = @state_exists app
+        if !exists?
+            saved_apps.push app
+      else
+        # Otherwise create a new array of apps if this app
+        # is not the workspace defined default
+        if app.app != @current_state.app
+          saved_apps = [app]
+
+      @workspace_state.set 'apps', saved_apps
+      @workspace_state.save()
+
+    # Remove app from saved workspace state
+    #
+    # @param `app` _Object_ application config object
+    #
+    state_remove : (app) ->
+      saved_apps = @workspace_state.get 'apps'
+      _.each saved_apps, (obj, index) =>
+        if app.app == obj.app
+          saved_apps.splice index, 1
+      @workspace_state.set 'apps', saved_apps
+      @workspace_state.save()
+    
+    # Check to see if an app already exists in saved state
+    #
+    # @param `app` _Object_ application config object
+    #
+    state_exists : (app) ->
+      saved_apps = @workspace_state.get 'apps'
+      _.find saved_apps, (saved) =>
+        saved.app is app.app
+ 
 
     # Check for an identity cookie and check server for
     # validity. If no cookie present then just build the
@@ -129,7 +179,7 @@ define [
       $.cookie(@COOKIE_NAME, digest, { expires : 7 })
 
     # Render the login form
-    build_login : () ->
+    build_login : ->
       @login_view = new WorkspaceLoginView({
           controller   : @
           template     : $('#tpl-ics-login')
@@ -198,6 +248,7 @@ define [
       @user = null
       @reset_admin_links()
       @navigation_view.destroy()
+      @teardown_workspace()
 
     #### Get Configuration Files
     #
@@ -249,8 +300,9 @@ define [
     # Attempt to setup and launch workspace based on localStorage
     #
     check_workspace_state : ->
-
       # Hit localStorage directly with Amplify
+      if !_.isFunction(@Amplify.store)
+        @check_workspace_state()
       raw_storage = @Amplify.store()
 
       # If already a PC2 object then create model with its ID and fetch()
@@ -298,6 +350,7 @@ define [
         @launch_workspace() # recur
       else
         @launch_app app
+        @check_persisted_apps()
 
       # Set breadcrumb
       @$workspace_breadcrumb.html("""
@@ -322,28 +375,51 @@ define [
     # using events so that if for some reason the view
     # doesn't load, we don't have to add it to the stack.
     #
+    # @param `app` _Object_ application config object
+    #
     launch_app : (app) ->
-      # Find apps saved in localStorage that are not part of the initial
-      # workspace definition. We need to fire these up.
-      saved_apps = @workspace_state.get 'apps'
-      saved_apps = _.reject saved_apps, (saved) =>
-        saved.app is app.app
+      # If app is not saved in @workspace_state and is not the 
+      # workspace defined app then we need to add it to our
+      # stack of saved apps
+      @state_add app
+
+      # Determine which Module to load into the view
+      default_module = 'TestModule'
+      if app.params?
+        default_module = app.params.pcModule or 'TestModule'
 
       # Open workspace defined default application
-      new WorkspaceCanvasView({
-        controller : @
-        module_type : 'TestModule'
-        'app' : app
-        })
+      @create_workspace default_module, app
 
       # Open user triggered applications
-      if saved_apps?
-        for saved in saved_apps
-          new WorkspaceCanvasView({
+      # saved_apps = @workspace_state.get 'apps'
+      # if saved_apps?
+      #   for saved in saved_apps
+      #     if saved.params?
+      #       default_module = saved.params.pcModule or 'TestModule'
+      #     @create_workspace default_module, saved
+
+    # Instantiate a new WorkspaceCanvasView
+    #
+    # @param `module` _String_ name of module to load  
+    # @param `app` _Object_ application config object  
+    #
+    create_workspace : (module, app) ->
+      new WorkspaceCanvasView({
             controller : @
-            module_type : 'TestModule'
-            'app' : saved
+            module_type : module
+            'app' : app
             })
+
+
+    # If there are other apps persisted in localStorage we need
+    # to launch those as well
+    check_persisted_apps : ->
+      saved_apps = @workspace_state.get 'apps'
+      if saved_apps?
+        for app in saved_apps
+          console.log app
+          @launch_app app
 
     #### Set Admin Links
     #
@@ -437,6 +513,7 @@ define [
 
   WorkspaceController.on "stack_remove", (view) ->
     @stack_remove(view)
+    @state_remove(view.app)
 
   WorkspaceController.on "new_tab", (app_name) ->
     @toggle_apps app_name

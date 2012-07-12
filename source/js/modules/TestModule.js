@@ -22,7 +22,24 @@
       };
 
       TestModule.prototype.render = function() {
-        return this.view.$el.html(this.app.app_label + ' MODULE BE RENDERED!');
+        var tpl,
+          _this = this;
+        tpl = "<p>{{label}} Module is rendered</p>\n<p><a href=\"#app\" class=\"open_search_app\" data-pc-module=\"SearchModule\" data-pc-policy=\"123456789\">Open another tab</a></p>\n<p><a href=\"#app\" class=\"open_search_app\" data-pc-module=\"SearchModule\" data-pc-policy=\"987654321\">Open another tab</a></p>\n<p><a href=\"#app\" class=\"open_search_app\" data-pc-module=\"SearchModule\" data-pc-policy=\"987651234\">Open another tab</a></p>";
+        this.view.$el.html(Mustache.render(tpl, {
+          label: this.app.app_label
+        }));
+        return $('.open_search_app').on('click', function(e) {
+          var $e, app, data;
+          e.preventDefault();
+          $e = $(e.target);
+          data = $e.data();
+          app = {
+            app: "policy_view_" + data.pcPolicy,
+            app_label: "Policy view " + data.pcPolicy,
+            params: data
+          };
+          return _this.view.launch_child_app(app);
+        });
       };
 
       TestModule.prototype.callback_delay = function(ms, func) {

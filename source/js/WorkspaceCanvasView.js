@@ -68,6 +68,13 @@
         return this.$el.find('#module-loader').fadeOut('fast', function() {
           return _this.module.render();
         });
+      },
+      launch_child_app: function(app) {
+        if (this.options.controller.state_exists(app) != null) {
+
+        } else {
+          return this.options.controller.launch_app(app);
+        }
       }
     });
   });

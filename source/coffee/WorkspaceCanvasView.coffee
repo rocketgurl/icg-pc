@@ -95,3 +95,16 @@ define [
       @$el.find('#module-loader').fadeOut('fast', =>
         @module.render()
         )
+
+    # Launch a new app (tab) within the current workspace context
+    # Checks to make sure the app isn't already loaded first.
+    #
+    # @param `app` _Object_ application config object  
+    #
+    launch_child_app : (app) ->
+      # If it's already in the saved state stack, we don't
+      # add it again
+      if @options.controller.state_exists(app)?
+        return
+      else
+        @options.controller.launch_app app

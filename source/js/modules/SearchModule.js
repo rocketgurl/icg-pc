@@ -3,26 +3,33 @@
 
   define(['jquery', 'underscore', 'backbone', 'mustache', 'amplify_core', 'amplify_store'], function($, _, Backbone, Mustache, amplify) {
     var SearchModule;
-    return SearchModule = {
-      init: function(view, app, params) {
+    return SearchModule = (function() {
+
+      function SearchModule(view, app, params) {
         this.view = view;
         this.app = app;
         this.params = params;
-        return this.load();
-      },
-      load: function() {
+        this.load();
+      }
+
+      SearchModule.prototype.load = function() {
         var _this = this;
         return this.callback_delay(2000, function() {
           return _this.view.remove_loader();
         });
-      },
-      render: function() {
+      };
+
+      SearchModule.prototype.render = function() {
         return this.view.$el.html('SEARCH MODULE BE RENDERED!');
-      },
-      callback_delay: function(ms, func) {
+      };
+
+      SearchModule.prototype.callback_delay = function(ms, func) {
         return setTimeout(func, ms);
-      }
-    };
+      };
+
+      return SearchModule;
+
+    })();
   });
 
 }).call(this);

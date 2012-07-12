@@ -31,7 +31,27 @@ define [
 
     # Do whatever rendering animation needs to happen here
     render : ->
-      @view.$el.html( @app.app_label + ' MODULE BE RENDERED!')
+      tpl = """
+      <p>{{label}} Module is rendered</p>
+      <p><a href="#app" class="open_search_app" data-pc-module="SearchModule" data-pc-policy="123456789">Open another tab</a></p>
+      <p><a href="#app" class="open_search_app" data-pc-module="SearchModule" data-pc-policy="987654321">Open another tab</a></p>
+      <p><a href="#app" class="open_search_app" data-pc-module="SearchModule" data-pc-policy="987651234">Open another tab</a></p>
+      """
+      @view.$el.html Mustache.render(tpl, { label : @app.app_label })
+
+      # Attach a handler
+      $('.open_search_app').on 'click', (e) =>
+        e.preventDefault()
+        $e = $(e.target)
+        data = $e.data()
+
+        app =
+          app       : "policy_view_#{data.pcPolicy}"
+          app_label : "Policy view #{data.pcPolicy}"
+          params    : data
+
+        @view.launch_child_app app
+        
 
     # Simple delay fund if we need it.
     callback_delay : (ms, func) ->

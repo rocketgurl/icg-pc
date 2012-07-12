@@ -41,6 +41,12 @@
       $workspace_tabs: $('#workspace nav ul'),
       Router: new WorkspaceRouter(),
       COOKIE_NAME: 'ics360.PolicyCentral',
+      logger: function(msg) {
+        return this.Amplify.publish('log', msg);
+      },
+      flash: function(type, msg) {
+        return this.Amplify.publish('flash', type, msg);
+      },
       workspace_stack: [],
       stack_add: function(view) {
         var exists;
@@ -73,11 +79,44 @@
           }
         }
       },
-      logger: function(msg) {
-        return this.Amplify.publish('log', msg);
+      state_add: function(app) {
+        var exists, saved_apps;
+        if (app.app === this.current_state.app) {
+          return;
+        }
+        saved_apps = this.workspace_state.get('apps');
+        if (saved_apps != null) {
+          exists = this.state_exists(app);
+          if (!(exists != null)) {
+            saved_apps.push(app);
+          }
+        } else {
+          if (app.app !== this.current_state.app) {
+            saved_apps = [app];
+          }
+        }
+        this.workspace_state.set('apps', saved_apps);
+        return this.workspace_state.save();
       },
-      flash: function(type, msg) {
-        return this.Amplify.publish('flash', type, msg);
+      state_remove: function(app) {
+        var saved_apps,
+          _this = this;
+        saved_apps = this.workspace_state.get('apps');
+        _.each(saved_apps, function(obj, index) {
+          if (app.app === obj.app) {
+            return saved_apps.splice(index, 1);
+          }
+        });
+        this.workspace_state.set('apps', saved_apps);
+        return this.workspace_state.save();
+      },
+      state_exists: function(app) {
+        var saved_apps,
+          _this = this;
+        saved_apps = this.workspace_state.get('apps');
+        return _.find(saved_apps, function(saved) {
+          return saved.app === app.app;
+        });
       },
       check_cookie_identity: function() {
         var cookie;
@@ -152,7 +191,8 @@
         $.cookie(this.COOKIE_NAME, null);
         this.user = null;
         this.reset_admin_links();
-        return this.navigation_view.destroy();
+        this.navigation_view.destroy();
+        return this.teardown_workspace();
       },
       get_configs: function() {
         var _this = this;
@@ -188,6 +228,9 @@
       check_workspace_state: function() {
         var raw_id, raw_storage,
           _this = this;
+        if (!_.isFunction(this.Amplify.store)) {
+          this.check_workspace_state();
+        }
         raw_storage = this.Amplify.store();
         if (raw_storage['ics_policy_central'] != null) {
           raw_storage = raw_storage['ics_policy_central'];
@@ -225,6 +268,7 @@
           this.launch_workspace();
         } else {
           this.launch_app(app);
+          this.check_persisted_apps();
         }
         this.$workspace_breadcrumb.html("<li><em>" + this.current_state.business + "</em></li>\n<li><em>" + (MenuHelper.check_length(group_label)) + "</em></li>\n<li><em>" + app.app_label + "</em></li>");
         this.workspace_state.set('workspace', {
@@ -236,26 +280,30 @@
         return this.workspace_state.save();
       },
       launch_app: function(app) {
-        var saved, saved_apps, _i, _len, _results,
-          _this = this;
-        saved_apps = this.workspace_state.get('apps');
-        saved_apps = _.reject(saved_apps, function(saved) {
-          return saved.app === app.app;
-        });
-        new WorkspaceCanvasView({
+        var default_module;
+        this.state_add(app);
+        default_module = 'TestModule';
+        if (app.params != null) {
+          default_module = app.params.pcModule || 'TestModule';
+        }
+        return this.create_workspace(default_module, app);
+      },
+      create_workspace: function(module, app) {
+        return new WorkspaceCanvasView({
           controller: this,
-          module_type: 'TestModule',
+          module_type: module,
           'app': app
         });
+      },
+      check_persisted_apps: function() {
+        var app, saved_apps, _i, _len, _results;
+        saved_apps = this.workspace_state.get('apps');
         if (saved_apps != null) {
           _results = [];
           for (_i = 0, _len = saved_apps.length; _i < _len; _i++) {
-            saved = saved_apps[_i];
-            _results.push(new WorkspaceCanvasView({
-              controller: this,
-              module_type: 'TestModule',
-              'app': saved
-            }));
+            app = saved_apps[_i];
+            console.log(app);
+            _results.push(this.launch_app(app));
           }
           return _results;
         }
@@ -340,7 +388,8 @@
       return this.stack_add(view);
     });
     WorkspaceController.on("stack_remove", function(view) {
-      return this.stack_remove(view);
+      this.stack_remove(view);
+      return this.state_remove(view.app);
     });
     return WorkspaceController.on("new_tab", function(app_name) {
       return this.toggle_apps(app_name);

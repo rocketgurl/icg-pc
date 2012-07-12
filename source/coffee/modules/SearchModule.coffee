@@ -7,7 +7,7 @@ define [
   'amplify_store'
 ], ($, _, Backbone, Mustache, amplify) ->
 
-  SearchModule = 
+  class SearchModule
 
     # Modules need to be able to call into the parent
     # WorkspaceCanvasView to manipulate the canvas area
@@ -17,11 +17,7 @@ define [
     # @param `app` _Object_ Application object
     # @param `params` _Object_ Applications specific params
     #
-    init : (view, app, params) ->
-      @view   = view
-      @app    = app
-      @params = params
-
+    constructor : (@view, @app, @params) ->
       # Kick off application
       @load()
       
