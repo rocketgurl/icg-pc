@@ -391,14 +391,6 @@ define [
       # Open workspace defined default application
       @create_workspace default_module, app
 
-      # Open user triggered applications
-      # saved_apps = @workspace_state.get 'apps'
-      # if saved_apps?
-      #   for saved in saved_apps
-      #     if saved.params?
-      #       default_module = saved.params.pcModule or 'TestModule'
-      #     @create_workspace default_module, saved
-
     # Instantiate a new WorkspaceCanvasView
     #
     # @param `module` _String_ name of module to load  
@@ -410,7 +402,6 @@ define [
             module_type : module
             'app' : app
             })
-
 
     # If there are other apps persisted in localStorage we need
     # to launch those as well
