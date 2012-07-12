@@ -136,7 +136,7 @@ define [
 
     # Remove app from saved workspace state
     #
-    # @param `app` _Object_ application config object
+    # @param `app` _Object_ application config object  
     #
     state_remove : (app) ->
       saved_apps = @workspace_state.get 'apps'
