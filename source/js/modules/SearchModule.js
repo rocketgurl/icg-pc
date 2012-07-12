@@ -20,7 +20,7 @@
       };
 
       SearchModule.prototype.render = function() {
-        return this.view.$el.html("<h2>" + this.app.app_label + " MODULE BE RENDERED!</h2>");
+        return this.view.$el.html('SEARCH MODULE BE RENDERED!');
       };
 
       SearchModule.prototype.callback_delay = function(ms, func) {

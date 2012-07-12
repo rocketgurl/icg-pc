@@ -30,7 +30,7 @@ define [
 
     # Do whatever rendering animation needs to happen here
     render : () ->
-      @view.$el.html("<h2>#{@app.app_label} MODULE BE RENDERED!</h2>")
+      @view.$el.html('SEARCH MODULE BE RENDERED!')
 
     # Simple delay fund if we need it.
     callback_delay : (ms, func) ->
