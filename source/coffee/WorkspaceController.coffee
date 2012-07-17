@@ -334,6 +334,12 @@ define [
     #
     launch_workspace : ->
 
+      # If not logged in then back to login
+      if !@user?
+        @flash 'notice', "Please login to Policy Central to continue."
+        @build_login()
+        return
+
       menu = @config.get 'menu'
 
       group_label = apps = menu[@current_state.business].contexts[@current_state.context].label

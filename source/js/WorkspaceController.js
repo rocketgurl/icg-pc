@@ -257,6 +257,11 @@
       launch_workspace: function() {
         var app, apps, group_label, menu,
           _this = this;
+        if (!(this.user != null)) {
+          this.flash('notice', "Please login to Policy Central to continue.");
+          this.build_login();
+          return;
+        }
         menu = this.config.get('menu');
         group_label = apps = menu[this.current_state.business].contexts[this.current_state.context].label;
         apps = menu[this.current_state.business].contexts[this.current_state.context].apps;
