@@ -13,7 +13,6 @@ define [
     #
     constructor : (@view, @id) ->
       @flash_container = @view.$el.find("#flash-message-#{@id}")
-      console.log @flash_container
       @register @id
 
 

@@ -9,7 +9,6 @@
         this.view = view;
         this.id = id;
         this.flash_container = this.view.$el.find("#flash-message-" + this.id);
-        console.log(this.flash_container);
         this.register(this.id);
       }
 
