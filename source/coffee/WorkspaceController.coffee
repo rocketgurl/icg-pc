@@ -26,23 +26,6 @@ define [
   amplify.subscribe 'log', (msg) ->
     console.log msg
 
-  #### TODO: MAKE MESSAGE CLASS THAT CAN HANDLE
-  ####       MULTIPLE FLASH CHANNELS ON PER TAB
-  #
-  #### Flash Message handling
-  #  
-  $flash = $('#flash-message')
-  amplify.subscribe 'flash', (type, msg) ->
-    # set className
-    if type?
-      $flash.attr 'class', type
-    if msg?
-      msg += ' <i class="icon-remove-sign"></i>'
-      $flash.html(msg).fadeIn('fast')
-
-  $flash.on 'click', 'i', (event) ->
-    event.preventDefault()
-    $flash.fadeOut 'fast'
 
   #### Services
   #

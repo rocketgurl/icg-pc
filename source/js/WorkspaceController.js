@@ -2,25 +2,11 @@
 (function() {
 
   define(['jquery', 'underscore', 'backbone', 'UserModel', 'ConfigModel', 'WorkspaceStateModel', 'WorkspaceLoginView', 'WorkspaceCanvasView', 'WorkspaceNavView', 'WorkspaceRouter', 'base64', 'MenuHelper', 'amplify_core', 'amplify_store', 'cookie', 'xml2json'], function($, _, Backbone, UserModel, ConfigModel, WorkspaceStateModel, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter, Base64, MenuHelper, amplify) {
-    var $flash, WorkspaceController, ics360,
+    var WorkspaceController, ics360,
       _this = this;
     window.ICS360_ENV = 'staging';
     amplify.subscribe('log', function(msg) {
       return console.log(msg);
-    });
-    $flash = $('#flash-message');
-    amplify.subscribe('flash', function(type, msg) {
-      if (type != null) {
-        $flash.attr('class', type);
-      }
-      if (msg != null) {
-        msg += ' <i class="icon-remove-sign"></i>';
-        return $flash.html(msg).fadeIn('fast');
-      }
-    });
-    $flash.on('click', 'i', function(event) {
-      event.preventDefault();
-      return $flash.fadeOut('fast');
     });
     ics360 = {
       services: {
