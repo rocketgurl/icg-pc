@@ -6,10 +6,11 @@ define [
 
   WorkspaceCanvasView = BaseView.extend
 
-    $target   : $('#target')
-    tagName   : 'section'
-    className : 'canvas'
-    tab       : null
+    $target    : $('#target')
+    $flash_tpl : $('#tpl-flash-message').html()
+    tagName    : 'section'
+    className  : 'canvas'
+    tab        : null
 
     initialize : (options) ->
       @$tab_el      = options.controller.$workspace_tabs
@@ -40,7 +41,7 @@ define [
     render : () ->
 
       # Drop loader image into place until our Module is good and ready
-      @$el.html Mustache.render tpl_module_loader, {module_name : @app.app_label}
+      @$el.html Mustache.render tpl_module_loader, {module_name : @app.app_label, app : @app.app}
 
       # Initialize module
       require ["modules/#{@options.module_type}"], (Module) =>
@@ -92,7 +93,7 @@ define [
 
     # Remove loader image and tell module to render
     remove_loader : () ->
-      @$el.find('#module-loader').fadeOut('fast', =>
+      @$el.find('.module-loader').fadeOut('fast', =>
         @module.render()
         )
 

@@ -45,7 +45,7 @@
         return this.Amplify.publish('log', msg);
       },
       flash: function(type, msg) {
-        return this.Amplify.publish('flash', type, msg);
+        return this.Amplify.publish(this.login_view.cid, type, msg);
       },
       workspace_stack: [],
       stack_add: function(view) {
@@ -364,6 +364,7 @@
       },
       teardown_workspace: function() {
         var _this = this;
+        console.log(this.workspace_state);
         return _.each(this.workspace_stack, function(view, index) {
           return view.destroy();
         });

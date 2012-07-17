@@ -1,8 +1,9 @@
 define [
   'BaseView',
   'mustache',
+  'Messenger',
   'text!templates/tpl_search_container.html'
-], (BaseView, Mustache, tpl_search_container) ->
+], (BaseView, Mustache, Messenger, tpl_search_container) ->
 
   SearchView = BaseView.extend
 
@@ -16,8 +17,15 @@ define [
       @$el = options.view.$el
 
     render : () ->
-      @$el.html Mustache.render tpl_search_container, { cid : @cid }
+      # Setup flash module & search container
+      html = Mustache.render $('#tpl-flash-message').html(), { cid : @cid }
+      html += Mustache.render tpl_search_container, { cid : @cid }
+      @$el.html html
+
+      # Register flash message pubsub for this view
+      @messenger = new Messenger(@options.view, @cid)
 
     search : (e) ->
       e.preventDefault()
       search_val = @$el.find('input[type=search]').val()
+      @Amplify.publish @cid, 'notice', search_val

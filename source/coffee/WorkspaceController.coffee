@@ -26,6 +26,9 @@ define [
   amplify.subscribe 'log', (msg) ->
     console.log msg
 
+  #### TODO: MAKE MESSAGE CLASS THAT CAN HANDLE
+  ####       MULTIPLE FLASH CHANNELS ON PER TAB
+  #
   #### Flash Message handling
   #  
   $flash = $('#flash-message')
@@ -76,7 +79,7 @@ define [
 
     # Display a flash message in the browser
     flash : (type, msg) ->
-      @Amplify.publish 'flash', type, msg    
+      @Amplify.publish @login_view.cid, type, msg    
 
     # Keep tabs on what's in our Workspace.
     # This should contain WorkspaceCanvasView-enabled objects
@@ -475,6 +478,7 @@ define [
 
     # Tell every app in the stack to commit seppuku
     teardown_workspace : ->
+      console.log @workspace_state
       _.each @workspace_stack, (view, index) =>
         view.destroy()
 
