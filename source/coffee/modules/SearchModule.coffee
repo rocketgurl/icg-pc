@@ -3,9 +3,10 @@ define [
   'underscore',
   'backbone',
   'mustache',
+  'modules/SearchView',
   'amplify_core',
   'amplify_store'
-], ($, _, Backbone, Mustache, amplify) ->
+], ($, _, Backbone, Mustache, SearchView, amplify) ->
 
   class SearchModule
 
@@ -25,12 +26,14 @@ define [
     # view.remove_loader will callback Module.render()
     #
     load: () ->
-      @callback_delay 2000, => 
+      @callback_delay 500, => 
         @view.remove_loader()
 
     # Do whatever rendering animation needs to happen here
     render : () ->
-       @view.$el.html("<h2>#{@app.app_label} MODULE BE RENDERED!</h2>")
+      @search_view = new SearchView({view : @view, module : @})
+      @search_view.render()
+      # @view.$el.html("<h2>#{@app.app_label} MODULE BE RENDERED!</h2>")
 
     # Simple delay fund if we need it.
     callback_delay : (ms, func) ->
