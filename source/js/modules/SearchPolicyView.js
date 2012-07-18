@@ -17,6 +17,11 @@
         });
         this.$el.html(this.Mustache.render(tpl_search_policy_row, this.data));
         return this.target.append(this.$el);
+      },
+      destroy: function() {
+        this.$el.remove();
+        this.model = null;
+        return this.el = null;
       }
     });
   });

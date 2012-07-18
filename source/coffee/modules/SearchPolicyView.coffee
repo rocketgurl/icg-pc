@@ -21,3 +21,8 @@ define [
 
       @$el.html @Mustache.render tpl_search_policy_row, @data
       @target.append @$el
+
+    destroy : ->
+      @$el.remove()
+      @model = null
+      @el    = null
