@@ -27,6 +27,7 @@
       $workspace_tabs: $('#workspace nav ul'),
       Router: new WorkspaceRouter(),
       COOKIE_NAME: 'ics360.PolicyCentral',
+      services: ics360.services,
       logger: function(msg) {
         return this.Amplify.publish('log', msg);
       },

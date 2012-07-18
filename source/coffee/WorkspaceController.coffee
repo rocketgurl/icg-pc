@@ -55,6 +55,7 @@ define [
     $workspace_tabs       : $('#workspace nav ul')
     Router                : new WorkspaceRouter()
     COOKIE_NAME           : 'ics360.PolicyCentral'
+    services              : ics360.services
 
     # Simple logger
     logger : (msg) ->
