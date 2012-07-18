@@ -23,11 +23,11 @@ define [
       if app.app?
         app_name = @get_app_name app.app
       else
-        @default_module
+        app_name = @default_module
 
       # Check the app_name against predetermined types
       # Could do this by convention ({App_name}Module)
-      # or make it more flexible this way.
+      # or make it a tad more flexible this way.
       switch app_name
         when "policies"
           'SearchModule'

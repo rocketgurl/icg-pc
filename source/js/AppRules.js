@@ -23,7 +23,7 @@
         if (app.app != null) {
           app_name = this.get_app_name(app.app);
         } else {
-          this.default_module;
+          app_name = this.default_module;
         }
         switch (app_name) {
           case "policies":
