@@ -24,7 +24,7 @@
       TestModule.prototype.render = function() {
         var tpl,
           _this = this;
-        tpl = "<p>{{label}} Module is rendered</p>\n<p><a href=\"#app\" class=\"open_search_app\" data-pc-module=\"SearchModule\" data-pc-policy=\"123456789\">Open another tab</a></p>\n<p><a href=\"#app\" class=\"open_search_app\" data-pc-module=\"SearchModule\" data-pc-policy=\"987654321\">Open another tab</a></p>\n<p><a href=\"#app\" class=\"open_search_app\" data-pc-module=\"SearchModule\" data-pc-policy=\"987651234\">Open another tab</a></p>";
+        tpl = "<h2>{{label}} Module is rendered</h2>\n<p>Hell open to christians they were having, Jimmy Henry said pettishly, about their damned Irish language. Where was the marshal, he wanted to know, to keep order in the council chamber. And old Barlow the macebearer laid up with asthma, no mace on the table, nothing in order, no quorum even, and Hutchinson, the lord mayor, in Llandudno and little Lorcan Sherlock doing locum tenens for him. Damned Irish language, language of our forefathers.</p>";
         this.view.$el.html(Mustache.render(tpl, {
           label: this.app.app_label
         }));

@@ -11,11 +11,12 @@ define [
   'WorkspaceRouter',
   'base64',
   'MenuHelper',
+  'AppRules',
   'amplify_core',
   'amplify_store',
   'cookie',
   'xml2json'
-], ($, _, Backbone, UserModel, ConfigModel, WorkspaceStateModel, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter,  Base64, MenuHelper, amplify) ->
+], ($, _, Backbone, UserModel, ConfigModel, WorkspaceStateModel, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter, Base64, MenuHelper, AppRules, amplify) ->
 
   #### Global ENV Setting
   #
@@ -377,9 +378,8 @@ define [
       @state_add app
 
       # Determine which Module to load into the view
-      default_module = 'TestModule'
-      if app.params?
-        default_module = app.params.pcModule or 'TestModule'
+      solomon = new AppRules(app)
+      default_module = solomon.default_module
 
       # Open workspace defined default application
       @create_workspace default_module, app

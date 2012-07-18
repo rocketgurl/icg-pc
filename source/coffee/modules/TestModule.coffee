@@ -32,10 +32,8 @@ define [
     # Do whatever rendering animation needs to happen here
     render : ->
       tpl = """
-      <p>{{label}} Module is rendered</p>
-      <p><a href="#app" class="open_search_app" data-pc-module="SearchModule" data-pc-policy="123456789">Open another tab</a></p>
-      <p><a href="#app" class="open_search_app" data-pc-module="SearchModule" data-pc-policy="987654321">Open another tab</a></p>
-      <p><a href="#app" class="open_search_app" data-pc-module="SearchModule" data-pc-policy="987651234">Open another tab</a></p>
+      <h2>{{label}} Module is rendered</h2>
+      <p>Hell open to christians they were having, Jimmy Henry said pettishly, about their damned Irish language. Where was the marshal, he wanted to know, to keep order in the council chamber. And old Barlow the macebearer laid up with asthma, no mace on the table, nothing in order, no quorum even, and Hutchinson, the lord mayor, in Llandudno and little Lorcan Sherlock doing locum tenens for him. Damned Irish language, language of our forefathers.</p>
       """
       @view.$el.html Mustache.render(tpl, { label : @app.app_label })
 
