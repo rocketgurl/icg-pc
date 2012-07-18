@@ -10,7 +10,7 @@ define [
   SearchPolicyCollection = BaseCollection.extend
 
     model : SearchPolicyModel
-    views : []
+    views : [] # view stack
 
     # Retrieve the policies from the response
     parse: (response) ->
