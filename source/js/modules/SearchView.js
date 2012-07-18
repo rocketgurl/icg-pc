@@ -37,10 +37,10 @@
             'Authorization': "Basic " + (this.controller.user.get('digest'))
           },
           success: function(collection, resp) {
-            return collection.render();
+            collection.render();
+            return _this.controller.Router.append_search(search_val);
           },
           error: function(collection, resp) {
-            console.log(resp);
             return _this.Amplify.publish(_this.cid, 'warning', "There was a problem with this request: " + resp.status + " - " + resp.statusText);
           }
         });

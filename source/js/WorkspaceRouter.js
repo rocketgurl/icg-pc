@@ -7,6 +7,7 @@
       routes: {
         'login': 'login',
         'logout': 'logout',
+        'workspace/:env/:business/:context/:app/search/*params': 'search',
         'workspace/:env/:business/:context/:app': 'workspace'
       },
       initialize: function(options) {},
@@ -19,16 +20,29 @@
           trigger: true
         });
       },
+      search: function(env, business, context, app, params) {
+        this.set_controller_state(env, business, context, app);
+        return console.log(params);
+      },
       workspace: function(env, business, context, app) {
-        this.controller.current_state = {
+        this.set_controller_state(env, business, context, app);
+        if (this.controller.config != null) {
+          return this.controller.trigger('launch');
+        }
+      },
+      set_controller_state: function(env, business, context, app) {
+        return this.controller.current_state = {
           'env': env,
           'business': business,
           'context': context,
           'app': app
         };
-        if (this.controller.config != null) {
-          return this.controller.trigger('launch');
-        }
+      },
+      append_search: function(params) {
+        var app, business, context, env, path, _ref;
+        _ref = this.controller.current_state, env = _ref.env, business = _ref.business, context = _ref.context, app = _ref.app;
+        path = "workspace/" + env + "/" + business + "/" + context + "/" + app + "/search/" + params;
+        return this.navigate(path);
       }
     });
   });

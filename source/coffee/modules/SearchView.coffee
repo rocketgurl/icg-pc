@@ -39,9 +39,9 @@ define [
         headers :
           'X-Authorization' : "Basic #{@controller.user.get('digest')}"
           'Authorization'   : "Basic #{@controller.user.get('digest')}"
-        success : (collection, resp) ->
+        success : (collection, resp) =>
           collection.render()
+          @controller.Router.append_search search_val
         error : (collection, resp) =>
-          console.log resp
           @Amplify.publish @cid, 'warning', "There was a problem with this request: #{resp.status} - #{resp.statusText}"
       )
