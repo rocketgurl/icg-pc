@@ -1,10 +1,9 @@
 define [
   'BaseView',
-  'mustache',
   'Messenger',
   'modules/SearchPolicyCollection',
   'text!templates/tpl_search_container.html'
-], (BaseView, Mustache, Messenger, SearchPolicyCollection, tpl_search_container) ->
+], (BaseView, Messenger, SearchPolicyCollection, tpl_search_container) ->
 
   SearchView = BaseView.extend
 
@@ -23,8 +22,8 @@ define [
 
     render : () ->
       # Setup flash module & search container
-      html = Mustache.render $('#tpl-flash-message').html(), { cid : @cid }
-      html += Mustache.render tpl_search_container, { cid : @cid }
+      html = @Mustache.render $('#tpl-flash-message').html(), { cid : @cid }
+      html += @Mustache.render tpl_search_container, { cid : @cid }
       @$el.html html
 
       # Register flash message pubsub for this view
