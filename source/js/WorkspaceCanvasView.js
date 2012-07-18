@@ -5,6 +5,7 @@
     var WorkspaceCanvasView;
     return WorkspaceCanvasView = BaseView.extend({
       $target: $('#target'),
+      $flash_tpl: $('#tpl-flash-message').html(),
       tagName: 'section',
       className: 'canvas',
       tab: null,
@@ -25,7 +26,8 @@
       render: function() {
         var _this = this;
         this.$el.html(Mustache.render(tpl_module_loader, {
-          module_name: this.app.app_label
+          module_name: this.app.app_label,
+          app: this.app.app
         }));
         require(["modules/" + this.options.module_type], function(Module) {
           return _this.module = new Module(_this, _this.app);
@@ -65,7 +67,7 @@
       },
       remove_loader: function() {
         var _this = this;
-        return this.$el.find('#module-loader').fadeOut('fast', function() {
+        return this.$el.find('.module-loader').fadeOut('fast', function() {
           return _this.module.render();
         });
       },

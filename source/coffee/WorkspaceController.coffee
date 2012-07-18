@@ -26,20 +26,6 @@ define [
   amplify.subscribe 'log', (msg) ->
     console.log msg
 
-  #### Flash Message handling
-  #  
-  $flash = $('#flash-message')
-  amplify.subscribe 'flash', (type, msg) ->
-    # set className
-    if type?
-      $flash.attr 'class', type
-    if msg?
-      msg += ' <i class="icon-remove-sign"></i>'
-      $flash.html(msg).fadeIn('fast')
-
-  $flash.on 'click', 'i', (event) ->
-    event.preventDefault()
-    $flash.fadeOut 'fast'
 
   #### Services
   #
@@ -69,6 +55,7 @@ define [
     $workspace_tabs       : $('#workspace nav ul')
     Router                : new WorkspaceRouter()
     COOKIE_NAME           : 'ics360.PolicyCentral'
+    services              : ics360.services
 
     # Simple logger
     logger : (msg) ->
@@ -76,7 +63,7 @@ define [
 
     # Display a flash message in the browser
     flash : (type, msg) ->
-      @Amplify.publish 'flash', type, msg    
+      @Amplify.publish @login_view.cid, type, msg    
 
     # Keep tabs on what's in our Workspace.
     # This should contain WorkspaceCanvasView-enabled objects
@@ -475,6 +462,7 @@ define [
 
     # Tell every app in the stack to commit seppuku
     teardown_workspace : ->
+      console.log @workspace_state
       _.each @workspace_stack, (view, index) =>
         view.destroy()
 

@@ -66,7 +66,6 @@
 		</nav>
 		<article>
 			<section id="canvas">
-				<div id="flash-message">FLASH!</div>
 				<div id="target"></div>
 			</section>
 			<footer>
@@ -85,6 +84,11 @@
         (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
         g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
         s.parentNode.insertBefore(g,s)}(document,'script'));
+    </script>
+
+    <!-- TEMPLATE: Flash Message Container -->
+    <script type="text/template" id="tpl-flash-message">
+    	<div id="flash-message-{{cid}}" class="flash-message"></div>
     </script>
 
     <!-- TEMPLATE: Search Tab -->

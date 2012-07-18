@@ -26,14 +26,13 @@ define [
     # view.remove_loader will callback Module.render()
     #
     load: () ->
-      @callback_delay 500, => 
+      @callback_delay 500, =>
         @view.remove_loader()
 
     # Do whatever rendering animation needs to happen here
     render : () ->
       @search_view = new SearchView({view : @view, module : @})
       @search_view.render()
-      # @view.$el.html("<h2>#{@app.app_label} MODULE BE RENDERED!</h2>")
 
     # Simple delay fund if we need it.
     callback_delay : (ms, func) ->
