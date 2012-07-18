@@ -17,6 +17,7 @@
         return this.extend(klass.prototype, mixin);
       },
       Amplify: amplify,
+      Mustache: Mustache,
       logger: function(msg) {
         return this.Amplify.publish('log', msg);
       }
