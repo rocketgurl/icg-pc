@@ -16,8 +16,11 @@ define [
     include : (klass, mixin) ->
       @extend klass.prototype, mixin
 
-    # hook into Amplify.js on all models
+    # hook into Amplify.js on all views
     Amplify : amplify
+
+    # Profide Mustache to all views
+    Mustache : Mustache
 
     # Simple logger pubsub
     logger : (msg) ->
