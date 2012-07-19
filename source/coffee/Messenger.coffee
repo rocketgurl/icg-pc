@@ -12,7 +12,11 @@ define [
     # @param `id` _String_ CID of view
     #
     constructor : (@view, @id) ->
-      @flash_container = @view.$el.find("#flash-message-#{@id}")
+      if @view.$el?
+        @flash_container = @view.$el.find("#flash-message-#{@id}")
+      else
+        @flash_container = @view.find("#flash-message-#{@id}")
+        
       @register @id
 
 

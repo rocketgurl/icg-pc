@@ -8,7 +8,11 @@
       function Messenger(view, id) {
         this.view = view;
         this.id = id;
-        this.flash_container = this.view.$el.find("#flash-message-" + this.id);
+        if (this.view.$el != null) {
+          this.flash_container = this.view.$el.find("#flash-message-" + this.id);
+        } else {
+          this.flash_container = this.view.find("#flash-message-" + this.id);
+        }
         this.register(this.id);
       }
 
