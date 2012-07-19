@@ -26,6 +26,9 @@
         this.app_to_context_map = this.get_context_map(this.contexts);
         this.ixadmin = this.identity.find('ApplicationSettings[applicationName=ixadmin][environmentName=' + window.ICS360_ENV + ']');
         this.tentacles = this.get_tentacles(this.ixadmin);
+        if (this.ixadmin.length === 0 || _.isEmpty(this.tentacles)) {
+          return false;
+        }
         return this.compile_menu_collection(this.businesses, this.tentacles, this.contexts);
       },
       generate_menu: function(data) {

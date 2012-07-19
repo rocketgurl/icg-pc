@@ -58,6 +58,11 @@ define [
       @ixadmin = @identity.find('ApplicationSettings[applicationName=ixadmin][environmentName=' + window.ICS360_ENV + ']')
       @tentacles = @get_tentacles(@ixadmin)
 
+      # If we don't have any ixAdmin entries for this env or
+      # tentacles then this person has no access to anything
+      if @ixadmin.length == 0 || _.isEmpty @tentacles
+        return false
+
       # Now assemble the building blocks into something usable
       return @compile_menu_collection(@businesses, @tentacles, @contexts)
 
