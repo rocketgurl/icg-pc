@@ -9,6 +9,7 @@ define [
   'WorkspaceCanvasView',
   'WorkspaceNavView',
   'WorkspaceRouter',
+  'Messenger',
   'base64',
   'MenuHelper',
   'AppRules',
@@ -16,7 +17,7 @@ define [
   'amplify_store',
   'cookie',
   'xml2json'
-], ($, _, Backbone, UserModel, ConfigModel, WorkspaceStateModel, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter, Base64, MenuHelper, AppRules, amplify) ->
+], ($, _, Backbone, UserModel, ConfigModel, WorkspaceStateModel, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter, Messenger, Base64, MenuHelper, AppRules, amplify) ->
 
   #### Global ENV Setting
   #
@@ -57,6 +58,7 @@ define [
     Router                : new WorkspaceRouter()
     COOKIE_NAME           : 'ics360.PolicyCentral'
     services              : ics360.services
+    global_flash          : new Messenger($('#canvas'), 'controller')
 
     # Simple logger
     logger : (msg) ->
@@ -235,8 +237,9 @@ define [
       $.cookie(@COOKIE_NAME, null)
       @user = null
       @reset_admin_links()
-      @navigation_view.destroy()
-      @teardown_workspace()
+      if @navigation_view?
+        @navigation_view.destroy()
+        @teardown_workspace()
 
     #### Get Configuration Files
     #
@@ -249,30 +252,35 @@ define [
         urlRoot : ics360.services.ixadmin
       @config.fetch(
         success : (model, resp) =>
-          @config.set 'menu', MenuHelper.build_menu(@user.get('document'), model.get('document'))
-          @config.set 'menu_html', MenuHelper.generate_menu(@config.get 'menu')
-          @navigation_view = new WorkspaceNavView({
-              router     : @Router
-              controller : @
-              el         : '#header-workspace-nav'
-              sub_el     : '#workspace-subnav'
-              main_nav   : @config.get('menu_html').main_nav
-              sub_nav    : @config.get('menu_html').sub_nav
-            })
-          @navigation_view.render()
-          
-          # If our current_state is set then we should go ahead and launch.
-          # We do this here to ensure we have @config set before attempting to
-          # launch, which would be... bad.
-          #
-          # If current_state is not set, then we check localStorage to see if
-          # there was a previous state saved, and try to use that one.
-          #
-          @check_workspace_state() # Check for localStorage state
-          if @current_state?
-            @trigger 'launch'
-          # else
-          #   @check_workspace_state() # Check for localStorage state
+          menu = MenuHelper.build_menu(@user.get('document'), model.get('document'))
+          if menu is false
+            @Amplify.publish 'controller', 'warning', "Sorry, you do not have access to any items in this environment."
+            return
+          else
+            @config.set 'menu', menu
+            @config.set 'menu_html', MenuHelper.generate_menu(menu)
+            @navigation_view = new WorkspaceNavView({
+                router     : @Router
+                controller : @
+                el         : '#header-workspace-nav'
+                sub_el     : '#workspace-subnav'
+                main_nav   : @config.get('menu_html').main_nav
+                sub_nav    : @config.get('menu_html').sub_nav
+              })
+            @navigation_view.render()
+            
+            # If our current_state is set then we should go ahead and launch.
+            # We do this here to ensure we have @config set before attempting to
+            # launch, which would be... bad.
+            #
+            # If current_state is not set, then we check localStorage to see if
+            # there was a previous state saved, and try to use that one.
+            #
+            @check_workspace_state() # Check for localStorage state
+            if @current_state?
+              @trigger 'launch'
+            # else
+            #   @check_workspace_state() # Check for localStorage state
 
         # Try to throw a useful error message when possible.
         error : (model, resp) =>
@@ -329,6 +337,9 @@ define [
         return
 
       menu = @config.get 'menu'
+      if menu is false
+        @Amplify.publish 'controller', 'warning', "Sorry, you do not have access to any items in this environment."
+        return
 
       group_label = apps = menu[@current_state.business].contexts[@current_state.context].label
       apps = menu[@current_state.business].contexts[@current_state.context].apps
