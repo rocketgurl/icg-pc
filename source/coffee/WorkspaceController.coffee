@@ -177,6 +177,10 @@ define [
           tab_label : 'Login'
         })
       @login_view.render()
+
+      # Set a flash message listener on the login form
+      login_flash = new Messenger(@login_view, @login_view.cid)
+
       if @navigation_view?
         @navigation_view.destroy()
 
@@ -203,7 +207,7 @@ define [
 
     # Need to throw a nice error message
     response_fail : (model, resp) ->
-      @flash 'warning', "There was a problem retreiving the configuration file. Please contact support. Error: #{resp.status} - #{resp.statusText}"
+      @Amplify.publish @login_view.cid, 'warning', "Sorry, your password or username was incorrect"
       @logger "PHALE!"
 
     # On a successfull login have @user set some variables
@@ -229,7 +233,7 @@ define [
     #
     login_fail : (model, resp, state) ->
       @Router.navigate('login', { trigger : true })
-      @flash 'warning', "SOWWEE you no enter cause #{state.text}"
+      @Amplify.publish @login_view.cid, 'warning', "SOWWEE you no enter cause #{state.text}"
 
     # Delete the identity cookie and nullify User
     # TODO: Need to teardown the main nav
@@ -237,6 +241,7 @@ define [
       $.cookie(@COOKIE_NAME, null)
       @user = null
       @reset_admin_links()
+      @set_breadcrumb()
       if @navigation_view?
         @navigation_view.destroy()
         @teardown_workspace()
@@ -284,7 +289,7 @@ define [
 
         # Try to throw a useful error message when possible.
         error : (model, resp) =>
-          @flash 'warning', "There was a problem retreiving the configuration file. Please contact support."
+          @Amplify.publish 'controller', 'warning', "There was a problem retreiving the configuration file. Please contact support."
         )
 
     # Simple delay fund if we need it.
@@ -317,7 +322,7 @@ define [
                 @Router.navigate "workspace/#{@current_state.env}/#{@current_state.business}/#{@current_state.context}/#{@current_state.app}"
               error : (model, resp) =>
                 # Make a new WorkspaceState as we had a problem.
-                @flash 'notice', "We had an issue with your saved state. Not major, but we're starting from scratch."
+                @Amplify.publish 'controller', 'notice', "We had an issue with your saved state. Not major, but we're starting from scratch."
                 @workspace_state = new WorkspaceStateModel()
             )
           
@@ -332,7 +337,7 @@ define [
 
       # If not logged in then back to login
       if !@user?
-        @flash 'notice', "Please login to Policy Central to continue."
+        @Amplify.publish 'controller', 'notice', "Please login to Policy Central to continue."
         @build_login()
         return
 
@@ -357,12 +362,13 @@ define [
         @launch_app app
         @check_persisted_apps()
 
+      data =
+        business : @current_state.business
+        group    : MenuHelper.check_length(group_label)
+        'app'    : app.app_label
+
       # Set breadcrumb
-      @$workspace_breadcrumb.html("""
-        <li><em>#{@current_state.business}</em></li>
-        <li><em>#{MenuHelper.check_length group_label}</em></li>
-        <li><em>#{app.app_label}</em></li>
-      """)
+      @set_breadcrumb(data)
 
       # Store our workplace information in localStorage
       @workspace_state.set 'workspace', {
@@ -372,6 +378,20 @@ define [
         app      : @current_state.app
       }
       @workspace_state.save()
+
+    # Build the breadcrumb in the top nav
+    #
+    # @param `data` _Object_ env labels
+    #
+    set_breadcrumb : (data) ->
+      if data?
+        @$workspace_breadcrumb.html("""
+          <li><em>#{data.business}</em></li>
+          <li><em>#{data.group}</em></li>
+          <li><em>#{data.app}</em></li>
+        """)
+      else
+         @$workspace_breadcrumb.html('')
 
     #### Launch App
     #
@@ -473,7 +493,7 @@ define [
 
     # Tell every app in the stack to commit seppuku
     teardown_workspace : ->
-      console.log @workspace_state
+      @set_breadcrumb()
       _.each @workspace_stack, (view, index) =>
         view.destroy()
 

@@ -123,6 +123,7 @@
         });
       },
       build_login: function() {
+        var login_flash;
         this.login_view = new WorkspaceLoginView({
           controller: this,
           template: $('#tpl-ics-login'),
@@ -130,6 +131,7 @@
           tab_label: 'Login'
         });
         this.login_view.render();
+        login_flash = new Messenger(this.login_view, this.login_view.cid);
         if (this.navigation_view != null) {
           return this.navigation_view.destroy();
         }
@@ -157,7 +159,7 @@
         });
       },
       response_fail: function(model, resp) {
-        this.flash('warning', "There was a problem retreiving the configuration file. Please contact support. Error: " + resp.status + " - " + resp.statusText);
+        this.Amplify.publish(this.login_view.cid, 'warning', "Sorry, your password or username was incorrect");
         return this.logger("PHALE!");
       },
       login_success: function(model, resp) {
@@ -173,12 +175,13 @@
         this.Router.navigate('login', {
           trigger: true
         });
-        return this.flash('warning', "SOWWEE you no enter cause " + state.text);
+        return this.Amplify.publish(this.login_view.cid, 'warning', "SOWWEE you no enter cause " + state.text);
       },
       logout: function() {
         $.cookie(this.COOKIE_NAME, null);
         this.user = null;
         this.reset_admin_links();
+        this.set_breadcrumb();
         if (this.navigation_view != null) {
           this.navigation_view.destroy();
           return this.teardown_workspace();
@@ -214,7 +217,7 @@
             }
           },
           error: function(model, resp) {
-            return _this.flash('warning', "There was a problem retreiving the configuration file. Please contact support.");
+            return _this.Amplify.publish('controller', 'warning', "There was a problem retreiving the configuration file. Please contact support.");
           }
         });
       },
@@ -241,7 +244,7 @@
                 return _this.Router.navigate("workspace/" + _this.current_state.env + "/" + _this.current_state.business + "/" + _this.current_state.context + "/" + _this.current_state.app);
               },
               error: function(model, resp) {
-                _this.flash('notice', "We had an issue with your saved state. Not major, but we're starting from scratch.");
+                _this.Amplify.publish('controller', 'notice', "We had an issue with your saved state. Not major, but we're starting from scratch.");
                 return _this.workspace_state = new WorkspaceStateModel();
               }
             });
@@ -251,10 +254,10 @@
         }
       },
       launch_workspace: function() {
-        var app, apps, group_label, menu,
+        var app, apps, data, group_label, menu,
           _this = this;
         if (!(this.user != null)) {
-          this.flash('notice', "Please login to Policy Central to continue.");
+          this.Amplify.publish('controller', 'notice', "Please login to Policy Central to continue.");
           this.build_login();
           return;
         }
@@ -275,7 +278,12 @@
           this.launch_app(app);
           this.check_persisted_apps();
         }
-        this.$workspace_breadcrumb.html("<li><em>" + this.current_state.business + "</em></li>\n<li><em>" + (MenuHelper.check_length(group_label)) + "</em></li>\n<li><em>" + app.app_label + "</em></li>");
+        data = {
+          business: this.current_state.business,
+          group: MenuHelper.check_length(group_label),
+          'app': app.app_label
+        };
+        this.set_breadcrumb(data);
         this.workspace_state.set('workspace', {
           env: this.current_state.env,
           business: this.current_state.business,
@@ -283,6 +291,13 @@
           app: this.current_state.app
         });
         return this.workspace_state.save();
+      },
+      set_breadcrumb: function(data) {
+        if (data != null) {
+          return this.$workspace_breadcrumb.html("<li><em>" + data.business + "</em></li>\n<li><em>" + data.group + "</em></li>\n<li><em>" + data.app + "</em></li>");
+        } else {
+          return this.$workspace_breadcrumb.html('');
+        }
       },
       launch_app: function(app) {
         var default_module, solomon;
@@ -362,7 +377,7 @@
       },
       teardown_workspace: function() {
         var _this = this;
-        console.log(this.workspace_state);
+        this.set_breadcrumb();
         return _.each(this.workspace_stack, function(view, index) {
           return view.destroy();
         });
