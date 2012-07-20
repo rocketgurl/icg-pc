@@ -8,7 +8,7 @@
       initialize: function(options) {
         this.data = options.model.attributes;
         this.parent = options.container.$el;
-        this.target = this.parent.find('table.module-search');
+        this.target = this.parent.find('table.module-search tbody');
         return this.render();
       },
       render: function() {
