@@ -8,33 +8,12 @@ define [
   # such as a default search tab for all policies.
   class AppRules
 
-    default_module : 'TestModule'
+    default_workspace : null
 
     constructor : (@app) ->
-      if @app.params?
-        @default_module = app.params.pcModule or 'TestModule'
-        @check_rules(@app)
-      else
-        @default_module = @which_module(@app)
-        console.log @default_module
-
-    # Determine which module we should load for a given app type
-    which_module : (app) ->
-      if app.app?
-        app_name = @get_app_name app.app
-      else
-        app_name = @default_module
-
-      # Check the app_name against predetermined types
-      # Could do this by convention ({App_name}Module)
-      # or make it a tad more flexible this way.
-      switch app_name
-        when "policies"
-          'SearchModule'
-        when "rulesets"
-          'Rulesets'
-        else
-          'TestModule'
+      if @app.app?
+        app_name           = @get_app_name @app.app
+        @default_workspace = @get_modules app_name
 
     # Derive app name
     get_app_name : (app_name) ->
@@ -43,9 +22,41 @@ define [
       else
         app_name
 
-    check_rules : (app) ->
+    # Determine which module definitions to return
+    get_modules : (app_name) ->
+      switch app_name
+        when 'policies'
+          [@policy_search]
+        when 'rulesets'
+          [@policy_search, @add_app(@rulesets)]
+        else
+          [@default]
 
-    rules_parse : (app_name) ->
+    # Add the current app onto a rule definition
+    add_app : (definition) ->
+      definition.app = @app
+      if definition.params?
+        definition.app.params = definition.params
+      definition
+
+    # RULEZ Definitions
+    policy_search :
+      module : 'SearchModule'
+      app : 
+        app       : 'search'
+        app_label : 'search'
+        query     : 'stuff'
+        other     : 'stuff'
+        params    : null        
+
+    rulesets :
+      module : 'TestModule'
+      params : null
+
+    default :
+      module : 'TestModule'
+      params : null
+
 
 
 

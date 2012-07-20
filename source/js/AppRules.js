@@ -5,35 +5,16 @@
     var AppRules;
     return AppRules = (function() {
 
-      AppRules.prototype.default_module = 'TestModule';
+      AppRules.prototype.default_workspace = null;
 
       function AppRules(app) {
+        var app_name;
         this.app = app;
-        if (this.app.params != null) {
-          this.default_module = app.params.pcModule || 'TestModule';
-          this.check_rules(this.app);
-        } else {
-          this.default_module = this.which_module(this.app);
-          console.log(this.default_module);
+        if (this.app.app != null) {
+          app_name = this.get_app_name(this.app.app);
+          this.default_workspace = this.get_modules(app_name);
         }
       }
-
-      AppRules.prototype.which_module = function(app) {
-        var app_name;
-        if (app.app != null) {
-          app_name = this.get_app_name(app.app);
-        } else {
-          app_name = this.default_module;
-        }
-        switch (app_name) {
-          case "policies":
-            return 'SearchModule';
-          case "rulesets":
-            return 'Rulesets';
-          default:
-            return 'TestModule';
-        }
-      };
 
       AppRules.prototype.get_app_name = function(app_name) {
         if (app_name.indexOf('_' >= 0)) {
@@ -43,9 +24,45 @@
         }
       };
 
-      AppRules.prototype.check_rules = function(app) {};
+      AppRules.prototype.get_modules = function(app_name) {
+        switch (app_name) {
+          case 'policies':
+            return [this.policy_search];
+          case 'rulesets':
+            return [this.policy_search, this.add_app(this.rulesets)];
+          default:
+            return [this["default"]];
+        }
+      };
 
-      AppRules.prototype.rules_parse = function(app_name) {};
+      AppRules.prototype.add_app = function(definition) {
+        definition.app = this.app;
+        if (definition.params != null) {
+          definition.app.params = definition.params;
+        }
+        return definition;
+      };
+
+      AppRules.prototype.policy_search = {
+        module: 'SearchModule',
+        app: {
+          app: 'search',
+          app_label: 'search',
+          query: 'stuff',
+          other: 'stuff',
+          params: null
+        }
+      };
+
+      AppRules.prototype.rulesets = {
+        module: 'TestModule',
+        params: null
+      };
+
+      AppRules.prototype["default"] = {
+        module: 'TestModule',
+        params: null
+      };
 
       return AppRules;
 

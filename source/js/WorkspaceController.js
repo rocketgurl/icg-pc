@@ -300,11 +300,16 @@
         }
       },
       launch_app: function(app) {
-        var default_module, solomon;
+        var default_workspace, rules, workspace, _i, _len, _results;
         this.state_add(app);
-        solomon = new AppRules(app);
-        default_module = solomon.default_module;
-        return this.create_workspace(default_module, app);
+        rules = new AppRules(app);
+        default_workspace = rules.default_workspace;
+        _results = [];
+        for (_i = 0, _len = default_workspace.length; _i < _len; _i++) {
+          workspace = default_workspace[_i];
+          _results.push(this.create_workspace(workspace.module, workspace.app));
+        }
+        return _results;
       },
       create_workspace: function(module, app) {
         return new WorkspaceCanvasView({

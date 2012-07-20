@@ -409,11 +409,12 @@ define [
       @state_add app
 
       # Determine which Module to load into the view
-      solomon = new AppRules(app)
-      default_module = solomon.default_module
+      rules = new AppRules(app)
+      default_workspace = rules.default_workspace
 
-      # Open workspace defined default application
-      @create_workspace default_module, app
+      # Open modules defined in workspace set
+      for workspace in default_workspace
+        @create_workspace workspace.module, workspace.app
 
     # Instantiate a new WorkspaceCanvasView
     #
