@@ -623,15 +623,36 @@ header.module-search ul li {
   display: inline-block;
   border-right: #bababa 1px solid;
   border-left: white 1px solid;
-  padding: 0 10px;
+  padding: 0 2px;
+  background: none;
   font-size: 14px;
   font-size: 1.4rem;
+}
+header.module-search ul li a {
+  text-decoration: none;
+  color: #165788;
+  display: inline-block;
+  padding: 4px 6px;
+}
+header.module-search ul li a strong {
+  font-weight: bold;
+}
+header.module-search ul li a:hover {
+  background-color: #165788;
+  border-radius: 4px;
+  color: white;
+}
+header.module-search ul li a:hover i {
+  color: white;
 }
 header.module-search ul li:first-child {
   border-left: 0px;
 }
 header.module-search ul li:last-child {
   border-right: 0px;
+}
+header.module-search i.icon-caret-down {
+  color: dimgrey;
 }
 
 .module-search.filters {

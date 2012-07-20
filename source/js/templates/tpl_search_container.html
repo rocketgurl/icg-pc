@@ -1,10 +1,10 @@
 <header class="module-search">
 	<h1>Policy Search</h1>
 	<ul>
-		<li>control</li>
-		<li>control</li>
-		<li>control</li>
-		<li>control</li>
+		<li><a href="">Current context: <strong>All Policies</strong> <i class="icon-caret-down"></i></a></li>
+		<li><a href=""><i class="icon-plus"></i> Save view <i class="icon-caret-down"></i></a></li>
+		<li><a href=""><i class="icon-bookmark"></i> Share view <i class="icon-caret-down"></i></a></li>
+		<li><a href=""><i class="icon-pushpin"></i> Pin view</a></li>
 	</ul>
 </header>
 <div id="search-filters-{{cid}}" class="module-search filters">
@@ -17,7 +17,21 @@
 		<a href=""><i class="icon-refresh"></i> Refresh results</a>
 	</form>
 </div>
-<table class="module-search"></table>
+<table class="module-search">
+	<thead>
+		<tr>
+			<th><a href="">Quote #</a></th>
+			<th><a href="">Policy #</a></th>
+			<th><a href="">Form</a></th>
+			<th><a href="">Name</a></th>
+			<th><a href="">Address</a></th>
+			<th><a href="">Status</a></th>
+			<th><a href="">Effective</a></th>
+			<th><a href="">Renewal UW Status</a></th>
+		</tr>
+	</thead>
+	<tbody></tbody>
+</table>
 <div id="search-pagination-{{cid}}" class="module-search pagination">
 	<form action="pagination" method="get" accept-charset="utf-8">
 		<div class="pagination-a">

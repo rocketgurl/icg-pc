@@ -18,8 +18,27 @@ header.module-search {
 			display: inline-block;
 			border-right: darken($lightgray, 20) 1px solid;
 			border-left: $white 1px solid;
-			padding: 0 10px;
+			padding: 0 2px;
+			background: none;
 			@include font-size(14);
+			a {
+				text-decoration: none;
+				color: $blue;
+				display: inline-block;
+				padding: 4px 6px;
+
+				strong {
+					font-weight: bold;
+				}
+			}
+			a:hover {
+				background-color: $blue;
+				border-radius: 4px;
+				color: $white;
+				i {
+					color: $white;
+				}
+			}
 		}
 		li:first-child {
 			border-left: 0px;
@@ -27,6 +46,9 @@ header.module-search {
 		li:last-child {
 			border-right: 0px;
 		}
+	}
+	i.icon-caret-down {
+		color: $darkgray;
 	}
 }
 

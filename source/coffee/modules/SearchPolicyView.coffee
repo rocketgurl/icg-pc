@@ -12,7 +12,7 @@ define [
     initialize : (options) ->
       @data   = options.model.attributes
       @parent = options.container.$el
-      @target = @parent.find('table.module-search')
+      @target = @parent.find('table.module-search tbody')
       @render()
 
     # Attach view to table
