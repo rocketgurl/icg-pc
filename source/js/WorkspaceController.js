@@ -312,11 +312,16 @@
         return _results;
       },
       create_workspace: function(module, app) {
-        return new WorkspaceCanvasView({
+        var options;
+        options = {
           controller: this,
           module_type: module,
           'app': app
-        });
+        };
+        if (app.tab != null) {
+          options.template_tab = $(app.tab).html();
+        }
+        return new WorkspaceCanvasView(options);
       },
       check_persisted_apps: function() {
         var app, saved_apps, _i, _len, _results;
@@ -345,9 +350,12 @@
           var app_name;
           e.preventDefault();
           app_name = $(e.target).attr('href');
+          if (app_name === void 0) {
+            app_name = $(e.target).parent().attr('href');
+          }
           return _this.toggle_apps(app_name);
         });
-        return this.$workspace_tabs.on('click', 'li i', function(e) {
+        return this.$workspace_tabs.on('click', 'li i.icon-remove-sign', function(e) {
           e.preventDefault();
           _this.stack_get($(e.target).prev().attr('href')).destroy();
           return _this.reassess_apps();

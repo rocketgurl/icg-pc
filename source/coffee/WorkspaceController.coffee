@@ -422,11 +422,15 @@ define [
     # @param `app` _Object_ application config object  
     #
     create_workspace : (module, app) ->
-      new WorkspaceCanvasView({
-            controller : @
-            module_type : module
-            'app' : app
-            })
+      options =
+        controller  : @
+        module_type : module
+        'app'       : app
+
+      if app.tab?
+        options.template_tab = $(app.tab).html()
+
+      new WorkspaceCanvasView(options)
 
     # If there are other apps persisted in localStorage we need
     # to launch those as well
@@ -462,10 +466,14 @@ define [
       @$workspace_tabs.on 'click', 'li a', (e) =>
         e.preventDefault()
         app_name = $(e.target).attr('href')
+
+        # Fallback for search tabs
+        if app_name is undefined
+          app_name = $(e.target).parent().attr('href')
         @toggle_apps app_name
 
       # Tab close icon
-      @$workspace_tabs.on 'click', 'li i', (e) =>
+      @$workspace_tabs.on 'click', 'li i.icon-remove-sign', (e) =>
         e.preventDefault()
         @stack_get($(e.target).prev().attr('href')).destroy()
         @reassess_apps()
@@ -473,6 +481,7 @@ define [
     # Loop through app stack and switch app states
     toggle_apps : (app_name) ->
       for view in @workspace_stack
+        #console.log "#{app_name} : #{view.app.app}"
         if app_name == view.app.app
           view.activate()
         else

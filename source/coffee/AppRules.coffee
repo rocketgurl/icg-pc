@@ -30,7 +30,7 @@ define [
         when 'rulesets'
           [@policy_search, @add_app(@rulesets)]
         else
-          [@default]
+          [@add_app(@default)]
 
     # Add the current app onto a rule definition
     add_app : (definition) ->
@@ -45,6 +45,7 @@ define [
       app : 
         app       : 'search'
         app_label : 'search'
+        tab       : '#tpl-workspace-tab-search'
         query     : 'stuff'
         other     : 'stuff'
         params    : null        

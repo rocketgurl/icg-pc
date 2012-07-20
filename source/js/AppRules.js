@@ -31,7 +31,7 @@
           case 'rulesets':
             return [this.policy_search, this.add_app(this.rulesets)];
           default:
-            return [this["default"]];
+            return [this.add_app(this["default"])];
         }
       };
 
@@ -48,6 +48,7 @@
         app: {
           app: 'search',
           app_label: 'search',
+          tab: '#tpl-workspace-tab-search',
           query: 'stuff',
           other: 'stuff',
           params: null
