@@ -26,14 +26,13 @@ header.module-search {
 				color: $blue;
 				display: inline-block;
 				padding: 4px 6px;
-
+				border-radius: 4px;
 				strong {
 					font-weight: bold;
 				}
 			}
 			a:hover {
 				background-color: $blue;
-				border-radius: 4px;
 				color: $white;
 				i {
 					color: $white;
@@ -45,6 +44,15 @@ header.module-search {
 		}
 		li:last-child {
 			border-right: 0px;
+		}
+		li.active {
+			a {
+				background-color: $blue;
+				color: $white;
+				i {
+					color: $white;
+				}
+			}
 		}
 	}
 	i.icon-caret-down {
@@ -168,4 +176,18 @@ table.module-search {
 		@include omega();
 		text-align: right;
 	}
+}
+
+.search-menus {
+	display: block;
+	position: absolute;
+	z-index: 650;
+	border-radius: 6px;
+	border: $blue 1px solid;
+	background: $white;
+	padding: 10px;
+	min-width: 250px;
+	margin: 5px 0 0 0;
+	display: none;
+	box-shadow: darken($lightgray, 30) 0 0 4px 1px;
 }

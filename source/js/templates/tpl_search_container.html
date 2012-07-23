@@ -1,10 +1,10 @@
 <header class="module-search">
 	<h1>Policy Search</h1>
 	<ul>
-		<li><a href="">Current context: <strong>All Policies</strong> <i class="icon-caret-down"></i></a></li>
-		<li><a href=""><i class="icon-plus"></i> Save view <i class="icon-caret-down"></i></a></li>
-		<li><a href=""><i class="icon-bookmark"></i> Share view <i class="icon-caret-down"></i></a></li>
-		<li><a href=""><i class="icon-pushpin"></i> Pin view</a></li>
+		<li class="search-controls" id="search-control-context"><a href="">Current context: <strong>All Policies</strong> <i class="icon-caret-down"></i></a></li>
+		<li class="search-controls" id="search-control-save"><a href=""><i class="icon-plus"></i> Save view <i class="icon-caret-down"></i></a></li>
+		<li class="search-controls" id="search-control-share"><a href=""><i class="icon-bookmark"></i> Share view <i class="icon-caret-down"></i></a></li>
+		<li class="search-controls" id="search-control-pin"><a href=""><i class="icon-pushpin"></i> Pin view</a></li>
 	</ul>
 </header>
 <div id="search-filters-{{cid}}" class="module-search filters">
@@ -51,3 +51,62 @@
 		</div>
 	</form>
 </div>
+<!-- TEMPLATE: Context menu -->
+<script type="text/template" id="tpl-context-menu">
+	<div class="search-menus" id="search-menu-context">
+		<table>
+			<thead>
+				<tr>
+					<th>Search views</th>
+					<th><i class="icon-remove-circle"></i></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Stuff</td>
+					<td>[]</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</script>
+
+<!-- TEMPLATE: Save menu -->
+<script type="text/template" id="tpl-save-menu">
+	<div class="search-menus" id="search-menu-save">
+		<table>
+			<thead>
+				<tr>
+					<th>Save views</th>
+					<th><i class="icon-remove-circle"></i></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Stuff</td>
+					<td>[]</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</script>
+
+<!-- TEMPLATE: Share menu -->
+<script type="text/template" id="tpl-share-menu">
+	<div class="search-menus" id="search-menu-share">
+		<table>
+			<thead>
+				<tr>
+					<th>Share views</th>
+					<th><i class="icon-remove-circle"></i></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td>Stuff</td>
+					<td>[]</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+</script>

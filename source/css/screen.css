@@ -633,13 +633,13 @@ header.module-search ul li a {
   color: #165788;
   display: inline-block;
   padding: 4px 6px;
+  border-radius: 4px;
 }
 header.module-search ul li a strong {
   font-weight: bold;
 }
 header.module-search ul li a:hover {
   background-color: #165788;
-  border-radius: 4px;
   color: white;
 }
 header.module-search ul li a:hover i {
@@ -650,6 +650,13 @@ header.module-search ul li:first-child {
 }
 header.module-search ul li:last-child {
   border-right: 0px;
+}
+header.module-search ul li.active a {
+  background-color: #165788;
+  color: white;
+}
+header.module-search ul li.active a i {
+  color: white;
 }
 header.module-search i.icon-caret-down {
   color: dimgrey;
@@ -791,4 +798,18 @@ table.module-search tbody td a:hover {
   #margin-left: -1em;
   display: inline;
   text-align: right;
+}
+
+.search-menus {
+  display: block;
+  position: absolute;
+  z-index: 650;
+  border-radius: 6px;
+  border: #165788 1px solid;
+  background: white;
+  padding: 10px;
+  min-width: 250px;
+  margin: 5px 0 0 0;
+  display: none;
+  box-shadow: #a1a1a1 0 0 4px 1px;
 }

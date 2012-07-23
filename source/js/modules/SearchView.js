@@ -4,8 +4,21 @@
   define(['BaseView', 'Messenger', 'modules/SearchPolicyCollection', 'text!templates/tpl_search_container.html'], function(BaseView, Messenger, SearchPolicyCollection, tpl_search_container) {
     var SearchView;
     return SearchView = BaseView.extend({
+      menu_cache: {},
       events: {
-        "submit .filters form": "search"
+        "submit .filters form": "search",
+        "click #search-control-context": function(e) {
+          return this.control_context(this.process_event(e));
+        },
+        "click #search-control-save": function(e) {
+          return this.control_save(this.process_event(e));
+        },
+        "click #search-control-share": function(e) {
+          return this.control_share(this.process_event(e));
+        },
+        "click #search-control-pin": function(e) {
+          return this.control_pin(this.process_event(e));
+        }
       },
       initialize: function(options) {
         this.el = options.view.el;
@@ -24,6 +37,7 @@
           cid: this.cid
         });
         this.$el.html(html);
+        this.controls = $('.search-controls');
         return this.messenger = new Messenger(this.options.view, this.cid);
       },
       search: function(e) {
@@ -44,6 +58,61 @@
             return _this.Amplify.publish(_this.cid, 'warning', "There was a problem with this request: " + resp.status + " - " + resp.statusText);
           }
         });
+      },
+      toggle_controls: function(id) {
+        var $el;
+        $el = $("#" + id);
+        if ($el.hasClass('active')) {
+          return this.controls.removeClass('active');
+        } else {
+          this.controls.removeClass('active');
+          return $el.addClass('active');
+        }
+      },
+      process_event: function(e) {
+        var $el;
+        this.clear_menus();
+        e.preventDefault();
+        $el = $(e.currentTarget);
+        this.toggle_controls($el.attr('id'));
+        return $el;
+      },
+      clear_menus: function() {
+        return _.each(this.menu_cache, function(menu, id) {
+          return menu.fadeOut(100);
+        });
+      },
+      attach_menu: function(e, template) {
+        var $tpl, el_width, tpl, tpl_id;
+        if (this.menu_cache[template] !== void 0) {
+          return this.menu_cache[template].fadeIn(100);
+        } else {
+          el_width = e.css('width');
+          tpl = this.$el.find("#" + template).html();
+          tpl_id = $(tpl).attr('id');
+          e.append(tpl);
+          $tpl = $("#" + tpl_id);
+          $tpl.fadeIn(100);
+          return this.menu_cache[template] = $tpl;
+        }
+      },
+      control_context: function(e) {
+        if (e.hasClass('active')) {
+          return this.attach_menu(e, 'tpl-context-menu');
+        }
+      },
+      control_save: function(e) {
+        if (e.hasClass('active')) {
+          return this.attach_menu(e, 'tpl-save-menu');
+        }
+      },
+      control_share: function(e) {
+        if (e.hasClass('active')) {
+          return this.attach_menu(e, 'tpl-share-menu');
+        }
+      },
+      control_pin: function(e) {
+        return console.log(e.attr('id'));
       }
     });
   });
