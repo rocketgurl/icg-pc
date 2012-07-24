@@ -1,13 +1,13 @@
 <div id="policy-nav">
 	<ul>
-		<li><a href="">Overview</a></li>
-		<li><a href="">IPM Changes</a></li>
-		<li><a href="">Servces requests</a></li>
-		<li><a href="">Renewal underwriting review</a></li>
-		<li><a href="">Data transmission jobs</a></li>
-		<li><a href="">Policy transaction history</a></li>
+		<li><a href="overview">Overview</a></li>
+		<li><a href="ipmchanges">IPM Changes</a></li>
+		<li><a href="servicerequests">Service requests</a></li>
+		<li><a href="renewalunderwriting">Renewal underwriting review</a></li>
+		<li><a href="datatransmission">Data transmission jobs</a></li>
+		<li><a href="policytransactions">Policy transaction history</a></li>
 	</ul>
 </div>
 <div id="policy-workspace">
-	<iframe id="policy-iframe" src="/mxadmin/index.html" frameborder="0"></iframe>
+	<iframe id="policy-iframe" data-ipm-policy="{{policy_id}}" data-ipm-auth="{{auth_digest}}" src="" frameborder="0"></iframe>
 </div>

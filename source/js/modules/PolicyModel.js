@@ -5,29 +5,18 @@
     var PolicyModel;
     PolicyModel = BaseModel.extend({
       initialize: function() {
-        this.use_cripple();
-        this.urlRoot = this.get('urlRoot');
-        if (this.get('username')) {
-          this.id = this.get('username');
-        }
-        if (this.get('username') && this.get('password')) {
-          this.set({
-            'digest': Base64.encode("" + (this.get('username')) + ":" + (this.get('password')))
-          });
-          return delete this.attributes.password;
-        }
+        return this.use_cripple();
       },
-      parse_identity: function() {
+      url: function() {
+        return this.get('urlRoot') + 'policies/' + this.id;
+      },
+      get_pxServerIndex: function() {
         var doc;
         doc = this.get('document');
-        if (doc != null) {
-          this.set('passwordHash', doc.find('Identity').attr('passwordHash'));
-          this.set('name', doc.find('Identity Name').text());
-          return this.set('email', doc.find('Identity Email').text());
-        }
+        return this.set('pxServerIndex', doc.find('Identifiers Identifier[name=pxServerIndex]').attr('value'));
       }
     });
-    return UserModel;
+    return PolicyModel;
   });
 
 }).call(this);

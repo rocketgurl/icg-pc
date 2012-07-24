@@ -172,6 +172,7 @@
 	}
 }
 
+
 .flash-message {
 	@include font-size(14);
 	padding: 10px 20px;
@@ -205,4 +206,18 @@
 	background-color: $warning-base;
 	@include background-image(linear-gradient($warning-base, $warning-bottom));
 	border: $warning-bottom 1px solid;
+}
+
+
+// Loader image
+.module-loader {
+	text-align: center;
+	background: url(/img/loader.gif) no-repeat center center;
+	background-position: center 30%;
+	min-height: 200px;
+	line-height: 200px;
+	h1 {
+		@include font-size(18);
+		color: darken($lightgray, 40);
+	}
 }

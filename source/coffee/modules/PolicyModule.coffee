@@ -4,9 +4,10 @@ define [
   'backbone',
   'mustache',
   'modules/PolicyView',
+  'modules/PolicyModel',
   'amplify_core',
   'amplify_store'
-], ($, _, Backbone, Mustache, PolicyView, amplify) ->
+], ($, _, Backbone, Mustache, PolicyView, PolicyModel, amplify) ->
 
   class PolicyModule
 
@@ -25,15 +26,39 @@ define [
     # Any bootstrapping should happen here. When done remove the loader image.
     # view.remove_loader will callback Module.render()
     #
-    load: () ->
-      @callback_delay 500, =>
-        @view.remove_loader()
+    load: ->
+      @policy_model = new PolicyModel(
+        id      : 'c23d82284fb34a25b1cc9bcb4f616ff1'
+        urlRoot : @view.options.controller.services.pxcentral
+        digest  : @view.options.controller.user.get('digest')
+        )
+
+      @policy_view = new PolicyView(
+        view   : @view
+        module : @
+        model  : @policy_model
+        )
+
+      @policy_model.fetch({
+        success : (model, resp) =>
+          model.response_state()
+          switch model.get('fetch_state').code
+            when "200"
+              model.get_pxServerIndex()
+              @render()
+            else
+              amplify.publish('controller', 'warning', "Sorry, that policy could not be retrieved.")
+        error : (model, resp) =>
+          amplify.publish('controller', 'warning', "Sorry, that policy could not be retrieved. #{resp}")
+      })
 
     # Do whatever rendering animation needs to happen here
-    render : () ->
-      @policy_view = new PolicyView({view : @view, module : @})
+    render : ->
+      @view.remove_loader()
       @policy_view.render()
 
     # Simple delay fund if we need it.
     callback_delay : (ms, func) ->
       setTimeout func, ms
+
+      

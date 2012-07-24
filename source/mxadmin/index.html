@@ -1,27 +1,33 @@
-<!doctype html>
+<!DOCTYPE html>
 <html class="no-js" lang="en">
 <head>
-	<meta charset="utf-8">
-	<title>mxAdmin</title>
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<script src="modernizr.min.js"></script>
-	<link rel="stylesheet" href="core.css" type="text/css">
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta charset="utf-8">
+<title>mxAdmin</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<script src="modernizr.min.js"></script><link rel="stylesheet" href="core.css" type="text/css">
 </head>
 <body>
-	<header role="banner">
-		<div>
+	<header role="banner"><div>
 			<h1>
 				<a href="home">mxAdmin</a>
 			</h1>
 			<p id="user_info"><a href="logout">Log Out</a></p>
 		</div>
-	</header>
-	
-	<div id="container">
+	</header><div id="container">
 		<div id="contents"></div>
 	</div>
-	
-	<script src="lib.ugly.js"></script>
-	<script src="app.ugly.js"></script>
+
+
+	<script src="js/lib/jquery.js">
+</script><script src="js/lib/jquery.ui.core.js"></script><script src="js/lib/jquery.ui.widget.js"></script><script src="js/lib/jquery.ui.position.js"></script><script src="js/lib/jquery.ui.autocomplete.js"></script><script src="js/lib/jquery.ui.datepicker.js"></script><script src="js/lib/jquery.address.js"></script><script src="js/lib/cookie.js"></script><script src="js/lib/icanhaz.js"></script><script src="js/lib/objectify.js"></script><script src="js/lib/base64.js"></script><script src="js/lib/date.js"></script><script src="js/lib/ajaxupload.js"></script><script src="js/lib/ics360.js"></script><script src="js/mxAdmin.js"></script><script src="js/helpers.js"></script><script src="js/base.js"></script><script src="js/view.js"></script><script src="js/model.js"></script>
+	<script>
+		$(function(){
+			var iframe = $(parent.document).find('#policy-iframe');
+			mxAdmin.POLICY = iframe.data('ipmPolicy');
+			mxAdmin.AUTH = iframe.data('ipmAuth');
+			console.log(mxAdmin);
+		})
+	</script>
 </body>
 </html>

@@ -600,6 +600,19 @@ body {
   border: #72101b 1px solid;
 }
 
+.module-loader {
+  text-align: center;
+  background: url(/img/loader.gif) no-repeat center center;
+  background-position: center 30%;
+  min-height: 200px;
+  line-height: 200px;
+}
+.module-loader h1 {
+  font-size: 18px;
+  font-size: 1.8rem;
+  color: #878787;
+}
+
 /*
 Module: Search
 */
