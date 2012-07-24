@@ -116,10 +116,17 @@ var view            = {},
     
     // Handler for all forms in mxadmin
     formSubmitHandler = function (e) {
+
+      // PC 2.0 ALERT
+      // We brute force our policy id from PolicyModule into
+      // the form field #id_identifier so that all actions
+      // will take place on that policy
+      $('#id_identifier').val(mxAdmin.POLICY);
+
       var theForm        = $(this),
           address        = theForm.attr('action') || $.address.pathNames[0] || mxAdmin.homeAddress,
           formValues     = null,
-          
+ 
           // Convert a serialized array of form elements into an object
           // @return OBJECT
           createFormValuesObj = function (form) {
@@ -182,7 +189,7 @@ var view            = {},
               }
             });
             
-            return changed;
+           return changed;
           };
       
       e.preventDefault();
@@ -702,6 +709,8 @@ view.home = {
       // We need to display a loading indicator has it might take a bit
       // for the policy to load.
       $('#id_identifier').parent().append($('<span />', {'class': 'loading'}));
+
+      console.log(params);
 
       model.pxcentral.policy.get(params.identifier, function (res) {
 

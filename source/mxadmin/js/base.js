@@ -186,30 +186,14 @@ function show (address, params) {
 
 // Hook jquery.address events into the route system
 $.address.change(function (address) {
-  if (address.path === '/logout') {
-    cookie.unset(LOGIN_COOKIE);
-    $.address.value(HOME);
-    return;
-  }
-
-  if (!cookie.get(LOGIN_COOKIE)) {
-    show('login');
-  }
-  else {
-    if (!CTX.user) {
-      CTX.user = Base64.decode(cookie.get(LOGIN_COOKIE)).split(':')[0];
-      view.banner.update();
-    }
-
     show(address.pathNames[0]);
-  }
 }).history(true);
 
 $(function () {
-  com.ics360.ixdirectory.init('./ixdirectory/api/rest/v2/');
-  model.pxcentral.init('./pxcentral/api/rest/v1/');
-  model.ixlibrary.init('./ixlibrary/api/sdo/rest/v1/');
-  model.ixdoc.init('./ixdoc/api/rest/v2/');
+  com.ics360.ixdirectory.init('/ixdirectory/api/rest/v2/');
+  model.pxcentral.init('/pxcentral/api/rest/v1/');
+  model.ixlibrary.init('/ixlibrary/api/sdo/rest/v1/');
+  model.ixdoc.init('/ixdoc/api/rest/v2/');
 
   if ($.address.value() === '/') {
     $.address.value(mxAdmin.homeAddress);

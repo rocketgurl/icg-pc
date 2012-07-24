@@ -483,8 +483,15 @@ com.ics360.ixdirectory = (function () {
 		// getAuthorizationHash
 		// 
 		// @param String
+
+    // PC 2.0 ALERT
+    // We are short circuiting this to use the Auth Digest passed into
+    // the iFrame as a data attribute from the PolicyModule.
     getAuthorizationHash: function () {
-      return _authorizationHash || false;
+      if (mxAdmin.AUTH !== undefined || mxAdmin.AUTH !== null) {
+        return mxAdmin.AUTH;
+      }
+      return false;
     },
 
 		// Get the current config object
