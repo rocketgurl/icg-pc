@@ -1,0 +1,70 @@
+{
+	"terms": [
+		{
+			"name": "CancelPendingReason",
+			"label": "Reason Code",
+			"enumerations": [
+				{
+					"value": "1",
+					"label": "Insured Request"
+				},
+				{
+					"value": "2",
+					"label": "Nonpayment Of Premium"
+				},
+				{
+					"value": "3",
+					"label": "Insured Convicted Of Crime"
+				},
+				{
+					"value": "4",
+					"label": "Discovery Of Fraud Or Material Misrepresentation"
+				},
+				{
+					"value": "5",
+					"label": "Discovery Of Willful Or Reckless Acts Of Omissions"
+				},
+				{
+					"value": "6",
+					"label": "Physical Changes In The Property Insured"
+				},
+				{
+					"value": "7",
+					"label": "Increase In Liability Hazards Beyond What Is Normally Accepted"
+				},
+				{
+					"value": "8",
+					"label": "Increase In Property Hazards Beyond What Is Normally Accepted"
+				},
+				{
+					"value": "9",
+					"label": "Overexposed In Area Where Risk Is Located"
+				},
+				{
+					"value": "10",
+					"label": "Change In Occupancy Status"
+				},
+				{
+					"value": "11",
+					"label": "Other Underwriting Reasons"
+				},
+				{
+					"value": "12",
+					"label": "Cancel/Rewrite"
+				},
+				{
+					"value": "13",
+					"label": "Change In Ownership"
+				},
+				{
+					"value": "14",
+					"label": "Missing Required Documentation"
+				},
+				{
+					"value": "201",
+					"label": "Payment Received"
+				}
+			]
+		}
+	]
+}

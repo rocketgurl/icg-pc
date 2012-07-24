@@ -1,0 +1,69 @@
+{
+	"terms": [
+		{
+			"name": "ReasonCodesAndLabels",
+			"enumerations": [
+				{
+					"value": "1",
+					"label": "Insured request"
+				},
+				{
+					"value": "2",
+					"label": "Nonpayment of premium"
+				},
+				{
+					"value": "3",
+					"label": "Insured convicted of crime"
+				},
+				{
+					"value": "4",
+					"label": "Discovery of fraud or material misrepresentation"
+				},
+				{
+					"value": "5",
+					"label": "Discovery of willful or reckless acts of omissions"
+				},
+				{
+					"value": "6",
+					"label": "Physical changes in the property "
+				},
+				{
+					"value": "7",
+					"label": "Increase in liability hazards beyond what is normally accepted"
+				},
+				{
+					"value": "8",
+					"label": "Increase in property hazards beyond what is normally accepted"
+				},
+				{
+					"value": "9",
+					"label": "Overexposed in area where risk is located"
+				},
+				{
+					"value": "10",
+					"label": "Change in occupancy status"
+				},
+				{
+					"value": "11",
+					"label": "Other underwriting reasons"
+				},
+				{
+					"value": "12",
+					"label": "Cancel/rewrite"
+				},
+				{
+					"value": "13",
+					"label": "Change in ownership"
+				},
+				{
+					"value": "14",
+					"label": "Missing required documentation"
+				},
+				{
+					"value": "15",
+					"label": "Insured Request (Short-Rate)"
+				}
+			]
+		}
+	]
+}

@@ -24,6 +24,7 @@
         this.el = options.view.el;
         this.$el = options.view.$el;
         this.controller = options.view.options.controller;
+        this.module = options.module;
         this.policies = new SearchPolicyCollection();
         this.policies.url = this.controller.services.pxcentral + 'policies?modified-after=2012-01-01&modified-before=2012-07-01';
         return this.policies.container = this;

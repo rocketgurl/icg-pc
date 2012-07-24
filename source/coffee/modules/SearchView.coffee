@@ -23,6 +23,7 @@ define [
       @el                 = options.view.el
       @$el                = options.view.$el
       @controller         = options.view.options.controller
+      @module             = options.module
       @policies           = new SearchPolicyCollection()
       @policies.url       = @controller.services.pxcentral + 'policies?modified-after=2012-01-01&modified-before=2012-07-01'
       @policies.container = @

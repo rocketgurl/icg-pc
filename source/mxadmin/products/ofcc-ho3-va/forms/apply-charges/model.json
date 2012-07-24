@@ -1,0 +1,26 @@
+{
+    "terms": [
+        {
+            "name": "ChargesReason",
+            "label": "Reason Code",
+            "enumerations": [
+                {
+                    "value": "900",
+                    "label": "Installment Charge"
+                },
+                {
+                    "value": "901",
+                    "label": "Late Payment Charge"
+                },
+                {
+                    "value": "902",
+                    "label": "NSF Charge"
+                },
+                        {
+                    "value": "903",
+                    "label": "Service Charge"
+                }
+            ]
+        }
+    ]
+}

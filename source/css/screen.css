@@ -817,3 +817,23 @@ table.module-search tbody td a:hover {
 /*
 Module: Policy
 */
+#policy-nav {
+  width: 15.254%;
+  float: left;
+  margin-right: 1.695%;
+  display: inline;
+}
+
+#policy-workspace {
+  width: 83.051%;
+  float: right;
+  margin-right: 0;
+  #margin-left: -1em;
+  display: inline;
+  border: #ddd 1px solid;
+}
+
+#policy-iframe {
+  width: 100%;
+  min-height: 600px;
+}

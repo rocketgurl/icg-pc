@@ -1,0 +1,526 @@
+<!-- Product: WIC HWO Alabama -->
+	<form action="endorse" method="get" accept-charset="utf-8" class="collapsedSections">
+	<div id="content">
+		<div id="content_header">
+			<h2>{{#preview}}Previewing {{/preview}} Endorsement for {{ policyId }}</h2>
+		</div>
+
+		{{^preview}}
+		<div class="content_body">
+			
+			{{#policyOverview}}
+			<section class="policyOverview">
+				<h1>Policy Overview</h1>
+				<ul>
+					<li>{{InsuredFirstName}} {{InsuredMiddleName}} {{InsuredLastName}}</li>
+					<li>{{InsuredMailingAddressLine1}}</li>
+					<li>{{InsuredMailingAddressLine2}}</li>
+					<li>{{InsuredMailingAddressCity}}, {{InsuredMailingAddressState}} {{InsuredMailingAddressZip}}</li>
+				</ul>
+			</section>
+			{{/policyOverview}}
+			
+			<fieldset>
+				<div>
+					<label for="id_reasonCode" class="labelRequired">Reason Code</label>
+					<select id="id_reasonCode" name="reasonCode" required>
+						{{#EnumsChangeCoveragesReason}}
+						<option value="{{value}}">{{label}}</option>
+						{{/EnumsChangeCoveragesReason}}
+					</select>
+				</div>				
+				
+				<div>
+					<label for="id_effectiveDate" class="labelRequired">Effective Date</label>
+					<input type="text" id="id_effectiveDate" name="effectiveDate" value="" class="datepicker" required>
+				</div>
+				<div>
+					<label for="id_comment">Comment</label>
+					<textarea id="id_comment" name="comment"></textarea>
+				</div>
+			</fieldset>
+
+			<fieldset class="horizontalFields defaultOpen extraWide">
+			
+				<h3>Section I Coverages <a data-alt-text="close">change</a></h3>
+			
+				<div class="collapsibleFieldContainer">
+					<div>
+						<label for="id_ReplacementCostBuilding" class="labelRequired">Replacement Cost of Dwelling <i>ReplacementCostBuilding</i></label>
+						<input type="text" id="id_ReplacementCostBuilding" name="ReplacementCostBuilding" value="{{ReplacementCostBuilding}}" required>
+						<i>(Expiring: {{ReplacementCostBuilding}})</i>
+					</div>
+					<div>
+						<label for="id_CoverageA" class="labelRequired">Coverage A <i>CoverageA</i></label>
+						<input type="text" id="id_CoverageA" name="CoverageA" value="{{CoverageA}}"  required>
+					</div>
+					<div>
+						<label for="id_OptionCoverageB" class="labelRequired">Coverage B (% of Coverage A) <i>OptionCoverageB</i></label>
+						<select id="id_OptionCoverageB" name="OptionCoverageB" data-value="{{OptionCoverageB}}" data-affects="CoverageB" required>
+							{{#EnumsOptionCoverageB}}
+							<option value="{{value}}">{{label}}</option>
+							{{/EnumsOptionCoverageB}}
+						</select>
+					</div>
+					<div>
+						<label for="id_CoverageB">Coverage B <i>CoverageB</i></label>
+						<input type="text" id="id_CoverageB" name="CoverageB" value="{{CoverageB}}" readonly>
+					</div>
+					<div>
+						<label for="id_OptionCoverageC" class="labelRequired">Coverage C (% of Coverage A) <i>OptionCoverageC</i></label>
+						<select id="id_OptionCoverageC" name="OptionCoverageC" data-value="{{OptionCoverageC}}" data-affects="CoverageC" required>
+							{{#EnumsOptionCoverageC}}
+							<option value="{{value}}">{{label}}</option>
+							{{/EnumsOptionCoverageC}}
+						</select>
+					</div>
+					<div>
+						<label for="id_CoverageC">Coverage C <i>CoverageC</i></label>
+						<input type="text" id="id_CoverageC" name="CoverageC" value="{{CoverageC}}" readonly>
+					</div>
+					<div>
+						<label for="id_OptionCoverageD" class="labelRequired">Coverage D (% of Coverage A) <i>OptionCoverageD</i></label>
+						<select id="id_OptionCoverageD" name="OptionCoverageD" data-value="{{OptionCoverageD}}" data-affects="CoverageD" required>
+							{{#EnumsOptionCoverageD}}
+							<option value="{{value}}">{{label}}</option>
+							{{/EnumsOptionCoverageD}}
+						</select>
+					</div>
+					<div>
+						<label for="id_CoverageD">Coverage D <i>CoverageD</i></label>
+						<input type="text" id="id_CoverageD" name="CoverageD" value="{{CoverageD}}" readonly>
+					</div>
+				
+				</div>
+			</fieldset>
+			
+			<fieldset class="horizontalFields">
+				<h3>Deductibles <a data-alt-text="close">change</a></h3>
+            	
+				<div class="collapsibleFieldContainer">
+					<div>
+						<label for="id_HurricaneDeductible" class="labelRequired">Named Storm Deductible <i>HurricaneDeductible</i></label>
+						<select id="id_HurricaneDeductible" name="HurricaneDeductible" data-value="{{HurricaneDeductible}}" required>
+							{{#EnumsHurricaneDeductible}}
+							<option value="{{value}}">{{label}}</option>
+							{{/EnumsHurricaneDeductible}}
+						</select>
+					</div>
+            		
+					<div>
+						<label for="id_AllOtherPerilsDeductible" class="labelRequired">All Other Peril Deductible <i>AllOtherPerilsDeductible</i></label>
+						<select id="id_AllOtherPerilsDeductible" name="AllOtherPerilsDeductible" data-value="{{AllOtherPerilsDeductible}}" required>
+							{{#EnumsAllOtherPerilsDeductible}}
+							<option value="{{value}}">{{label}}</option>
+							{{/EnumsAllOtherPerilsDeductible}}
+						</select>
+					</div>
+				</div>
+			</fieldset>
+			
+		
+
+			<fieldset class="horizontalFields extraWide">
+				<h3>Optional Coverages <a data-alt-text="close">change</a></h3>
+				
+				<div class="collapsibleFieldContainer">
+				
+					<!-- wic-hwo-al -->
+					<div>
+						<label for="id_PersonalPropertyReplacementCost">Personal Property Replacement Cost <i>PersonalPropertyReplacementCost</i></label>
+						<select id="id_PersonalPropertyReplacementCost" name="PersonalPropertyReplacementCost" data-value="{{PersonalPropertyReplacementCost}}">
+							{{#EnumsPersonalPropertyReplacementCost}}
+							<option value="{{value}}">{{label}}</option>
+							{{/EnumsPersonalPropertyReplacementCost}}
+						</select>
+					</div>
+					<div>
+						<label for="id_IncreasedOrdinanceLimit">Increased Ordinance or Law <i>IncreasedOrdinanceLimit</i></label>
+						<select id="id_IncreasedOrdinanceLimit" name="IncreasedOrdinanceLimit" data-value="{{IncreasedOrdinanceLimit}}">
+							{{#EnumsIncreasedOrdinanceLimit}}
+							<option value="{{value}}">{{label}}</option>
+							{{/EnumsIncreasedOrdinanceLimit}}
+						</select>
+					</div>
+				
+					<div>
+						<label for="id_LossAssessmentCoverage">Increased Loss Assessment <i>LossAssessmentCoverage</i></label>
+						<select id="id_LossAssessmentCoverage" name="LossAssessmentCoverage" data-value="{{LossAssessmentCoverage}}">
+							{{#EnumsLossAssessmentCoverage}}
+							<option value="{{value}}">{{label}}</option>
+							{{/EnumsLossAssessmentCoverage}}
+						</select>
+					</div>
+				
+					<!-- wic-hwo-al -->
+					<div>
+						<label for="id_DeluxeEndorsementOption">Deluxe Endorsement Option <i>DeluxeEndorsementOption</i></label>
+						<select id="id_DeluxeEndorsementOption" name="DeluxeEndorsementOption" data-value="{{DeluxeEndorsementOption}}">
+							{{#EnumsDeluxeEndorsementOption}}
+							<option value="{{value}}">{{label}}</option>
+							{{/EnumsDeluxeEndorsementOption}}
+						</select>
+					</div>
+				
+				</div>
+			</fieldset>
+			
+			<fieldset class="horizontalFields">
+				<h3>Credits, Discounts and Surcharges <a data-alt-text="close">change</a></h3>
+				<div class="collapsibleFieldContainer">
+					<div>
+						<label for="id_PrimeTimeDiscount">Prime Time Discount <i>PrimeTimeDiscount</i></label>
+						<select id="id_PrimeTimeDiscount" name="PrimeTimeDiscount" data-value="{{PrimeTimeDiscount}}">
+							{{#EnumsPrimeTimeDiscount}}
+							<option value="{{value}}">{{label}}</option>
+							{{/EnumsPrimeTimeDiscount}}
+						</select>
+					</div>
+					<div>
+						<label for="id_MultiPolicy">Multi-policy Discount <i>MultiPolicy</i></label>
+						<select id="id_MultiPolicy" name="MultiPolicy" data-value="{{MultiPolicy}}">
+							{{#EnumsMultiPolicy}}
+							<option value="{{value}}">{{label}}</option>
+							{{/EnumsMultiPolicy}}
+						</select>
+					</div>
+					<div>
+						<label for="id_AutoPolicyCarrier">Auto Policy Carrier <i>AutoPolicyCarrier</i></label>
+						<input type="text" id="id_AutoPolicyCarrier" name="AutoPolicyCarrier" value="{{AutoPolicyCarrier}}">
+					</div>
+					<div>
+						<label for="id_AutoPolicyNumber">Auto Policy Number <i>AutoPolicyNumber</i></label>
+						<input type="text" id="id_AutoPolicyNumber" name="AutoPolicyNumber" value="{{AutoPolicyNumber}}">
+					</div>
+					<div>
+						<label for="id_LiabilityHazardPoints">Additional Liability Hazards <i>LiabilityHazardPoints</i></label>
+						<input type="text" id="id_LiabilityHazardPoints" name="LiabilityHazardPoints" value="{{LiabilityHazardPoints}}">
+					</div>
+					<div>
+						<label for="id_BurglarAlarm">Burglar Alarm <i>BurglarAlarm</i></label>
+						<select id="id_BurglarAlarm" name="BurglarAlarm" data-value="{{BurglarAlarm}}">
+							{{#EnumsBurglarAlarm}}
+							<option value="{{value}}">{{label}}</option>
+							{{/EnumsBurglarAlarm}}
+						</select>
+					</div>
+					<div>
+						<label for="id_FireAlarm">Fire Alarm <i>FireAlarm</i></label>
+						<select id="id_FireAlarm" name="FireAlarm" data-value="{{FireAlarm}}">
+							{{#EnumsFireAlarm}}
+							<option value="{{value}}">{{label}}</option>
+							{{/EnumsFireAlarm}}
+						</select>
+					</div>
+				</div>
+			</fieldset>
+			
+			<fieldset class="horizontalFields">
+				<h3>Windstorm Mitigation Features <a data-alt-text="close">change</a></h3>
+				<div class="collapsibleFieldContainer">
+					<div>
+						<label for="id_OpeningProtectionType">Opening Protection <i>OpeningProtectionType</i></label>
+						<select id="id_OpeningProtectionType" name="OpeningProtectionType" data-value="{{OpeningProtectionType}}">
+							{{#EnumsOpeningProtectionType}}
+							<option value="{{value}}">{{label}}</option>
+							{{/EnumsOpeningProtectionType}}
+						</select>
+					</div>
+					<div>
+						<label for="id_RoofCoveringType">Roof Covering Material <i>RoofCoveringType</i></label>
+						<select id="id_RoofCoveringType" name="RoofCoveringType" data-value="{{RoofCoveringType}}">
+							{{#EnumsRoofCoveringType}}
+							<option value="{{value}}">{{label}}</option>
+							{{/EnumsRoofCoveringType}}
+						</select>
+					</div>
+					<div>
+						<label for="id_ConstructionYearRoof">Construction Year Roof <i>ConstructionYearRoof</i></label>
+						<select id="id_ConstructionYearRoof" name="ConstructionYearRoof" data-value="{{ConstructionYearRoof}}">
+							{{#EnumsConstructionYearRoof}}
+							<option value="{{value}}">{{label}}</option>
+							{{/EnumsConstructionYearRoof}}
+						</select>
+					</div>
+					<div>
+						<label for="id_RoofGeometryType">Roof Geometry <i>RoofGeometryType</i></label>
+						<select id="id_RoofGeometryType" name="RoofGeometryType" data-value="{{RoofGeometryType}}">
+							{{#EnumsRoofGeometryType}}
+							<option value="{{value}}">{{label}}</option>
+							{{/EnumsRoofGeometryType}}
+						</select>
+					</div>
+					<div>
+						<label for="id_RoofDeckAttachmentType">Roof Deck Attachment <i>RoofDeckAttachmentType</i></label>
+						<select id="id_RoofDeckAttachmentType" name="RoofDeckAttachmentType" data-value="{{RoofDeckAttachmentType}}">
+							{{#EnumsRoofDeckAttachmentType}}
+							<option value="{{value}}">{{label}}</option>
+							{{/EnumsRoofDeckAttachmentType}}
+						</select>
+					</div>
+					<div>
+						<label for="id_RoofWallConnectionType">Roof Wall Connection <i>RoofWallConnectionType</i></label>
+						<select id="id_RoofWallConnectionType" name="RoofWallConnectionType" data-value="{{RoofWallConnectionType}}">
+							{{#EnumsRoofWallConnectionType}}
+							<option value="{{value}}">{{label}}</option>
+							{{/EnumsRoofWallConnectionType}}
+						</select>
+					</div>
+				</div>
+			</fieldset>
+
+		
+			<!-- wic-hwo-al -->
+			<fieldset class="horizontalFields extraWide">
+				<h3>Occupancy <a data-alt-text="close">change</a></h3>
+				
+				<div class="collapsibleFieldContainer">
+					<div>
+						<label for="id_PropertyOccupancy">Property Occupancy <i>PropertyOccupancy</i></label>
+						<select id="id_PropertyOccupancy" name="PropertyOccupancy" data-value="{{PropertyOccupancy}}">
+							{{#EnumsPropertyOccupancy}}
+							<option value="{{value}}">{{label}}</option>
+							{{/EnumsPropertyOccupancy}}
+						</select>
+					</div>
+					<div>
+						<label for="id_PropertyUsage">Property Usage <i>PropertyUsage</i></label>
+						<select id="id_PropertyUsage" name="PropertyUsage" data-value="{{PropertyUsage}}">
+							{{#EnumsPropertyUsage}}
+							<option value="{{value}}">{{label}}</option>
+							{{/EnumsPropertyUsage}}
+						</select>
+					</div>
+					<div>
+						<label for="id_MonthsUnoccupied">Number of Months Unoccupied <i>MonthsUnoccupied</i></label>
+						<select id="id_MonthsUnoccupied" name="MonthsUnoccupied" data-value="{{MonthsUnoccupied}}">
+							{{#EnumsMonthsUnoccupied}}
+							<option value="{{value}}">{{label}}</option>
+							{{/EnumsMonthsUnoccupied}}
+						</select>
+					</div>
+					<div>
+						<label for="id_MonthsRented">Number of Months Rented <i>MonthsRented</i></label>
+						<select id="id_MonthsRented" name="MonthsRented" data-value="{{MonthsRented}}">
+							{{#EnumsMonthsRented}}
+							<option value="{{value}}">{{label}}</option>
+							{{/EnumsMonthsRented}}
+						</select>
+					</div>
+				</div>
+			</fieldset>
+		
+
+			<fieldset class="horizontalFields">
+				<h3>Overrides <a data-alt-text="close">change</a></h3>
+				
+				<div class="collapsibleFieldContainer">
+					<div>
+						<label for="id_InspectionFee">Inspection Fee <i>InspectionFee</i></label>
+						<input type="number" id="id_InspectionFee" name="InspectionFee" value="{{InspectionFee}}">
+					</div>
+				</div>
+			</fieldset>
+			<div class="form_actions">
+				<input type="submit" class="button" value="Preview"> <a href="home">Nevermind, go back</a>
+			</div>
+
+		</div>
+		<input type="hidden" id="id_preview" name="preview" value="true">
+		{{/preview}}
+				
+		{{#preview}}
+		<div class="content_body preview">
+			<div class="table_wrapping">
+				<table class="data_table" summary="Table containing preview of endorsement.">
+					<col span="1" class="col_labels"></col>
+					<col span="2"></col>
+					<col span="1" class="col_days"></col>
+					<colgroup span="3" class="col_non_hurricane">
+						<col></col>
+						<col></col>
+						<col></col>
+					</colgroup>
+					<colgroup span="3" class="col_hurricane">
+						<col></col>
+						<col></col>
+						<col></col>
+					</colgroup>
+					<col span="3" class="col_amounts"></col>
+					<thead>
+				   		<tr>
+				   			<th>&nbsp;</th>
+				   			<th>&nbsp;</th>
+				   			<th>&nbsp;</th>
+				   			<th>&nbsp;</th>
+				   			<th colspan='3' class="col_group_heading">Non-Hurricane Premium</th>
+				   			<th colspan='3' class="col_group_heading">Hurricane Premium</th>
+				   			<th>&nbsp;</th>
+				   			<th>&nbsp;</th>
+				   			<th>&nbsp;</th>
+				   		</tr>
+				   		<tr>
+				   			<th>&nbsp;</th>
+				   			<th>Starts</th>
+				   			<th>Ends</th>
+				   			<th>#&nbsp;Days</th>
+				   			<th class="col_group_cap_open">Unadjusted</th>
+				   			<th>Adjustment</th>
+				   			<th class="col_group_cap_close">Adjusted</th>
+
+				   			<th class="col_group_cap_open">Unadjusted</th>
+				   			<th>Adjustment</th>
+				   			<th class="col_group_cap_close">Adjusted</th>
+
+				   			<th>Premium Before Fees</th>
+				   			<th>Total Fees and Taxes</th>
+				   			<th>Total Premium and Fees</th>
+				   		</tr>
+					</thead>
+					
+					<tbody>
+						<tr>
+							<td>Proposed Term</td>
+							<td>{{#term}}{{ fmtStartDate }}{{/term}}</td>
+							<td>{{#term}}{{ fmtEndDate }}{{/term}}</td>
+							<td>{{#term}}{{ days }}{{/term}}</td>
+
+							<td>{{#term}}{{ grandSubtotalNonCat }}{{/term}}</td>
+							<td>-</td>
+							<td>{{#term}}{{ grandSubtotalNonCat }}{{/term}}</td>
+
+							<td>{{#term}}{{ grandSubtotalCat }}{{/term}}</td>
+							<td>-</td>
+							<td>{{#term}}{{ grandSubtotalCat }}{{/term}}</td>
+
+							<td>{{#term}}{{ grandSubtotal }}{{/term}}</td>
+							<td>{{#term}}{{ fees }}{{/term}}</td>
+							<td>{{#term}}{{ grandTotal }}{{/term}}</td>
+						</tr>
+						
+						<tr>
+							{{#current_policy}}
+							<td>Current Term</td>
+							<td>{{#term}}{{ fmtStartDate }}{{/term}}</td>
+							<td>{{#term}}{{ fmtEndDate }}{{/term}}</td>
+							<td>{{#term}}{{ days }}{{/term}}</td>
+
+							<td>{{#term}}{{ grandSubtotalNonCat }}{{/term}}</td>
+							<td>-</td>
+							<td>{{#term}}{{ grandSubtotalNonCat }}{{/term}}</td>
+
+							<td>{{#term}}{{ grandSubtotalCat }}{{/term}}</td>
+							<td>-</td>
+							<td>{{#term}}{{ grandSubtotalCat }}{{/term}}</td>
+
+							<td>{{#term}}{{ grandSubtotal }}{{/term}}</td>
+							<td>{{#term}}{{ fees }}{{/term}}</td>
+							<td>{{#term}}{{ grandTotal }}{{/term}}</td>
+							{{/current_policy}}
+						</tr>
+						
+						<tr class="dividing_row">
+							<td colspan="3">
+								<h4>Proposed Policy</h4>
+							</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+						</tr>
+						
+						{{#intervals}}
+						<tr {{#isNew}}class="calc_row"{{/isNew}}>
+							<td>Interval</td>
+							<td>{{ fmtStartDate }}</td>
+							<td>{{ fmtEndDate }}</td>
+							<td>{{ days }}</td>
+							
+							<!--The new interval-->
+						{{#isNew}}
+							<td>{{grandSubtotalNonCatUnadjusted}}</td>
+							<td>
+								<input type="text" name="NonHurricanePremiumDollarAdjustmentFRC" value="{{nonCatAdjustment}}">
+							</td>
+							<td class="calculated_value">{{ grandSubtotalNonCat }}</td>
+							<td>{{grandSubtotalCatUnadjusted}}</td>
+							<td>
+								<input type="text" name="HurricanePremiumDollarAdjustmentFRC" value="{{catAdjustment}}">
+							</td>
+							<td class="calculated_value">{{grandSubtotalCat}}</td>
+							<td class="subtotal">{{grandSubtotal}}</td>
+						{{/isNew}}
+							
+							<!--All other intervals-->
+						{{^isNew}}
+							<td>{{grandSubtotalNonCat}}</td>
+							<td>-</td>
+							<td>{{grandSubtotalNonCat}}</td>
+							
+							<td>{{grandSubtotalCat}}</td>
+							<td>-</td>
+							<td>{{grandSubtotalCat}}</td>
+							<td>{{grandSubtotal}}</td>
+						{{/isNew}}
+													
+							<td>-</td>
+							<td>-</td>
+						</tr>
+						{{/intervals}}
+						
+						<tr class="dividing_row">
+							<td colspan="3">
+								<h4>Current Policy</h4>
+							</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+						</tr>
+						
+						{{#current_policy}}
+						{{#intervals}}
+						<tr>
+							<td>Interval</td>
+							<td>{{ fmtStartDate }}</td>
+							<td>{{ fmtEndDate }}</td>
+							<td>{{ days }}</td>
+
+							<td>{{ grandSubtotalNonCat }}</td>
+							<td>-</td>
+							<td>{{ grandSubtotalNonCat }}</td>
+
+							<td>{{ grandSubtotalCat }}</td>
+							<td>-</td>
+							<td>{{ grandSubtotalCat }}</td>
+
+							<td>{{ grandSubtotal }}</td>
+							<td>-</td>
+							<td>-</td>
+						</tr>
+						{{/intervals}}
+						{{/current_policy}}
+					</tbody>
+				</table>
+			</div>
+			
+			<div class="form_actions">
+				<input type="button" id="updatePreview" class="button" value="Update Preview">
+				<input type="submit" class="button" value="Confirm"> <a href="home">Cancel</a>
+			</div>
+		</div>
+		{{/preview}}
+	</div>
+</form>

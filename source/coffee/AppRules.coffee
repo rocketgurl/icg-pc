@@ -29,6 +29,8 @@ define [
           [@policy_search]
         when 'rulesets'
           [@policy_search, @add_app(@rulesets)]
+        when 'policyview'
+          [@add_app(@policy_view)]
         else
           [@add_app(@default)]
 
@@ -48,7 +50,10 @@ define [
         tab       : '#tpl-workspace-tab-search'
         query     : 'stuff'
         other     : 'stuff'
-        params    : null        
+        params    : null    
+
+    policy_view : 
+      module : 'PolicyModule'   
 
     rulesets :
       module : 'TestModule'

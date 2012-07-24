@@ -1,0 +1,50 @@
+<!-- Product: WIC HO3 Alabama -->
+<form action="reverse_payment" method="get" accept-charset="utf-8">
+	<div id="content">
+		<div id="content_header">
+			<h2>Reverse a Payment on {{policyId}}</h2>
+		</div>
+
+		<div class="content_body">
+			
+			{{#policyOverview}}
+			<section class="policyOverview">
+				<h1>Policy Overview</h1>
+				<ul>
+					<li>{{InsuredFirstName}} {{InsuredMiddleName}} {{InsuredLastName}}</li>
+					<li>{{InsuredMailingAddressLine1}}</li>
+					<li>{{InsuredMailingAddressLine2}}</li>
+					<li>{{InsuredMailingAddressCity}}, {{InsuredMailingAddressState}} {{InsuredMailingAddressZip}}</li>
+				</ul>
+			</section>
+			{{/policyOverview}}
+			
+			<fieldset>
+				<div>
+					<label for="id_appliedDate" class="labelRequired">Applied Date</label>
+					<input type="text" id="id_appliedDate" name="appliedDate" value="" class="datepicker" required>
+				</div>
+            	
+				<div>
+					<label for="id_paymentAmount" class="labelRequired">Amount</label>
+					<span class="moneyLabel">$</span> <input type="text" id="id_paymentAmount" class="moneyInput" name="paymentAmount" value="" required>
+				</div>
+				<div>
+					<label for="id_paymentReference">Reference</label>
+					<input type="text" id="id_paymentReference" name="paymentReference" value="">
+				</div>
+				<div>
+					<label for="id_paymentMethod" class="labelRequired">Payment Method</label>
+					<select id="id_paymentMethod" name="paymentMethod" required>
+						{{#EnumsPaymentMethod}}
+						<option value="{{value}}">{{label}}</option>
+						{{/EnumsPaymentMethod}}
+					</select>
+				</div>
+				<div class="form_actions">
+					<input type="submit" class="button" value="Confirm"> <a href="home">Nevermind, go back</a>
+				</div>
+			</fieldset>
+		</div>
+	</div>
+</form>
