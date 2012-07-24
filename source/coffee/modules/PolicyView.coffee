@@ -43,6 +43,10 @@ define [
     # Load mxAdmin into workarea
     show_ipmchanges : ->
       @$el.find('#policy-iframe').attr('src', '/mxadmin/index.html')
+      iframe = @$el.find('#policy-iframe')
+      iframe.load ->
+        console.log iframe.contents().find('#test')
+        iframe.contents().find('#test').html('Howdy from your parent!')
       
 
   PolicyView

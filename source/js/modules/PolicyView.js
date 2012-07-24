@@ -38,7 +38,13 @@
         return this.Amplify.publish(this.cid, 'success', 'You be overviewin!');
       },
       show_ipmchanges: function() {
-        return this.$el.find('#policy-iframe').attr('src', '/mxadmin/index.html');
+        var iframe;
+        this.$el.find('#policy-iframe').attr('src', '/mxadmin/index.html');
+        iframe = this.$el.find('#policy-iframe');
+        return iframe.load(function() {
+          console.log(iframe.contents().find('#test'));
+          return iframe.contents().find('#test').html('Howdy from your parent!');
+        });
       }
     });
     return PolicyView;
