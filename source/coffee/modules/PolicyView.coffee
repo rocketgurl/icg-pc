@@ -44,11 +44,14 @@ define [
     # Load mxAdmin into workarea and inject policy header
     show_ipmchanges : ->
       header = @Mustache.render tpl_ipm_header, @model.get_ipm_header()
-      console.log header
-      @$el.find('#policy-iframe').attr('src', '/mxadmin/index.html')
+      $('#policy-header').html(header)
+
       iframe = @$el.find('#policy-iframe')
-      iframe.load ->
-        iframe.contents().find('#policy-header').html(header)
-      
+      iframe.attr('src', '/mxadmin/index.html')     
+
+      # Calc min-height of iFrame in %
+      iframe_height = Math.floor((($(window).height() - (220 + $('#policy-header').height()))/$(window).height())*100) + "%"
+      console.log iframe_height
+      iframe.css('min-height', iframe_height)
 
   PolicyView

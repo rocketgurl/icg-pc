@@ -12,6 +12,37 @@ Module: Policy
 
 #policy-iframe {
 	width: 100%;
-	min-height: 75%;
 	background: $white;
+}
+
+#policy-header {
+	background: $white;
+	margin: 0;
+	ul {
+		margin: 0;
+		width: 100%;
+		border-bottom: $lightgray 1px solid;
+		li {
+			display: inline-block;
+			padding: 10px;
+			border-right: $lightgray 1px solid;
+		}
+		li:last-child {
+			border-right: 0;
+		}
+	}
+	h3 {
+		@include font-size(12);
+		margin: 0 0 5px 0;
+		color: $colblue;
+	}
+	h2 {
+		@include font-size(14);
+		font-weight: bold;
+		color: $darkblue;
+		display: inline-block;
+		span {
+			color: $orange;
+		}
+	}
 }

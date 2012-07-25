@@ -848,6 +848,39 @@ Module: Policy
 
 #policy-iframe {
   width: 100%;
-  min-height: 75%;
   background: white;
+}
+
+#policy-header {
+  background: white;
+  margin: 0;
+}
+#policy-header ul {
+  margin: 0;
+  width: 100%;
+  border-bottom: #ededed 1px solid;
+}
+#policy-header ul li {
+  display: inline-block;
+  padding: 10px;
+  border-right: #ededed 1px solid;
+}
+#policy-header ul li:last-child {
+  border-right: 0;
+}
+#policy-header h3 {
+  font-size: 12px;
+  font-size: 1.2rem;
+  margin: 0 0 5px 0;
+  color: #007ac9;
+}
+#policy-header h2 {
+  font-size: 14px;
+  font-size: 1.4rem;
+  font-weight: bold;
+  color: #002857;
+  display: inline-block;
+}
+#policy-header h2 span {
+  color: #fe8400;
 }

@@ -38,14 +38,14 @@
         return this.Amplify.publish(this.cid, 'success', 'You be overviewin!');
       },
       show_ipmchanges: function() {
-        var header, iframe;
+        var header, iframe, iframe_height;
         header = this.Mustache.render(tpl_ipm_header, this.model.get_ipm_header());
-        console.log(header);
-        this.$el.find('#policy-iframe').attr('src', '/mxadmin/index.html');
+        $('#policy-header').html(header);
         iframe = this.$el.find('#policy-iframe');
-        return iframe.load(function() {
-          return iframe.contents().find('#policy-header').html(header);
-        });
+        iframe.attr('src', '/mxadmin/index.html');
+        iframe_height = Math.floor((($(window).height() - (220 + $('#policy-header').height())) / $(window).height()) * 100) + "%";
+        console.log(iframe_height);
+        return iframe.css('min-height', iframe_height);
       }
     });
     return PolicyView;
