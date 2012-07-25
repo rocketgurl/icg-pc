@@ -2,7 +2,8 @@ define [
   'BaseView',
   'Messenger',
   'text!templates/tpl_policy_container.html',
-], (BaseView, Messenger, tpl_policy_container, tpl_module_loader) ->
+  'text!templates/tpl_ipm_header.html'
+], (BaseView, Messenger, tpl_policy_container, tpl_ipm_header) ->
 
   PolicyView = BaseView.extend
 
@@ -40,13 +41,14 @@ define [
       console.log 'overviewing!'
       @Amplify.publish @cid, 'success', 'You be overviewin!'
 
-    # Load mxAdmin into workarea
+    # Load mxAdmin into workarea and inject policy header
     show_ipmchanges : ->
+      header = @Mustache.render tpl_ipm_header, @model.get_ipm_header()
+      console.log header
       @$el.find('#policy-iframe').attr('src', '/mxadmin/index.html')
       iframe = @$el.find('#policy-iframe')
       iframe.load ->
-        console.log iframe.contents().find('#test')
-        iframe.contents().find('#test').html('Howdy from your parent!')
+        iframe.contents().find('#policy-header').html(header)
       
 
   PolicyView
