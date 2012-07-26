@@ -47,7 +47,6 @@ define [
 
     # Load Flex Policy Summary
     show_overview : ->
-      console.log 'overviewing!'
       @Amplify.publish @cid, 'success', 'You be overviewin!'
 
     # Load mxAdmin into workarea and inject policy header
@@ -60,7 +59,6 @@ define [
 
       # Calc min-height of iFrame in %
       iframe_height = Math.floor((($(window).height() - (220 + $('#policy-header').height()))/$(window).height())*100) + "%"
-      console.log iframe_height
       iframe.css('min-height', iframe_height)
 
   PolicyView
