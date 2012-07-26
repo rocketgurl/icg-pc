@@ -26,6 +26,10 @@ define [
       # Register flash message pubsub for this view
       @messenger = new Messenger(@options.view, @cid)
 
+    toggle_nav_state : (el) ->
+      $('#policy-nav a').removeClass 'select'
+      el.addClass 'select'
+
     # Dynamically call methods based on href of #policy-nav elements
     # Because JavaScript is dynamic like that, yo.
     # SAFETY: We namespace the function signature and also make
@@ -33,6 +37,9 @@ define [
     dispatch : (e) ->
       e.preventDefault()
       $e = $(e.currentTarget)
+
+      @toggle_nav_state $e
+
       func = @["show_#{$e.attr('href')}"]
       if _.isFunction(func)
         func.apply(this)

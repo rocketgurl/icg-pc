@@ -3,31 +3,63 @@ Module: Policy
 */
 #policy-nav {
 	@include span-columns(2, 12);
+	li {
+		margin: 0;
+		border-top: $white 1px solid;
+		border-bottom: darken($lightgray, 10) 1px solid;
+		a {
+			padding: 8px 10px;
+			@include font-size(12);
+			text-decoration: none;
+			color: $darkblue;
+			display: block;			
+		}
+		a:hover {
+			color: $white;
+			background: $darkblue;
+		}
+		a.select {
+			@extend a:hover;
+			background: $darkblue url(../img/icon_arrow_right.png) 95% 50% no-repeat;
+			
+		}
+	}
+	li:first-child {
+		border-top: 0px;
+	}
+	li:last-child {
+		border-bottom: 0px;
+	}
 }
 
 #policy-workspace {
 	@include span-columns(10 omega, 12);
-	border: #ddd 1px solid;
+	// border: #ddd 1px solid;
 }
 
 #policy-iframe {
 	width: 100%;
 	background: $white;
+	display: block;
+	border: #ddd 1px solid;
+	margin: 0;
+	padding: 0;
 }
 
 #policy-header {
 	background: $white;
+	border: #ddd 1px solid;
+	border-bottom: 0px;
+	width: 100%;
 	margin: 0;
-	ul {
+	table {
 		margin: 0;
 		width: 100%;
-		border-bottom: $lightgray 1px solid;
-		li {
-			display: inline-block;
+		td {
 			padding: 10px;
 			border-right: $lightgray 1px solid;
 		}
-		li:last-child {
+		td:last-child {
 			border-right: 0;
 		}
 	}
@@ -40,7 +72,7 @@ Module: Policy
 		@include font-size(14);
 		font-weight: bold;
 		color: $darkblue;
-		display: inline-block;
+		display: inline;
 		span {
 			color: $orange;
 		}

@@ -1,7 +1,7 @@
 require
   baseUrl: 'js'
   paths: 
-    jquery        : 'https://ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min'
+    jquery        : 'lib/jquery-1.7.2.min'
     underscore    : 'lib/underscore-min'
     backbone      : 'lib/backbone-min'
     amplify_core  : 'lib/amplify.core.min'
@@ -12,6 +12,9 @@ require
     xml2json      : 'lib/jquery.xml2json',
     text          : 'lib/text'
   priority: ['jquery']
+  shim:
+      'cookie'   : ['jquery'],
+      'xml2json' : ['jquery']
 
 require [
   "jquery",

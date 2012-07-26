@@ -24,10 +24,15 @@
         this.$el.html(html);
         return this.messenger = new Messenger(this.options.view, this.cid);
       },
+      toggle_nav_state: function(el) {
+        $('#policy-nav a').removeClass('select');
+        return el.addClass('select');
+      },
       dispatch: function(e) {
         var $e, func;
         e.preventDefault();
         $e = $(e.currentTarget);
+        this.toggle_nav_state($e);
         func = this["show_" + ($e.attr('href'))];
         if (_.isFunction(func)) {
           return func.apply(this);

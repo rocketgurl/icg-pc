@@ -210,7 +210,7 @@ body {
   color: white;
   text-decoration: none;
 }
-#header-admin ul li a:hover {
+#header-admin ul li a:hover, #header-admin ul #policy-nav li a.select, #policy-nav #header-admin ul li a.select {
   text-decoration: underline;
 }
 #header-admin ul li:first-child {
@@ -243,10 +243,10 @@ body {
   font-size: 1.4rem;
   padding: 0 5px 0 0;
 }
-#header-workspace-nav ul.main-nav li a:hover {
+#header-workspace-nav ul.main-nav li a:hover, #header-workspace-nav ul.main-nav #policy-nav li a.select, #policy-nav #header-workspace-nav ul.main-nav li a.select {
   color: #63c2ff;
 }
-#header-workspace-nav ul.main-nav li a:hover:after {
+#header-workspace-nav ul.main-nav li a:hover:after, #header-workspace-nav ul.main-nav #policy-nav li a.select:after, #policy-nav #header-workspace-nav ul.main-nav li a.select:after {
   content: " \25B6";
 }
 #header-workspace-nav ul.main-nav li.open {
@@ -259,7 +259,7 @@ body {
 #header-workspace-nav ul.main-nav li.open a:after {
   content: " \25B6";
 }
-#header-workspace-nav ul.main-nav li.open a:hover {
+#header-workspace-nav ul.main-nav li.open a:hover, #header-workspace-nav ul.main-nav #policy-nav li.open a.select, #policy-nav #header-workspace-nav ul.main-nav li.open a.select {
   color: white;
 }
 
@@ -308,7 +308,7 @@ body {
   margin: 0 0 2px 0;
   display: block;
 }
-#workspace-subnav ul li ul li a:hover,
+#workspace-subnav ul li ul li a:hover, #workspace-subnav ul #policy-nav li ul li a.select, #policy-nav #workspace-subnav ul li ul li a.select,
 #workspace-subnav ul li ul li a.on {
   background: #418bc3;
   -webkit-border-radius: 4px;
@@ -373,7 +373,7 @@ body {
   color: #4f4f4f;
   text-shadow: 0 1px #FFF;
 }
-#workspace nav ul li a:hover {
+#workspace nav ul li a:hover, #workspace nav ul #policy-nav li a.select, #policy-nav #workspace nav ul li a.select {
   color: #030303;
 }
 #workspace nav ul li i {
@@ -403,7 +403,7 @@ body {
   line-height: 23px;
   color: #4f4f4f;
 }
-#workspace nav ul li#tab-search a:hover i {
+#workspace nav ul li#tab-search a:hover i, #workspace nav ul #policy-nav li#tab-search a.select i, #policy-nav #workspace nav ul li#tab-search a.select i {
   color: #1c1c1c;
 }
 #workspace nav ul li.selected {
@@ -423,7 +423,7 @@ body {
 #workspace nav ul li.selected a {
   color: #165788;
 }
-#workspace nav ul li.selected a:hover {
+#workspace nav ul li.selected a:hover, #workspace nav ul #policy-nav li.selected a.select, #policy-nav #workspace nav ul li.selected a.select {
   color: #010304;
 }
 #workspace nav ul li.selected i {
@@ -525,7 +525,7 @@ body {
   color: #165788;
   text-decoration: none;
 }
-#workspace footer ul li a:hover {
+#workspace footer ul li a:hover, #workspace footer ul #policy-nav li a.select, #policy-nav #workspace footer ul li a.select {
   text-decoration: underline;
 }
 #workspace footer ul li:first-child {
@@ -651,11 +651,11 @@ header.module-search ul li a {
 header.module-search ul li a strong {
   font-weight: bold;
 }
-header.module-search ul li a:hover {
+header.module-search ul li a:hover, header.module-search ul #policy-nav li a.select, #policy-nav header.module-search ul li a.select {
   background-color: #165788;
   color: white;
 }
-header.module-search ul li a:hover i {
+header.module-search ul li a:hover i, header.module-search ul #policy-nav li a.select i, #policy-nav header.module-search ul li a.select i {
   color: white;
 }
 header.module-search ul li:first-child {
@@ -698,7 +698,7 @@ header.module-search i.icon-caret-down {
   text-decoration: none;
   padding: 0 10px;
 }
-.module-search.filters a:hover {
+.module-search.filters a:hover, .module-search.filters #policy-nav li a.select, #policy-nav li .module-search.filters a.select {
   color: #165788;
 }
 
@@ -722,7 +722,7 @@ table.module-search th a {
   color: #007ac9;
   text-decoration: none;
 }
-table.module-search th a:hover {
+table.module-search th a:hover, table.module-search th #policy-nav li a.select, #policy-nav li table.module-search th a.select {
   color: #165788;
 }
 table.module-search thead tr th {
@@ -753,7 +753,7 @@ table.module-search tbody td a {
   text-decoration: none;
   text-transform: uppercase;
 }
-table.module-search tbody td a:hover {
+table.module-search tbody td a:hover, table.module-search tbody td #policy-nav li a.select, #policy-nav li table.module-search tbody td a.select {
   text-decoration: underline;
 }
 
@@ -836,6 +836,32 @@ Module: Policy
   margin-right: 1.695%;
   display: inline;
 }
+#policy-nav li {
+  margin: 0;
+  border-top: white 1px solid;
+  border-bottom: lightgrey 1px solid;
+}
+#policy-nav li a {
+  padding: 8px 10px;
+  font-size: 12px;
+  font-size: 1.2rem;
+  text-decoration: none;
+  color: #002857;
+  display: block;
+}
+#policy-nav li a:hover, #policy-nav li a.select {
+  color: white;
+  background: #002857;
+}
+#policy-nav li a.select {
+  background: #002857 url(../img/icon_arrow_right.png) 95% 50% no-repeat;
+}
+#policy-nav li:first-child {
+  border-top: 0px;
+}
+#policy-nav li:last-child {
+  border-bottom: 0px;
+}
 
 #policy-workspace {
   width: 83.051%;
@@ -843,29 +869,33 @@ Module: Policy
   margin-right: 0;
   #margin-left: -1em;
   display: inline;
-  border: #ddd 1px solid;
 }
 
 #policy-iframe {
   width: 100%;
   background: white;
+  display: block;
+  border: #ddd 1px solid;
+  margin: 0;
+  padding: 0;
 }
 
 #policy-header {
   background: white;
+  border: #ddd 1px solid;
+  border-bottom: 0px;
+  width: 100%;
   margin: 0;
 }
-#policy-header ul {
+#policy-header table {
   margin: 0;
   width: 100%;
-  border-bottom: #ededed 1px solid;
 }
-#policy-header ul li {
-  display: inline-block;
+#policy-header table td {
   padding: 10px;
   border-right: #ededed 1px solid;
 }
-#policy-header ul li:last-child {
+#policy-header table td:last-child {
   border-right: 0;
 }
 #policy-header h3 {
@@ -879,7 +909,7 @@ Module: Policy
   font-size: 1.4rem;
   font-weight: bold;
   color: #002857;
-  display: inline-block;
+  display: inline;
 }
 #policy-header h2 span {
   color: #fe8400;
