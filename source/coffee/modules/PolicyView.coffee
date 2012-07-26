@@ -26,6 +26,7 @@ define [
       # Register flash message pubsub for this view
       @messenger = new Messenger(@options.view, @cid)
 
+    # Switch nav items on/off
     toggle_nav_state : (el) ->
       $('#policy-nav a').removeClass 'select'
       el.addClass 'select'
@@ -38,12 +39,13 @@ define [
       e.preventDefault()
       $e = $(e.currentTarget)
 
-      @toggle_nav_state $e
+      @toggle_nav_state $e # turn select state on/off
 
       func = @["show_#{$e.attr('href')}"]
       if _.isFunction(func)
         func.apply(this)
 
+    # Load Flex Policy Summary
     show_overview : ->
       console.log 'overviewing!'
       @Amplify.publish @cid, 'success', 'You be overviewin!'
