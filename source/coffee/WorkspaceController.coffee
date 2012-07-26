@@ -184,6 +184,8 @@ define [
       if @navigation_view?
         @navigation_view.destroy()
 
+      $('#header').css('height', '65px')
+
     # Instantiate a new user and check ixDirectory
     # for valid credentials
     check_credentials : (username, password) ->
@@ -223,6 +225,7 @@ define [
       @set_admin_links() # Change admin links to name & logout
       if @login_view?
         @login_view.destroy()
+        $('#header').css('height', '95px')
 
     # On unsuccessful login render the login form again
     # along with a Flash message indicating issue
@@ -506,6 +509,9 @@ define [
       @set_breadcrumb()
       _.each @workspace_stack, (view, index) =>
         view.destroy()
+      if @workspace_stack.length > 0
+        @workspace_stack = []
+        @$workspace_tabs.html('')
 
 
     # Kick off the show

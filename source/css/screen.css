@@ -88,7 +88,7 @@ body {
   background-image: -ms-linear-gradient(top, #165788, #0f3b5c);
   background-image: linear-gradient(top, #165788, #0f3b5c);
   overflow: hidden;
-  height: 95px;
+  height: 65px;
 }
 
 #header-container {
