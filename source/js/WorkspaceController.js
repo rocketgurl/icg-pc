@@ -169,8 +169,7 @@
         this.set_cookie_identity(this.user.get('digest'));
         this.set_admin_links();
         if (this.login_view != null) {
-          this.login_view.destroy();
-          return $('#header').css('height', '95px');
+          return this.login_view.destroy();
         }
       },
       login_fail: function(model, resp, state) {
@@ -277,6 +276,7 @@
           this.teardown_workspace();
           this.launch_workspace();
         } else {
+          $('#header').css('height', '95px');
           this.launch_app(app);
           this.check_persisted_apps();
         }

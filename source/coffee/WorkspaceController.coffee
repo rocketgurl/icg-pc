@@ -225,7 +225,6 @@ define [
       @set_admin_links() # Change admin links to name & logout
       if @login_view?
         @login_view.destroy()
-        $('#header').css('height', '95px')
 
     # On unsuccessful login render the login form again
     # along with a Flash message indicating issue
@@ -362,6 +361,7 @@ define [
         @teardown_workspace()
         @launch_workspace() # recur
       else
+        $('#header').css('height', '95px')
         @launch_app app
         @check_persisted_apps()
 
