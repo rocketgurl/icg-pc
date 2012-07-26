@@ -2,7 +2,8 @@
 var CTX          = {},
     LOGIN_COOKIE = 'mxadmin.login',
     // this HOME global can start being converted to mxAdmin.homeAddress
-    HOME         = 'home';
+    HOME         = 'home',
+    $address = $('#address_store');
 
 // Make sure Firefox doesn't shit itself if it doesn't have Firebug installed
 if (!window.console || !window.console.log) {
@@ -113,7 +114,7 @@ function show (address, params) {
     return;
   }
 
-  if (address[0] === '/') {
+  if (address === '/') {
     address = address.substr(1);
   }
 
@@ -129,7 +130,9 @@ function show (address, params) {
       // This will catch all page refreshes
       // NOTE: This needs to be done better
       if (!CTX.policy) {
-        return $.address.value(mxAdmin.homeAddress);
+        // PC 2.0
+        // return $.address.value(mxAdmin.homeAddress);
+        return $address.trigger('nav', [mxAdmin.homeAddress]);
       }
 
       // NOTE: This was written very quickly, probably needs some work.
@@ -170,12 +173,13 @@ function show (address, params) {
   else {
     if (CTX.policy) {
       viewObj = $.extend(true, CTX, mxAdmin.helpers.getPolicyOverview(CTX.policy.InsurancePolicy));
-      viewObj.policyOverview = true;
     }
     else {
       // this is pretty bad.
       if (viewName !== 'home' && viewName !== 'login') {
-        return $.address.value(mxAdmin.homeAddress);
+        // PC 2.0
+        // return $.address.value(mxAdmin.homeAddress);
+        return $address.trigger('nav', [mxAdmin.homeAddress]);
       }
 
       viewObj = CTX;
@@ -184,10 +188,17 @@ function show (address, params) {
   }
 }
 
-// Hook jquery.address events into the route system
-$.address.change(function (address) {
-    show(address.pathNames[0]);
-}).history(true);
+// PC 2.0 - Epic Hack
+// 
+// Instead of keeping state with the url hash (#) via $.address we're now
+// storing our state in a hidden form field in index.html ($address). 
+// We have to explicitly call $.trigger on $address now, but them's
+// the breaks.
+// 
+$address.bind("nav", function (event, address) {
+    $address.val(address);
+    show(address);
+});
 
 $(function () {
   com.ics360.ixdirectory.init('/ixdirectory/api/rest/v2/');
@@ -195,7 +206,9 @@ $(function () {
   model.ixlibrary.init('/ixlibrary/api/sdo/rest/v1/');
   model.ixdoc.init('/ixdoc/api/rest/v2/');
 
-  if ($.address.value() === '/') {
-    $.address.value(mxAdmin.homeAddress);
+  // PC 2.0
+  // What slash really means is "i want to go home!"
+  if ($address.val() === '/') {
+    $address.trigger('nav', [mxAdmin.homeAddress]);
   }
 });

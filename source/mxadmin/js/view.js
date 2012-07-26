@@ -52,10 +52,10 @@ var view            = {},
       }
     },
     
-    
+    // PC 2.0
     fieldIsValid = function (field) {
     	var el         = $(field),
-        	address    = el.parents("form").attr('action') || $.address.pathNames[0] || mxAdmin.homeAddress,
+        	address    = el.parents("form").attr('action') || $('#address_store').val() || mxAdmin.homeAddress,
           validators = view[address].validators || null,  
 	        label      = $("label[for='"+el.attr("id")+"']"),
 	        val        = el.val() || null,
@@ -82,8 +82,9 @@ var view            = {},
     // @return BOOL
     formIsValid = function (theForm) {
       var valid      = true,
-          address    = $(theForm).attr('action') || $.address.pathNames[0] || mxAdmin.homeAddress,
+          address    = $(theForm).attr('action') || $('#address_store').val() || mxAdmin.homeAddress,
           validators = view[address].validators || null;
+
       
       $(':input', theForm).each(function (i, element) {
     	  if (!fieldIsValid(element)){
@@ -124,7 +125,7 @@ var view            = {},
       $('#id_identifier').val(mxAdmin.POLICY);
 
       var theForm        = $(this),
-          address        = theForm.attr('action') || $.address.pathNames[0] || mxAdmin.homeAddress,
+          address        = theForm.attr('action') || $('#address_store').val() || mxAdmin.homeAddress,
           formValues     = null,
  
           // Convert a serialized array of form elements into an object
@@ -378,7 +379,7 @@ view.onReady = function () {
     e.preventDefault();
 
     if (href && href !== '#') {
-      $.address.value(href);
+      $address.trigger('nav', [href]);
     }
   });
 
@@ -486,7 +487,7 @@ view.request_success = function (options) {
     settings = $.extend(true, defaults, options);
 
   return function () {
-    $.address.value(HOME);
+    $address.trigger('nav', [HOME]);
     $('body').trigger('success', [settings.title, settings.desc]);
   };
 };
@@ -710,8 +711,6 @@ view.home = {
       // for the policy to load.
       $('#id_identifier').parent().append($('<span />', {'class': 'loading'}));
 
-      console.log(params);
-
       model.pxcentral.policy.get(params.identifier, function (res) {
 
         if (!res.InsurancePolicy) {
@@ -821,7 +820,8 @@ view.home = {
         CTX.policy = res;
         CTX.policyId = params.identifier;
         CTX.product = policy.productName;
-        $.address.value(params.page_action);
+        // $.address.value(params.page_action);
+        $address.trigger('nav', [params.page_action]);
 
       }, view.request_error);
     }
@@ -851,7 +851,8 @@ view.issue = {
 
   load: function (params) {
     if (!CTX.policy) {
-      return $.address.value(mxAdmin.homeAddress);
+      // return $address.trigger('nav', [mxAdmin.homeAddress]);
+      return $address.trigger('nav', [mxAdmin.homeAddress]);
     }
 
     var policy = model.policy(CTX.policy.InsurancePolicy),
@@ -871,7 +872,8 @@ view.issue = {
 view.issue_manual = {
   load: function (params) {
     if (!CTX.policy) {
-      return $.address.value(mxAdmin.homeAddress);
+      // return $address.trigger('nav', [mxAdmin.homeAddress]);
+      return $address.trigger('nav', [mxAdmin.homeAddress]);
     }
 
         var id          = model.pxcentral.policy.id(CTX.policy),
@@ -908,7 +910,8 @@ view.invoice = {
 
     load: function (params) {
         if (!CTX.policy) {
-      return $.address.value(HOME);
+      // return $address.trigger('nav', [HOME]);
+      return $address.trigger('nav', [HOME]);
     }
 
         var id     = model.pxcentral.policy.id(CTX.policy),
@@ -982,7 +985,8 @@ view.make_payment = {
 
     load: function (params) {
         if (!CTX.policy) {
-      return $.address.value(mxAdmin.homeAddress);
+      // return $address.trigger('nav', [mxAdmin.homeAddress]);
+      return $address.trigger('nav', [mxAdmin.homeAddress]);
     }
 
         var id     = model.pxcentral.policy.id(CTX.policy),
@@ -1024,7 +1028,7 @@ view.reverse_payment = {
   },
 
   load: function (params) {
-        if (!CTX.policy) return $.address.value(HOME);
+        if (!CTX.policy) return $address.trigger('nav', [HOME]);
 
         var id     = model.pxcentral.policy.id(CTX.policy),
             url    = model.ixlibrary.policy.url(id),
@@ -1167,7 +1171,8 @@ view.cancellation = {
     viewName = params['_confirm_cancellation_view_name'];
 
     if (!CTX.policy) {
-      return $.address.value(HOME);
+      // return $address.trigger('nav', [HOME]);
+      return $address.trigger('nav', [HOME]);
     }
 
     CTX.latestTerm = model.pxcentral.policy.getLastTerm(CTX.policy.InsurancePolicy);
@@ -1177,7 +1182,8 @@ view.cancellation = {
             $('#page_action').val($(this).attr('name'));
         });
 
-    $.address.value(params.page_action);
+    // $.address.value(params.page_action);
+    $address.trigger('nav', [params.page_action]);
   },
 
   // This is a common view method for all cancellation actions.
@@ -1215,7 +1221,7 @@ view.cancellation = {
     settings = $.extend(true, defaults, options);
 
     return function (params) {
-      if (!CTX.policy) return $.address.value(HOME);
+      if (!CTX.policy) return $address.trigger('nav', [HOME]);
 
       var
       that      = this,
@@ -1260,7 +1266,8 @@ view.cancellation = {
 
               that.preview(previewCTX, {
                 cancel: function() {
-                  $.address.value(HOME);
+                  // $.address.value(HOME);
+                  $address.trigger('nav', [HOME]);
                 },
                 confirm: function() {
                   model.pxcentral.policy.set(id, toSend, {
@@ -1502,7 +1509,7 @@ view.renew = {
 
   load: function (params) {
     if (!CTX.policy) {
-      return $.address.value(mxAdmin.homeAddress);
+      return $address.trigger('nav', [mxAdmin.homeAddress]);
     }
 
     var that             = this,
@@ -1749,7 +1756,7 @@ view.endorse = {
 
   load: function (params) {
     if (!CTX.policy) {
-      return $.address.value(mxAdmin.homeAddress);
+      return $address.trigger('nav', [mxAdmin.homeAddress]);
     }
 
     if (params && !mxAdmin.helpers.isEmpty(params)) {
@@ -2068,7 +2075,8 @@ view.change_customer = {
 
   load: function (params) {
         if (!CTX.policy) {
-      return $.address.value(HOME);
+      // return $address.trigger('nav', [HOME]);
+      return $address.trigger('nav', [HOME]);
     }
         $("#id_MailingEqualPropertyAddress").on("change", function(){
         	if ($(this).val() == "100"){
@@ -2168,7 +2176,7 @@ view.change_additional_interest = {
   
   load: function (params) {
     if (!CTX.policy) {
-      return $.address.value(mxAdmin.homeAddress);
+      return $address.trigger('nav', [mxAdmin.homeAddress]);
     }
     
     if (params && !mxAdmin.helpers.isEmpty(params)) {
@@ -2225,7 +2233,8 @@ view.change_additional_interest = {
 view.edit_term = {
     load: function (params) {
         if (!CTX.policy) {
-      return $.address.value(HOME);
+      // return $address.trigger('nav', [HOME]);
+      return $address.trigger('nav', [HOME]);
     }
 
         if (params && !mxAdmin.helpers.isEmpty(params)) {
@@ -2354,7 +2363,8 @@ view.generate_document = {
     load: function (params) {
 
     if (!CTX.policy) {
-      return $.address.value(HOME);
+      // return $address.trigger('nav', [HOME]);
+      return $address.trigger('nav', [HOME]);
     }
 
     if (params && !mxAdmin.helpers.isEmpty(params)) {
@@ -2416,7 +2426,8 @@ view.premium_disbursement = {
       toSend = null;
 
         if (!CTX.policy) {
-      return $.address.value(HOME);
+      // return $address.trigger('nav', [HOME]);
+      return $address.trigger('nav', [HOME]);
     }
 
         if (params && !mxAdmin.helpers.isEmpty(params)) {
@@ -2435,7 +2446,8 @@ view.reverse_disbursement = {
       toSend = null;
 
     if (!CTX.policy) {
-      return $.address.value(HOME);
+      // return $address.trigger('nav', [HOME]);
+      return $address.trigger('nav', [HOME]);
     }
 
         if (params && !mxAdmin.helpers.isEmpty(params)) {
@@ -2450,7 +2462,7 @@ view.reverse_disbursement = {
 view.change_payment_plan = {
     load: function (params) {
     if (!CTX.policy) {
-      return $.address.value(mxAdmin.homeAddress);
+      return $address.trigger('nav', [mxAdmin.homeAddress]);
     }
 
     var policy = model.policy(CTX.policy.InsurancePolicy),
@@ -2490,7 +2502,7 @@ view.update_mortgagee = {
 
   load: function (params) {
     if (!CTX.policy) {
-      return $.address.value(HOME);
+      return $address.trigger('nav', [HOME]);
     }
 
         if (params && !mxAdmin.helpers.isEmpty(params)) {
@@ -2550,7 +2562,7 @@ view.update_risk = {
       toSend = null;
 
         if (!CTX.policy) {
-      return $.address.value(HOME);
+      return $address.trigger('nav', [HOME]);
     }
 
         if (params && !mxAdmin.helpers.isEmpty(params)) {
@@ -2591,7 +2603,7 @@ view.apply_charges = {
       toSend = null;
 
         if (!CTX.policy) {
-      return $.address.value(HOME);
+      return $address.trigger('nav', [HOME]);
     }
 
         if (params && !mxAdmin.helpers.isEmpty(params)) {
@@ -2637,7 +2649,7 @@ view.write_off = {
       toSend = null;
 
     if (!CTX.policy) {
-      return $.address.value(HOME);
+      return $address.trigger('nav', [HOME]);
     }
 
         if (params && !mxAdmin.helpers.isEmpty(params)) {
