@@ -53,14 +53,14 @@
         });
       },
       toggle_nav_slide: function() {
-        if (this.$header.height() === this.base_height) {
+        if (this.$header.height() === this.base_height + 30) {
           return this.$header.animate({
-            height: 300 + this.base_height
+            height: 330 + this.base_height
           }, 200, 'swing', this.show_nav());
         } else {
           this.hide_nav();
           return this.$header.animate({
-            height: this.base_height
+            height: this.base_height + 30
           }, 200, 'swing');
         }
       },
