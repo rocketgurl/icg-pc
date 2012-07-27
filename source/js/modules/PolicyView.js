@@ -22,7 +22,8 @@
           policy_id: this.model.get('pxServerIndex')
         });
         this.$el.html(html);
-        return this.messenger = new Messenger(this.options.view, this.cid);
+        this.messenger = new Messenger(this.options.view, this.cid);
+        return this.show_overview();
       },
       toggle_nav_state: function(el) {
         $('#policy-nav a').removeClass('select');
@@ -39,7 +40,11 @@
         }
       },
       show_overview: function() {
-        return this.Amplify.publish(this.cid, 'success', 'You be overviewin!');
+        var iframe, iframe_height;
+        iframe = this.$el.find('#policy-iframe');
+        iframe.attr('src', 'http://fc06.deviantart.net/fs46/f/2009/169/f/4/Unicorn_Pukes_Rainbow_by_Angel35W.jpg');
+        iframe_height = Math.floor((($(window).height() - (220 + $('#policy-header').height())) / $(window).height()) * 100) + "%";
+        return iframe.css('min-height', iframe_height);
       },
       show_ipmchanges: function() {
         var header, iframe, iframe_height;

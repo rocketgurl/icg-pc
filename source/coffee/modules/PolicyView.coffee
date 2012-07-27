@@ -26,6 +26,8 @@ define [
       # Register flash message pubsub for this view
       @messenger = new Messenger(@options.view, @cid)
 
+      @show_overview()
+
     # Switch nav items on/off
     toggle_nav_state : (el) ->
       $('#policy-nav a').removeClass 'select'
@@ -47,7 +49,10 @@ define [
 
     # Load Flex Policy Summary
     show_overview : ->
-      @Amplify.publish @cid, 'success', 'You be overviewin!'
+      iframe = @$el.find('#policy-iframe')
+      iframe.attr('src', 'http://fc06.deviantart.net/fs46/f/2009/169/f/4/Unicorn_Pukes_Rainbow_by_Angel35W.jpg')   
+      iframe_height = Math.floor((($(window).height() - (220 + $('#policy-header').height()))/$(window).height())*100) + "%"
+      iframe.css('min-height', iframe_height)
 
     # Load mxAdmin into workarea and inject policy header
     show_ipmchanges : ->
