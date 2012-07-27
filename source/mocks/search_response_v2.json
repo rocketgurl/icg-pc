@@ -1,0 +1,167 @@
+{
+    "page": 1,
+    "itemsPerPage": 100,
+    "totalItems": 9,
+    "policies": [
+        {
+            "insured": {
+                "InsuredLastName": "Freddy",
+                "InsuredName": "Hank Freddy",
+                "InsuredFirstName": "Hank",
+                "InsuredMailingAddressLine1": "123 Sesame St",
+                "InsuredMailingAddressCity": "New York",
+                "InsuredMailingAddressState": "NY",
+                "InsuredMailingAddressZip": "10017"
+            },
+            "identifiers": {
+                "InsightPolicyId": "6d1184b23d7c4a59fa368b33f2c570e8",
+                "pxServerIndex": "21478",
+                "QuoteNumber": "CRU4Q-21478"
+            },
+            "EffectiveDate": "2010-06-22T20:08:21-04:00",
+            "PolicyState": "ACTIVEQUOTE",
+            "ProductLabel": "DP3",
+            "RenewalUnderwritingStatus": "New"
+        }, 
+        {
+            "insured": {
+                "InsuredLastName": "Platter",
+                "InsuredName": "LuAnne Platter",
+                "InsuredFirstName": "LuAnne",
+                "InsuredMailingAddressLine1": "1313 Mockingbird Ln",
+                "InsuredMailingAddressCity": "New York",
+                "InsuredMailingAddressState": "NY",
+                "InsuredMailingAddressZip": "10017"
+            },
+            "identifiers": {
+                "InsightPolicyId": "6d1184b23d7c4a59fa368b33f2c570e8",
+                "pxServerIndex": "21478",
+                "QuoteNumber": "CRU4Q-21478"
+            },
+            "EffectiveDate": "2010-06-22T20:08:21-04:00",
+            "PolicyState": "ACTIVEQUOTE",
+            "ProductLabel": "DP3",
+            "RenewalUnderwritingStatus": "New"
+        }, 
+        {
+            "insured": {
+                "InsuredLastName": "Cartwright",
+                "InsuredName": "Reginald Cartwright",
+                "InsuredFirstName": "Reginald",
+                "InsuredMailingAddressLine1": "100 Center St.",
+                "InsuredMailingAddressCity": "New York",
+                "InsuredMailingAddressState": "NY",
+                "InsuredMailingAddressZip": "10017"
+            },
+            "identifiers": {
+                "InsightPolicyId": "6d1184b23d7c4a59fa368b33f2c570e8",
+                "pxServerIndex": "21478",
+                "QuoteNumber": "CRU4Q-21478"
+            },
+            "EffectiveDate": "2010-06-22T20:08:21-04:00",
+            "PolicyState": "ACTIVEQUOTE",
+            "ProductLabel": "DP3",
+            "RenewalUnderwritingStatus": "New"
+        }, 
+        {
+            "insured": {
+                "InsuredLastName": "Miller",
+                "InsuredName": "Boatswain Miller",
+                "InsuredFirstName": "Boatswain",
+                "InsuredMailingAddressLine1": "31 Maiden Ln",
+                "InsuredMailingAddressCity": "New York",
+                "InsuredMailingAddressState": "NY",
+                "InsuredMailingAddressZip": "10017"
+            },
+            "identifiers": {
+                "InsightPolicyId": "6d1184b23d7c4a59fa368b33f2c570e8",
+                "pxServerIndex": "21478",
+                "QuoteNumber": "CRU4Q-21478"
+            },
+            "EffectiveDate": "2010-06-22T20:08:21-04:00",
+            "PolicyState": "ACTIVEQUOTE",
+            "ProductLabel": "DP3",
+            "RenewalUnderwritingStatus": "New"
+        },
+        {
+            "insured": {
+                "InsuredLastName": "Freddy",
+                "InsuredName": "Hank Freddy",
+                "InsuredFirstName": "Hank",
+                "InsuredMailingAddressLine1": "123 Sesame St",
+                "InsuredMailingAddressCity": "New York",
+                "InsuredMailingAddressState": "NY",
+                "InsuredMailingAddressZip": "10017"
+            },
+            "identifiers": {
+                "InsightPolicyId": "6d1184b23d7c4a59fa368b33f2c570e8",
+                "pxServerIndex": "21478",
+                "QuoteNumber": "CRU4Q-21478"
+            },
+            "EffectiveDate": "2010-06-22T20:08:21-04:00",
+            "PolicyState": "ACTIVEQUOTE",
+            "ProductLabel": "DP3",
+            "RenewalUnderwritingStatus": "New"
+        }, 
+        {
+            "insured": {
+                "InsuredLastName": "Platter",
+                "InsuredName": "LuAnne Platter",
+                "InsuredFirstName": "LuAnne",
+                "InsuredMailingAddressLine1": "1313 Mockingbird Ln",
+                "InsuredMailingAddressCity": "New York",
+                "InsuredMailingAddressState": "NY",
+                "InsuredMailingAddressZip": "10017"
+            },
+            "identifiers": {
+                "InsightPolicyId": "6d1184b23d7c4a59fa368b33f2c570e8",
+                "pxServerIndex": "21478",
+                "QuoteNumber": "CRU4Q-21478"
+            },
+            "EffectiveDate": "2010-06-22T20:08:21-04:00",
+            "PolicyState": "ACTIVEQUOTE",
+            "ProductLabel": "DP3",
+            "RenewalUnderwritingStatus": "New"
+        }, 
+        {
+            "insured": {
+                "InsuredLastName": "Cartwright",
+                "InsuredName": "Reginald Cartwright",
+                "InsuredFirstName": "Reginald",
+                "InsuredMailingAddressLine1": "100 Center St.",
+                "InsuredMailingAddressCity": "New York",
+                "InsuredMailingAddressState": "NY",
+                "InsuredMailingAddressZip": "10017"
+            },
+            "identifiers": {
+                "InsightPolicyId": "6d1184b23d7c4a59fa368b33f2c570e8",
+                "pxServerIndex": "21478",
+                "QuoteNumber": "CRU4Q-21478"
+            },
+            "EffectiveDate": "2010-06-22T20:08:21-04:00",
+            "PolicyState": "ACTIVEQUOTE",
+            "ProductLabel": "DP3",
+            "RenewalUnderwritingStatus": "New"
+        }, 
+        {
+            "insured": {
+                "InsuredLastName": "Miller",
+                "InsuredName": "Boatswain Miller",
+                "InsuredFirstName": "Boatswain",
+                "InsuredMailingAddressLine1": "31 Maiden Ln",
+                "InsuredMailingAddressCity": "New York",
+                "InsuredMailingAddressState": "NY",
+                "InsuredMailingAddressZip": "10017"
+            },
+            "identifiers": {
+                "InsightPolicyId": "6d1184b23d7c4a59fa368b33f2c570e8",
+                "pxServerIndex": "21478",
+                "QuoteNumber": "CRU4Q-21478"
+            },
+            "EffectiveDate": "2010-06-22T20:08:21-04:00",
+            "PolicyState": "ACTIVEQUOTE",
+            "ProductLabel": "DP3",
+            "RenewalUnderwritingStatus": "New"
+        }
+    ]
+}

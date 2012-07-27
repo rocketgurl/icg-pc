@@ -184,6 +184,8 @@ define [
       if @navigation_view?
         @navigation_view.destroy()
 
+      $('#header').css('height', '65px')
+
     # Instantiate a new user and check ixDirectory
     # for valid credentials
     check_credentials : (username, password) ->
@@ -359,6 +361,7 @@ define [
         @teardown_workspace()
         @launch_workspace() # recur
       else
+        $('#header').css('height', '95px')
         @launch_app app
         @check_persisted_apps()
 
@@ -506,6 +509,9 @@ define [
       @set_breadcrumb()
       _.each @workspace_stack, (view, index) =>
         view.destroy()
+      if @workspace_stack.length > 0
+        @workspace_stack = []
+        @$workspace_tabs.html('')
 
 
     # Kick off the show

@@ -72,14 +72,14 @@ define [
     # Open and close the menus
     #
     toggle_nav_slide : () ->
-      if @$header.height() is @base_height
+      if @$header.height() is @base_height + 30
         @$header.animate {
-          height : 300 + @base_height # totally arbitrary height
+          height : 330 + @base_height # totally arbitrary height
           }, 200, 'swing', @show_nav()
       else
         @hide_nav()
         @$header.animate {
-          height : @base_height
+          height : @base_height + 30
           }, 200, 'swing'
 
     #### Show Nav

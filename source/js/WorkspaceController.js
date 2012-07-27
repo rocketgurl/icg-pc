@@ -133,8 +133,9 @@
         this.login_view.render();
         login_flash = new Messenger(this.login_view, this.login_view.cid);
         if (this.navigation_view != null) {
-          return this.navigation_view.destroy();
+          this.navigation_view.destroy();
         }
+        return $('#header').css('height', '65px');
       },
       check_credentials: function(username, password) {
         var _this = this;
@@ -275,6 +276,7 @@
           this.teardown_workspace();
           this.launch_workspace();
         } else {
+          $('#header').css('height', '95px');
           this.launch_app(app);
           this.check_persisted_apps();
         }
@@ -391,9 +393,13 @@
       teardown_workspace: function() {
         var _this = this;
         this.set_breadcrumb();
-        return _.each(this.workspace_stack, function(view, index) {
+        _.each(this.workspace_stack, function(view, index) {
           return view.destroy();
         });
+        if (this.workspace_stack.length > 0) {
+          this.workspace_stack = [];
+          return this.$workspace_tabs.html('');
+        }
       },
       init: function() {
         this.Router.controller = this;

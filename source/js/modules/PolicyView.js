@@ -39,7 +39,6 @@
         }
       },
       show_overview: function() {
-        console.log('overviewing!');
         return this.Amplify.publish(this.cid, 'success', 'You be overviewin!');
       },
       show_ipmchanges: function() {
@@ -49,7 +48,6 @@
         iframe = this.$el.find('#policy-iframe');
         iframe.attr('src', '/mxadmin/index.html');
         iframe_height = Math.floor((($(window).height() - (220 + $('#policy-header').height())) / $(window).height()) * 100) + "%";
-        console.log(iframe_height);
         return iframe.css('min-height', iframe_height);
       }
     });

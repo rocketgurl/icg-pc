@@ -13,8 +13,8 @@ require
     text          : 'lib/text'
   priority: ['jquery']
   shim:
-      'cookie'   : ['jquery'],
-      'xml2json' : ['jquery']
+      'cookie'    : ['jquery'],
+      'xml2json'  : ['jquery']
 
 require [
   "jquery",

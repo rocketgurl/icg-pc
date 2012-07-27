@@ -221,3 +221,52 @@
 		color: darken($lightgray, 40);
 	}
 }
+
+#form-login {
+	width: 100%;
+	text-align: center;
+
+	form {
+		margin: 50px auto;
+		text-align: left;
+		display: block;
+		width: 400px;
+		border: darken($lightgray, 20) 1px solid;
+		border-radius: 8px;
+		padding: 30px 40px;
+		box-shadow: $white 0 1px 0;
+		@include background-image(linear-gradient(top, $lightgray, darken($lightgray, 15)));
+	}
+
+	h1 {
+		@include font-size(28);
+		@include emboss();
+		color: $blue;
+		padding: 0 0 20px 0;
+		margin: 0 0 20px 0;
+		border-bottom: darken($lightgray, 20) 1px solid;
+		box-shadow: $white 0 1px 0;
+	}
+
+	div {
+		margin: 0 0 20px 0;
+	}
+
+	label {
+		@include font-size(16);
+		color: $blue;
+		display: inline-block;
+		width: 90px;
+	}
+
+	input[type=text],
+	input[type=password] {
+		width: 240px;
+		@include font-size(16);
+		padding: 3px;
+	}
+
+	input[type=submit] {
+		@include font-size(18);
+	}
+}

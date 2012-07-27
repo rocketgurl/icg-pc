@@ -24,6 +24,8 @@ define [
       @$el.attr 
         id : @data.id
 
+      @data.EffectiveDate = @data.EffectiveDate.substr(0,10) # Chomp dates
+
       @$el.html @Mustache.render tpl_search_policy_row, @data
       @target.append @$el
 

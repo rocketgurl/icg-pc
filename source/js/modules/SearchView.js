@@ -26,7 +26,7 @@
         this.controller = options.view.options.controller;
         this.module = options.module;
         this.policies = new SearchPolicyCollection();
-        this.policies.url = this.controller.services.pxcentral + 'policies?modified-after=2012-01-01&modified-before=2012-07-01';
+        this.policies.url = '/mocks/search_response_v2.json';
         return this.policies.container = this;
       },
       render: function() {
