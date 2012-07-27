@@ -2,8 +2,7 @@ define [
   'jquery', 
   'underscore',
   'backbone',
-  'amplify_core',
-  'amplify_store'
+  'amplify'
 ], ($, _, Backbone, amplify) ->
 
   BaseCollection = Backbone.Collection.extend

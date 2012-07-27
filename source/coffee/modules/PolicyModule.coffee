@@ -5,8 +5,7 @@ define [
   'mustache',
   'modules/PolicyView',
   'modules/PolicyModel',
-  'amplify_core',
-  'amplify_store'
+  'amplify'
 ], ($, _, Backbone, Mustache, PolicyView, PolicyModel, amplify) ->
 
   class PolicyModule

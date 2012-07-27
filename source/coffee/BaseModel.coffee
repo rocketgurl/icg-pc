@@ -6,8 +6,7 @@ define [
   'LocalStorageSync',
   'CrippledClientSync',
   'xmlSync',
-  'amplify_core',
-  'amplify_store'
+  'amplify'
 ], ($, _, Backbone, Store, LocalStorageSync, CrippledClientSync, XMLSync, amplify) ->
 
   #### BaseModel

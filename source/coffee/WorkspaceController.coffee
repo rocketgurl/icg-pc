@@ -13,11 +13,10 @@ define [
   'base64',
   'MenuHelper',
   'AppRules',
-  'amplify_core',
-  'amplify_store',
+  'amplify',
   'cookie',
   'xml2json'
-], ($, _, Backbone, UserModel, ConfigModel, WorkspaceStateModel, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter, Messenger, Base64, MenuHelper, AppRules, amplify) ->
+], ($, _, Backbone, UserModel, ConfigModel, WorkspaceStateModel, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter, Messenger, Base64, MenuHelper, AppRules, amplify, jcookie, xml2json) ->
 
   #### Global ENV Setting
   #

@@ -3,8 +3,7 @@ define [
   'underscore',
   'backbone',
   'mustache',
-  'amplify_core',
-  'amplify_store'
+  'amplify'
 ], ($, _, Backbone, Mustache, amplify) ->
 
   class TestModule

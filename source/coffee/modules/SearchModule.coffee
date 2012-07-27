@@ -4,8 +4,7 @@ define [
   'backbone',
   'mustache',
   'modules/SearchView',
-  'amplify_core',
-  'amplify_store'
+  'amplify'
 ], ($, _, Backbone, Mustache, SearchView, amplify) ->
 
   class SearchModule

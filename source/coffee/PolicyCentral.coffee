@@ -1,6 +1,6 @@
 define [
   'jquery',
-  'amplify_core',
+  'amplify',
   'WorkspaceController',
   'WorkspaceRouter',
   'UserModel'
