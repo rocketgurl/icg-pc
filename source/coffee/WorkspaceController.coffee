@@ -361,9 +361,13 @@ define [
         @teardown_workspace()
         @launch_workspace() # recur
       else
-        $('#header').css('height', '95px')
+        
+        if $('#header').height() < 95
+          $('#header').css('height', '95px')
+
         @launch_app app
         @check_persisted_apps()
+        # @navigation_view.toggle_nav_slide()
 
       data =
         business : @current_state.business

@@ -270,3 +270,14 @@
 		@include font-size(18);
 	}
 }
+
+#test_module {
+	h2 {
+		@include font-size(24);
+		color: $blue;
+		margin: 0 0 20px 0;
+	}
+	p {
+		@include font-size(14);
+	}
+}

@@ -276,7 +276,9 @@
           this.teardown_workspace();
           this.launch_workspace();
         } else {
-          $('#header').css('height', '95px');
+          if ($('#header').height() < 95) {
+            $('#header').css('height', '95px');
+          }
           this.launch_app(app);
           this.check_persisted_apps();
         }
