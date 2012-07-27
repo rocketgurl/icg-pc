@@ -47,12 +47,17 @@ define [
       if _.isFunction(func)
         func.apply(this)
 
+    # Size the iframe to the approximate view area of the workspace
+    resize_iframe : (iframe, offset) ->
+      offset = offset || 0
+      iframe_height = Math.floor((($(window).height() - (220 + offset))/$(window).height())*100) + "%"
+      iframe.css('min-height', iframe_height)
+
     # Load Flex Policy Summary
     show_overview : ->
       iframe = @$el.find('#policy-iframe')
       iframe.attr('src', 'http://fc06.deviantart.net/fs46/f/2009/169/f/4/Unicorn_Pukes_Rainbow_by_Angel35W.jpg')   
-      iframe_height = Math.floor((($(window).height() - (220 + $('#policy-header').height()))/$(window).height())*100) + "%"
-      iframe.css('min-height', iframe_height)
+      @resize_iframe iframe
 
     # Load mxAdmin into workarea and inject policy header
     show_ipmchanges : ->
@@ -60,10 +65,7 @@ define [
       $('#policy-header').html(header)
 
       iframe = @$el.find('#policy-iframe')
-      iframe.attr('src', '/mxadmin/index.html')     
-
-      # Calc min-height of iFrame in %
-      iframe_height = Math.floor((($(window).height() - (220 + $('#policy-header').height()))/$(window).height())*100) + "%"
-      iframe.css('min-height', iframe_height)
+      iframe.attr('src', '/mxadmin/index.html')
+      @resize_iframe iframe, $('#policy-header').height()
 
   PolicyView

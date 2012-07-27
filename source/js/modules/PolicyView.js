@@ -39,21 +39,25 @@
           return func.apply(this);
         }
       },
-      show_overview: function() {
-        var iframe, iframe_height;
-        iframe = this.$el.find('#policy-iframe');
-        iframe.attr('src', 'http://fc06.deviantart.net/fs46/f/2009/169/f/4/Unicorn_Pukes_Rainbow_by_Angel35W.jpg');
-        iframe_height = Math.floor((($(window).height() - (220 + $('#policy-header').height())) / $(window).height()) * 100) + "%";
+      resize_iframe: function(iframe, offset) {
+        var iframe_height;
+        offset = offset || 0;
+        iframe_height = Math.floor((($(window).height() - (220 + offset)) / $(window).height()) * 100) + "%";
         return iframe.css('min-height', iframe_height);
       },
+      show_overview: function() {
+        var iframe;
+        iframe = this.$el.find('#policy-iframe');
+        iframe.attr('src', 'http://fc06.deviantart.net/fs46/f/2009/169/f/4/Unicorn_Pukes_Rainbow_by_Angel35W.jpg');
+        return this.resize_iframe(iframe);
+      },
       show_ipmchanges: function() {
-        var header, iframe, iframe_height;
+        var header, iframe;
         header = this.Mustache.render(tpl_ipm_header, this.model.get_ipm_header());
         $('#policy-header').html(header);
         iframe = this.$el.find('#policy-iframe');
         iframe.attr('src', '/mxadmin/index.html');
-        iframe_height = Math.floor((($(window).height() - (220 + $('#policy-header').height())) / $(window).height()) * 100) + "%";
-        return iframe.css('min-height', iframe_height);
+        return this.resize_iframe(iframe, $('#policy-header').height());
       }
     });
     return PolicyView;
