@@ -15,7 +15,11 @@ define [
       "click #search-control-context a" : (e) -> @control_context(@process_event e)
       "click #search-control-save a"    : (e) -> @control_save(@process_event e)
       "click #search-control-share a"   : (e) -> @control_share(@process_event e)
-      "click #search-control-pin"     : (e) -> @control_pin(@process_event e)
+      "click #search-control-pin"       : (e) -> @control_pin(@process_event e)
+
+      "click .icon-remove-circle" : (e) -> 
+        @clear_menus()
+        @controls.removeClass('active')
 
     # We need to brute force the View's container to the 
     # WorkspaceCanvasView's el

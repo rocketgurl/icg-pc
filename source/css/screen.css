@@ -885,11 +885,30 @@ table.module-search tbody td a:hover, table.module-search tbody td #policy-nav l
   border-radius: 6px;
   border: #165788 1px solid;
   background: white;
-  padding: 10px;
   min-width: 250px;
   margin: 5px 0 0 0;
   display: none;
   box-shadow: #a1a1a1 0 0 4px 1px;
+}
+.search-menus table {
+  width: 100%;
+}
+.search-menus table tr td {
+  padding: 10px;
+}
+.search-menus thead tr {
+  background-color: #165788;
+}
+.search-menus thead tr th {
+  color: white;
+  padding: 10px;
+}
+
+.menu-close {
+  text-align: right;
+}
+.menu-close i {
+  cursor: pointer;
 }
 
 /*

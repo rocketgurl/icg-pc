@@ -18,6 +18,10 @@
         },
         "click #search-control-pin": function(e) {
           return this.control_pin(this.process_event(e));
+        },
+        "click .icon-remove-circle": function(e) {
+          this.clear_menus();
+          return this.controls.removeClass('active');
         }
       },
       initialize: function(options) {
