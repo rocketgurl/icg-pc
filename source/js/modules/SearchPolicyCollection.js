@@ -10,18 +10,9 @@
         return response.policies;
       },
       render: function() {
-        var view, _i, _len, _ref;
-        if (this.views.length > 0) {
-          _ref = this.views;
-          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-            view = _ref[_i];
-            view.destroy();
-            this.views.shift();
-          }
-          return this.populate();
-        } else {
-          return this.populate();
-        }
+        $('table.module-search tbody').html('');
+        this.views = [];
+        return this.populate();
       },
       populate: function() {
         var _this = this;

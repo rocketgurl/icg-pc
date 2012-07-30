@@ -46,6 +46,7 @@
           _this = this;
         e.preventDefault();
         search_val = this.$el.find('input[type=search]').val();
+        this.policies.reset();
         return this.policies.fetch({
           headers: {
             'X-Authorization': "Basic " + (this.controller.user.get('digest')),

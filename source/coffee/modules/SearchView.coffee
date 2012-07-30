@@ -45,6 +45,8 @@ define [
       e.preventDefault()
       search_val = @$el.find('input[type=search]').val()
 
+      @policies.reset() # wipe out the collection models
+
       # Set Basic Auth headers to request and attempt to
       # get some policies
       @policies.fetch(

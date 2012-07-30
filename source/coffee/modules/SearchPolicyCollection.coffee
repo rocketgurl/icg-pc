@@ -16,16 +16,12 @@ define [
     parse: (response) ->
       response.policies;
 
-    # If we have existing views, kill them.
-    # Otherwise load up the new ones.
+    # We need to reset the table so that future searches
+    # won't append tables to the existing result set.
     render : () ->
-      if @views.length > 0
-        for view in @views
-          view.destroy()
-          @views.shift()
-        @populate()
-      else
-        @populate()
+      $('table.module-search tbody').html('')
+      @views = []
+      @populate()
 
     # Load table with policy views
     populate : ->
