@@ -28,8 +28,8 @@
         });
       },
       destroy: function() {
-        this.$el.html();
-        return this.$sub_el.html();
+        this.$el.find('.main-nav').remove();
+        return this.$sub_el.empty();
       },
       toggle_main_nav: function(e) {
         var $a, $li;

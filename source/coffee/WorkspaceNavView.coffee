@@ -33,8 +33,8 @@ define [
         'min-height' : @$el.height()
 
     destroy : () ->
-      @$el.html()
-      @$sub_el.html()
+      @$el.find('.main-nav').remove()
+      @$sub_el.empty()
 
     #### Toggle Main Nav
     #

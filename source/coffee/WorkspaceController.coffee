@@ -222,6 +222,7 @@ define [
       @user.parse_identity() # Additional setup on model
       @set_cookie_identity(@user.get('digest')) # set cookie
       @set_admin_links() # Change admin links to name & logout
+      @show_workspace_button()
       if @login_view?
         @login_view.destroy()
 
@@ -243,6 +244,7 @@ define [
       @user = null
       @reset_admin_links()
       @set_breadcrumb()
+      @hide_workspace_button()
       if @navigation_view?
         @navigation_view.destroy()
         @teardown_workspace()
@@ -466,6 +468,18 @@ define [
     #
     reset_admin_links : ->
       @$workspace_admin.find('ul').html(@$workspace_admin_initial)
+
+    # Display workspace button and breadcrumb
+    show_workspace_button : ->
+      @$workspace_button.fadeIn(400)
+      $('#header-controls span').fadeIn(400)
+      @$workspace_breadcrumb.fadeIn(400)
+
+    # Display workspace button and breadcrumb
+    hide_workspace_button : ->
+      @$workspace_button.fadeOut(400)
+      $('#header-controls span').fadeOut(400)
+      @$workspace_breadcrumb.fadeOut(400)
 
     attach_tab_handlers : ->
       # Tabs

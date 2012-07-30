@@ -168,6 +168,7 @@
         this.user.parse_identity();
         this.set_cookie_identity(this.user.get('digest'));
         this.set_admin_links();
+        this.show_workspace_button();
         if (this.login_view != null) {
           return this.login_view.destroy();
         }
@@ -183,6 +184,7 @@
         this.user = null;
         this.reset_admin_links();
         this.set_breadcrumb();
+        this.hide_workspace_button();
         if (this.navigation_view != null) {
           this.navigation_view.destroy();
           return this.teardown_workspace();
@@ -347,6 +349,16 @@
       },
       reset_admin_links: function() {
         return this.$workspace_admin.find('ul').html(this.$workspace_admin_initial);
+      },
+      show_workspace_button: function() {
+        this.$workspace_button.fadeIn(400);
+        $('#header-controls span').fadeIn(400);
+        return this.$workspace_breadcrumb.fadeIn(400);
+      },
+      hide_workspace_button: function() {
+        this.$workspace_button.fadeOut(400);
+        $('#header-controls span').fadeOut(400);
+        return this.$workspace_breadcrumb.fadeOut(400);
       },
       attach_tab_handlers: function() {
         var _this = this;

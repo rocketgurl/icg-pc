@@ -137,6 +137,7 @@ body {
 }
 #header-controls span {
   color: #80bcea;
+  display: none;
 }
 #header-controls #breadcrumb {
   margin: 0;
