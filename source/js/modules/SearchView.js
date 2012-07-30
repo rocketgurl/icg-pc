@@ -7,13 +7,13 @@
       menu_cache: {},
       events: {
         "submit .filters form": "search",
-        "click #search-control-context": function(e) {
+        "click #search-control-context a": function(e) {
           return this.control_context(this.process_event(e));
         },
-        "click #search-control-save": function(e) {
+        "click #search-control-save a": function(e) {
           return this.control_save(this.process_event(e));
         },
-        "click #search-control-share": function(e) {
+        "click #search-control-share a": function(e) {
           return this.control_share(this.process_event(e));
         },
         "click #search-control-pin": function(e) {
@@ -75,7 +75,7 @@
         var $el;
         this.clear_menus();
         e.preventDefault();
-        $el = $(e.currentTarget);
+        $el = $(e.currentTarget).parent();
         this.toggle_controls($el.attr('id'));
         return $el;
       },
