@@ -529,6 +529,7 @@ define [
       if @workspace_stack.length > 0
         @workspace_stack = []
         @$workspace_tabs.html('')
+        $('#target').empty()
 
 
     # Kick off the show

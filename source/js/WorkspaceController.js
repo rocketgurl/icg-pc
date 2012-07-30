@@ -412,7 +412,8 @@
         });
         if (this.workspace_stack.length > 0) {
           this.workspace_stack = [];
-          return this.$workspace_tabs.html('');
+          this.$workspace_tabs.html('');
+          return $('#target').empty();
         }
       },
       init: function() {
