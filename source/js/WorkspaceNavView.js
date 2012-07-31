@@ -53,14 +53,19 @@
         });
       },
       toggle_nav_slide: function() {
-        if (this.$header.height() === this.base_height + 30) {
+        var close_height;
+        if (this.$header.height() === this.base_height + 30 || this.$header.height() === 65) {
           return this.$header.animate({
             height: 330 + this.base_height
           }, 200, 'swing', this.show_nav());
         } else {
           this.hide_nav();
+          close_height = this.base_height;
+          if ($('#workspace nav ul li').length > 0) {
+            close_height = this.base_height + 30;
+          }
           return this.$header.animate({
-            height: this.base_height + 30
+            height: close_height
           }, 200, 'swing');
         }
       },
