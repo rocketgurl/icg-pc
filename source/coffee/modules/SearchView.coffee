@@ -12,10 +12,10 @@ define [
     events :
       "submit .filters form"          : "search"
 
-      "click #search-control-context a" : (e) -> @control_context(@process_event e)
-      "click #search-control-save a"    : (e) -> @control_save(@process_event e)
-      "click #search-control-share a"   : (e) -> @control_share(@process_event e)
-      "click #search-control-pin"       : (e) -> @control_pin(@process_event e)
+      "click .search-control-context a" : (e) -> @control_context(@process_event e)
+      "click .search-control-save a"    : (e) -> @control_save(@process_event e)
+      "click .search-control-share a"   : (e) -> @control_share(@process_event e)
+      "click .search-control-pin a"       : (e) -> @control_pin(e)
 
       "click .icon-remove-circle" : (e) -> 
         @clear_menus()
@@ -38,12 +38,14 @@ define [
       if @module.app.params?
         @params = @module.app.params
 
+      @menu_cache[@cid] = {} # We need to namespace the cache with CID
+
     render : () ->
       # Setup flash module & search container
       html = @Mustache.render $('#tpl-flash-message').html(), { cid : @cid }
       html += @Mustache.render tpl_search_container, { cid : @cid }
       @$el.html html
-      @controls = $('.search-controls')
+      @controls = @$el.find('.search-controls')
 
       # Register flash message pubsub for this view
       @messenger = new Messenger(@options.view, @cid)
@@ -77,7 +79,7 @@ define [
 
     # Reset active state on elements
     toggle_controls : (id) ->
-      $el = $("##{id}")
+      $el = @$el.find(".#{id}")
       # if this control is already active, them deactivate it and everyone
       if $el.hasClass('active')
         @controls.removeClass('active')
@@ -91,26 +93,26 @@ define [
       @clear_menus()
       e.preventDefault()
       $el = $(e.currentTarget).parent()
-      @toggle_controls $el.attr('id')
+      id = $el.attr('class').split ' '
+      @toggle_controls id[1]
       $el
 
     # Remove menus
     clear_menus : ->
-      _.each @menu_cache, (menu, id) ->
+      _.each @menu_cache[@cid], (menu, id) ->
         menu.fadeOut(100)        
 
     # Attach menu to control item
     attach_menu : (e, template) ->
-      if @menu_cache[template] != undefined
-        @menu_cache[template].fadeIn(100)
+      if @menu_cache[@cid][template] != undefined
+        @menu_cache[@cid][template].fadeIn(100)
       else
         el_width = e.css('width')
         tpl      = @$el.find("##{template}").html()
-        tpl_id   = $(tpl).attr('id')
+        tpl_id   = $(tpl).attr('class').split(' ')[1]
         e.append(tpl)
-        $tpl = $("##{tpl_id}");
-        $tpl.fadeIn(100);
-        @menu_cache[template] = $tpl
+        @menu_cache[@cid][template] = @$el.find(".#{tpl_id}")
+        @menu_cache[@cid][template].fadeIn(100)
 
     # Search context control
     control_context : (e) ->
@@ -129,4 +131,6 @@ define [
 
     # Search pin control
     control_pin : (e) ->
-      console.log e.attr('id')
+      e.preventDefault()
+      search_val = @$el.find('input[type=search]').val()
+      @controller.launch_search search_val

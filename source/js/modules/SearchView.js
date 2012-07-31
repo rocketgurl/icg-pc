@@ -7,17 +7,17 @@
       menu_cache: {},
       events: {
         "submit .filters form": "search",
-        "click #search-control-context a": function(e) {
+        "click .search-control-context a": function(e) {
           return this.control_context(this.process_event(e));
         },
-        "click #search-control-save a": function(e) {
+        "click .search-control-save a": function(e) {
           return this.control_save(this.process_event(e));
         },
-        "click #search-control-share a": function(e) {
+        "click .search-control-share a": function(e) {
           return this.control_share(this.process_event(e));
         },
-        "click #search-control-pin": function(e) {
-          return this.control_pin(this.process_event(e));
+        "click .search-control-pin a": function(e) {
+          return this.control_pin(e);
         },
         "click .icon-remove-circle": function(e) {
           this.clear_menus();
@@ -33,8 +33,9 @@
         this.policies.url = '/mocks/search_response_v2.json';
         this.policies.container = this;
         if (this.module.app.params != null) {
-          return this.params = this.module.app.params;
+          this.params = this.module.app.params;
         }
+        return this.menu_cache[this.cid] = {};
       },
       render: function() {
         var html;
@@ -45,7 +46,7 @@
           cid: this.cid
         });
         this.$el.html(html);
-        this.controls = $('.search-controls');
+        this.controls = this.$el.find('.search-controls');
         this.messenger = new Messenger(this.options.view, this.cid);
         if (this.params != null) {
           this.$el.find('input[type=search]').val(this.params.query);
@@ -76,7 +77,7 @@
       },
       toggle_controls: function(id) {
         var $el;
-        $el = $("#" + id);
+        $el = this.$el.find("." + id);
         if ($el.hasClass('active')) {
           return this.controls.removeClass('active');
         } else {
@@ -85,30 +86,30 @@
         }
       },
       process_event: function(e) {
-        var $el;
+        var $el, id;
         this.clear_menus();
         e.preventDefault();
         $el = $(e.currentTarget).parent();
-        this.toggle_controls($el.attr('id'));
+        id = $el.attr('class').split(' ');
+        this.toggle_controls(id[1]);
         return $el;
       },
       clear_menus: function() {
-        return _.each(this.menu_cache, function(menu, id) {
+        return _.each(this.menu_cache[this.cid], function(menu, id) {
           return menu.fadeOut(100);
         });
       },
       attach_menu: function(e, template) {
-        var $tpl, el_width, tpl, tpl_id;
-        if (this.menu_cache[template] !== void 0) {
-          return this.menu_cache[template].fadeIn(100);
+        var el_width, tpl, tpl_id;
+        if (this.menu_cache[this.cid][template] !== void 0) {
+          return this.menu_cache[this.cid][template].fadeIn(100);
         } else {
           el_width = e.css('width');
           tpl = this.$el.find("#" + template).html();
-          tpl_id = $(tpl).attr('id');
+          tpl_id = $(tpl).attr('class').split(' ')[1];
           e.append(tpl);
-          $tpl = $("#" + tpl_id);
-          $tpl.fadeIn(100);
-          return this.menu_cache[template] = $tpl;
+          this.menu_cache[this.cid][template] = this.$el.find("." + tpl_id);
+          return this.menu_cache[this.cid][template].fadeIn(100);
         }
       },
       control_context: function(e) {
@@ -127,7 +128,10 @@
         }
       },
       control_pin: function(e) {
-        return console.log(e.attr('id'));
+        var search_val;
+        e.preventDefault();
+        search_val = this.$el.find('input[type=search]').val();
+        return this.controller.launch_search(search_val);
       }
     });
   });

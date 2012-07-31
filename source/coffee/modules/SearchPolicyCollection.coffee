@@ -19,7 +19,7 @@ define [
     # We need to reset the table so that future searches
     # won't append tables to the existing result set.
     render : () ->
-      $('table.module-search tbody').html('')
+      @container.$el.find('table.module-search tbody').html('')
       @views = []
       @populate()
 

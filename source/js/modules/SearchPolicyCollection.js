@@ -10,7 +10,7 @@
         return response.policies;
       },
       render: function() {
-        $('table.module-search tbody').html('');
+        this.container.$el.find('table.module-search tbody').html('');
         this.views = [];
         return this.populate();
       },
