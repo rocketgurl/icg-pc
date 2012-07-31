@@ -19,6 +19,9 @@
         "click .search-control-pin a": function(e) {
           return this.control_pin(e);
         },
+        "click .search-control-refresh": function(e) {
+          return this.control_refresh(e);
+        },
         "click .icon-remove-circle": function(e) {
           this.clear_menus();
           return this.controls.removeClass('active');
@@ -132,6 +135,10 @@
         e.preventDefault();
         search_val = this.$el.find('input[type=search]').val();
         return this.controller.launch_search(search_val);
+      },
+      control_refresh: function(e) {
+        e.preventDefault();
+        return this.search();
       }
     });
   });

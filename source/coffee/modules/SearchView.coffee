@@ -15,7 +15,8 @@ define [
       "click .search-control-context a" : (e) -> @control_context(@process_event e)
       "click .search-control-save a"    : (e) -> @control_save(@process_event e)
       "click .search-control-share a"   : (e) -> @control_share(@process_event e)
-      "click .search-control-pin a"       : (e) -> @control_pin(e)
+      "click .search-control-pin a"     : (e) -> @control_pin(e)
+      "click .search-control-refresh"   : (e) -> @control_refresh(e)
 
       "click .icon-remove-circle" : (e) -> 
         @clear_menus()
@@ -134,3 +135,7 @@ define [
       e.preventDefault()
       search_val = @$el.find('input[type=search]').val()
       @controller.launch_search search_val
+
+    control_refresh : (e) -> 
+      e.preventDefault()
+      @search()
