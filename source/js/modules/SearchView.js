@@ -58,7 +58,7 @@
           },
           success: function(collection, resp) {
             collection.render();
-            return _this.controller.Router.append_search(search_val);
+            return _this.controller.Router.append_search(encodeURI(search_val));
           },
           error: function(collection, resp) {
             return _this.Amplify.publish(_this.cid, 'warning', "There was a problem with this request: " + resp.status + " - " + resp.statusText);

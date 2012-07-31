@@ -1,6 +1,7 @@
 define [
-  'BaseRouter'
-], (BaseRouter) ->
+  'BaseRouter',
+  'Helpers'
+], (BaseRouter, Helpers) ->
 
   #### Routes, just the routes ma'am.
   #
@@ -29,8 +30,9 @@ define [
 
     # Search parameters
     search : (env, business, context, app, params) ->
-      @set_controller_state(env, business, context, app)
-      console.log params
+      @set_controller_state(env, business, context, app, params)
+      if @controller.config?
+        @controller.trigger 'launch'
 
     # Parse workspace
     workspace : (env, business, context, app) ->
@@ -41,15 +43,21 @@ define [
         @controller.trigger 'launch'
 
     # Set our workspace state in the controller
-    set_controller_state : (env, business, context, app) ->
+    set_controller_state : (env, business, context, app, params) ->
+      if params != 'undefined'
+        params = Helpers.id_safe(decodeURI(params))
       @controller.current_state =
         'env'      : env
         'business' : business
         'context'  : context
         'app'      : app
+        'params'   : params ? null
+      @controller.set_nav_state()
 
     # Take current workspace url and append search params to it
     append_search : (params) ->
+      @controller.current_state.params = params
+      @controller.set_nav_state() # save updated state
       {env, business, context, app} = @controller.current_state
       path = "workspace/#{env}/#{business}/#{context}/#{app}/search/#{params}"
       @navigate path

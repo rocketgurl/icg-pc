@@ -59,7 +59,7 @@ define [
           'Authorization'   : "Basic #{@controller.user.get('digest')}"
         success : (collection, resp) =>
           collection.render()
-          @controller.Router.append_search search_val
+          @controller.Router.append_search encodeURI(search_val)
         error : (collection, resp) =>
           @Amplify.publish @cid, 'warning', "There was a problem with this request: #{resp.status} - #{resp.statusText}"
       )

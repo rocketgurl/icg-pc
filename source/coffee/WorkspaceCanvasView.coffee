@@ -1,8 +1,9 @@
 define [
   'BaseView',
   'mustache',
+  'Helpers',
   'text!templates/tpl_module_loader.html'
-], (BaseView, Mustache, tpl_module_loader) ->
+], (BaseView, Mustache, Helpers, tpl_module_loader) ->
 
   WorkspaceCanvasView = BaseView.extend
 
@@ -60,7 +61,7 @@ define [
 
     # Create tab for this view
     render_tab : (template) ->
-      @tab = $(Mustache.render template, { tab_class : '', tab_url : @el.id, tab_label : @app.app_label })
+      @tab = $(Mustache.render template, { tab_class : '', tab_url : Helpers.id_safe(decodeURI(@el.id)), tab_label : @app.app_label })
       @$tab_el.append(@tab)
 
     # Put tab into active state 

@@ -32,6 +32,8 @@
             return [this.policy_search, this.add_app(this.rulesets)];
           case 'policyview':
             return [this.add_app(this.policy_view)];
+          case 'search':
+            return [this.add_app(this.policy_search_params)];
           default:
             return [this.add_app(this["default"])];
         }
@@ -55,6 +57,11 @@
           other: 'stuff',
           params: null
         }
+      };
+
+      AppRules.prototype.policy_search_params = {
+        module: 'SearchModule',
+        params: null
       };
 
       AppRules.prototype.policy_view = {

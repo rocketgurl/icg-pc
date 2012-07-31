@@ -13,10 +13,11 @@ define [
   'base64',
   'MenuHelper',
   'AppRules',
+  'Helpers',
   'amplify',
   'cookie',
   'xml2json'
-], ($, _, Backbone, UserModel, ConfigModel, WorkspaceStateModel, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter, Messenger, Base64, MenuHelper, AppRules, amplify, jcookie, xml2json) ->
+], ($, _, Backbone, UserModel, ConfigModel, WorkspaceStateModel, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter, Messenger, Base64, MenuHelper, AppRules, Helpers, amplify, jcookie, xml2json) ->
 
   #### Global ENV Setting
   #
@@ -104,7 +105,7 @@ define [
     state_add : (app) ->
       # No workspace default apps allowed
       if app.app is @current_state.app
-        return
+        return false
 
       saved_apps = @workspace_state.get 'apps'
 
@@ -113,7 +114,9 @@ define [
         # If its not, add it.
         exists = @state_exists app
         if !exists?
-            saved_apps.push app
+          saved_apps.push app
+        else
+          return false
       else
         # Otherwise create a new array of apps if this app
         # is not the workspace defined default
@@ -122,6 +125,7 @@ define [
 
       @workspace_state.set 'apps', saved_apps
       @workspace_state.save()
+      return true
 
     # Remove app from saved workspace state
     #
@@ -144,6 +148,19 @@ define [
       _.find saved_apps, (saved) =>
         saved.app is app.app
  
+
+    # Try and keep the localStorage version of app state
+    # persisted across requests
+    set_nav_state : ->
+      if @current_state? and @workspace_state?
+        @workspace_state.set 'workspace', {
+          env      : @current_state.env
+          business : @current_state.business
+          context  : @current_state.context
+          app      : @current_state.app
+          params   : @current_state.params ? null
+        }
+        @workspace_state.save()
 
     # Check for an identity cookie and check server for
     # validity. If no cookie present then just build the
@@ -321,8 +338,11 @@ define [
           @workspace_state.fetch(
               success : (model, resp) =>
                 @current_state = model.get 'workspace'
+                url = "workspace/#{@current_state.env}/#{@current_state.business}/#{@current_state.context}/#{@current_state.app}"
+                if @current_state.params?
+                  url += "/search/#{@current_state.params}"
                 # Make sure our address bar properly populated
-                @Router.navigate "workspace/#{@current_state.env}/#{@current_state.business}/#{@current_state.context}/#{@current_state.app}"
+                @Router.navigate url
               error : (model, resp) =>
                 # Make a new WorkspaceState as we had a problem.
                 @Amplify.publish 'controller', 'notice', "We had an issue with your saved state. Not major, but we're starting from scratch."
@@ -332,16 +352,21 @@ define [
       else
         @workspace_state = new WorkspaceStateModel()
 
+    #### Check logged in state
+    is_loggedin : ->
+      if !@user?
+        @Amplify.publish 'controller', 'notice', "Please login to Policy Central to continue."
+        @build_login()
+        return false
+      return true
+
     #### Launch Workspace
     #
     # Attempt to setup and launch workspace based on info in the menu Obj
     #
     launch_workspace : ->
-
       # If not logged in then back to login
-      if !@user?
-        @Amplify.publish 'controller', 'notice', "Please login to Policy Central to continue."
-        @build_login()
+      if @is_loggedin is false
         return
 
       menu = @config.get 'menu'
@@ -367,8 +392,10 @@ define [
           $('#header').css('height', '95px')
 
         @launch_app app
-        @check_persisted_apps()
-        # @navigation_view.toggle_nav_slide()
+        if @check_persisted_apps()
+          # Is this a search? attempt to launch it
+          if @current_state.params?
+            @launch_search @current_state.params
 
       data =
         business : @current_state.business
@@ -379,13 +406,7 @@ define [
       @set_breadcrumb(data)
 
       # Store our workplace information in localStorage
-      @workspace_state.set 'workspace', {
-        env      : @current_state.env
-        business : @current_state.business
-        context  : @current_state.context
-        app      : @current_state.app
-      }
-      @workspace_state.save()
+      @set_nav_state()
 
     # Build the breadcrumb in the top nav
     #
@@ -403,7 +424,7 @@ define [
 
     #### Launch App
     #
-    # Attempt to setup and launch app. Apps are added
+    # Attempt to setup and launch app. Apps are addedb               
     # to the stack from the `WorkspaceCanvasView` itself
     # using events so that if for some reason the view
     # doesn't load, we don't have to add it to the stack.
@@ -423,6 +444,23 @@ define [
       # Open modules defined in workspace set
       for workspace in default_workspace
         @create_workspace workspace.module, workspace.app
+
+
+    launch_search : (params) ->
+      
+      safe_app_name = "search_#{Helpers.id_safe(params)}"
+
+      # Setup the app object to launch policy view with
+      app =
+        app       : safe_app_name 
+        app_label : "Search: #{decodeURI(params)}"
+        params    :
+          query : params
+
+      stack_check = @stack_get safe_app_name
+
+      if !stack_check?
+        @launch_app app
 
     # Instantiate a new WorkspaceCanvasView
     #
@@ -447,6 +485,7 @@ define [
       if saved_apps?
         for app in saved_apps
           @launch_app app
+      return true
 
     #### Set Admin Links
     #
@@ -501,7 +540,6 @@ define [
     # Loop through app stack and switch app states
     toggle_apps : (app_name) ->
       for view in @workspace_stack
-        #console.log "#{app_name} : #{view.app.app}"
         if app_name == view.app.app
           view.activate()
         else
@@ -556,6 +594,9 @@ define [
 
   WorkspaceController.on "launch", ->
     @launch_workspace()
+
+  WorkspaceController.on "search", (params) ->
+    @launch_search(params)
 
   WorkspaceController.on "stack_add", (view) ->
     @stack_add view

@@ -31,6 +31,8 @@ define [
           [@policy_search, @add_app(@rulesets)]
         when 'policyview'
           [@add_app(@policy_view)]
+        when 'search'
+          [@add_app(@policy_search_params)]
         else
           [@add_app(@default)]
 
@@ -52,6 +54,10 @@ define [
         other     : 'stuff'
         params    : null    
 
+    policy_search_params :
+      module : 'SearchModule'
+      params : null
+    
     policy_view : 
       module : 'PolicyModule'   
 
