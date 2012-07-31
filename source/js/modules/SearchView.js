@@ -31,7 +31,10 @@
         this.module = options.module;
         this.policies = new SearchPolicyCollection();
         this.policies.url = '/mocks/search_response_v2.json';
-        return this.policies.container = this;
+        this.policies.container = this;
+        if (this.module.app.params != null) {
+          return this.params = this.module.app.params;
+        }
       },
       render: function() {
         var html;
@@ -43,12 +46,18 @@
         });
         this.$el.html(html);
         this.controls = $('.search-controls');
-        return this.messenger = new Messenger(this.options.view, this.cid);
+        this.messenger = new Messenger(this.options.view, this.cid);
+        if (this.params != null) {
+          this.$el.find('input[type=search]').val(this.params.query);
+          return this.search();
+        }
       },
       search: function(e) {
         var search_val,
           _this = this;
-        e.preventDefault();
+        if (e != null) {
+          e.preventDefault();
+        }
         search_val = this.$el.find('input[type=search]').val();
         this.policies.reset();
         return this.policies.fetch({

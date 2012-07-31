@@ -34,6 +34,10 @@ define [
       @policies.url = '/mocks/search_response_v2.json'
       @policies.container = @
 
+      # Load any passed parameters into view
+      if @module.app.params?
+        @params = @module.app.params
+
     render : () ->
       # Setup flash module & search container
       html = @Mustache.render $('#tpl-flash-message').html(), { cid : @cid }
@@ -44,9 +48,16 @@ define [
       # Register flash message pubsub for this view
       @messenger = new Messenger(@options.view, @cid)
 
+      # If we have params we need to go ahead and do the search query
+      if @params?
+        @$el.find('input[type=search]').val(@params.query)
+        @search()
+
     # Assemble search params and hit pxCentral
     search : (e) ->
-      e.preventDefault()
+      if e?
+        e.preventDefault()
+
       search_val = @$el.find('input[type=search]').val()
 
       @policies.reset() # wipe out the collection models

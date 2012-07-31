@@ -49,7 +49,12 @@
         var _this = this;
         return _.each(this.workspace_stack, function(obj, index) {
           if (view.app.app === obj.app.app) {
-            return _this.workspace_stack.splice(index, 1);
+            _this.workspace_stack.splice(index, 1);
+            if (view.app.params != null) {
+              _this.current_state.params = null;
+              _this.set_nav_state();
+              return _this.update_address();
+            }
           }
         });
       },
@@ -259,13 +264,8 @@
             });
             return this.workspace_state.fetch({
               success: function(model, resp) {
-                var url;
                 _this.current_state = model.get('workspace');
-                url = "workspace/" + _this.current_state.env + "/" + _this.current_state.business + "/" + _this.current_state.context + "/" + _this.current_state.app;
-                if (_this.current_state.params != null) {
-                  url += "/search/" + _this.current_state.params;
-                }
-                return _this.Router.navigate(url);
+                return _this.update_address();
               },
               error: function(model, resp) {
                 _this.Amplify.publish('controller', 'notice', "We had an issue with your saved state. Not major, but we're starting from scratch.");
@@ -379,6 +379,16 @@
           }
         }
         return true;
+      },
+      update_address: function() {
+        var url;
+        if (this.current_state != null) {
+          url = "workspace/" + this.current_state.env + "/" + this.current_state.business + "/" + this.current_state.context + "/" + this.current_state.app;
+          if (this.current_state.params != null) {
+            url += "/search/" + this.current_state.params;
+          }
+          return this.Router.navigate(url);
+        }
       },
       set_admin_links: function() {
         if (!(this.$workspace_admin_initial != null)) {

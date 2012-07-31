@@ -84,6 +84,11 @@ define [
       _.each @workspace_stack, (obj, index) =>
         if view.app.app == obj.app.app
           @workspace_stack.splice index, 1
+          # Remove params from stack if present
+          if view.app.params?
+            @current_state.params = null
+            @set_nav_state()
+            @update_address()
 
     # Remove all views from stack
     stack_clear : () ->
@@ -338,11 +343,7 @@ define [
           @workspace_state.fetch(
               success : (model, resp) =>
                 @current_state = model.get 'workspace'
-                url = "workspace/#{@current_state.env}/#{@current_state.business}/#{@current_state.context}/#{@current_state.app}"
-                if @current_state.params?
-                  url += "/search/#{@current_state.params}"
-                # Make sure our address bar properly populated
-                @Router.navigate url
+                @update_address()
               error : (model, resp) =>
                 # Make a new WorkspaceState as we had a problem.
                 @Amplify.publish 'controller', 'notice', "We had an issue with your saved state. Not major, but we're starting from scratch."
@@ -445,9 +446,15 @@ define [
       for workspace in default_workspace
         @create_workspace workspace.module, workspace.app
 
-
+    #### Launch Search App w/ params
+    #
+    # We need to launch a Search Module preloaded with
+    # query params.
+    #
+    # @param `params` _String_ query params
+    #
     launch_search : (params) ->
-      
+      # We need to sanitize this a little
       safe_app_name = "search_#{Helpers.id_safe(params)}"
 
       # Setup the app object to launch policy view with
@@ -457,8 +464,8 @@ define [
         params    :
           query : params
 
+      # If doesn't already exist launch it
       stack_check = @stack_get safe_app_name
-
       if !stack_check?
         @launch_app app
 
@@ -486,6 +493,17 @@ define [
         for app in saved_apps
           @launch_app app
       return true
+
+    #### Update Address
+    #
+    # Set URL to whatever @current_state says it should be. Yo.
+    #
+    update_address : ->
+      if @current_state?
+        url = "workspace/#{@current_state.env}/#{@current_state.business}/#{@current_state.context}/#{@current_state.app}"
+        if @current_state.params?
+          url += "/search/#{@current_state.params}"
+        @Router.navigate url
 
     #### Set Admin Links
     #
