@@ -519,8 +519,8 @@ define [
     update_address : ->
       if @current_state?
         url = "workspace/#{@current_state.env}/#{@current_state.business}/#{@current_state.context}/#{@current_state.app}"
-        if @current_state.params?
-          url += "/search/#{@current_state.params}"
+        if @current_state.params? and @current_state.module?
+          url += "/#{@current_state.module}/#{Helpers.serialize(@current_state.params)}"
         @Router.navigate url
 
     #### Set Admin Links

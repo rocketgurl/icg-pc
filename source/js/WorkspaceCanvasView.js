@@ -10,12 +10,14 @@
       className: 'canvas',
       tab: null,
       initialize: function(options) {
-        var _this = this;
+        var _ref,
+          _this = this;
         this.$tab_el = options.controller.$workspace_tabs;
         if (options.template != null) {
           this.template = options.template;
         }
         this.template_tab = options.template_tab != null ? options.template_tab : $('#tpl-workspace-tab').html();
+        this.params = (_ref = options.params) != null ? _ref : null;
         if (!(options.app != null)) {
           return this.Amplify.publish('flash', 'warning', 'There was a problem locating that workspace.');
         }

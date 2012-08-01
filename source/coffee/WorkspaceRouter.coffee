@@ -55,6 +55,13 @@ define [
         'params'   : params ? null
       @controller.set_nav_state()
 
+
+    # Build a default workspace path without any module information.
+    # Based on @current_state in controller
+    build_path : ->
+      {env, business, context, app} = @controller.current_state
+      @navigate "workspace/#{env}/#{business}/#{context}/#{app}"
+
     # Build a path for modules (search, policyview) with the correct
     # named parameters, etc.
     #

@@ -386,8 +386,8 @@
         var url;
         if (this.current_state != null) {
           url = "workspace/" + this.current_state.env + "/" + this.current_state.business + "/" + this.current_state.context + "/" + this.current_state.app;
-          if (this.current_state.params != null) {
-            url += "/search/" + this.current_state.params;
+          if ((this.current_state.params != null) && (this.current_state.module != null)) {
+            url += "/" + this.current_state.module + "/" + (Helpers.serialize(this.current_state.params));
           }
           return this.Router.navigate(url);
         }

@@ -17,6 +17,7 @@ define [
       @$tab_el      = options.controller.$workspace_tabs
       @template     = options.template if options.template?
       @template_tab = if options.template_tab? then options.template_tab else $('#tpl-workspace-tab').html()
+      @params = options.params ? null
 
       # No app, throw a big error
       if !options.app?

@@ -44,6 +44,11 @@
         };
         return this.controller.set_nav_state();
       },
+      build_path: function() {
+        var app, business, context, env, _ref;
+        _ref = this.controller.current_state, env = _ref.env, business = _ref.business, context = _ref.context, app = _ref.app;
+        return this.navigate("workspace/" + env + "/" + business + "/" + context + "/" + app);
+      },
       build_module_path: function(module, params) {
         var app, business, context, env, serialized, _ref, _ref1;
         _ref = [module, params], this.controller.current_state.module = _ref[0], this.controller.current_state.params = _ref[1];
