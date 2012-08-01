@@ -8,12 +8,13 @@
       AppRules.prototype.default_workspace = null;
 
       function AppRules(app) {
-        var app_name;
         this.app = app;
         if (this.app.app != null) {
-          app_name = this.get_app_name(this.app.app);
-          this.default_workspace = this.get_modules(app_name);
+          this.app_name = this.get_app_name(this.app.app);
+          this.default_workspace = this.get_modules(this.app_name);
         }
+        this;
+
       }
 
       AppRules.prototype.get_app_name = function(app_name) {

@@ -12,8 +12,9 @@ define [
 
     constructor : (@app) ->
       if @app.app?
-        app_name           = @get_app_name @app.app
-        @default_workspace = @get_modules app_name
+        @app_name           = @get_app_name @app.app
+        @default_workspace  = @get_modules @app_name
+      @
 
     # Derive app name
     get_app_name : (app_name) ->

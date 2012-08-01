@@ -22,7 +22,7 @@ define [
     # Attach view to table
     render : ->
       @$el.attr 
-        id : @data.id
+        id : @data.identifiers.InsightPolicyId
 
       @data.EffectiveDate = @data.EffectiveDate.substr(0,10) # Chomp dates
 
@@ -42,11 +42,10 @@ define [
 
       identifiers = @model.get('identifiers')
 
-      # Setup the app object to launch policy view with
-      app =
-        app       : 'policyview'
-        app_label : identifiers.QuoteNumber
-        params    :
-          id : $el.attr('id')
+      # Setup the params object to launch policy view with
+      params =
+        id  : $el.attr('id')
+        url : identifiers.QuoteNumber
 
-      @module.view.launch_child_app app
+      @module.view.options.controller.launch_module 'policyview', params
+      @module.view.options.controller.Router.append_module 'policyview', params

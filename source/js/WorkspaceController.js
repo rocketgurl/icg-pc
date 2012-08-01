@@ -115,14 +115,15 @@
         });
       },
       set_nav_state: function() {
-        var _ref;
+        var _ref, _ref1;
         if ((this.current_state != null) && (this.workspace_state != null)) {
           this.workspace_state.set('workspace', {
             env: this.current_state.env,
             business: this.current_state.business,
             context: this.current_state.context,
             app: this.current_state.app,
-            params: (_ref = this.current_state.params) != null ? _ref : null
+            module: (_ref = this.current_state.module) != null ? _ref : null,
+            params: (_ref1 = this.current_state.params) != null ? _ref1 : null
           });
           return this.workspace_state.save();
         }
@@ -310,8 +311,8 @@
           }
           this.launch_app(app);
           if (this.check_persisted_apps()) {
-            if (this.current_state.params != null) {
-              this.launch_search(this.current_state.params);
+            if (this.current_state.module != null) {
+              this.launch_module(this.current_state.module, this.current_state.params);
             }
           }
         }
@@ -342,19 +343,20 @@
         }
         return _results;
       },
-      launch_search: function(params) {
+      launch_module: function(module, params) {
         var app, safe_app_name, stack_check;
-        safe_app_name = "search_" + (Helpers.id_safe(params));
+        safe_app_name = "" + (Helpers.id_safe(module)) + "_" + (Helpers.id_safe(params.url));
         app = {
           app: safe_app_name,
-          app_label: "Search: " + (decodeURI(params)),
-          params: {
-            query: params
-          }
+          app_label: "" + (Helpers.uc_first(module)) + ": " + params.url,
+          params: params
         };
+        app.app.params = params;
         stack_check = this.stack_get(safe_app_name);
         if (!(stack_check != null)) {
           return this.launch_app(app);
+        } else {
+          return this.toggle_apps(safe_app_name);
         }
       },
       create_workspace: function(module, app) {
@@ -415,6 +417,7 @@
           var app_name;
           e.preventDefault();
           app_name = $(e.target).attr('href');
+          _this.set_active_url(app_name);
           if (app_name === void 0) {
             app_name = $(e.target).parent().attr('href');
           }
@@ -425,6 +428,29 @@
           _this.stack_get($(e.target).prev().attr('href')).destroy();
           return _this.reassess_apps();
         });
+      },
+      set_active_url: function(app_name) {
+        var module, module_name, view, _i, _len, _ref, _results;
+        _ref = this.workspace_stack;
+        _results = [];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          view = _ref[_i];
+          if (app_name === view.app.app) {
+            module = view.module;
+            if ((module.app != null) && (module.app.params != null)) {
+              module_name = new AppRules(module.app).app_name;
+              this.Router.append_module(module_name, module.app.params);
+            } else {
+              this.Router.remove_module();
+            }
+          }
+          if (app_name === void 0) {
+            _results.push(this.Router.remove_module());
+          } else {
+            _results.push(void 0);
+          }
+        }
+        return _results;
       },
       toggle_apps: function(app_name) {
         var view, _i, _len, _ref, _results;
@@ -485,8 +511,8 @@
     WorkspaceController.on("launch", function() {
       return this.launch_workspace();
     });
-    WorkspaceController.on("search", function(params) {
-      return this.launch_search(params);
+    WorkspaceController.on("search", function(module, params) {
+      return this.launch_module(module, params);
     });
     WorkspaceController.on("stack_add", function(view) {
       return this.stack_add(view);

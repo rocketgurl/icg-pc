@@ -73,7 +73,10 @@ define [
           'Authorization'   : "Basic #{@controller.user.get('digest')}"
         success : (collection, resp) =>
           collection.render()
-          @controller.Router.append_search encodeURI(search_val)
+          params = 
+            url   : search_val
+            query : search_val
+          @controller.Router.append_module 'search', params
         error : (collection, resp) =>
           @Amplify.publish @cid, 'warning', "There was a problem with this request: #{resp.status} - #{resp.statusText}"
       )
@@ -134,7 +137,11 @@ define [
     control_pin : (e) ->
       e.preventDefault()
       search_val = @$el.find('input[type=search]').val()
-      @controller.launch_search search_val
+      params = 
+        url   : search_val
+        query : search_val
+      @controller.launch_module 'search', params
+      @controller.Router.append_module 'search', params
 
     control_refresh : (e) -> 
       e.preventDefault()

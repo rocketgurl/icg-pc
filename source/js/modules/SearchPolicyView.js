@@ -17,7 +17,7 @@
       },
       render: function() {
         this.$el.attr({
-          id: this.data.id
+          id: this.data.identifiers.InsightPolicyId
         });
         this.data.EffectiveDate = this.data.EffectiveDate.substr(0, 10);
         this.$el.html(this.Mustache.render(tpl_search_policy_row, this.data));
@@ -29,18 +29,16 @@
         return this.el = null;
       },
       open_policy: function(e) {
-        var $el, app, identifiers;
+        var $el, identifiers, params;
         e.preventDefault();
         $el = $(e.currentTarget);
         identifiers = this.model.get('identifiers');
-        app = {
-          app: 'policyview',
-          app_label: identifiers.QuoteNumber,
-          params: {
-            id: $el.attr('id')
-          }
+        params = {
+          id: $el.attr('id'),
+          url: identifiers.QuoteNumber
         };
-        return this.module.view.launch_child_app(app);
+        this.module.view.options.controller.launch_module('policyview', params);
+        return this.module.view.options.controller.Router.append_module('policyview', params);
       }
     });
   });

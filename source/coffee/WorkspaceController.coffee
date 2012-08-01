@@ -163,6 +163,7 @@ define [
           business : @current_state.business
           context  : @current_state.context
           app      : @current_state.app
+          module   : @current_state.module ? null
           params   : @current_state.params ? null
         }
         @workspace_state.save()
@@ -395,8 +396,8 @@ define [
         @launch_app app
         if @check_persisted_apps()
           # Is this a search? attempt to launch it
-          if @current_state.params?
-            @launch_search @current_state.params
+          if @current_state.module?
+            @launch_module(@current_state.module, @current_state.params)
 
       data =
         business : @current_state.business
@@ -436,6 +437,10 @@ define [
       # If app is not saved in @workspace_state and is not the 
       # workspace defined app then we need to add it to our
       # stack of saved apps
+      # if @state_exists(app)?
+      #   console.log 'toggle'
+      #   @toggle_apps app.app
+      # else
       @state_add app
 
       # Determine which Module to load into the view
@@ -451,23 +456,36 @@ define [
     # We need to launch a Search Module preloaded with
     # query params.
     #
-    # @param `params` _String_ query params
+    # @param `params` _Object_ query params
     #
-    launch_search : (params) ->
+    launch_module : (module, params) ->
+      # if not module
+      #   module = @current_state.module
+
+      # if not params
+      #   params = @current_state.params
+
+      # if not params
+      #   params =
+      #     url : ''
+
       # We need to sanitize this a little
-      safe_app_name = "search_#{Helpers.id_safe(params)}"
+      safe_app_name = "#{Helpers.id_safe(module)}_#{Helpers.id_safe(params.url)}"
 
       # Setup the app object to launch policy view with
       app =
-        app       : safe_app_name 
-        app_label : "Search: #{decodeURI(params)}"
-        params    :
-          query : params
+        app       : safe_app_name
+        app_label : "#{Helpers.uc_first(module)}: #{params.url}"
+        params    : params
+
+      app.app.params = params
 
       # If doesn't already exist launch it
       stack_check = @stack_get safe_app_name
       if !stack_check?
         @launch_app app
+      else
+        @toggle_apps safe_app_name
 
     # Instantiate a new WorkspaceCanvasView
     #
@@ -538,15 +556,22 @@ define [
       $('#header-controls span').fadeOut(400)
       @$workspace_breadcrumb.fadeOut(400)
 
+    #### Drop a click listener on all tabs
+    #
     attach_tab_handlers : ->
       # Tabs
       @$workspace_tabs.on 'click', 'li a', (e) =>
         e.preventDefault()
         app_name = $(e.target).attr('href')
 
+        # When a user clicks on a tab, that tabs URL
+        # should be rendered in the address bar
+        @set_active_url app_name
+
         # Fallback for search tabs
         if app_name is undefined
           app_name = $(e.target).parent().attr('href')
+
         @toggle_apps app_name
 
       # Tab close icon
@@ -554,6 +579,29 @@ define [
         e.preventDefault()
         @stack_get($(e.target).prev().attr('href')).destroy()
         @reassess_apps()
+
+    #### Set Active Url
+    #
+    # When a tab is clicked, use the app_name to find
+    # the active tab and dig into it to get the module
+    # name and params of that tab module. Then use this
+    # to switch the url to what it should be.
+    #
+    # @param `app_name` _String_ app_name from tab href
+    #
+    set_active_url : (app_name) ->
+      for view in @workspace_stack
+        if app_name == view.app.app
+          module = view.module
+          if module.app? and module.app.params?
+            module_name = new AppRules(module.app).app_name
+            @Router.append_module module_name, module.app.params
+          else
+            @Router.remove_module()
+
+        #  Failsafe for default search tab with no name
+        if app_name is undefined
+          @Router.remove_module()
 
     # Loop through app stack and switch app states
     toggle_apps : (app_name) ->
@@ -613,8 +661,8 @@ define [
   WorkspaceController.on "launch", ->
     @launch_workspace()
 
-  WorkspaceController.on "search", (params) ->
-    @launch_search(params)
+  WorkspaceController.on "search", (module, params) ->
+    @launch_module(module, params)
 
   WorkspaceController.on "stack_add", (view) ->
     @stack_add view

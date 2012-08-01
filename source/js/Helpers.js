@@ -6,12 +6,38 @@
     Helpers = {
       id_safe: function(string) {
         var out, reg;
+        if (!(string != null)) {
+          return null;
+        }
         reg = new RegExp('/\s*\W/gi');
         out = string.replace(/\s*\W/gi, '_');
         if (out === 'undefined' || out === void 0) {
           return null;
         }
         return out;
+      },
+      uc_first: function(string) {
+        return string.substr(0, 1).toUpperCase() + string.substr(1);
+      },
+      unserialize: function(string) {
+        var k, out, params, v, value, _i, _len, _ref;
+        out = {};
+        params = string.split('/');
+        for (_i = 0, _len = params.length; _i < _len; _i++) {
+          value = params[_i];
+          _ref = value.split(':'), k = _ref[0], v = _ref[1];
+          out[k] = decodeURI(v);
+        }
+        return out;
+      },
+      serialize: function(object) {
+        var key, serialized, value;
+        serialized = '';
+        for (key in object) {
+          value = object[key];
+          serialized += "/" + key + ":" + (encodeURI(value));
+        }
+        return serialized;
       }
     };
     return Helpers;

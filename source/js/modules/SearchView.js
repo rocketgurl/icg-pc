@@ -70,8 +70,13 @@
             'Authorization': "Basic " + (this.controller.user.get('digest'))
           },
           success: function(collection, resp) {
+            var params;
             collection.render();
-            return _this.controller.Router.append_search(encodeURI(search_val));
+            params = {
+              url: search_val,
+              query: search_val
+            };
+            return _this.controller.Router.append_module('search', params);
           },
           error: function(collection, resp) {
             return _this.Amplify.publish(_this.cid, 'warning', "There was a problem with this request: " + resp.status + " - " + resp.statusText);
@@ -131,10 +136,15 @@
         }
       },
       control_pin: function(e) {
-        var search_val;
+        var params, search_val;
         e.preventDefault();
         search_val = this.$el.find('input[type=search]').val();
-        return this.controller.launch_search(search_val);
+        params = {
+          url: search_val,
+          query: search_val
+        };
+        this.controller.launch_module('search', params);
+        return this.controller.Router.append_module('search', params);
       },
       control_refresh: function(e) {
         e.preventDefault();

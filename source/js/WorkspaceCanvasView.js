@@ -10,6 +10,7 @@
       className: 'canvas',
       tab: null,
       initialize: function(options) {
+        var _this = this;
         this.$tab_el = options.controller.$workspace_tabs;
         if (options.template != null) {
           this.template = options.template;
@@ -21,17 +22,16 @@
         this.app = options.app;
         this.el.id = this.app.app;
         this.options.controller.trigger('stack_add', this);
+        require(["modules/" + this.options.module_type], function(Module) {
+          return _this.module = new Module(_this, _this.app);
+        });
         return this.render();
       },
       render: function() {
-        var _this = this;
         this.$el.html(Mustache.render(tpl_module_loader, {
           module_name: this.app.app_label,
           app: this.app.app
         }));
-        require(["modules/" + this.options.module_type], function(Module) {
-          return _this.module = new Module(_this, _this.app);
-        });
         this.$el.hide();
         this.$target.append(this.$el);
         this.render_tab(this.template_tab);
@@ -71,12 +71,9 @@
           return _this.module.render();
         });
       },
-      launch_child_app: function(app) {
-        if (this.options.controller.state_exists(app) != null) {
-          return this.options.controller.toggle_apps(app.app);
-        } else {
-          return this.options.controller.launch_app(app);
-        }
+      launch_child_app: function(module, app) {
+        this.options.controller.Router.append_module(module, app.params.url);
+        return this.options.controller.launch_module(module, app);
       }
     });
   });

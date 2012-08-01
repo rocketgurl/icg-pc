@@ -28,6 +28,10 @@ define [
       # Add to the stack
       @options.controller.trigger 'stack_add', @
 
+      # Initialize module
+      require ["modules/#{@options.module_type}"], (Module) =>
+        @module = new Module(@, @app)
+
       @render()
 
 
@@ -43,10 +47,6 @@ define [
 
       # Drop loader image into place until our Module is good and ready
       @$el.html Mustache.render tpl_module_loader, {module_name : @app.app_label, app : @app.app}
-
-      # Initialize module
-      require ["modules/#{@options.module_type}"], (Module) =>
-        @module = new Module(@, @app)
 
       @$el.hide(); # We initially keep our contents hidden
       @$target.append(@$el)
@@ -103,10 +103,6 @@ define [
     #
     # @param `app` _Object_ application config object  
     #
-    launch_child_app : (app) ->
-      # If it's already in the saved state stack, we don't
-      # add it again
-      if @options.controller.state_exists(app)?
-        @options.controller.toggle_apps app.app
-      else
-        @options.controller.launch_app app
+    launch_child_app : (module, app) ->
+      @options.controller.Router.append_module module, app.params.url
+      @options.controller.launch_module module, app

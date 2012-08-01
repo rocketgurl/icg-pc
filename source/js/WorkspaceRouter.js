@@ -7,7 +7,7 @@
       routes: {
         'login': 'login',
         'logout': 'logout',
-        'workspace/:env/:business/:context/:app/search/*params': 'search',
+        'workspace/:env/:business/:context/:app/:module/*params': 'module',
         'workspace/:env/:business/:context/:app': 'workspace'
       },
       initialize: function(options) {},
@@ -20,10 +20,11 @@
           trigger: true
         });
       },
-      search: function(env, business, context, app, params) {
-        this.set_controller_state(env, business, context, app, params);
+      module: function(env, business, context, app, module, params) {
+        this.set_controller_state(env, business, context, app, module, params);
         if (this.controller.config != null) {
-          return this.controller.trigger('launch');
+          params = Helpers.unserialize(params);
+          return this.controller.launch_module(module, params);
         }
       },
       workspace: function(env, business, context, app) {
@@ -32,26 +33,37 @@
           return this.controller.trigger('launch');
         }
       },
-      set_controller_state: function(env, business, context, app, params) {
-        if (params !== 'undefined') {
-          params = Helpers.id_safe(decodeURI(params));
-        }
+      set_controller_state: function(env, business, context, app, module, params) {
         this.controller.current_state = {
           'env': env,
           'business': business,
           'context': context,
           'app': app,
+          'module': module != null ? module : null,
           'params': params != null ? params : null
         };
         return this.controller.set_nav_state();
       },
-      append_search: function(params) {
-        var app, business, context, env, path, _ref;
-        this.controller.current_state.params = params;
+      build_module_path: function(module, params) {
+        var app, business, context, env, serialized, _ref, _ref1;
+        _ref = [module, params], this.controller.current_state.module = _ref[0], this.controller.current_state.params = _ref[1];
         this.controller.set_nav_state();
+        _ref1 = this.controller.current_state, env = _ref1.env, business = _ref1.business, context = _ref1.context, app = _ref1.app;
+        serialized = Helpers.serialize(params);
+        return "workspace/" + env + "/" + business + "/" + context + "/" + app + "/" + module + serialized;
+      },
+      append_module: function(module, params) {
+        return this.navigate(this.build_module_path(module, params));
+      },
+      navigate_to_module: function(module, params) {
+        return this.navigate(this.build_module_path(module, params), {
+          trigger: true
+        });
+      },
+      remove_module: function() {
+        var app, business, context, env, _ref;
         _ref = this.controller.current_state, env = _ref.env, business = _ref.business, context = _ref.context, app = _ref.app;
-        path = "workspace/" + env + "/" + business + "/" + context + "/" + app + "/search/" + params;
-        return this.navigate(path);
+        return this.navigate("workspace/" + env + "/" + business + "/" + context + "/" + app);
       }
     });
   });
