@@ -2,3 +2,7 @@
 #page {
 	@include background-image(linear-gradient(top, $blue, darken($blue, 10)));	
 }
+
+.button-green {
+	@include simple-color (120, 100%, 42%);
+}

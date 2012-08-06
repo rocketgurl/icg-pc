@@ -1,0 +1,24 @@
+<!-- TEMPLATE: Save menu -->
+<div class="search-menus search-menu-save">
+	<table>
+		<thead>
+			<tr>
+				<th>Save views</th>
+				<th class="menu-close"><i class="icon-remove-circle"></i></th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr>
+				<td colspan="2">
+					<h2>Search context:</h2>
+					<h3>{{search_context}}</h3>
+					<form action="submit" method="post" accept-charset="utf-8">
+						<label for="search_save_label">Label for this view:</label>
+						<input type="text" name="search_save_label" id="search_save_label" value="" placeholder="enter a name for this search">
+						<p class="search_form_submit"><input type="submit" name="button_save_view" id="button_save_view" value="Save view" class="button-green"></p>
+					</form>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>

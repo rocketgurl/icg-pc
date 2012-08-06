@@ -206,6 +206,36 @@ table.module-search {
 			}
 		}
 	}
+
+	h2 {
+		font-weight: bold;
+	}
+
+	h3 {
+		margin: 2px 0;
+	}
+
+	form {
+		margin: 10px 0 0 0;
+	}
+
+	label {
+		display: block;
+		margin: 6px 0;
+	}
+
+	input[type=text] {
+		display: block;
+		min-width: 220px;
+		padding: 3px;
+		@include sans;
+		@include font-size(14);
+	}
+
+	.search_form_submit {
+		text-align: right;
+		margin: 5px 0;
+	}
 }
 
 .menu-close {

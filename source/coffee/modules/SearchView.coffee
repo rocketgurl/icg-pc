@@ -2,8 +2,11 @@ define [
   'BaseView',
   'Messenger',
   'modules/SearchPolicyCollection',
-  'text!templates/tpl_search_container.html'
-], (BaseView, Messenger, SearchPolicyCollection, tpl_search_container) ->
+  'text!templates/tpl_search_container.html',
+  'text!templates/tpl_search_menu_save.html',
+  'text!templates/tpl_search_menu_views.html',
+  'text!templates/tpl_search_menu_share.html'
+], (BaseView, Messenger, SearchPolicyCollection, tpl_search_container, tpl_search_menu_save, tpl_search_menu_views, tpl_search_menu_share) ->
 
   SearchView = BaseView.extend
 
@@ -25,11 +28,11 @@ define [
     # We need to brute force the View's container to the 
     # WorkspaceCanvasView's el
     initialize : (options) ->
-      @el                 = options.view.el
-      @$el                = options.view.$el
-      @controller         = options.view.options.controller
-      @module             = options.module
-      @policies           = new SearchPolicyCollection()
+      @el         = options.view.el
+      @$el        = options.view.$el
+      @controller = options.view.options.controller
+      @module     = options.module
+      @policies   = new SearchPolicyCollection()
       #@policies.url       = @controller.services.pxcentral + 'policies?modified-after=2012-01-01&modified-before=2012-07-01'
       # Use mocks for demo
       @policies.url = '/mocks/search_response_v2.json'
@@ -107,31 +110,36 @@ define [
         menu.fadeOut(100)        
 
     # Attach menu to control item
-    attach_menu : (e, template) ->
-      if @menu_cache[@cid][template] != undefined
-        @menu_cache[@cid][template].fadeIn(100)
+    attach_menu : (e, template, view_data) ->
+      # Default view object
+      if !view_data?
+        view_data = {}
+
+      # make cache key from event classname
+      cache_key = e.attr('class').split(' ')[1]
+
+      if @menu_cache[@cid][cache_key] != undefined
+        @menu_cache[@cid][cache_key].fadeIn(100)
       else
         el_width = e.css('width')
-        tpl      = @$el.find("##{template}").html()
-        tpl_id   = $(tpl).attr('class').split(' ')[1]
-        e.append(tpl)
-        @menu_cache[@cid][template] = @$el.find(".#{tpl_id}")
-        @menu_cache[@cid][template].fadeIn(100)
+        e.append(@Mustache.render template, view_data)
+        @menu_cache[@cid][cache_key] = e.find("div")
+        @menu_cache[@cid][cache_key].fadeIn(100)
 
     # Search context control
     control_context : (e) ->
       if e.hasClass 'active'
-        @attach_menu e, 'tpl-context-menu'
+        @attach_menu e, tpl_search_menu_views
 
     # Search save control
     control_save : (e) ->
       if e.hasClass 'active'
-        @attach_menu e, 'tpl-save-menu'
+        @attach_menu e, tpl_search_menu_save, { 'search_context' : 'dee da' }
 
     # Search share control
     control_share : (e) ->
       if e.hasClass 'active'
-        @attach_menu e, 'tpl-share-menu'
+        @attach_menu e, tpl_search_menu_share
 
     # Search pin control
     control_pin : (e) ->
