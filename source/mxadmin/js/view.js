@@ -54,26 +54,26 @@ var view            = {},
     
     // PC 2.0
     fieldIsValid = function (field) {
-    	var el         = $(field),
-        	address    = el.parents("form").attr('action') || $('#address_store').val() || mxAdmin.homeAddress,
+      var el         = $(field),
+          address    = el.parents("form").attr('action') || $('#address_store').val() || mxAdmin.homeAddress,
           validators = view[address].validators || null,  
-	        label      = $("label[for='"+el.attr("id")+"']"),
-	        val        = el.val() || null,
-	        required   = (el.attr('required')) ? true : false,
-	        errorClass = 'validation_error';
-	    if (
-	    	(required && val === null) || // Validate required fields
-	    	!elemValidToType(el) || // Validate on the type of the input.
-	    	(validators && val && validators[el.attr('name')] && !validators[el.attr('name')](el))// Custom element validators. Only run if the element has a value.
-	    ){
-        	label.addClass(errorClass);
+          label      = $("label[for='"+el.attr("id")+"']"),
+          val        = el.val() || null,
+          required   = (el.attr('required')) ? true : false,
+          errorClass = 'validation_error';
+      if (
+        (required && val === null) || // Validate required fields
+        !elemValidToType(el) || // Validate on the type of the input.
+        (validators && val && validators[el.attr('name')] && !validators[el.attr('name')](el))// Custom element validators. Only run if the element has a value.
+      ){
+          label.addClass(errorClass);
             el.addClass(errorClass);
             return false;
         }
         else{
-        	label.removeClass(errorClass);
-        	el.removeClass(errorClass);
-        	return true;
+          label.removeClass(errorClass);
+          el.removeClass(errorClass);
+          return true;
         }
         
     }
@@ -87,9 +87,9 @@ var view            = {},
 
       
       $(':input', theForm).each(function (i, element) {
-    	  if (!fieldIsValid(element)){
-    		  valid = false;
-    	  }
+        if (!fieldIsValid(element)){
+          valid = false;
+        }
       });
       return valid;  
     },
@@ -118,11 +118,15 @@ var view            = {},
     // Handler for all forms in mxadmin
     formSubmitHandler = function (e) {
 
+
       // PC 2.0 ALERT
       // We brute force our policy id from PolicyModule into
       // the form field #id_identifier so that all actions
       // will take place on that policy
       $('#id_identifier').val(mxAdmin.POLICY);
+
+      // ICS-979 - Switch Favicon to loading state
+      mxAdmin.loadFavicon(mxAdmin.FAVICON_LOADING);
 
       var theForm        = $(this),
           address        = theForm.attr('action') || $('#address_store').val() || mxAdmin.homeAddress,
@@ -232,10 +236,13 @@ var view            = {},
 // rendering, template completed, etc
 view.onReady = function () {
 
+  // ICS-979 Change favicon back to default
+  mxAdmin.loadFavicon(mxAdmin.FAVICON_DEFAULT);
+
   var coverage_calculations,
       $coverage_a = $('#id_CoverageA');
 
-  // We need to check is CoverageA is holding any data-calculations
+  // We need to check if CoverageA is holding any data-calculations
   // information, and if it is, add it to $coverage_calculations,
   // and eval into an object. We do this so we can modify items 
   // that don't have a corresponding select field. For instance,
@@ -311,14 +318,88 @@ view.onReady = function () {
         }
       });
     }
+
+    // 
+    // ICS-1010 : Add Policy Limits option to VA mxAdmin form for Water Backup
+    //
+    // In HO3 VA policies, when "Policy Limits" is selected for the
+    // WaterBackupCoverage field the value of that field should reflect
+    // whatever is in Coverage A. Additionally, on form load, if Coverage A
+    // is the same as whatever the value of WaterBackupCoverage is, then 
+    // WBC should be set to "Policy Limits" with the value of Coverage A.
+    // ALSO : There is a call to these functions on Line 424 below
+    // 
+    var $water_backup_coverage = $('#id_WaterBackupCoverage');
     
+    // Determine if we're an HO3 VA form
+    var check_ho3va = function() {
+      if (CTX.product === "ofcc-ho3-va" && $water_backup_coverage.length > 0) {
+        return true;
+      }
+      return false;
+    }
+
+    // Are we HO3 VA? Then check a few items
+    if (check_ho3va()) {
+      // if Coverage_A value == WaterBackupCoverage value then set WBC value
+      // to Coverage A and 'select' it.
+      if (parseInt($water_backup_coverage.val(), 10) === parseInt($coverage_a.val(), 10)) {
+        $water_backup_coverage.find('option[value="33"]').attr('value', $coverage_a.val());
+        $water_backup_coverage.val($coverage_a.val());
+      }
+    }
+
+    // If WaterBackupCoverage is set to Policy Limits then it's val must
+    // always be that of Coverage A. So when Coverage A changes, change the
+    // val of WaterBackupCoverage.
+    var waterBackupCoverage = function() {
+      if ($water_backup_coverage.find('option:selected').text() === "Policy Limits") {
+        $water_backup_coverage.find('option:selected').attr('value', $coverage_a.val());
+      };
+    }
+
+    // Anytime WaterBackupCoverage changes check it against Coverage A
+    $water_backup_coverage.change(function(){
+      waterBackupCoverage();
+    })
+
+    // 
+    // ICS-964 : mxAdmin should only allow the user to select cancellation date for certain reason codes.
+    // (If certain reason codes are selected then hide the effective date form)
+    //
+    var $form_action_cancel_pending = $('form[action=cancel_pending]');
+
+    // Are we on the right view?
+    if ($form_action_cancel_pending.length > 0) {
+
+      // Grab the reason code select and the parent div of effectiveDate
+      var $reason_code = $('#id_reasonCode');
+      var $effective_date = $('#id_effectiveDate').parent();
+
+      // Loop through the codes that turn off the date field. If the
+      // currently selected value matches then switch off date. Before
+      // the loop we switch the date back on as a default
+      $reason_code.change(function(){
+        var code_switches = [2, 7, 8, 9, 10, 11];
+        var code = parseInt($(this).val(), 10); // we need an Int to compare
+        $effective_date.show();
+        for (var i = 0; i < code_switches.length; i++) {
+          if (code === code_switches[i]) {
+            $effective_date.hide();
+            $effective_date.find('input[type=text]').val('') // clear value
+          } 
+        };
+      })
+    }
+    
+
   // We're using some HTML5 input types and the form validation is
   // pretty wonky still, so we'll just turn off the html validation for now.
   // Bind all forms' submit event to our handler.
   $('form').attr('novalidate', 'novalidate')
     .bind('submit', formSubmitHandler)
     .each(function(i, form){
-    	formIsValid(form);
+      formIsValid(form);
     });
   
 
@@ -351,6 +432,10 @@ view.onReady = function () {
   $('input[name=CoverageA]').bind('input', function(){
     coverageFieldCalcs();
     coverageACalcs();
+    // ICS-1010 If we're a VA policy we need to do some extra work
+    if (check_ho3va()) {
+      waterBackupCoverage();
+    }
   });
 
   // A number of select elements should trigger a change in certain
@@ -391,13 +476,18 @@ view.onReady = function () {
   // Prepare open/close-able sections.
   view.editableFormSections.init();
   $(":input").on("change", function(event) {
-	  fieldIsValid(event.target);
+    fieldIsValid(event.target);
   });
 };
 
 // Display a message at the top of the page. Used for success and error
 // messages.
 view.message = function (e, title, desc, details) {
+
+  // ICS-979
+  // If we're throwing a message it usually means that something
+  // has stopped, so we need to switc the favicon back to normal
+  mxAdmin.loadFavicon(mxAdmin.FAVICON_DEFAULT);
 
   var msgHtml = $('<div />', {
     'class': 'content_msg'
@@ -1296,58 +1386,58 @@ view.cancellation = {
     
       //TODO: Handle this elsewhere
       formatMoney = function(value){
-		  formatted = "$" + parseFloat(value).formatMoney(2, ".", ",");
-		  return formatted;
+      formatted = "$" + parseFloat(value).formatMoney(2, ".", ",");
+      return formatted;
       }
       
       var MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
       
       var cancellation;
       for (var i = previewCTX.policy.InsurancePolicy.EventHistory.Event.length - 1; i >= 0; i--){
-    	  var type = previewCTX.policy.InsurancePolicy.EventHistory.Event[i].$type;
-    	  if (type == "Cancel" || type == "PendingCancellation"){
-			  previewCTX.Action = type == "Cancel" ? "Cancellation" : "Pending Cancellation";
-    		  cancellation = previewCTX.policy.InsurancePolicy.EventHistory.Event[i];
-    		  break;
-    	  }
+        var type = previewCTX.policy.InsurancePolicy.EventHistory.Event[i].$type;
+        if (type == "Cancel" || type == "PendingCancellation"){
+        previewCTX.Action = type == "Cancel" ? "Cancellation" : "Pending Cancellation";
+          cancellation = previewCTX.policy.InsurancePolicy.EventHistory.Event[i];
+          break;
+        }
       }
       //TODO: I should be able to use some existing dataitem process logic to handle this
       for (var i = 0; i < cancellation.DataItem.length; i++){
-    	  var parsed, formatted;
-    	  var item = cancellation.DataItem[i];
-    	  if (item.$name == "AppliedDate"){
-    		  previewCTX.AppliedDate = item.$value;
-    	  }	  
-    	  else if (item.$name == "reasonCode"){
-    		  previewCTX.ReasonCode = item.$value;
-    	  }
-    	  else if (item.$name == "reasonCodeLabel"){
-    		  previewCTX.ReasonCodeLabel = item.$value;
-    	  }
+        var parsed, formatted;
+        var item = cancellation.DataItem[i];
+        if (item.$name == "AppliedDate"){
+          previewCTX.AppliedDate = item.$value;
+        }   
+        else if (item.$name == "reasonCode"){
+          previewCTX.ReasonCode = item.$value;
+        }
+        else if (item.$name == "reasonCodeLabel"){
+          previewCTX.ReasonCodeLabel = item.$value;
+        }
         else if (item.$name == "EffectiveDate"){
           previewCTX.EffectiveDate = item.$value;
         }  
-    	  else if (item.$name == "ChangeInPremium"){
-    		  previewCTX.ChangeInPremium = formatMoney(item.$value);
-    	  }
-    	  else if (item.$name == "ChangeInTax"){
-    		  previewCTX.ChangeInTax = formatMoney(item.$value);
-    	  }
-    	  else if (item.$name == "CancelAmount"){
-    		  previewCTX.CancelAmount = formatMoney(item.$value);
-    	  }
-    	  else if (item.$name == "ChangeInFee"){
-    		  previewCTX.ChangeInFee = formatMoney(item.$value);
-    	  }
+        else if (item.$name == "ChangeInPremium"){
+          previewCTX.ChangeInPremium = formatMoney(item.$value);
+        }
+        else if (item.$name == "ChangeInTax"){
+          previewCTX.ChangeInTax = formatMoney(item.$value);
+        }
+        else if (item.$name == "CancelAmount"){
+          previewCTX.CancelAmount = formatMoney(item.$value);
+        }
+        else if (item.$name == "ChangeInFee"){
+          previewCTX.ChangeInFee = formatMoney(item.$value);
+        }
       }
       var preview_labels = {
-    	  "PendingCancellationRescission": "rescission of pending cancellation",
-    	  "Reinstatement": "reinstatement",
-    	  "PendingCancellation": "pending cancellation",
-    	  "Cancellation": "cancellation"
+        "PendingCancellationRescission": "rescission of pending cancellation",
+        "Reinstatement": "reinstatement",
+        "PendingCancellation": "pending cancellation",
+        "Cancellation": "cancellation"
       };
       if (previewCTX.params.pcsType == "PendingCancellationRescission" || previewCTX.params.pcsType == "Reinstatement") {
-    	  previewCTX.Undo = true;
+        previewCTX.Undo = true;
       }
       previewCTX.PreviewLabel = preview_labels[previewCTX.params.pcsType];
       
@@ -1384,9 +1474,9 @@ view.cancellation = {
       });
 
       $('form').bind("submit", function(el) {
-    	//This is a little hacky to call this directly, but the formSubmitHandler is a bit too strict in what it tries to do.
-    	//TODO: Use more generic form submission handling.
-    	loadingOn($(this));
+      //This is a little hacky to call this directly, but the formSubmitHandler is a bit too strict in what it tries to do.
+      //TODO: Use more generic form submission handling.
+      loadingOn($(this));
         options.confirm();
       });
 
@@ -1479,7 +1569,7 @@ view.rescind = {
   }),
   
   preview: view.cancellation.preview({
-	    'submitLabel': 'Rescind pending cancellation'
+      'submitLabel': 'Rescind pending cancellation'
   })
 }
 
@@ -2013,7 +2103,7 @@ view.change_customer = {
     
     $.extend(toRet, mxAdmin.helpers.getDataItemValues(termDataItems, this.vocabTerms));
     if (toRet.MailingEqualPropertyAddress == "100"){
-    	toRet.DisableMailingAddress = true;
+      toRet.DisableMailingAddress = true;
     };
 
     // We need to create an array of objects for each Additional Insured.
@@ -2079,28 +2169,28 @@ view.change_customer = {
       return $address.trigger('nav', [HOME]);
     }
         $("#id_MailingEqualPropertyAddress").on("change", function(){
-        	if ($(this).val() == "100"){
-        		$("#id_InsuredMailingAddressLine1").parents("fieldset").first().hide();
-        	} else {
-        		$("#id_InsuredMailingAddressLine1").parents("fieldset").first().show();
-        	}
+          if ($(this).val() == "100"){
+            $("#id_InsuredMailingAddressLine1").parents("fieldset").first().hide();
+          } else {
+            $("#id_InsuredMailingAddressLine1").parents("fieldset").first().show();
+          }
         });
         $("#id_MailingEqualPropertyAddress, #id_PropertyStreetNumber, #id_PropertyStreetName, #id_PropertyAddressLine2, #id_PropertyCity, #id_PropertyState, #id_PropertyZipCode").on("change", function(){
-        	if ($("#id_MailingEqualPropertyAddress").val() == "100"){
-        		$("#id_InsuredMailingAddressLine1").val(
-        				$("#id_PropertyStreetNumber").val() + " " 
-        				+ $("#id_PropertyStreetName").val());
-        		$("#id_InsuredMailingAddressLine2").val(
-        				$("#id_PropertyAddressLine2").val());
-        		$("#id_InsuredMailingAddressCity").val(
-        				$("#id_PropertyCity").val());
-        		$("#id_InsuredMailingAddressState").val(
-        				$("#id_PropertyState").val());
-        		$("#id_InsuredMailingAddressZip").val(
-        				$("#id_PropertyZipCode").val());
-        		$("#id_InsuredMailingAddressCountry").val("");
-        	}
-        	
+          if ($("#id_MailingEqualPropertyAddress").val() == "100"){
+            $("#id_InsuredMailingAddressLine1").val(
+                $("#id_PropertyStreetNumber").val() + " " 
+                + $("#id_PropertyStreetName").val());
+            $("#id_InsuredMailingAddressLine2").val(
+                $("#id_PropertyAddressLine2").val());
+            $("#id_InsuredMailingAddressCity").val(
+                $("#id_PropertyCity").val());
+            $("#id_InsuredMailingAddressState").val(
+                $("#id_PropertyState").val());
+            $("#id_InsuredMailingAddressZip").val(
+                $("#id_PropertyZipCode").val());
+            $("#id_InsuredMailingAddressCountry").val("");
+          }
+          
         });
         if (params && !mxAdmin.helpers.isEmpty(params)) {
       var toSend           = null,
@@ -2109,7 +2199,7 @@ view.change_customer = {
 
       // This will set the type attribute of the <TransactionRequest>
       params.transactionType = 'InsuredChanges';
-    	  
+        
       
       // We need to be able to clear out any values and leave
       // them blank. To do so we need to set a special value so

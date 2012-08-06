@@ -199,13 +199,13 @@ model.policy = function (policyXML) {
   this.policyXML = policyXML;
   
   this.states = {
-	  ACTIVE_POLICY: 'ACTIVEPOLICY',
-	  ACTIVE_QUOTE: 'ACTIVEQUOTE',
-	  CANCELLED_POLICY: 'CANCELLEDPOLICY',
-	  EXPIRED_QUOTE: 'EXPIREDQUOTE',
-	  NON_RENEWED_POLICY: 'NONRENEWEDPOLICY'
+    ACTIVE_POLICY      : 'ACTIVEPOLICY',
+    ACTIVE_QUOTE       : 'ACTIVEQUOTE',
+    CANCELLED_POLICY   : 'CANCELLEDPOLICY',
+    EXPIRED_QUOTE      : 'EXPIREDQUOTE',
+    NON_RENEWED_POLICY : 'NONRENEWEDPOLICY'
 	};
-  
+ 
   // Determine the state of the policy
   // @return STRING - The state of the policy
   this.state = function () {
@@ -402,7 +402,7 @@ model.policy = function (policyXML) {
   ret.state = this.state();
   
   // BOOL - Whether this policy is actually a quote.
-	ret.quote = this.quote();
+  ret.quote = this.quote();
   
   // If this policy is still a quote we want to abandon ship.
   if (ret.quote) {

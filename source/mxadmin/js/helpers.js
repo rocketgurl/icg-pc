@@ -336,7 +336,7 @@
 						
 			return Date.parse(ret.stripTimeFromDate(dateString)).toString(format);
 		};
-		
+
 		// Display a standard message on the page.
 		// @param OBJ options
 		//

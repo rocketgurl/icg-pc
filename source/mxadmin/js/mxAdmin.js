@@ -2,6 +2,10 @@ var mxAdmin = {};
 window.mxAdmin = mxAdmin;
 mxAdmin.homeAddress = 'home';
 
+// ICS-979 - loading favicons
+mxAdmin.FAVICON_DEFAULT = 'favicon_insight.png';
+mxAdmin.FAVICON_LOADING = 'favicon_loading_e.ico';
+
 // Make a request to retrieve an html template.
 // @param OBJECT options
 mxAdmin.loadTemplate = function (templateName, data, callback, options) {
@@ -50,6 +54,18 @@ mxAdmin.loadTemplate = function (templateName, data, callback, options) {
       error: settings.error
     });
   }
+};
+
+// Load a favicon in the page to indicate things at work.
+mxAdmin.loadFavicon = function(filename) {
+  // Change favicon back to default
+  $('#favicon').remove();
+  var link = document.createElement('link');
+    link.type = 'image/x-icon';
+    link.rel  = 'icon';
+    link.href = '/images/' + filename;
+    link.id   = 'favicon';
+  $('head').append(link);
 };
 
 // We'll use this to cache all requested dataModels
