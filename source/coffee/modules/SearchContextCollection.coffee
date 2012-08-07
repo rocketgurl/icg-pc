@@ -47,8 +47,15 @@ define [
           parent     : @parent
           data       : data
           controller : @controller
+          collection : @
         )
 
     populate : (html) ->
       @each (model) =>
         @render model, html
+
+    destroy : (id) ->
+      model = @get id
+      if model.destroy()
+        @remove model
+

@@ -6,7 +6,8 @@
     return SearchContextView = BaseView.extend({
       tagName: 'tr',
       events: {
-        "click a": "launch_search"
+        "click .search-views-row > a": "launch_search",
+        "click .admin-icon-trash": "destroy"
       },
       initialize: function(options) {
         this.parent = options.parent;
@@ -28,6 +29,14 @@
         };
         this.options.controller.launch_module('search', params);
         return this.options.controller.Router.append_module('search', params);
+      },
+      destroy: function(e) {
+        var id, rows;
+        e.preventDefault();
+        id = $(e.currentTarget).attr('href').substr(7);
+        this.options.collection.destroy(id);
+        rows = $('.row-' + id).html('').remove();
+        return this.$el.remove();
       }
     });
   });

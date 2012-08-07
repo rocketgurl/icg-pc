@@ -10,7 +10,8 @@ define [
     tagName : 'tr'
 
     events : 
-      "click a" : "launch_search"
+      "click .search-views-row > a" : "launch_search"
+      "click .admin-icon-trash" : "destroy"
 
     initialize : (options) ->
       @parent = options.parent
@@ -30,3 +31,10 @@ define [
         query : href.query
       @options.controller.launch_module 'search', params
       @options.controller.Router.append_module 'search', params
+
+    destroy : (e) ->
+      e.preventDefault()
+      id = $(e.currentTarget).attr('href').substr(7)
+      @options.collection.destroy(id)
+      rows = $('.row-' + id).html('').remove()
+      @$el.remove()

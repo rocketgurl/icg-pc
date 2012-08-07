@@ -253,3 +253,12 @@ td.search-views-row > a {
 	text-decoration: none;
 }
 
+td.search-views-admin {
+	text-align: right;
+}
+
+td.search-views-admin > a {
+	padding: 0 5px;
+	color: $blue;
+	text-decoration: none;
+}

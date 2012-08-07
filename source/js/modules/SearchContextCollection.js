@@ -34,7 +34,8 @@
         return model.view = new SearchContextView({
           parent: this.parent,
           data: data,
-          controller: this.controller
+          controller: this.controller,
+          collection: this
         });
       },
       populate: function(html) {
@@ -42,6 +43,13 @@
         return this.each(function(model) {
           return _this.render(model, html);
         });
+      },
+      destroy: function(id) {
+        var model;
+        model = this.get(id);
+        if (model.destroy()) {
+          return this.remove(model);
+        }
       }
     });
   });
