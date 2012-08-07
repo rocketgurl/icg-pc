@@ -3,8 +3,9 @@ define [
   'underscore',
   'backbone',
   'mustache',
-  'amplify'
-], ($, _, Backbone, Mustache, amplify) ->
+  'amplify',
+  'json'
+], ($, _, Backbone, Mustache, amplify, JSON) ->
 
   BaseView = Backbone.View.extend
 

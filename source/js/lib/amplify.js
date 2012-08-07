@@ -19,14 +19,14 @@
 (function(root, doc, factory) {
 	if (typeof define === "function" && define.amd) {
 		// AMD. Register as an anonymous module.
-		define(["jquery"], function($) {
-			return factory($, root, doc);
+		define(["jquery", "json"], function($, JSON) {
+			return factory($, JSON, root, doc);
 		});
 	} else {
 		// Browser globals
 		factory(root.jQuery, root, doc);
 	}
-}(this, document, function($, global, document, undefined) {
+}(this, document, function($, JSON, global, document, undefined) {
 
 (function( global, undefined ) {
 
@@ -797,7 +797,7 @@ amplify.subscribe( "request.before.ajax", function( resource, settings, ajaxSett
 	};
 });
 
-}( amplify, jQuery ) );
+}( amplify, jQuery, JSON ) );
 
 	return amplify;
 }));

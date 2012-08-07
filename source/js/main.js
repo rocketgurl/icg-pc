@@ -13,7 +13,8 @@
       cookie: 'lib/jquery.cookie',
       xml2json: 'lib/jquery.xml2json',
       text: 'lib/text',
-      domReady: 'lib/domReady'
+      domReady: 'lib/domReady',
+      json: 'lib/json2'
     },
     priority: ['jquery'],
     shim: {
@@ -21,7 +22,11 @@
         deps: ['jquery'],
         exports: 'jQuery.fn.cookie'
       },
-      'xml2json': ['jquery']
+      'xml2json': ['jquery'],
+      'json': {
+        deps: ['jquery'],
+        exports: 'JSON'
+      }
     }
   });
 

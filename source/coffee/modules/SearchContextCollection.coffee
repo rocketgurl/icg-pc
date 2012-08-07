@@ -5,8 +5,9 @@ define [
   'Store',
   'LocalStorageSync',
   'amplify',
-  'Helpers'
-], (SearchContextModel, SearchContextView, Base64, Store, LocalStorageSync, Amplify, Helpers) ->
+  'Helpers',
+  'json'
+], (SearchContextModel, SearchContextView, Base64, Store, LocalStorageSync, Amplify, Helpers, JSON) ->
 
   #### A collection of policies
   #
@@ -37,6 +38,12 @@ define [
     render : (model, parent) ->
       @parent = parent || $('.search-menu-context')
       data = model.attributes
+
+      # Help out herp derp browsers
+      if _.isObject data.params
+        data.params = Helpers.serialize data.params
+
+      #data.params = Helpers.serialize data.params
       model.view = new SearchContextView(
           parent : @parent
           data   : data
