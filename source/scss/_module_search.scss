@@ -14,45 +14,43 @@ header.module-search {
 	ul {
 		display: inline-block;
 		font-size: 0; // fixes white space issues in inline-block
-		li {
+		li.search-controls {
 			display: inline-block;
 			border-right: darken($lightgray, 20) 1px solid;
 			border-left: $white 1px solid;
 			padding: 0 2px;
 			background: none;
 			@include font-size(14);
-			a {
-				text-decoration: none;
-				color: $blue;
-				display: inline-block;
-				padding: 4px 6px;
-				border-radius: 4px;
-				strong {
-					font-weight: bold;
-				}
-			}
-			a:hover {
-				background-color: $blue;
-				color: $white;
-				i {
-					color: $white;
-				}
+		}
+		li.search-controls > a {
+			text-decoration: none;
+			color: $blue;
+			display: inline-block;
+			padding: 4px 6px;
+			border-radius: 4px;
+			strong {
+				font-weight: bold;
 			}
 		}
-		li:first-child {
+		li.search-controls > a:hover {
+			background-color: $blue;
+			color: $white;
+			i {
+				color: $white;
+			}
+		}
+		li.search-controls.active > a {
+			background-color: $blue;
+			color: $white;
+			i {
+				color: $white;
+			}
+		}
+		li.search-controls:first-child {
 			border-left: 0px;
 		}
-		li:last-child {
+		li.search-controls:last-child {
 			border-right: 0px;
-		}
-		li.active {
-			a {
-				background-color: $blue;
-				color: $white;
-				i {
-					color: $white;
-				}
-			}
 		}
 	}
 	i.icon-caret-down {
@@ -245,3 +243,13 @@ table.module-search {
 		cursor: pointer;
 	}
 }
+
+// Saved Search menu
+td.search-views-row > a {
+	padding: 0;
+	border-radius: 0;
+	background: none;
+	color: $colblue;
+	text-decoration: none;
+}
+

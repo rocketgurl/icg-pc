@@ -60,6 +60,7 @@ define [
     COOKIE_NAME           : 'ics360.PolicyCentral'
     services              : ics360.services
     global_flash          : new Messenger($('#canvas'), 'controller')
+    SEARCH                : {}
 
     # Simple logger
     logger : (msg) ->
@@ -337,8 +338,9 @@ define [
       # Needed to attache this as a global to the window to ensure
       # that models are passed around to many instances of 
       # SearchModule. It's a hack, but it works for now.
-      window.ICS_PC2.saved_searches = new SearchContextCollection()
-      window.ICS_PC2.saved_searches.fetch()
+      @SEARCH.saved_searches = new SearchContextCollection()
+      @SEARCH.saved_searches.controller = @ # so we can phone home
+      @SEARCH.saved_searches.fetch()
 
       # If already a PC2 object then create model with its ID and fetch()
       # otherwise create a new model (which will get a new GUID)

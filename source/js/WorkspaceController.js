@@ -29,6 +29,7 @@
       COOKIE_NAME: 'ics360.PolicyCentral',
       services: ics360.services,
       global_flash: new Messenger($('#canvas'), 'controller'),
+      SEARCH: {},
       logger: function(msg) {
         return this.Amplify.publish('log', msg);
       },
@@ -256,8 +257,9 @@
           this.check_workspace_state();
         }
         raw_storage = this.Amplify.store();
-        window.ICS_PC2.saved_searches = new SearchContextCollection();
-        window.ICS_PC2.saved_searches.fetch();
+        this.SEARCH.saved_searches = new SearchContextCollection();
+        this.SEARCH.saved_searches.controller = this;
+        this.SEARCH.saved_searches.fetch();
         if (raw_storage['ics_policy_central'] != null) {
           raw_storage = raw_storage['ics_policy_central'];
           raw_id = _.keys(raw_storage)[0];

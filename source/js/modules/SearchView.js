@@ -7,16 +7,16 @@
       menu_cache: {},
       events: {
         "submit .filters form": "search",
-        "click .search-control-context a": function(e) {
+        "click .search-control-context > a": function(e) {
           return this.control_context(this.process_event(e));
         },
-        "click .search-control-save a": function(e) {
+        "click .search-control-save > a": function(e) {
           return this.control_save(this.process_event(e));
         },
-        "click .search-control-share a": function(e) {
+        "click .search-control-share > a": function(e) {
           return this.control_share(this.process_event(e));
         },
-        "click .search-control-pin a": function(e) {
+        "click .search-control-pin > a": function(e) {
           return this.control_pin(e);
         },
         "click .search-control-refresh": function(e) {
@@ -131,7 +131,7 @@
         if (e.hasClass('active')) {
           menu = this.attach_menu(e, tpl_search_menu_views);
           if (menu) {
-            return window.ICS_PC2.saved_searches.populate(menu);
+            return this.controller.SEARCH.saved_searches.populate(menu);
           }
         }
       },
@@ -164,7 +164,7 @@
         var val;
         e.preventDefault();
         val = $('#search_save_label').val();
-        return window.ICS_PC2.saved_searches.create({
+        return this.controller.SEARCH.saved_searches.create({
           label: val,
           params: this.params
         });

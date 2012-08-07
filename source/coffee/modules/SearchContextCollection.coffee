@@ -5,9 +5,8 @@ define [
   'Store',
   'LocalStorageSync',
   'amplify',
-  'Helpers',
-  'json'
-], (SearchContextModel, SearchContextView, Base64, Store, LocalStorageSync, Amplify, Helpers, JSON) ->
+  'Helpers'
+], (SearchContextModel, SearchContextView, Base64, Store, LocalStorageSync, Amplify, Helpers) ->
 
   #### A collection of policies
   #
@@ -45,8 +44,9 @@ define [
 
       #data.params = Helpers.serialize data.params
       model.view = new SearchContextView(
-          parent : @parent
-          data   : data
+          parent     : @parent
+          data       : data
+          controller : @controller
         )
 
     populate : (html) ->

@@ -746,7 +746,7 @@ header.module-search ul {
   display: inline-block;
   font-size: 0;
 }
-header.module-search ul li {
+header.module-search ul li.search-controls {
   display: inline-block;
   border-right: #bababa 1px solid;
   border-left: white 1px solid;
@@ -755,35 +755,35 @@ header.module-search ul li {
   font-size: 14px;
   font-size: 1.4rem;
 }
-header.module-search ul li a {
+header.module-search ul li.search-controls > a {
   text-decoration: none;
   color: #165788;
   display: inline-block;
   padding: 4px 6px;
   border-radius: 4px;
 }
-header.module-search ul li a strong {
+header.module-search ul li.search-controls > a strong {
   font-weight: bold;
 }
-header.module-search ul li a:hover, header.module-search ul #policy-nav li a.select, #policy-nav header.module-search ul li a.select {
+header.module-search ul li.search-controls > a:hover, header.module-search ul #policy-nav li.search-controls > a.select, #policy-nav header.module-search ul li.search-controls > a.select {
   background-color: #165788;
   color: white;
 }
-header.module-search ul li a:hover i, header.module-search ul #policy-nav li a.select i, #policy-nav header.module-search ul li a.select i {
+header.module-search ul li.search-controls > a:hover i, header.module-search ul #policy-nav li.search-controls > a.select i, #policy-nav header.module-search ul li.search-controls > a.select i {
   color: white;
 }
-header.module-search ul li:first-child {
+header.module-search ul li.search-controls.active > a {
+  background-color: #165788;
+  color: white;
+}
+header.module-search ul li.search-controls.active > a i {
+  color: white;
+}
+header.module-search ul li.search-controls:first-child {
   border-left: 0px;
 }
-header.module-search ul li:last-child {
+header.module-search ul li.search-controls:last-child {
   border-right: 0px;
-}
-header.module-search ul li.active a {
-  background-color: #165788;
-  color: white;
-}
-header.module-search ul li.active a i {
-  color: white;
 }
 header.module-search i.icon-caret-down {
   color: dimgrey;
@@ -984,6 +984,14 @@ table.module-search tbody td a:hover, table.module-search tbody td #policy-nav l
 }
 .menu-close i {
   cursor: pointer;
+}
+
+td.search-views-row > a {
+  padding: 0;
+  border-radius: 0;
+  background: none;
+  color: #007ac9;
+  text-decoration: none;
 }
 
 /*

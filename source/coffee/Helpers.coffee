@@ -28,7 +28,8 @@ define [
       params = string.split '/'
       for value in params
         [k, v] = value.split ':'
-        out[k] = decodeURI(v)
+        if k? && v?
+          out[k] = decodeURI(v)
       out
 
     # Serialize an object to a URL ready string

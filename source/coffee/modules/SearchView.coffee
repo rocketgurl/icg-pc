@@ -15,10 +15,10 @@ define [
     events :
       "submit .filters form"          : "search"
 
-      "click .search-control-context a" : (e) -> @control_context(@process_event e)
-      "click .search-control-save a"    : (e) -> @control_save(@process_event e)
-      "click .search-control-share a"   : (e) -> @control_share(@process_event e)
-      "click .search-control-pin a"     : (e) -> @control_pin(e)
+      "click .search-control-context > a" : (e) -> @control_context(@process_event e)
+      "click .search-control-save > a"    : (e) -> @control_save(@process_event e)
+      "click .search-control-share > a"   : (e) -> @control_share(@process_event e)
+      "click .search-control-pin > a"     : (e) -> @control_pin(e)
       "click .search-control-refresh"   : (e) -> @control_refresh(e)
       "submit .search-menu-save form"   : (e) -> @save_search(e)
 
@@ -139,7 +139,7 @@ define [
       if e.hasClass 'active'
         menu = @attach_menu e, tpl_search_menu_views
         if menu
-          window.ICS_PC2.saved_searches.populate(menu)
+          @controller.SEARCH.saved_searches.populate(menu)
 
     # Search save control
     control_save : (e) ->
@@ -168,11 +168,11 @@ define [
     save_search : (e) ->
       e.preventDefault()
       val = $('#search_save_label').val()
-      window.ICS_PC2.saved_searches.create {
+      @controller.SEARCH.saved_searches.create {
         label  : val
         params : @params
       }
-      #window.ICS_PC2.saved_searches.reset window.ICS_PC2.saved_searches.models
-      # window.ICS_PC2.saved_searches.save()
-      # for model in window.ICS_PC2.saved_searches.models
+      #@controller.SEARCH.saved_searches.reset @controller.SEARCH.saved_searches.models
+      # @controller.SEARCH.saved_searches.save()
+      # for model in @controller.SEARCH.saved_searches.models
       #   model.save()

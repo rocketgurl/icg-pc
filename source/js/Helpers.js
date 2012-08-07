@@ -26,7 +26,9 @@
         for (_i = 0, _len = params.length; _i < _len; _i++) {
           value = params[_i];
           _ref = value.split(':'), k = _ref[0], v = _ref[1];
-          out[k] = decodeURI(v);
+          if ((k != null) && (v != null)) {
+            out[k] = decodeURI(v);
+          }
         }
         return out;
       },
