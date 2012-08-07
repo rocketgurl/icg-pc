@@ -37,7 +37,6 @@ define [
     render : (model, parent) ->
       @parent = parent || $('.search-menu-context')
       data = model.attributes
-      data.params = Helpers.serialize data.params
       model.view = new SearchContextView(
           parent : @parent
           data   : data

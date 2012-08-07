@@ -28,7 +28,6 @@
         var data;
         this.parent = parent || $('.search-menu-context');
         data = model.attributes;
-        data.params = Helpers.serialize(data.params);
         return model.view = new SearchContextView({
           parent: this.parent,
           data: data
