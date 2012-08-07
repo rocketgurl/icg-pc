@@ -15,7 +15,6 @@
         return this.bind('reset', this.add_many, this);
       },
       add_one: function(model) {
-        console.log('add one');
         return this.render(model);
       },
       add_many: function(collection) {

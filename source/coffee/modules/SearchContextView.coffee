@@ -32,6 +32,12 @@ define [
       @options.controller.launch_module 'search', params
       @options.controller.Router.append_module 'search', params
 
+    #### Remove saved search. 
+    #
+    # Remember, we have to remove it from 
+    # all existing menu's in the UI as well as remove from
+    # the collection
+    #
     destroy : (e) ->
       e.preventDefault()
       id = $(e.currentTarget).attr('href').substr(7)

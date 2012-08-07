@@ -8,7 +8,7 @@ define [
   'Helpers'
 ], (SearchContextModel, SearchContextView, Base64, Store, LocalStorageSync, Amplify, Helpers) ->
 
-  #### A collection of policies
+  #### Use Local Storage to handle saved search views
   #
   SearchContextCollection = Backbone.Collection.extend
 
@@ -19,21 +19,25 @@ define [
     sync         : LocalStorageSync
     rendered     : false
 
-    # Use Local Storage to hand saved search views
+    # Bind some events to deal with peculiarities of handling
+    # multiple methods.
+    #
     initialize : () ->
       @bind 'add', @add_one, @
       @bind 'reset', @add_many, @
 
     add_one : (model) ->
-      console.log 'add one' 
       @render model
 
     add_many : (collection) ->
       collection.each (model) =>
         @render model
 
-    # We need to reset the table so that future searches
-    # won't append tables to the existing result set.
+    # Create a view for the model and slot into all of the
+    # existing menus in the UI.
+    #
+    # We can take raw HTML here instead of a className (parent)
+    #
     render : (model, parent) ->
       @parent = parent || $('.search-menu-context')
       data = model.attributes
@@ -42,7 +46,6 @@ define [
       if _.isObject data.params
         data.params = Helpers.serialize data.params
 
-      #data.params = Helpers.serialize data.params
       model.view = new SearchContextView(
           parent     : @parent
           data       : data
@@ -54,6 +57,7 @@ define [
       @each (model) =>
         @render model, html
 
+    # Destroy the model and then remove from the collection.
     destroy : (id) ->
       model = @get id
       if model.destroy()
