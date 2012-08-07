@@ -23,10 +23,6 @@ define [
     # store a ref to Backbone's parse so we can use it again
     backboneParse : Backbone.Model.prototype.parse
 
-    # Setup localStorage DB in browswer
-    localStorage : new Store 'ics_policy_central'
-    localSync    : LocalStorageSync
-
     # Deal with Crippled Clients
     crippledClientSync  : CrippledClientSync
 
@@ -73,7 +69,12 @@ define [
       @parse = @xmlParse
 
     # Tell model to use localStorage
-    use_localStorage : () ->
+    use_localStorage : (storage_key) ->
+
+      # Setup localStorage DB in browswer
+      @localStorage = new Store storage_key
+      @localSync    = LocalStorageSync
+
       @sync  = @localSync
       @parse = @backboneParse
 

@@ -22,7 +22,8 @@
       },
       create: function(model) {
         if (!model.id) {
-          model.set(model.idAttribute, this.guid());
+          model.id = this.guid();
+          model.set(model.idAttribute, model.id);
         }
         this.data[model.id] = model;
         this.save();

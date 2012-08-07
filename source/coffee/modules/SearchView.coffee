@@ -20,6 +20,7 @@ define [
       "click .search-control-share a"   : (e) -> @control_share(@process_event e)
       "click .search-control-pin a"     : (e) -> @control_pin(e)
       "click .search-control-refresh"   : (e) -> @control_refresh(e)
+      "submit .search-menu-save form"   : (e) -> @save_search(e)
 
       "click .icon-remove-circle" : (e) -> 
         @clear_menus()
@@ -44,12 +45,17 @@ define [
 
       @menu_cache[@cid] = {} # We need to namespace the cache with CID
 
+
     render : () ->
       # Setup flash module & search container
       html = @Mustache.render $('#tpl-flash-message').html(), { cid : @cid }
       html += @Mustache.render tpl_search_container, { cid : @cid }
       @$el.html html
       @controls = @$el.find('.search-controls')
+
+      # @controls.each (i, control) ->
+      #   target = $(control).attr('class').split(' ')[1]
+
 
       # Register flash message pubsub for this view
       @messenger = new Messenger(@options.view, @cid)
@@ -76,10 +82,10 @@ define [
           'Authorization'   : "Basic #{@controller.user.get('digest')}"
         success : (collection, resp) =>
           collection.render()
-          params = 
+          @params = 
             url   : search_val
             query : search_val
-          @controller.Router.append_module 'search', params
+          @controller.Router.append_module 'search', @params
         error : (collection, resp) =>
           @Amplify.publish @cid, 'warning', "There was a problem with this request: #{resp.status} - #{resp.statusText}"
       )
@@ -120,21 +126,25 @@ define [
 
       if @menu_cache[@cid][cache_key] != undefined
         @menu_cache[@cid][cache_key].fadeIn(100)
+        return false
       else
         el_width = e.css('width')
         e.append(@Mustache.render template, view_data)
         @menu_cache[@cid][cache_key] = e.find("div")
         @menu_cache[@cid][cache_key].fadeIn(100)
+        return @menu_cache[@cid][cache_key]
 
     # Search context control
     control_context : (e) ->
       if e.hasClass 'active'
-        @attach_menu e, tpl_search_menu_views
+        menu = @attach_menu e, tpl_search_menu_views
+        if menu
+          window.ICS_PC2.saved_searches.populate(menu)
 
     # Search save control
     control_save : (e) ->
       if e.hasClass 'active'
-        @attach_menu e, tpl_search_menu_save, { 'search_context' : 'dee da' }
+        @attach_menu e, tpl_search_menu_save
 
     # Search share control
     control_share : (e) ->
@@ -154,3 +164,15 @@ define [
     control_refresh : (e) -> 
       e.preventDefault()
       @search()
+
+    save_search : (e) ->
+      e.preventDefault()
+      val = $('#search_save_label').val()
+      window.ICS_PC2.saved_searches.create {
+        label  : val
+        params : @params
+      }
+      #window.ICS_PC2.saved_searches.reset window.ICS_PC2.saved_searches.models
+      # window.ICS_PC2.saved_searches.save()
+      # for model in window.ICS_PC2.saved_searches.models
+      #   model.save()

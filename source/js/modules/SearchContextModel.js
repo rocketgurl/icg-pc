@@ -2,13 +2,13 @@
 (function() {
 
   define(['BaseModel', 'base64'], function(BaseModel, Base64) {
-    var WorkspaceStateModel;
-    WorkspaceStateModel = BaseModel.extend({
+    var SearchContextModel;
+    SearchContextModel = BaseModel.extend({
       initialize: function() {
-        return this.use_localStorage('ics_policy_central');
+        return this.use_localStorage('ics_saved_searches');
       }
     });
-    return WorkspaceStateModel;
+    return SearchContextModel;
   });
 
 }).call(this);

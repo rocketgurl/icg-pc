@@ -956,7 +956,8 @@ table.module-search tbody td a:hover, table.module-search tbody td #policy-nav l
   font-weight: bold;
 }
 .search-menus h3 {
-  margin: 2px 0;
+  margin: 4px 0;
+  color: dimgrey;
 }
 .search-menus form {
   margin: 10px 0 0 0;

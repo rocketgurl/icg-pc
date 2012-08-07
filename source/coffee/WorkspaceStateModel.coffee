@@ -10,7 +10,7 @@ define [
   WorkspaceStateModel = BaseModel.extend
 
     initialize : () ->
-      @use_localStorage() # Use LocalStorage
+      @use_localStorage('ics_policy_central') # Use LocalStorage
 
       
   WorkspaceStateModel

@@ -22,6 +22,9 @@
         "click .search-control-refresh": function(e) {
           return this.control_refresh(e);
         },
+        "submit .search-menu-save form": function(e) {
+          return this.save_search(e);
+        },
         "click .icon-remove-circle": function(e) {
           this.clear_menus();
           return this.controls.removeClass('active');
@@ -70,13 +73,12 @@
             'Authorization': "Basic " + (this.controller.user.get('digest'))
           },
           success: function(collection, resp) {
-            var params;
             collection.render();
-            params = {
+            _this.params = {
               url: search_val,
               query: search_val
             };
-            return _this.controller.Router.append_module('search', params);
+            return _this.controller.Router.append_module('search', _this.params);
           },
           error: function(collection, resp) {
             return _this.Amplify.publish(_this.cid, 'warning', "There was a problem with this request: " + resp.status + " - " + resp.statusText);
@@ -114,24 +116,28 @@
         }
         cache_key = e.attr('class').split(' ')[1];
         if (this.menu_cache[this.cid][cache_key] !== void 0) {
-          return this.menu_cache[this.cid][cache_key].fadeIn(100);
+          this.menu_cache[this.cid][cache_key].fadeIn(100);
+          return false;
         } else {
           el_width = e.css('width');
           e.append(this.Mustache.render(template, view_data));
           this.menu_cache[this.cid][cache_key] = e.find("div");
-          return this.menu_cache[this.cid][cache_key].fadeIn(100);
+          this.menu_cache[this.cid][cache_key].fadeIn(100);
+          return this.menu_cache[this.cid][cache_key];
         }
       },
       control_context: function(e) {
+        var menu;
         if (e.hasClass('active')) {
-          return this.attach_menu(e, tpl_search_menu_views);
+          menu = this.attach_menu(e, tpl_search_menu_views);
+          if (menu) {
+            return window.ICS_PC2.saved_searches.populate(menu);
+          }
         }
       },
       control_save: function(e) {
         if (e.hasClass('active')) {
-          return this.attach_menu(e, tpl_search_menu_save, {
-            'search_context': 'dee da'
-          });
+          return this.attach_menu(e, tpl_search_menu_save);
         }
       },
       control_share: function(e) {
@@ -153,6 +159,15 @@
       control_refresh: function(e) {
         e.preventDefault();
         return this.search();
+      },
+      save_search: function(e) {
+        var val;
+        e.preventDefault();
+        val = $('#search_save_label').val();
+        return window.ICS_PC2.saved_searches.create({
+          label: val,
+          params: this.params
+        });
       }
     });
   });

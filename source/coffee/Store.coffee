@@ -33,7 +33,10 @@ define [
 		# Add a model, giving it a (hopefully)-unique GUID, if it doesn't already
 		# have an id of it's own.
 		create : (model) ->
-	    if !model.id then model.set(model.idAttribute, @guid())
+	    if !model.id
+	    	model.id = @guid()
+	    	model.set(model.idAttribute, model.id)
+
 	    @data[model.id] = model
 	    @save()
 	    model

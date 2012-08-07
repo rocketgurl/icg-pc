@@ -16,8 +16,9 @@ define [
   'Helpers',
   'amplify',
   'cookie',
-  'xml2json'
-], ($, _, Backbone, UserModel, ConfigModel, WorkspaceStateModel, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter, Messenger, Base64, MenuHelper, AppRules, Helpers, amplify, jcookie, xml2json) ->
+  'xml2json',
+  'modules/SearchContextCollection'
+], ($, _, Backbone, UserModel, ConfigModel, WorkspaceStateModel, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter, Messenger, Base64, MenuHelper, AppRules, Helpers, amplify, jcookie, xml2json, SearchContextCollection) ->
 
   #### Global ENV Setting
   #
@@ -331,6 +332,13 @@ define [
       if !_.isFunction(@Amplify.store)
         @check_workspace_state()
       raw_storage = @Amplify.store()
+
+      # Setup collection to save search views in local storage. We
+      # Needed to attache this as a global to the window to ensure
+      # that models are passed around to many instances of 
+      # SearchModule. It's a hack, but it works for now.
+      window.ICS_PC2.saved_searches = new SearchContextCollection()
+      window.ICS_PC2.saved_searches.fetch()
 
       # If already a PC2 object then create model with its ID and fetch()
       # otherwise create a new model (which will get a new GUID)

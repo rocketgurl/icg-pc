@@ -6,8 +6,6 @@
     return BaseModel = Backbone.Model.extend({
       backboneSync: Backbone.sync,
       backboneParse: Backbone.Model.prototype.parse,
-      localStorage: new Store('ics_policy_central'),
-      localSync: LocalStorageSync,
       crippledClientSync: CrippledClientSync,
       xmlSync: XMLSync,
       xmlParse: function(response, xhr) {
@@ -46,7 +44,9 @@
         this.sync = this.crippledClientSync;
         return this.parse = this.xmlParse;
       },
-      use_localStorage: function() {
+      use_localStorage: function(storage_key) {
+        this.localStorage = new Store(storage_key);
+        this.localSync = LocalStorageSync;
         this.sync = this.localSync;
         return this.parse = this.backboneParse;
       },
