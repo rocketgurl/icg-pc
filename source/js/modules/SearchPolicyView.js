@@ -19,7 +19,9 @@
         this.$el.attr({
           id: this.data.identifiers.InsightPolicyId
         });
-        this.data.EffectiveDate = this.data.EffectiveDate.substr(0, 10);
+        if (this.data.EffectiveDate != null) {
+          this.data.EffectiveDate = this.data.EffectiveDate.substr(0, 10);
+        }
         this.$el.html(this.Mustache.render(tpl_search_policy_row, this.data));
         return this.target.append(this.$el);
       },

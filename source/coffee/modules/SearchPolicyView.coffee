@@ -24,7 +24,8 @@ define [
       @$el.attr 
         id : @data.identifiers.InsightPolicyId
 
-      @data.EffectiveDate = @data.EffectiveDate.substr(0,10) # Chomp dates
+      # Chomp dates
+      @data.EffectiveDate = @data.EffectiveDate.substr(0,10) if @data.EffectiveDate?
 
       @$el.html @Mustache.render tpl_search_policy_row, @data
       @target.append @$el
