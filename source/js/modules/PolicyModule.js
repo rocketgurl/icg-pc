@@ -9,13 +9,26 @@
         this.view = view;
         this.app = app;
         this.params = params;
+        if (this.app.params != null) {
+          this.params = this.app.params;
+        }
         this.load();
       }
 
       PolicyModule.prototype.load = function() {
-        var _this = this;
+        var id,
+          _this = this;
+        if (this.params.id != null) {
+          id = this.params.id;
+        }
+        if (this.params.url != null) {
+          if (id == null) {
+            id = this.params.url;
+          }
+        }
+        console.log(this.view.options.controller.user);
         this.policy_model = new PolicyModel({
-          id: 'c23d82284fb34a25b1cc9bcb4f616ff1',
+          id: id,
           urlRoot: this.view.options.controller.services.pxcentral,
           digest: this.view.options.controller.user.get('digest')
         });
@@ -25,6 +38,10 @@
           model: this.policy_model
         });
         return this.policy_model.fetch({
+          headers: {
+            'X-Authorization': "Basic " + (this.view.options.controller.user.get('digest')),
+            'Authorization': "Basic " + (this.view.options.controller.user.get('digest'))
+          },
           success: function(model, resp) {
             model.response_state();
             switch (model.get('fetch_state').code) {
@@ -32,7 +49,7 @@
                 model.get_pxServerIndex();
                 return _this.render();
               default:
-                return amplify.publish('controller', 'warning', "Sorry, that policy could not be retrieved.");
+                return amplify.publish('controller', 'warning', "Sorry, that policy could not be retrieved. " + (model.get('fetch_state').text));
             }
           },
           error: function(model, resp) {

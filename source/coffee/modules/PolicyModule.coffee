@@ -19,6 +19,9 @@ define [
     # @param `params` _Object_ Applications specific params
     #
     constructor : (@view, @app, @params) ->
+      # Make sure we have some kind of params
+      @params = @app.params if @app.params?
+
       # Kick off application
       @load()
       
@@ -26,8 +29,14 @@ define [
     # view.remove_loader will callback Module.render()
     #
     load: ->
+      # We need to either use the policy # or the quote #
+      id = @params.id if @params.id? 
+      id ?= @params.url if @params.url?
+
+      console.log @view.options.controller.user
+
       @policy_model = new PolicyModel(
-        id      : 'c23d82284fb34a25b1cc9bcb4f616ff1'
+        id      : id
         urlRoot : @view.options.controller.services.pxcentral
         digest  : @view.options.controller.user.get('digest')
         )
@@ -39,6 +48,9 @@ define [
         )
 
       @policy_model.fetch({
+        headers :
+          'X-Authorization' : "Basic #{@view.options.controller.user.get('digest')}"
+          'Authorization'   : "Basic #{@view.options.controller.user.get('digest')}"
         success : (model, resp) =>
           model.response_state()
           switch model.get('fetch_state').code
@@ -46,7 +58,7 @@ define [
               model.get_pxServerIndex()
               @render()
             else
-              amplify.publish('controller', 'warning', "Sorry, that policy could not be retrieved.")
+              amplify.publish('controller', 'warning', "Sorry, that policy could not be retrieved. #{model.get('fetch_state').text}")
         error : (model, resp) =>
           amplify.publish('controller', 'warning', "Sorry, that policy could not be retrieved. #{resp}")
       })
