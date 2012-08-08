@@ -480,7 +480,9 @@ define [
       #     url : ''
 
       # We need to sanitize this a little
-      safe_app_name = "#{Helpers.id_safe(module)}_#{Helpers.id_safe(params.url)}"
+      params ?= {}
+      safe_app_name = "#{Helpers.id_safe(module)}"
+      safe_app_name += "_#{Helpers.id_safe(params.url)}" if params.url?
 
       # Setup the app object to launch policy view with
       app =

@@ -349,7 +349,13 @@
       },
       launch_module: function(module, params) {
         var app, safe_app_name, stack_check;
-        safe_app_name = "" + (Helpers.id_safe(module)) + "_" + (Helpers.id_safe(params.url));
+        if (params == null) {
+          params = {};
+        }
+        safe_app_name = "" + (Helpers.id_safe(module));
+        if (params.url != null) {
+          safe_app_name += "_" + (Helpers.id_safe(params.url));
+        }
         app = {
           app: safe_app_name,
           app_label: "" + (Helpers.uc_first(module)) + ": " + params.url,
