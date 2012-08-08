@@ -1,7 +1,7 @@
 /*
 Module: Policy
 */
-#policy-nav {
+.policy-nav {
 	@include span-columns(2, 12);
 	li {
 		margin: 0;
@@ -37,7 +37,7 @@ Module: Policy
 	// border: #ddd 1px solid;
 }
 
-#policy-iframe {
+.policy-iframe {
 	width: 100%;
 	background: $white;
 	display: block;
@@ -46,7 +46,7 @@ Module: Policy
 	padding: 0;
 }
 
-#policy-header {
+.policy-header {
 	background: $white;
 	border: #ddd 1px solid;
 	border-bottom: 0px;

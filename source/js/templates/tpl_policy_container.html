@@ -1,4 +1,4 @@
-<div id="policy-nav">
+<div id="policy-nav-{{cid}}" class="policy-nav">
 	<ul>
 		<li><a href="overview" class="select">Overview</a></li>
 		<li><a href="ipmchanges">IPM Changes</a></li>
@@ -9,6 +9,6 @@
 	</ul>
 </div>
 <div id="policy-workspace">
-	<div id="policy-header"></div>
-	<iframe id="policy-iframe" data-ipm-policy="{{policy_id}}" data-ipm-auth="{{auth_digest}}" src="" frameborder="0"></iframe>
+	<div id="policy-header-{{cid}}" class="policy-header"></div>
+	<iframe id="policy-iframe-{{cid}}" class="policy-iframe" data-ipm-policy="{{policy_id}}" data-ipm-auth="{{auth_digest}}" src="" frameborder="0"></iframe>
 </div>

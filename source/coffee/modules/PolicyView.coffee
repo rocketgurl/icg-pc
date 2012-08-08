@@ -8,7 +8,7 @@ define [
   PolicyView = BaseView.extend
 
     events : 
-      "click #policy-nav a" : "dispatch"
+      "click .policy-nav a" : "dispatch"
 
     # We need to brute force the View's container to the 
     # WorkspaceCanvasView's el
@@ -20,8 +20,20 @@ define [
     render : ->
       # Setup flash module & search container
       html = @Mustache.render $('#tpl-flash-message').html(), { cid : @cid }
-      html += @Mustache.render tpl_policy_container, { auth_digest : @model.get('digest'), policy_id : @model.get('pxServerIndex') }
+      html += @Mustache.render tpl_policy_container, { auth_digest : @model.get('digest'), policy_id : @model.get('pxServerIndex'), cid : @cid }
       @$el.html html
+
+      # Namespace page elements
+      #
+      # Since we have multiple instances we use the view cid
+      # to keep everyone's ID separate. We store refs to these
+      # in vars to keep things in one place keep jQuery traversal
+      # to a minimum.
+      #
+      @iframe_id        = "#policy-iframe-#{@cid}"
+      @iframe           = @$el.find(@iframe_id)
+      @policy_header    = @$el.find("#policy-header-#{@cid}")
+      @policy_nav_links = @$el.find("#policy-nav-#{@cid} a")
 
       # Register flash message pubsub for this view
       @messenger = new Messenger(@options.view, @cid)
@@ -30,7 +42,7 @@ define [
 
     # Switch nav items on/off
     toggle_nav_state : (el) ->
-      $('#policy-nav a').removeClass 'select'
+      @policy_nav_links.removeClass 'select'
       el.addClass 'select'
 
     # Dynamically call methods based on href of #policy-nav elements
@@ -51,21 +63,19 @@ define [
     resize_iframe : (iframe, offset) ->
       offset = offset || 0
       iframe_height = Math.floor((($(window).height() - (220 + offset))/$(window).height())*100) + "%"
-      iframe.css('min-height', iframe_height)
+      @iframe.css('min-height', iframe_height)
 
     # Load Flex Policy Summary
     show_overview : ->
-      iframe = @$el.find('#policy-iframe')
-      iframe.attr('src', 'http://fc06.deviantart.net/fs46/f/2009/169/f/4/Unicorn_Pukes_Rainbow_by_Angel35W.jpg')   
-      @resize_iframe iframe
+      @iframe.attr('src', 'http://fc06.deviantart.net/fs46/f/2009/169/f/4/Unicorn_Pukes_Rainbow_by_Angel35W.jpg')   
+      @resize_iframe @iframe
 
     # Load mxAdmin into workarea and inject policy header
     show_ipmchanges : ->
       header = @Mustache.render tpl_ipm_header, @model.get_ipm_header()
-      $('#policy-header').html(header)
+      @policy_header.html(header)
 
-      iframe = @$el.find('#policy-iframe')
-      iframe.attr('src', '/mxadmin/index.html')
-      @resize_iframe iframe, $('#policy-header').height()
+      @iframe.attr('src', '/mxadmin/index.html')
+      @resize_iframe(@iframe, @policy_header.height())
 
   PolicyView

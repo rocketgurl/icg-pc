@@ -5,7 +5,7 @@
     var PolicyView;
     PolicyView = BaseView.extend({
       events: {
-        "click #policy-nav a": "dispatch"
+        "click .policy-nav a": "dispatch"
       },
       initialize: function(options) {
         this.el = options.view.el;
@@ -19,14 +19,19 @@
         });
         html += this.Mustache.render(tpl_policy_container, {
           auth_digest: this.model.get('digest'),
-          policy_id: this.model.get('pxServerIndex')
+          policy_id: this.model.get('pxServerIndex'),
+          cid: this.cid
         });
         this.$el.html(html);
+        this.iframe_id = "#policy-iframe-" + this.cid;
+        this.iframe = this.$el.find(this.iframe_id);
+        this.policy_header = this.$el.find("#policy-header-" + this.cid);
+        this.policy_nav_links = this.$el.find("#policy-nav-" + this.cid + " a");
         this.messenger = new Messenger(this.options.view, this.cid);
         return this.show_overview();
       },
       toggle_nav_state: function(el) {
-        $('#policy-nav a').removeClass('select');
+        this.policy_nav_links.removeClass('select');
         return el.addClass('select');
       },
       dispatch: function(e) {
@@ -43,21 +48,18 @@
         var iframe_height;
         offset = offset || 0;
         iframe_height = Math.floor((($(window).height() - (220 + offset)) / $(window).height()) * 100) + "%";
-        return iframe.css('min-height', iframe_height);
+        return this.iframe.css('min-height', iframe_height);
       },
       show_overview: function() {
-        var iframe;
-        iframe = this.$el.find('#policy-iframe');
-        iframe.attr('src', 'http://fc06.deviantart.net/fs46/f/2009/169/f/4/Unicorn_Pukes_Rainbow_by_Angel35W.jpg');
-        return this.resize_iframe(iframe);
+        this.iframe.attr('src', 'http://fc06.deviantart.net/fs46/f/2009/169/f/4/Unicorn_Pukes_Rainbow_by_Angel35W.jpg');
+        return this.resize_iframe(this.iframe);
       },
       show_ipmchanges: function() {
-        var header, iframe;
+        var header;
         header = this.Mustache.render(tpl_ipm_header, this.model.get_ipm_header());
-        $('#policy-header').html(header);
-        iframe = this.$el.find('#policy-iframe');
-        iframe.attr('src', '/mxadmin/index.html');
-        return this.resize_iframe(iframe, $('#policy-header').height());
+        this.policy_header.html(header);
+        this.iframe.attr('src', '/mxadmin/index.html');
+        return this.resize_iframe(this.iframe, this.policy_header.height());
       }
     });
     return PolicyView;
