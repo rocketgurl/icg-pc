@@ -29,14 +29,13 @@ define [
     # We need to brute force the View's container to the 
     # WorkspaceCanvasView's el
     initialize : (options) ->
-      @el         = options.view.el
-      @$el        = options.view.$el
-      @controller = options.view.options.controller
-      @module     = options.module
-      @policies   = new SearchPolicyCollection()
-      #@policies.url       = @controller.services.pxcentral + 'policies?modified-after=2012-01-01&modified-before=2012-07-01'
-      # Use mocks for demo
-      @policies.url = '/mocks/search_response_v2.json'
+      @el           = options.view.el
+      @$el          = options.view.$el
+      @controller   = options.view.options.controller
+      @module       = options.module
+      @policies     = new SearchPolicyCollection()
+      @policies.url = @controller.services.pxcentral + 'policies'
+      # @policies.url = '/mocks/search_response_v2.json'
       @policies.container = @
 
       # Load any passed parameters into view
@@ -77,6 +76,9 @@ define [
       # Set Basic Auth headers to request and attempt to
       # get some policies
       @policies.fetch(
+        data : 
+          q       : search_val
+          perpage : 25
         headers :
           'X-Authorization' : "Basic #{@controller.user.get('digest')}"
           'Authorization'   : "Basic #{@controller.user.get('digest')}"

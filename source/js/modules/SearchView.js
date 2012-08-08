@@ -36,7 +36,7 @@
         this.controller = options.view.options.controller;
         this.module = options.module;
         this.policies = new SearchPolicyCollection();
-        this.policies.url = '/mocks/search_response_v2.json';
+        this.policies.url = this.controller.services.pxcentral + 'policies';
         this.policies.container = this;
         if (this.module.app.params != null) {
           this.params = this.module.app.params;
@@ -68,6 +68,10 @@
         search_val = this.$el.find('input[type=search]').val();
         this.policies.reset();
         return this.policies.fetch({
+          data: {
+            q: search_val,
+            perpage: 25
+          },
           headers: {
             'X-Authorization': "Basic " + (this.controller.user.get('digest')),
             'Authorization': "Basic " + (this.controller.user.get('digest'))
