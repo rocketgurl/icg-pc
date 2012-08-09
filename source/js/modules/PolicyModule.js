@@ -26,7 +26,6 @@
             id = this.params.url;
           }
         }
-        console.log(this.view.options.controller.user);
         this.policy_model = new PolicyModel({
           id: id,
           urlRoot: this.view.options.controller.services.pxcentral,

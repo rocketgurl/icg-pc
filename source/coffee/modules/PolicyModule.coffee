@@ -33,8 +33,6 @@ define [
       id = @params.id if @params.id? 
       id ?= @params.url if @params.url?
 
-      console.log @view.options.controller.user
-
       @policy_model = new PolicyModel(
         id      : id
         urlRoot : @view.options.controller.services.pxcentral
