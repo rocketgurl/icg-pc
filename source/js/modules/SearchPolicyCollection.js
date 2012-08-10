@@ -7,9 +7,15 @@
       model: SearchPolicyModel,
       views: [],
       parse: function(response) {
+        this.pagination = {
+          page: response.page,
+          per_page: response.perPage,
+          total_items: response.totalItems
+        };
         return response.policies;
       },
       render: function() {
+        this.render_pagination();
         this.container.$el.find('table.module-search tbody').html('');
         this.views = [];
         return this.populate();
@@ -22,6 +28,29 @@
             container: _this.container
           }));
         });
+      },
+      render_pagination: function() {
+        this.calculate_metadata();
+        this.container.$el.find('.pagination-a span').append(this.pagination.items);
+        return this.container.$el.find('.pagination-b select').append(this.calculate_pagejumps());
+      },
+      calculate_pagejumps: function() {
+        var page, pages, selects, _i;
+        pages = Math.round(+this.pagination.total_items / +this.pagination.per_page);
+        selects = "";
+        for (page = _i = 1; 1 <= pages ? _i <= pages : _i >= pages; page = 1 <= pages ? ++_i : --_i) {
+          selects += "<option value=\"" + page + "\">" + page + "</option>";
+        }
+        return selects;
+      },
+      calculate_metadata: function() {
+        var finish, start;
+        finish = +this.pagination.page * +this.pagination.per_page;
+        start = finish - +this.pagination.per_page;
+        if (start === 0) {
+          start = 1;
+        }
+        return this.pagination.items = "" + start + " - " + finish + " of " + this.pagination.total_items;
       }
     });
     return SearchPolicyCollection;

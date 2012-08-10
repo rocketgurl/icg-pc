@@ -49,13 +49,9 @@ define [
     render : () ->
       # Setup flash module & search container
       html = @Mustache.render $('#tpl-flash-message').html(), { cid : @cid }
-      html += @Mustache.render tpl_search_container, { cid : @cid }
+      html += @Mustache.render tpl_search_container, { cid : @cid, pagination: @policies.pagination }
       @$el.html html
       @controls = @$el.find('.search-controls')
-
-      # @controls.each (i, control) ->
-      #   target = $(control).attr('class').split(' ')[1]
-
 
       # Register flash message pubsub for this view
       @messenger = new Messenger(@options.view, @cid)
@@ -72,7 +68,7 @@ define [
       search_val = @$el.find('input[type=search]').val()
       @fetch(
           q       : search_val
-          perpage : 25
+          perpage : 15
         )
     
 

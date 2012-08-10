@@ -27,6 +27,13 @@ define [
       # Chomp dates
       @data.EffectiveDate = @data.EffectiveDate.substr(0,10) if @data.EffectiveDate?
 
+      # Deal with address concatenation
+      @data.insured.Address = ""
+      if @data.insured.InsuredMailingAddressLine1?
+        @data.insured.Address += "#{@data.insured.InsuredMailingAddressLine1}, "
+      if @data.insured.InsuredMailingAddressCity?
+        @data.insured.Address += "#{@data.insured.InsuredMailingAddressCity}, "
+
       @$el.html @Mustache.render tpl_search_policy_row, @data
       @target.append @$el
 

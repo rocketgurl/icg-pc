@@ -49,7 +49,8 @@
           cid: this.cid
         });
         html += this.Mustache.render(tpl_search_container, {
-          cid: this.cid
+          cid: this.cid,
+          pagination: this.policies.pagination
         });
         this.$el.html(html);
         this.controls = this.$el.find('.search-controls');
@@ -67,7 +68,7 @@
         search_val = this.$el.find('input[type=search]').val();
         return this.fetch({
           q: search_val,
-          perpage: 25
+          perpage: 15
         });
       },
       fetch: function(query) {

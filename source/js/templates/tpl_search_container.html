@@ -38,18 +38,21 @@
 <div id="search-pagination-{{cid}}" class="module-search pagination">
 	<form action="pagination" method="get" accept-charset="utf-8">
 		<div class="pagination-a">
-			<span>Items 1 - 15 of 100</span>
+			<span>Items </span>
 		</div>
 		<div class="pagination-b">
-			<label for="">Jump to page:</label>
-			<select name="">
-				<option value="">5</option>
+			<label for="search-pagination-page-{{cid}}">Jump to page:</label>
+			<select name="search-pagination-page" id="search-pagination-page-{{cid}}">
 			</select>
 		</div>
 		<div class="pagination-c">
-			<label for="">Result count:</label>
-			<select name="">
-				<option value="">100 per page</option>
+			<label for="search-pagination-perpage-{{cid}}">Result count:</label>
+			<select name="search-pagination-perpage" id="search-pagination-perpage-{{cid}}">
+				<option value="15" selected>15 per page</option>
+				<option value="25">25 per page</option>
+				<option value="50">50 per page</option>
+				<option value="75">75 per page</option>
+				<option value="100">100 per page</option>
 			</select>
 		</div>
 	</form>

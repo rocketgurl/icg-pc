@@ -22,6 +22,13 @@
         if (this.data.EffectiveDate != null) {
           this.data.EffectiveDate = this.data.EffectiveDate.substr(0, 10);
         }
+        this.data.insured.Address = "";
+        if (this.data.insured.InsuredMailingAddressLine1 != null) {
+          this.data.insured.Address += "" + this.data.insured.InsuredMailingAddressLine1 + ", ";
+        }
+        if (this.data.insured.InsuredMailingAddressCity != null) {
+          this.data.insured.Address += "" + this.data.insured.InsuredMailingAddressCity + ", ";
+        }
         this.$el.html(this.Mustache.render(tpl_search_policy_row, this.data));
         return this.target.append(this.$el);
       },
