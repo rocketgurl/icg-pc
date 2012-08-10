@@ -212,13 +212,10 @@
 // Loader image
 .module-loader {
 	text-align: center;
-	background: url(/img/loader.gif) no-repeat center center;
-	background-position: center 30%;
-	min-height: 200px;
-	line-height: 200px;
 	h1 {
 		@include font-size(18);
 		color: darken($lightgray, 40);
+		margin: 20px 0;
 	}
 }
 

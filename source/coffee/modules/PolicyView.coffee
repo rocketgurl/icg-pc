@@ -17,10 +17,13 @@ define [
       @$el        = options.view.$el
       @controller = options.view.options.controller
 
-    render : ->
+    render : (options) ->
       # Setup flash module & search container
       html = @Mustache.render $('#tpl-flash-message').html(), { cid : @cid }
-      html += @Mustache.render tpl_policy_container, { auth_digest : @model.get('digest'), policy_id : @model.get('pxServerIndex'), cid : @cid }
+      
+      if !options?
+        html += @Mustache.render tpl_policy_container, { auth_digest : @model.get('digest'), policy_id : @model.get('pxServerIndex'), cid : @cid }
+      
       @$el.html html
 
       # Namespace page elements

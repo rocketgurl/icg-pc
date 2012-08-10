@@ -17,7 +17,7 @@
           _this = this;
         rnd = Math.floor(Math.random() * (4 - 1 + 1)) + 1;
         return this.callback_delay(rnd * 1000, function() {
-          return _this.view.remove_loader();
+          return _this.view.remove_loader(true);
         });
       };
 

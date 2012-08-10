@@ -12,16 +12,18 @@
         this.$el = options.view.$el;
         return this.controller = options.view.options.controller;
       },
-      render: function() {
+      render: function(options) {
         var html;
         html = this.Mustache.render($('#tpl-flash-message').html(), {
           cid: this.cid
         });
-        html += this.Mustache.render(tpl_policy_container, {
-          auth_digest: this.model.get('digest'),
-          policy_id: this.model.get('pxServerIndex'),
-          cid: this.cid
-        });
+        if (!(options != null)) {
+          html += this.Mustache.render(tpl_policy_container, {
+            auth_digest: this.model.get('digest'),
+            policy_id: this.model.get('pxServerIndex'),
+            cid: this.cid
+          });
+        }
         this.$el.html(html);
         this.iframe_id = "#policy-iframe-" + this.cid;
         this.iframe = this.$el.find(this.iframe_id);

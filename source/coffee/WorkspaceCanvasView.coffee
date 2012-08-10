@@ -53,6 +53,10 @@ define [
       @$target.append(@$el)
       @render_tab(@template_tab)
 
+      # Loading image
+      @loader = Helpers.loader("loader-#{@app.app}", 60, '#696969')
+      @loader.setFPS(48)
+
       # Alert the controller
       #
       # There should prolly be some checking to make sure the app has
@@ -94,9 +98,10 @@ define [
       @options.controller.trigger 'stack_remove', @
 
     # Remove loader image and tell module to render
-    remove_loader : () ->
+    remove_loader : (render) ->
       @$el.find('.module-loader').fadeOut('fast', =>
-        @module.render()
+        if render?
+          @module.render()
         )
 
     # Launch a new app (tab) within the current workspace context

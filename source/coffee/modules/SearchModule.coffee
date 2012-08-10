@@ -26,7 +26,7 @@ define [
     #
     load: () ->
       @callback_delay 500, =>
-        @view.remove_loader()
+        @view.remove_loader(true)
 
     # Do whatever rendering animation needs to happen here
     render : () ->

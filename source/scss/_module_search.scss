@@ -262,3 +262,26 @@ td.search-views-admin > a {
 	color: $blue;
 	text-decoration: none;
 }
+
+.search-loader {
+	display: none;
+	position: absolute;
+	z-index: 1400;
+	width: 100%;
+	text-align: center;
+	margin: 50px 0 0 0;
+	h2 {
+		display: inline-block;
+		margin: 10px auto;
+		padding: 50px;
+		border-radius: 14px;
+		background: rgba(0,0,0,.5);
+		color: darken($white, 10);
+		@include sans;
+		@include font-size(24);
+		span {
+			display: block;
+			margin: 0 0 20px 0;
+		}
+	}
+}

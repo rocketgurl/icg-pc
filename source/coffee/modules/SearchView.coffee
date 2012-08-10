@@ -1,26 +1,27 @@
 define [
   'BaseView',
+  'Helpers',
   'Messenger',
   'modules/SearchPolicyCollection',
   'text!templates/tpl_search_container.html',
   'text!templates/tpl_search_menu_save.html',
   'text!templates/tpl_search_menu_views.html',
   'text!templates/tpl_search_menu_share.html'
-], (BaseView, Messenger, SearchPolicyCollection, tpl_search_container, tpl_search_menu_save, tpl_search_menu_views, tpl_search_menu_share) ->
+], (BaseView, Helpers, Messenger, SearchPolicyCollection, tpl_search_container, tpl_search_menu_save, tpl_search_menu_views, tpl_search_menu_share) ->
 
   SearchView = BaseView.extend
 
     menu_cache : {} # Store search menus
 
     events :
-      "submit .filters form"          : "search"
-
+      "submit .filters form"              : "search"
+      
       "click .search-control-context > a" : (e) -> @control_context(@process_event e)
       "click .search-control-save > a"    : (e) -> @control_save(@process_event e)
       "click .search-control-share > a"   : (e) -> @control_share(@process_event e)
       "click .search-control-pin > a"     : (e) -> @control_pin(e)
-      "click .search-control-refresh"   : (e) -> @control_refresh(e)
-      "submit .search-menu-save form"   : (e) -> @save_search(e)
+      "click .search-control-refresh"     : (e) -> @control_refresh(e)
+      "submit .search-menu-save form"     : (e) -> @save_search(e)
 
       "click .icon-remove-circle" : (e) -> 
         @clear_menus()
@@ -68,28 +69,49 @@ define [
     search : (e) ->
       if e?
         e.preventDefault()
-
       search_val = @$el.find('input[type=search]').val()
+      @fetch(
+          q       : search_val
+          perpage : 25
+        )
+    
+
+    # Tell the collection to fetch some policies and
+    # handle UI issues, etc.
+    fetch : (query) ->
+      # Drop the loading UI in place
+      @loader_ui(true)
 
       @policies.reset() # wipe out the collection models
 
       # Set Basic Auth headers to request and attempt to
       # get some policies
       @policies.fetch(
-        data : 
-          q       : search_val
-          perpage : 25
+        data    : query
         headers :
           'X-Authorization' : "Basic #{@controller.user.get('digest')}"
           'Authorization'   : "Basic #{@controller.user.get('digest')}"
         success : (collection, resp) =>
+
+          #check for empty requests
+          if collection.models.length == 0
+            @loader_ui(false)
+            @Amplify.publish @cid, 'notice', "No policies found when searching for #{query.q}"
+            return
+
           collection.render()
+
+          # Remove loader UI
+          @loader_ui(false)
+
+          # Set the URL params
           @params = 
-            url   : search_val
-            query : search_val
+            url   : query.q
+            query : query.q
           @controller.Router.append_module 'search', @params
         error : (collection, resp) =>
           @Amplify.publish @cid, 'warning', "There was a problem with this request: #{resp.status} - #{resp.statusText}"
+          @loader_ui(false)
       )
 
     # Reset active state on elements
@@ -174,7 +196,17 @@ define [
         label  : val
         params : @params
       }
-      #@controller.SEARCH.saved_searches.reset @controller.SEARCH.saved_searches.models
-      # @controller.SEARCH.saved_searches.save()
-      # for model in @controller.SEARCH.saved_searches.models
-      #   model.save()
+
+    loader_ui : (bool) ->
+      if bool and !@loader?
+        @loader = Helpers.loader("search-spinner-#{@cid}", 100, '#ffffff')
+        @loader.setDensity(70)
+        @loader.setFPS(48)
+        $("#search-loader-#{@cid}").show()
+      else
+        if @loader?
+          @loader.kill()
+          @loader = null
+        $("#search-loader-#{@cid}").hide()
+
+

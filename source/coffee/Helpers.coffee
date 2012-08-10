@@ -2,7 +2,8 @@ define [
   'jquery', 
   'underscore',
   'base64',
-], ($, _, Base64) ->
+  'loader'
+], ($, _, Base64, CanvasLoader) ->
 
   Helpers =
 
@@ -38,5 +39,17 @@ define [
       for key, value of object
         serialized += "/#{key}:#{encodeURI(value)}"
       serialized
+
+    # Convenience method to create Canvas loader.
+    # Returns loader object so it's easy to kill.
+    loader : (id, diameter, color) ->
+      cl = new CanvasLoader id
+      cl.setColor color
+      cl.setShape 'oval'
+      cl.setDiameter diameter
+      cl.setDensity 60
+      cl.setFPS 24
+      cl.show()
+      return cl
 
   Helpers

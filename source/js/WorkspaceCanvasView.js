@@ -37,6 +37,8 @@
         this.$el.hide();
         this.$target.append(this.$el);
         this.render_tab(this.template_tab);
+        this.loader = Helpers.loader("loader-" + this.app.app, 60, '#696969');
+        this.loader.setFPS(48);
         return this.options.controller.trigger('new_tab', this.app.app);
       },
       render_tab: function(template) {
@@ -67,10 +69,12 @@
         this.$el.html('').remove();
         return this.options.controller.trigger('stack_remove', this);
       },
-      remove_loader: function() {
+      remove_loader: function(render) {
         var _this = this;
         return this.$el.find('.module-loader').fadeOut('fast', function() {
-          return _this.module.render();
+          if (render != null) {
+            return _this.module.render();
+          }
         });
       },
       launch_child_app: function(module, app) {

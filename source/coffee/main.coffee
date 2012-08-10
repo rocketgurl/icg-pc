@@ -1,3 +1,4 @@
+"use strict";
 require
   baseUrl: 'js'
   paths: 
@@ -11,7 +12,8 @@ require
     xml2json   : 'lib/jquery.xml2json',
     text       : 'lib/text',
     domReady   : 'lib/domReady',
-    json      : 'lib/json2'
+    json       : 'lib/json2',
+    loader     : 'lib/heartcode-canvasloader-min'
   priority: ['jquery']
   shim:
       'cookie' : 
@@ -21,6 +23,9 @@ require
       'json' : 
         deps    : ['jquery']
         exports : 'JSON'
+      'loader' :
+        deps    : ['jquery']
+        exports : 'CanvasLoader'
 
 require [
   "jquery",

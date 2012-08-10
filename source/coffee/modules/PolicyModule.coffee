@@ -5,8 +5,9 @@ define [
   'mustache',
   'modules/PolicyView',
   'modules/PolicyModel',
-  'amplify'
-], ($, _, Backbone, Mustache, PolicyView, PolicyModel, amplify) ->
+  'amplify',
+  'Messenger'
+], ($, _, Backbone, Mustache, PolicyView, PolicyModel, amplify, Messenger) ->
 
   class PolicyModule
 
@@ -45,6 +46,8 @@ define [
         model  : @policy_model
         )
 
+      @messenger = new Messenger(@policy_view, @policy_view.cid)
+
       @policy_model.fetch({
         headers :
           'X-Authorization' : "Basic #{@view.options.controller.user.get('digest')}"
@@ -56,15 +59,19 @@ define [
               model.get_pxServerIndex()
               @render()
             else
-              amplify.publish('controller', 'warning', "Sorry, that policy could not be retrieved. #{model.get('fetch_state').text}")
-        error : (model, resp) =>
-          amplify.publish('controller', 'warning', "Sorry, that policy could not be retrieved. #{resp}")
+              @view.remove_loader()
+              @render({ flash_only : true })              
+              amplify.publish(@policy_view.cid, 'warning', "#{model.get('fetch_state').text} - #{$(resp).find('p').html()} Sorry.")
+       error : (model, resp) =>
+          @render({ flash_only : true })
+          @view.remove_loader()
+          amplify.publish(@policy_view.cid, 'warning', "#{$(resp).find('p').html()} Sorry.")
       })
 
     # Do whatever rendering animation needs to happen here
-    render : ->
-      @view.remove_loader()
-      @policy_view.render()
+    render : (options) ->
+      @view.remove_loader(true)
+      @policy_view.render(options)
 
     # Simple delay fund if we need it.
     callback_delay : (ms, func) ->

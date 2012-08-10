@@ -26,7 +26,7 @@ define [
     load: ->
       rnd = Math.floor(Math.random() * (4 - 1 + 1)) + 1;
       @callback_delay rnd * 1000, => 
-        @view.remove_loader()
+        @view.remove_loader(true)
 
     # Do whatever rendering animation needs to happen here
     render : ->
