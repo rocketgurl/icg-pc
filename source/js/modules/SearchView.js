@@ -59,8 +59,8 @@
         this.controls = this.$el.find('.search-controls');
         this.messenger = new Messenger(this.options.view, this.cid);
         if (this.params != null) {
-          this.$el.find('input[type=search]').val(this.params.query);
-          return this.search();
+          this.set_search_options(this.params);
+          return this.fetch(this.get_search_options(this.params));
         }
       },
       search: function(e) {
@@ -68,6 +68,20 @@
           e.preventDefault();
         }
         return this.fetch(this.get_search_options());
+      },
+      set_search_options: function(options) {
+        if (_.has(options, 'query')) {
+          this.$el.find('input[type=search]').val(options.query);
+        }
+        if (_.has(options, 'state')) {
+          this.$el.find('.query-type').val(options.state);
+        }
+        if (_.has(options, 'perpage')) {
+          this.$el.find('.search-pagination-perpage').val(options.perpage);
+        }
+        if (_.has(options, 'page')) {
+          return this.$el.find('.search-pagination-page').val(options.page);
+        }
       },
       get_search_options: function(options) {
         var page, perpage, query, state, _ref, _ref1, _ref2;
@@ -81,7 +95,7 @@
           state: state
         };
         if (options != null) {
-          query = _.extend(options, query);
+          query = _.extend(query, options);
         }
         return query;
       },
@@ -107,6 +121,7 @@
               url: query.q,
               query: query.q
             };
+            _this.params = _.extend(_this.params, _this.get_search_options());
             return _this.controller.Router.append_module('search', _this.params);
           },
           error: function(collection, resp) {

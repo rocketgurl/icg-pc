@@ -62,8 +62,8 @@ define [
 
       # If we have params we need to go ahead and do the search query
       if @params?
-        @$el.find('input[type=search]').val(@params.query)
-        @search()
+        @set_search_options @params
+        @fetch(@get_search_options(@params))
 
     # Assemble search params and hit pxCentral
     search : (e) ->
@@ -71,11 +71,24 @@ define [
         e.preventDefault()
       @fetch(@get_search_options())
     
+
+    set_search_options : (options) ->
+      if _.has(options, 'query')
+        @$el.find('input[type=search]').val(options.query)
+
+      if _.has(options, 'state')
+        @$el.find('.query-type').val(options.state)
+
+      if _.has(options, 'perpage')
+        @$el.find('.search-pagination-perpage').val(options.perpage)
+
+      if _.has(options, 'page')
+        @$el.find('.search-pagination-page').val(options.page)
+
     # Assemble search options from various inputs and explicitly
     # passed values (options) to return as an object for @fetch
     #
     get_search_options : (options) ->
-      # Handle defaults
       perpage = @$el.find('.search-pagination-perpage').val() ? 15
       page    = @$el.find('.search-pagination-page').val() ? 1
       state   = @$el.find('.query-type').val() ? ''
@@ -87,7 +100,7 @@ define [
         state   : state
 
       if options?
-        query = _.extend options, query
+        query = _.extend query, options
 
       query
 
@@ -123,6 +136,8 @@ define [
           @params = 
             url   : query.q
             query : query.q
+
+          @params = _.extend @params, @get_search_options()
           @controller.Router.append_module 'search', @params
         error : (collection, resp) =>
           @Amplify.publish @cid, 'warning', "There was a problem with this request: #{resp.status} - #{resp.statusText}"
