@@ -66,6 +66,9 @@ define [
       # Tell the Router to trigger the app
       @options.router.navigate($a.attr('href'), { trigger : true })
 
+      @hide_nav()
+      @toggle_nav_slide()
+
 
     #### Toggle Nav Slide
     #

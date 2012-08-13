@@ -48,9 +48,11 @@
         $li = $a.parent();
         this.$sub_el.find('a').removeClass();
         $a.addClass('on');
-        return this.options.router.navigate($a.attr('href'), {
+        this.options.router.navigate($a.attr('href'), {
           trigger: true
         });
+        this.hide_nav();
+        return this.toggle_nav_slide();
       },
       toggle_nav_slide: function() {
         var close_height;
