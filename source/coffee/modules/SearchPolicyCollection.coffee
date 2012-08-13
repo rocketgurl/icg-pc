@@ -39,8 +39,8 @@ define [
     # Build and display pagination control information
     render_pagination : ->
       @calculate_metadata()
-      @container.$el.find('.pagination-a span').append(@pagination.items)
-      @container.$el.find('.pagination-b select').append(@calculate_pagejumps())      
+      @container.$el.find('.pagination-a span').html("Items #{@pagination.items}")
+      @container.$el.find('.pagination-b select').html(@calculate_pagejumps())      
 
     # Calculate the page jump option tags
     calculate_pagejumps : ->

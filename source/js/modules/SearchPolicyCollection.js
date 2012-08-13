@@ -31,8 +31,8 @@
       },
       render_pagination: function() {
         this.calculate_metadata();
-        this.container.$el.find('.pagination-a span').append(this.pagination.items);
-        return this.container.$el.find('.pagination-b select').append(this.calculate_pagejumps());
+        this.container.$el.find('.pagination-a span').html("Items " + this.pagination.items);
+        return this.container.$el.find('.pagination-b select').html(this.calculate_pagejumps());
       },
       calculate_pagejumps: function() {
         var page, pages, selects, _i;
