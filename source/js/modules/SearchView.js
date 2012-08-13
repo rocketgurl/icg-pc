@@ -7,6 +7,8 @@
       menu_cache: {},
       events: {
         "submit .filters form": "search",
+        "change .search-pagination-perpage": "search",
+        "change .search-pagination-page": "search",
         "click .search-control-context > a": function(e) {
           return this.control_context(this.process_event(e));
         },
@@ -25,6 +27,7 @@
         "submit .search-menu-save form": function(e) {
           return this.save_search(e);
         },
+        "click .search-sort-link": "sort_by",
         "click .icon-remove-circle": function(e) {
           this.clear_menus();
           return this.controls.removeClass('active');
@@ -61,15 +64,26 @@
         }
       },
       search: function(e) {
-        var search_val;
         if (e != null) {
           e.preventDefault();
         }
-        search_val = this.$el.find('input[type=search]').val();
-        return this.fetch({
-          q: search_val,
-          perpage: 15
-        });
+        return this.fetch(this.get_search_options());
+      },
+      get_search_options: function(options) {
+        var page, perpage, query, state, _ref, _ref1, _ref2;
+        perpage = (_ref = this.$el.find('.search-pagination-perpage').val()) != null ? _ref : 15;
+        page = (_ref1 = this.$el.find('.search-pagination-page').val()) != null ? _ref1 : 1;
+        state = (_ref2 = this.$el.find('.query-type').val()) != null ? _ref2 : '';
+        query = {
+          q: this.$el.find('input[type=search]').val(),
+          perpage: perpage,
+          page: page,
+          state: state
+        };
+        if (options != null) {
+          query = _.extend(options, query);
+        }
+        return query;
       },
       fetch: function(query) {
         var _this = this;
@@ -173,8 +187,12 @@
         return this.controller.Router.append_module('search', params);
       },
       control_refresh: function(e) {
+        var options;
         e.preventDefault();
-        return this.search();
+        options = {
+          'cache-control': 'no-cache'
+        };
+        return this.fetch(this.get_search_options(options));
       },
       save_search: function(e) {
         var val;
@@ -197,6 +215,21 @@
             this.loader = null;
           }
           return $("#search-loader-" + this.cid).hide();
+        }
+      },
+      sort_by: function(e) {
+        var $el, options;
+        e.preventDefault();
+        $el = $(e.currentTarget);
+        options = {
+          'sort': $el.attr('href'),
+          'sort-dir': $el.data('dir')
+        };
+        this.fetch(this.get_search_options(options));
+        if ($el.data('dir') === 'asc') {
+          return $el.data('dir', 'desc');
+        } else {
+          return $el.data('dir', 'asc');
         }
       }
     });

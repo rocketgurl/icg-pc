@@ -10,9 +10,11 @@
 <div id="search-filters-{{cid}}" class="module-search filters">
 	<form action="search_submit" method="get" accept-charset="utf-8">
 		<label for="search-query">Search:</label>
-<!-- 		<select name="">
-			<option value="">Quotes &amp; policies</option>
-		</select> -->
+		<select name="query-type" class="query-type">
+			<option value="all">Quotes &amp; policies</option>
+			<option value="quote">Quotes only</option>
+			<option value="policy">Policies only</option>
+		</select>
 		<input type="search" name="search-query" value="" placeholder="Enter search terms" />
 		<a href="" class="search-control-refresh"><i class="icon-refresh"></i> Refresh results</a>
 	</form>
@@ -23,13 +25,13 @@
 <table class="module-search">
 	<thead>
 		<tr>
-			<th><a href="quote-number">Quote #</a></th>
-			<th><a href="policy-number">Policy #</a></th>
+			<th><a class="search-sort-link" href="quote-number" data-dir="asc">Quote #</a></th>
+			<th><a class="search-sort-link" href="policy-number" data-dir="asc">Policy #</a></th>
 			<th>Form</th>
-			<th><a href="last-name">Name</a></th>
+			<th><a class="search-sort-link" href="last-name" data-dir="asc">Name</a></th>
 			<th>Address</th>
-			<th><a href="status">Status</a></th>
-			<th><a href="effective-date">Effective</a></th>
+			<th><a class="search-sort-link" href="status" data-dir="asc">Status</a></th>
+			<th><a class="search-sort-link" href="effective-date" data-dir="asc">Effective</a></th>
 			<th>Renewal UW Status</th>
 		</tr>
 	</thead>
@@ -42,12 +44,12 @@
 		</div>
 		<div class="pagination-b">
 			<label for="search-pagination-page-{{cid}}">Jump to page:</label>
-			<select name="search-pagination-page" id="search-pagination-page-{{cid}}">
+			<select class="search-pagination-page" name="search-pagination-page" id="search-pagination-page-{{cid}}">
 			</select>
 		</div>
 		<div class="pagination-c">
 			<label for="search-pagination-perpage-{{cid}}">Result count:</label>
-			<select name="search-pagination-perpage" id="search-pagination-perpage-{{cid}}">
+			<select class="search-pagination-perpage" name="search-pagination-perpage" id="search-pagination-perpage-{{cid}}">
 				<option value="15" selected>15 per page</option>
 				<option value="25">25 per page</option>
 				<option value="50">50 per page</option>

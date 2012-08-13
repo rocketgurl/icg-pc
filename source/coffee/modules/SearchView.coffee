@@ -15,6 +15,8 @@ define [
 
     events :
       "submit .filters form"              : "search"
+      "change .search-pagination-perpage" : "search"
+      "change .search-pagination-page"    : "search"
       
       "click .search-control-context > a" : (e) -> @control_context(@process_event e)
       "click .search-control-save > a"    : (e) -> @control_save(@process_event e)
@@ -22,6 +24,8 @@ define [
       "click .search-control-pin > a"     : (e) -> @control_pin(e)
       "click .search-control-refresh"     : (e) -> @control_refresh(e)
       "submit .search-menu-save form"     : (e) -> @save_search(e)
+
+      "click .search-sort-link" : "sort_by"
 
       "click .icon-remove-circle" : (e) -> 
         @clear_menus()
@@ -65,12 +69,28 @@ define [
     search : (e) ->
       if e?
         e.preventDefault()
-      search_val = @$el.find('input[type=search]').val()
-      @fetch(
-          q       : search_val
-          perpage : 15
-        )
+      @fetch(@get_search_options())
     
+    # Assemble search options from various inputs and explicitly
+    # passed values (options) to return as an object for @fetch
+    #
+    get_search_options : (options) ->
+      # Handle defaults
+      perpage = @$el.find('.search-pagination-perpage').val() ? 15
+      page    = @$el.find('.search-pagination-page').val() ? 1
+      state   = @$el.find('.query-type').val() ? ''
+
+      query =
+        q       : @$el.find('input[type=search]').val()
+        perpage : perpage
+        page    : page
+        state   : state
+
+      if options?
+        query = _.extend options, query
+
+      query
+
 
     # Tell the collection to fetch some policies and
     # handle UI issues, etc.
@@ -88,7 +108,6 @@ define [
           'X-Authorization' : "Basic #{@controller.user.get('digest')}"
           'Authorization'   : "Basic #{@controller.user.get('digest')}"
         success : (collection, resp) =>
-
           #check for empty requests
           if collection.models.length == 0
             @loader_ui(false)
@@ -183,7 +202,9 @@ define [
 
     control_refresh : (e) -> 
       e.preventDefault()
-      @search()
+      options =
+        'cache-control' : 'no-cache'
+      @fetch(@get_search_options(options))
 
     save_search : (e) ->
       e.preventDefault()
@@ -205,4 +226,17 @@ define [
           @loader = null
         $("#search-loader-#{@cid}").hide()
 
+    sort_by : (e) ->
+      e.preventDefault()
+      $el = $(e.currentTarget)
+      
+      options =
+        'sort'     : $el.attr('href')
+        'sort-dir' : $el.data('dir')
+      @fetch(@get_search_options(options))
+
+      if $el.data('dir') is 'asc'
+        $el.data('dir', 'desc')
+      else
+        $el.data('dir', 'asc')
 

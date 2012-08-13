@@ -39,7 +39,11 @@
         pages = Math.round(+this.pagination.total_items / +this.pagination.per_page);
         selects = "";
         for (page = _i = 1; 1 <= pages ? _i <= pages : _i >= pages; page = 1 <= pages ? ++_i : --_i) {
-          selects += "<option value=\"" + page + "\">" + page + "</option>";
+          if (page === this.pagination.page) {
+            selects += "<option value=\"" + page + "\" selected>" + page + "</option>";
+          } else {
+            selects += "<option value=\"" + page + "\">" + page + "</option>";
+          }
         }
         return selects;
       },

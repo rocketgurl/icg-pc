@@ -22,7 +22,7 @@ define [
 
     # We need to reset the table so that future searches
     # won't append tables to the existing result set.
-    render : () ->
+    render : ->
       @render_pagination()
       @container.$el.find('table.module-search tbody').html('')
       @views = []
@@ -47,9 +47,14 @@ define [
       pages = Math.round(+@pagination.total_items / +@pagination.per_page)
       selects = ""
       for page in [1..pages]
-        selects += """
-          <option value="#{page}">#{page}</option>
-        """
+        if page is @pagination.page
+          selects += """
+            <option value="#{page}" selected>#{page}</option>
+          """
+        else
+          selects += """
+            <option value="#{page}">#{page}</option>
+          """
       selects
 
     # Build the items count string for pagination
