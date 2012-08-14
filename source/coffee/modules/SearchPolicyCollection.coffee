@@ -47,14 +47,13 @@ define [
       pages = Math.round(+@pagination.total_items / +@pagination.per_page)
       selects = ""
       for page in [1..pages]
+        selected = ''
         if page is @pagination.page
-          selects += """
-            <option value="#{page}" selected>#{page}</option>
+          selected = ' selected'
+        selects += """
+            <option value="#{page}"#{selected}>#{page}</option>
           """
-        else
-          selects += """
-            <option value="#{page}">#{page}</option>
-          """
+          
       selects
 
     # Build the items count string for pagination

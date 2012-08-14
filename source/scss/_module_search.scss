@@ -60,6 +60,9 @@ header.module-search {
 
 .module-search.filters {
 	margin: 0 0 20px 0;
+	form: {
+		display: block;
+	}
 	label {
 		font-weight: bold;
 		color: $darkblue;

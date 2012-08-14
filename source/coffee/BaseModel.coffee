@@ -49,8 +49,8 @@ define [
       fetch_state =
         text : xhr.getResponseHeader 'X-True-Statustext'
         code : xhr.getResponseHeader 'X-True-Statuscode'
-      @set 'fetch_state' : fetch_state
-
+      @set 'fetch_state', fetch_state
+      @
 
     # Explicitly set sync for this model to Backbone default
     sync : @backboneSync

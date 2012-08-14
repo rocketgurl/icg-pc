@@ -28,9 +28,8 @@
           text: xhr.getResponseHeader('X-True-Statustext'),
           code: xhr.getResponseHeader('X-True-Statuscode')
         };
-        return this.set({
-          'fetch_state': fetch_state
-        });
+        this.set('fetch_state', fetch_state);
+        return this;
       },
       sync: this.backboneSync,
       switch_sync: function(sync_adapater) {

@@ -39,11 +39,12 @@
         this.messenger = new Messenger(this.policy_view, this.policy_view.cid);
         return this.policy_model.fetch({
           headers: {
-            'X-Authorization': "Basic " + (this.view.options.controller.user.get('digest')),
-            'Authorization': "Basic " + (this.view.options.controller.user.get('digest'))
+            'Authorization': "Basic " + (this.view.options.controller.user.get('digest')),
+            'X-Authorization': "Basic " + (this.view.options.controller.user.get('digest'))
           },
           success: function(model, resp) {
             model.response_state();
+            console.log(model.get('fetch_state').code);
             switch (model.get('fetch_state').code) {
               case "200":
                 model.get_pxServerIndex();
@@ -53,15 +54,16 @@
                 _this.render({
                   flash_only: true
                 });
-                return amplify.publish(_this.policy_view.cid, 'warning', "" + (model.get('fetch_state').text) + " - " + ($(resp).find('p').html()) + " Sorry.");
+                return amplify.publish(_this.policy_view.cid, 'warning', "" + (model.get('fetch_state').text) + " - " + ($(resp).find('p').text()) + " Sorry.");
             }
           },
           error: function(model, resp) {
+            console.log('errz!');
             _this.render({
               flash_only: true
             });
             _this.view.remove_loader();
-            return amplify.publish(_this.policy_view.cid, 'warning', "" + ($(resp).find('p').html()) + " Sorry.");
+            return amplify.publish(_this.policy_view.cid, 'warning', "" + ($(resp).find('p').text()) + " Sorry.");
           }
         });
       };

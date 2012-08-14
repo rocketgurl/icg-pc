@@ -788,6 +788,7 @@ header.module-search i.icon-caret-down {
 
 .module-search.filters {
   margin: 0 0 20px 0;
+  form-display: block;
 }
 .module-search.filters label {
   font-weight: bold;

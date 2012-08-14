@@ -35,15 +35,15 @@
         return this.container.$el.find('.pagination-b select').html(this.calculate_pagejumps());
       },
       calculate_pagejumps: function() {
-        var page, pages, selects, _i;
+        var page, pages, selected, selects, _i;
         pages = Math.round(+this.pagination.total_items / +this.pagination.per_page);
         selects = "";
         for (page = _i = 1; 1 <= pages ? _i <= pages : _i >= pages; page = 1 <= pages ? ++_i : --_i) {
+          selected = '';
           if (page === this.pagination.page) {
-            selects += "<option value=\"" + page + "\" selected>" + page + "</option>";
-          } else {
-            selects += "<option value=\"" + page + "\">" + page + "</option>";
+            selected = ' selected';
           }
+          selects += "<option value=\"" + page + "\"" + selected + ">" + page + "</option>";
         }
         return selects;
       },

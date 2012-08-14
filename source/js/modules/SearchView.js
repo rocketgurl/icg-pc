@@ -84,18 +84,23 @@
         }
       },
       get_search_options: function(options) {
-        var page, perpage, query, state, _ref, _ref1, _ref2;
+        var key, page, perpage, q, query, state, value, _ref, _ref1, _ref2, _ref3;
         perpage = (_ref = this.$el.find('.search-pagination-perpage').val()) != null ? _ref : 15;
         page = (_ref1 = this.$el.find('.search-pagination-page').val()) != null ? _ref1 : 1;
         state = (_ref2 = this.$el.find('.query-type').val()) != null ? _ref2 : '';
+        q = (_ref3 = this.$el.find('input[type=search]').val()) != null ? _ref3 : '';
         query = {
-          q: this.$el.find('input[type=search]').val(),
+          q: q,
           perpage: perpage,
           page: page,
           state: state
         };
-        if (options != null) {
+        if (options === !void 0 && !null) {
           query = _.extend(query, options);
+        }
+        for (key in options) {
+          value = options[key];
+          this.params[key] = value;
         }
         return query;
       },

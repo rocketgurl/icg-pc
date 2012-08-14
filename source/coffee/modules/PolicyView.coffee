@@ -66,7 +66,10 @@ define [
     resize_iframe : (iframe, offset) ->
       offset = offset || 0
       iframe_height = Math.floor((($(window).height() - (220 + offset))/$(window).height())*100) + "%"
-      @iframe.css('min-height', iframe_height)
+      @iframe.css(
+        'min-height' : iframe_height
+        'height'     : $(window).height() - (220 + offset)
+        )
 
     # Load Flex Policy Summary
     show_overview : ->

@@ -50,7 +50,10 @@
         var iframe_height;
         offset = offset || 0;
         iframe_height = Math.floor((($(window).height() - (220 + offset)) / $(window).height()) * 100) + "%";
-        return this.iframe.css('min-height', iframe_height);
+        return this.iframe.css({
+          'min-height': iframe_height,
+          'height': $(window).height() - (220 + offset)
+        });
       },
       show_overview: function() {
         this.iframe.attr('src', 'http://fc06.deviantart.net/fs46/f/2009/169/f/4/Unicorn_Pukes_Rainbow_by_Angel35W.jpg');

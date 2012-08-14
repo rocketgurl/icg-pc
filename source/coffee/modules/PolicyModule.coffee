@@ -50,22 +50,24 @@ define [
 
       @policy_model.fetch({
         headers :
-          'X-Authorization' : "Basic #{@view.options.controller.user.get('digest')}"
           'Authorization'   : "Basic #{@view.options.controller.user.get('digest')}"
+          'X-Authorization' : "Basic #{@view.options.controller.user.get('digest')}"
         success : (model, resp) =>
           model.response_state()
+          console.log model.get('fetch_state').code
           switch model.get('fetch_state').code
             when "200"
               model.get_pxServerIndex()
               @render()
             else
               @view.remove_loader()
-              @render({ flash_only : true })              
-              amplify.publish(@policy_view.cid, 'warning', "#{model.get('fetch_state').text} - #{$(resp).find('p').html()} Sorry.")
+              @render({ flash_only : true })
+              amplify.publish(@policy_view.cid, 'warning', "#{model.get('fetch_state').text} - #{$(resp).find('p').text()} Sorry.")
        error : (model, resp) =>
+          console.log 'errz!'
           @render({ flash_only : true })
           @view.remove_loader()
-          amplify.publish(@policy_view.cid, 'warning', "#{$(resp).find('p').html()} Sorry.")
+          amplify.publish(@policy_view.cid, 'warning', "#{$(resp).find('p').text()} Sorry.")
       })
 
     # Do whatever rendering animation needs to happen here

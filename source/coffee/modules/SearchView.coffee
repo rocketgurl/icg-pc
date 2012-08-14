@@ -71,7 +71,7 @@ define [
         e.preventDefault()
       @fetch(@get_search_options())
     
-
+    # Set different form fields to the updated values based on @params
     set_search_options : (options) ->
       if _.has(options, 'query')
         @$el.find('input[type=search]').val(options.query)
@@ -92,15 +92,23 @@ define [
       perpage = @$el.find('.search-pagination-perpage').val() ? 15
       page    = @$el.find('.search-pagination-page').val() ? 1
       state   = @$el.find('.query-type').val() ? ''
+      q       = @$el.find('input[type=search]').val() ? ''
 
       query =
-        q       : @$el.find('input[type=search]').val()
+        q       : q
         perpage : perpage
         page    : page
         state   : state
 
-      if options?
+      # We have to be explicit to save IE from itself
+      if options is not undefined and not null
         query = _.extend query, options
+
+      # Make sure we keep track of all params
+      #
+      # !! Normally we would just use _.extend @params, query
+      # but IE8 shits itself if you do that.
+      @params[key] = value for key, value of options
 
       query
 
@@ -110,7 +118,6 @@ define [
     fetch : (query) ->
       # Drop the loading UI in place
       @loader_ui(true)
-
       @policies.reset() # wipe out the collection models
 
       # Set Basic Auth headers to request and attempt to

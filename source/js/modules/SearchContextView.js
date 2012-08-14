@@ -20,13 +20,9 @@
         return this.target.append(this.$el);
       },
       launch_search: function(e) {
-        var href, params;
+        var params;
         e.preventDefault();
-        href = Helpers.unserialize($(e.currentTarget).attr('href'));
-        params = {
-          url: href.url,
-          query: href.query
-        };
+        params = Helpers.unserialize($(e.currentTarget).attr('href'));
         this.options.controller.launch_module('search', params);
         return this.options.controller.Router.append_module('search', params);
       },

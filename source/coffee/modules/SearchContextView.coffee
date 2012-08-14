@@ -25,10 +25,10 @@ define [
 
     launch_search : (e) ->
       e.preventDefault()
-      href = Helpers.unserialize $(e.currentTarget).attr('href')
-      params = 
-        url   : href.url
-        query : href.query
+      params = Helpers.unserialize $(e.currentTarget).attr('href')
+      # params = 
+      #   url   : href.url
+      #   query : href.query
       @options.controller.launch_module 'search', params
       @options.controller.Router.append_module 'search', params
 
