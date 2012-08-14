@@ -54,7 +54,6 @@ define [
           'X-Authorization' : "Basic #{@view.options.controller.user.get('digest')}"
         success : (model, resp) =>
           model.response_state()
-          console.log model.get('fetch_state').code
           switch model.get('fetch_state').code
             when "200"
               model.get_pxServerIndex()
@@ -64,7 +63,6 @@ define [
               @render({ flash_only : true })
               amplify.publish(@policy_view.cid, 'warning', "#{model.get('fetch_state').text} - #{$(resp).find('p').text()} Sorry.")
        error : (model, resp) =>
-          console.log 'errz!'
           @render({ flash_only : true })
           @view.remove_loader()
           amplify.publish(@policy_view.cid, 'warning', "#{$(resp).find('p').text()} Sorry.")

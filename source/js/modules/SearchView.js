@@ -225,12 +225,14 @@
       },
       loader_ui: function(bool) {
         if (bool && !(this.loader != null)) {
-          this.loader = Helpers.loader("search-spinner-" + this.cid, 100, '#ffffff');
-          this.loader.setDensity(70);
-          this.loader.setFPS(48);
+          if ($('html').hasClass('lt-ie9') === false) {
+            this.loader = Helpers.loader("search-spinner-" + this.cid, 100, '#ffffff');
+            this.loader.setDensity(70);
+            this.loader.setFPS(48);
+          }
           return $("#search-loader-" + this.cid).show();
         } else {
-          if (this.loader != null) {
+          if ((this.loader != null) && $('html').hasClass('lt-ie9') === false) {
             this.loader.kill();
             this.loader = null;
           }

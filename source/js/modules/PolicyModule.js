@@ -44,7 +44,6 @@
           },
           success: function(model, resp) {
             model.response_state();
-            console.log(model.get('fetch_state').code);
             switch (model.get('fetch_state').code) {
               case "200":
                 model.get_pxServerIndex();
@@ -58,7 +57,6 @@
             }
           },
           error: function(model, resp) {
-            console.log('errz!');
             _this.render({
               flash_only: true
             });

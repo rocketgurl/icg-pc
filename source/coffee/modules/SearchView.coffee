@@ -238,12 +238,13 @@ define [
 
     loader_ui : (bool) ->
       if bool and !@loader?
-        @loader = Helpers.loader("search-spinner-#{@cid}", 100, '#ffffff')
-        @loader.setDensity(70)
-        @loader.setFPS(48)
+        if $('html').hasClass('lt-ie9') is false
+          @loader = Helpers.loader("search-spinner-#{@cid}", 100, '#ffffff')
+          @loader.setDensity(70)
+          @loader.setFPS(48)
         $("#search-loader-#{@cid}").show()
       else
-        if @loader?
+        if @loader? and $('html').hasClass('lt-ie9') is false
           @loader.kill()
           @loader = null
         $("#search-loader-#{@cid}").hide()
