@@ -35,6 +35,7 @@ define [
             model     : model
             container : @container
           )
+      @force_stripes() # Tell IE8 to get s*****d.
 
     # Build and display pagination control information
     render_pagination : ->
@@ -62,5 +63,13 @@ define [
       start = finish - +@pagination.per_page
       start = 1 if start is 0
       @pagination.items = "#{start} - #{finish} of #{@pagination.total_items}"
+
+    # If you happen to be IE8 then we have to brute force striped
+    # table rows, because you're lame.
+    force_stripes : ->
+      if $('html').hasClass('lt-ie9')
+        @container.$el.find('table.module-search tbody tr').each (index, el) ->
+          if index % 2 is 1
+            $(el).find('td').css('background', '#ffffff')
 
   SearchPolicyCollection

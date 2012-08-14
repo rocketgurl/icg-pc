@@ -22,12 +22,13 @@
       },
       populate: function() {
         var _this = this;
-        return this.each(function(model) {
+        this.each(function(model) {
           return _this.views.push(new SearchPolicyView({
             model: model,
             container: _this.container
           }));
         });
+        return this.force_stripes();
       },
       render_pagination: function() {
         this.calculate_metadata();
@@ -55,6 +56,15 @@
           start = 1;
         }
         return this.pagination.items = "" + start + " - " + finish + " of " + this.pagination.total_items;
+      },
+      force_stripes: function() {
+        if ($('html').hasClass('lt-ie9')) {
+          return this.container.$el.find('table.module-search tbody tr').each(function(index, el) {
+            if (index % 2 === 1) {
+              return $(el).find('td').css('background', '#ffffff');
+            }
+          });
+        }
       }
     });
     return SearchPolicyCollection;
