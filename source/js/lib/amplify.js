@@ -24,7 +24,7 @@
 		});
 	} else {
 		// Browser globals
-		factory(root.jQuery, root, doc);
+		factory(root.jQuery, JSON, root, doc);
 	}
 }(this, document, function($, JSON, global, document, undefined) {
 

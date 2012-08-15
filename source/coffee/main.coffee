@@ -29,9 +29,11 @@ require
 
 require [
   "jquery",
+  "underscore",
+  "json",
   "cookie",
   "WorkspaceController",
   "domReady!"
-], ($, cookie, WorkspaceController, doc) ->
+], ($, _, JSON, cookie, WorkspaceController, doc) ->
   $ ->
     WorkspaceController.init()

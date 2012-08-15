@@ -36,7 +36,7 @@
     }
   });
 
-  require(["jquery", "cookie", "WorkspaceController", "domReady!"], function($, cookie, WorkspaceController, doc) {
+  require(["jquery", "underscore", "json", "cookie", "WorkspaceController", "domReady!"], function($, _, JSON, cookie, WorkspaceController, doc) {
     return $(function() {
       return WorkspaceController.init();
     });

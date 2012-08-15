@@ -12,7 +12,9 @@
       cookie     : 'lib/jquery.cookie',
       xml2json   : 'lib/jquery.xml2json',
       text       : 'lib/text',
-      domReady   : 'lib/domReady'
+      domReady   : 'lib/domReady',
+      json       : 'lib/json2',
+      loader     : 'lib/heartcode-canvasloader-min'
     },
     modules: [
         {
@@ -24,7 +26,8 @@
                 "jquery",
                 "backbone",
                 "mustache",
-                "amplify"
+                "amplify",
+                "underscore"
             ]
         },
         {
@@ -33,7 +36,18 @@
                 "jquery",
                 "backbone",
                 "mustache",
-                "amplify"
+                "amplify",
+                "underscore"
+            ]
+        },
+        {
+            name : "modules/TestModule",
+            exclude: [
+                "jquery",
+                "backbone",
+                "mustache",
+                "amplify",
+                "underscore"
             ]
         }
     ]
