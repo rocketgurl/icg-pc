@@ -59,6 +59,7 @@ define [
     services              : ics360.services
     global_flash          : new Messenger($('#canvas'), 'controller')
     SEARCH                : {}
+    fail_count            : 0
 
     # Simple logger
     logger : (msg) ->
@@ -657,7 +658,14 @@ define [
         # This is voodoo. Basically $.cookie force chokes itself
         # on occasion and the only save I can figure out is to
         # completely refresh the browser.
-        window.location.href = window.location.pathname
+        script = $("<script src=\"/js/lib/jquery.cookie.js\"></script>")
+        $('head').append(script)
+        @callback_delay 400, =>
+          if @fail_count < 3
+            @fail_count++
+            @init()
+          else
+            throw new Error('Could not load jQuery Cookie Plugin - please reload page.')
 
   _.extend WorkspaceController, Backbone.Events
 

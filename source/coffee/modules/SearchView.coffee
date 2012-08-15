@@ -43,9 +43,11 @@ define [
       # @policies.url = '/mocks/search_response_v2.json'
       @policies.container = @
 
+      @params = @module.app.params ? {}
+
       # Load any passed parameters into view
-      if @module.app.params?
-        @params = @module.app.params
+      # if @module.app.params?
+      #   @params = @module.app.params
 
       @menu_cache[@cid] = {} # We need to namespace the cache with CID
 
@@ -61,7 +63,7 @@ define [
       @messenger = new Messenger(@options.view, @cid)
 
       # If we have params we need to go ahead and do the search query
-      if @params?
+      if @params? and @params.q?
         @set_search_options @params
         @fetch(@get_search_options(@params))
 
@@ -89,29 +91,25 @@ define [
     # passed values (options) to return as an object for @fetch
     #
     get_search_options : (options) ->
-      perpage = @$el.find('.search-pagination-perpage').val() ? 15
-      page    = @$el.find('.search-pagination-page').val() ? 1
-      state   = @$el.find('.query-type').val() ? ''
-      q       = @$el.find('input[type=search]').val() ? ''
+      perpage     = @$el.find('.search-pagination-perpage').val() ? 15
+      page        = @$el.find('.search-pagination-page').val() ? 1
+      policystate = @$el.find('.query-type').val() ? ''
+      q           = @$el.find('input[type=search]').val() ? ''
 
       query =
-        q       : q
-        perpage : perpage
-        page    : page
-        state   : state
+        q           : q
+        perpage     : perpage
+        page        : page
+        policystate : policystate
 
       # We have to be explicit to save IE from itself
-      if options is not undefined and not null
-        query = _.extend query, options
+      if options?
+        query[key] = value for key, value of options
 
       # Make sure we keep track of all params
-      #
-      # !! Normally we would just use _.extend @params, query
-      # but IE8 shits itself if you do that.
-      @params[key] = value for key, value of options
+      @params[key] = value for key, value of query
 
       query
-
 
     # Tell the collection to fetch some policies and
     # handle UI issues, etc.
@@ -255,7 +253,7 @@ define [
       
       options =
         'sort'     : $el.attr('href')
-        'sort-dir' : $el.data('dir')
+        'sortdir' : $el.data('dir')
       @fetch(@get_search_options(options))
 
       if $el.data('dir') is 'asc'

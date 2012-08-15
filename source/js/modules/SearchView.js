@@ -34,6 +34,7 @@
         }
       },
       initialize: function(options) {
+        var _ref;
         this.el = options.view.el;
         this.$el = options.view.$el;
         this.controller = options.view.options.controller;
@@ -41,9 +42,7 @@
         this.policies = new SearchPolicyCollection();
         this.policies.url = this.controller.services.pxcentral + 'policies';
         this.policies.container = this;
-        if (this.module.app.params != null) {
-          this.params = this.module.app.params;
-        }
+        this.params = (_ref = this.module.app.params) != null ? _ref : {};
         return this.menu_cache[this.cid] = {};
       },
       render: function() {
@@ -58,7 +57,7 @@
         this.$el.html(html);
         this.controls = this.$el.find('.search-controls');
         this.messenger = new Messenger(this.options.view, this.cid);
-        if (this.params != null) {
+        if ((this.params != null) && (this.params.q != null)) {
           this.set_search_options(this.params);
           return this.fetch(this.get_search_options(this.params));
         }
@@ -84,22 +83,25 @@
         }
       },
       get_search_options: function(options) {
-        var key, page, perpage, q, query, state, value, _ref, _ref1, _ref2, _ref3;
+        var key, page, perpage, policystate, q, query, value, _ref, _ref1, _ref2, _ref3;
         perpage = (_ref = this.$el.find('.search-pagination-perpage').val()) != null ? _ref : 15;
         page = (_ref1 = this.$el.find('.search-pagination-page').val()) != null ? _ref1 : 1;
-        state = (_ref2 = this.$el.find('.query-type').val()) != null ? _ref2 : '';
+        policystate = (_ref2 = this.$el.find('.query-type').val()) != null ? _ref2 : '';
         q = (_ref3 = this.$el.find('input[type=search]').val()) != null ? _ref3 : '';
         query = {
           q: q,
           perpage: perpage,
           page: page,
-          state: state
+          policystate: policystate
         };
-        if (options === !void 0 && !null) {
-          query = _.extend(query, options);
+        if (options != null) {
+          for (key in options) {
+            value = options[key];
+            query[key] = value;
+          }
         }
-        for (key in options) {
-          value = options[key];
+        for (key in query) {
+          value = query[key];
           this.params[key] = value;
         }
         return query;
@@ -245,7 +247,7 @@
         $el = $(e.currentTarget);
         options = {
           'sort': $el.attr('href'),
-          'sort-dir': $el.data('dir')
+          'sortdir': $el.data('dir')
         };
         this.fetch(this.get_search_options(options));
         if ($el.data('dir') === 'asc') {

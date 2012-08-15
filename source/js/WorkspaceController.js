@@ -30,6 +30,7 @@
       services: ics360.services,
       global_flash: new Messenger($('#canvas'), 'controller'),
       SEARCH: {},
+      fail_count: 0,
       logger: function(msg) {
         return this.Amplify.publish('log', msg);
       },
@@ -502,13 +503,24 @@
         }
       },
       init: function() {
+        var script,
+          _this = this;
         if ($.cookie != null) {
           this.Router.controller = this;
           Backbone.history.start();
           this.check_cookie_identity();
           return this.attach_tab_handlers();
         } else {
-          return window.location.href = window.location.pathname;
+          script = $("<script src=\"/js/lib/jquery.cookie.js\"></script>");
+          $('head').append(script);
+          return this.callback_delay(400, function() {
+            if (_this.fail_count < 3) {
+              _this.fail_count++;
+              return _this.init();
+            } else {
+              throw new Error('Could not load jQuery Cookie Plugin - please reload page.');
+            }
+          });
         }
       }
     };
