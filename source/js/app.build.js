@@ -2,6 +2,7 @@
     appDir: "../",
     baseUrl: "js",
     dir: "../../build",
+    mainConfigFile: 'main.js',
     paths : {
       jquery     : 'lib/jquery-1.7.2.min',
       underscore : 'lib/underscore-min',
@@ -14,7 +15,7 @@
       text       : 'lib/text',
       domReady   : 'lib/domReady',
       json       : 'lib/json2',
-      loader     : 'lib/heartcode-canvasloader-min'
+      loader     : 'lib/heartcode-canvasloader'
     },
     modules: [
         {

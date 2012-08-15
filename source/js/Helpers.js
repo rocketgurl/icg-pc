@@ -43,7 +43,7 @@
       },
       loader: function(id, diameter, color) {
         var cl;
-        cl = new CanvasLoader(id);
+        cl = new window.CanvasLoader(id);
         cl.setColor(color);
         cl.setShape('oval');
         cl.setDiameter(diameter);

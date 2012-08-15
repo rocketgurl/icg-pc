@@ -2,7 +2,6 @@ define [
   'jquery', 
   'underscore',
   'backbone',
-  'json',
   'UserModel',
   'ConfigModel',
   'WorkspaceStateModel',
@@ -15,11 +14,10 @@ define [
   'MenuHelper',
   'AppRules',
   'Helpers',
-  'amplify',
-  'cookie',
   'xml2json',
-  'modules/SearchContextCollection'
-], ($, _, Backbone, JSON, UserModel, ConfigModel, WorkspaceStateModel, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter, Messenger, Base64, MenuHelper, AppRules, Helpers, amplify, jcookie, xml2json, SearchContextCollection) ->
+  'modules/SearchContextCollection',
+  'cookie'
+], ($, _, Backbone, UserModel, ConfigModel, WorkspaceStateModel, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter, Messenger, Base64, MenuHelper, AppRules, Helpers, xml2json, SearchContextCollection, jcookie) ->
 
   #### Global ENV Setting
   #

@@ -2,9 +2,8 @@ define [
   'jquery', 
   'underscore',
   'backbone',
-  'mustache',
-  'amplify'
-], ($, _, Backbone, Mustache, amplify) ->
+  'mustache'
+], ($, _, Backbone, Mustache) ->
 
   class TestModule
 

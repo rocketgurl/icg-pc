@@ -16,18 +16,6 @@
  * 
  * http://amplifyjs.com
  */
-(function(root, doc, factory) {
-	if (typeof define === "function" && define.amd) {
-		// AMD. Register as an anonymous module.
-		define(["jquery", "json"], function($, JSON) {
-			return factory($, JSON, root, doc);
-		});
-	} else {
-		// Browser globals
-		factory(root.jQuery, JSON, root, doc);
-	}
-}(this, document, function($, JSON, global, document, undefined) {
-
 (function( global, undefined ) {
 
 var slice = [].slice,
@@ -797,8 +785,4 @@ amplify.subscribe( "request.before.ajax", function( resource, settings, ajaxSett
 	};
 });
 
-}( amplify, jQuery, JSON ) );
-
-	return amplify;
-}));
-
+}( amplify, jQuery ) );

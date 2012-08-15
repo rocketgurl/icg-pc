@@ -43,7 +43,7 @@ define [
     # Convenience method to create Canvas loader.
     # Returns loader object so it's easy to kill.
     loader : (id, diameter, color) ->
-      cl = new CanvasLoader id
+      cl = new window.CanvasLoader id
       cl.setColor color
       cl.setShape 'oval'
       cl.setDiameter diameter

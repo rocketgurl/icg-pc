@@ -2,10 +2,8 @@ define [
   'jquery', 
   'underscore',
   'backbone',
-  'mustache',
-  'amplify',
-  'json'
-], ($, _, Backbone, Mustache, amplify, JSON) ->
+  'mustache'
+], ($, _, Backbone, Mustache) ->
 
   BaseView = Backbone.View.extend
 

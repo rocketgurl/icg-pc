@@ -1,9 +1,8 @@
 define [
   'jquery', 
   'underscore',
-  'backbone',
-  'amplify'
-], ($, _, Backbone, amplify) ->
+  'backbone'
+], ($, _, Backbone) ->
 
   BaseRouter = Backbone.Router.extend
 

@@ -5,11 +5,13 @@ define [
   'mustache',
   'modules/PolicyView',
   'modules/PolicyModel',
-  'amplify',
-  'Messenger'
-], ($, _, Backbone, Mustache, PolicyView, PolicyModel, amplify, Messenger) ->
+  'Messenger',
+  'loader'
+], ($, _, Backbone, Mustache, PolicyView, PolicyModel, Messenger, CanvasLoader) ->
 
   class PolicyModule
+
+    Amplify : amplify
 
     # Modules need to be able to call into the parent
     # WorkspaceCanvasView to manipulate the canvas area
@@ -61,11 +63,11 @@ define [
             else
               @view.remove_loader()
               @render({ flash_only : true })
-              amplify.publish(@policy_view.cid, 'warning', "#{model.get('fetch_state').text} - #{$(resp).find('p').text()} Sorry.")
+              @Amplify.publish(@policy_view.cid, 'warning', "#{model.get('fetch_state').text} - #{$(resp).find('p').text()} Sorry.")
        error : (model, resp) =>
           @render({ flash_only : true })
           @view.remove_loader()
-          amplify.publish(@policy_view.cid, 'warning', "#{$(resp).find('p').text()} Sorry.")
+          @Amplify.publish(@policy_view.cid, 'warning', "#{$(resp).find('p').text()} Sorry.")
       })
 
     # Do whatever rendering animation needs to happen here

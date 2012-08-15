@@ -16,27 +16,28 @@
       text: 'lib/text',
       domReady: 'lib/domReady',
       json: 'lib/json2',
-      loader: 'lib/heartcode-canvasloader-min'
+      loader: 'lib/heartcode-canvasloader'
     },
     priority: ['jquery'],
     shim: {
-      'cookie': {
-        deps: ['jquery'],
-        exports: 'jQuery.fn.cookie'
-      },
-      'xml2json': ['jquery'],
       'json': {
         deps: ['jquery'],
         exports: 'JSON'
       },
+      'cookie': ['jquery'],
+      'amplify': {
+        deps: ['jquery', 'json'],
+        exports: 'amplify'
+      },
       'loader': {
         deps: ['jquery'],
         exports: 'CanvasLoader'
-      }
+      },
+      'xml2json': ['jquery']
     }
   });
 
-  require(["jquery", "underscore", "json", "cookie", "WorkspaceController", "domReady!"], function($, _, JSON, cookie, WorkspaceController, doc) {
+  require(["jquery", "underscore", "WorkspaceController", "amplify", "loader", "domReady!"], function($, _, WorkspaceController, amplify, CanvasLoader, doc) {
     return $(function() {
       return WorkspaceController.init();
     });

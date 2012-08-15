@@ -1,8 +1,7 @@
 define [
   'jquery', 
-  'underscore',
-  'amplify'
-], ($, _, amplify) ->
+  'underscore'
+], ($, _) ->
 
   class Messenger
 
