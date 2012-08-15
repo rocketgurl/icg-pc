@@ -15,9 +15,8 @@ define [
   'AppRules',
   'Helpers',
   'xml2json',
-  'modules/SearchContextCollection',
-  'cookie'
-], ($, _, Backbone, UserModel, ConfigModel, WorkspaceStateModel, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter, Messenger, Base64, MenuHelper, AppRules, Helpers, xml2json, SearchContextCollection, jcookie) ->
+  'modules/SearchContextCollection'
+], ($, _, Backbone, UserModel, ConfigModel, WorkspaceStateModel, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter, Messenger, Base64, MenuHelper, AppRules, Helpers, xml2json, SearchContextCollection) ->
 
   #### Global ENV Setting
   #
@@ -319,7 +318,7 @@ define [
           @Amplify.publish 'controller', 'warning', "There was a problem retreiving the configuration file. Please contact support."
         )
 
-    # Simple delay fund if we need it.
+    # Simple delay func if we need it.
     callback_delay : (ms, func) =>
       setTimeout func, ms
 
@@ -649,11 +648,16 @@ define [
 
     # Kick off the show
     init : () ->
-      @Router.controller = @
-      Backbone.history.start()
-      @check_cookie_identity()
-      @attach_tab_handlers()
-
+      if $.cookie?
+        @Router.controller = @
+        Backbone.history.start()
+        @check_cookie_identity()
+        @attach_tab_handlers()
+      else
+        # This is voodoo. Basically $.cookie force chokes itself
+        # on occasion and the only save I can figure out is to
+        # completely refresh the browser.
+        window.location.href = window.location.pathname
 
   _.extend WorkspaceController, Backbone.Events
 

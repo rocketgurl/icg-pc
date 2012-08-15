@@ -8,7 +8,6 @@ require
     amplify    : 'lib/amplify'
     mustache   : 'lib/requirejs.mustache'
     base64     : 'lib/base64'
-    cookie     : 'lib/jquery.cookie'
     xml2json   : 'lib/jquery.xml2json'
     text       : 'lib/text'
     domReady   : 'lib/domReady'
@@ -16,10 +15,10 @@ require
     loader     : 'lib/heartcode-canvasloader'
   priority: ['jquery']
   shim:
+      'jquery' : ['require']
       'json' : 
         deps    : ['jquery']
         exports : 'JSON'
-      'cookie' : ['jquery']
       'amplify' :
         deps    : ['jquery', 'json']
         exports : 'amplify'
