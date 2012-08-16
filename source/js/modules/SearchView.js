@@ -119,7 +119,7 @@
           success: function(collection, resp) {
             if (collection.models.length === 0) {
               _this.loader_ui(false);
-              _this.Amplify.publish(_this.cid, 'notice', "No policies found when searching for " + query.q);
+              _this.Amplify.publish(_this.cid, 'notice', "No policies found when searching for " + query.q, 3000);
               return;
             }
             collection.render();

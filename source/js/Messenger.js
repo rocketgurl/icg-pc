@@ -5,12 +5,9 @@
     var Messenger;
     return Messenger = (function() {
 
-      function Messenger(view, id, DELAY) {
-        var _ref;
+      function Messenger(view, id) {
         this.view = view;
         this.id = id;
-        this.DELAY = DELAY;
-        this.DELAY = (_ref = this.DELAY) != null ? _ref : 5000;
         if (this.view.$el != null) {
           this.flash_container = this.view.$el.find("#flash-message-" + this.id);
         } else {
@@ -21,17 +18,17 @@
 
       Messenger.prototype.register = function(id) {
         var _this = this;
-        amplify.subscribe(id, function(type, msg) {
+        amplify.subscribe(id, function(type, msg, delay) {
           if (type != null) {
             _this.flash_container.addClass(type);
           }
           if (msg != null) {
             msg += ' <i class="icon-remove-sign"></i>';
             _this.flash_container.html(msg).fadeIn('fast');
-            if (_this.DELAY != null) {
+            if (delay != null) {
               return _.delay(function() {
                 return _this.flash_container.html(msg).fadeOut('slow');
-              }, _this.DELAY);
+              }, delay);
             }
           }
         });

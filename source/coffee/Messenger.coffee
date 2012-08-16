@@ -11,12 +11,8 @@ define [
     #
     # @param `view` _Object_ Backbone Parent View
     # @param `id` _String_ CID of view
-    # @param `DELAY` _Number_ Milliseconds to delay flash fadeOut
     #
-    constructor : (@view, @id, @DELAY) ->
-
-      @DELAY = @DELAY ? 5000
-
+    constructor : (@view, @id) ->
       if @view.$el?
         @flash_container = @view.$el.find("#flash-message-#{@id}")
       else
@@ -31,7 +27,7 @@ define [
     # @param `id` _String_ CID of view
     #
     register : (id) ->
-      amplify.subscribe id, (type, msg) =>
+      amplify.subscribe id, (type, msg, delay) =>
         # set className
         if type?
           @flash_container.addClass type
@@ -40,11 +36,12 @@ define [
           @flash_container.html(msg).fadeIn('fast')
 
           # After a short delay remove the flash message
-          # To not do this, set DELAY to null on your instance
-          if @DELAY?
+          if delay?
             _.delay =>
-              @flash_container.html(msg).fadeOut('slow')
-            , @DELAY
+              @flash_container.html(msg).fadeOut('slow')            
+            , delay
+
+    
 
       @flash_container.on 'click', 'i', (e) =>
         e.preventDefault()

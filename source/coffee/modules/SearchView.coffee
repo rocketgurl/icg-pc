@@ -129,7 +129,7 @@ define [
           #check for empty requests
           if collection.models.length == 0
             @loader_ui(false)
-            @Amplify.publish @cid, 'notice', "No policies found when searching for #{query.q}"
+            @Amplify.publish @cid, 'notice', "No policies found when searching for #{query.q}", 3000
             return
 
           collection.render()
