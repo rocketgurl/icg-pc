@@ -77,7 +77,7 @@ define [
     toggle_nav_slide : () ->
       if @$header.height() is @base_height + 30 or @$header.height() is 65
         @$header.animate {
-          height : 330 + @base_height # totally arbitrary height
+          height : 230 + @base_height # totally arbitrary height
           }, 200, 'swing', @show_nav()
       else
         @hide_nav()
