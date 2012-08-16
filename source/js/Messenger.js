@@ -5,9 +5,12 @@
     var Messenger;
     return Messenger = (function() {
 
-      function Messenger(view, id) {
+      function Messenger(view, id, DELAY) {
+        var _ref;
         this.view = view;
         this.id = id;
+        this.DELAY = DELAY;
+        this.DELAY = (_ref = this.DELAY) != null ? _ref : 5000;
         if (this.view.$el != null) {
           this.flash_container = this.view.$el.find("#flash-message-" + this.id);
         } else {
@@ -24,7 +27,12 @@
           }
           if (msg != null) {
             msg += ' <i class="icon-remove-sign"></i>';
-            return _this.flash_container.html(msg).fadeIn('fast');
+            _this.flash_container.html(msg).fadeIn('fast');
+            if (_this.DELAY != null) {
+              return _.delay(function() {
+                return _this.flash_container.html(msg).fadeOut('slow');
+              }, _this.DELAY);
+            }
           }
         });
         return this.flash_container.on('click', 'i', function(e) {

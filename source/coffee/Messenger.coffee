@@ -3,14 +3,20 @@ define [
   'underscore'
 ], ($, _) ->
 
+  #### Common inteface to flash messages using Amplify.js
+  #
   class Messenger
 
     # Create an Amplify sub for a specific view
     #
     # @param `view` _Object_ Backbone Parent View
     # @param `id` _String_ CID of view
+    # @param `DELAY` _Number_ Milliseconds to delay flash fadeOut
     #
-    constructor : (@view, @id) ->
+    constructor : (@view, @id, @DELAY) ->
+
+      @DELAY = @DELAY ? 5000
+
       if @view.$el?
         @flash_container = @view.$el.find("#flash-message-#{@id}")
       else
@@ -32,6 +38,13 @@ define [
         if msg?
           msg += ' <i class="icon-remove-sign"></i>'
           @flash_container.html(msg).fadeIn('fast')
+
+          # After a short delay remove the flash message
+          # To not do this, set DELAY to null on your instance
+          if @DELAY?
+            _.delay =>
+              @flash_container.html(msg).fadeOut('slow')
+            , @DELAY
 
       @flash_container.on 'click', 'i', (e) =>
         e.preventDefault()

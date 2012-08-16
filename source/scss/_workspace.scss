@@ -174,36 +174,37 @@
 
 
 .flash-message {
+	margin: 0 0 20px 0;
 	@include font-size(14);
 	padding: 10px 20px;
-	margin: 0 0 20px 0;
 	@include border-radius(6px);
 	display: none;
 	i {
+		top: -3px;
 		float: right;
+		cursor: pointer;
 		@include font-size(20);
 		position: relative;
-		top: -3px;
 	}
 }
 .success {
+	background-color: $success-base;
 	color: $success-text;
 	font-weight: bold;
-	background-color: $success-base;
 	@include background-image(linear-gradient($success-base, darken($success-base, 20)));
 	border: darken($success-base, 30) 1px solid;
 }
 .notice {
+	background-color: $notice-base;
 	color: $notice-text;
 	font-weight: bold;
-	background-color: $notice-base;
 	@include background-image(linear-gradient($notice-base, $notice-bottom));
 	border: $notice-bottom 1px solid;
 }
 .warning {
+	background-color: $warning-base;
 	color: $warning-text;
 	font-weight: bold;
-	background-color: $warning-base;
 	@include background-image(linear-gradient($warning-base, $warning-bottom));
 	border: $warning-bottom 1px solid;
 }
