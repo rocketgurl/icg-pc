@@ -15,7 +15,9 @@ require
     loader     : 'lib/heartcode-canvasloader'
   priority: ['jquery']
   shim:
-      'jquery' : ['require']
+      'jquery' : 
+        deps    : ['require']
+        exports : '$' 
       'json' : 
         deps    : ['jquery']
         exports : 'JSON'
@@ -33,7 +35,8 @@ require [
   "WorkspaceController",
   "amplify",
   "loader",
-  "domReady!"
-], ($, _, WorkspaceController, amplify, CanvasLoader, doc) ->
-  $ ->
+  "domReady"
+], ($, _, WorkspaceController, amplify, CanvasLoader, domReady) ->
+  domReady ->
     WorkspaceController.init()
+    

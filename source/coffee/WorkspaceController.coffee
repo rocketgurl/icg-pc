@@ -1,5 +1,5 @@
 define [
-  'jquery', 
+  'jquery',
   'underscore',
   'backbone',
   'UserModel',
@@ -14,9 +14,10 @@ define [
   'MenuHelper',
   'AppRules',
   'Helpers',
+  'Cookie',
   'xml2json',
   'modules/SearchContextCollection'
-], ($, _, Backbone, UserModel, ConfigModel, WorkspaceStateModel, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter, Messenger, Base64, MenuHelper, AppRules, Helpers, xml2json, SearchContextCollection) ->
+], ($, _, Backbone, UserModel, ConfigModel, WorkspaceStateModel, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter, Messenger, Base64, MenuHelper, AppRules, Helpers, Cookie, xml2json, SearchContextCollection) ->
 
   #### Global ENV Setting
   #
@@ -55,11 +56,11 @@ define [
     $workspace_canvas     : $('#canvas')
     $workspace_tabs       : $('#workspace nav ul')
     Router                : new WorkspaceRouter()
-    COOKIE_NAME           : 'ics360.PolicyCentral'
+    Cookie                : new Cookie()
+    COOKIE_NAME           : 'ics360_PolicyCentral'
     services              : ics360.services
     global_flash          : new Messenger($('#canvas'), 'controller')
     SEARCH                : {}
-    fail_count            : 0
 
     # Simple logger
     logger : (msg) ->
@@ -174,7 +175,8 @@ define [
     # login form as usual. 
     #
     check_cookie_identity : () ->
-      if cookie = $.cookie(@COOKIE_NAME)
+      cookie = @Cookie.get(@COOKIE_NAME)
+      if cookie?
         cookie = Base64.decode(cookie).split(':')
         @check_credentials cookie[0], cookie[1]
       else
@@ -189,7 +191,7 @@ define [
     # @param `digest` _String_ Base64.encode username:password
     #
     set_cookie_identity : (digest) ->
-      $.cookie(@COOKIE_NAME, digest, { expires : 7 })
+      @Cookie.set(@COOKIE_NAME, digest, { expires : 7})
 
     # Render the login form
     build_login : ->
@@ -264,7 +266,7 @@ define [
     # Delete the identity cookie and nullify User
     # TODO: Need to teardown the main nav
     logout : ->
-      $.cookie(@COOKIE_NAME, null)
+      @Cookie.remove(@COOKIE_NAME)
       @user = null
       @reset_admin_links()
       @set_breadcrumb()
@@ -649,23 +651,12 @@ define [
 
     # Kick off the show
     init : () ->
-      if $.cookie?
+      @callback_delay 1000, =>
         @Router.controller = @
         Backbone.history.start()
         @check_cookie_identity()
         @attach_tab_handlers()
-      else
-        # This is voodoo. Basically $.cookie force chokes itself
-        # on occasion and the only save I can figure out is to
-        # completely refresh the browser.
-        script = $("<script src=\"/js/lib/jquery.cookie.js\"></script>")
-        $('head').append(script)
-        @callback_delay 400, =>
-          if @fail_count < 3
-            @fail_count++
-            @init()
-          else
-            throw new Error('Could not load jQuery Cookie Plugin - please reload page.')
+
 
   _.extend WorkspaceController, Backbone.Events
 

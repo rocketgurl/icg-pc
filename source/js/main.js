@@ -19,7 +19,10 @@
     },
     priority: ['jquery'],
     shim: {
-      'jquery': ['require'],
+      'jquery': {
+        deps: ['require'],
+        exports: '$'
+      },
       'json': {
         deps: ['jquery'],
         exports: 'JSON'
@@ -36,8 +39,8 @@
     }
   });
 
-  require(["jquery", "underscore", "WorkspaceController", "amplify", "loader", "domReady!"], function($, _, WorkspaceController, amplify, CanvasLoader, doc) {
-    return $(function() {
+  require(["jquery", "underscore", "WorkspaceController", "amplify", "loader", "domReady"], function($, _, WorkspaceController, amplify, CanvasLoader, domReady) {
+    return domReady(function() {
       return WorkspaceController.init();
     });
   });
