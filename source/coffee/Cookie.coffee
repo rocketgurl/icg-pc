@@ -1,12 +1,15 @@
 ###
   Cookie handling
-  Adapted from https://github.com/carhartl/jquery-cookie
+
+  Adapted from:  
+  jQuery Cookie Plugin v1.2
+  https://github.com/carhartl/jquery-cookie
+
+  There is no reason to have cookie handling in a jQuery plugin. None.
+  Also, the jQuery plugin had many issues with RequireJS and hooking into
+  jQuery properly. So we just extract it out to a simple class.
 ###
-define [
-  'jquery', 
-  'underscore',
-  'base64',
-], ($, _, Base64) ->
+define [], () ->
 
   class Cookie
 
@@ -20,7 +23,7 @@ define [
     decoded : (s) ->
       decodeURIComponent(s.replace(@pluses, ' '))
 
-    # Set a cookie
+    # Set a cookie with key -> val and an object of options
     set : (key, value, options) ->
       if value? and options?
         options = _.extend {}, @defaults, options
@@ -42,7 +45,7 @@ define [
           if options.secure   then "; secure" else ''
         ].join(''))
 
-    # Get a cookie value
+    # Get a cookie value by key
     get : (key) ->
       cookies = document.cookie.split('; ')
       for cookie in cookies

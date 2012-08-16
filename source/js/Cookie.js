@@ -2,13 +2,20 @@
 
 /*
   Cookie handling
-  Adapted from https://github.com/carhartl/jquery-cookie
+
+  Adapted from:  
+  jQuery Cookie Plugin v1.2
+  https://github.com/carhartl/jquery-cookie
+
+  There is no reason to have cookie handling in a jQuery plugin. None.
+  Also, the jQuery plugin had many issues with RequireJS and hooking into
+  jQuery properly. So we just extract it out to a simple class.
 */
 
 
 (function() {
 
-  define(['jquery', 'underscore', 'base64'], function($, _, Base64) {
+  define([], function() {
     var Cookie;
     return Cookie = (function() {
 
