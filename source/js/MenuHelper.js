@@ -39,11 +39,13 @@
         sub_nav = '';
         for (name in data) {
           obj = data[name];
-          main_nav.main_nav.push({
-            url: name,
-            label: obj.label,
-            business: name
-          });
+          if (_.has(obj, 'contexts') && !_.isEmpty(obj.contexts)) {
+            main_nav.main_nav.push({
+              url: name,
+              label: obj.label,
+              business: name
+            });
+          }
           submenu = {
             sub_nav_id: name,
             submenu: ''
@@ -118,7 +120,9 @@
           var path;
           path = $(tentacle).attr('path');
           if (path !== 'undefined' && path.match(re)) {
-            return tentacles.push(path);
+            if (path.match(/policies/gi)) {
+              return tentacles.push(path);
+            }
           }
         });
         processed_tentacles = _.map(tentacles, function(val, key) {

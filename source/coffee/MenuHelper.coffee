@@ -74,19 +74,20 @@ define [
     # @param `data` _Object_ results of @compile_menu_collection
     #
     generate_menu : (data) ->
-
       # Generate main_nav
       main_nav = { main_nav : [] }
       sub_nav = ''
 
       # Loop throug objects
       for name, obj of data
-        # Main nav
-        main_nav.main_nav.push {
-          url      : name
-          label    : obj.label
-          business : name
-        }
+        # Only generate a Main_Nav item if there are actual
+        # contexts available to it
+        if _.has(obj, 'contexts') and !_.isEmpty(obj.contexts)
+            main_nav.main_nav.push {
+              url      : name
+              label    : obj.label
+              business : name
+            }
 
         # Sub nav
         submenu = { sub_nav_id : name, submenu : '' }
@@ -159,7 +160,9 @@ define [
       _.each data, (tentacle, index) ->
         path = $(tentacle).attr('path')
         if path != 'undefined' and path.match(re)
-          tentacles.push path
+          # 8/16/12 - we are only getting Policy apps for now as per Lewisohn
+          if path.match(/policies/gi)
+            tentacles.push path
       
 
       # Take the tentacle path and process it, looking for valid
