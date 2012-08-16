@@ -163,9 +163,7 @@
       },
       attach_menu: function(e, template, view_data) {
         var cache_key, el_width;
-        if (!(view_data != null)) {
-          view_data = {};
-        }
+        view_data = view_data != null ? view_data : {};
         cache_key = e.attr('class').split(' ')[1];
         if (this.menu_cache[this.cid][cache_key] !== void 0) {
           this.menu_cache[this.cid][cache_key].fadeIn(100);
@@ -194,7 +192,9 @@
       },
       control_share: function(e) {
         if (e.hasClass('active')) {
-          return this.attach_menu(e, tpl_search_menu_share);
+          return this.attach_menu(e, tpl_search_menu_share, {
+            url: window.location.href
+          });
         }
       },
       control_pin: function(e) {

@@ -177,8 +177,7 @@ define [
     # Attach menu to control item
     attach_menu : (e, template, view_data) ->
       # Default view object
-      if !view_data?
-        view_data = {}
+      view_data = view_data ? {}
 
       # make cache key from event classname
       cache_key = e.attr('class').split(' ')[1]
@@ -208,7 +207,7 @@ define [
     # Search share control
     control_share : (e) ->
       if e.hasClass 'active'
-        @attach_menu e, tpl_search_menu_share
+        @attach_menu e, tpl_search_menu_share, { url : window.location.href }
 
     # Search pin control
     control_pin : (e) ->
