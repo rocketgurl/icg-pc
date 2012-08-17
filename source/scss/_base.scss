@@ -109,3 +109,8 @@ $warning-bottom : #72101b;
     border: 1px solid $border;
   }
 }
+
+// Remove outline around links
+a {
+	outline: none;
+}

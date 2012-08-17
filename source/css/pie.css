@@ -1,3 +1,7 @@
+a {
+  outline: none;
+}
+
 .pie-element, .bordered, .gradient {
   behavior: url("/css/PIE.htc");
   position: relative;
