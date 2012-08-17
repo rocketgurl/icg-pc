@@ -233,6 +233,7 @@ define [
         params : @params
       }
 
+    # Place a loading animation on top of the content
     loader_ui : (bool) ->
       if bool and !@loader?
         if $('html').hasClass('lt-ie9') is false
@@ -246,6 +247,7 @@ define [
           @loader = null
         $("#search-loader-#{@cid}").hide()
 
+    # Handling sorting state on columns
     sort_by : (e) ->
       e.preventDefault()
       $el = $(e.currentTarget)
@@ -255,8 +257,30 @@ define [
         'sortdir' : $el.data('dir')
       @fetch(@get_search_options(options))
 
+      @remove_indicators() # clear the decks!
+
       if $el.data('dir') is 'asc'
         $el.data('dir', 'desc')
+        @swap_indicator $el, '&#9660;'
       else
         $el.data('dir', 'asc')
+        @swap_indicator $el, '&#9650;'
+
+    # Switch sorting indicator symbol
+    swap_indicator : (el, char) ->
+      text = el.html()
+      reg = /▲|▼/gi
+      if text.match('▲') or text.match('▼')
+        text = text.replace(reg, char)
+        el.html(text)
+      else
+        el.html(text + " #{char}")
+
+    # clear all sorting indicators
+    remove_indicators : ->
+      $('.search-sort-link').each (index, el) ->
+        el = $(el)
+        reg = /▲|▼/gi
+        el.html(el.html().replace(reg, ''))
+
 

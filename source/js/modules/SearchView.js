@@ -250,11 +250,33 @@
           'sortdir': $el.data('dir')
         };
         this.fetch(this.get_search_options(options));
+        this.remove_indicators();
         if ($el.data('dir') === 'asc') {
-          return $el.data('dir', 'desc');
+          $el.data('dir', 'desc');
+          return this.swap_indicator($el, '&#9660;');
         } else {
-          return $el.data('dir', 'asc');
+          $el.data('dir', 'asc');
+          return this.swap_indicator($el, '&#9650;');
         }
+      },
+      swap_indicator: function(el, char) {
+        var reg, text;
+        text = el.html();
+        reg = /▲|▼/gi;
+        if (text.match('▲') || text.match('▼')) {
+          text = text.replace(reg, char);
+          return el.html(text);
+        } else {
+          return el.html(text + (" " + char));
+        }
+      },
+      remove_indicators: function() {
+        return $('.search-sort-link').each(function(index, el) {
+          var reg;
+          el = $(el);
+          reg = /▲|▼/gi;
+          return el.html(el.html().replace(reg, ''));
+        });
       }
     });
   });
