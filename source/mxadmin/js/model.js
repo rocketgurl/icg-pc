@@ -24,10 +24,10 @@ model.GET = function (url, success, error) {
     if (!id) return;
 
     return $.ajax({
-        url : url,
-        dataType: 'xml',
-        beforeSend: com.ics360.ajaxCrippledClient('GET', ['X-Authorization: Basic '+ id, 'Cache-Control: no-cache']),
-        error: error,
+        url        : url,
+        dataType   : 'xml',
+        beforeSend : com.ics360.ajaxCrippledClient('GET', ['X-Authorization: Basic '+ id, 'Cache-Control: no-cache']),
+        error      : error,
         success: function(xml, status, xhr) {
           var crippleSuccess = com.ics360.ajaxCrippleClientSuccess(xhr);
       
@@ -51,10 +51,10 @@ model.DELETE = function (url, success, error) {
     console.log('DELETE ' + url);
   
     return $.ajax({
-        url : url,
-        dataType: 'xml',
-        beforeSend: com.ics360.ajaxCrippledClient('DELETE', ['X-Authorization: Basic '+ id]),
-        error: error,
+        url        : url,
+        dataType   : 'xml',
+        beforeSend : com.ics360.ajaxCrippledClient('DELETE', ['X-Authorization: Basic '+ id]),
+        error      : error,
         success: function(xml, status, xhr) {
       var crippleSuccess = com.ics360.ajaxCrippleClientSuccess(xhr);
       
@@ -72,9 +72,8 @@ model.DELETE = function (url, success, error) {
 };
 
 model._UP = function (method) {
-  return function (url, data, options) {
-    
-    var id       = _preflight_credentials(),
+  return function (url, data, options) {    
+      var id   = _preflight_credentials(),
       settings = null,
       defaults = {
         contentType: 'application/xml',
@@ -104,25 +103,24 @@ model._UP = function (method) {
     }
         
       return $.ajax({
-          url : url,
-          dataType: 'xml',
-          type: 'POST',
-          contentType: settings.contentType,
-          data: objectify.toXML(data),
-          beforeSend: com.ics360.ajaxCrippledClient(method, headerList),
-          error: view.message,
+          url         : url,
+          dataType    : 'xml',
+          type        : 'POST',
+          contentType : settings.contentType,
+          data        : objectify.toXML(data),
+          beforeSend  : com.ics360.ajaxCrippledClient(method, headerList),
+          error       : view.message,
           success: function (xml, status, xhr) {
-        var crippleSuccess = com.ics360.ajaxCrippleClientSuccess(xhr);
-            
-              // Cripple success checks the X-True-Statuscode header for a
-        // double-dose of header checkin'
-        if (crippleSuccess) {
-          if (xml) {
-            settings.success(objectify.fromXML(xml));
-          }
-        } else {
-          settings.error(xhr, status);
-        }
+            var crippleSuccess = com.ics360.ajaxCrippleClientSuccess(xhr);
+            // Cripple success checks the X-True-Statuscode header for a
+            // double-dose of header checkin'
+            if (crippleSuccess) {
+              if (xml) {
+                settings.success(objectify.fromXML(xml));
+              }
+            } else {
+              settings.error(xhr, status);
+            }
           }
       });
   };
@@ -132,34 +130,34 @@ model.POST = model._UP('POST');
 model.PUT = model._UP('PUT');
 
 model.mime = {
-    'bmp': 'images/bmp',
-    'css': 'text/css',
-    'doc': 'application/msword',
-    'dot': 'application/msword',
-    'gif': 'image/gif',
-    'gz' : 'application/x-gzip',
-    'htm': 'text/html',
-    'html': 'text/html',
-    'ico': 'image/x-icon',
-    'jpeg': 'image/jpeg',
-    'jpg': 'image/jpeg',
-    'js':  'application/javascript',
-    'mht': 'message/rfc822',
-    'mhtml': 'message/rfc822',
-    'pdf': 'application/pdf',
-    'png': 'image/png',
-    'pps': 'application/vnd.ms-powerpoint',
-    'ppt': 'application/vnd.ms-powerpoint',
-    'svg': 'image/svg+xml',
-    'tgz': 'application/x-compressed',
-    'txt': 'text/plain',
-    'xla': 'application/vnd.ms-excel',
-    'xlc': 'application/vnd.ms-excel',
-    'xlm': 'application/vnd.ms-excel',
-    'xls': 'application/vnd.ms-excel',
-    'xlt': 'application/vnd.ms-excel',
-    'xlw': 'application/vnd.ms-excel',
-    'zip': 'application/zip'
+    'bmp'   : 'images/bmp',
+    'css'   : 'text/css',
+    'doc'   : 'application/msword',
+    'dot'   : 'application/msword',
+    'gif'   : 'image/gif',
+    'gz'    : 'application/x-gzip',
+    'htm'   : 'text/html',
+    'html'  : 'text/html',
+    'ico'   : 'image/x-icon',
+    'jpeg'  : 'image/jpeg',
+    'jpg'   : 'image/jpeg',
+    'js'    :  'application/javascript',
+    'mht'   : 'message/rfc822',
+    'mhtml' : 'message/rfc822',
+    'pdf'   : 'application/pdf',
+    'png'   : 'image/png',
+    'pps'   : 'application/vnd.ms-powerpoint',
+    'ppt'   : 'application/vnd.ms-powerpoint',
+    'svg'   : 'image/svg+xml',
+    'tgz'   : 'application/x-compressed',
+    'txt'   : 'text/plain',
+    'xla'   : 'application/vnd.ms-excel',
+    'xlc'   : 'application/vnd.ms-excel',
+    'xlm'   : 'application/vnd.ms-excel',
+    'xls'   : 'application/vnd.ms-excel',
+    'xlt'   : 'application/vnd.ms-excel',
+    'xlw'   : 'application/vnd.ms-excel',
+    'zip'   : 'application/zip'
 };
 
 model.mimeFromExt = function (ext) {
@@ -341,9 +339,8 @@ model.policy = function (policyXML) {
   // @return OBJECT - A Term object
   this.lastTerm = function () {
     var t = this.terms();
-      l = t.length;
-    
-    return t[l - 1];
+      l = t.length;    
+      return t[l - 1];
   };
   
   // Get Customer data of the specified type
