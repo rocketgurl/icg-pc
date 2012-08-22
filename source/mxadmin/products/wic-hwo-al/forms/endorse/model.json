@@ -465,18 +465,8 @@
 			"label": "Auto Policy Number"
 		},
 		{
-			"name": "HandRailWalkwayLiability",
-			"label": "Handrail/Walkway Liability",
-			"enumerations": [
-				{
-					"value": "100",
-					"label": "Yes"
-				},
-				{
-					"value": "200",
-					"label": "No"
-				}
-			]
+			"name": "LiabilityHazardPoints",
+			"label": "Additional Liability Hazards"
 		},
 		{
 			"name": "BurglarAlarm",
