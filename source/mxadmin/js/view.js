@@ -582,67 +582,14 @@ view.request_success = function (options) {
   };
 };
 
-// ICS-1042 & ICS-429
-// 
-// The new Rate Validation system requires an override switch
-// to be thrown if necessary.
-// 
-view.checkRateValidationError = function () {
-  var body_data = $('body').data();
-  if (body_data['error-message'] === 'Rate Validation Failed') {
-    $('#rate_validation_override').fadeIn('fast');
-  }
-}; 
-
-// ICS-1042 & ICS-429
-// 
-// We need to intercept errors and check for JSON payloads coming from mxServer.
-// Rate validation will throw a specific error, and can be overidden only after
-// that error is thrown, so we need to do a couple of things:
-// 
-// 1. Check for JSON payloads and parse
-// 2. Let our view know what happened by setting a data attr on body
-// 
 // A default error handler for all ajax requests
-// 
 view.request_error = function (response, status, errorThrown) {
-
-  var errorTitle, errorDesc, errorDetails, re, json, resp;
-
   // Erroracolypse handling
-  if (!response) {
-      $('body').trigger('error', [status || 'Unknown HTTP error', "Some sort of major problem occurred with the request. It's bad enough that mxAdmin didn't even get an error message."]);
-  }
-
-  if (response.responseText) {
-    re   = /\[(.*?)\]/g;
-    json = re.exec(response.responseText);
-  }
-
-  // Slap an error flag into a data element on BODY. We will use this in view.js
-  if (json && document.body.id === 'endorse') {
-
-    resp = (json && json[0]) ? JSON.parse(json[0]) : null;
-
-    // Assemble a message and drop into data element on BODY
-    if (resp[0] && resp[0].message) {
-      errorTitle   = resp[0].message || null;
-      errorDesc    = resp[0].detail || null;
-      errorDetails = null;
-
-      $('body').data({
-        'error-view'    : 'endorse',
-        'error-message' : errorTitle,
-        'error-detail'  : errorDesc
-      });
-
-      // Tell Endorse to check errors
-      view.checkRateValidationError();
+    if (!response) {
+        $('body').trigger('error', [status || 'Unknown HTTP error', "Some sort of major problem occurred with the request. It's bad enough that mxAdmin didn't even get an error message."]);
     }
-  } else {
 
-    // Build the usual HTML response
-    var statusCode = response.status,
+  var statusCode     = response.status,
     trueStatusCode = response.getResponseHeader('X-True-Statuscode') || null,
 
     // We need to pull some info from the responseText so we'll create and
@@ -658,34 +605,33 @@ view.request_error = function (response, status, errorThrown) {
     errorDesc    = null,
     errorDetails = null;
 
-    // Retrieve the error title and desc from the tmp response text element
-    $('body').append(tmpElem);
-    errorTitle   = tmpElem.find('h1:first').text();
-    errorDesc    = tmpElem.find('p:first').text();
-    errorDetails = tmpElem.find('ol:first');
+  // Retrieve the error title and desc from the tmp response text element
+  $('body').append(tmpElem);
+  errorTitle   = tmpElem.find('h1:first').text();
+  errorDesc    = tmpElem.find('p:first').text();
+  errorDetails = tmpElem.find('ol:first');
 
-    // Since checking for the <ol> will return an empty array, we want to make
-    // sure there is actually something there before we send it to be poplulated
-    // in the error message.
-    // We'll check first for the <ol> because that is what we're supposed to get,
-    // then a second time for the <ul>. Some of the services incorrectly give that
-    // instead of the <ol>
+  // Since checking for the <ol> will return an empty array, we want to make
+  // sure there is actually something there before we send it to be poplulated
+  // in the error message.
+  // We'll check first for the <ol> because that is what we're supposed to get,
+  // then a second time for the <ul>. Some of the services incorrectly give that
+  // instead of the <ol>
+  if (errorDetails.length <= 0) {
+    errorDetails = tmpElem.find('ul:first');
+
     if (errorDetails.length <= 0) {
-      errorDetails = tmpElem.find('ul:first');
-
-      if (errorDetails.length <= 0) {
-        errorDetails = null;
-      }
+      errorDetails = null;
     }
+  }
 
-    // Be sure to remove the temp elem. Bad things will happen if you don't
-    tmpElem.remove();
+  // Be sure to remove the temp elem. Bad things will happen if you don't
+  tmpElem.remove();
 
-    // In case we don't recieve a trueStatusCode from the server, we need to
-    // display the status that was returned with the request.
-    if (trueStatusCode === null) {
-      errorTitle = statusCode + ' ' + errorTitle;
-    }
+  // In case we don't recieve a trueStatusCode from the server, we need to
+  // display the status that was returned with the request.
+  if (trueStatusCode === null) {
+    errorTitle = statusCode + ' ' + errorTitle;
   }
 
   $('body').trigger('error', [errorTitle, errorDesc, errorDetails]);
@@ -1502,7 +1448,7 @@ view.cancellation = {
       // For immediate cancellations we want to show EffectiveDate from the preview XML doc. This is partially to
       // future proof things so that if the server does calculations on the preview XML doc in the future we will
       // show them to the user here instead of their raw input.
-      if (previewCTX.params.pcsType === 'PendingCancellation') {
+      if (previewCTX.Action === 'Pending Cancellation') {
         previewCTX.EffectiveDate = previewCTX.policy.InsurancePolicy.Management.PendingCancellation.$cancellationEffectiveDate;
       } else if (previewCTX.policy.InsurancePolicy.Management.PolicyState.$effectiveDate) {
         previewCTX.EffectiveDate = previewCTX.policy.InsurancePolicy.Management.PolicyState.$effectiveDate;
@@ -1885,7 +1831,7 @@ view.endorse = {
       return CTX;
     }
 
-    var latestTerm = model.pxcentral.policy.getLastTerm(CTX.policy.InsurancePolicy),
+    var latestTerm    = model.pxcentral.policy.getLastTerm(CTX.policy.InsurancePolicy),
 
         // Store the data items from the latest policy term
         termDataItems = latestTerm.DataItem,
@@ -1941,54 +1887,30 @@ view.endorse = {
       // Create the object that will be converted into an XML TransactionRequest
       toSend = model.transactionRequest(CTX.policy).endorse(params);
 
-      // If this is a Preview state then we need to set some extra headers
       if (params.preview) {
-        var default_headers = {
-          'X-Commit': false
-        };
-        // ICS-1042 / ICS-429
-        // 
-        // If the user ticks the override input then we need to add
-        // ad custom header to the request. We also store a data var
-        // on BODY as we need to maintain this override state over
-        // multiple requests.
-        // 
-        if (params.id_rv_override && params.id_rv_override === '1') {
-          default_headers['Override-Validation-Block'] = true;
-          $('body').data('override-validation', 'yes');
-        }
-
         model.pxcentral.policy.set(id, toSend, {
-          headers  : default_headers,
-          callback : function (data) {
-            var previewCTX    = $.extend({}, CTX);
+          headers: {
+            'X-Commit': false
+          },
+          callback: function (data) {
+            var previewCTX = $.extend({}, CTX);
             previewCTX.policy = data;
 
             delete params.preview;
+
             if (params.preview !== 're-preview') {
                 delete CTX.preview;
             }
+
             // Hold on to the params each time so we don't lose
             // anything while previewing.
-            CTX.params        = params;
+            CTX.params = params;
             previewCTX.params = params;
             self.preview(previewCTX);
           }
         });
       } else {
-
-        var options;
-
-        // ICS-1042 / ICS-429
-        // 
-        // If Override state is set we need to pass the header
-        // and also clear the state so we don't override something
-        // else.
-        if ($('body').data('override-validation') === 'yes') {
-          options = { headers : {'Override-Validation-Block' : true}};
-          $('body').data('override-validation', 'no');
-        }
-        model.pxcentral.policy.set(id, toSend, options);
+        model.pxcentral.policy.set(id, toSend);
       }
     }
   },
@@ -1998,30 +1920,31 @@ view.endorse = {
   // TODO: Abstract and refactor this method.
   //       It's needed in multiple areas so it should be moved to a helper.
   parseIntervals: function (CTX) {
-    // XXX figure out an option for objectify to turn DataItem arrays into objects and back
-    //     these functions are (hopefully) just a workaround until that happens.
-    var toRet = {},
-        term  = model.pxcentral.policy.getLastTerm(CTX.policy.InsurancePolicy),
+        // XXX figure out an option for objectify to turn DataItem arrays into objects and back
+        //     these functions are (hopefully) just a workaround until that happens.
+        var toRet = {},
+            term  = model.pxcentral.policy.getLastTerm(CTX.policy.InsurancePolicy),
 
-        //yeah this looks screwy but Intervals contains a set of Interval children,
-        //this set is serialized into an array containing the actual children.
-        intervals = term.Intervals && term.Intervals.Interval,
-        interval,
-        startDate,
-        endDate,
-        termStart,
-        termEnd,
-        fees,
-        grandSubtotal,
-        grandSubtotalUnadjusted,
-        termGrandSubtotalAdjustment,
-        grandTotal,
-        getDataItem = mxAdmin.helpers.getDataItem,
-        msInDay     = 24 * 60 * 60 * 1000,
+      //yeah this looks screwy but Intervals contains a set of Interval children,
+            //this set is serialized into an array containing the actual children.
+            intervals = term.Intervals && term.Intervals.Interval,
 
-        // Adjustment values
-        nonCatAdjustment = 0,
-        catAdjustment    = 0;
+      interval,
+            startDate,
+            endDate,
+            termStart,
+            termEnd,
+            fees,
+            grandSubtotal,
+            grandSubtotalUnadjusted,
+            termGrandSubtotalAdjustment,
+            grandTotal,
+            getDataItem = mxAdmin.helpers.getDataItem,
+            msInDay     = 24 * 60 * 60 * 1000,
+
+      // Adjustment values
+      nonCatAdjustment = 0,
+      catAdjustment    = 0;
 
     // Grab any entered adjustment values
     // Throwing this in try/catch because CTX.params won't always exist here
@@ -2034,47 +1957,47 @@ view.endorse = {
       intervals = [intervals];
     }
 
-    toRet.intervals = [];
-    termStart = Date.parse(term.EffectiveDate);
-    termEnd   = Date.parse(term.ExpirationDate);
+        toRet.intervals = [];
+        termStart                     = Date.parse(term.EffectiveDate);
+        termEnd                       = Date.parse(term.ExpirationDate);
 
     grandSubtotalNonCatUnadjusted = getDataItem(term.DataItem, 'GrandSubtotalNonCatUnadjusted');
     grandSubtotalCatUnadjusted    = getDataItem(term.DataItem, 'GrandSubtotalCatUnadjusted');
     grandSubtotalNonCat           = getDataItem(term.DataItem, 'GrandSubtotalNonCat');
     grandSubtotalCat              = getDataItem(term.DataItem, 'GrandSubtotalCat');
 
-    grandSubtotalUnadjusted       = getDataItem(term.DataItem, 'GrandSubtotalUnadjusted');
-    grandSubtotal                 = getDataItem(term.DataItem, 'GrandSubtotal');
-    termGrandSubtotalAdjustment   = getDataItem(term.DataItem, 'TermGrandSubtotalAdjustment');
-    fees                          = getDataItem(term.DataItem, 'TotalFees');
-    grandTotal                    = getDataItem(term.DataItem, 'TotalPremium');
+        grandSubtotalUnadjusted       = getDataItem(term.DataItem, 'GrandSubtotalUnadjusted');
+        grandSubtotal                 = getDataItem(term.DataItem, 'GrandSubtotal');
+        termGrandSubtotalAdjustment   = getDataItem(term.DataItem, 'TermGrandSubtotalAdjustment');
+        fees                          = getDataItem(term.DataItem, 'TotalFees');
+        grandTotal                    = getDataItem(term.DataItem, 'TotalPremium');
 
     toRet.term = {
-      startDate    : termStart,
-      endDate      : termEnd,
-      fmtStartDate : mxAdmin.helpers.cleanDate(term.EffectiveDate, 'MMM d yy'),
-      fmtEndDate   : mxAdmin.helpers.cleanDate(term.ExpirationDate, 'MMM d yy'),
-      days         : Math.round((termEnd - termStart) / msInDay),
+            startDate: termStart,
+            endDate: termEnd,
+      fmtStartDate: mxAdmin.helpers.cleanDate(term.EffectiveDate, 'MMM d yy'),
+      fmtEndDate: mxAdmin.helpers.cleanDate(term.ExpirationDate, 'MMM d yy'),
+            days: Math.round((termEnd - termStart) / msInDay),
 
       // These are new items added in 1.0
-      grandSubtotalNonCatUnadjusted : Math.round(grandSubtotalNonCatUnadjusted),
-      grandSubtotalCatUnadjusted    : Math.round(grandSubtotalCatUnadjusted),
+      grandSubtotalNonCatUnadjusted: Math.round(grandSubtotalNonCatUnadjusted),
+      grandSubtotalCatUnadjusted: Math.round(grandSubtotalCatUnadjusted),
 
-      grandSubtotalNonCat : Math.round(grandSubtotalNonCat),
-      grandSubtotalCat    : Math.round(grandSubtotalCat),
+      grandSubtotalNonCat: Math.round(grandSubtotalNonCat),
+      grandSubtotalCat: Math.round(grandSubtotalCat),
 
       // These items are pre 1.0
-      grandSubtotalUnadjusted: Math.round(grandSubtotalUnadjusted),
-      termGrandSubtotalAdjustment: Math.round(termGrandSubtotalAdjustment),
-      grandSubtotal: Math.round(grandSubtotal),
-      fees: Math.round(fees),
-      grandTotal: Math.round(grandTotal)
-    };
+            grandSubtotalUnadjusted: Math.round(grandSubtotalUnadjusted),
+            termGrandSubtotalAdjustment: Math.round(termGrandSubtotalAdjustment),
+            grandSubtotal: Math.round(grandSubtotal),
+            fees: Math.round(fees),
+            grandTotal: Math.round(grandTotal)
+        };
 
-    for (var i = 0, ii = intervals.length; i < ii; i++) {
-      interval                = intervals[i];
-      startDate               = Date.parse(interval.StartDate);
-      endDate                 = Date.parse(interval.EndDate);
+      for (var i = 0, ii = intervals.length; i < ii; i++) {
+            interval                = intervals[i];
+            startDate               = Date.parse(interval.StartDate);
+            endDate                 = Date.parse(interval.EndDate);
 
       grandSubtotalNonCat     = getDataItem(interval.DataItem, 'GrandSubtotalNonCat');
       grandSubtotalCat        = getDataItem(interval.DataItem, 'GrandSubtotalCat');
@@ -2084,11 +2007,11 @@ view.endorse = {
       grandTotal              = getDataItem(interval.DataItem, 'TotalPremium');
 
       toRet.intervals.push({
-        startDate    : startDate,
-        endDate      : startDate,
-        fmtStartDate : mxAdmin.helpers.cleanDate(interval.StartDate, 'MMM d yy'),
-        fmtEndDate   : mxAdmin.helpers.cleanDate(interval.EndDate, 'MMM d yy'),
-        days         : Math.round((endDate - startDate) / msInDay),
+                startDate: startDate,
+                endDate: startDate,
+        fmtStartDate: mxAdmin.helpers.cleanDate(interval.StartDate, 'MMM d yy'),
+        fmtEndDate: mxAdmin.helpers.cleanDate(interval.EndDate, 'MMM d yy'),
+                days: Math.round((endDate - startDate) / msInDay),
 
         // Because the policy does not contain an unadjusted value,
         // we need to calculate that value based on the "adjusted" value
@@ -2099,25 +2022,26 @@ view.endorse = {
         grandSubtotalCatUnadjusted: Math.round((parseInt(grandSubtotalCat, 10) - ~~(catAdjustment))),
 
         // Adjustment values
-        nonCatAdjustment    : nonCatAdjustment,
-        catAdjustment       : catAdjustment,        
-        grandSubtotalNonCat : Math.round(grandSubtotalNonCat),
-        grandSubtotalCat    : Math.round(grandSubtotalCat),
+        nonCatAdjustment: nonCatAdjustment,
+        catAdjustment: catAdjustment,
+
+        grandSubtotalNonCat: Math.round(grandSubtotalNonCat),
+        grandSubtotalCat: Math.round(grandSubtotalCat),
 
         // These items are pre 1.0
-        grandSubtotalUnadjusted : Math.round(grandSubtotalUnadjusted),
-        grandSubtotal           : Math.round(grandSubtotal),
-        fees                    : Math.round(fees),
-        grandTotal              : Math.round(grandTotal)
-      });
-    }
+                grandSubtotalUnadjusted: Math.round(grandSubtotalUnadjusted),
+                grandSubtotal: Math.round(grandSubtotal),
+              fees: Math.round(fees),
+                grandTotal: Math.round(grandTotal)
+            });
+        }
 
-    toRet.intervals.sort(function (a, b) {
-        var v1 = a.startDate,
-    v2 = b.startDate;
+        toRet.intervals.sort(function (a, b) {
+            var v1 = a.startDate,
+        v2 = b.startDate;
 
-        return (v1 == v2) ? 0 : ((v1 < v2) ? -1 : 1);
-    });
+            return (v1 == v2) ? 0 : ((v1 < v2) ? -1 : 1);
+        });
 
     // Set the newest interval to the new one
         toRet.intervals[toRet.intervals.length - 1].isNew = true;

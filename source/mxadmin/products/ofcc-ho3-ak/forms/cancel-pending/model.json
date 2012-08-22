@@ -61,10 +61,6 @@
 					"label": "Missing Required Documentation"
 				},
 				{
-                    "value": "16", 
-                    "label": "Nonpayment of Premium - Flat"
-                },
-				{
 					"value": "201",
 					"label": "Payment Received"
 				}

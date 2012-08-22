@@ -1,5 +1,5 @@
-var mxAdmin         = {};
-window.mxAdmin      = mxAdmin;
+var mxAdmin = {};
+window.mxAdmin = mxAdmin;
 mxAdmin.homeAddress = 'home';
 
 // ICS-979 - loading favicons
@@ -12,10 +12,10 @@ mxAdmin.loadTemplate = function (templateName, data, callback, options) {
   var defaults  = {
         // Providing a filename will allow for naming the ich template
         // one name and then requesting a different file from the server
-        filename    : templateName,
-        extension   : 'html',
-        dataType    : 'html',
-        templateLoc : './templates/',
+        filename: templateName,
+        extension: 'html',
+        dataType: 'html',
+        templateLoc: './templates/',
         error: function (jqxhr) {
           console.log('There was an error retrieving the template', jqxhr);
         }
@@ -63,7 +63,7 @@ mxAdmin.loadFavicon = function(filename) {
   var link = document.createElement('link');
     link.type = 'image/x-icon';
     link.rel  = 'icon';
-    link.href = './images/' + filename;
+    link.href = '/images/' + filename;
     link.id   = 'favicon';
   $('head').append(link);
 };
@@ -112,9 +112,9 @@ mxAdmin.dataModel = function (options) {
   if (needsRequest) {
     try {
       $.ajax({
-        type     : 'GET',
-        url      : './products/' + settings.productName + '/forms/' + settings.viewName + '/model.json',
-        dataType : 'json',
+        type: 'GET',
+        url: './products/' + settings.productName + '/forms/' + settings.viewName + '/model.json',
+        dataType: 'json',
         success: function (res) {
           var data = null;
 
