@@ -56,7 +56,7 @@
         });
       },
       show_overview: function() {
-        this.iframe.attr('src', 'http://fc06.deviantart.net/fs46/f/2009/169/f/4/Unicorn_Pukes_Rainbow_by_Angel35W.jpg');
+        this.iframe.attr('src', 'http://texturebackgrounds.net/wp-content/uploads/2012/05/abstract-blue-backgrounds-x.jpg');
         return this.resize_iframe(this.iframe);
       },
       show_ipmchanges: function() {

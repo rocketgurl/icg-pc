@@ -21,6 +21,11 @@
 			{{/policyOverview}}
 			
 			<fieldset>
+
+				<div id="rate_validation_override">
+					<input type="checkbox" name="id_rv_override" id="id_rv_override" value="1"> <label for="id_rv_override">Check to Override Rate Validation</label>
+				</div>
+				
 				<div>
 					<label for="id_reasonCode" class="labelRequired">Reason Code</label>
 					<select id="id_reasonCode" name="reasonCode" required>
@@ -193,8 +198,12 @@
 						<input type="text" id="id_AutoPolicyNumber" name="AutoPolicyNumber" value="{{AutoPolicyNumber}}">
 					</div>
 					<div>
-						<label for="id_LiabilityHazardPoints">Additional Liability Hazards <i>LiabilityHazardPoints</i></label>
-						<input type="text" id="id_LiabilityHazardPoints" name="LiabilityHazardPoints" value="{{LiabilityHazardPoints}}">
+						<label for="id_HandRailWalkwayLiability">Handrail/Walkway Liability <i>HandRailWalkwayLiability</i></label>
+						<select id="id_HandRailWalkwayLiability" name="HandRailWalkwayLiability" data-value="{{HandRailWalkwayLiability}}" required>
+							{{#EnumsHandRailWalkwayLiability}}
+							<option value="{{value}}">{{label}}</option>
+							{{/EnumsHandRailWalkwayLiability}}
+						</select>
 					</div>
 					<div>
 						<label for="id_BurglarAlarm">Burglar Alarm <i>BurglarAlarm</i></label>

@@ -73,7 +73,7 @@ define [
 
     # Load Flex Policy Summary
     show_overview : ->
-      @iframe.attr('src', 'http://fc06.deviantart.net/fs46/f/2009/169/f/4/Unicorn_Pukes_Rainbow_by_Angel35W.jpg')   
+      @iframe.attr('src', 'http://texturebackgrounds.net/wp-content/uploads/2012/05/abstract-blue-backgrounds-x.jpg')   
       @resize_iframe @iframe
 
     # Load mxAdmin into workarea and inject policy header
