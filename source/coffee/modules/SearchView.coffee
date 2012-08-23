@@ -63,9 +63,11 @@ define [
       @messenger = new Messenger(@options.view, @cid)
 
       # If we have params we need to go ahead and do the search query
-      if @params? and @params.q?
-        @set_search_options @params
-        @fetch(@get_search_options(@params))
+      if @params?
+        @params.q = @params.query ? @params.q # make sure we have a query
+        if @params.q?
+          @set_search_options @params
+          @fetch(@get_search_options(@params))
 
     # Assemble search params and hit pxCentral
     search : (e) ->

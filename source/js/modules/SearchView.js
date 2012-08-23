@@ -46,7 +46,7 @@
         return this.menu_cache[this.cid] = {};
       },
       render: function() {
-        var html;
+        var html, _ref;
         html = this.Mustache.render($('#tpl-flash-message').html(), {
           cid: this.cid
         });
@@ -57,9 +57,12 @@
         this.$el.html(html);
         this.controls = this.$el.find('.search-controls');
         this.messenger = new Messenger(this.options.view, this.cid);
-        if ((this.params != null) && (this.params.q != null)) {
-          this.set_search_options(this.params);
-          return this.fetch(this.get_search_options(this.params));
+        if (this.params != null) {
+          this.params.q = (_ref = this.params.query) != null ? _ref : this.params.q;
+          if (this.params.q != null) {
+            this.set_search_options(this.params);
+            return this.fetch(this.get_search_options(this.params));
+          }
         }
       },
       search: function(e) {
