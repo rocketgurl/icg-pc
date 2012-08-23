@@ -1,0 +1,100 @@
+html {
+    background-color: #f4f4f4;
+}
+
+body 
+{ 
+	background-color: #f4f4f4;
+	font-family: helvetica, arial, sans-serif;
+}
+
+#container 
+{
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.clear:after 
+{
+    content: ".";
+    display: block;
+    height: 0;
+    clear: both;
+    visibility: hidden;
+}
+
+h3 
+{
+	border-top: 1px solid #ccc;
+	font-size: 1em;
+	font-weight: bold;
+    margin: 0;
+	padding: 0.6em 0.2em;
+}
+
+/*- Loading indicators --------------------------------------------*/
+span.loading 
+{
+    display: none;
+}
+
+.loadingOn input, 
+.loadingOn input[type="submit"], 
+.loadingOn a
+{
+    display: none;
+}
+
+.loadingOn span.loading 
+{
+	background-image: url(images/ajax-loader.gif);
+    background-repeat: no-repeat;
+	color: #666;
+	clear: both;
+    display: inline-block;
+    font-size: .75em;
+    line-height: 24px;
+    opacity: 0.7;
+}
+
+.buttons.loadingOn span.loading
+{
+	background-position: right 50%;
+	padding-right: 32px;
+    text-align: right;
+}
+
+.form_actions.loadingOn span.loading 
+{
+	background-position: left 50%;
+    padding-left: 28px;
+    text-align: left;
+}
+
+// Edit Variables
+th 
+{
+    text-align: left;
+}
+
+td
+{
+    padding: .1em 0;
+}
+
+#edit_values #content 
+{
+	font-size: .8em;
+    width: auto;
+}
+
+#edit_values span 
+{
+    display: inline-block;
+    width: 15em;
+}
+
+.shaded 
+{
+    background-color: #eee;
+}

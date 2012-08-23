@@ -1,0 +1,35 @@
+@import "lib/lib";
+
+// These are general styles for lists of action buttons. Like on the home page
+// or the cancellation landing page.
+.actionButtons
+{
+	background: transparent;
+	border: none;
+	color: #2f79b2;
+	cursor: pointer;
+	display: inline-block;
+	font-size: 0.85em;
+	line-height: 1em;
+	margin: 0;
+	padding: 4px;
+	
+	&:hover
+	{
+		background-color: #E6F3FD;
+	}
+
+	&.tempDisabled
+	{
+		cursor: default;
+		
+		&:hover
+		{
+			background-color: transparent;
+		}
+	}
+}
+
+@import "general", "banner", "content", "tmpCatchAll";
+@import "forms", "formActions", "formFields", "formLabels", "columnActions";
+@import "login", "messages", "home", "previewTables", "policyOverview", "cancellation";

@@ -1,0 +1,80 @@
+fieldset 
+{
+	div 
+	{
+		padding: 5px 0 9px 0;
+	}
+	
+	i
+	{
+		color: #666;
+		display: inline-block;
+		font-size: 0.8em;
+	}
+	
+	.collapsibleFieldContainer
+	{
+		display: none;
+		padding: 1em 0;
+	}
+}
+
+fieldset fieldset
+{
+	background-color: #F7F7F7;
+	border: 1px solid darken(#f7f7f7, 4.5%);
+	margin-bottom: 16px;
+	padding: 12px 4px 6px 4px;
+	
+	div
+	{
+		padding-left: 4px;
+	}
+}
+
+legend
+{
+	background-color: #9E9E9E;
+	@include border-radius(3px);
+	color: #fff;
+	font-size: 0.75em;
+	font-weight: bold;
+	padding: 2px 4px;
+}
+
+.collapsedSections h3
+{
+	cursor: pointer;
+	overflow: hidden;
+	
+	&:hover
+	{
+		background-color: #fafafa;
+		a
+		{
+			color: #0060d6;
+			visibility: visible;
+		}
+	}
+	
+	a
+	{
+		color: lighten(#353535, 20%);
+		font-size: 0.8em;
+		font-weight: normal;
+		padding-left: 1em;
+		visibility: hidden;
+	}
+}
+
+// Everything below here should probably go away
+label + .row, 
+label + .replacelabel
+{
+    margin: -6px 0 12px 0;
+}
+
+.break 
+{
+    clear: left;
+}

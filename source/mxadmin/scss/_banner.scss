@@ -1,0 +1,59 @@
+header[role="banner"]
+{
+	background-color: #314c6a;
+	@include background(linear-gradient(top, #4e6f92, #314c6a));
+	border-bottom: 1px solid #264364;
+	border-top: 1px solid #4a74a2;
+	@include single-box-shadow(#fff, 0px, 1px, 1px);
+	padding: 3px 20px 4px 20px;
+
+	div
+	{
+		margin: 0 auto;
+		max-width: 1280px;
+		overflow: hidden;
+	}
+	
+	h1 
+	{
+		display: inline-block;
+	    float: left;
+	
+		a 
+		{
+			color: #fff;
+		    display: block;
+			font-size: 1em;
+		    font-weight: normal;
+			text-decoration: none;
+		
+			&:hover 
+			{
+			    opacity: 0.8;
+			}
+		}
+	}
+	
+	#user_info 
+	{
+		color: #6f9dd0;
+		display: inline-block;
+		float: right;
+	    font-size: 0.75em;
+	    font-weight: normal;
+		padding-top: 2px;
+		text-align: right;
+
+		a 
+		{
+			color: #fff;
+			text-decoration: none;
+			
+			&:hover 
+			{
+			    text-decoration: underline;
+			}
+		}
+	}
+}
+

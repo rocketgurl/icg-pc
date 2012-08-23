@@ -1,0 +1,49 @@
+.columnActions {
+	margin-top: 10px;
+	max-width: 1080px;
+	padding-bottom: 10px;
+	font-family: 'Helvetica Neue', helvetica, arial, sans-serif;
+	
+	input[type="text"] {
+		min-width: 260px;
+	}
+	
+	input[type="submit"] {
+		@extend .actionButtons;
+		line-height: 1.3em;
+		text-align: left;
+		white-space: pre-wrap;
+	}
+	
+	div.column {
+		display: inline-block;
+		min-width: 200px;
+		padding-top: 10px;
+		vertical-align: top;
+		width: 31%;
+	}
+	
+	div.column section:last-child {
+		margin-bottom: 0;
+	}
+	
+	section {
+		margin-bottom: 18px;
+		padding-right: 10px;
+		
+		h1 {
+			border-bottom: 1px solid #ccc;
+			color: lighten(#000, 35%);
+			font-size: 0.813em;
+			font-weight: bold;
+			text-indent: 2px;
+			padding-bottom: 4px;
+			width: 85%;
+		}
+	}
+	
+	li {
+		display: block;
+		padding: 2px 0;
+	}
+}

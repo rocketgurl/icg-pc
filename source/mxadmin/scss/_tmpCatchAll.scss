@@ -1,0 +1,8 @@
+// This is a temporary home for styles. They should gradually move out of here
+// into more appropriate partials
+#generate_document {
+	input[type="submit"] 
+	{
+		@extend .actionButtons;
+	}
+}
