@@ -260,7 +260,7 @@ define [
     #
     login_fail : (model, resp, state) ->
       @Router.navigate('login', { trigger : true })
-      @Amplify.publish @login_view.cid, 'warning', "SOWWEE you no enter cause #{state.text}"
+      @Amplify.publish @login_view.cid, 'warning', "There was an error parsing your identity record #{state.text}"
 
     # Delete the identity cookie and nullify User
     # TODO: Need to teardown the main nav

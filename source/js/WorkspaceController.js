@@ -202,7 +202,7 @@
         this.Router.navigate('login', {
           trigger: true
         });
-        return this.Amplify.publish(this.login_view.cid, 'warning', "SOWWEE you no enter cause " + state.text);
+        return this.Amplify.publish(this.login_view.cid, 'warning', "There was an error parsing your identity record " + state.text);
       },
       logout: function() {
         this.Cookie.remove(this.COOKIE_NAME);
