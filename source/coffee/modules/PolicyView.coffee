@@ -73,6 +73,7 @@ define [
 
     # Load Flex Policy Summary
     show_overview : ->
+      @policy_header.hide()
       @iframe.attr('src', 'http://texturebackgrounds.net/wp-content/uploads/2012/05/abstract-blue-backgrounds-x.jpg')   
       @resize_iframe @iframe
 
@@ -80,6 +81,7 @@ define [
     show_ipmchanges : ->
       header = @Mustache.render tpl_ipm_header, @model.get_ipm_header()
       @policy_header.html(header)
+      @policy_header.show()
 
       @iframe.attr('src', '/mxadmin/index.html')
       @resize_iframe(@iframe, @policy_header.height())

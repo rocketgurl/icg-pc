@@ -56,6 +56,7 @@
         });
       },
       show_overview: function() {
+        this.policy_header.hide();
         this.iframe.attr('src', 'http://texturebackgrounds.net/wp-content/uploads/2012/05/abstract-blue-backgrounds-x.jpg');
         return this.resize_iframe(this.iframe);
       },
@@ -63,6 +64,7 @@
         var header;
         header = this.Mustache.render(tpl_ipm_header, this.model.get_ipm_header());
         this.policy_header.html(header);
+        this.policy_header.show();
         this.iframe.attr('src', '/mxadmin/index.html');
         return this.resize_iframe(this.iframe, this.policy_header.height());
       }
