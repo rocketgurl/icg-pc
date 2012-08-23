@@ -16,15 +16,19 @@ define [
       'logout' : 'logout'
       'workspace/:env/:business/:context/:app/:module/*params' : 'module'
       'workspace/:env/:business/:context/:app' : 'workspace'
+      '*root' : 'root'
 
     initialize : (options) ->
 
+    root : (root) ->
+      console.log 'root'
+
     # Render login form
-    login : () ->
+    login : ->
       @controller.trigger 'login'
 
     # Delete any cookies and render login form
-    logout : () ->
+    logout : ->
       @controller.trigger 'logout'
       @navigate('login', { trigger : true })
 

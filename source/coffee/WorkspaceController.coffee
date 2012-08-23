@@ -28,7 +28,6 @@ define [
   amplify.subscribe 'log', (msg) ->
     console.log msg
 
-
   #### Services
   #
   # Insight 360 Service URLs
@@ -336,7 +335,7 @@ define [
       raw_storage = @Amplify.store()
 
       # Setup collection to save search views in local storage. We
-      # Needed to attache this as a global to the window to ensure
+      # need to attach this to the controller to ensure
       # that models are passed around to many instances of 
       # SearchModule. It's a hack, but it works for now.
       @SEARCH.saved_searches = new SearchContextCollection()
@@ -363,7 +362,12 @@ define [
             )
           
       else
+        # If no localStorage data then make a blank Workspace model and
+        # slide open the menu as a default action to prompt interaction
         @workspace_state = new WorkspaceStateModel()
+        @navigation_view.toggle_nav_slide() # open main nav        
+        @navigation_view.$el.find('li a span').first().trigger('click') # select first item
+
 
     #### Check logged in state
     is_loggedin : ->

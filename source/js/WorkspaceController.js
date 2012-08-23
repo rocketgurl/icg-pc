@@ -281,7 +281,9 @@
             });
           }
         } else {
-          return this.workspace_state = new WorkspaceStateModel();
+          this.workspace_state = new WorkspaceStateModel();
+          this.navigation_view.toggle_nav_slide();
+          return this.navigation_view.$el.find('li a span').first().trigger('click');
         }
       },
       is_loggedin: function() {

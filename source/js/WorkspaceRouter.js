@@ -8,9 +8,13 @@
         'login': 'login',
         'logout': 'logout',
         'workspace/:env/:business/:context/:app/:module/*params': 'module',
-        'workspace/:env/:business/:context/:app': 'workspace'
+        'workspace/:env/:business/:context/:app': 'workspace',
+        '*root': 'root'
       },
       initialize: function(options) {},
+      root: function(root) {
+        return console.log('root');
+      },
       login: function() {
         return this.controller.trigger('login');
       },
