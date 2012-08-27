@@ -14,11 +14,15 @@
       text       : 'lib/text',
       domReady   : 'lib/domReady',
       json       : 'lib/json2',
-      loader     : 'lib/heartcode-canvasloader'
+      loader     : 'lib/heartcode-canvasloader',
+      swfobject  : 'lib/swfobject'
     },
     modules: [
         {
             name: "main"
+            exclude: [
+              "swfobject"
+            ]
         },
         {
             name : "modules/PolicyModule",
@@ -37,7 +41,8 @@
                 "backbone",
                 "mustache",
                 "amplify",
-                "underscore"
+                "underscore",
+                "swfobject"
             ]
         },
         {
@@ -47,7 +52,8 @@
                 "backbone",
                 "mustache",
                 "amplify",
-                "underscore"
+                "underscore",
+                "swfobject"
             ]
         }
     ]

@@ -2,8 +2,9 @@ define [
   'BaseView',
   'Messenger',
   'text!templates/tpl_policy_container.html',
-  'text!templates/tpl_ipm_header.html'
-], (BaseView, Messenger, tpl_policy_container, tpl_ipm_header) ->
+  'text!templates/tpl_ipm_header.html',
+  'swfobject'
+], (BaseView, Messenger, tpl_policy_container, tpl_ipm_header, SWFObject) ->
 
   PolicyView = BaseView.extend
 
@@ -74,8 +75,10 @@ define [
     # Load Flex Policy Summary
     show_overview : ->
       @policy_header.hide()
-      @iframe.attr('src', 'http://texturebackgrounds.net/wp-content/uploads/2012/05/abstract-blue-backgrounds-x.jpg')   
-      @resize_iframe @iframe
+      @iframe.hide()
+      console.log SWFObject
+      #@iframe.attr('src', 'http://texturebackgrounds.net/wp-content/uploads/2012/05/abstract-blue-backgrounds-x.jpg')   
+      #@resize_iframe @iframe
 
     # Load mxAdmin into workarea and inject policy header
     show_ipmchanges : ->
@@ -83,6 +86,7 @@ define [
       @policy_header.html(header)
       @policy_header.show()
 
+      @iframe.show()
       @iframe.attr('src', '/mxadmin/index.html')
       @resize_iframe(@iframe, @policy_header.height())
 

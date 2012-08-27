@@ -165,7 +165,7 @@
       check_credentials: function(username, password) {
         var _this = this;
         this.user = new UserModel({
-          urlRoot: ics360.services.ixdirectory + 'identities',
+          urlRoot: this.services.ixdirectory + 'identities',
           'username': username,
           'password': password
         });
@@ -218,7 +218,7 @@
       get_configs: function() {
         var _this = this;
         this.config = new ConfigModel({
-          urlRoot: ics360.services.ixadmin
+          urlRoot: this.services.ixadmin
         });
         return this.config.fetch({
           success: function(model, resp) {
@@ -507,7 +507,7 @@
       },
       init: function() {
         var _this = this;
-        return this.callback_delay(1000, function() {
+        return this.callback_delay(100, function() {
           _this.Router.controller = _this;
           Backbone.history.start();
           _this.check_cookie_identity();

@@ -10,38 +10,74 @@
   <script type="text/javascript" src="lib/jasmine-1.2.0/jasmine-html.js"></script>
 
   <!-- include source files here... -->
-  <script type="text/javascript" src="spec/SpecHelper.js"></script>
-  <script type="text/javascript" src="spec/PlayerSpec.js"></script>
+  <script src="../js/lib/require.js"></script>
 
-  <!-- include spec files here... -->
-  <script type="text/javascript" src="src/Player.js"></script>
-  <script type="text/javascript" src="src/Song.js"></script>
+  <!-- SPECS -->
+  <script type="text/javascript" src="spec/SpecHelper.js"></script>
 
   <script type="text/javascript">
     (function() {
-      var jasmineEnv = jasmine.getEnv();
-      jasmineEnv.updateInterval = 1000;
 
-      var htmlReporter = new jasmine.HtmlReporter();
 
-      jasmineEnv.addReporter(htmlReporter);
-
-      jasmineEnv.specFilter = function(spec) {
-        return htmlReporter.specFilter(spec);
-      };
-
-      var currentWindowOnload = window.onload;
-
-      window.onload = function() {
-        if (currentWindowOnload) {
-          currentWindowOnload();
+      require({
+        baseUrl: '../js',
+        paths: {
+          jquery     : 'lib/jquery-1.7.2.min',
+          underscore : 'lib/underscore-min',
+          backbone   : 'lib/backbone-min',
+          amplify    : 'lib/amplify',
+          mustache   : 'lib/requirejs.mustache',
+          base64     : 'lib/base64',
+          xml2json   : 'lib/jquery.xml2json',
+          text       : 'lib/text',
+          domReady   : 'lib/domReady',
+          json       : 'lib/json2',
+          loader     : 'lib/heartcode-canvasloader',
+          swfobject  : 'lib/swfobject'
+        },
+        priority: ['jquery'],
+        shim: {
+          'jquery': {
+            deps: ['require'],
+            exports: '$'
+          },
+          'json': {
+            deps: ['jquery'],
+            exports: 'JSON'
+          },
+          'amplify': {
+            deps: ['jquery', 'json'],
+            exports: 'amplify'
+          },
+          'loader': {
+            deps: ['jquery'],
+            exports: 'CanvasLoader'
+          },
+          'xml2json': ['jquery']
         }
-        execJasmine();
-      };
+      });
 
-      function execJasmine() {
-        jasmineEnv.execute();
-      }
+      require([
+        "jquery",
+        "../tests/spec/WorkspaceControllerSpec",
+        "domReady"],
+        function($, TestSpec, domReady) {
+        return domReady(function() {
+            var jasmineEnv = jasmine.getEnv();
+            jasmineEnv.updateInterval = 1000;
+
+            var htmlReporter = new jasmine.HtmlReporter();
+
+            jasmineEnv.addReporter(htmlReporter);
+
+            jasmineEnv.specFilter = function(spec) {
+              return htmlReporter.specFilter(spec);
+            };
+
+            jasmineEnv.execute();
+        });
+      });
+      
 
     })();
   </script>

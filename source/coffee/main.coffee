@@ -13,6 +13,7 @@ require
     domReady   : 'lib/domReady'
     json       : 'lib/json2'
     loader     : 'lib/heartcode-canvasloader'
+    swfobject  : 'lib/swfobject'
   priority: ['jquery']
   shim:
       'jquery' : 
