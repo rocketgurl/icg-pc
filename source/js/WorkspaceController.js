@@ -41,7 +41,7 @@
       stack_add: function(view) {
         var exists;
         exists = _.find(this.workspace_stack, function(item) {
-          return item.options.app === view.options.app;
+          return item.app.app === view.app.app;
         });
         if (!(exists != null)) {
           return this.workspace_stack.push(view);

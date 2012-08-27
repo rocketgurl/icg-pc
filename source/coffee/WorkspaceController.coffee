@@ -76,7 +76,7 @@ define [
     # Add a view to the stack, but check for duplicates first
     stack_add : (view) ->
       exists = _.find @workspace_stack, (item) ->
-        return item.options.app == view.options.app
+        return item.app.app == view.app.app
       if !exists?
         @workspace_stack.push view
 
