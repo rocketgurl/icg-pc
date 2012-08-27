@@ -214,7 +214,7 @@ define [
     # for valid credentials
     check_credentials : (username, password) ->
       @user = new UserModel
-          urlRoot    : ics360.services.ixdirectory + 'identities'
+          urlRoot    : @services.ixdirectory + 'identities'
           'username' : username
           'password' : password
 
@@ -282,7 +282,7 @@ define [
     #
     get_configs : ->
       @config = new ConfigModel
-        urlRoot : ics360.services.ixadmin
+        urlRoot : @services.ixadmin
       @config.fetch(
         success : (model, resp) =>
           menu = MenuHelper.build_menu(@user.get('document'), model.get('document'))
@@ -655,7 +655,7 @@ define [
 
     # Kick off the show
     init : () ->
-      @callback_delay 1000, =>
+      @callback_delay 100, =>
         @Router.controller = @
         Backbone.history.start()
         @check_cookie_identity()
