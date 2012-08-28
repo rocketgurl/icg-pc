@@ -36,7 +36,11 @@
         deps: ['jquery'],
         exports: 'CanvasLoader'
       },
-      'xml2json': ['jquery']
+      'xml2json': ['jquery'],
+      'swfobject': {
+        deps: ['require'],
+        exports: 'swfobject'
+      }
     }
   });
 

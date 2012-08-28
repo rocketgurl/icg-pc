@@ -19,7 +19,7 @@
     },
     modules: [
         {
-            name: "main"
+            name: "main",
             exclude: [
               "swfobject"
             ]
