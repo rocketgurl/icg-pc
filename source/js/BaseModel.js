@@ -18,6 +18,7 @@
         };
         if (tree != null) {
           out.document = tree;
+          out.raw_xml = xhr.responseText;
         }
         return out;
       },
