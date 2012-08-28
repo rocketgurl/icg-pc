@@ -32,6 +32,7 @@ define [
       out = { 'xhr' : xhr }
       if tree?
           out.document = tree
+          out.raw_xml  = xhr.responseText
       out
 
     # Response state (Hackety hack hack)
