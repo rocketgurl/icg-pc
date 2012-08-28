@@ -173,13 +173,15 @@ define [
     # validity. If no cookie present then just build the
     # login form as usual. 
     #
-    check_cookie_identity : () ->
+    check_cookie_identity : ->
       cookie = @Cookie.get(@COOKIE_NAME)
       if cookie?
         cookie = Base64.decode(cookie).split(':')
-        @check_credentials cookie[0], cookie[1]
+        if @check_credentials(cookie[0], cookie[1])
+          true
       else
         @Router.navigate('login', { trigger : true })
+        false
 
     # Drop an identity cookie in the browser.
     # This is in the form of a username:password digest
@@ -210,13 +212,15 @@ define [
 
       $('#header').css('height', '65px')
 
+      @login_view
+
     # Instantiate a new user and check ixDirectory
     # for valid credentials
     check_credentials : (username, password) ->
       @user = new UserModel
-          urlRoot    : @services.ixdirectory + 'identities'
-          'username' : username
-          'password' : password
+        urlRoot    : @services.ixdirectory + 'identities'
+        'username' : username
+        'password' : password
 
       # retrieve an identity document or fail
       @user.fetch(
@@ -230,6 +234,8 @@ define [
           error : (model, resp) =>
             @response_fail model, resp
         )
+
+      @user
 
     # Need to throw a nice error message
     response_fail : (model, resp) ->
@@ -309,11 +315,15 @@ define [
             # If current_state is not set, then we check localStorage to see if
             # there was a previous state saved, and try to use that one.
             #
-            @check_workspace_state() # Check for localStorage state
+            if @check_workspace_state() is false # Check for localStorage state
+              @navigation_view.toggle_nav_slide() # open main nav        
+              @navigation_view.$el.find('li a span').first().trigger('click') # select first item
+
             if @current_state?
               @trigger 'launch'
-            # else
-            #   @check_workspace_state() # Check for localStorage state
+
+            # Instantiate our SearchContextCollection
+            @setup_search_storage()
 
         # Try to throw a useful error message when possible.
         error : (model, resp) =>
@@ -334,14 +344,6 @@ define [
         @check_workspace_state()
       raw_storage = @Amplify.store()
 
-      # Setup collection to save search views in local storage. We
-      # need to attach this to the controller to ensure
-      # that models are passed around to many instances of 
-      # SearchModule. It's a hack, but it works for now.
-      @SEARCH.saved_searches = new SearchContextCollection()
-      @SEARCH.saved_searches.controller = @ # so we can phone home
-      @SEARCH.saved_searches.fetch()
-
       # If already a PC2 object then create model with its ID and fetch()
       # otherwise create a new model (which will get a new GUID)
       if raw_storage['ics_policy_central']?
@@ -355,19 +357,32 @@ define [
               success : (model, resp) =>
                 @current_state = model.get 'workspace'
                 @update_address()
+                true
               error : (model, resp) =>
                 # Make a new WorkspaceState as we had a problem.
                 @Amplify.publish 'controller', 'notice', "We had an issue with your saved state. Not major, but we're starting from scratch."
                 @workspace_state = new WorkspaceStateModel()
+                true
             )
-          
+          true          
       else
-        # If no localStorage data then make a blank Workspace model and
-        # slide open the menu as a default action to prompt interaction
+        # If no localStorage data then make a blank Workspace model 
+        # and return false
         @workspace_state = new WorkspaceStateModel()
-        @navigation_view.toggle_nav_slide() # open main nav        
-        @navigation_view.$el.find('li a span').first().trigger('click') # select first item
+        false
 
+
+    #### Setup Search Storage
+    #
+    # Setup collection to save search views in local storage. We
+    # need to attach this to the controller to ensure
+    # that models are passed around to many instances of 
+    # SearchModule. It's a hack, but it works for now.
+    setup_search_storage : ->
+      @SEARCH.saved_searches = new SearchContextCollection()
+      @SEARCH.saved_searches.controller = @ # so we can phone home
+      @SEARCH.saved_searches.fetch()
+      @SEARCH.saved_searches
 
     #### Check logged in state
     is_loggedin : ->

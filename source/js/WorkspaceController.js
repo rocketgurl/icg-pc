@@ -135,11 +135,14 @@
         cookie = this.Cookie.get(this.COOKIE_NAME);
         if (cookie != null) {
           cookie = Base64.decode(cookie).split(':');
-          return this.check_credentials(cookie[0], cookie[1]);
+          if (this.check_credentials(cookie[0], cookie[1])) {
+            return true;
+          }
         } else {
-          return this.Router.navigate('login', {
+          this.Router.navigate('login', {
             trigger: true
           });
+          return false;
         }
       },
       set_cookie_identity: function(digest) {
@@ -160,7 +163,8 @@
         if (this.navigation_view != null) {
           this.navigation_view.destroy();
         }
-        return $('#header').css('height', '65px');
+        $('#header').css('height', '65px');
+        return this.login_view;
       },
       check_credentials: function(username, password) {
         var _this = this;
@@ -169,7 +173,7 @@
           'username': username,
           'password': password
         });
-        return this.user.fetch({
+        this.user.fetch({
           success: function(model, resp) {
             _this.user.response_state();
             switch (_this.user.get('fetch_state').code) {
@@ -183,6 +187,7 @@
             return _this.response_fail(model, resp);
           }
         });
+        return this.user;
       },
       response_fail: function(model, resp) {
         this.Amplify.publish(this.login_view.cid, 'warning', "Sorry, your password or username was incorrect");
@@ -238,10 +243,14 @@
                 sub_nav: _this.config.get('menu_html').sub_nav
               });
               _this.navigation_view.render();
-              _this.check_workspace_state();
-              if (_this.current_state != null) {
-                return _this.trigger('launch');
+              if (_this.check_workspace_state() === false) {
+                _this.navigation_view.toggle_nav_slide();
+                _this.navigation_view.$el.find('li a span').first().trigger('click');
               }
+              if (_this.current_state != null) {
+                _this.trigger('launch');
+              }
+              return _this.setup_search_storage();
             }
           },
           error: function(model, resp) {
@@ -259,9 +268,6 @@
           this.check_workspace_state();
         }
         raw_storage = this.Amplify.store();
-        this.SEARCH.saved_searches = new SearchContextCollection();
-        this.SEARCH.saved_searches.controller = this;
-        this.SEARCH.saved_searches.fetch();
         if (raw_storage['ics_policy_central'] != null) {
           raw_storage = raw_storage['ics_policy_central'];
           raw_id = _.keys(raw_storage)[0];
@@ -269,22 +275,30 @@
             this.workspace_state = new WorkspaceStateModel({
               id: raw_id
             });
-            return this.workspace_state.fetch({
+            this.workspace_state.fetch({
               success: function(model, resp) {
                 _this.current_state = model.get('workspace');
-                return _this.update_address();
+                _this.update_address();
+                return true;
               },
               error: function(model, resp) {
                 _this.Amplify.publish('controller', 'notice', "We had an issue with your saved state. Not major, but we're starting from scratch.");
-                return _this.workspace_state = new WorkspaceStateModel();
+                _this.workspace_state = new WorkspaceStateModel();
+                return true;
               }
             });
+            return true;
           }
         } else {
           this.workspace_state = new WorkspaceStateModel();
-          this.navigation_view.toggle_nav_slide();
-          return this.navigation_view.$el.find('li a span').first().trigger('click');
+          return false;
         }
+      },
+      setup_search_storage: function() {
+        this.SEARCH.saved_searches = new SearchContextCollection();
+        this.SEARCH.saved_searches.controller = this;
+        this.SEARCH.saved_searches.fetch();
+        return this.SEARCH.saved_searches;
       },
       is_loggedin: function() {
         if (!(this.user != null)) {

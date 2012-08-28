@@ -1,8 +1,9 @@
 define [
   'BaseView',
   'Messenger',
-  'mustache'
-], (BaseView, Messenger, Mustache) ->
+  'mustache',
+  'text!templates/tpl_login.html'
+], (BaseView, Messenger, Mustache, tpl_login) ->
 
   WorkspaceLoginView = BaseView.extend
 
@@ -12,20 +13,16 @@ define [
     events :
       "submit form" : "get_credentials"
 
-    initialize : (options) ->
-      @template = options.template if options.template?
-
     # Render login form
-    render : () ->
-      html = Mustache.render $('#tpl-flash-message').html(), { cid : @cid }
-      html += @template.html()
+    render : ->
+      html = Mustache.render tpl_login, { cid : @cid }
       @$el.html html
 
       # Register flash message pubsub for this view
       @messenger = new Messenger(@, @cid)
 
     # Destroy
-    destroy : () ->
+    destroy : ->
       @$el.html('')
 
     # Get creds from form and pass to controller
