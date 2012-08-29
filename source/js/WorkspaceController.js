@@ -217,8 +217,16 @@
         this.hide_workspace_button();
         if (this.navigation_view != null) {
           this.navigation_view.destroy();
-          return this.teardown_workspace();
+          this.teardown_workspace();
         }
+        return this.destroy_workspace_model();
+      },
+      destroy_workspace_model: function() {
+        if (this.workspace_state != null) {
+          this.workspace_state.destroy();
+          this.workspace_state = null;
+        }
+        return this.Amplify.store('ics_policy_central', null);
       },
       get_configs: function() {
         var _this = this;

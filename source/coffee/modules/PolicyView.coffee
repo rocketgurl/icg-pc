@@ -95,6 +95,9 @@ define [
     # When the SWF calls ready() this is fired and passed
     # policy data along
     initialize_swf : ->
+      console.log @controller.config
+      console.log @options.module
+
       obj      = swfobject.getObjectById("policy-summary-#{@cid}");
       digest   = Base64.decode(@model.get('digest')).split ':'
       settings =
@@ -102,7 +105,7 @@ define [
         "policyId"        : @model.id
 
       if digest[0]? and digest[1]?
-        obj.init(digest[0], digest[1], @model.get('raw_xml'), settings)
+        obj.init(digest[0], digest[1], @controller.config.get('raw_xml'), settings)
 
     # Load mxAdmin into workarea and inject policy header
     show_ipmchanges : ->

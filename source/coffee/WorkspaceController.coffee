@@ -276,9 +276,18 @@ define [
       @reset_admin_links()
       @set_breadcrumb()
       @hide_workspace_button()
+
       if @navigation_view?
         @navigation_view.destroy()
         @teardown_workspace()
+
+      @destroy_workspace_model()
+
+    destroy_workspace_model : ->
+      if @workspace_state?
+        @workspace_state.destroy() 
+        @workspace_state = null
+      @Amplify.store('ics_policy_central', null)
 
     #### Get Configuration Files
     #

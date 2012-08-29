@@ -72,6 +72,8 @@
       },
       initialize_swf: function() {
         var digest, obj, settings;
+        console.log(this.controller.config);
+        console.log(this.options.module);
         obj = swfobject.getObjectById("policy-summary-" + this.cid);
         digest = Base64.decode(this.model.get('digest')).split(':');
         settings = {
@@ -79,7 +81,7 @@
           "policyId": this.model.id
         };
         if ((digest[0] != null) && (digest[1] != null)) {
-          return obj.init(digest[0], digest[1], this.model.get('raw_xml'), settings);
+          return obj.init(digest[0], digest[1], this.controller.config.get('raw_xml'), settings);
         }
       },
       show_ipmchanges: function() {
