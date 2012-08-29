@@ -11,7 +11,7 @@
         this.app = app;
         if (this.app.app != null) {
           this.app_name = this.get_app_name(this.app.app);
-          this.default_workspace = this.get_modules(this.app_name);
+          this.default_workspace = this.combine(this.get_modules(this.app_name));
         }
         this;
 
@@ -46,6 +46,18 @@
           definition.app.params = definition.params;
         }
         return definition;
+      };
+
+      AppRules.prototype.combine = function(definitions) {
+        var definition, _i, _len;
+        if (this.app.context != null) {
+          this.app.context.application = this.app.app;
+          for (_i = 0, _len = definitions.length; _i < _len; _i++) {
+            definition = definitions[_i];
+            definition.app.context = this.app.context;
+          }
+        }
+        return definitions;
       };
 
       AppRules.prototype.policy_search = {

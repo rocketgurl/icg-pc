@@ -95,8 +95,13 @@ define [
     # When the SWF calls ready() this is fired and passed
     # policy data along
     initialize_swf : ->
-      console.log @controller.config
-      console.log @options.module
+      # doc.find('Customers Customer[type=Insured] DataItem[name=AdditionalInsured1FirstName]').attr('value')
+      if @options.module.app?
+        context = @options.module.app.context
+
+      doc = @controller.config.get('document')
+      config = doc.find("ConfigItem[name=#{context.parent_app}] ConfigItem[name=businesses] ConfigItem[name=#{context.businesses.name}] ConfigItem[name=#{window.ICS360_ENV}]")
+      serializer = new XMLSerializer()
 
       obj      = swfobject.getObjectById("policy-summary-#{@cid}");
       digest   = Base64.decode(@model.get('digest')).split ':'
@@ -104,8 +109,12 @@ define [
         "parentAuthtoken" : "Y29tLmljczM2MC5hcHBzLmluc2lnaHRjZW50cmFsOjg4NTllY2IzNmU1ZWIyY2VkZTkzZTlmYTc1YzYxZDRl",
         "policyId"        : @model.id
 
+      console.log digest
+      console.log settings
+      console.log serializer.serializeToString(config[0])
+
       if digest[0]? and digest[1]?
-        obj.init(digest[0], digest[1], @controller.config.get('raw_xml'), settings)
+        obj.init(digest[0], digest[1], serializer.serializeToString(config[0]), settings)
 
     # Load mxAdmin into workarea and inject policy header
     show_ipmchanges : ->

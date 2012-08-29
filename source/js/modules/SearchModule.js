@@ -9,6 +9,7 @@
         this.view = view;
         this.app = app;
         this.params = params;
+        console.log(this.app);
         this.load();
       }
 

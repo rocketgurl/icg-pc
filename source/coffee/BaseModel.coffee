@@ -28,11 +28,14 @@ define [
     # Setup XML parsing using CrippledClient
     xmlSync  : XMLSync
     xmlParse : (response, xhr) ->
-      tree = $(response) if response?
+      tree   = response if response?
+      xmlstr = if response.xml then response.xml else (new XMLSerializer()).serializeToString(response)
+      tree   = $.parseXML(xmlstr)
       out = { 'xhr' : xhr }
       if tree?
-          out.document = tree
-          out.raw_xml  = xhr.responseText
+          out.document   = $(tree)
+          out.raw_xml    = xhr.responseText
+          out.string_xml = xmlstr
       out
 
     # Response state (Hackety hack hack)

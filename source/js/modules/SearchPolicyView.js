@@ -42,9 +42,11 @@
         e.preventDefault();
         $el = $(e.currentTarget);
         identifiers = this.model.get('identifiers');
+        this.module.app.context.parent_app = this.module.app.context.application;
         params = {
           id: $el.attr('id'),
-          url: identifiers.QuoteNumber
+          url: identifiers.QuoteNumber,
+          context: this.module.app.context
         };
         this.module.view.options.controller.launch_module('policyview', params);
         return this.module.view.options.controller.Router.append_module('policyview', params);

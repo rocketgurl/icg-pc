@@ -19,6 +19,7 @@ define [
     #
     constructor : (@view, @app, @params) ->
       # Kick off application
+      console.log @app
       @load()
       
     # Any bootstrapping should happen here. When done remove the loader image.

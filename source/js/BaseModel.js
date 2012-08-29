@@ -9,16 +9,19 @@
       crippledClientSync: CrippledClientSync,
       xmlSync: XMLSync,
       xmlParse: function(response, xhr) {
-        var out, tree;
+        var out, tree, xmlstr;
         if (response != null) {
-          tree = $(response);
+          tree = response;
         }
+        xmlstr = response.xml ? response.xml : (new XMLSerializer()).serializeToString(response);
+        tree = $.parseXML(xmlstr);
         out = {
           'xhr': xhr
         };
         if (tree != null) {
-          out.document = tree;
+          out.document = $(tree);
           out.raw_xml = xhr.responseText;
+          out.string_xml = xmlstr;
         }
         return out;
       },

@@ -417,6 +417,7 @@ define [
 
       group_label = apps = menu[@current_state.business].contexts[@current_state.context].label
       apps = menu[@current_state.business].contexts[@current_state.context].apps
+
       app = _.find apps, (app) =>
         app.app is @current_state.app
 
@@ -513,11 +514,17 @@ define [
       safe_app_name = "#{Helpers.id_safe(module)}"
       safe_app_name += "_#{Helpers.id_safe(params.url)}" if params.url?
 
+      contect = null
+      if params.context?
+        context = params.context
+        delete params['context']
+
       # Setup the app object to launch policy view with
       app =
         app       : safe_app_name
         app_label : "#{Helpers.uc_first(module)}: #{params.url}"
         params    : params
+        context   : context
 
       app.app.params = params
 

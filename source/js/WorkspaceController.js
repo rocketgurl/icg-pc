@@ -374,7 +374,7 @@
         return _results;
       },
       launch_module: function(module, params) {
-        var app, safe_app_name, stack_check;
+        var app, contect, context, safe_app_name, stack_check;
         if (params == null) {
           params = {};
         }
@@ -382,10 +382,16 @@
         if (params.url != null) {
           safe_app_name += "_" + (Helpers.id_safe(params.url));
         }
+        contect = null;
+        if (params.context != null) {
+          context = params.context;
+          delete params['context'];
+        }
         app = {
           app: safe_app_name,
           app_label: "" + (Helpers.uc_first(module)) + ": " + params.url,
-          params: params
+          params: params,
+          context: context
         };
         app.app.params = params;
         stack_check = this.stack_get(safe_app_name);

@@ -13,7 +13,7 @@ define [
     constructor : (@app) ->
       if @app.app?
         @app_name           = @get_app_name @app.app
-        @default_workspace  = @get_modules @app_name
+        @default_workspace  = @combine(@get_modules(@app_name))
       @
 
     # Derive app name
@@ -43,6 +43,16 @@ define [
       if definition.params?
         definition.app.params = definition.params
       definition
+
+    # Make sure every app has the original Context available
+    combine : (definitions) ->
+      if @app.context?
+        # orignal app name
+        @app.context.application = @app.app
+        
+        for definition in definitions
+          definition.app.context = @app.context
+      definitions
 
     # RULEZ Definitions
     policy_search :

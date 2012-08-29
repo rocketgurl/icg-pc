@@ -50,10 +50,14 @@ define [
 
       identifiers = @model.get('identifiers')
 
+      # We need to tell the policyView which app it came from
+      @module.app.context.parent_app = @module.app.context.application
+
       # Setup the params object to launch policy view with
       params =
-        id  : $el.attr('id')
-        url : identifiers.QuoteNumber
+        id      : $el.attr('id')
+        url     : identifiers.QuoteNumber
+        context : @module.app.context
 
       @module.view.options.controller.launch_module 'policyview', params
       @module.view.options.controller.Router.append_module 'policyview', params
