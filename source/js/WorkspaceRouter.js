@@ -12,9 +12,7 @@
         '*root': 'root'
       },
       initialize: function(options) {},
-      root: function(root) {
-        return console.log('root');
-      },
+      root: function(root) {},
       login: function() {
         return this.controller.trigger('login');
       },

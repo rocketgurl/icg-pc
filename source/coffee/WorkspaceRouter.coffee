@@ -21,7 +21,6 @@ define [
     initialize : (options) ->
 
     root : (root) ->
-      console.log 'root'
 
     # Render login form
     login : ->
