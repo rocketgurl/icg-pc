@@ -1,10 +1,11 @@
 define [
   'BaseView',
   'Messenger',
+  'base64',
   'text!templates/tpl_policy_container.html',
   'text!templates/tpl_ipm_header.html',
   'swfobject'
-], (BaseView, Messenger, tpl_policy_container, tpl_ipm_header, swfobject) ->
+], (BaseView, Messenger, Base64, tpl_policy_container, tpl_ipm_header, swfobject) ->
 
   PolicyView = BaseView.extend
 
@@ -17,6 +18,11 @@ define [
       @el         = options.view.el
       @$el        = options.view.$el
       @controller = options.view.options.controller
+
+      # Attach function to window to catch ready() calls
+      # from PolicySummary SWF
+      window.policyViewInitSWF = =>
+        @initialize_swf()
 
     render : (options) ->
       # Setup flash module & search container
@@ -73,22 +79,39 @@ define [
         'height'     : $(window).height() - (220 + offset)
         )
 
-
     # Load Flex Policy Summary
     show_overview : ->
       @policy_header.hide()
       @iframe.hide()
-      @policy_summary.show()
       @resize_element @policy_summary
 
-      # Load Flash
+      # If this el is missing then create it
+      if @$el.find("#policy-summary-#{@cid}").length is 0
+        @$el.find("#policy-header-#{@cid}").after(@policy_summary)
+
+      @policy_summary.show()
+      swfobject.embedSWF("../swf/PolicySummary.swf", "policy-summary-#{@cid}", "100%", @policy_summary.height(), "9.0.0");
+
+    # When the SWF calls ready() this is fired and passed
+    # policy data along
+    initialize_swf : ->
+      obj      = swfobject.getObjectById("policy-summary-#{@cid}");
+      digest   = Base64.decode(@model.get('digest')).split ':'
+      settings =
+        "parentAuthtoken" : "Y29tLmljczM2MC5hcHBzLmluc2lnaHRjZW50cmFsOjg4NTllY2IzNmU1ZWIyY2VkZTkzZTlmYTc1YzYxZDRl",
+        "policyId"        : @model.id
+
+      if digest[0]? and digest[1]?
+        obj.init(digest[0], digest[1], @model.get('raw_xml'), settings)
 
     # Load mxAdmin into workarea and inject policy header
     show_ipmchanges : ->
       header = @Mustache.render tpl_ipm_header, @model.get_ipm_header()
       @policy_header.html(header)
       @policy_header.show()
+
       @policy_summary.hide()
+      swfobject.removeSWF("policy-summary-#{@cid}")
 
       @iframe.show()
       @iframe.attr('src', '/mxadmin/index.html')
