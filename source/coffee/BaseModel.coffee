@@ -2,11 +2,11 @@ define [
   'jquery', 
   'underscore',
   'backbone',
-  'Store',
+  'amplify',
   'LocalStorageSync',
   'CrippledClientSync',
   'xmlSync'
-], ($, _, Backbone, Store, LocalStorageSync, CrippledClientSync, XMLSync) ->
+], ($, _, Backbone, amplify, LocalStorageSync, CrippledClientSync, XMLSync) ->
 
   #### BaseModel
   #
