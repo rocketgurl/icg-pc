@@ -72,7 +72,7 @@ define [
     # Put tab into active state 
     activate : ->
       @tab.addClass('selected')
-      @$el.show();
+      @$el.show()
 
     # Put tab into inactive state
     deactivate : ->

@@ -35,6 +35,7 @@
         this.policy_nav_links = this.$el.find("#policy-nav-" + this.cid + " a");
         this.policy_summary = this.$el.find("#policy-summary-" + this.cid);
         this.messenger = new Messenger(this.options.view, this.cid);
+        console.log('render');
         return this.show_overview();
       },
       toggle_nav_state: function(el) {
@@ -67,16 +68,23 @@
         if (this.$el.find("#policy-summary-" + this.cid).length === 0) {
           this.$el.find("#policy-header-" + this.cid).after(this.policy_summary);
         }
-        this.policy_summary.show();
-        return swfobject.embedSWF("../swf/PolicySummary.swf", "policy-summary-" + this.cid, "100%", this.policy_summary.height(), "9.0.0");
+        if (this.$el.find("#policy-summary-" + this.cid).length > 0) {
+          this.policy_summary.show();
+          return swfobject.embedSWF("../swf/PolicySummary.swf", "policy-summary-" + this.cid, "100%", this.policy_summary.height(), "9.0.0", null, null, {
+            allowScriptAccess: 'always'
+          });
+        }
       },
       initialize_swf: function() {
-        var config, context, digest, doc, obj, serializer, settings;
+        var config, context, digest, doc, obj, serializer, settings, _ref;
         if (this.options.module.app != null) {
           context = this.options.module.app.context;
         }
+        if ((_ref = context.parent_app) == null) {
+          context.parent_app = this.options.module.app.app;
+        }
         doc = this.controller.config.get('document');
-        config = doc.find("ConfigItem[name=" + context.parent_app + "] ConfigItem[name=businesses] ConfigItem[name=" + context.businesses.name + "] ConfigItem[name=" + window.ICS360_ENV + "]");
+        config = doc.find("ConfigItem[name=" + context.parent_app + "] ConfigItem[name=businesses] ConfigItem[name=" + context.businesses.name + "] ConfigItem[name=production]");
         serializer = new XMLSerializer();
         obj = swfobject.getObjectById("policy-summary-" + this.cid);
         digest = Base64.decode(this.model.get('digest')).split(':');

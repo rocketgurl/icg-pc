@@ -48,7 +48,7 @@ define [
 
       # Register flash message pubsub for this view
       @messenger = new Messenger(@options.view, @cid)
-
+      console.log 'render'
       @show_overview()
 
     # Switch nav items on/off
@@ -89,18 +89,32 @@ define [
       if @$el.find("#policy-summary-#{@cid}").length is 0
         @$el.find("#policy-header-#{@cid}").after(@policy_summary)
 
-      @policy_summary.show()
-      swfobject.embedSWF("../swf/PolicySummary.swf", "policy-summary-#{@cid}", "100%", @policy_summary.height(), "9.0.0");
+      if @$el.find("#policy-summary-#{@cid}").length > 0
+        @policy_summary.show()
+        #swfobject.embedSWF(swfUrlStr, replaceElemIdStr, widthStr, heightStr, swfVersionStr, xiSwfUrlStr, flashvarsObj, parObj, attObj, callbackFn)
+        swfobject.embedSWF(
+          "../swf/PolicySummary.swf",
+          "policy-summary-#{@cid}",
+          "100%",
+          @policy_summary.height(),
+          "9.0.0"
+          null,
+          null,
+          {
+            allowScriptAccess : 'always'
+            }
+        )
 
     # When the SWF calls ready() this is fired and passed
     # policy data along
     initialize_swf : ->
-      # doc.find('Customers Customer[type=Insured] DataItem[name=AdditionalInsured1FirstName]').attr('value')
       if @options.module.app?
         context = @options.module.app.context
 
+      context.parent_app ?= @options.module.app.app
+
       doc = @controller.config.get('document')
-      config = doc.find("ConfigItem[name=#{context.parent_app}] ConfigItem[name=businesses] ConfigItem[name=#{context.businesses.name}] ConfigItem[name=#{window.ICS360_ENV}]")
+      config = doc.find("ConfigItem[name=#{context.parent_app}] ConfigItem[name=businesses] ConfigItem[name=#{context.businesses.name}] ConfigItem[name=production]")
       serializer = new XMLSerializer()
 
       obj      = swfobject.getObjectById("policy-summary-#{@cid}");
