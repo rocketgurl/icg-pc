@@ -9,8 +9,11 @@
 require "bundler"
 require "fileutils"
 
+# Path to RquireJS build config
+RJS_CONFIG = File.join('source', 'js', 'app.build.js').gsub(File::SEPARATOR, File::ALT_SEPARATOR || File::SEPARATOR)
+
 # Build command for RequireJS / Uglify.js
-RJS_BUILD = "r.js -o source/js/app.build.js"
+RJS_BUILD = "#{ENV['REQUIRE_JS_PATH']} -o #{RJS_CONFIG}"
 
 # Build location
 BUILD_DIR = "build"
