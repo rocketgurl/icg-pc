@@ -42,14 +42,10 @@ require [
   "domReady"
 ], ($, _, WorkspaceController, amplify, CanvasLoader, domReady) ->
 
-  # Ensure we have an XMLSerializing facility available
-  # if not window.XMLSerializer
-  #   window.XMLSerializer = ->
-
-  #   window.XMLSerializer.prototype.serializeToString = ( XMLObject ) ->
-  #     XMLObject.xml || ''
-
   # Initialize application when dom is ready
   domReady ->
-    WorkspaceController.init()
+    # Oh yes we did! Attached WorkspaceController to the window,
+    # because it makes debugging a helluva lot easier.
+    window.workspace = WorkspaceController
+    window.workspace.init()
     

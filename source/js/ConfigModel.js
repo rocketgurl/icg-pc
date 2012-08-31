@@ -7,6 +7,21 @@
       initialize: function() {
         this.use_xml();
         return this.urlRoot = this.get('urlRoot');
+      },
+      get_config: function(workspace) {
+        var config, doc, serializer;
+        if (!(this.get('document') != null)) {
+          false;
+        }
+        doc = this.get('document');
+        config = doc.find("ConfigItem[name=" + workspace.app + "] ConfigItem[name=businesses] ConfigItem[name=" + workspace.business + "] ConfigItem[name=production]");
+        serializer = new XMLSerializer();
+        if (config[0] != null) {
+          this.set('swf_config', serializer.serializeToString(config[0]));
+          return this.get('swf_config');
+        } else {
+          return false;
+        }
       }
     });
     return ConfigModel;

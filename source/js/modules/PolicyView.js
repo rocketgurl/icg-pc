@@ -76,27 +76,23 @@
         }
       },
       initialize_swf: function() {
-        var config, context, digest, doc, obj, serializer, settings, _ref;
-        if (this.options.module.app != null) {
-          context = this.options.module.app.context;
+        var config, digest, obj, settings, workspace;
+        workspace = this.controller.workspace_state.get('workspace');
+        config = this.controller.config.get_config(workspace);
+        console.log(workspace);
+        if (!(config != null)) {
+          this.Amplify.publish(this.cid, 'warning', "There was a problem with the configuration for this policy. Sorry.");
         }
-        if ((_ref = context.parent_app) == null) {
-          context.parent_app = this.options.module.app.app;
-        }
-        doc = this.controller.config.get('document');
-        config = doc.find("ConfigItem[name=" + context.parent_app + "] ConfigItem[name=businesses] ConfigItem[name=" + context.businesses.name + "] ConfigItem[name=production]");
-        serializer = new XMLSerializer();
         obj = swfobject.getObjectById("policy-summary-" + this.cid);
         digest = Base64.decode(this.model.get('digest')).split(':');
         settings = {
           "parentAuthtoken": "Y29tLmljczM2MC5hcHBzLmluc2lnaHRjZW50cmFsOjg4NTllY2IzNmU1ZWIyY2VkZTkzZTlmYTc1YzYxZDRl",
           "policyId": this.model.id
         };
-        console.log(digest);
-        console.log(settings);
-        console.log(serializer.serializeToString(config[0]));
         if ((digest[0] != null) && (digest[1] != null)) {
-          return obj.init(digest[0], digest[1], serializer.serializeToString(config[0]), settings);
+          return obj.init(digest[0], digest[1], config, settings);
+        } else {
+          return this.Amplify.publish(this.cid, 'warning', "There your credentials for this policy. Sorry.");
         }
       },
       show_ipmchanges: function() {

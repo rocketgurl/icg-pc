@@ -46,7 +46,8 @@
 
   require(["jquery", "underscore", "WorkspaceController", "amplify", "loader", "domReady"], function($, _, WorkspaceController, amplify, CanvasLoader, domReady) {
     return domReady(function() {
-      return WorkspaceController.init();
+      window.workspace = WorkspaceController;
+      return window.workspace.init();
     });
   });
 
