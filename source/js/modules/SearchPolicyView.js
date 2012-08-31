@@ -42,7 +42,6 @@
         e.preventDefault();
         $el = $(e.currentTarget);
         identifiers = this.model.get('identifiers');
-        this.module.app.context.parent_app = this.module.app.context.application;
         params = {
           id: $el.attr('id'),
           url: identifiers.QuoteNumber,

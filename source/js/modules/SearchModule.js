@@ -9,6 +9,7 @@
         this.view = view;
         this.app = app;
         this.params = params;
+        _.extend(this, Backbone.Events);
         this.load();
       }
 

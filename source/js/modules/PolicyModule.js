@@ -14,6 +14,7 @@
         if (this.app.params != null) {
           this.params = this.app.params;
         }
+        _.extend(this, Backbone.Events);
         this.load();
       }
 
@@ -39,7 +40,7 @@
           model: this.policy_model
         });
         this.messenger = new Messenger(this.policy_view, this.policy_view.cid);
-        return this.policy_model.fetch({
+        this.policy_model.fetch({
           headers: {
             'Authorization': "Basic " + (this.view.options.controller.user.get('digest')),
             'X-Authorization': "Basic " + (this.view.options.controller.user.get('digest'))
@@ -65,6 +66,9 @@
             _this.view.remove_loader();
             return _this.Amplify.publish(_this.policy_view.cid, 'warning', "" + ($(resp).find('p').text()) + " Sorry.");
           }
+        });
+        return this.on('activate', function() {
+          return this.policy_view.trigger('activate');
         });
       };
 

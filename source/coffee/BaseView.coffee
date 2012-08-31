@@ -3,8 +3,9 @@ define [
   'underscore',
   'backbone',
   'mustache',
-  'amplify'
-], ($, _, Backbone, Mustache, amplify) ->
+  'amplify',
+  'Helpers'
+], ($, _, Backbone, Mustache, amplify, Helpers) ->
 
   BaseView = Backbone.View.extend
 
@@ -20,6 +21,9 @@ define [
 
     # Profide Mustache to all views
     Mustache : Mustache
+
+    # Provide Helpers to all views
+    Helpers : Helpers
 
     # Simple logger pubsub
     logger : (msg) ->

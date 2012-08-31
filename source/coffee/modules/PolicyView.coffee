@@ -15,14 +15,18 @@ define [
     # We need to brute force the View's container to the 
     # WorkspaceCanvasView's el
     initialize : (options) ->
-      @el         = options.view.el
-      @$el        = options.view.$el
-      @controller = options.view.options.controller
+      @el           = options.view.el
+      @$el          = options.view.$el
+      @controller   = options.view.options.controller
+      @flash_loaded = false
 
-      # Attach function to window to catch ready() calls
-      # from PolicySummary SWF
-      window.policyViewInitSWF = =>
-        @initialize_swf()
+      # If flash is not loaded, then on an activate event
+      # we need to load the flash up. This prevents us
+      # from loading always switching to the overview
+      # on tab activation
+      @on 'activate', () ->
+        if @flash_loaded is false
+          @show_overview()
 
     render : (options) ->
       # Setup flash module & search container
@@ -32,6 +36,7 @@ define [
         html += @Mustache.render tpl_policy_container, { auth_digest : @model.get('digest'), policy_id : @model.get('pxServerIndex'), cid : @cid }
       
       @$el.html html
+      @$el.hide()
 
       # Namespace page elements
       #
@@ -48,8 +53,9 @@ define [
 
       # Register flash message pubsub for this view
       @messenger = new Messenger(@options.view, @cid)
-      console.log 'render'
-      @show_overview()
+
+      if @controller.active_view.cid == @options.view.cid
+        @show_overview()
 
     # Switch nav items on/off
     toggle_nav_state : (el) ->
@@ -81,8 +87,11 @@ define [
 
     # Load Flex Policy Summary
     show_overview : ->
-      @policy_header.hide()
-      @iframe.hide()
+      @$el.show()
+      if @policy_header
+        @policy_header.hide()
+        @iframe.hide()
+
       @resize_element @policy_summary
 
       # If this el is missing then create it
@@ -91,7 +100,7 @@ define [
 
       if @$el.find("#policy-summary-#{@cid}").length > 0
         @policy_summary.show()
-        #swfobject.embedSWF(swfUrlStr, replaceElemIdStr, widthStr, heightStr, swfVersionStr, xiSwfUrlStr, flashvarsObj, parObj, attObj, callbackFn)
+
         swfobject.embedSWF(
           "../swf/PolicySummary.swf",
           "policy-summary-#{@cid}",
@@ -102,16 +111,26 @@ define [
           null,
           {
             allowScriptAccess : 'always'
-            }
+          },
+          null,
+          (e) =>
+            @flash_callback(e)
         )
+
+    flash_callback : (e) ->
+      if not e.success or e.success is not true
+        @Amplify.publish(@cid, 'warning', "We could not launch the Flash player to load the summary. Sorry.")
+        return false
+
+      # Grab the SWF ready() function for ourselves!
+      window.policyViewInitSWF = =>
+        @initialize_swf()
 
     # When the SWF calls ready() this is fired and passed
     # policy data along
     initialize_swf : ->
       workspace = @controller.workspace_state.get('workspace')
       config    = @controller.config.get_config(workspace)
-
-      console.log workspace
 
       if not config?
         @Amplify.publish(@cid, 'warning', "There was a problem with the configuration for this policy. Sorry.")
@@ -125,7 +144,9 @@ define [
       if digest[0]? and digest[1]?
         obj.init(digest[0], digest[1], config, settings)
       else
-        @Amplify.publish(@cid, 'warning', "There your credentials for this policy. Sorry.")
+        @Amplify.publish(@cid, 'warning', "There was a problem with your credentials for this policy. Sorry.")
+
+      @flash_loaded = true # set state
 
     # Load mxAdmin into workarea and inject policy header
     show_ipmchanges : ->

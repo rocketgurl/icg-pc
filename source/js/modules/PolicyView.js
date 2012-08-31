@@ -8,13 +8,15 @@
         "click .policy-nav a": "dispatch"
       },
       initialize: function(options) {
-        var _this = this;
         this.el = options.view.el;
         this.$el = options.view.$el;
         this.controller = options.view.options.controller;
-        return window.policyViewInitSWF = function() {
-          return _this.initialize_swf();
-        };
+        this.flash_loaded = false;
+        return this.on('activate', function() {
+          if (this.flash_loaded === false) {
+            return this.show_overview();
+          }
+        });
       },
       render: function(options) {
         var html;
@@ -29,14 +31,16 @@
           });
         }
         this.$el.html(html);
+        this.$el.hide();
         this.iframe_id = "#policy-iframe-" + this.cid;
         this.iframe = this.$el.find(this.iframe_id);
         this.policy_header = this.$el.find("#policy-header-" + this.cid);
         this.policy_nav_links = this.$el.find("#policy-nav-" + this.cid + " a");
         this.policy_summary = this.$el.find("#policy-summary-" + this.cid);
         this.messenger = new Messenger(this.options.view, this.cid);
-        console.log('render');
-        return this.show_overview();
+        if (this.controller.active_view.cid === this.options.view.cid) {
+          return this.show_overview();
+        }
       },
       toggle_nav_state: function(el) {
         this.policy_nav_links.removeClass('select');
@@ -62,8 +66,12 @@
         });
       },
       show_overview: function() {
-        this.policy_header.hide();
-        this.iframe.hide();
+        var _this = this;
+        this.$el.show();
+        if (this.policy_header) {
+          this.policy_header.hide();
+          this.iframe.hide();
+        }
         this.resize_element(this.policy_summary);
         if (this.$el.find("#policy-summary-" + this.cid).length === 0) {
           this.$el.find("#policy-header-" + this.cid).after(this.policy_summary);
@@ -72,14 +80,25 @@
           this.policy_summary.show();
           return swfobject.embedSWF("../swf/PolicySummary.swf", "policy-summary-" + this.cid, "100%", this.policy_summary.height(), "9.0.0", null, null, {
             allowScriptAccess: 'always'
+          }, null, function(e) {
+            return _this.flash_callback(e);
           });
         }
+      },
+      flash_callback: function(e) {
+        var _this = this;
+        if (!e.success || e.success === !true) {
+          this.Amplify.publish(this.cid, 'warning', "We could not launch the Flash player to load the summary. Sorry.");
+          return false;
+        }
+        return window.policyViewInitSWF = function() {
+          return _this.initialize_swf();
+        };
       },
       initialize_swf: function() {
         var config, digest, obj, settings, workspace;
         workspace = this.controller.workspace_state.get('workspace');
         config = this.controller.config.get_config(workspace);
-        console.log(workspace);
         if (!(config != null)) {
           this.Amplify.publish(this.cid, 'warning', "There was a problem with the configuration for this policy. Sorry.");
         }
@@ -90,10 +109,11 @@
           "policyId": this.model.id
         };
         if ((digest[0] != null) && (digest[1] != null)) {
-          return obj.init(digest[0], digest[1], config, settings);
+          obj.init(digest[0], digest[1], config, settings);
         } else {
-          return this.Amplify.publish(this.cid, 'warning', "There your credentials for this policy. Sorry.");
+          this.Amplify.publish(this.cid, 'warning', "There was a problem with your credentials for this policy. Sorry.");
         }
+        return this.flash_loaded = true;
       },
       show_ipmchanges: function() {
         var header;

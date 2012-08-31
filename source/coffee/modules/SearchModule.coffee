@@ -18,6 +18,9 @@ define [
     # @param `params` _Object_ Applications specific params
     #
     constructor : (@view, @app, @params) ->
+      # Bind events
+      _.extend @, Backbone.Events
+      
       # Kick off application
       @load()
       

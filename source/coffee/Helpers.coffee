@@ -52,4 +52,12 @@ define [
       cl.show()
       return cl
 
+    # Simple wrapper on setTimeout
+    callback_delay : (ms, func) =>
+      setTimeout func, ms
+
+    # Return a random number tween min and max
+    random : (min, max) ->
+      Math.floor(Math.random() * (max - min + 1)) + min
+
   Helpers

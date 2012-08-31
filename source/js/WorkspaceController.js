@@ -501,7 +501,8 @@
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           view = _ref[_i];
           if (app_name === view.app.app) {
-            _results.push(view.activate());
+            view.activate();
+            _results.push(this.active_view = view);
           } else {
             _results.push(view.deactivate());
           }

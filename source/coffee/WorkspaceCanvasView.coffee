@@ -17,7 +17,8 @@ define [
       @$tab_el      = options.controller.$workspace_tabs
       @template     = options.template if options.template?
       @template_tab = if options.template_tab? then options.template_tab else $('#tpl-workspace-tab').html()
-      @params = options.params ? null
+      @params       = options.params ? null
+      @reactivate   = false
 
       # No app, throw a big error
       if !options.app?
@@ -44,7 +45,7 @@ define [
     # 4. Inject all of this into DOM and add Tab
     # 5. Tell the controller we're here.
     #
-    render : () ->
+    render : ->
 
       # Drop loader image into place until our Module is good and ready
       @$el.html Mustache.render tpl_module_loader, {module_name : @app.app_label, app : @app.app}
@@ -73,6 +74,8 @@ define [
     activate : ->
       @tab.addClass('selected')
       @$el.show()
+      if @module
+        @module.trigger 'activate'
 
     # Put tab into inactive state
     deactivate : ->

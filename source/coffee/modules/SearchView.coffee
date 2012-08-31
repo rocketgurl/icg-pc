@@ -43,14 +43,13 @@ define [
       # @policies.url = '/mocks/search_response_v2.json'
       @policies.container = @
 
-      @params = @module.app.params ? {}
+      # Use this to breakout of loops
+      @fetch_count = 0
 
       # Load any passed parameters into view
-      # if @module.app.params?
-      #   @params = @module.app.params
+      @params = @module.app.params ? {}
 
       @menu_cache[@cid] = {} # We need to namespace the cache with CID
-
 
     render : () ->
       # Setup flash module & search container
@@ -120,13 +119,26 @@ define [
       @loader_ui(true)
       @policies.reset() # wipe out the collection models
 
+      # If we can't get the user's credentials we try up to 10
+      # times before we bail out with a warning.
+      digest = @controller.user.get('digest')
+      if digest is undefined
+        if @fetch_count < 10
+          @fetch(query)
+          @fetch_count++
+        else
+          @Amplify.publish @cid, 'warning', "There was a problem with your credentials. Try a page refresh."
+          return
+      else
+        @fetch_count = 0
+
       # Set Basic Auth headers to request and attempt to
       # get some policies
       @policies.fetch(
         data    : query
         headers :
-          'X-Authorization' : "Basic #{@controller.user.get('digest')}"
-          'Authorization'   : "Basic #{@controller.user.get('digest')}"
+          'X-Authorization' : "Basic #{digest}"
+          'Authorization'   : "Basic #{digest}"
         success : (collection, resp) =>
           #check for empty requests
           if collection.models.length == 0

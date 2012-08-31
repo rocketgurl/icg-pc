@@ -656,6 +656,7 @@ define [
       for view in @workspace_stack
         if app_name == view.app.app
           view.activate()
+          @active_view = view
         else
           view.deactivate()
 

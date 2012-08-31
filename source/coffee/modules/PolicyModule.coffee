@@ -25,6 +25,9 @@ define [
       # Make sure we have some kind of params
       @params = @app.params if @app.params?
 
+      # Bind events
+      _.extend @, Backbone.Events
+
       # Kick off application
       @load()
       
@@ -70,6 +73,10 @@ define [
           @Amplify.publish(@policy_view.cid, 'warning', "#{$(resp).find('p').text()} Sorry.")
       })
 
+      # When this tab is activated
+      @on 'activate', () ->
+        @policy_view.trigger 'activate'
+
     # Do whatever rendering animation needs to happen here
     render : (options) ->
       @view.remove_loader(true)
@@ -79,4 +86,3 @@ define [
     callback_delay : (ms, func) ->
       setTimeout func, ms
 
-      

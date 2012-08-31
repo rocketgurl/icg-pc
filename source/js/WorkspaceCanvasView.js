@@ -18,6 +18,7 @@
         }
         this.template_tab = options.template_tab != null ? options.template_tab : $('#tpl-workspace-tab').html();
         this.params = (_ref = options.params) != null ? _ref : null;
+        this.reactivate = false;
         if (!(options.app != null)) {
           return this.Amplify.publish('flash', 'warning', 'There was a problem locating that workspace.');
         }
@@ -51,7 +52,10 @@
       },
       activate: function() {
         this.tab.addClass('selected');
-        return this.$el.show();
+        this.$el.show();
+        if (this.module) {
+          return this.module.trigger('activate');
+        }
       },
       deactivate: function() {
         this.tab.removeClass('selected');

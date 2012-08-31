@@ -42,6 +42,7 @@
         this.policies = new SearchPolicyCollection();
         this.policies.url = this.controller.services.pxcentral + 'policies';
         this.policies.container = this;
+        this.fetch_count = 0;
         this.params = (_ref = this.module.app.params) != null ? _ref : {};
         return this.menu_cache[this.cid] = {};
       },
@@ -110,14 +111,27 @@
         return query;
       },
       fetch: function(query) {
-        var _this = this;
+        var digest,
+          _this = this;
         this.loader_ui(true);
         this.policies.reset();
+        digest = this.controller.user.get('digest');
+        if (digest === void 0) {
+          if (this.fetch_count < 10) {
+            this.fetch(query);
+            this.fetch_count++;
+          } else {
+            this.Amplify.publish(this.cid, 'warning', "There was a problem with your credentials. Try a page refresh.");
+            return;
+          }
+        } else {
+          this.fetch_count = 0;
+        }
         return this.policies.fetch({
           data: query,
           headers: {
-            'X-Authorization': "Basic " + (this.controller.user.get('digest')),
-            'Authorization': "Basic " + (this.controller.user.get('digest'))
+            'X-Authorization': "Basic " + digest,
+            'Authorization': "Basic " + digest
           },
           success: function(collection, resp) {
             if (collection.models.length === 0) {

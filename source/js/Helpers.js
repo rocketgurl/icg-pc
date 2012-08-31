@@ -2,7 +2,8 @@
 (function() {
 
   define(['jquery', 'underscore', 'base64', 'loader'], function($, _, Base64, CanvasLoader) {
-    var Helpers;
+    var Helpers,
+      _this = this;
     Helpers = {
       id_safe: function(string) {
         var out, reg;
@@ -51,6 +52,12 @@
         cl.setFPS(24);
         cl.show();
         return cl;
+      },
+      callback_delay: function(ms, func) {
+        return setTimeout(func, ms);
+      },
+      random: function(min, max) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
       }
     };
     return Helpers;
