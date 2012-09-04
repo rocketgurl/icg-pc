@@ -424,20 +424,16 @@ define [
       # We need to destroy any existing tabs in the workspace
       # before loading a new one. We do this recursively to prevent
       # race conditions (new tabs pushing onto the stack as old ones pop off)
-      #
-      if @workspace_stack.length > 0
-        @teardown_workspace()
-        @launch_workspace() # recur
-      else
-        
-        if $('#header').height() < 95
-          $('#header').css('height', '95px')
+      @teardown_workspace()
+      
+      if $('#header').height() < 95
+        $('#header').css('height', '95px')
 
-        @launch_app app
-        if @check_persisted_apps()
-          # Is this a search? attempt to launch it
-          if @current_state.module?
-            @launch_module(@current_state.module, @current_state.params)
+      @launch_app app
+      if @check_persisted_apps()
+        # Is this a search? attempt to launch it
+        if @current_state.module?
+          @launch_module(@current_state.module, @current_state.params)
 
       data =
         business : @current_state.business
@@ -466,7 +462,7 @@ define [
 
     #### Launch App
     #
-    # Attempt to setup and launch app. Apps are addedb               
+    # Attempt to setup and launch app. Apps are added               
     # to the stack from the `WorkspaceCanvasView` itself
     # using events so that if for some reason the view
     # doesn't load, we don't have to add it to the stack.
@@ -679,10 +675,14 @@ define [
       @set_breadcrumb()
       _.each @workspace_stack, (view, index) =>
         view.destroy()
+        view = null
       if @workspace_stack.length > 0
-        @workspace_stack = []
+        @stack_clear()
         @$workspace_tabs.html('')
         $('#target').empty()
+        true
+      else
+        false
 
 
     # Kick off the show

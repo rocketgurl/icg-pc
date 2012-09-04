@@ -332,18 +332,14 @@
         app = _.find(apps, function(app) {
           return app.app === _this.current_state.app;
         });
-        if (this.workspace_stack.length > 0) {
-          this.teardown_workspace();
-          this.launch_workspace();
-        } else {
-          if ($('#header').height() < 95) {
-            $('#header').css('height', '95px');
-          }
-          this.launch_app(app);
-          if (this.check_persisted_apps()) {
-            if (this.current_state.module != null) {
-              this.launch_module(this.current_state.module, this.current_state.params);
-            }
+        this.teardown_workspace();
+        if ($('#header').height() < 95) {
+          $('#header').css('height', '95px');
+        }
+        this.launch_app(app);
+        if (this.check_persisted_apps()) {
+          if (this.current_state.module != null) {
+            this.launch_module(this.current_state.module, this.current_state.params);
           }
         }
         data = {
@@ -526,12 +522,16 @@
         var _this = this;
         this.set_breadcrumb();
         _.each(this.workspace_stack, function(view, index) {
-          return view.destroy();
+          view.destroy();
+          return view = null;
         });
         if (this.workspace_stack.length > 0) {
-          this.workspace_stack = [];
+          this.stack_clear();
           this.$workspace_tabs.html('');
-          return $('#target').empty();
+          $('#target').empty();
+          return true;
+        } else {
+          return false;
         }
       },
       init: function() {

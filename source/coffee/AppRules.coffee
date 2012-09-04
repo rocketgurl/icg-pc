@@ -12,9 +12,34 @@ define [
 
     constructor : (@app) ->
       if @app.app?
-        @app_name           = @get_app_name @app.app
-        @default_workspace  = @combine(@get_modules(@app_name))
+        @app_name          = @get_app_name @app.app
+        @default_workspace = @validate_app(@app_name)
       @
+
+    # Filter the workspace to see if it has any required fields/params
+    # and return the workspace set ready to go.
+    validate_app : (app_name) ->
+      modules = @get_modules(@app_name)
+      validates = _.filter(modules, (module) =>
+          @test_module module
+        )
+      @combine(validates)
+                   
+    # Check for a required field and if present validate
+    # said fields on the app definition. Returns a boolean
+    # to be used in validate_app
+    test_module : (module) ->
+      test = false
+      if module['required'] and _.isArray(module['required'])
+        for r in module['required']
+          if _.isEmpty(module.app[r]) or module.app[r] is undefined
+            test = false
+          else
+            test = true
+      else
+        test = true
+
+      test
 
     # Derive app name
     get_app_name : (app_name) ->
@@ -56,7 +81,8 @@ define [
 
     # RULEZ Definitions
     policy_search :
-      module : 'SearchModule'
+      required : false
+      module   : 'SearchModule'
       app : 
         app       : 'search'
         app_label : 'search'
@@ -66,17 +92,21 @@ define [
         params    : null    
 
     policy_search_params :
+      required : false
       module : 'SearchModule'
       params : null
     
     policy_view : 
-      module : 'PolicyModule'   
+      required : ['params']
+      module   : 'PolicyModule'
 
     rulesets :
+      required : false
       module : 'TestModule'
       params : null
 
     default :
+      required : false
       module : 'TestModule'
       params : null
 

@@ -11,11 +11,40 @@
         this.app = app;
         if (this.app.app != null) {
           this.app_name = this.get_app_name(this.app.app);
-          this.default_workspace = this.combine(this.get_modules(this.app_name));
+          this.default_workspace = this.validate_app(this.app_name);
         }
         this;
 
       }
+
+      AppRules.prototype.validate_app = function(app_name) {
+        var modules, validates,
+          _this = this;
+        modules = this.get_modules(this.app_name);
+        validates = _.filter(modules, function(module) {
+          return _this.test_module(module);
+        });
+        return this.combine(validates);
+      };
+
+      AppRules.prototype.test_module = function(module) {
+        var r, test, _i, _len, _ref;
+        test = false;
+        if (module['required'] && _.isArray(module['required'])) {
+          _ref = module['required'];
+          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            r = _ref[_i];
+            if (_.isEmpty(module.app[r]) || module.app[r] === void 0) {
+              test = false;
+            } else {
+              test = true;
+            }
+          }
+        } else {
+          test = true;
+        }
+        return test;
+      };
 
       AppRules.prototype.get_app_name = function(app_name) {
         if (app_name.indexOf('_' >= 0)) {
@@ -61,6 +90,7 @@
       };
 
       AppRules.prototype.policy_search = {
+        required: false,
         module: 'SearchModule',
         app: {
           app: 'search',
@@ -73,20 +103,24 @@
       };
 
       AppRules.prototype.policy_search_params = {
+        required: false,
         module: 'SearchModule',
         params: null
       };
 
       AppRules.prototype.policy_view = {
+        required: ['params'],
         module: 'PolicyModule'
       };
 
       AppRules.prototype.rulesets = {
+        required: false,
         module: 'TestModule',
         params: null
       };
 
       AppRules.prototype["default"] = {
+        required: false,
         module: 'TestModule',
         params: null
       };
