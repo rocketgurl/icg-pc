@@ -227,7 +227,7 @@ define [
           success : (model, resp) =>
             # The model has to figure out what the
             # response state was
-            @user.response_state()
+            model.response_state()
             switch @user.get('fetch_state').code
               when "200" then @login_success(model, resp)
               else @login_fail(model, resp, @user.get('fetch_state'))

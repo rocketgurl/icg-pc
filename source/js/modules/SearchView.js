@@ -116,17 +116,6 @@
         this.loader_ui(true);
         this.policies.reset();
         digest = this.controller.user.get('digest');
-        if (digest === void 0) {
-          if (this.fetch_count < 10) {
-            this.fetch(query);
-            this.fetch_count++;
-          } else {
-            this.Amplify.publish(this.cid, 'warning', "There was a problem with your credentials. Try a page refresh.");
-            return;
-          }
-        } else {
-          this.fetch_count = 0;
-        }
         return this.policies.fetch({
           data: query,
           headers: {

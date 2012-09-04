@@ -175,7 +175,7 @@
         });
         this.user.fetch({
           success: function(model, resp) {
-            _this.user.response_state();
+            model.response_state();
             switch (_this.user.get('fetch_state').code) {
               case "200":
                 return _this.login_success(model, resp);

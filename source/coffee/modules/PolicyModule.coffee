@@ -52,11 +52,12 @@ define [
         )
 
       @messenger = new Messenger(@policy_view, @policy_view.cid)
+      digest     = @view.options.controller.user.get('digest')
 
       @policy_model.fetch({
         headers :
-          'Authorization'   : "Basic #{@view.options.controller.user.get('digest')}"
-          'X-Authorization' : "Basic #{@view.options.controller.user.get('digest')}"
+          'Authorization'   : "Basic #{digest}"
+          'X-Authorization' : "Basic #{digest}"
         success : (model, resp) =>
           model.response_state()
           switch model.get('fetch_state').code

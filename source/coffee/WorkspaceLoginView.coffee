@@ -11,7 +11,7 @@ define [
     tab : null
 
     events :
-      "submit form" : "get_credentials"
+      "submit #form-login form" : "get_credentials"
 
     # Render login form
     render : ->
@@ -23,7 +23,8 @@ define [
 
     # Destroy
     destroy : ->
-      @$el.html('')
+      @$el.find('#form-login').remove()
+      @off() # remove events
 
     # Get creds from form and pass to controller
     get_credentials : (event) ->

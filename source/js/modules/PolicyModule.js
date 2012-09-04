@@ -19,7 +19,7 @@
       }
 
       PolicyModule.prototype.load = function() {
-        var id,
+        var digest, id,
           _this = this;
         if (this.params.id != null) {
           id = this.params.id;
@@ -40,10 +40,11 @@
           model: this.policy_model
         });
         this.messenger = new Messenger(this.policy_view, this.policy_view.cid);
+        digest = this.view.options.controller.user.get('digest');
         this.policy_model.fetch({
           headers: {
-            'Authorization': "Basic " + (this.view.options.controller.user.get('digest')),
-            'X-Authorization': "Basic " + (this.view.options.controller.user.get('digest'))
+            'Authorization': "Basic " + digest,
+            'X-Authorization': "Basic " + digest
           },
           success: function(model, resp) {
             model.response_state();

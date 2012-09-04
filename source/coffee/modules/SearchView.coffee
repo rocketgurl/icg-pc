@@ -122,15 +122,6 @@ define [
       # If we can't get the user's credentials we try up to 10
       # times before we bail out with a warning.
       digest = @controller.user.get('digest')
-      if digest is undefined
-        if @fetch_count < 10
-          @fetch(query)
-          @fetch_count++
-        else
-          @Amplify.publish @cid, 'warning', "There was a problem with your credentials. Try a page refresh."
-          return
-      else
-        @fetch_count = 0
 
       # Set Basic Auth headers to request and attempt to
       # get some policies

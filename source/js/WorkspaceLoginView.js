@@ -7,7 +7,7 @@
       el: '#target',
       tab: null,
       events: {
-        "submit form": "get_credentials"
+        "submit #form-login form": "get_credentials"
       },
       render: function() {
         var html;
@@ -18,7 +18,8 @@
         return this.messenger = new Messenger(this, this.cid);
       },
       destroy: function() {
-        return this.$el.html('');
+        this.$el.find('#form-login').remove();
+        return this.off();
       },
       get_credentials: function(event) {
         var password, username;
