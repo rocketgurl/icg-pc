@@ -36,23 +36,13 @@ define [
         html += @Mustache.render tpl_policy_container, { auth_digest : @model.get('digest'), policy_id : @model.get('pxServerIndex'), cid : @cid }
       
       @$el.html html
+
+      @cache_elements()
+
       @$el.hide()
 
-      # Namespace page elements
-      #
-      # Since we have multiple instances we use the view cid
-      # to keep everyone's ID separate. We store refs to these
-      # in vars to keep things in one place keep jQuery traversal
-      # to a minimum.
-      #
-      @iframe_id        = "#policy-iframe-#{@cid}"
-      @iframe           = @$el.find(@iframe_id)
-      @policy_header    = @$el.find("#policy-header-#{@cid}")
-      @policy_nav_links = @$el.find("#policy-nav-#{@cid} a")
-      @policy_summary   = @$el.find("#policy-summary-#{@cid}")
-
       # Register flash message pubsub for this view
-      @messenger = new Messenger(@options.view, @cid)
+      @messenger = new Messenger(@options.view, @cid)      
 
       if @controller.active_view.cid == @options.view.cid
         @show_overview()
@@ -76,6 +66,20 @@ define [
       if _.isFunction(func)
         func.apply(this)
 
+    # Namespace page elements
+    #
+    # Since we have multiple instances we use the view cid
+    # to keep everyone's ID separate. We store refs to these
+    # in vars to keep things in one place keep jQuery traversal
+    # to a minimum.
+    #
+    cache_elements : ->
+      @iframe_id        = "#policy-iframe-#{@cid}"
+      @iframe           = @$el.find(@iframe_id)
+      @policy_header    = @$el.find("#policy-header-#{@cid}")
+      @policy_nav_links = @$el.find("#policy-nav-#{@cid} a")
+      @policy_summary   = @$el.find("#policy-summary-#{@cid}")
+
     # Size the iframe to the approximate view area of the workspace
     resize_element : (el, offset) ->
       offset = offset || 0
@@ -88,18 +92,26 @@ define [
     # Load Flex Policy Summary
     show_overview : ->
       @$el.show()
+
       if @policy_header
         @policy_header.hide()
         @iframe.hide()
 
-      @resize_element @policy_summary
-
-      # If this el is missing then create it
+      # SWFObject deletes the policy-summary container when it removes Flash
+      # so we need to check if its there and drop it back in if its not
       if @$el.find("#policy-summary-#{@cid}").length is 0
         @$el.find("#policy-header-#{@cid}").after(@policy_summary)
+        @policy_summary = @$el.find("#policy-summary-#{@cid}")
 
-      if @$el.find("#policy-summary-#{@cid}").length > 0
+      if @policy_summary.length > 0
+        @resize_element @policy_summary
         @policy_summary.show()
+
+      # Check for policy_summary element and then act on it.
+      # if @$el.find("#policy-summary-#{@cid}").length > 0
+      #   @policy_summary = @$el.find("#policy-summary-#{@cid}")
+      #   @resize_element @policy_summary
+      #   @policy_summary.show()
 
         swfobject.embedSWF(
           "../swf/PolicySummary.swf",

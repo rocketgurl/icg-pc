@@ -31,12 +31,8 @@
           });
         }
         this.$el.html(html);
+        this.cache_elements();
         this.$el.hide();
-        this.iframe_id = "#policy-iframe-" + this.cid;
-        this.iframe = this.$el.find(this.iframe_id);
-        this.policy_header = this.$el.find("#policy-header-" + this.cid);
-        this.policy_nav_links = this.$el.find("#policy-nav-" + this.cid + " a");
-        this.policy_summary = this.$el.find("#policy-summary-" + this.cid);
         this.messenger = new Messenger(this.options.view, this.cid);
         if (this.controller.active_view.cid === this.options.view.cid) {
           return this.show_overview();
@@ -56,6 +52,13 @@
           return func.apply(this);
         }
       },
+      cache_elements: function() {
+        this.iframe_id = "#policy-iframe-" + this.cid;
+        this.iframe = this.$el.find(this.iframe_id);
+        this.policy_header = this.$el.find("#policy-header-" + this.cid);
+        this.policy_nav_links = this.$el.find("#policy-nav-" + this.cid + " a");
+        return this.policy_summary = this.$el.find("#policy-summary-" + this.cid);
+      },
       resize_element: function(el, offset) {
         var el_height;
         offset = offset || 0;
@@ -72,11 +75,12 @@
           this.policy_header.hide();
           this.iframe.hide();
         }
-        this.resize_element(this.policy_summary);
         if (this.$el.find("#policy-summary-" + this.cid).length === 0) {
           this.$el.find("#policy-header-" + this.cid).after(this.policy_summary);
+          this.policy_summary = this.$el.find("#policy-summary-" + this.cid);
         }
-        if (this.$el.find("#policy-summary-" + this.cid).length > 0) {
+        if (this.policy_summary.length > 0) {
+          this.resize_element(this.policy_summary);
           this.policy_summary.show();
           return swfobject.embedSWF("../swf/PolicySummary.swf", "policy-summary-" + this.cid, "100%", this.policy_summary.height(), "9.0.0", null, null, {
             allowScriptAccess: 'always'
