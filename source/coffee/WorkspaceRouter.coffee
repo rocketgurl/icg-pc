@@ -73,7 +73,7 @@ define [
       # Seriailze params
       serialized = Helpers.serialize params
 
-      "workspace/#{env}/#{business}/#{context}/#{app}/#{module}#{serialized}"
+      "workspace/#{env}/#{business}/#{context}/#{app}#{module}#{serialized}"
 
     # Take current workspace url and append search params to it
     #
