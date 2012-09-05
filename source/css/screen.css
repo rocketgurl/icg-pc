@@ -77,7 +77,6 @@ body {
   background-image: -webkit-linear-gradient(top, #165788, #0f3b5c);
   background-image: -moz-linear-gradient(top, #165788, #0f3b5c);
   background-image: -o-linear-gradient(top, #165788, #0f3b5c);
-  background-image: -ms-linear-gradient(top, #165788, #0f3b5c);
   background-image: linear-gradient(top, #165788, #0f3b5c);
 }
 
@@ -88,7 +87,6 @@ body {
   background-image: -webkit-linear-gradient(#00d600, #009e00);
   background-image: -moz-linear-gradient(#00d600, #009e00);
   background-image: -o-linear-gradient(#00d600, #009e00);
-  background-image: -ms-linear-gradient(#00d600, #009e00);
   background-image: linear-gradient(#00d600, #009e00);
   border: 1px solid #008f00;
   -webkit-border-radius: 3px;
@@ -115,7 +113,6 @@ body {
   background-image: -webkit-linear-gradient(#04b904, #008f00);
   background-image: -moz-linear-gradient(#04b904, #008f00);
   background-image: -o-linear-gradient(#04b904, #008f00);
-  background-image: -ms-linear-gradient(#04b904, #008f00);
   background-image: linear-gradient(#04b904, #008f00);
   -webkit-box-shadow: inset 0 1px 0 0 #08e708;
   -moz-box-shadow: inset 0 1px 0 0 #08e708;
@@ -137,7 +134,6 @@ body {
   background-image: -webkit-linear-gradient(top, #165788, #0f3b5c);
   background-image: -moz-linear-gradient(top, #165788, #0f3b5c);
   background-image: -o-linear-gradient(top, #165788, #0f3b5c);
-  background-image: -ms-linear-gradient(top, #165788, #0f3b5c);
   background-image: linear-gradient(top, #165788, #0f3b5c);
   overflow: hidden;
   height: 65px;
@@ -168,9 +164,9 @@ body {
 }
 
 #header-logo {
-  width: 15.254%;
+  width: 15.25424%;
   float: left;
-  margin-right: 1.695%;
+  margin-right: 1.69492%;
   display: inline;
   padding: 5px 0;
 }
@@ -179,9 +175,9 @@ body {
 }
 
 #header-controls {
-  width: 49.153%;
+  width: 49.15254%;
   float: left;
-  margin-right: 1.695%;
+  margin-right: 1.69492%;
   display: inline;
   font-size: 12px;
   font-size: 1.2rem;
@@ -236,7 +232,7 @@ body {
 }
 
 #header-admin {
-  width: 32.203%;
+  width: 32.20339%;
   float: right;
   margin-right: 0;
   #margin-left: -1em;
@@ -277,9 +273,9 @@ body {
   margin-top: 50px;
 }
 #header-workspace-nav ul.main-nav {
-  width: 23.729%;
+  width: 23.72881%;
   float: left;
-  margin-right: 1.695%;
+  margin-right: 1.69492%;
   display: inline;
 }
 #header-workspace-nav ul.main-nav li {
@@ -317,7 +313,7 @@ body {
 }
 
 #workspace-subnav {
-  width: 74.576%;
+  width: 74.57627%;
   float: right;
   margin-right: 0;
   #margin-left: -1em;
@@ -407,7 +403,6 @@ body {
   background-image: -webkit-linear-gradient(top, #d3d3d3 50%, #a1a1a1);
   background-image: -moz-linear-gradient(top, #d3d3d3 50%, #a1a1a1);
   background-image: -o-linear-gradient(top, #d3d3d3 50%, #a1a1a1);
-  background-image: -ms-linear-gradient(top, #d3d3d3 50%, #a1a1a1);
   background-image: linear-gradient(top, #d3d3d3 50%, #a1a1a1);
   position: relative;
   z-index: 0;
@@ -453,7 +448,7 @@ body {
   left: 0;
   font-size: 18px;
   font-size: 1.8rem;
-  line-height: 23px;
+  line-height: 22px;
   color: #4f4f4f;
 }
 #workspace nav ul li#tab-search a:hover i, #workspace nav ul .policy-nav li#tab-search a.select i, .policy-nav #workspace nav ul li#tab-search a.select i {
@@ -467,7 +462,6 @@ body {
   background-image: -webkit-linear-gradient(top, #ffffff 10%, #ededed);
   background-image: -moz-linear-gradient(top, #ffffff 10%, #ededed);
   background-image: -o-linear-gradient(top, #ffffff 10%, #ededed);
-  background-image: -ms-linear-gradient(top, #ffffff 10%, #ededed);
   background-image: linear-gradient(top, #ffffff 10%, #ededed);
   z-index: 3;
   border-bottom: 1px solid #ededed;
@@ -619,7 +613,6 @@ body {
   background-image: -webkit-linear-gradient(#d5ebd6, #90ca93);
   background-image: -moz-linear-gradient(#d5ebd6, #90ca93);
   background-image: -o-linear-gradient(#d5ebd6, #90ca93);
-  background-image: -ms-linear-gradient(#d5ebd6, #90ca93);
   background-image: linear-gradient(#d5ebd6, #90ca93);
   border: #6dba71 1px solid;
 }
@@ -634,7 +627,6 @@ body {
   background-image: -webkit-linear-gradient(#eeec8b, #d3c354);
   background-image: -moz-linear-gradient(#eeec8b, #d3c354);
   background-image: -o-linear-gradient(#eeec8b, #d3c354);
-  background-image: -ms-linear-gradient(#eeec8b, #d3c354);
   background-image: linear-gradient(#eeec8b, #d3c354);
   border: #d3c354 1px solid;
 }
@@ -649,7 +641,6 @@ body {
   background-image: -webkit-linear-gradient(#ba6976, #72101b);
   background-image: -moz-linear-gradient(#ba6976, #72101b);
   background-image: -o-linear-gradient(#ba6976, #72101b);
-  background-image: -ms-linear-gradient(#ba6976, #72101b);
   background-image: linear-gradient(#ba6976, #72101b);
   border: #72101b 1px solid;
 }
@@ -683,7 +674,6 @@ body {
   background-image: -webkit-linear-gradient(top, #ededed, #c7c7c7);
   background-image: -moz-linear-gradient(top, #ededed, #c7c7c7);
   background-image: -o-linear-gradient(top, #ededed, #c7c7c7);
-  background-image: -ms-linear-gradient(top, #ededed, #c7c7c7);
   background-image: linear-gradient(top, #ededed, #c7c7c7);
 }
 #form-login h1 {
@@ -888,7 +878,6 @@ table.module-search tbody td a:hover, table.module-search tbody td .policy-nav l
   background-image: -webkit-linear-gradient(#b4b4b4, #8f8f8f);
   background-image: -moz-linear-gradient(#b4b4b4, #8f8f8f);
   background-image: -o-linear-gradient(#b4b4b4, #8f8f8f);
-  background-image: -ms-linear-gradient(#b4b4b4, #8f8f8f);
   background-image: linear-gradient(#b4b4b4, #8f8f8f);
   border: #767676 1px solid;
   padding: 6px 0;
@@ -914,9 +903,9 @@ table.module-search tbody td a:hover, table.module-search tbody td .policy-nav l
 .module-search.pagination .pagination-a,
 .module-search.pagination .pagination-b,
 .module-search.pagination .pagination-c {
-  width: 32.203%;
+  width: 32.20339%;
   float: left;
-  margin-right: 1.695%;
+  margin-right: 1.69492%;
   display: inline;
 }
 .module-search.pagination .pagination-b {
@@ -1036,9 +1025,9 @@ td.search-views-admin > a {
 Module: Policy
 */
 .policy-nav {
-  width: 15.254%;
+  width: 15.25424%;
   float: left;
-  margin-right: 1.695%;
+  margin-right: 1.69492%;
   display: inline;
 }
 .policy-nav li {
@@ -1069,7 +1058,7 @@ Module: Policy
 }
 
 #policy-workspace {
-  width: 83.051%;
+  width: 83.05085%;
   float: right;
   margin-right: 0;
   #margin-left: -1em;
