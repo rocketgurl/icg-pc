@@ -50,10 +50,6 @@ define [
 
       identifiers = @model.get('identifiers')
 
-      # We need to tell the policyView which app it came from
-      # workspace = @module.controller.workspace_state.get('workspace')
-      # @module.app.context.parent_app = workspace.application
-
       # Setup the params object to launch policy view with
       params =
         url     : identifiers.QuoteNumber
