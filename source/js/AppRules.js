@@ -24,7 +24,7 @@
         validates = _.filter(modules, function(module) {
           return _this.test_module(module);
         });
-        return this.combine(validates);
+        return validates;
       };
 
       AppRules.prototype.test_module = function(module) {
@@ -77,18 +77,6 @@
         return definition;
       };
 
-      AppRules.prototype.combine = function(definitions) {
-        var definition, _i, _len;
-        if (this.app.context != null) {
-          this.app.context.application = this.app.app;
-          for (_i = 0, _len = definitions.length; _i < _len; _i++) {
-            definition = definitions[_i];
-            definition.app.context = this.app.context;
-          }
-        }
-        return definitions;
-      };
-
       AppRules.prototype.policy_search = {
         required: false,
         module: 'SearchModule',
@@ -96,8 +84,6 @@
           app: 'search',
           app_label: 'search',
           tab: '#tpl-workspace-tab-search',
-          query: 'stuff',
-          other: 'stuff',
           params: null
         }
       };

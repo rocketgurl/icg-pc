@@ -23,7 +23,7 @@ define [
       validates = _.filter(modules, (module) =>
           @test_module module
         )
-      @combine(validates)
+      validates
                    
     # Check for a required field and if present validate
     # said fields on the app definition. Returns a boolean
@@ -69,16 +69,6 @@ define [
         definition.app.params = definition.params
       definition
 
-    # Make sure every app has the original Context available
-    combine : (definitions) ->
-      if @app.context?
-        # orignal app name
-        @app.context.application = @app.app
-        
-        for definition in definitions
-          definition.app.context = @app.context
-      definitions
-
     # RULEZ Definitions
     policy_search :
       required : false
@@ -87,14 +77,12 @@ define [
         app       : 'search'
         app_label : 'search'
         tab       : '#tpl-workspace-tab-search'
-        query     : 'stuff'
-        other     : 'stuff'
         params    : null    
 
     policy_search_params :
       required : false
-      module : 'SearchModule'
-      params : null
+      module   : 'SearchModule'
+      params   : null
     
     policy_view : 
       required : ['params']
@@ -102,13 +90,13 @@ define [
 
     rulesets :
       required : false
-      module : 'TestModule'
-      params : null
+      module   : 'TestModule'
+      params   : null
 
     default :
       required : false
-      module : 'TestModule'
-      params : null
+      module   : 'TestModule'
+      params   : null
 
 
 
