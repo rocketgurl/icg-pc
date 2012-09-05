@@ -74,8 +74,8 @@ define [
     
     # Set different form fields to the updated values based on @params
     set_search_options : (options) ->
-      if _.has(options, 'query')
-        @$el.find('input[type=search]').val(options.query)
+      if _.has(options, 'q')
+        @$el.find('input[type=search]').val(options.q)
 
       if _.has(options, 'state')
         @$el.find('.query-type').val(options.state)
@@ -215,10 +215,7 @@ define [
     control_pin : (e) ->
       e.preventDefault()
       search_val = @$el.find('input[type=search]').val()
-      params = 
-        q   : search_val
-      #@controller.launch_module 'search', params
-      @controller.Router.navigate_to_module 'search', params
+      @controller.Router.navigate_to_module 'search', @get_search_options()
 
     control_refresh : (e) -> 
       e.preventDefault()

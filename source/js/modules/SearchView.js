@@ -72,8 +72,8 @@
         return this.fetch(this.get_search_options());
       },
       set_search_options: function(options) {
-        if (_.has(options, 'query')) {
-          this.$el.find('input[type=search]').val(options.query);
+        if (_.has(options, 'q')) {
+          this.$el.find('input[type=search]').val(options.q);
         }
         if (_.has(options, 'state')) {
           this.$el.find('.query-type').val(options.state);
@@ -202,13 +202,10 @@
         }
       },
       control_pin: function(e) {
-        var params, search_val;
+        var search_val;
         e.preventDefault();
         search_val = this.$el.find('input[type=search]').val();
-        params = {
-          q: search_val
-        };
-        return this.controller.Router.navigate_to_module('search', params);
+        return this.controller.Router.navigate_to_module('search', this.get_search_options());
       },
       control_refresh: function(e) {
         var options;
