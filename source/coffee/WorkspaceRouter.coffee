@@ -67,7 +67,6 @@ define [
     #
     build_module_path : (module, params) ->
       [@controller.current_state.module, @controller.current_state.params] = [module, params]
-      @controller.set_nav_state() # save updated state
       {env, business, context, app} = @controller.current_state
 
       # Seriailze params

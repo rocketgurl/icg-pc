@@ -49,7 +49,6 @@
       build_module_path: function(module, params) {
         var app, business, context, env, serialized, _ref, _ref1;
         _ref = [module, params], this.controller.current_state.module = _ref[0], this.controller.current_state.params = _ref[1];
-        this.controller.set_nav_state();
         _ref1 = this.controller.current_state, env = _ref1.env, business = _ref1.business, context = _ref1.context, app = _ref1.app;
         serialized = Helpers.serialize(params);
         return "workspace/" + env + "/" + business + "/" + context + "/" + app + "/" + module + serialized;
