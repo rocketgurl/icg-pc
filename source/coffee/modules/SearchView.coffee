@@ -34,13 +34,12 @@ define [
     # We need to brute force the View's container to the 
     # WorkspaceCanvasView's el
     initialize : (options) ->
-      @el           = options.view.el
-      @$el          = options.view.$el
-      @controller   = options.view.options.controller
-      @module       = options.module
-      @policies     = new SearchPolicyCollection()
-      @policies.url = @controller.services.pxcentral + 'policies'
-      # @policies.url = '/mocks/search_response_v2.json'
+      @el                 = options.view.el
+      @$el                = options.view.$el
+      @controller         = options.view.options.controller
+      @module             = options.module
+      @policies           = new SearchPolicyCollection()
+      @policies.url       = @controller.services.pxcentral + 'policies'
       @policies.container = @
 
       # Use this to breakout of loops
@@ -63,7 +62,6 @@ define [
 
       # If we have params we need to go ahead and do the search query
       if @params?
-        @params.q = @params.query ? @params.q # make sure we have a query
         if @params.q?
           @set_search_options @params
           @fetch(@get_search_options(@params))
@@ -144,11 +142,10 @@ define [
 
           # Set the URL params
           @params = 
-            url   : query.q
-            query : query.q
+            q   : query.q
 
           @params = _.extend @params, @get_search_options()
-          @controller.Router.append_module 'search', @params
+          @controller.set_active_url @module.app.app # Ensure the correct URL
         error : (collection, resp) =>
           @Amplify.publish @cid, 'warning', "There was a problem with this request: #{resp.status} - #{resp.statusText}"
           @loader_ui(false)
@@ -219,10 +216,9 @@ define [
       e.preventDefault()
       search_val = @$el.find('input[type=search]').val()
       params = 
-        url   : search_val
-        query : search_val
-      @controller.launch_module 'search', params
-      @controller.Router.append_module 'search', params
+        q   : search_val
+      #@controller.launch_module 'search', params
+      @controller.Router.navigate_to_module 'search', params
 
     control_refresh : (e) -> 
       e.preventDefault()

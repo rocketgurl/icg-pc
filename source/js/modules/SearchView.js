@@ -47,7 +47,7 @@
         return this.menu_cache[this.cid] = {};
       },
       render: function() {
-        var html, _ref;
+        var html;
         html = this.Mustache.render($('#tpl-flash-message').html(), {
           cid: this.cid
         });
@@ -59,7 +59,6 @@
         this.controls = this.$el.find('.search-controls');
         this.messenger = new Messenger(this.options.view, this.cid);
         if (this.params != null) {
-          this.params.q = (_ref = this.params.query) != null ? _ref : this.params.q;
           if (this.params.q != null) {
             this.set_search_options(this.params);
             return this.fetch(this.get_search_options(this.params));
@@ -131,11 +130,10 @@
             collection.render();
             _this.loader_ui(false);
             _this.params = {
-              url: query.q,
-              query: query.q
+              q: query.q
             };
             _this.params = _.extend(_this.params, _this.get_search_options());
-            return _this.controller.Router.append_module('search', _this.params);
+            return _this.controller.set_active_url(_this.module.app.app);
           },
           error: function(collection, resp) {
             _this.Amplify.publish(_this.cid, 'warning', "There was a problem with this request: " + resp.status + " - " + resp.statusText);
@@ -208,11 +206,9 @@
         e.preventDefault();
         search_val = this.$el.find('input[type=search]').val();
         params = {
-          url: search_val,
-          query: search_val
+          q: search_val
         };
-        this.controller.launch_module('search', params);
-        return this.controller.Router.append_module('search', params);
+        return this.controller.Router.navigate_to_module('search', params);
       },
       control_refresh: function(e) {
         var options;

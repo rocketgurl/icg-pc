@@ -117,15 +117,19 @@
         });
       },
       set_nav_state: function() {
-        var _ref, _ref1;
+        var params, _ref, _ref1;
         if ((this.current_state != null) && (this.workspace_state != null)) {
+          params = (_ref = this.current_state.params) != null ? _ref : null;
+          if (_.isString(params)) {
+            params = Helpers.unserialize(params);
+          }
           this.workspace_state.set('workspace', {
             env: this.current_state.env,
             business: this.current_state.business,
             context: this.current_state.context,
             app: this.current_state.app,
-            module: (_ref = this.current_state.module) != null ? _ref : null,
-            params: (_ref1 = this.current_state.params) != null ? _ref1 : null
+            module: (_ref1 = this.current_state.module) != null ? _ref1 : null,
+            params: params
           });
           return this.workspace_state.save();
         }
@@ -359,7 +363,11 @@
       },
       launch_app: function(app) {
         var default_workspace, rules, workspace, _i, _len, _results;
-        this.state_add(app);
+        if (this.state_exists(app) != null) {
+          this.toggle_apps(app.app);
+        } else {
+          this.state_add(app);
+        }
         rules = new AppRules(app);
         default_workspace = rules.default_workspace;
         _results = [];
@@ -370,24 +378,24 @@
         return _results;
       },
       launch_module: function(module, params) {
-        var app, contect, context, safe_app_name, stack_check;
+        var app, safe_app_name, stack_check, url;
         if (params == null) {
           params = {};
         }
-        safe_app_name = "" + (Helpers.id_safe(module));
-        if (params.url != null) {
-          safe_app_name += "_" + (Helpers.id_safe(params.url));
+        if (!params.q && (params.url != null)) {
+          url = params.url;
         }
-        contect = null;
-        if (params.context != null) {
-          context = params.context;
-          delete params['context'];
+        if (params.q != null) {
+          url = params.q;
+        }
+        safe_app_name = "" + (Helpers.id_safe(module));
+        if (url != null) {
+          safe_app_name += "_" + (Helpers.id_safe(url));
         }
         app = {
           app: safe_app_name,
-          app_label: "" + (Helpers.uc_first(module)) + ": " + params.url,
-          params: params,
-          context: context
+          app_label: "" + (Helpers.uc_first(module)) + ": " + url,
+          params: params
         };
         app.app.params = params;
         stack_check = this.stack_get(safe_app_name);
@@ -475,7 +483,7 @@
           view = _ref[_i];
           if (app_name === view.app.app) {
             module = view.module;
-            if ((module.app != null) && (module.app.params != null)) {
+            if ((module != null) && (module.app != null) && (module.app.params != null)) {
               module_name = new AppRules(module.app).app_name;
               this.Router.append_module(module_name, module.app.params);
             } else {
@@ -498,7 +506,9 @@
           view = _ref[_i];
           if (app_name === view.app.app) {
             view.activate();
-            _results.push(this.active_view = view);
+            this.active_view = view;
+            this.set_active_url(app_name);
+            _results.push(true);
           } else {
             _results.push(view.deactivate());
           }

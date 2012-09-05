@@ -159,13 +159,19 @@ define [
     # persisted across requests
     set_nav_state : ->
       if @current_state? and @workspace_state?
+
+        # If this is a string, then deserialize it
+        params = @current_state.params ? null
+        if _.isString(params)
+          params = Helpers.unserialize params
+
         @workspace_state.set 'workspace', {
           env      : @current_state.env
           business : @current_state.business
           context  : @current_state.context
           app      : @current_state.app
           module   : @current_state.module ? null
-          params   : @current_state.params ? null
+          params   : params
         }
         @workspace_state.save()
 
@@ -473,11 +479,10 @@ define [
       # If app is not saved in @workspace_state and is not the 
       # workspace defined app then we need to add it to our
       # stack of saved apps
-      # if @state_exists(app)?
-      #   console.log 'toggle'
-      #   @toggle_apps app.app
-      # else
-      @state_add app
+      if @state_exists(app)?
+        @toggle_apps app.app
+      else
+        @state_add app
 
       # Determine which Module to load into the view
       rules = new AppRules(app)
@@ -507,20 +512,20 @@ define [
 
       # We need to sanitize this a little
       params ?= {}
-      safe_app_name = "#{Helpers.id_safe(module)}"
-      safe_app_name += "_#{Helpers.id_safe(params.url)}" if params.url?
 
-      contect = null
-      if params.context?
-        context = params.context
-        delete params['context']
+      if !params.q and params.url?
+        url = params.url
+
+      url = params.q if params.q?
+
+      safe_app_name = "#{Helpers.id_safe(module)}"
+      safe_app_name += "_#{Helpers.id_safe(url)}" if url?
 
       # Setup the app object to launch policy view with
       app =
         app       : safe_app_name
-        app_label : "#{Helpers.uc_first(module)}: #{params.url}"
+        app_label : "#{Helpers.uc_first(module)}: #{url}"
         params    : params
-        context   : context
 
       app.app.params = params
 
@@ -637,7 +642,7 @@ define [
       for view in @workspace_stack
         if app_name == view.app.app
           module = view.module
-          if module.app? and module.app.params?
+          if module? and module.app? and module.app.params?
             module_name = new AppRules(module.app).app_name
             @Router.append_module module_name, module.app.params
           else
@@ -653,6 +658,8 @@ define [
         if app_name == view.app.app
           view.activate()
           @active_view = view
+          @set_active_url app_name
+          true
         else
           view.deactivate()
 
