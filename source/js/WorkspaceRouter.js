@@ -52,7 +52,7 @@
         this.controller.set_nav_state();
         _ref1 = this.controller.current_state, env = _ref1.env, business = _ref1.business, context = _ref1.context, app = _ref1.app;
         serialized = Helpers.serialize(params);
-        return "workspace/" + env + "/" + business + "/" + context + "/" + app + module + serialized;
+        return "workspace/" + env + "/" + business + "/" + context + "/" + app + "/" + module + serialized;
       },
       append_module: function(module, params) {
         return this.navigate(this.build_module_path(module, params));

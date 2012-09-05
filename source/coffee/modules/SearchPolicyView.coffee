@@ -56,9 +56,7 @@ define [
 
       # Setup the params object to launch policy view with
       params =
-        id      : $el.attr('id')
         url     : identifiers.QuoteNumber
-        context : @module.app.context
 
       @module.view.options.controller.launch_module 'policyview', params
       @module.view.options.controller.Router.append_module 'policyview', params

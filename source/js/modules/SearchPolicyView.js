@@ -43,9 +43,7 @@
         $el = $(e.currentTarget);
         identifiers = this.model.get('identifiers');
         params = {
-          id: $el.attr('id'),
-          url: identifiers.QuoteNumber,
-          context: this.module.app.context
+          url: identifiers.QuoteNumber
         };
         this.module.view.options.controller.launch_module('policyview', params);
         return this.module.view.options.controller.Router.append_module('policyview', params);
