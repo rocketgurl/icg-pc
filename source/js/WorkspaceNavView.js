@@ -55,11 +55,18 @@
         return this.toggle_nav_slide();
       },
       toggle_nav_slide: function() {
-        var close_height;
+        var app, business, close_height, context, current_state, env, sub_nav_id;
         if (this.$header.height() === this.base_height + 30 || this.$header.height() === 65) {
-          return this.$header.animate({
+          this.$header.animate({
             height: 230 + this.base_height
           }, 200, 'swing', this.show_nav());
+          current_state = this.options.controller.current_state;
+          if (current_state != null) {
+            env = current_state.env, business = current_state.business, context = current_state.context, app = current_state.app;
+            sub_nav_id = "nav-" + env + "-" + business + "-" + context + "-" + app;
+            this.$el.find("li a[data-pc=" + business + "] span").trigger('click');
+            return this.$sub_el.find("#" + sub_nav_id).addClass('on');
+          }
         } else {
           this.hide_nav();
           close_height = this.base_height;

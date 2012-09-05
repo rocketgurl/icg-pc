@@ -79,6 +79,15 @@ define [
         @$header.animate {
           height : 230 + @base_height # totally arbitrary height
           }, 200, 'swing', @show_nav()
+
+        # Ensure that the navigation indicates current state when opened
+        current_state = @options.controller.current_state
+        if current_state?
+          {env, business, context, app} = current_state
+          sub_nav_id = "nav-#{env}-#{business}-#{context}-#{app}"
+          @$el.find("li a[data-pc=#{business}] span").trigger('click')
+          @$sub_el.find("##{sub_nav_id}").addClass('on')
+
       else
         @hide_nav()
         # determine correct close height based on presence of tabs
