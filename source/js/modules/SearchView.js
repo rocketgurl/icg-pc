@@ -5,6 +5,7 @@
     var SearchView;
     return SearchView = BaseView.extend({
       menu_cache: {},
+      sort_cache: {},
       events: {
         "submit .filters form": "search",
         "change .search-pagination-perpage": "search",
@@ -72,21 +73,34 @@
         return this.fetch(this.get_search_options());
       },
       set_search_options: function(options) {
-        if (_.has(options, 'q')) {
-          this.$el.find('input[type=search]').val(options.q);
+        var elements, key, sort, sorts, val, _i, _len;
+        elements = {
+          'q': 'input[type=search]',
+          'state': '.query-type',
+          'perpage': '.search-pagination-perpage',
+          'page': '.search-pagination-page'
+        };
+        for (key in elements) {
+          val = elements[key];
+          if (_.has(options, key)) {
+            this.$el.find(val).val(options[key]);
+          }
         }
-        if (_.has(options, 'state')) {
-          this.$el.find('.query-type').val(options.state);
+        sorts = ['sort', 'sortdir'];
+        for (_i = 0, _len = sorts.length; _i < _len; _i++) {
+          sort = sorts[_i];
+          if (_.has(options, sort)) {
+            this.sort_cache[sort] = options[sort];
+          }
         }
-        if (_.has(options, 'perpage')) {
-          this.$el.find('.search-pagination-perpage').val(options.perpage);
-        }
-        if (_.has(options, 'page')) {
-          return this.$el.find('.search-pagination-page').val(options.page);
+        if (!_.isEmpty(this.sort_cache)) {
+          return this.$el.find("a[href=" + this.sort_cache['sort'] + "]").data('dir', this.sort_cache['sortdir']).trigger('click', {
+            silent: true
+          });
         }
       },
       get_search_options: function(options) {
-        var key, page, perpage, policystate, q, query, value, _ref, _ref1, _ref2, _ref3;
+        var key, page, perpage, policystate, q, query, value, _ref, _ref1, _ref2, _ref3, _ref4;
         perpage = (_ref = this.$el.find('.search-pagination-perpage').val()) != null ? _ref : 15;
         page = (_ref1 = this.$el.find('.search-pagination-page').val()) != null ? _ref1 : 1;
         policystate = (_ref2 = this.$el.find('.query-type').val()) != null ? _ref2 : '';
@@ -97,6 +111,13 @@
           page: page,
           policystate: policystate
         };
+        if (!_.isEmpty(this.sort_cache)) {
+          _ref4 = this.sort_cache;
+          for (key in _ref4) {
+            value = _ref4[key];
+            query[key] = value;
+          }
+        }
         if (options != null) {
           for (key in options) {
             value = options[key];
@@ -240,15 +261,20 @@
           return $("#search-loader-" + this.cid).hide();
         }
       },
-      sort_by: function(e) {
-        var $el, options;
+      sort_by: function(e, options) {
+        var $el;
+        if (options == null) {
+          options = {};
+        }
         e.preventDefault();
         $el = $(e.currentTarget);
-        options = {
+        this.sort_cache = {
           'sort': $el.attr('href'),
           'sortdir': $el.data('dir')
         };
-        this.fetch(this.get_search_options(options));
+        if (!_.has(options, 'silent')) {
+          this.fetch(this.get_search_options(this.sort_cache));
+        }
         this.remove_indicators();
         if ($el.data('dir') === 'asc') {
           $el.data('dir', 'desc');

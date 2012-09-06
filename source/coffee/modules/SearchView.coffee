@@ -12,6 +12,7 @@ define [
   SearchView = BaseView.extend
 
     menu_cache : {} # Store search menus
+    sort_cache : {} # Store sorting states
 
     events :
       "submit .filters form"              : "search"
@@ -74,17 +75,28 @@ define [
     
     # Set different form fields to the updated values based on @params
     set_search_options : (options) ->
-      if _.has(options, 'q')
-        @$el.find('input[type=search]').val(options.q)
+      # Load form/page elements
+      elements =
+        'q'       : 'input[type=search]'
+        'state'   : '.query-type'
+        'perpage' : '.search-pagination-perpage'
+        'page'    : '.search-pagination-page'
 
-      if _.has(options, 'state')
-        @$el.find('.query-type').val(options.state)
+      for key, val of elements
+        if _.has(options, key)
+          @$el.find(val).val(options[key])
 
-      if _.has(options, 'perpage')
-        @$el.find('.search-pagination-perpage').val(options.perpage)
+      # Load the sort cache
+      sorts = ['sort', 'sortdir']
+      for sort in sorts
+        if _.has(options, sort)
+          @sort_cache[sort] = options[sort]
 
-      if _.has(options, 'page')
-        @$el.find('.search-pagination-page').val(options.page)
+      # Ensure out sort indicators are on if present
+      if !_.isEmpty(@sort_cache)
+        @$el.find("a[href=#{@sort_cache['sort']}]")
+            .data('dir', @sort_cache['sortdir'])
+            .trigger('click', {silent : true})
 
     # Assemble search options from various inputs and explicitly
     # passed values (options) to return as an object for @fetch
@@ -100,6 +112,10 @@ define [
         perpage     : perpage
         page        : page
         policystate : policystate
+
+      # Combine any sorting directives with the query
+      if !_.isEmpty(@sort_cache)
+        query[key] = value for key, value of @sort_cache
 
       # We have to be explicit to save IE from itself
       if options?
@@ -246,14 +262,19 @@ define [
         $("#search-loader-#{@cid}").hide()
 
     # Handling sorting state on columns
-    sort_by : (e) ->
+    sort_by : (e, options) ->
+
+      options ?= {}
+
       e.preventDefault()
       $el = $(e.currentTarget)
       
-      options =
-        'sort'     : $el.attr('href')
+      @sort_cache =
+        'sort'    : $el.attr('href')
         'sortdir' : $el.data('dir')
-      @fetch(@get_search_options(options))
+
+      if !_.has(options, 'silent')
+        @fetch(@get_search_options(@sort_cache))
 
       @remove_indicators() # clear the decks!
 
