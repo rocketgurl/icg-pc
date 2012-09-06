@@ -198,7 +198,7 @@ define [
     # @param `digest` _String_ Base64.encode username:password
     #
     set_cookie_identity : (digest) ->
-      @Cookie.set(@COOKIE_NAME, digest, { expires : 7})
+      @Cookie.set(@COOKIE_NAME, digest, { expires : 7, secure : true })
 
     # Render the login form
     build_login : ->

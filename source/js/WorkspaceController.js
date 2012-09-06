@@ -151,7 +151,8 @@
       },
       set_cookie_identity: function(digest) {
         return this.Cookie.set(this.COOKIE_NAME, digest, {
-          expires: 7
+          expires: 7,
+          secure: true
         });
       },
       build_login: function() {
