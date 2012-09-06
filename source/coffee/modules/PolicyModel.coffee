@@ -21,8 +21,8 @@ define [
 
     get_policy_holder : ->
       doc = @get 'document'
-      last = doc.find('Customers Customer[type=Insured] DataItem[name=AdditionalInsured1LastName]').attr('value')
-      first = doc.find('Customers Customer[type=Insured] DataItem[name=AdditionalInsured1FirstName]').attr('value')
+      last = doc.find('Customers Customer[type=Insured] DataItem[name=OpInsuredLastName]').attr('value')
+      first = doc.find('Customers Customer[type=Insured] DataItem[name=OpInsuredFirstName]').attr('value')
       "#{last}, #{first}"
 
     get_policy_period : ->

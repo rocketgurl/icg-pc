@@ -18,8 +18,8 @@
       get_policy_holder: function() {
         var doc, first, last;
         doc = this.get('document');
-        last = doc.find('Customers Customer[type=Insured] DataItem[name=AdditionalInsured1LastName]').attr('value');
-        first = doc.find('Customers Customer[type=Insured] DataItem[name=AdditionalInsured1FirstName]').attr('value');
+        last = doc.find('Customers Customer[type=Insured] DataItem[name=OpInsuredLastName]').attr('value');
+        first = doc.find('Customers Customer[type=Insured] DataItem[name=OpInsuredFirstName]').attr('value');
         return "" + last + ", " + first;
       },
       get_policy_period: function() {
