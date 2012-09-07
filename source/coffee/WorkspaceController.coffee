@@ -440,6 +440,8 @@ define [
         # Is this a search? attempt to launch it
         if @current_state.module?
           @launch_module(@current_state.module, @current_state.params)
+        @reassess_apps()
+
 
       data =
         business : @current_state.business

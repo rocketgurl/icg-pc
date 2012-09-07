@@ -346,6 +346,7 @@
           if (this.current_state.module != null) {
             this.launch_module(this.current_state.module, this.current_state.params);
           }
+          this.reassess_apps();
         }
         data = {
           business: this.current_state.business,
