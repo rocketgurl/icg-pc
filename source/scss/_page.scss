@@ -4,5 +4,9 @@
 }
 
 .button-green {
-	@include simple-color (120, 100%, 42%);
+	@include simple-color (79, 100%, 32%);
+}
+
+.button-disabled {
+	@include simple-color (360, 0%, 93%);
 }

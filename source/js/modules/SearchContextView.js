@@ -27,12 +27,13 @@
         return this.options.controller.Router.append_module('search', params);
       },
       destroy: function(e) {
-        var id, rows;
+        var id;
         e.preventDefault();
         id = $(e.currentTarget).attr('href').substr(7);
         this.options.collection.destroy(id);
-        rows = $('.row-' + id).html('').remove();
-        return this.$el.remove();
+        return this.$el.fadeOut('fast', function(id) {
+          return $('.row-' + id).html('').remove();
+        });
       }
     });
   });

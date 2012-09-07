@@ -212,7 +212,9 @@
       },
       control_save: function(e) {
         if (e.hasClass('active')) {
-          return this.attach_menu(e, tpl_search_menu_save);
+          this.attach_menu(e, tpl_search_menu_save);
+          $('#search_save_label').val('').removeAttr('disabled');
+          return $('.search-menu-save input[type=submit]').removeAttr('disabled').removeClass('button-disabled').addClass('button-green').val('Save view');
         }
       },
       control_share: function(e) {
@@ -237,13 +239,20 @@
         return this.fetch(this.get_search_options(options));
       },
       save_search: function(e) {
-        var val;
+        var saved, val;
         e.preventDefault();
         val = $('#search_save_label').val();
-        return this.controller.SEARCH.saved_searches.create({
+        if (val === '') {
+          return false;
+        }
+        saved = this.controller.SEARCH.saved_searches.create({
           label: val,
           params: this.params
         });
+        if (saved) {
+          $('#search_save_label').attr('disabled', 'disabled');
+          return $('.search-menu-save input[type=submit]').attr('disabled', 'disabled').addClass('button-disabled').removeClass('button-green').val('Saved!');
+        }
       },
       loader_ui: function(bool) {
         if (bool && !(this.loader != null)) {

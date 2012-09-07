@@ -42,5 +42,6 @@ define [
       e.preventDefault()
       id = $(e.currentTarget).attr('href').substr(7)
       @options.collection.destroy(id)
-      rows = $('.row-' + id).html('').remove()
-      @$el.remove()
+      @$el.fadeOut('fast', (id) ->
+          $('.row-' + id).html('').remove()
+        )

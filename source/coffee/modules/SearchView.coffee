@@ -221,6 +221,16 @@ define [
     control_save : (e) ->
       if e.hasClass 'active'
         @attach_menu e, tpl_search_menu_save
+        # reset state
+        $('#search_save_label')
+          .val('')
+          .removeAttr('disabled')
+        # Enable button
+        $('.search-menu-save input[type=submit]')
+          .removeAttr('disabled')
+          .removeClass('button-disabled')
+          .addClass('button-green')
+          .val('Save view')
 
     # Search share control
     control_share : (e) ->
@@ -242,10 +252,24 @@ define [
     save_search : (e) ->
       e.preventDefault()
       val = $('#search_save_label').val()
-      @controller.SEARCH.saved_searches.create {
+      
+      # No value, no save
+      if val is ''
+        return false
+
+      saved = @controller.SEARCH.saved_searches.create {
         label  : val
         params : @params
       }
+
+      if saved
+        $('#search_save_label').attr('disabled', 'disabled')
+        # disable button
+        $('.search-menu-save input[type=submit]')
+          .attr('disabled', 'disabled')
+          .addClass('button-disabled')
+          .removeClass('button-green')
+          .val('Saved!')
 
     # Place a loading animation on top of the content
     loader_ui : (bool) ->
@@ -262,6 +286,9 @@ define [
         $("#search-loader-#{@cid}").hide()
 
     # Handling sorting state on columns
+    #
+    # @param _options_ Object : setting silent prevent fetch()
+    #
     sort_by : (e, options) ->
 
       options ?= {}
