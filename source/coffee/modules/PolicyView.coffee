@@ -37,8 +37,20 @@ define [
       
       @$el.html html
 
+      # Cache commonly used jQuery elements
       @cache_elements()
 
+      # iFrame properties
+      props =
+        policy_id : @model.get('pxServerIndex')
+        ipm_auth  : @model.get('digest')
+
+      # Load iFrame and pass in policy properties
+      @iframe.attr('src', '/mxadmin/index.html')
+      @iframe.bind 'load', =>
+        @iframe[0].contentWindow.inject_properties(props)
+
+      # Hide the view
       @$el.hide()
 
       # Register flash message pubsub for this view
@@ -169,11 +181,10 @@ define [
       @policy_header.show()
 
       @policy_summary.hide()
-      # swfobject.removeSWF("policy-summary-#{@cid}")
       $("#policy-summary-#{@cid}").hide()
 
       @iframe.show()
-      @iframe.attr('src', '/mxadmin/index.html')
+      # @iframe.attr('src', '/mxadmin/index.html')
       @resize_element(@iframe, @policy_header.height())
 
   PolicyView

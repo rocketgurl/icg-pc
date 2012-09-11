@@ -19,7 +19,8 @@
         });
       },
       render: function(options) {
-        var html;
+        var html, props,
+          _this = this;
         html = this.Mustache.render($('#tpl-flash-message').html(), {
           cid: this.cid
         });
@@ -32,6 +33,14 @@
         }
         this.$el.html(html);
         this.cache_elements();
+        props = {
+          policy_id: this.model.get('pxServerIndex'),
+          ipm_auth: this.model.get('digest')
+        };
+        this.iframe.attr('src', '/mxadmin/index.html');
+        this.iframe.bind('load', function() {
+          return _this.iframe[0].contentWindow.inject_properties(props);
+        });
         this.$el.hide();
         this.messenger = new Messenger(this.options.view, this.cid);
         if (this.controller.active_view.cid === this.options.view.cid) {
@@ -134,7 +143,6 @@
         this.policy_summary.hide();
         $("#policy-summary-" + this.cid).hide();
         this.iframe.show();
-        this.iframe.attr('src', '/mxadmin/index.html');
         return this.resize_element(this.iframe, this.policy_header.height());
       }
     });
