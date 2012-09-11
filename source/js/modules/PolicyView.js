@@ -105,11 +105,9 @@
       },
       initialize_swf: function() {
         var config, digest, obj, settings, workspace;
-        console.log("flash loaded: " + this.flash_loaded);
         if (this.flash_loaded === true) {
           return true;
         }
-        console.log('initializing flash');
         workspace = this.controller.workspace_state.get('workspace');
         config = this.controller.config.get_config(workspace);
         if (!(config != null)) {

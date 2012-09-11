@@ -140,12 +140,8 @@ define [
     # policy data along
     initialize_swf : ->
 
-      console.log "flash loaded: #{@flash_loaded}"
-
       if @flash_loaded is true
         return true
-
-      console.log 'initializing flash'
 
       workspace = @controller.workspace_state.get('workspace')
       config    = @controller.config.get_config(workspace)
