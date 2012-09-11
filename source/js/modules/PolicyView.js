@@ -69,7 +69,8 @@
         });
       },
       show_overview: function() {
-        var _this = this;
+        var flash_obj,
+          _this = this;
         this.$el.show();
         if (this.policy_header) {
           this.policy_header.hide();
@@ -81,7 +82,10 @@
         }
         if (this.policy_summary.length > 0) {
           this.resize_element(this.policy_summary);
-          this.policy_summary.show();
+          flash_obj = $(swfobject.getObjectById("policy-summary-" + this.cid));
+          flash_obj.show();
+        }
+        if (this.flash_loaded === false) {
           return swfobject.embedSWF("../swf/PolicySummary.swf", "policy-summary-" + this.cid, "100%", this.policy_summary.height(), "9.0.0", null, null, {
             allowScriptAccess: 'always'
           }, null, function(e) {
@@ -101,6 +105,11 @@
       },
       initialize_swf: function() {
         var config, digest, obj, settings, workspace;
+        console.log("flash loaded: " + this.flash_loaded);
+        if (this.flash_loaded === true) {
+          return true;
+        }
+        console.log('initializing flash');
         workspace = this.controller.workspace_state.get('workspace');
         config = this.controller.config.get_config(workspace);
         if (!(config != null)) {
@@ -125,7 +134,7 @@
         this.policy_header.html(header);
         this.policy_header.show();
         this.policy_summary.hide();
-        swfobject.removeSWF("policy-summary-" + this.cid);
+        $("#policy-summary-" + this.cid).hide();
         this.iframe.show();
         this.iframe.attr('src', '/mxadmin/index.html');
         return this.resize_element(this.iframe, this.policy_header.height());

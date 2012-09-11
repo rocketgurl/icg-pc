@@ -105,14 +105,12 @@ define [
 
       if @policy_summary.length > 0
         @resize_element @policy_summary
-        @policy_summary.show()
+        # We need to hook into the correct flash container
+        # using SWFObject (hackety hack hack)
+        flash_obj = $(swfobject.getObjectById("policy-summary-#{@cid}"))
+        flash_obj.show()
 
-      # Check for policy_summary element and then act on it.
-      # if @$el.find("#policy-summary-#{@cid}").length > 0
-      #   @policy_summary = @$el.find("#policy-summary-#{@cid}")
-      #   @resize_element @policy_summary
-      #   @policy_summary.show()
-
+      if @flash_loaded is false
         swfobject.embedSWF(
           "../swf/PolicySummary.swf",
           "policy-summary-#{@cid}",
@@ -141,6 +139,14 @@ define [
     # When the SWF calls ready() this is fired and passed
     # policy data along
     initialize_swf : ->
+
+      console.log "flash loaded: #{@flash_loaded}"
+
+      if @flash_loaded is true
+        return true
+
+      console.log 'initializing flash'
+
       workspace = @controller.workspace_state.get('workspace')
       config    = @controller.config.get_config(workspace)
 
@@ -167,7 +173,8 @@ define [
       @policy_header.show()
 
       @policy_summary.hide()
-      swfobject.removeSWF("policy-summary-#{@cid}")
+      # swfobject.removeSWF("policy-summary-#{@cid}")
+      $("#policy-summary-#{@cid}").hide()
 
       @iframe.show()
       @iframe.attr('src', '/mxadmin/index.html')
