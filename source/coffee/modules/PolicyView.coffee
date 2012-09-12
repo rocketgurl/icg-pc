@@ -120,6 +120,12 @@ define [
         # We need to hook into the correct flash container
         # using SWFObject (hackety hack hack)
         flash_obj = $(swfobject.getObjectById("policy-summary-#{@cid}"))
+
+        # WebKit doesn't seem able to hook into getObjectById so we
+        # fall back to jQuery
+        if _.isEmpty flash_obj
+          flash_obj = $("#policy-summary-#{@cid}")
+
         flash_obj.show()
 
       if @flash_loaded is false

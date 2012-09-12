@@ -92,6 +92,9 @@
         if (this.policy_summary.length > 0) {
           this.resize_element(this.policy_summary);
           flash_obj = $(swfobject.getObjectById("policy-summary-" + this.cid));
+          if (_.isEmpty(flash_obj)) {
+            flash_obj = $("#policy-summary-" + this.cid);
+          }
           flash_obj.show();
         }
         if (this.flash_loaded === false) {
