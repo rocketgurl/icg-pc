@@ -4,8 +4,17 @@
   define(['BaseModel', 'base64'], function(BaseModel, Base64) {
     var WorkspaceStateModel;
     WorkspaceStateModel = BaseModel.extend({
-      initialize: function() {
-        return this.use_localStorage('ics_policy_central');
+      initialize: function(attributes) {
+        this.use_localStorage('ics_policy_central');
+        if (attributes != null) {
+          return this.build_name(attributes);
+        }
+      },
+      build_name: function(workspace) {
+        workspace = workspace != null ? workspace : this.get('workspace');
+        if (workspace != null) {
+          return this.set('name', "" + workspace.business + "_" + workspace.context + "_" + workspace.env);
+        }
       }
     });
     return WorkspaceStateModel;

@@ -9,8 +9,17 @@ define [
   #
   WorkspaceStateModel = BaseModel.extend
 
-    initialize : () ->
+    initialize : (attributes) ->
       @use_localStorage('ics_policy_central') # Use LocalStorage
+
+      # Build name attr from WorkspaceController.current_state
+      if attributes?
+        @build_name(attributes)
+
+    build_name : (workspace) ->
+      workspace = if workspace? then workspace else @get('workspace')
+      if workspace?
+        @set 'name', "#{workspace.business}_#{workspace.context}_#{workspace.env}"
 
       
   WorkspaceStateModel

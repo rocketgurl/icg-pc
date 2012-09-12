@@ -5,6 +5,7 @@ define [
   'UserModel',
   'ConfigModel',
   'WorkspaceStateModel',
+  'WorkspaceStateCollection',
   'WorkspaceLoginView',
   'WorkspaceCanvasView',
   'WorkspaceNavView',
@@ -17,7 +18,7 @@ define [
   'Cookie',
   'xml2json',
   'modules/SearchContextCollection'
-], ($, _, Backbone, UserModel, ConfigModel, WorkspaceStateModel, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter, Messenger, Base64, MenuHelper, AppRules, Helpers, Cookie, xml2json, SearchContextCollection) ->
+], ($, _, Backbone, UserModel, ConfigModel, WorkspaceStateModel, WorkspaceStateCollection, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter, Messenger, Base64, MenuHelper, AppRules, Helpers, Cookie, xml2json, SearchContextCollection) ->
 
   #### Global ENV Setting
   #
@@ -60,6 +61,7 @@ define [
     services              : ics360.services
     global_flash          : new Messenger($('#canvas'), 'controller')
     SEARCH                : {}
+    Workspaces            : new WorkspaceStateCollection()
 
     # Simple logger
     logger : (msg) ->
@@ -94,7 +96,7 @@ define [
     # Remove all views from stack
     stack_clear : () ->
       @workspace_stack = []
-      @workspace_state.set 'apps', [] # maintain in state
+      #@workspace_state.set 'apps', [] # maintain in state
 
     # Find a view in the stack and return it
     stack_get : (app) ->
@@ -164,6 +166,16 @@ define [
         params = @current_state.params ? null
         if _.isString(params)
           params = Helpers.unserialize params
+
+        # Get the current workspace, if not present, then
+        # we need to create a new workspace for the current_state
+        @workspace_state = @Workspaces.retrieve @current_state
+
+        if @workspace_state is undefined or _.isEmpty(@workspace_state)
+          @workspace_state = @Workspaces.create(@current_state)
+
+        if _.isArray @workspace_state
+          @workspace_state = @workspace_state[0]
 
         @workspace_state.set 'workspace', {
           env      : @current_state.env
@@ -359,31 +371,33 @@ define [
         @check_workspace_state()
       raw_storage = @Amplify.store()
 
-      # If already a PC2 object then create model with its ID and fetch()
+      # If already a PC2 object then add a model with its ID and fetch()
       # otherwise create a new model (which will get a new GUID)
       if raw_storage['ics_policy_central']?
         raw_storage = raw_storage['ics_policy_central']
         raw_id = _.keys(raw_storage)[0]
         if raw_id?
-          @workspace_state = new WorkspaceStateModel(
+          workspaces = @Workspaces.add(
               id : raw_id
             )
+          @workspace_state = workspaces.get(raw_id)
           @workspace_state.fetch(
               success : (model, resp) =>
                 @current_state = model.get 'workspace'
+                model.build_name()
                 @update_address()
                 true
               error : (model, resp) =>
                 # Make a new WorkspaceState as we had a problem.
                 @Amplify.publish 'controller', 'notice', "We had an issue with your saved state. Not major, but we're starting from scratch."
-                @workspace_state = new WorkspaceStateModel()
+                @workspace_state = @Workspaces.create()
                 true
             )
           true          
       else
         # If no localStorage data then make a blank Workspace model 
         # and return false
-        @workspace_state = new WorkspaceStateModel()
+        @workspace_state = @Workspaces.create()
         false
 
 
@@ -441,7 +455,6 @@ define [
         if @current_state.module?
           @launch_module(@current_state.module, @current_state.params)
         @reassess_apps()
-
 
       data =
         business : @current_state.business
