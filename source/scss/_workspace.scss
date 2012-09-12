@@ -269,6 +269,14 @@
 	}
 }
 
+#login-button {
+	@include simple-color(hue($blue), saturation($blue), lightness($blue));
+}
+
+#form-login-button {
+
+}
+
 #test_module {
 	h2 {
 		@include font-size(24);
