@@ -575,7 +575,6 @@ body {
   z-index: 1;
 }
 #workspace article {
-  background: #ededed;
   *zoom: 1;
   width: 97%;
   margin-left: auto;
@@ -759,7 +758,8 @@ body {
   width: 240px;
   font-size: 16px;
   font-size: 1.6rem;
-  padding: 3px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  padding: 6px;
 }
 #form-login input[type=submit] {
   font-size: 18px;
@@ -767,51 +767,76 @@ body {
 }
 
 #login-button {
-  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzE2NTc4OCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzBhMzk1YyIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzJiOTBkMiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzE5NzJhYyIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
   background-size: 100%;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #165788), color-stop(100%, #0a395c));
-  background-image: -webkit-linear-gradient(#165788, #0a395c);
-  background-image: -moz-linear-gradient(#165788, #0a395c);
-  background-image: -o-linear-gradient(#165788, #0a395c);
-  background-image: -ms-linear-gradient(#165788, #0a395c);
-  background-image: linear-gradient(#165788, #0a395c);
-  border: 1px solid #08304e;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #2b90d2), color-stop(100%, #1972ac));
+  background-image: -webkit-linear-gradient(#2b90d2, #1972ac);
+  background-image: -moz-linear-gradient(#2b90d2, #1972ac);
+  background-image: -o-linear-gradient(#2b90d2, #1972ac);
+  background-image: -ms-linear-gradient(#2b90d2, #1972ac);
+  background-image: linear-gradient(#2b90d2, #1972ac);
+  border: 1px solid #17699f;
   -webkit-border-radius: 3px;
   -moz-border-radius: 3px;
   -ms-border-radius: 3px;
   -o-border-radius: 3px;
   border-radius: 3px;
-  -webkit-box-shadow: inset 0 1px 0 0 #297dbc;
-  -moz-box-shadow: inset 0 1px 0 0 #297dbc;
-  box-shadow: inset 0 1px 0 0 #297dbc;
+  -webkit-box-shadow: inset 0 1px 0 0 #6cadd8;
+  -moz-box-shadow: inset 0 1px 0 0 #6cadd8;
+  box-shadow: inset 0 1px 0 0 #6cadd8;
   color: white;
   font-weight: bold;
   padding: 8px 12px !important;
-  text-shadow: 0 1px 0 #04253e;
+  text-shadow: 0 1px 0 #0f5e92;
   text-align: center;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   font-size: 14px;
   font-size: 1.4rem;
 }
 #login-button:hover {
-  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzE1NDk2ZiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzA5MzA0ZSIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzJiODFiOCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzE4Njk5ZSIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
   background-size: 100%;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #15496f), color-stop(100%, #09304e));
-  background-image: -webkit-linear-gradient(#15496f, #09304e);
-  background-image: -moz-linear-gradient(#15496f, #09304e);
-  background-image: -o-linear-gradient(#15496f, #09304e);
-  background-image: -ms-linear-gradient(#15496f, #09304e);
-  background-image: linear-gradient(#15496f, #09304e);
-  -webkit-box-shadow: inset 0 1px 0 0 #206498;
-  -moz-box-shadow: inset 0 1px 0 0 #206498;
-  box-shadow: inset 0 1px 0 0 #206498;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #2b81b8), color-stop(100%, #18699e));
+  background-image: -webkit-linear-gradient(#2b81b8, #18699e);
+  background-image: -moz-linear-gradient(#2b81b8, #18699e);
+  background-image: -o-linear-gradient(#2b81b8, #18699e);
+  background-image: -ms-linear-gradient(#2b81b8, #18699e);
+  background-image: linear-gradient(#2b81b8, #18699e);
+  -webkit-box-shadow: inset 0 1px 0 0 #479ad0;
+  -moz-box-shadow: inset 0 1px 0 0 #479ad0;
+  box-shadow: inset 0 1px 0 0 #479ad0;
   cursor: pointer;
 }
 #login-button:active {
-  -webkit-box-shadow: inset 0 0 8px 4px #072840, inset 0 0 8px 4px #072840, 0 1px 1px 0 #eeeeee;
-  -moz-box-shadow: inset 0 0 8px 4px #072840, inset 0 0 8px 4px #072840, 0 1px 1px 0 #eeeeee;
-  box-shadow: inset 0 0 8px 4px #072840, inset 0 0 8px 4px #072840, 0 1px 1px 0 #eeeeee;
-  border: 1px solid #08304e;
+  -webkit-box-shadow: inset 0 0 8px 4px #166090, inset 0 0 8px 4px #166090, 0 1px 1px 0 #eeeeee;
+  -moz-box-shadow: inset 0 0 8px 4px #166090, inset 0 0 8px 4px #166090, 0 1px 1px 0 #eeeeee;
+  box-shadow: inset 0 0 8px 4px #166090, inset 0 0 8px 4px #166090, 0 1px 1px 0 #eeeeee;
+  border: 1px solid #17699f;
+}
+
+#form-login-button a {
+  font-size: 14px;
+  font-size: 1.4rem;
+  color: #165788;
+  text-decoration: none;
+  margin: 0 5px 0 0;
+  padding: 6px 10px;
+  background: transparent;
+  border-radius: 6px;
+  position: relative;
+  left: -10px;
+}
+#form-login-button a:hover, #form-login-button .policy-nav li a.select, .policy-nav li #form-login-button a.select {
+  color: white;
+  background: #a1a1a1;
+  box-shadow: 0 1px 3px 1px #6e6e6e inset;
+  text-shadow: 0 1px 1px #000;
+}
+
+.logo-background {
+  background: url("/img/logo_bg.png") top right no-repeat;
+  background-position: 140% 35%;
+  background-size: 60%;
 }
 
 #test_module h2 {

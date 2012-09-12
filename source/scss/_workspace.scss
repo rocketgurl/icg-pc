@@ -128,7 +128,7 @@
 		}
 	}
 	article {
-		background: $lightgray;
+		
 		@include container;
 		padding: 20px 0;
 		margin-top: -32px; // Correct position offset from tabs
@@ -261,7 +261,8 @@
 	input[type=password] {
 		width: 240px;
 		@include font-size(16);
-		padding: 3px;
+		@include sans;
+		padding: 6px;
 	}
 
 	input[type=submit] {
@@ -270,11 +271,33 @@
 }
 
 #login-button {
-	@include simple-color(hue($blue), saturation($blue), lightness($blue));
+	@include simple-color(hue(#2b90d2), saturation(#2b90d2), lightness(#2b90d2));
 }
 
 #form-login-button {
+	a {
+		@include font-size(14);
+		color: $blue;
+		text-decoration: none;
+		margin: 0 5px 0 0;
+		padding: 6px 10px;
+		background: transparent;
+		border-radius: 6px;
+		position: relative;
+		left: -10px;
+		&:hover {
+			color: $white;
+			background: darken($lightgray, 30);
+			box-shadow: 0 1px 3px 1px darken($lightgray, 50) inset;
+			text-shadow: 0 1px 1px #000;
+		}
+	}
+}
 
+.logo-background {
+	background: url('/img/logo_bg.png') top right no-repeat;
+	background-position: 140% 35%;
+	background-size: 60%;
 }
 
 #test_module {

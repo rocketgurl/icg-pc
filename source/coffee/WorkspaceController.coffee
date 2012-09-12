@@ -229,6 +229,7 @@ define [
         @navigation_view.destroy()
 
       $('#header').css('height', '65px')
+      $('body').addClass('logo-background')
 
       @login_view
 
@@ -274,6 +275,7 @@ define [
       @show_workspace_button()
       if @login_view?
         @login_view.destroy()
+        $('body').removeClass('logo-background')
 
     # On unsuccessful login render the login form again
     # along with a Flash message indicating issue

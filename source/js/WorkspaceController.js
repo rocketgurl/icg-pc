@@ -176,6 +176,7 @@
           this.navigation_view.destroy();
         }
         $('#header').css('height', '65px');
+        $('body').addClass('logo-background');
         return this.login_view;
       },
       check_credentials: function(username, password) {
@@ -212,7 +213,8 @@
         this.set_admin_links();
         this.show_workspace_button();
         if (this.login_view != null) {
-          return this.login_view.destroy();
+          this.login_view.destroy();
+          return $('body').removeClass('logo-background');
         }
       },
       login_fail: function(model, resp, state) {
