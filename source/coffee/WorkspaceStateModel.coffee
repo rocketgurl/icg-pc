@@ -17,8 +17,8 @@ define [
         @build_name(attributes)
 
     build_name : (workspace) ->
-      workspace = if workspace? then workspace else @get('workspace')
-      if workspace?
+      workspace = if workspace is not undefined then workspace else @get('workspace')
+      if workspace? 
         @set 'name', "#{workspace.business}_#{workspace.context}_#{workspace.env}"
 
       

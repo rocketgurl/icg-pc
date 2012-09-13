@@ -10,15 +10,15 @@ define [
   'WorkspaceCanvasView',
   'WorkspaceNavView',
   'WorkspaceRouter',
+  'modules/SearchContextCollection'
   'Messenger',
   'base64',
   'MenuHelper',
   'AppRules',
   'Helpers',
   'Cookie',
-  'xml2json',
-  'modules/SearchContextCollection'
-], ($, _, Backbone, UserModel, ConfigModel, WorkspaceStateModel, WorkspaceStateCollection, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter, Messenger, Base64, MenuHelper, AppRules, Helpers, Cookie, xml2json, SearchContextCollection) ->
+  'xml2json'
+], ($, _, Backbone, UserModel, ConfigModel, WorkspaceStateModel, WorkspaceStateCollection, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter, SearchContextCollection, Messenger, Base64, MenuHelper, AppRules, Helpers, Cookie, xml2json) ->
 
   #### Global ENV Setting
   #
@@ -74,6 +74,20 @@ define [
     # Keep tabs on what's in our Workspace.
     # This should contain WorkspaceCanvasView-enabled objects
     workspace_stack : []
+
+    # Method Combinator (Decorator) 
+    # https://github.com/raganwald/method-combinators
+    #
+    # Ensure that workspace_state is valid
+    # We make sure @workspace_state is valid before operating
+    # on it, or return false
+    valid_workspace : (methodBody) ->
+      ->
+        if @workspace_state? and !_.isEmpty(@workspace_state)
+          methodBody.apply(this, arguments)
+        else
+          return false
+
 
     # Add a view to the stack, but check for duplicates first
     stack_add : (view) ->
@@ -140,27 +154,32 @@ define [
     # @param `app` _Object_ application config object  
     #
     state_remove : (app) ->
-      saved_apps = @workspace_state.get 'apps'
-      _.each saved_apps, (obj, index) =>
-        if app.app == obj.app
-          saved_apps.splice index, 1
-      @workspace_state.set 'apps', saved_apps
-      @workspace_state.save()
+      @valid_workspace ->
+        saved_apps = @workspace_state.get 'apps'
+        _.each saved_apps, (obj, index) =>
+          if app.app == obj.app
+            saved_apps.splice index, 1
+        @workspace_state.set 'apps', saved_apps
+        @workspace_state.save()
     
     # Check to see if an app already exists in saved state
     #
     # @param `app` _Object_ application config object
     #
     state_exists : (app) ->
-      saved_apps = @workspace_state.get 'apps'
-      _.find saved_apps, (saved) =>
-        saved.app is app.app
+      @valid_workspace ->
+        saved_apps = @workspace_state.get 'apps'
+        _.find saved_apps, (saved) =>
+          saved.app is app.app
  
 
     # Try and keep the localStorage version of app state
     # persisted across requests
     set_nav_state : ->
       if @current_state? and @workspace_state?
+
+        if @current_state is undefined
+          return false
 
         # If this is a string, then deserialize it
         params = @current_state.params ? null
@@ -172,7 +191,7 @@ define [
         @workspace_state = @Workspaces.retrieve @current_state
 
         if @workspace_state is undefined or _.isEmpty(@workspace_state)
-          @workspace_state = @Workspaces.create(@current_state)
+          @workspace_state = @Workspaces.create({ workspace : @current_state })
 
         if _.isArray @workspace_state
           @workspace_state = @workspace_state[0]
@@ -304,7 +323,7 @@ define [
       @destroy_workspace_model()
 
     destroy_workspace_model : ->
-      if @workspace_state?
+      @valid_workspace ->
         @workspace_state.destroy() 
         @workspace_state = null
       @Amplify.store('ics_policy_central', null)
@@ -327,6 +346,10 @@ define [
           else
             @config.set 'menu', menu
             @config.set 'menu_html', MenuHelper.generate_menu(menu)
+
+            # Instantiate our SearchContextCollection
+            #@setup_search_storage()
+
             @navigation_view = new WorkspaceNavView({
                 router     : @Router
                 controller : @
@@ -350,9 +373,6 @@ define [
 
             if @current_state?
               @trigger 'launch'
-
-            # Instantiate our SearchContextCollection
-            @setup_search_storage()
 
         # Try to throw a useful error message when possible.
         error : (model, resp) =>
@@ -380,7 +400,7 @@ define [
         raw_id = _.keys(raw_storage)[0]
         if raw_id?
           workspaces = @Workspaces.add(
-              id : raw_id
+              id : raw_id 
             )
           @workspace_state = workspaces.get(raw_id)
           @workspace_state.fetch(
@@ -397,9 +417,8 @@ define [
             )
           true          
       else
-        # If no localStorage data then make a blank Workspace model 
-        # and return false
-        @workspace_state = @Workspaces.create()
+        # If no localStorage data then make a stub object
+        @workspace_state = {}
         false
 
 
@@ -517,16 +536,6 @@ define [
     # @param `params` _Object_ query params
     #
     launch_module : (module, params) ->
-      # if not module
-      #   module = @current_state.module
-
-      # if not params
-      #   params = @current_state.params
-
-      # if not params
-      #   params =
-      #     url : ''
-
       # We need to sanitize this a little
       params ?= {}
 
@@ -572,6 +581,8 @@ define [
     # If there are other apps persisted in localStorage we need
     # to launch those as well
     check_persisted_apps : ->
+      if !@workspace_state?
+        return false
       saved_apps = @workspace_state.get 'apps'
       if saved_apps?
         for app in saved_apps
@@ -747,5 +758,6 @@ define [
 
   WorkspaceController.on "new_tab", (app_name) ->
     @toggle_apps app_name
+
 
   

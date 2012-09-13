@@ -11,7 +11,7 @@
         }
       },
       build_name: function(workspace) {
-        workspace = workspace != null ? workspace : this.get('workspace');
+        workspace = workspace === !void 0 ? workspace : this.get('workspace');
         if (workspace != null) {
           return this.set('name', "" + workspace.business + "_" + workspace.context + "_" + workspace.env);
         }
