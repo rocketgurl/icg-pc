@@ -2,7 +2,7 @@
 (function() {
 
   define(['jquery', 'underscore', 'backbone', 'UserModel', 'ConfigModel', 'WorkspaceStateModel', 'WorkspaceStateCollection', 'WorkspaceLoginView', 'WorkspaceCanvasView', 'WorkspaceNavView', 'WorkspaceRouter', 'modules/SearchContextCollection', 'Messenger', 'base64', 'MenuHelper', 'AppRules', 'Helpers', 'Cookie', 'xml2json'], function($, _, Backbone, UserModel, ConfigModel, WorkspaceStateModel, WorkspaceStateCollection, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter, SearchContextCollection, Messenger, Base64, MenuHelper, AppRules, Helpers, Cookie, xml2json) {
-    var WorkspaceController, ics360,
+    var WorkspaceController, ics360, valid_workspace,
       _this = this;
     window.ICS360_ENV = 'staging';
     amplify.subscribe('log', function(msg) {
@@ -16,6 +16,15 @@
         ixdoc: './ixdoc/api/rest/v2/',
         ixadmin: './config/ics/staging/ixadmin'
       }
+    };
+    valid_workspace = function(methodBody) {
+      return function() {
+        if ((this.workspace_state != null) && !_.isEmpty(this.workspace_state)) {
+          return methodBody.apply(this, arguments);
+        } else {
+          return false;
+        }
+      };
     };
     WorkspaceController = {
       Amplify: amplify,
@@ -39,15 +48,6 @@
         return this.Amplify.publish(this.login_view.cid, type, msg);
       },
       workspace_stack: [],
-      valid_workspace: function(methodBody) {
-        return function() {
-          if ((this.workspace_state != null) && !_.isEmpty(this.workspace_state)) {
-            return methodBody.apply(this, arguments);
-          } else {
-            return false;
-          }
-        };
-      },
       stack_add: function(view) {
         var exists;
         exists = _.find(this.workspace_stack, function(item) {
@@ -91,6 +91,7 @@
         saved_apps = this.workspace_state.get('apps');
         if (saved_apps != null) {
           exists = this.state_exists(app);
+          console.log(exists);
           if (!(exists != null)) {
             saved_apps.push(app);
           } else {
@@ -105,30 +106,26 @@
         this.workspace_state.save();
         return true;
       },
-      state_remove: function(app) {
-        return this.valid_workspace(function() {
-          var saved_apps,
-            _this = this;
-          saved_apps = this.workspace_state.get('apps');
-          _.each(saved_apps, function(obj, index) {
-            if (app.app === obj.app) {
-              return saved_apps.splice(index, 1);
-            }
-          });
-          this.workspace_state.set('apps', saved_apps);
-          return this.workspace_state.save();
+      state_remove: valid_workspace(function(app) {
+        var saved_apps,
+          _this = this;
+        saved_apps = this.workspace_state.get('apps');
+        _.each(saved_apps, function(obj, index) {
+          if (app.app === obj.app) {
+            return saved_apps.splice(index, 1);
+          }
         });
-      },
-      state_exists: function(app) {
-        return this.valid_workspace(function() {
-          var saved_apps,
-            _this = this;
-          saved_apps = this.workspace_state.get('apps');
-          return _.find(saved_apps, function(saved) {
-            return saved.app === app.app;
-          });
+        this.workspace_state.set('apps', saved_apps);
+        return this.workspace_state.save();
+      }),
+      state_exists: valid_workspace(function(app) {
+        var saved_apps,
+          _this = this;
+        saved_apps = this.workspace_state.get('apps');
+        return _.find(saved_apps, function(saved) {
+          return saved.app === app.app;
         });
-      },
+      }),
       set_nav_state: function() {
         var params, _ref, _ref1;
         if ((this.current_state != null) && (this.workspace_state != null)) {
@@ -144,6 +141,8 @@
             this.workspace_state = this.Workspaces.create({
               workspace: this.current_state
             });
+            console.log('made new workspace');
+            console.log(this.workspace_state);
           }
           if (_.isArray(this.workspace_state)) {
             this.workspace_state = this.workspace_state[0];
@@ -336,10 +335,14 @@
         }
       },
       setup_search_storage: function() {
-        this.SEARCH.saved_searches = new SearchContextCollection();
-        this.SEARCH.saved_searches.controller = this;
-        this.SEARCH.saved_searches.fetch();
-        return this.SEARCH.saved_searches;
+        var _ref;
+        console.log(SearchContextCollection);
+        if (!(((_ref = this.SEARCH) != null ? _ref.saved_searches : void 0) != null)) {
+          this.SEARCH.saved_searches = new SearchContextCollection();
+          this.SEARCH.saved_searches.controller = this;
+          this.SEARCH.saved_searches.fetch();
+          return this.SEARCH.saved_searches;
+        }
       },
       is_loggedin: function() {
         if (!(this.user != null)) {
@@ -393,6 +396,7 @@
       },
       launch_app: function(app) {
         var default_workspace, rules, workspace, _i, _len, _results;
+        console.log(this.state_exists(app));
         if (this.state_exists(app) != null) {
           this.toggle_apps(app.app);
         } else {

@@ -1,18 +1,17 @@
 define [
+  'BaseCollection',
   'modules/SearchContextModel',
   'modules/SearchContextView',
   'base64',
   'Store',
   'LocalStorageSync',
-  'amplify',
   'Helpers'
-], (SearchContextModel, SearchContextView, Base64, Store, LocalStorageSync, Amplify, Helpers) ->
+], (BaseCollection, SearchContextModel, SearchContextView, Base64, Store, LocalStorageSync, amplify, Helpers) ->
 
   #### Use Local Storage to handle saved search views
   #
-  SearchContextCollection = Backbone.Collection.extend
+  SearchContextCollection = BaseCollection.extend
 
-    Amplify      : Amplify
     model        : SearchContextModel
     views        : [] # view stack
     localStorage : new Store 'ics_saved_searches'
@@ -62,4 +61,3 @@ define [
       model = @get id
       if model.destroy()
         @remove model
-

@@ -41,6 +41,19 @@ define [
       ixdoc       : './ixdoc/api/rest/v2/'
       ixadmin     : './config/ics/staging/ixadmin' # TESTING ONLY
 
+  # Method Combinator (Decorator) 
+  # https://github.com/raganwald/method-combinators
+  #
+  # Ensure that workspace_state is valid
+  # We make sure @workspace_state is valid before operating
+  # on it, or return false
+  valid_workspace = (methodBody) ->
+    ->
+      if @workspace_state? and !_.isEmpty(@workspace_state)
+        methodBody.apply(this, arguments)
+      else
+        false
+
   #### Orchestrate the Workspace 
   #
   # This controller wires together different views/models
@@ -74,20 +87,6 @@ define [
     # Keep tabs on what's in our Workspace.
     # This should contain WorkspaceCanvasView-enabled objects
     workspace_stack : []
-
-    # Method Combinator (Decorator) 
-    # https://github.com/raganwald/method-combinators
-    #
-    # Ensure that workspace_state is valid
-    # We make sure @workspace_state is valid before operating
-    # on it, or return false
-    valid_workspace : (methodBody) ->
-      ->
-        if @workspace_state? and !_.isEmpty(@workspace_state)
-          methodBody.apply(this, arguments)
-        else
-          return false
-
 
     # Add a view to the stack, but check for duplicates first
     stack_add : (view) ->
@@ -135,6 +134,7 @@ define [
         # Check to see if this app is already in the array.
         # If its not, add it.
         exists = @state_exists app
+        console.log exists
         if !exists?
           saved_apps.push app
         else
@@ -153,8 +153,9 @@ define [
     #
     # @param `app` _Object_ application config object  
     #
-    state_remove : (app) ->
-      @valid_workspace ->
+    state_remove :
+      valid_workspace \
+      (app) ->
         saved_apps = @workspace_state.get 'apps'
         _.each saved_apps, (obj, index) =>
           if app.app == obj.app
@@ -166,8 +167,9 @@ define [
     #
     # @param `app` _Object_ application config object
     #
-    state_exists : (app) ->
-      @valid_workspace ->
+    state_exists :
+      valid_workspace \
+      (app) ->
         saved_apps = @workspace_state.get 'apps'
         _.find saved_apps, (saved) =>
           saved.app is app.app
@@ -192,6 +194,8 @@ define [
 
         if @workspace_state is undefined or _.isEmpty(@workspace_state)
           @workspace_state = @Workspaces.create({ workspace : @current_state })
+          console.log 'made new workspace'
+          console.log @workspace_state
 
         if _.isArray @workspace_state
           @workspace_state = @workspace_state[0]
@@ -348,7 +352,7 @@ define [
             @config.set 'menu_html', MenuHelper.generate_menu(menu)
 
             # Instantiate our SearchContextCollection
-            #@setup_search_storage()
+            # @setup_search_storage()
 
             @navigation_view = new WorkspaceNavView({
                 router     : @Router
@@ -429,10 +433,12 @@ define [
     # that models are passed around to many instances of 
     # SearchModule. It's a hack, but it works for now.
     setup_search_storage : ->
-      @SEARCH.saved_searches = new SearchContextCollection()
-      @SEARCH.saved_searches.controller = @ # so we can phone home
-      @SEARCH.saved_searches.fetch()
-      @SEARCH.saved_searches
+      console.log SearchContextCollection
+      if not @SEARCH?.saved_searches?
+        @SEARCH.saved_searches = new SearchContextCollection()      
+        @SEARCH.saved_searches.controller = @ # so we can phone home
+        @SEARCH.saved_searches.fetch()
+        @SEARCH.saved_searches
 
     #### Check logged in state
     is_loggedin : ->
@@ -515,6 +521,7 @@ define [
       # If app is not saved in @workspace_state and is not the 
       # workspace defined app then we need to add it to our
       # stack of saved apps
+      console.log @state_exists(app)
       if @state_exists(app)?
         @toggle_apps app.app
       else

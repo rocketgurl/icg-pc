@@ -1,4 +1,3 @@
-"use strict";
 require
   baseUrl: 'js'
   paths: 

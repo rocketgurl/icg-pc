@@ -10,6 +10,7 @@
         this.app = app;
         this.params = params;
         _.extend(this, Backbone.Events);
+        this.view.options.controller.setup_search_storage();
         this.load();
       }
 

@@ -20,6 +20,9 @@ define [
     constructor : (@view, @app, @params) ->
       # Bind events
       _.extend @, Backbone.Events
+
+      # Make sure the controller can handle multiple search data
+      @view.options.controller.setup_search_storage()
       
       # Kick off application
       @load()
