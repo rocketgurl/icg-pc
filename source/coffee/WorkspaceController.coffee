@@ -10,7 +10,7 @@ define [
   'WorkspaceCanvasView',
   'WorkspaceNavView',
   'WorkspaceRouter',
-  'modules/SearchContextCollection'
+  'modules/SearchContextCollection',
   'Messenger',
   'base64',
   'MenuHelper',
@@ -73,7 +73,6 @@ define [
     COOKIE_NAME           : 'ics360_PolicyCentral'
     services              : ics360.services
     global_flash          : new Messenger($('#canvas'), 'controller')
-    SEARCH                : {}
     Workspaces            : new WorkspaceStateCollection()
 
     # Simple logger
@@ -134,7 +133,6 @@ define [
         # Check to see if this app is already in the array.
         # If its not, add it.
         exists = @state_exists app
-        console.log exists
         if !exists?
           saved_apps.push app
         else
@@ -194,8 +192,6 @@ define [
 
         if @workspace_state is undefined or _.isEmpty(@workspace_state)
           @workspace_state = @Workspaces.create({ workspace : @current_state })
-          console.log 'made new workspace'
-          console.log @workspace_state
 
         if _.isArray @workspace_state
           @workspace_state = @workspace_state[0]
@@ -434,9 +430,14 @@ define [
     # that models are passed around to many instances of 
     # SearchModule. It's a hack, but it works for now.
     setup_search_storage : ->
-      console.log SearchContextCollection
       if not @SEARCH?.saved_searches?
-        @SEARCH.saved_searches = new SearchContextCollection()      
+
+        # if !_.isFunction(SearchContextCollection)
+        #   throw new Error('SearchContextCollection is not loaded properly')
+
+        @SEARCH =
+          saved_searches : new SearchContextCollection()  
+              
         @SEARCH.saved_searches.controller = @ # so we can phone home
         @SEARCH.saved_searches.fetch()
         @SEARCH.saved_searches

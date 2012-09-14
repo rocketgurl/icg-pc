@@ -6,12 +6,11 @@ define [
   'Store',
   'LocalStorageSync',
   'Helpers'
-], (BaseCollection, SearchContextModel, SearchContextView, Base64, Store, LocalStorageSync, amplify, Helpers) ->
+], (BaseCollection, SearchContextModel, SearchContextView, Base64, Store, LocalStorageSync, Helpers) ->
 
   #### Use Local Storage to handle saved search views
   #
   SearchContextCollection = BaseCollection.extend
-
     model        : SearchContextModel
     views        : [] # view stack
     localStorage : new Store 'ics_saved_searches'

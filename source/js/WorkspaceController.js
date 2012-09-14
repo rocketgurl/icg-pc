@@ -39,7 +39,6 @@
       COOKIE_NAME: 'ics360_PolicyCentral',
       services: ics360.services,
       global_flash: new Messenger($('#canvas'), 'controller'),
-      SEARCH: {},
       Workspaces: new WorkspaceStateCollection(),
       logger: function(msg) {
         return this.Amplify.publish('log', msg);
@@ -91,7 +90,6 @@
         saved_apps = this.workspace_state.get('apps');
         if (saved_apps != null) {
           exists = this.state_exists(app);
-          console.log(exists);
           if (!(exists != null)) {
             saved_apps.push(app);
           } else {
@@ -141,8 +139,6 @@
             this.workspace_state = this.Workspaces.create({
               workspace: this.current_state
             });
-            console.log('made new workspace');
-            console.log(this.workspace_state);
           }
           if (_.isArray(this.workspace_state)) {
             this.workspace_state = this.workspace_state[0];
@@ -334,9 +330,10 @@
       },
       setup_search_storage: function() {
         var _ref;
-        console.log(SearchContextCollection);
         if (!(((_ref = this.SEARCH) != null ? _ref.saved_searches : void 0) != null)) {
-          this.SEARCH.saved_searches = new SearchContextCollection();
+          this.SEARCH = {
+            saved_searches: new SearchContextCollection()
+          };
           this.SEARCH.saved_searches.controller = this;
           this.SEARCH.saved_searches.fetch();
           return this.SEARCH.saved_searches;
