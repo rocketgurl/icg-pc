@@ -326,11 +326,12 @@ define [
 
       @destroy_workspace_model()
 
-    destroy_workspace_model : ->
-      @valid_workspace ->
+    destroy_workspace_model :
+      valid_workspace \
+      ->
         @workspace_state.destroy() 
         @workspace_state = null
-      @Amplify.store('ics_policy_central', null)
+        @Amplify.store('ics_policy_central', null)
 
     #### Get Configuration Files
     #
@@ -521,7 +522,6 @@ define [
       # If app is not saved in @workspace_state and is not the 
       # workspace defined app then we need to add it to our
       # stack of saved apps
-      console.log @state_exists(app)
       if @state_exists(app)?
         @toggle_apps app.app
       else

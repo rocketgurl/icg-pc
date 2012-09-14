@@ -252,13 +252,11 @@
         }
         return this.destroy_workspace_model();
       },
-      destroy_workspace_model: function() {
-        this.valid_workspace(function() {
-          this.workspace_state.destroy();
-          return this.workspace_state = null;
-        });
+      destroy_workspace_model: valid_workspace(function() {
+        this.workspace_state.destroy();
+        this.workspace_state = null;
         return this.Amplify.store('ics_policy_central', null);
-      },
+      }),
       get_configs: function() {
         var _this = this;
         this.config = new ConfigModel({
@@ -396,7 +394,6 @@
       },
       launch_app: function(app) {
         var default_workspace, rules, workspace, _i, _len, _results;
-        console.log(this.state_exists(app));
         if (this.state_exists(app) != null) {
           this.toggle_apps(app.app);
         } else {
