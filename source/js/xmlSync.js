@@ -8,7 +8,8 @@
       options = _.extend(options, {
         dataType: 'xml',
         contentType: 'application/xml',
-        processData: false
+        processData: false,
+        withCredentials: true
       });
       return originalSync.apply(Backbone, [method, model, options]);
     };

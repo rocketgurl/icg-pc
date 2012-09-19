@@ -41,6 +41,7 @@
         });
         this.messenger = new Messenger(this.policy_view, this.policy_view.cid);
         digest = this.view.options.controller.user.get('digest');
+        window.pol = this.policy_model;
         this.policy_model.fetch({
           headers: {
             'Authorization': "Basic " + digest,

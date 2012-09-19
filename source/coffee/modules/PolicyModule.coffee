@@ -53,7 +53,7 @@ define [
 
       @messenger = new Messenger(@policy_view, @policy_view.cid)
       digest     = @view.options.controller.user.get('digest')
-
+      window.pol = @policy_model
       @policy_model.fetch({
         headers :
           'Authorization'   : "Basic #{digest}"

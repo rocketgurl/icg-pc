@@ -32,6 +32,11 @@
           text: xhr.getResponseHeader('X-True-Statustext'),
           code: xhr.getResponseHeader('X-True-Statuscode')
         };
+        if (!(fetch_state.code != null)) {
+          if (xhr.readyState === 4 && xhr.status === 200) {
+            fetch_state.code = "200";
+          }
+        }
         this.set('fetch_state', fetch_state);
         return this;
       },

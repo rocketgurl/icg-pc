@@ -35,11 +35,13 @@
         this.cache_elements();
         props = {
           policy_id: this.model.get('pxServerIndex'),
-          ipm_auth: this.model.get('digest')
+          ipm_auth: this.model.get('digest'),
+          routes: this.controller.services
         };
         this.iframe.attr('src', '/mxadmin/index.html');
         this.iframe.bind('load', function() {
-          return _this.iframe[0].contentWindow.inject_properties(props);
+          _this.iframe[0].contentWindow.inject_properties(props);
+          return _this.iframe[0].contentWindow.load_mxAdmin();
         });
         this.$el.hide();
         this.messenger = new Messenger(this.options.view, this.cid);
@@ -116,12 +118,11 @@
         };
       },
       initialize_swf: function() {
-        var config, digest, obj, settings, workspace;
+        var config, digest, obj, settings;
         if (this.flash_loaded === true) {
           return true;
         }
-        workspace = this.controller.workspace_state.get('workspace');
-        config = this.controller.config.get_config(workspace);
+        config = this.controller.config.get_config(this.controller.workspace_state);
         if (!(config != null)) {
           this.Amplify.publish(this.cid, 'warning', "There was a problem with the configuration for this policy. Sorry.");
         }

@@ -16,14 +16,14 @@
       options = _.extend(options, {
         dataType: 'xml',
         contentType: 'application/xml',
-        processData: false
+        processData: false,
+        withCredentials: true
       });
       if (model.get('digest') != null) {
         options.basic_auth_digest = model.get('digest');
       }
       options.beforeSend = function(xhr) {
         xhr.setRequestHeader('X-Crippled-Client', 'yes');
-        xhr.setRequestHeader('X-Method', type);
         xhr.setRequestHeader('X-Rest-Method', type);
         xhr.setRequestHeader('X-Requested-With', 'XMLHTTPRequest');
         if (options.basic_auth_digest) {

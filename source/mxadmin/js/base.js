@@ -200,11 +200,18 @@ $address.bind("nav", function (event, address) {
     show(address);
 });
 
+// PC 2.0
+// 
+// Need to get these values from PolicyView
+// 
 $(function () {
-  com.ics360.ixdirectory.init('/ixdirectory/api/rest/v2/');
-  model.pxcentral.init('/pxcentral/api/rest/v1/');
-  model.ixlibrary.init('/ixlibrary/api/sdo/rest/v1/');
-  model.ixdoc.init('/ixdoc/api/rest/v2/');
+
+  mxAdmin.initialize = function() {
+    com.ics360.ixdirectory.init(mxAdmin.ICSROUTES.ixdirectory);
+    model.pxcentral.init(mxAdmin.ICSROUTES.pxcentral);
+    model.ixlibrary.init(mxAdmin.ICSROUTES.ixlibrary);
+    model.ixdoc.init(mxAdmin.ICSROUTES.ixdoc);
+  }
 
   // PC 2.0
   // What slash really means is "i want to go home!"

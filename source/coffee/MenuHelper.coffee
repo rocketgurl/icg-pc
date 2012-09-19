@@ -40,7 +40,7 @@ define [
       # Get a nice object of business names from ixConfig
       @businesses = @ixconfig.find('ConfigItem[name=businesses]').first().children()
       business_names = {}
-      @businesses.each (index, item)->
+      @businesses.each (index, item) ->
         item = $(item)
         business_names[item.attr('name')] = item.attr('value')
       @businesses = business_names

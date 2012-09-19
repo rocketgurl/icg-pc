@@ -338,6 +338,7 @@ define [
     get_configs : ->
       @config = new ConfigModel
         urlRoot : @services.ixadmin
+
       @config.fetch(
         success : (model, resp) =>
           menu = MenuHelper.build_menu(@user.get('document'), model.get('document'))
@@ -478,6 +479,18 @@ define [
       if $('#header').height() < 95
         $('#header').css('height', '95px')
 
+      # Set the path to pxCentral to the correct instance
+      if url = @config.get_pxCentral(@workspace_state)
+        # testing URL
+        # /pxcentral/api/rest/v1/
+        # https://staging-services.ics360.org/cru-6/ 
+        url = url.replace('staging-services.ics360.org', 'ics-intweb-01.ics.local:1111')
+        @services.pxcentral = "#{url}pxcentral/api/rest/v1/"
+        console.log @services.pxcentral
+
+      for node in ['cxserver', 'ixdirectory', 'ixprofiler', 'ixrelay', 'ixvocab']
+        @services[node] = @config.get_universal_service(@workspace_state, node)
+
       @launch_app app
       if @check_persisted_apps()
         # Is this a search? attempt to launch it
@@ -495,6 +508,7 @@ define [
 
       # Store our workplace information in localStorage
       @set_nav_state()
+
 
     # Build the breadcrumb in the top nav
     #

@@ -209,7 +209,8 @@ com.ics360 = function () {
               
               return function(xhr) {
                   xhr.setRequestHeader('X-Crippled-Client', 'yes');
-                  xhr.setRequestHeader('X-Method', method);
+                  // PC 2.0 - CORS
+                  // xhr.setRequestHeader('X-Method', method);
                   xhr.setRequestHeader('X-Rest-Method', method);
       
                   if (_extra) {

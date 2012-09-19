@@ -348,7 +348,7 @@
         return true;
       },
       launch_workspace: function() {
-        var app, apps, data, group_label, menu,
+        var app, apps, data, group_label, menu, node, url, _i, _len, _ref,
           _this = this;
         if (this.is_loggedin === false) {
           return;
@@ -366,6 +366,16 @@
         this.teardown_workspace();
         if ($('#header').height() < 95) {
           $('#header').css('height', '95px');
+        }
+        if (url = this.config.get_pxCentral(this.workspace_state)) {
+          url = url.replace('staging-services.ics360.org', 'ics-intweb-01.ics.local:1111');
+          this.services.pxcentral = "" + url + "pxcentral/api/rest/v1/";
+          console.log(this.services.pxcentral);
+        }
+        _ref = ['cxserver', 'ixdirectory', 'ixprofiler', 'ixrelay', 'ixvocab'];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          node = _ref[_i];
+          this.services[node] = this.config.get_universal_service(this.workspace_state, node);
         }
         this.launch_app(app);
         if (this.check_persisted_apps()) {

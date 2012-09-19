@@ -52,8 +52,16 @@ define [
       fetch_state =
         text : xhr.getResponseHeader 'X-True-Statustext'
         code : xhr.getResponseHeader 'X-True-Statuscode'
+
+      # This might be a CORS request in which case we can't
+      # get our X-True-Statustext so we need to wing it.
+      # This could still cause us some problems down the road.
+      if not fetch_state.code?
+        if xhr.readyState is 4 and xhr.status is 200
+          fetch_state.code = "200"
+
       @set 'fetch_state', fetch_state
-      @
+      this
 
     # Explicitly set sync for this model to Backbone default
     sync : @backboneSync

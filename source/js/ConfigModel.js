@@ -2,19 +2,29 @@
 (function() {
 
   define(['BaseModel', 'base64'], function(BaseModel, Base64) {
-    var ConfigModel;
+    var ConfigModel, check_workspace;
+    check_workspace = function(methodBody) {
+      return function(workspace) {
+        if (!(this.get('document') != null)) {
+          false;
+        }
+        workspace = workspace.get('workspace');
+        if (!(workspace != null)) {
+          return false;
+        } else {
+          return methodBody.apply(this, arguments);
+        }
+      };
+    };
     ConfigModel = BaseModel.extend({
       initialize: function() {
         this.use_xml();
         return this.urlRoot = this.get('urlRoot');
       },
-      get_config: function(workspace) {
+      get_config: check_workspace(function(workspace) {
         var config, doc, serializer;
-        if (!(this.get('document') != null)) {
-          false;
-        }
         doc = this.get('document');
-        config = doc.find("ConfigItem[name=" + workspace.app + "] ConfigItem[name=businesses] ConfigItem[name=" + workspace.business + "] ConfigItem[name=production]");
+        config = doc.find("ConfigItem[name=" + workspace.app + "] ConfigItem[name=businesses] ConfigItem[name=" + workspace.business + "] ConfigItem[name=" + window.ICS360_ENV + "]");
         serializer = new XMLSerializer();
         if (config[0] != null) {
           this.set('swf_config', serializer.serializeToString(config[0]));
@@ -22,7 +32,27 @@
         } else {
           return false;
         }
-      }
+      }),
+      get_pxCentral: check_workspace(function(workspace) {
+        var doc, url;
+        doc = this.get('document');
+        url = doc.find("ConfigItem[name=" + workspace.app + "] ConfigItem[name=businesses] ConfigItem[name=" + workspace.business + "] ConfigItem[name=" + window.ICS360_ENV + "] ConfigItem[name=popServer] ConfigItem[name=baseURL]").attr('value');
+        if (url === void 0) {
+          return false;
+        } else {
+          return url;
+        }
+      }),
+      get_universal_service: check_workspace(function(workspace, service) {
+        var doc, url;
+        doc = this.get('document');
+        url = doc.find("ConfigItem[name=" + workspace.app + "] ConfigItem[name=businesses] ConfigItem[name=" + workspace.business + "] ConfigItem[name=" + window.ICS360_ENV + "] ConfigItem[name=universalServices] ConfigItem[name=" + service + "] ConfigItem[name=baseURL]").attr('value');
+        if (url === void 0) {
+          return false;
+        } else {
+          return url;
+        }
+      })
     });
     return ConfigModel;
   });

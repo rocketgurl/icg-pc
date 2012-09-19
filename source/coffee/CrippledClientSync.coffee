@@ -29,9 +29,10 @@ define [
     # We want to move XML back and forth, and use our own
     # XML parser (processData : false)
     options = _.extend options,
-      dataType    : 'xml'
-      contentType : 'application/xml'
-      processData : false
+      dataType        : 'xml'
+      contentType     : 'application/xml'
+      processData     : false
+      withCredentials : true # for CORS
 
     # Pass along auth information
     options.basic_auth_digest = model.get('digest') if model.get('digest')?
@@ -39,7 +40,6 @@ define [
     # Append Crippled Client specific headers
     options.beforeSend = (xhr) ->
       xhr.setRequestHeader('X-Crippled-Client', 'yes')
-      xhr.setRequestHeader('X-Method', type)
       xhr.setRequestHeader('X-Rest-Method', type)
       xhr.setRequestHeader('X-Requested-With', 'XMLHTTPRequest')
 

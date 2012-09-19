@@ -44,11 +44,13 @@ define [
       props =
         policy_id : @model.get('pxServerIndex')
         ipm_auth  : @model.get('digest')
+        routes    : @controller.services
 
       # Load iFrame and pass in policy properties
       @iframe.attr('src', '/mxadmin/index.html')
       @iframe.bind 'load', =>
         @iframe[0].contentWindow.inject_properties(props)
+        @iframe[0].contentWindow.load_mxAdmin()
 
       # Hide the view
       @$el.hide()
@@ -161,8 +163,10 @@ define [
       if @flash_loaded is true
         return true
 
-      workspace = @controller.workspace_state.get('workspace')
-      config    = @controller.config.get_config(workspace)
+      # We need to get some global workspace information to pass along
+      # to our SWF
+      # workspace = @controller.workspace_state.get('workspace')
+      config    = @controller.config.get_config(@controller.workspace_state)
 
       if not config?
         @Amplify.publish(@cid, 'warning', "There was a problem with the configuration for this policy. Sorry.")
