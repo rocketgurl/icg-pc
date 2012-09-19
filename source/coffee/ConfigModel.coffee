@@ -18,7 +18,7 @@ define [
         false
 
       doc        = @get('document')
-      config     = doc.find("ConfigItem[name=#{workspace.app}] ConfigItem[name=businesses] ConfigItem[name=#{workspace.business}] ConfigItem[name=production]")
+      config     = doc.find("ConfigItem[name=#{workspace.app}] ConfigItem[name=businesses] ConfigItem[name=#{workspace.business}] ConfigItem[name=#{window.ICS360_ENV}]")
       serializer = new XMLSerializer()
 
       if config[0]? 
