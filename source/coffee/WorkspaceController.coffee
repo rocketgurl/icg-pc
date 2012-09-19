@@ -20,10 +20,6 @@ define [
   'xml2json'
 ], ($, _, Backbone, UserModel, ConfigModel, WorkspaceStateModel, WorkspaceStateCollection, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter, SearchContextCollection, Messenger, Base64, MenuHelper, AppRules, Helpers, Cookie, xml2json) ->
 
-  #### Global ENV Setting
-  #
-  window.ICS360_ENV = 'staging'
-
   # Global log object for debugging
   #
   amplify.subscribe 'log', (msg) ->
