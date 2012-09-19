@@ -370,7 +370,6 @@
         if (url = this.config.get_pxCentral(this.workspace_state)) {
           url = url.replace('staging-services.ics360.org', 'ics-intweb-01.ics.local:1111');
           this.services.pxcentral = "" + url + "pxcentral/api/rest/v1/";
-          console.log(this.services.pxcentral);
         }
         _ref = ['cxserver', 'ixdirectory', 'ixprofiler', 'ixrelay', 'ixvocab'];
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {

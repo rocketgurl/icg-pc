@@ -486,7 +486,6 @@ define [
         # https://staging-services.ics360.org/cru-6/ 
         url = url.replace('staging-services.ics360.org', 'ics-intweb-01.ics.local:1111')
         @services.pxcentral = "#{url}pxcentral/api/rest/v1/"
-        console.log @services.pxcentral
 
       for node in ['cxserver', 'ixdirectory', 'ixprofiler', 'ixrelay', 'ixvocab']
         @services[node] = @config.get_universal_service(@workspace_state, node)
