@@ -55,7 +55,7 @@ define [
       
       # Parse the tentacles from ixDirectory and build an
       # array of the valid ones
-      @ixadmin = @identity.find('ApplicationSettings[applicationName=ixadmin][environmentName=' + window.ICS360_ENV + ']')
+      @ixadmin = @identity.find("ApplicationSettings[applicationName=ixadmin][environmentName=#{window.ICS360_ENV}]")
       @tentacles = @get_tentacles(@ixadmin)
 
       # If we don't have any ixAdmin entries for this env or

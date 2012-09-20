@@ -7,6 +7,7 @@
       events: {
         "click .policy-nav a": "dispatch"
       },
+      render_state: false,
       initialize: function(options) {
         this.el = options.view.el;
         this.$el = options.view.$el;
@@ -32,6 +33,9 @@
           });
         }
         this.$el.html(html);
+        if (this.render_state === false) {
+          this.render_state = true;
+        }
         this.cache_elements();
         props = {
           policy_id: this.model.get('pxServerIndex'),
@@ -147,6 +151,7 @@
         this.policy_summary.hide();
         $("#policy-summary-" + this.cid).hide();
         this.iframe.show();
+        this.iframe.attr('src', '/mxadmin/index.html');
         return this.resize_element(this.iframe, this.policy_header.height());
       }
     });

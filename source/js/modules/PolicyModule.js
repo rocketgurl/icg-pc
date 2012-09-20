@@ -62,11 +62,17 @@
             }
           },
           error: function(model, resp) {
+            var response;
             _this.render({
               flash_only: true
             });
             _this.view.remove_loader();
-            return _this.Amplify.publish(_this.policy_view.cid, 'warning', "" + ($(resp).find('p').text()) + " Sorry.");
+            if (resp.statusText === "error") {
+              response = "There was a problem retrieving this policy.";
+            } else {
+              response = resp.responseText;
+            }
+            return _this.Amplify.publish(_this.policy_view.cid, 'warning', "" + response + " Sorry.");
           }
         });
         return this.on('activate', function() {
@@ -76,7 +82,9 @@
 
       PolicyModule.prototype.render = function(options) {
         this.view.remove_loader(true);
-        return this.policy_view.render(options);
+        if (this.policy_view.render_state === false) {
+          return this.policy_view.render(options);
+        }
       };
 
       PolicyModule.prototype.callback_delay = function(ms, func) {

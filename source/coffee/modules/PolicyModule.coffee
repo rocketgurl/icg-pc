@@ -71,7 +71,14 @@ define [
        error : (model, resp) =>
           @render({ flash_only : true })
           @view.remove_loader()
-          @Amplify.publish(@policy_view.cid, 'warning', "#{$(resp).find('p').text()} Sorry.")
+
+          # Generate error message
+          if resp.statusText is "error"
+            response = "There was a problem retrieving this policy."
+          else
+            response = resp.responseText
+
+          @Amplify.publish(@policy_view.cid, 'warning', "#{response} Sorry.")
       })
 
       # When this tab is activated
@@ -81,7 +88,8 @@ define [
     # Do whatever rendering animation needs to happen here
     render : (options) ->
       @view.remove_loader(true)
-      @policy_view.render(options)
+      if @policy_view.render_state is false
+        @policy_view.render(options)
 
     # Simple delay fund if we need it.
     callback_delay : (ms, func) ->

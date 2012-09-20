@@ -12,6 +12,9 @@ define [
     events : 
       "click .policy-nav a" : "dispatch"
 
+    # We have not been rendered
+    render_state : false
+
     # We need to brute force the View's container to the 
     # WorkspaceCanvasView's el
     initialize : (options) ->
@@ -36,6 +39,12 @@ define [
         html += @Mustache.render tpl_policy_container, { auth_digest : @model.get('digest'), policy_id : @model.get('pxServerIndex'), cid : @cid }
       
       @$el.html html
+
+      # This is to make sure we only render the one time
+      # as we have some weird issues where render is call 
+      # multiple times (still tracking down.)
+      if @render_state is false
+        @render_state = true
 
       # Cache commonly used jQuery elements
       @cache_elements()
@@ -159,7 +168,6 @@ define [
     # When the SWF calls ready() this is fired and passed
     # policy data along
     initialize_swf : ->
-
       if @flash_loaded is true
         return true
 
@@ -194,7 +202,7 @@ define [
       $("#policy-summary-#{@cid}").hide()
 
       @iframe.show()
-      # @iframe.attr('src', '/mxadmin/index.html')
+      @iframe.attr('src', '/mxadmin/index.html')
       @resize_element(@iframe, @policy_header.height())
 
   PolicyView
