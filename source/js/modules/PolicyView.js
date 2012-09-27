@@ -182,9 +182,11 @@
         return this.resize_element(this.iframe, this.policy_header.height());
       },
       teardown_ipmchanges: function() {
-        this.policy_header.hide();
-        this.$el.find("#policy-header-" + this.cid).hide();
-        return this.iframe.hide();
+        if (this.policy_header) {
+          this.policy_header.hide();
+          this.$el.find("#policy-header-" + this.cid).hide();
+          return this.iframe.hide();
+        }
       }
     });
     return PolicyView;

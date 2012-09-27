@@ -229,8 +229,9 @@ define [
 
     # Hide IPM Changes
     teardown_ipmchanges : ->
-      @policy_header.hide()
-      @$el.find("#policy-header-#{@cid}").hide()
-      @iframe.hide()
+      if @policy_header
+        @policy_header.hide()
+        @$el.find("#policy-header-#{@cid}").hide()
+        @iframe.hide()
 
   PolicyView

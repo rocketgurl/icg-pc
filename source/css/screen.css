@@ -196,8 +196,8 @@ body {
   width: 97%;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 1em;
-  padding-right: 1em;
+  padding-left: 1.5%;
+  padding-right: 1.5%;
   padding: 0;
 }
 #header-container:after {
@@ -216,9 +216,9 @@ body {
 }
 
 #header-logo {
-  width: 15.254%;
+  width: 15.25424%;
   float: left;
-  margin-right: 1.695%;
+  margin-right: 1.69492%;
   display: inline;
   padding: 5px 0;
 }
@@ -227,9 +227,9 @@ body {
 }
 
 #header-controls {
-  width: 49.153%;
+  width: 49.15254%;
   float: left;
-  margin-right: 1.695%;
+  margin-right: 1.69492%;
   display: inline;
   font-size: 12px;
   font-size: 1.2rem;
@@ -284,7 +284,7 @@ body {
 }
 
 #header-admin {
-  width: 32.203%;
+  width: 32.20339%;
   float: right;
   margin-right: 0;
   #margin-left: -1em;
@@ -325,9 +325,9 @@ body {
   margin-top: 50px;
 }
 #header-workspace-nav ul.main-nav {
-  width: 23.729%;
+  width: 23.72881%;
   float: left;
-  margin-right: 1.695%;
+  margin-right: 1.69492%;
   display: inline;
 }
 #header-workspace-nav ul.main-nav li {
@@ -365,7 +365,7 @@ body {
 }
 
 #workspace-subnav {
-  width: 74.576%;
+  width: 74.57627%;
   float: right;
   margin-right: 0;
   #margin-left: -1em;
@@ -424,8 +424,8 @@ body {
   width: 97%;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 1em;
-  padding-right: 1em;
+  padding-left: 1.5%;
+  padding-right: 1.5%;
   background: transparent;
   position: relative;
   top: -32px;
@@ -579,8 +579,8 @@ body {
   width: 97%;
   margin-left: auto;
   margin-right: auto;
-  padding-left: 1em;
-  padding-right: 1em;
+  padding-left: 1.5%;
+  padding-right: 1.5%;
   padding: 20px 0;
   margin-top: -32px;
 }
@@ -940,7 +940,7 @@ header.module-search i.icon-caret-down {
   color: #165788;
 }
 
-table.module-search {
+table.module-search, .ru-loss-history {
   margin: 0 0 20px 0;
   width: 100%;
   color: #4f4f4f;
@@ -949,49 +949,50 @@ table.module-search {
   border-top: white 1px solid;
   box-shadow: #bababa 0 -1px 0;
 }
-table.module-search td,
-table.module-search th {
+table.module-search td, .ru-loss-history td,
+table.module-search th,
+.ru-loss-history th {
   padding: 9px 5px;
 }
-table.module-search th {
+table.module-search th, .ru-loss-history th {
   font-weight: bold;
 }
-table.module-search th a {
+table.module-search th a, .ru-loss-history th a {
   color: #007ac9;
   text-decoration: none;
 }
-table.module-search th a:hover, table.module-search th .policy-nav li a.select, .policy-nav li table.module-search th a.select {
+table.module-search th a:hover, .ru-loss-history th a:hover, table.module-search th .policy-nav li a.select, .policy-nav li table.module-search th a.select, .ru-loss-history th .policy-nav li a.select, .policy-nav li .ru-loss-history th a.select {
   color: #165788;
 }
-table.module-search thead tr th {
+table.module-search thead tr th, .ru-loss-history thead tr th {
   border-bottom: lightgrey 1px solid;
 }
-table.module-search tbody tr {
+table.module-search tbody tr, .ru-loss-history tbody tr {
   background: none;
   border: 1px solid transparent;
 }
-table.module-search tbody tr:nth-child(odd) {
+table.module-search tbody tr:nth-child(odd), .ru-loss-history tbody tr:nth-child(odd) {
   background-color: white;
 }
-table.module-search tbody tr:last-child td {
+table.module-search tbody tr:last-child td, .ru-loss-history tbody tr:last-child td {
   border-bottom: lightgrey 1px solid;
 }
-table.module-search tbody tr:hover td {
+table.module-search tbody tr:hover td, .ru-loss-history tbody tr:hover td {
   background-color: #ffccff;
   border-top: #ff99ff 1px solid;
   border-bottom: #ff99ff 1px solid;
   color: #660066;
   cursor: pointer;
 }
-table.module-search tbody tr:hover td a {
+table.module-search tbody tr:hover td a, .ru-loss-history tbody tr:hover td a {
   color: #660066;
 }
-table.module-search tbody td a {
+table.module-search tbody td a, .ru-loss-history tbody td a {
   color: #4f4f4f;
   text-decoration: none;
   text-transform: uppercase;
 }
-table.module-search tbody td a:hover, table.module-search tbody td .policy-nav li a.select, .policy-nav li table.module-search tbody td a.select {
+table.module-search tbody td a:hover, .ru-loss-history tbody td a:hover, table.module-search tbody td .policy-nav li a.select, .policy-nav li table.module-search tbody td a.select, .ru-loss-history tbody td .policy-nav li a.select, .policy-nav li .ru-loss-history tbody td a.select {
   text-decoration: underline;
 }
 
@@ -1035,9 +1036,9 @@ table.module-search tbody td a:hover, table.module-search tbody td .policy-nav l
 .module-search.pagination .pagination-a,
 .module-search.pagination .pagination-b,
 .module-search.pagination .pagination-c {
-  width: 32.203%;
+  width: 32.20339%;
   float: left;
-  margin-right: 1.695%;
+  margin-right: 1.69492%;
   display: inline;
 }
 .module-search.pagination .pagination-b {
@@ -1157,9 +1158,9 @@ td.search-views-admin > a {
 Module: Policy
 */
 .policy-nav {
-  width: 15.254%;
+  width: 15.25424%;
   float: left;
-  margin-right: 1.695%;
+  margin-right: 1.69492%;
   display: inline;
 }
 .policy-nav li {
@@ -1190,7 +1191,7 @@ Module: Policy
 }
 
 #policy-workspace {
-  width: 83.051%;
+  width: 83.05085%;
   float: right;
   margin-right: 0;
   #margin-left: -1em;
@@ -1239,4 +1240,129 @@ Module: Policy
 }
 .policy-header h2 span {
   color: #fe8400;
+}
+
+.ru-container {
+  *zoom: 1;
+  width: 96.4%;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1.8%;
+  padding-right: 1.8%;
+  border: #ddd 1px solid;
+  background-color: #f4f4f4;
+}
+.ru-container:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+.ru-container h1, .ru-container h2 {
+  width: 100%;
+  float: right;
+  margin-right: 0;
+  #margin-left: -1em;
+  display: inline;
+  font-weight: bold;
+  margin: 15px 0 0 0;
+}
+.ru-container h1 {
+  color: #002857;
+  font-size: 24px;
+  font-size: 2.4rem;
+  text-shadow: 0 1px white;
+}
+.ru-container h2 {
+  color: dimgrey;
+  font-size: 18px;
+  font-size: 1.8rem;
+  margin: 20px 0 10px 0;
+}
+
+.ru-block {
+  margin-top: 20px;
+  min-height: 240px;
+  box-shadow: #ccc 0 0 1px 1px;
+  background: #fff;
+  width: 32.20339%;
+  float: left;
+  margin-right: 1.69492%;
+  display: inline;
+}
+.ru-block:nth-child(4n) {
+  float: right;
+  margin-right: 0;
+  #margin-left: -1em;
+  display: inline;
+}
+
+.ru-block-shim {
+  color: dimgrey;
+  padding: 10px 20px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-size: 1.4rem;
+}
+.ru-block-shim h3 {
+  font-weight: bold;
+  margin: 10px 0 8px 0;
+}
+.ru-block-shim p {
+  padding: 0 0 15px 0;
+  margin: 0 0 10px 0;
+  border: 0;
+  line-height: 140%;
+}
+.ru-block-shim strong {
+  font-weight: bold;
+  color: #002857;
+}
+
+.ru-hybrid p {
+  border-bottom: #ddd 1px solid;
+}
+
+.ru-list {
+  width: 100%;
+  border: 0;
+  margin: 0;
+}
+.ru-list td {
+  padding: 8px 2px 8px 0;
+  border-bottom: #eee 1px solid;
+}
+.ru-list td:last-child {
+  font-weight: bold;
+  color: #002857;
+}
+.ru-list tr:last-child td {
+  margin: 0;
+  border: 0;
+}
+.ru-list a {
+  color: #007ac9;
+  text-decoration: none;
+}
+.ru-list a i {
+  font-size: 16px;
+  font-size: 1.6rem;
+}
+.ru-list a:hover, .ru-list .policy-nav li a.select, .policy-nav li .ru-list a.select {
+  color: #165788;
+}
+
+.ru-loss-history {
+  display: block;
+  width: 100%;
+  float: right;
+  margin-right: 0;
+  #margin-left: -1em;
+  display: inline;
+}
+.ru-loss-history td a {
+  font-weight: bold;
+  color: #007ac9 !important;
+}
+.ru-loss-history td:first-child {
+  text-align: center;
 }

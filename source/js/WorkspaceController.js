@@ -368,7 +368,6 @@
           $('#header').css('height', '95px');
         }
         if (url = this.config.get_pxCentral(this.workspace_state)) {
-          url = url.replace('staging-services.ics360.org', 'ics-intweb-01.ics.local:1111');
           this.services.pxcentral = "" + url + "pxcentral/api/rest/v1/";
         }
         _ref = ['cxserver', 'ixdirectory', 'ixprofiler', 'ixrelay', 'ixvocab'];
