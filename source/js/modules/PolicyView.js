@@ -15,7 +15,8 @@
         this.flash_loaded = false;
         return this.on('activate', function() {
           if (this.flash_loaded === false) {
-            return this.show_overview();
+            this.show_overview();
+            return this.teardown_ipmchanges();
           }
         });
       },
@@ -37,6 +38,9 @@
           this.render_state = true;
         }
         this.cache_elements();
+        this.actions = this.policy_nav_links.map(function(idx, item) {
+          return $(this).attr('href');
+        });
         props = {
           policy_id: this.model.get('pxServerIndex'),
           ipm_auth: this.model.get('digest'),
@@ -50,7 +54,8 @@
         this.$el.hide();
         this.messenger = new Messenger(this.options.view, this.cid);
         if (this.controller.active_view.cid === this.options.view.cid) {
-          return this.show_overview();
+          this.show_overview();
+          return this.teardown_ipmchanges();
         }
       },
       toggle_nav_state: function(el) {
@@ -58,14 +63,38 @@
         return el.addClass('select');
       },
       dispatch: function(e) {
-        var $e, func;
+        var $e, action, func;
         e.preventDefault();
         $e = $(e.currentTarget);
+        action = $e.attr('href');
+        this.teardown_actions(_.filter(this.actions, function(item) {
+          return item !== action;
+        }));
         this.toggle_nav_state($e);
-        func = this["show_" + ($e.attr('href'))];
+        func = this["show_" + action];
         if (_.isFunction(func)) {
           return func.apply(this);
         }
+      },
+      teardown_actions: function(actions) {
+        var action, func, _i, _len, _results;
+        if (actions === void 0 || actions === null) {
+          return false;
+        }
+        if (!_.isArray(actions)) {
+          actions = [actions];
+        }
+        _results = [];
+        for (_i = 0, _len = actions.length; _i < _len; _i++) {
+          action = actions[_i];
+          func = this["teardown_" + action];
+          if (_.isFunction(func)) {
+            _results.push(func.apply(this));
+          } else {
+            _results.push(void 0);
+          }
+        }
+        return _results;
       },
       cache_elements: function() {
         this.iframe_id = "#policy-iframe-" + this.cid;
@@ -87,10 +116,6 @@
         var flash_obj,
           _this = this;
         this.$el.show();
-        if (this.policy_header) {
-          this.policy_header.hide();
-          this.iframe.hide();
-        }
         if (this.$el.find("#policy-summary-" + this.cid).length === 0) {
           this.$el.find("#policy-header-" + this.cid).after(this.policy_summary);
           this.policy_summary = this.$el.find("#policy-summary-" + this.cid);
@@ -110,6 +135,10 @@
             return _this.flash_callback(e);
           });
         }
+      },
+      teardown_overview: function() {
+        this.policy_summary.hide();
+        return $("#policy-summary-" + this.cid).hide();
       },
       flash_callback: function(e) {
         var _this = this;
@@ -148,11 +177,14 @@
         header = this.Mustache.render(tpl_ipm_header, this.model.get_ipm_header());
         this.policy_header.html(header);
         this.policy_header.show();
-        this.policy_summary.hide();
-        $("#policy-summary-" + this.cid).hide();
         this.iframe.show();
         this.iframe.attr('src', '/mxadmin/index.html');
         return this.resize_element(this.iframe, this.policy_header.height());
+      },
+      teardown_ipmchanges: function() {
+        this.policy_header.hide();
+        this.$el.find("#policy-header-" + this.cid).hide();
+        return this.iframe.hide();
       }
     });
     return PolicyView;

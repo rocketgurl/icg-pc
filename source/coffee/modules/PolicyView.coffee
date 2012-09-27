@@ -30,6 +30,7 @@ define [
       @on 'activate', () ->
         if @flash_loaded is false
           @show_overview()
+          @teardown_ipmchanges()
 
     render : (options) ->
       # Setup flash module & search container
@@ -48,6 +49,9 @@ define [
 
       # Cache commonly used jQuery elements
       @cache_elements()
+
+      # Get an array of our policy-nav actions
+      @actions = @policy_nav_links.map (idx, item) -> return $(this).attr('href')
 
       # iFrame properties
       props =
@@ -69,6 +73,7 @@ define [
 
       if @controller.active_view.cid == @options.view.cid
         @show_overview()
+        @teardown_ipmchanges()
 
     # Switch nav items on/off
     toggle_nav_state : (el) ->
@@ -81,13 +86,32 @@ define [
     # sure it actually exists before attempting to call it.
     dispatch : (e) ->
       e.preventDefault()
-      $e = $(e.currentTarget)
+      $e     = $(e.currentTarget)
+      action = $e.attr('href')
+
+      @teardown_actions _.filter(@actions, (item) -> 
+        return item != action
+      )
 
       @toggle_nav_state $e # turn select state on/off
 
-      func = @["show_#{$e.attr('href')}"]
+      func = @["show_#{action}"]
       if _.isFunction(func)
         func.apply(this)
+
+    # Take an array of actions (or action) and use it
+    # to call it's teardown function (if it exists)
+    teardown_actions : (actions) ->
+      if actions == undefined || actions == null
+        return false
+
+      if !_.isArray(actions)
+        actions = [actions]
+
+      for action in actions
+        func = @["teardown_#{action}"]
+        if _.isFunction(func)
+          func.apply(this)
 
     # Namespace page elements
     #
@@ -115,10 +139,6 @@ define [
     # Load Flex Policy Summary
     show_overview : ->
       @$el.show()
-
-      if @policy_header
-        @policy_header.hide()
-        @iframe.hide()
 
       # SWFObject deletes the policy-summary container when it removes Flash
       # so we need to check if its there and drop it back in if its not
@@ -155,6 +175,11 @@ define [
           (e) =>
             @flash_callback(e)
         )
+
+    # Hide flash overview
+    teardown_overview : ->
+      @policy_summary.hide()
+      $("#policy-summary-#{@cid}").hide()
 
     flash_callback : (e) ->
       if not e.success or e.success is not true
@@ -198,11 +223,14 @@ define [
       @policy_header.html(header)
       @policy_header.show()
 
-      @policy_summary.hide()
-      $("#policy-summary-#{@cid}").hide()
-
       @iframe.show()
       @iframe.attr('src', '/mxadmin/index.html')
       @resize_element(@iframe, @policy_header.height())
+
+    # Hide IPM Changes
+    teardown_ipmchanges : ->
+      @policy_header.hide()
+      @$el.find("#policy-header-#{@cid}").hide()
+      @iframe.hide()
 
   PolicyView
