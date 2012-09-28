@@ -32,6 +32,9 @@
           });
         }
         this.$el.html(html);
+        if (this.model.isIPM() === false) {
+          $('.policy-nav a[href=ipmchanges]').parent('li').hide();
+        }
         this.cache_elements();
         props = {
           policy_id: this.model.get('pxServerIndex'),
