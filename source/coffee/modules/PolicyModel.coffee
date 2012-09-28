@@ -59,7 +59,7 @@ define [
     # **Is this an IPM policy?**  
     # @return _Boolean_
     isIPM : ->
-      if @getSystemOfRecord == 'mxServer' then true else false    
+      if @getSystemOfRecord() == 'mxServer' then true else false    
 
       
   PolicyModel

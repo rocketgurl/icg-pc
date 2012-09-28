@@ -47,7 +47,7 @@
         return this.get('document').find('Management SystemOfRecord').text();
       },
       isIPM: function() {
-        if (this.getSystemOfRecord === 'mxServer') {
+        if (this.getSystemOfRecord() === 'mxServer') {
           return true;
         } else {
           return false;
