@@ -39,7 +39,7 @@ define [
 
       # If this is a non-IPM policy then remove IPM changes from nav
       if @model.isIPM() == false
-        $('.policy-nav a[href=ipmchanges]').parent('li').hide();
+        @$el.find('.policy-nav a[href=ipmchanges]').parent('li').hide();
 
       # Cache commonly used jQuery elements
       @cache_elements()

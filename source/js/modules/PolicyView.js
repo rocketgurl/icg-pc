@@ -33,7 +33,7 @@
         }
         this.$el.html(html);
         if (this.model.isIPM() === false) {
-          $('.policy-nav a[href=ipmchanges]').parent('li').hide();
+          this.$el.find('.policy-nav a[href=ipmchanges]').parent('li').hide();
         }
         this.cache_elements();
         props = {
