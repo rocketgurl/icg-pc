@@ -4,7 +4,6 @@
   define(['jquery', 'underscore', 'backbone', 'UserModel', 'ConfigModel', 'WorkspaceStateModel', 'WorkspaceStateCollection', 'WorkspaceLoginView', 'WorkspaceCanvasView', 'WorkspaceNavView', 'WorkspaceRouter', 'modules/SearchContextCollection', 'Messenger', 'base64', 'MenuHelper', 'AppRules', 'Helpers', 'Cookie', 'xml2json'], function($, _, Backbone, UserModel, ConfigModel, WorkspaceStateModel, WorkspaceStateCollection, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter, SearchContextCollection, Messenger, Base64, MenuHelper, AppRules, Helpers, Cookie, xml2json) {
     var WorkspaceController, ics360, valid_workspace,
       _this = this;
-    window.ICS360_ENV = 'staging';
     amplify.subscribe('log', function(msg) {
       return console.log(msg);
     });

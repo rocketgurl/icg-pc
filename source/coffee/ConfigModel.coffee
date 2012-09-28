@@ -35,7 +35,7 @@ define [
         doc    = @get('document')
         config = doc.find("ConfigItem[name=#{workspace.app}] ConfigItem[name=businesses] ConfigItem[name=#{workspace.business}] ConfigItem[name=#{window.ICS360_ENV}]")
         serializer = new XMLSerializer()
-
+        
         if config[0]? 
           @set 'swf_config', serializer.serializeToString(config[0])
           return @get('swf_config')

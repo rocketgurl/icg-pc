@@ -47,6 +47,11 @@ define [
       if @render_state is false
         @render_state = true
 
+      # If this is a non-IPM policy then remove IPM changes from nav
+      if @model.isIPM() == false
+        @$el.find('.policy-nav a[href=ipmchanges]').parent('li').hide();
+
+
       # Cache commonly used jQuery elements
       @cache_elements()
 

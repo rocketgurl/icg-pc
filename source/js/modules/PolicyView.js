@@ -37,6 +37,9 @@
         if (this.render_state === false) {
           this.render_state = true;
         }
+        if (this.model.isIPM() === false) {
+          this.$el.find('.policy-nav a[href=ipmchanges]').parent('li').hide();
+        }
         this.cache_elements();
         this.actions = this.policy_nav_links.map(function(idx, item) {
           return $(this).attr('href');
