@@ -1,5 +1,22 @@
-define(["jquery", "underscore", "WorkspaceController", "amplify", "loader"], function($, _, WorkspaceController, amplify, CanvasLoader) {
+define([
+  "jquery", 
+  "underscore", 
+  "WorkspaceController", 
+  "modules/SearchContextCollection",
+  "modules/PolicyModel",
+  "amplify",
+  "loader"], 
+  function(
+    $, 
+    _, 
+    WorkspaceController, 
+    SearchContextCollection,
+    PolicyModel,
+    amplify, 
+    CanvasLoader
+) {
   
+  // WORKSPACE CONTROLLER
   describe('WorkspaceController', function () {
 
     // Setup ENV
@@ -56,12 +73,12 @@ define(["jquery", "underscore", "WorkspaceController", "amplify", "loader"], fun
         expect(WorkspaceController.workspace_stack[0]).toBe(app_b);
       });
 
-      it ('Can clear the whole stack in one go and save it on the model', function () {
+      it ('Can clear the whole stack in one go', function () {
         WorkspaceController.stack_add(app_a);
         WorkspaceController.check_workspace_state();
         var clear = WorkspaceController.stack_clear();
-        expect(clear).toEqual(jasmine.any(Object));
-        expect(clear.attributes.apps.length).toBe(0);
+        expect(clear).toEqual(jasmine.any(Array));
+        expect(clear.length).toBe(0);
         expect(WorkspaceController.workspace_stack.length).toBe(0);
       });      
 
@@ -121,13 +138,103 @@ define(["jquery", "underscore", "WorkspaceController", "amplify", "loader"], fun
 
     describe('WorkspaceController saves searches in localStorage', function () {
 
-      it ('has a saved search', function () {
-        var collection = WorkspaceController.setup_search_storage();
-        expect(collection).toEqual(jasmine.any(Object));
-        expect(collection.controller).toBe(WorkspaceController);
-        console.log(collection)
-      });     
+      // it ('has a saved search', function () {
+      //   console.log(WorkspaceController);
+      //   var collection = WorkspaceController.setup_search_storage();
+      //   expect(collection).toEqual(jasmine.any(Object));
+      //   expect(collection.controller).toBe(WorkspaceController);
+      //   console.log(collection)
+      // });     
 
+    });
+
+  });
+
+  // POLICY MODEL
+  describe('PolicyModel', function () {
+
+    var policy = new PolicyModel({
+      id      : 'CRU4Q-71064',
+      urlRoot : 'https://policycentral.src/pxcentral/api/rest/v1/',
+      digest  : 'Y3J1NHRAY3J1MzYwLmNvbTphYmMxMjM='
+    });
+
+    var ajax_count = 0;
+
+    beforeEach(function(){
+      if (ajax_count < 1) {
+        var callback = jasmine.createSpy();
+        policy.fetch({
+          success : callback
+        });
+        waitsFor(function() {
+          ajax_count++;
+          return callback.callCount > 0;
+        }, "Timeout BOOM!", 10000)
+      }
+    })
+
+    it ('is an object', function () {
+      expect(policy).toEqual(jasmine.any(Object));
+    });
+
+    it ('has a URL', function () {
+      runs(function(){
+        expect(policy.url()).toBe('https://policycentral.src/pxcentral/api/rest/v1/policies/CRU4Q-71064');
+      });
+    });
+
+    it ('has a policy document', function () {
+      runs(function(){
+        expect(policy.get('document')).not.toBeNull();
+        expect(policy.get('document')).toEqual(jasmine.any(Object));
+      });
+    });
+
+    it ('has a pxServerIndex', function () {
+      runs(function(){
+        expect(policy.get_pxServerIndex()).toBe('71064');
+      });
+    });
+
+    it ('has a poliy holder', function () {
+      runs(function(){
+        expect(policy.get_policy_holder()).toBe('TEST, CHRIS');
+      });
+    });
+
+    it ('has a poliy period', function () {
+      runs(function(){
+        expect(policy.get_policy_period()).toBe('2012-06-04 - 2013-06-04');
+      });
+    });
+
+    it ('has an ipm header', function () {
+      runs(function(){
+        console.log(policy.get_ipm_header());
+        var ipm_header = {
+          carrier : "Acceptance Casualty Insurance Company",
+          holder  : "TEST, CHRIS",
+          id      : "SCH007106400",
+          period  : "2012-06-04 - 2013-06-04",
+          product : "HO3",
+          state   : "ACTIVEPOLICY"
+        }
+        expect(policy.get_ipm_header()).toEqual(jasmine.any(Object));
+        expect(policy.get_ipm_header()).toEqual(ipm_header);
+      });
+    });
+
+    it ('has a system of record', function () {
+      runs(function(){
+        expect(policy.getSystemOfRecord()).toBe('pxServer');
+      });
+    });
+
+    it ('is not an IPM policy', function () {
+      runs(function(){
+        expect(policy.isIPM()).toBe(false);
+      });
     });
 
   });

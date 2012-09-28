@@ -13,7 +13,8 @@
       get_pxServerIndex: function() {
         var doc;
         doc = this.get('document');
-        return this.set('pxServerIndex', doc.find('Identifiers Identifier[name=pxServerIndex]').attr('value'));
+        this.set('pxServerIndex', doc.find('Identifiers Identifier[name=pxServerIndex]').attr('value'));
+        return this.get('pxServerIndex');
       },
       get_policy_holder: function() {
         var doc, first, last;
@@ -41,6 +42,16 @@
           carrier: doc.find('Management Carrier').text()
         };
         return ipm_header;
+      },
+      getSystemOfRecord: function() {
+        return this.get('document').find('Management SystemOfRecord').text();
+      },
+      isIPM: function() {
+        if (this.getSystemOfRecord === 'mxServer') {
+          return true;
+        } else {
+          return false;
+        }
       }
     });
     return PolicyModel;
