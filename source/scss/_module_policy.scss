@@ -32,7 +32,7 @@ Module: Policy
 	}
 }
 
-#policy-workspace {
+.policy-workspace {
 	@include span-columns(10 omega, 12);
 	// border: #ddd 1px solid;
 }
