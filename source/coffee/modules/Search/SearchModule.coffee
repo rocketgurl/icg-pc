@@ -3,7 +3,7 @@ define [
   'underscore',
   'backbone',
   'mustache',
-  'modules/SearchView',
+  'modules/Search/SearchView',
   'loader'
 ], ($, _, Backbone, Mustache, SearchView, CanvasLoader) ->
 

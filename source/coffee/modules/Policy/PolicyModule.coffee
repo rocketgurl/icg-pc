@@ -3,8 +3,8 @@ define [
   'underscore',
   'backbone',
   'mustache',
-  'modules/PolicyView',
-  'modules/PolicyModel',
+  'modules/Policy/PolicyView',
+  'modules/Policy/PolicyModel',
   'Messenger',
   'loader'
 ], ($, _, Backbone, Mustache, PolicyView, PolicyModel, Messenger, CanvasLoader) ->

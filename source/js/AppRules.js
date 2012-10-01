@@ -79,7 +79,7 @@
 
       AppRules.prototype.policy_search = {
         required: false,
-        module: 'SearchModule',
+        module: 'Search/SearchModule',
         app: {
           app: 'search',
           app_label: 'search',
@@ -90,13 +90,13 @@
 
       AppRules.prototype.policy_search_params = {
         required: false,
-        module: 'SearchModule',
+        module: 'Search/SearchModule',
         params: null
       };
 
       AppRules.prototype.policy_view = {
         required: ['params'],
-        module: 'PolicyModule'
+        module: 'Policy/PolicyModule'
       };
 
       AppRules.prototype.rulesets = {

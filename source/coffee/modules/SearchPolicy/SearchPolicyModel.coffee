@@ -1,7 +1,6 @@
 define [
-  'BaseModel',
-  'base64'
-], (BaseModel, Base64) ->
+  'BaseModel'
+], (BaseModel) ->
 
   #### A Policy used in Search views
   #

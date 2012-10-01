@@ -2,7 +2,7 @@ define [
   'BaseView',
   'Helpers',
   'Messenger',
-  'modules/SearchPolicyCollection',
+  'modules/SearchPolicy/SearchPolicyCollection',
   'text!templates/tpl_search_container.html',
   'text!templates/tpl_search_menu_save.html',
   'text!templates/tpl_search_menu_views.html',
