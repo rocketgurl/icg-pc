@@ -25,7 +25,7 @@
             ]
         },
         {
-            name : "modules/PolicyModule",
+            name : "modules/Policy/PolicyModule",
             exclude: [
                 "jquery",
                 "backbone",
@@ -35,7 +35,7 @@
             ]
         },
         {
-            name : "modules/SearchModule",
+            name : "modules/Search/SearchModule",
             exclude: [
                 "jquery",
                 "backbone",
