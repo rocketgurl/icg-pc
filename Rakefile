@@ -32,9 +32,6 @@ PRUNE = {
   ]
 }
 
-
-
-
 # Default task runs :build
 task :default => [:build]
 
