@@ -1,0 +1,20 @@
+<!-- TEMPLATE: Renewal Underwriting Assignees -->
+<div class="ru-menus renewal-underwriting-change-assignee" id="ru-assignee-{{cid}}">
+	<table>
+		<thead>
+			<tr>
+				<th>Change Assignee</th>
+				<th class="menu-close"><i class="icon-remove-circle"></i></th>
+			</tr>
+		</thead>
+		<tbody>
+			{{#assignees}}
+			<tr>
+				<td colspan="2" class="row-{{id}} search-views-row">
+					<a href="{{id}}">{{name}}</a>
+				</td>
+			</tr>
+			{{/assignees}}
+		</tbody>
+	</table>
+</div>

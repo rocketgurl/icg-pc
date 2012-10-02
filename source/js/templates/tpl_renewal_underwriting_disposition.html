@@ -1,0 +1,20 @@
+<!-- TEMPLATE: Renewal Underwriting Disposition -->
+<div class="ru-menus renewal-underwriting-change-disposition" id="ru-disposition-{{cid}}">
+	<table>
+		<thead>
+			<tr>
+				<th>Change Disposition</th>
+				<th class="menu-close"><i class="icon-remove-circle"></i></th>
+			</tr>
+		</thead>
+		<tbody>
+			{{#dispositions}}
+			<tr>
+				<td colspan="2" class="row-{{id}} search-views-row">
+					<a href="{{id}}">{{name}}</a>
+				</td>
+			</tr>
+			{{/dispositions}}
+		</tbody>
+	</table>
+</div>

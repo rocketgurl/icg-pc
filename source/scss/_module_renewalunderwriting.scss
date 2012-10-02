@@ -102,3 +102,10 @@
 		&:first-child { text-align: center; }
 	}
 }
+
+.ru-menus {
+	@extend .search-menus;
+	.menu-close {
+		cursor: pointer;
+	}
+}

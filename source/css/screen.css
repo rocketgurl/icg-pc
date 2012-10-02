@@ -1052,7 +1052,7 @@ table.module-search tbody td a:hover, .ru-loss-history tbody td a:hover, table.m
   text-align: right;
 }
 
-.search-menus {
+.search-menus, .ru-menus {
   display: block;
   position: absolute;
   z-index: 650;
@@ -1064,34 +1064,34 @@ table.module-search tbody td a:hover, .ru-loss-history tbody td a:hover, table.m
   display: none;
   box-shadow: #a1a1a1 0 0 4px 1px;
 }
-.search-menus table {
+.search-menus table, .ru-menus table {
   width: 100%;
 }
-.search-menus table tr td {
+.search-menus table tr td, .ru-menus table tr td {
   padding: 10px;
 }
-.search-menus thead tr {
+.search-menus thead tr, .ru-menus thead tr {
   background-color: #165788;
 }
-.search-menus thead tr th {
+.search-menus thead tr th, .ru-menus thead tr th {
   color: white;
   padding: 10px;
 }
-.search-menus h2 {
+.search-menus h2, .ru-menus h2 {
   font-weight: bold;
 }
-.search-menus h3 {
+.search-menus h3, .ru-menus h3 {
   margin: 4px 0;
   color: dimgrey;
 }
-.search-menus form {
+.search-menus form, .ru-menus form {
   margin: 10px 0 0 0;
 }
-.search-menus label {
+.search-menus label, .ru-menus label {
   display: block;
   margin: 6px 0;
 }
-.search-menus input[type=text] {
+.search-menus input[type=text], .ru-menus input[type=text] {
   display: block;
   min-width: 220px;
   padding: 3px;
@@ -1099,7 +1099,7 @@ table.module-search tbody td a:hover, .ru-loss-history tbody td a:hover, table.m
   font-size: 14px;
   font-size: 1.4rem;
 }
-.search-menus .search_form_submit {
+.search-menus .search_form_submit, .ru-menus .search_form_submit {
   text-align: right;
   margin: 5px 0;
 }
@@ -1366,4 +1366,8 @@ Module: Policy
 }
 .ru-loss-history td:first-child {
   text-align: center;
+}
+
+.ru-menus .menu-close {
+  cursor: pointer;
 }
