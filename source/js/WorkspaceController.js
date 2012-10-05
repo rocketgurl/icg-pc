@@ -13,7 +13,8 @@
         pxcentral: './pxcentral/api/rest/v1/',
         ixlibrary: './ixlibrary/api/sdo/rest/v1/',
         ixdoc: './ixdoc/api/rest/v2/',
-        ixadmin: './config/ics/staging/ixadmin'
+        ixadmin: './config/ics/staging/ixadmin',
+        zendesk: 'https://ics-intweb-01.ics.local:1111/zendesk/api/v2'
       }
     };
     valid_workspace = function(methodBody) {

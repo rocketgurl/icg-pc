@@ -37,6 +37,11 @@ define [
       end   = doc.find('Terms Term ExpirationDate').text().substr(0,10)
       "#{start} - #{end}"
 
+    # **Return the full policy id taken from the XML**  
+    # @return _String_
+    get_policy_id : ->
+      @get('document').find('Identifiers Identifier[name=PolicyID]').attr('value')
+
     # **Build an object containing information for the IPM header**  
     # @return _Object_
     get_ipm_header : ->
@@ -58,7 +63,7 @@ define [
     # **Is this an IPM policy?**  
     # @return _Boolean_
     isIPM : ->
-      if @getSystemOfRecord() == 'mxServer' then true else false    
+      if @getSystemOfRecord() == 'mxServer' then true else false
 
       
   PolicyModel

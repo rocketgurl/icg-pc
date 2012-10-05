@@ -6,8 +6,9 @@ define [
   'amplify',
   'LocalStorageSync',
   'CrippledClientSync',
-  'xmlSync'
-], ($, _, Backbone, Store, amplify, LocalStorageSync, CrippledClientSync, XMLSync) ->
+  'xmlSync',
+  'Helpers'
+], ($, _, Backbone, Store, amplify, LocalStorageSync, CrippledClientSync, XMLSync, Helpers) ->
 
   #### BaseModel
   #
@@ -16,6 +17,9 @@ define [
   # Backbone JSON handling. 
   # 
   BaseModel = Backbone.Model.extend
+
+    # make Helpers functions available to all models
+    Helpers : Helpers
 
     # store a ref to Backbone's sync so we can use it again
     backboneSync  : Backbone.sync

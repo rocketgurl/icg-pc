@@ -2,11 +2,12 @@ define [
   'BaseView',
   'Messenger',
   'base64',
-  'modules/RenewalUnderwriting/RenewalUnderwritingView'
+  'modules/RenewalUnderwriting/RenewalUnderwritingView',
+  'modules/ZenDesk/ZenDeskView',
   'text!templates/tpl_policy_container.html',
   'text!templates/tpl_ipm_header.html',
   'swfobject'
-], (BaseView, Messenger, Base64, RenewalUnderwritingView, tpl_policy_container, tpl_ipm_header, swfobject) ->
+], (BaseView, Messenger, Base64, RenewalUnderwritingView, ZenDeskView, tpl_policy_container, tpl_ipm_header, swfobject) ->
 
   PolicyView = BaseView.extend
 
@@ -22,6 +23,7 @@ define [
       @el           = options.view.el
       @$el          = options.view.$el
       @controller   = options.view.options.controller
+      @services     = @controller.services
       @flash_loaded = false
 
       # If flash is not loaded, then on an activate event
@@ -275,5 +277,32 @@ define [
         @policy_header.hide()
         @$el.find("#policy-header-#{@cid}").hide()
 
+    show_servicerequests : ->
+      $zd_el = $("#zendesk-#{@cid}")
+      if $zd_el.length == 0
+        $("#policy-workspace-#{@cid}").append("<div id=\"zendesk-#{@cid}\" class=\"zd-container\"></div>")
+        $zd_el = $("#zendesk-#{@cid}")
+
+      # If container not already loaded, then insert element into DOM
+      if @zd_container == null || @zd_container == undefined
+        @zd_container = new ZenDeskView({
+            $el         : $zd_el
+            policy      : @model
+            policy_view : this
+          }).render()
+      else
+        @zd_container.show()
+
+      # We need a policy_header
+      @build_policy_header()
+
+    teardown_servicerequests : ->
+      $zd_el = $("#zendesk-#{@cid}")
+      if $zd_el.length > 0
+        @zd_container.hide()
+
+      if @policy_header
+        @policy_header.hide()
+        @$el.find("#policy-header-#{@cid}").hide()
 
   PolicyView
