@@ -36,7 +36,7 @@ define [
       ixlibrary   : './ixlibrary/api/sdo/rest/v1/'
       ixdoc       : './ixdoc/api/rest/v2/'
       ixadmin     : './config/ics/staging/ixadmin' # TESTING ONLY
-      zendesk     : 'https://ics-intweb-01.ics.local:1111/zendesk/api/v2'
+      zendesk     : './zendesk/api/v2'
 
   # Method Combinator (Decorator) 
   # https://github.com/raganwald/method-combinators

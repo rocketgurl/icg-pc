@@ -53,9 +53,14 @@
               sort_by: 'created_at'
             },
             dataType: 'json',
+            beforeSend: function(xhr) {
+              return xhr.setRequestHeader('Authorization', "Basic " + digest);
+            },
             headers: {
               'Authorization': "Basic " + digest
             },
+            username: 'darren.newton@arc90.com',
+            password: 'arc90zen',
             success: function(data, textStatus, jqXHR) {
               console.log(data);
               return data;
