@@ -51,8 +51,6 @@ define [
             xhr.setRequestHeader('Authorization', "Basic #{digest}")
           headers :
             'Authorization' : "Basic #{digest}"
-          username : 'darren.newton@arc90.com'
-          password : 'arc90zen'
           success : (data, textStatus, jqXHR) =>
             console.log data
             data
