@@ -218,6 +218,7 @@
       teardown_renewalunderwriting: function() {
         var $ru_el;
         $ru_el = $("#renewal-underwriting-" + this.cid);
+        console.log(this.ru_container);
         if ($ru_el.length > 0) {
           this.ru_container.hide();
         }

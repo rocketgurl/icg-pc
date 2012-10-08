@@ -29,11 +29,14 @@ define [
     render : ->
       @show()
       $("#ru-loader-#{@policy_view.cid}").show()
-      console.log($("#ru-loader-#{@policy_view.cid}"))
       @loader = @Helpers.loader("ru-spinner-#{@policy_view.cid}", 80, '#696969')
       @loader.setFPS(48)
+      
+      # This is just for testing the loader, remove delay
       load = _.bind(@policy.fetchRenewalMetadata, @policy)
       _.delay(load, 2000)
+      
+      this # so we can chain
 
     removeLoader : ->
       @loader.kill()
@@ -114,7 +117,6 @@ define [
     renewalSuccess : (resp) ->
       if resp?
         resp.cid = @cid
-        console.log resp
         @$el.html @Mustache.render tpl_ru_container, resp
         @removeLoader()
         @show()

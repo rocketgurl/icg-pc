@@ -270,6 +270,7 @@ define [
 
     teardown_renewalunderwriting : ->
       $ru_el = $("#renewal-underwriting-#{@cid}")
+      console.log @ru_container
       if $ru_el.length > 0
         @ru_container.hide()
 

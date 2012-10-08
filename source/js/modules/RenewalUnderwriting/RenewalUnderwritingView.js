@@ -26,11 +26,11 @@
         var load;
         this.show();
         $("#ru-loader-" + this.policy_view.cid).show();
-        console.log($("#ru-loader-" + this.policy_view.cid));
         this.loader = this.Helpers.loader("ru-spinner-" + this.policy_view.cid, 80, '#696969');
         this.loader.setFPS(48);
         load = _.bind(this.policy.fetchRenewalMetadata, this.policy);
-        return _.delay(load, 2000);
+        _.delay(load, 2000);
+        return this;
       },
       removeLoader: function() {
         this.loader.kill();
@@ -123,7 +123,6 @@
       renewalSuccess: function(resp) {
         if (resp != null) {
           resp.cid = this.cid;
-          console.log(resp);
           this.$el.html(this.Mustache.render(tpl_ru_container, resp));
           this.removeLoader();
           return this.show();
