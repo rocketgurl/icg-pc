@@ -2,11 +2,12 @@ define [
   'BaseView',
   'Messenger',
   'base64',
-  'modules/RenewalUnderwriting/RenewalUnderwritingView'
+  'modules/RenewalUnderwriting/RenewalUnderwritingView',
   'text!templates/tpl_policy_container.html',
   'text!templates/tpl_ipm_header.html',
+  'text!templates/tpl_renewal_underwriting_wrapper.html',
   'swfobject'
-], (BaseView, Messenger, Base64, RenewalUnderwritingView, tpl_policy_container, tpl_ipm_header, swfobject) ->
+], (BaseView, Messenger, Base64, RenewalUnderwritingView, tpl_policy_container, tpl_ipm_header, tpl_ru_wrapper, swfobject) ->
 
   PolicyView = BaseView.extend
 
@@ -251,14 +252,15 @@ define [
     show_renewalunderwriting : ->
       $ru_el = $("#renewal-underwriting-#{@cid}")
       if $ru_el.length == 0
-        $("#policy-workspace-#{@cid}").append("<div id=\"renewal-underwriting-#{@cid}\" class=\"ru-container\"></div>")
+        $("#policy-workspace-#{@cid}").append @Mustache.render tpl_ru_wrapper, { cid : @cid }
         $ru_el = $("#renewal-underwriting-#{@cid}")
 
       # If container not already loaded, then insert element into DOM
       if @ru_container == null || @ru_container == undefined
         @ru_container = new RenewalUnderwritingView({
-            $el    : $ru_el
-            policy : @model
+            $el         : $ru_el
+            policy      : @model
+            policy_view : @
           }).render()
       else
         @ru_container.show()

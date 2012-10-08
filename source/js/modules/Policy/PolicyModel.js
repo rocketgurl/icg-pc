@@ -7,8 +7,13 @@
       initialize: function() {
         return this.use_cripple();
       },
-      url: function() {
-        return this.get('urlRoot') + 'policies/' + this.id;
+      url: function(route) {
+        var url;
+        url = this.get('urlRoot') + 'policies/' + this.id;
+        if (route != null) {
+          url = "" + url + route;
+        }
+        return url;
       },
       get_pxServerIndex: function() {
         var doc;
@@ -52,6 +57,18 @@
         } else {
           return false;
         }
+      },
+      fetchRenewalMetadata: function() {
+        this.use_backbone();
+        return this.fetch({
+          url: '/mocks/renewal_underwriting_get.json',
+          success: function(model, resp) {
+            return model.trigger('renewal:success', resp);
+          },
+          error: function(model, resp) {
+            return model.trigger('renewal:error', resp);
+          }
+        });
       }
     });
     return PolicyModel;

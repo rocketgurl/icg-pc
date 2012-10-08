@@ -11,8 +11,14 @@ define [
     initialize : ->
       @use_cripple() # Use CrippledClient XMLSync
 
-    url : ->
-      return @get('urlRoot') + 'policies/' + @id
+    # **Assemble urls for Policies**  
+    # @params _String_  
+    # @return _String_  
+    url : (route) ->
+      url = @get('urlRoot') + 'policies/' + @id
+      if route?
+        url = "#{url}#{route}"
+      url
 
     # **Get the numeric portion of policy id used in pxServer**  
     # @return _String_
@@ -58,7 +64,25 @@ define [
     # **Is this an IPM policy?**  
     # @return _Boolean_
     isIPM : ->
-      if @getSystemOfRecord() == 'mxServer' then true else false    
+      if @getSystemOfRecord() == 'mxServer' then true else false
+
+    # **Fetch Renewal Metadata**  
+    # We need to temporarily switch back to a JSON parse method in our model
+    # and attempt to get renewal underwriting metadata  
+    #
+    # @return _Object_
+    fetchRenewalMetadata : ->
+      @use_backbone()
+      @fetch(
+          # url : @url('/underwriting')
+          url : '/mocks/renewal_underwriting_get.json' #mocks
+          success : (model, resp) ->
+            model.trigger('renewal:success', resp)
+          error : (model, resp) ->
+            model.trigger('renewal:error', resp)
+        )
+
+
 
       
   PolicyModel

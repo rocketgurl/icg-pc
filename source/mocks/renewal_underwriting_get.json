@@ -1,0 +1,42 @@
+{
+    "renewal": {
+        "renewalReviewRequired": "Yes",
+        "reviewStatus": "New",
+        "inspectionOrdered": "Yes",
+        "reviewPeriod": "2012-10-10",
+        "reviewDeadline": "2012-05-05",
+        "assignedTo": "Joy Jackson",
+        "reason": "The path of the righteous man is beset on all sides by the iniquities of the selfish and the tyranny of evil men."
+    },
+    "insuranceScore": {
+        "oldInsuranceScore": "Acceptable",
+        "newInsuranceScore": "Excellent",
+        "currentDisposition": "Pending",
+        "nonPaymentCancellations": "0",
+        "nonSufficientFunds": "0"
+    },
+    "lossHistory": [
+        {
+            "lossNumber": "1",
+            "lossDate": "9/28/2012",
+            "claimNumber": "11C538901",
+            "amount": "10,258.00",
+            "status": "Open",
+            "lossCause": "Water damange",
+            "catIndicator": "Yes",
+            "lossCarrier": "State Farm Insurance Co.",
+            "description": "Liability or medical payments - Slip/fall (Liability)"
+        },
+        {
+            "lossNumber": "2",
+            "lossDate": "9/28/2012",
+            "claimNumber": "11C538901",
+            "amount": "10,258.00",
+            "status": "Open",
+            "lossCause": "Water damange",
+            "catIndicator": "Yes",
+            "lossCarrier": "State Farm Insurance Co.",
+            "description": "Liability or medical payments - Slip/fall (Liability)"
+        }
+    ]
+}

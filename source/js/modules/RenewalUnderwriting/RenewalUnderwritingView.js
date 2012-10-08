@@ -17,13 +17,24 @@
       },
       initialize: function(options) {
         this.$el = options.$el;
-        return this.policy = options.policy;
+        this.policy = options.policy;
+        this.policy_view = options.policy_view;
+        this.policy.on('renewal:success', this.renewalSuccess, this);
+        return this.policy.on('renewal:error', this.renewalError, this);
       },
       render: function() {
-        this.$el.html(this.Mustache.render(tpl_ru_container, {
-          cid: this.cid
-        }));
-        return this.show();
+        var load;
+        this.show();
+        $("#ru-loader-" + this.policy_view.cid).show();
+        console.log($("#ru-loader-" + this.policy_view.cid));
+        this.loader = this.Helpers.loader("ru-spinner-" + this.policy_view.cid, 80, '#696969');
+        this.loader.setFPS(48);
+        load = _.bind(this.policy.fetchRenewalMetadata, this.policy);
+        return _.delay(load, 2000);
+      },
+      removeLoader: function() {
+        this.loader.kill();
+        return $("#ru-loader-" + this.cid).hide();
       },
       show: function() {
         return this.$el.fadeIn('fast');
@@ -108,6 +119,18 @@
           ]
         };
         return this.attach_menu(el, tpl_ru_disposition, data);
+      },
+      renewalSuccess: function(resp) {
+        if (resp != null) {
+          resp.cid = this.cid;
+          console.log(resp);
+          this.$el.html(this.Mustache.render(tpl_ru_container, resp));
+          this.removeLoader();
+          return this.show();
+        }
+      },
+      renewalError: function(resp) {
+        return this.Amplify.publish(this.policy_view.cid, 'warning', "Could not retrieve renewal underwriting information: " + resp.statusText + " (" + resp.status + ")");
       }
     });
   });

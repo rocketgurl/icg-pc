@@ -19,12 +19,25 @@ define [
         @clear_menu e
 
     initialize : (options) ->
-      @$el    = options.$el
-      @policy = options.policy
+      @$el         = options.$el
+      @policy      = options.policy
+      @policy_view = options.policy_view
+
+      @policy.on 'renewal:success', @renewalSuccess, this
+      @policy.on 'renewal:error', @renewalError, this
 
     render : ->
-      @$el.html @Mustache.render tpl_ru_container, { cid : @cid }
       @show()
+      $("#ru-loader-#{@policy_view.cid}").show()
+      console.log($("#ru-loader-#{@policy_view.cid}"))
+      @loader = @Helpers.loader("ru-spinner-#{@policy_view.cid}", 80, '#696969')
+      @loader.setFPS(48)
+      load = _.bind(@policy.fetchRenewalMetadata, @policy)
+      _.delay(load, 2000)
+
+    removeLoader : ->
+      @loader.kill()
+      $("#ru-loader-#{@cid}").hide()
 
     show : ->
       @$el.fadeIn('fast')
@@ -97,3 +110,15 @@ define [
         ]
 
       @attach_menu el, tpl_ru_disposition, data
+
+    renewalSuccess : (resp) ->
+      if resp?
+        resp.cid = @cid
+        console.log resp
+        @$el.html @Mustache.render tpl_ru_container, resp
+        @removeLoader()
+        @show()
+
+    renewalError : (resp) ->
+      @Amplify.publish(@policy_view.cid, 'warning', "Could not retrieve renewal underwriting information: #{resp.statusText} (#{resp.status})")
+
