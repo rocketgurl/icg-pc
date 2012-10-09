@@ -14,7 +14,7 @@
         ixlibrary: './ixlibrary/api/sdo/rest/v1/',
         ixdoc: './ixdoc/api/rest/v2/',
         ixadmin: './config/ics/staging/ixadmin',
-        zendesk: './zendesk/api/v2'
+        zendesk: './mocks/zen.php'
       }
     };
     valid_workspace = function(methodBody) {

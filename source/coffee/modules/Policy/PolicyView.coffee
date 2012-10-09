@@ -289,7 +289,7 @@ define [
             $el         : $zd_el
             policy      : @model
             policy_view : this
-          }).render()
+          }).fetch()
       else
         @zd_container.show()
 

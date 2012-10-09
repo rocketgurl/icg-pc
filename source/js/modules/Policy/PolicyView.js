@@ -236,7 +236,7 @@
             $el: $zd_el,
             policy: this.model,
             policy_view: this
-          }).render();
+          }).fetch();
         } else {
           this.zd_container.show();
         }

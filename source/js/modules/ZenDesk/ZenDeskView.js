@@ -11,13 +11,15 @@
       },
       initialize: function(options) {
         var _ref;
-        return _ref = [options.$el, options.policy, options.policy_view], this.$el = _ref[0], this.policy = _ref[1], this.policy_view = _ref[2], _ref;
+        _ref = [options.$el, options.policy, options.policy_view], this.$el = _ref[0], this.policy = _ref[1], this.policy_view = _ref[2];
+        return this;
+      },
+      fetch: function() {
+        return this.fetch_tickets(this.policy.get_policy_id());
       },
       render: function() {
-        var tickets;
-        tickets = this.fetch_tickets(this.policy.get_policy_id());
         this.$el.html(this.Mustache.render(tpl_zd_container, {
-          results: tickets.results
+          results: this.tickets.results
         }));
         return this.show();
       },
@@ -36,7 +38,7 @@
           _this = this;
         if (_.isEmpty(query)) {
           this.Amplify.publish(this.policy_view.cid, 'warning', "This policy is unable to search the ZenDesk API at this time. Sorry.");
-          false;
+          return false;
         }
         digest = this.Helpers.createDigest('darren.newton@arc90.com', 'arc90zen');
         if (!digest) {
@@ -44,7 +46,7 @@
           return false;
         } else {
           return $.ajax({
-            url: "" + this.policy_view.services.zendesk + "/search.json",
+            url: this.policy_view.services.zendesk,
             type: 'GET',
             contentType: 'application/json',
             data: {
@@ -53,15 +55,10 @@
               sort_by: 'created_at'
             },
             dataType: 'json',
-            beforeSend: function(xhr) {
-              return xhr.setRequestHeader('Authorization', "Basic " + digest);
-            },
-            headers: {
-              'Authorization': "Basic " + digest
-            },
             success: function(data, textStatus, jqXHR) {
               console.log(data);
-              return data;
+              _this.tickets = data;
+              return _this.render();
             },
             error: function(jqXHR, textStatus, errorThrown) {
               _this.Amplify.publish(_this.policy_view.cid, 'warning', "This policy is unable to access the ZenDesk API at this time. Message: " + textStatus);
