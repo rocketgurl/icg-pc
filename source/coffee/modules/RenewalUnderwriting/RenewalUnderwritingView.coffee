@@ -34,7 +34,7 @@ define [
       
       # This is just for testing the loader, remove delay
       load = _.bind(@policy.fetchRenewalMetadata, @policy)
-      _.delay(load, 2000)
+      _.delay(load, 1000)
       
       this # so we can chain
 

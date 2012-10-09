@@ -29,7 +29,7 @@
         this.loader = this.Helpers.loader("ru-spinner-" + this.policy_view.cid, 80, '#696969');
         this.loader.setFPS(48);
         load = _.bind(this.policy.fetchRenewalMetadata, this.policy);
-        _.delay(load, 2000);
+        _.delay(load, 1000);
         return this;
       },
       removeLoader: function() {

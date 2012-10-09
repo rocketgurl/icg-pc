@@ -2,12 +2,12 @@
 <div class="ru-block">
 	<div class="ru-block-shim">
 		<table class="ru-list">
-			<tr><td>Renewal review required:</td><td>Yes</td></tr>
-			<tr><td>Review status:</td><td>New</td></tr>
-			<tr><td>Inspection ordered:</td><td>Yes</td></tr>
-			<tr><td>Review period:</td><td>2012-10-10</td></tr>
-			<tr><td>Review deadline:</td><td>2012-05-05</td></tr>
-			<tr><td>Assigned to:</td><td><a href="assigned_to">Joy Jackson&nbsp;<i class="icon-pencil"></i></a></td></tr>
+			<tr><td>Renewal review required:</td><td>{{renewal.renewalReviewRequired}}</td></tr>
+			<tr><td>Review status:</td><td>{{renewal.reviewStatus}}</td></tr>
+			<tr><td>Inspection ordered:</td><td>{{renewal.inspectionOrdered}}</td></tr>
+			<tr><td>Review period:</td><td>{{renewal.reviewPeriod}}</td></tr>
+			<tr><td>Review deadline:</td><td>{{renewal.reviewDeadline}}</td></tr>
+			<tr><td>Assigned to:</td><td><a href="assigned_to">{{renewal.assignedTo}}&nbsp;<i class="icon-pencil"></i></a></td></tr>
 		</table>
 	</div>
 </div>
@@ -15,19 +15,19 @@
 	<div class="ru-hybrid ru-block-shim">
 		<h3>Insurance score:</h3>
 		<p>
-			Old: <strong>Acceptable</strong>  |  New: <strong>Excellent</strong>
+			Old: <strong>{{insuranceScore.oldInsuranceScore}}</strong>  |  New: <strong>{{insuranceScore.newInsuranceScore}}</strong>
 		</p>	
 		<table class="ru-list">
-			<tr><td>Current disposition:</td><td><a href="current_disposition">Pending&nbsp;<i class="icon-pencil"></i></a></td></tr>
-			<tr><td>Non-payment cancellations:</td><td>0</td></tr>
-			<tr><td>NSFs:</td><td>0</td></tr>
+			<tr><td>Current disposition:</td><td><a href="current_disposition">{{insuranceScore.currentDisposition}}&nbsp;<i class="icon-pencil"></i></a></td></tr>
+			<tr><td>Non-payment cancellations:</td><td>{{insuranceScore.nonPaymentCancellations}}</td></tr>
+			<tr><td>NSFs:</td><td>{{insuranceScore.nonSufficientFunds}}</td></tr>
 		</table>
 	</div>
 </div>
 <div class="ru-block omega">
 	<div class="ru-block-shim">
 		<h3>Renewal review reasons</h3>
-		<p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts. Separated they live in Bookmarksgrove right at the coast of the Semantics, a large language ocean.</p>
+		<p>{{renewal.reason}}</p>
 	</div>
 </div>
 
@@ -47,38 +47,18 @@
 		</tr>
 	</thead>
 	<tbody>
+		{{#lossHistory}}
 		<tr>
-			<td><a href="">1</a></td>
-			<td>09/28/2012</td>
-			<td>11C538901</td>
-			<td>10,258.00</td>
-			<td>Open</td>
-			<td>Water damage</td>
-			<td>Yes</td>
-			<td>State Farm Insurance Co.</td>
-			<td>Local riots over release of new Cabbage Patch™ dolls escalated to apocalyptic levels</td>
+			<td>{{lossNumber}}</td>
+			<td>{{lossDate}}</td>
+			<td>{{claimNumber}}</td>
+			<td>{{amount}}</td>
+			<td>{{status}}</td>
+			<td>{{lossCause}}</td>
+			<td>{{catIndicator}}</td>
+			<td>{{lossCarrier}}</td>
+			<td>{{description}}</td>
 		</tr>
-		<tr>
-			<td><a href="">2</a></td>
-			<td>09/28/2012</td>
-			<td>11C538901</td>
-			<td>10,258.00</td>
-			<td>Open</td>
-			<td>Water damage</td>
-			<td>Yes</td>
-			<td>State Farm Insurance Co.</td>
-			<td>Roof airlifed to Oz via tornado</td>
-		</tr>
-		<tr>
-			<td><a href="">3</a></td>
-			<td>09/28/2012</td>
-			<td>11C538901</td>
-			<td>10,258.00</td>
-			<td>Open</td>
-			<td>Water damage</td>
-			<td>Yes</td>
-			<td>State Farm Insurance Co.</td>
-			<td>Zombies.</td>
-		</tr>
+		{{/lossHistory}}
 	</tbody>
 </table>
