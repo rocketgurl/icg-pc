@@ -1,0 +1,155 @@
+{
+    "results": [
+        {
+            "url": "https://coastalriskunderwriters.zendesk.com/api/v2/tickets/31453.json",
+            "id": 31453,
+            "external_id": null,
+            "via": {
+                "channel": "web",
+                "source": {
+                    "from": {},
+                    "to": {},
+                    "rel": null
+                }
+            },
+            "created_at": "2012-10-16T17:31:23Z",
+            "updated_at": "2012-10-17T20:26:59Z",
+            "type": "incident",
+            "subject": "Test Zendesk Integration Multiple ticket",
+            "description": "This is a second ticket to test whether zendesk tickets show up in Policy Central 2.0",
+            "priority": "high",
+            "status": "open",
+            "recipient": null,
+            "requester_id": 164123767,
+            "submitter_id": 157183813,
+            "assignee_id": 157183813,
+            "organization_id": 20708073,
+            "group_id": 20150732,
+            "collaborator_ids": [],
+            "forum_topic_id": null,
+            "problem_id": null,
+            "has_incidents": false,
+            "due_at": null,
+            "tags": [
+                "change_mailing_address",
+                "icg_user",
+                "occidental_insight"
+            ],
+            "fields": [
+                {
+                    "id": 20666647,
+                    "value": "None"
+                },
+                {
+                    "id": 20703591,
+                    "value": "change_mailing_address"
+                },
+                {
+                    "id": 20714753,
+                    "value": "occidental_insight"
+                },
+                {
+                    "id": 20716327,
+                    "value": "VAH007157400"
+                }
+            ],
+            "custom_fields": [
+                {
+                    "id": 20666647,
+                    "value": "None"
+                },
+                {
+                    "id": 20703591,
+                    "value": "change_mailing_address"
+                },
+                {
+                    "id": 20714753,
+                    "value": "occidental_insight"
+                },
+                {
+                    "id": 20716327,
+                    "value": "VAH007157400"
+                }
+            ],
+            "satisfaction_rating": null,
+            "result_type": "ticket"
+        },
+        {
+            "url": "https://coastalriskunderwriters.zendesk.com/api/v2/tickets/31451.json",
+            "id": 31451,
+            "external_id": null,
+            "via": {
+                "channel": "web",
+                "source": {
+                    "from": {},
+                    "to": {},
+                    "rel": null
+                }
+            },
+            "created_at": "2012-10-16T17:30:16Z",
+            "updated_at": "2012-10-17T20:27:36Z",
+            "type": "incident",
+            "subject": "Test Zendesk Integration",
+            "description": "This is a test to see zendesk tickets from within Policy Central 2.0",
+            "priority": "normal",
+            "status": "open",
+            "recipient": null,
+            "requester_id": 164123767,
+            "submitter_id": 157183813,
+            "assignee_id": 157183813,
+            "organization_id": 20708073,
+            "group_id": 20150732,
+            "collaborator_ids": [],
+            "forum_topic_id": null,
+            "problem_id": null,
+            "has_incidents": false,
+            "due_at": null,
+            "tags": [
+                "change_mortgagee",
+                "icg_user",
+                "occidental_insight"
+            ],
+            "fields": [
+                {
+                    "id": 20666647,
+                    "value": "None"
+                },
+                {
+                    "id": 20703591,
+                    "value": "change_mortgagee"
+                },
+                {
+                    "id": 20714753,
+                    "value": "occidental_insight"
+                },
+                {
+                    "id": 20716327,
+                    "value": "VAH007157400"
+                }
+            ],
+            "custom_fields": [
+                {
+                    "id": 20666647,
+                    "value": "None"
+                },
+                {
+                    "id": 20703591,
+                    "value": "change_mortgagee"
+                },
+                {
+                    "id": 20714753,
+                    "value": "occidental_insight"
+                },
+                {
+                    "id": 20716327,
+                    "value": "VAH007157400"
+                }
+            ],
+            "satisfaction_rating": null,
+            "result_type": "ticket"
+        }
+    ],
+    "next_page": null,
+    "previous_page": null,
+    "count": 2
+}

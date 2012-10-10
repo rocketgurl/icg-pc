@@ -1,18 +1,17 @@
 define [
   'BaseView',
   'Messenger',
-  'text!templates/tpl_zendesk_container.html'
+  'text!modules/ZenDesk/templates/tpl_zendesk_container.html'
 ], (BaseView, Messenger, tpl_zd_container) ->
 
   ZenDeskView = BaseView.extend
 
-    events :
-      'click a[href=assigned_to]' : (e) -> @process_event e
-
+    # Setup commons references to parents and this element
     initialize : (options) ->
       [@$el, @policy, @policy_view] = [options.$el, options.policy, options.policy_view]
       this
 
+    # Get tickets from the ZenDesk proxy
     fetch : ->
       @fetch_tickets(@policy.get_policy_id())
 
@@ -26,20 +25,13 @@ define [
     hide : ->
       @$el.hide()
 
-    process_event : (e) ->
-      e.preventDefault()
-      $(e.currentTarget)
-
+    # Hit our proxy to get tickets from ZenDesk by searching on the policy id.
+    # It basically simpler at this point to hit it directly instead of creating
+    # Model/Controllers as we're not doing anything special with them.
     fetch_tickets : (query) -> 
       if _.isEmpty query
         @Amplify.publish(@policy_view.cid, 'warning', "This policy is unable to search the ZenDesk API at this time. Sorry.")
         return false
-
-      digest = @Helpers.createDigest 'darren.newton@arc90.com', 'arc90zen'
-
-      if !digest
-        @Amplify.publish(@policy_view.cid, 'warning', "This policy is unable to search the ZenDesk API at this time. Sorry.")
-        false
       else
         $.ajax
           url         : @policy_view.services.zendesk
@@ -50,15 +42,10 @@ define [
             sort_order : 'desc'
             sort_by    : 'created_at'
           dataType : 'json'
-          # beforeSend : (xhr) ->
-          #   xhr.setRequestHeader('Authorization', "Basic #{digest}")
-          # headers :
-          #   'Authorization' : "Basic #{digest}"
           success : (data, textStatus, jqXHR) =>
-            console.log data
             @tickets = data
             @render()
           error: (jqXHR, textStatus, errorThrown) =>
             @Amplify.publish(@policy_view.cid, 'warning', "This policy is unable to access the ZenDesk API at this time. Message: #{textStatus}")
-            console.log jqXHR
             false
+      this
