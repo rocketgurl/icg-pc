@@ -216,7 +216,7 @@
       },
       response_fail: function(model, resp) {
         this.Amplify.publish(this.login_view.cid, 'warning', "Sorry, your password or username was incorrect");
-        return this.logger("PHALE!");
+        return this.logger("Response fail: " + resp.status + " : " + resp.statusText + " - " + resp.responseText);
       },
       login_success: function(model, resp) {
         this.get_configs();

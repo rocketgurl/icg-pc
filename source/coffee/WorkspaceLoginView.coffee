@@ -1,9 +1,8 @@
 define [
   'BaseView',
   'Messenger',
-  'mustache',
   'text!templates/tpl_login.html'
-], (BaseView, Messenger, Mustache, tpl_login) ->
+], (BaseView, Messenger, tpl_login) ->
 
   WorkspaceLoginView = BaseView.extend
 
@@ -15,7 +14,8 @@ define [
 
     # Render login form
     render : ->
-      html = Mustache.render tpl_login, { cid : @cid }
+      html = @Mustache.render $('#tpl-flash-message').html(), { cid : @cid }
+      html += @Mustache.render tpl_login, { cid : @cid }
       @$el.html html
 
       # Register flash message pubsub for this view

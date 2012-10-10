@@ -30,7 +30,7 @@ define [
     xmlSync  : XMLSync
     xmlParse : (response, xhr) ->
       tree   = response if response?
-      xmlstr = if response.xml then response.xml else (new XMLSerializer()).serializeToString(response)
+      xmlstr = if response?.xml? then response.xml else (new XMLSerializer()).serializeToString(response)
       tree   = $.parseXML(xmlstr)
       out = { 'xhr' : xhr }
       if tree?

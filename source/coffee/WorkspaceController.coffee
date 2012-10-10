@@ -274,7 +274,7 @@ define [
     # Need to throw a nice error message
     response_fail : (model, resp) ->
       @Amplify.publish @login_view.cid, 'warning', "Sorry, your password or username was incorrect"
-      @logger "PHALE!"
+      @logger "Response fail: #{resp.status} : #{resp.statusText} - #{resp.responseText}"
 
     # On a successfull login have @user set some variables
     # and set an identity cookie to smooth logging in later.
