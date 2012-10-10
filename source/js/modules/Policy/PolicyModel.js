@@ -63,10 +63,12 @@
         return this.fetch({
           url: '/mocks/renewal_underwriting_get.json',
           success: function(model, resp) {
-            return model.trigger('renewal:success', resp);
+            model.trigger('renewal:success', resp);
+            return this.use_cripple();
           },
           error: function(model, resp) {
-            return model.trigger('renewal:error', resp);
+            model.trigger('renewal:error', resp);
+            return this.use_cripple();
           }
         });
       }
