@@ -5,7 +5,8 @@ define [
   'mustache',
   'text!templates/tpl_main_nav.html',
   'text!templates/tpl_sub_nav_container.html',
-  'text!templates/tpl_sub_nav_ul.html'
+  'text!templates/tpl_sub_nav_ul.html',
+  'xml2json'
 ], (require, $, _, Mustache, tpl_main_nav, tpl_sub_nav_container, tpl_sub_nav_ul) ->
 
   #### Menu Helper

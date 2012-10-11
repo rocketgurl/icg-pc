@@ -191,6 +191,8 @@ define [
             @flash_callback(e)
         )
 
+
+
     # Hide flash overview
     teardown_overview : ->
       @policy_summary.hide()
@@ -222,8 +224,11 @@ define [
       obj      = swfobject.getObjectById("policy-summary-#{@cid}");
       digest   = Base64.decode(@model.get('digest')).split ':'
       settings =
-        "parentAuthtoken" : "Y29tLmljczM2MC5hcHBzLmluc2lnaHRjZW50cmFsOjg4NTllY2IzNmU1ZWIyY2VkZTkzZTlmYTc1YzYxZDRl",
-        "policyId"        : @model.id
+        "parentAuthtoken"   : "Y29tLmljczM2MC5hcHBzLmluc2lnaHRjZW50cmFsOjg4NTllY2IzNmU1ZWIyY2VkZTkzZTlmYTc1YzYxZDRl",
+        "policyId"          : @model.id,
+        "applicationid"     : "ixadmin",
+        "organizationid"    : "ics",
+        "masterEnvironment" : window.ICS360_ENV
 
       if digest[0]? and digest[1]?
         obj.init(digest[0], digest[1], config, settings)
@@ -260,7 +265,7 @@ define [
         @ru_container = new RenewalUnderwritingView({
             $el         : $ru_el
             policy      : @model
-            policy_view : @
+            policy_view : this
           }).render()
       else
         @ru_container.show()
@@ -276,6 +281,5 @@ define [
       if @policy_header
         @policy_header.hide()
         @$el.find("#policy-header-#{@cid}").hide()
-
 
   PolicyView

@@ -28,6 +28,7 @@ define [
 
     render : ->
       @show()
+      console.log @policy_view
       $("#ru-loader-#{@policy_view.cid}").show()
       @loader = @Helpers.loader("ru-spinner-#{@policy_view.cid}", 80, '#696969')
       @loader.setFPS(48)
