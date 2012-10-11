@@ -78,10 +78,10 @@ define [
           url : '/mocks/renewal_underwriting_get.json' #mocks
           success : (model, resp) ->
             model.trigger('renewal:success', resp)
-            @use_cripple()
+            model.use_cripple()
           error : (model, resp) ->
             model.trigger('renewal:error', resp)
-            @use_cripple()
+            model.use_cripple()
         )
 
 

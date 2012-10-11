@@ -64,11 +64,11 @@
           url: '/mocks/renewal_underwriting_get.json',
           success: function(model, resp) {
             model.trigger('renewal:success', resp);
-            return this.use_cripple();
+            return model.use_cripple();
           },
           error: function(model, resp) {
             model.trigger('renewal:error', resp);
-            return this.use_cripple();
+            return model.use_cripple();
           }
         });
       }
