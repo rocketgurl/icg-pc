@@ -1,7 +1,7 @@
 define [
   'BaseCollection',
-  'modules/SearchContext/SearchContextModel',
-  'modules/SearchContext/SearchContextView',
+  'modules/Search/SearchContextModel',
+  'modules/Search/SearchContextView',
   'base64',
   'Store',
   'LocalStorageSync',

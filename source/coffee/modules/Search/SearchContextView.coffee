@@ -1,7 +1,7 @@
 define [
   'BaseView',
   'Messenger',
-  'text!templates/tpl_search_menu_views_row.html',
+  'text!modules/Search/templates/tpl_search_menu_views_row.html',
   'Helpers'
 ], (BaseView, Messenger, tpl_search_menu_views_row, Helpers) ->
 

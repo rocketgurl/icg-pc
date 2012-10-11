@@ -45,7 +45,7 @@ define [
   'WorkspaceCanvasView',
   'WorkspaceNavView',
   'WorkspaceRouter',
-  'modules/SearchContext/SearchContextCollection',
+  'modules/Search/SearchContextCollection',
   'Messenger',
   'base64',
   'MenuHelper',

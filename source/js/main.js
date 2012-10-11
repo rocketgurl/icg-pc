@@ -43,7 +43,7 @@
     }
   });
 
-  define(['jquery', 'underscore', 'backbone', 'WorkspaceController', 'UserModel', 'ConfigModel', 'WorkspaceStateModel', 'WorkspaceStateCollection', 'WorkspaceLoginView', 'WorkspaceCanvasView', 'WorkspaceNavView', 'WorkspaceRouter', 'modules/SearchContext/SearchContextCollection', 'Messenger', 'base64', 'MenuHelper', 'AppRules', 'Helpers', 'Cookie', 'domReady', 'xml2json'], function($, _, Backbone, WorkspaceController, UserModel, ConfigModel, WorkspaceStateModel, WorkspaceStateCollection, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter, SearchContextCollection, Messenger, Base64, MenuHelper, AppRules, Helpers, Cookie, domReady) {
+  define(['jquery', 'underscore', 'backbone', 'WorkspaceController', 'UserModel', 'ConfigModel', 'WorkspaceStateModel', 'WorkspaceStateCollection', 'WorkspaceLoginView', 'WorkspaceCanvasView', 'WorkspaceNavView', 'WorkspaceRouter', 'modules/Search/SearchContextCollection', 'Messenger', 'base64', 'MenuHelper', 'AppRules', 'Helpers', 'Cookie', 'domReady', 'xml2json'], function($, _, Backbone, WorkspaceController, UserModel, ConfigModel, WorkspaceStateModel, WorkspaceStateCollection, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter, SearchContextCollection, Messenger, Base64, MenuHelper, AppRules, Helpers, Cookie, domReady) {
     return domReady(function() {
       window.workspace = WorkspaceController;
       return window.workspace.init();

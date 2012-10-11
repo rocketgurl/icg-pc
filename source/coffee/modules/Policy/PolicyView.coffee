@@ -3,8 +3,8 @@ define [
   'Messenger',
   'base64',
   'modules/RenewalUnderwriting/RenewalUnderwritingView'
-  'text!templates/tpl_policy_container.html',
-  'text!templates/tpl_ipm_header.html',
+  'text!modules/Policy/templates/tpl_policy_container.html',
+  'text!modules/Policy/templates/tpl_ipm_header.html',
   'swfobject'
 ], (BaseView, Messenger, Base64, RenewalUnderwritingView, tpl_policy_container, tpl_ipm_header, swfobject) ->
 
@@ -189,7 +189,6 @@ define [
           (e) =>
             @flash_callback(e)
         )
-
 
 
     # Hide flash overview

@@ -1,7 +1,7 @@
 define [
   'BaseCollection',
-  'modules/SearchPolicy/SearchPolicyModel',
-  'modules/SearchPolicy/SearchPolicyView',
+  'modules/Search/SearchPolicyModel',
+  'modules/Search/SearchPolicyView',
   'base64'
 ], (BaseCollection, SearchPolicyModel, SearchPolicyView, Base64) ->
 

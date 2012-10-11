@@ -1,9 +1,9 @@
 define [
   'BaseView',
   'Messenger',
-  'text!templates/tpl_renewal_underwriting_container.html',
-  'text!templates/tpl_renewal_underwriting_assignee.html',
-  'text!templates/tpl_renewal_underwriting_disposition.html'
+  'text!modules/RenewalUnderwriting/templates/tpl_renewal_underwriting_container.html',
+  'text!modules/RenewalUnderwriting/templates/tpl_renewal_underwriting_assignee.html',
+  'text!modules/RenewalUnderwriting/templates/tpl_renewal_underwriting_disposition.html'
 ], (BaseView, Messenger, tpl_ru_container, tpl_ru_assignees, tpl_ru_disposition) ->
 
   RenewalUnderwritingView = BaseView.extend
