@@ -229,8 +229,6 @@ define [
         "organizationid"    : "ics",
         "masterEnvironment" : window.ICS360_ENV
 
-      console.log settings
-
       if digest[0]? and digest[1]?
         obj.init(digest[0], digest[1], config, settings)
       else
