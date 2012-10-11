@@ -172,8 +172,12 @@
         digest = Base64.decode(this.model.get('digest')).split(':');
         settings = {
           "parentAuthtoken": "Y29tLmljczM2MC5hcHBzLmluc2lnaHRjZW50cmFsOjg4NTllY2IzNmU1ZWIyY2VkZTkzZTlmYTc1YzYxZDRl",
-          "policyId": this.model.id
+          "policyId": this.model.id,
+          "applicationid": "ixadmin",
+          "organizationid": "ics",
+          "masterEnvironment": window.ICS360_ENV
         };
+        console.log(settings);
         if ((digest[0] != null) && (digest[1] != null)) {
           obj.init(digest[0], digest[1], config, settings);
         } else {
