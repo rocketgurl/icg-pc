@@ -16,8 +16,7 @@ define [
   'MenuHelper',
   'AppRules',
   'Helpers',
-  'Cookie',
-  'xml2json'
+  'Cookie'
 ], ($, _, Backbone, UserModel, ConfigModel, WorkspaceStateModel, WorkspaceStateCollection, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter, SearchContextCollection, Messenger, Base64, MenuHelper, AppRules, Helpers, Cookie, xml2json) ->
 
   # Global log object for debugging

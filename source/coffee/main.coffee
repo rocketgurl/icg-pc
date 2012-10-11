@@ -52,9 +52,9 @@ define [
   'AppRules',
   'Helpers',
   'Cookie',
-  'xml2json',
-  'domReady'
-], ($, _, Backbone, WorkspaceController, UserModel, ConfigModel, WorkspaceStateModel, WorkspaceStateCollection, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter, SearchContextCollection, Messenger, Base64, MenuHelper, AppRules, Helpers, Cookie, xml2json, domReady) ->
+  'domReady',
+  'xml2json'
+], ($, _, Backbone, WorkspaceController, UserModel, ConfigModel, WorkspaceStateModel, WorkspaceStateCollection, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter, SearchContextCollection, Messenger, Base64, MenuHelper, AppRules, Helpers, Cookie, domReady) ->
 
   # Initialize application when dom is ready
   domReady ->
