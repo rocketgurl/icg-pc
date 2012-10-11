@@ -25,7 +25,6 @@
       render: function() {
         var load;
         this.show();
-        console.log(this.policy_view);
         $("#ru-loader-" + this.policy_view.cid).show();
         this.loader = this.Helpers.loader("ru-spinner-" + this.policy_view.cid, 80, '#696969');
         this.loader.setFPS(48);

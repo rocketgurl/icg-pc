@@ -6,7 +6,8 @@ define [
   'amplify',
   'LocalStorageSync',
   'CrippledClientSync',
-  'xmlSync'
+  'xmlSync',
+  'xml2json'
 ], ($, _, Backbone, Store, amplify, LocalStorageSync, CrippledClientSync, XMLSync) ->
 
   #### BaseModel
@@ -36,7 +37,8 @@ define [
       if tree?
           out.document   = $(tree)
           out.raw_xml    = xhr.responseText
-          out.string_xml = xmlstr
+          # out.string_xml = xmlstr
+          out.json       = $.xml2json(out.raw_xml)
       out
 
     # Response state (Hackety hack hack)
