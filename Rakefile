@@ -23,7 +23,7 @@ PRUNE = {
   :dirs => [
     'coffee',
     'docs',
-    'mocks',
+    # 'mocks',
     'tests'
   ],
   :files => [
