@@ -1,6 +1,6 @@
 define [
   'BaseView',
-  'text!templates/tpl_search_policy_row.html'
+  'text!modules/Search/templates/tpl_search_policy_row.html'
 ], (BaseView, tpl_search_policy_row) ->
 
   SearchPolicyView = BaseView.extend

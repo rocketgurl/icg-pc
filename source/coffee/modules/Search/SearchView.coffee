@@ -2,11 +2,11 @@ define [
   'BaseView',
   'Helpers',
   'Messenger',
-  'modules/SearchPolicy/SearchPolicyCollection',
-  'text!templates/tpl_search_container.html',
-  'text!templates/tpl_search_menu_save.html',
-  'text!templates/tpl_search_menu_views.html',
-  'text!templates/tpl_search_menu_share.html'
+  'modules/Search/SearchPolicyCollection',
+  'text!modules/Search/templates/tpl_search_container.html',
+  'text!modules/Search/templates/tpl_search_menu_save.html',
+  'text!modules/Search/templates/tpl_search_menu_views.html',
+  'text!modules/Search/templates/tpl_search_menu_share.html'
 ], (BaseView, Helpers, Messenger, SearchPolicyCollection, tpl_search_container, tpl_search_menu_save, tpl_search_menu_views, tpl_search_menu_share) ->
 
   SearchView = BaseView.extend

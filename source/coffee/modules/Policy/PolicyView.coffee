@@ -2,10 +2,9 @@ define [
   'BaseView',
   'Messenger',
   'base64',
-  'modules/RenewalUnderwriting/RenewalUnderwritingView',
-  'text!templates/tpl_policy_container.html',
-  'text!templates/tpl_ipm_header.html',
-  'text!templates/tpl_renewal_underwriting_wrapper.html',
+  'modules/RenewalUnderwriting/RenewalUnderwritingView'
+  'text!modules/Policy/templates/tpl_policy_container.html',
+  'text!modules/Policy/templates/tpl_ipm_header.html',
   'swfobject'
 ], (BaseView, Messenger, Base64, RenewalUnderwritingView, tpl_policy_container, tpl_ipm_header, tpl_ru_wrapper, swfobject) ->
 
@@ -191,6 +190,7 @@ define [
             @flash_callback(e)
         )
 
+
     # Hide flash overview
     teardown_overview : ->
       @policy_summary.hide()
@@ -222,8 +222,11 @@ define [
       obj      = swfobject.getObjectById("policy-summary-#{@cid}");
       digest   = Base64.decode(@model.get('digest')).split ':'
       settings =
-        "parentAuthtoken" : "Y29tLmljczM2MC5hcHBzLmluc2lnaHRjZW50cmFsOjg4NTllY2IzNmU1ZWIyY2VkZTkzZTlmYTc1YzYxZDRl",
-        "policyId"        : @model.id
+        "parentAuthtoken"   : "Y29tLmljczM2MC5hcHBzLmluc2lnaHRjZW50cmFsOjg4NTllY2IzNmU1ZWIyY2VkZTkzZTlmYTc1YzYxZDRl",
+        "policyId"          : @model.id,
+        "applicationid"     : "ixadmin",
+        "organizationid"    : "ics",
+        "masterEnvironment" : window.ICS360_ENV
 
       if digest[0]? and digest[1]?
         obj.init(digest[0], digest[1], config, settings)
