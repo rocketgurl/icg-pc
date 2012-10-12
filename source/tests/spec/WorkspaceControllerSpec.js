@@ -179,13 +179,11 @@ define([
     beforeEach(function(){
       if (ajax_count < 1) {
         var callback = jasmine.createSpy();
-
         _.each(policies, function(policy){
           policy.fetch({
             success : callback
           });
-        })
-
+        });
         waitsFor(function() {
           return callback.callCount > 2;
         }, "Timeout BOOM!", 1000)
@@ -198,6 +196,7 @@ define([
       _.each(policies, function(policy){
         expect(policy).toEqual(jasmine.any(Object));
         expect(policy instanceof Backbone.Model).toBe(true);
+        console.log(policy);
       })
     });
 
@@ -277,16 +276,44 @@ define([
       });
     });
 
-    it ('is not an IPM policy', function () {
+    it ('is an IPM policy', function () {
       runs(function(){
-
         _.each(policies, function(policy, index){
           expect(policy.isIPM()).toBe(true);
-        });
-
-        
+        });        
       });
     });
+
+
+    it ('can get a policy state : getState()', function () {
+
+      var states = ['ACTIVEPOLICY','ACTIVEPOLICY',{ effectiveDate : '2011-01-15T00:00:00-04:00', reasonCode : '5', text : 'CANCELLEDPOLICY' }];
+      
+      runs(function(){
+        _.each(policies, function(policy, index){
+          expect(policy.getState()).toEqual(states[index]);
+        });        
+      });
+
+      runs(function(){
+        expect(policy_C.getState().effectiveDate).toEqual('2011-01-15T00:00:00-04:00');
+      });
+    });
+
+
+    it ('can see if a policy is cancelled : isCancelled()', function () {
+      runs(function(){
+        expect(policy_A.isCancelled()).toBe(false);
+      });
+      runs(function(){
+        expect(policy_B.isCancelled()).toBe(false);
+      });
+      runs(function(){
+        expect(policy_C.isCancelled()).toBe(true);
+      });
+    });
+
+
 
   });
 

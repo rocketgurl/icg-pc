@@ -4,8 +4,18 @@
   define(['BaseModel'], function(BaseModel) {
     var PolicyModel;
     PolicyModel = BaseModel.extend({
+      states: {
+        ACTIVE_POLICY: 'ACTIVEPOLICY',
+        ACTIVE_QUOTE: 'ACTIVEQUOTE',
+        CANCELLED_POLICY: 'CANCELLEDPOLICY',
+        EXPIRED_QUOTE: 'EXPIREDQUOTE',
+        NON_RENEWED_POLICY: 'NONRENEWEDPOLICY'
+      },
       initialize: function() {
-        return this.use_cripple();
+        this.use_cripple();
+        return this.on('change', function(e) {
+          return e.setModelState();
+        });
       },
       url: function(route) {
         var url;
@@ -71,6 +81,238 @@
             return model.use_cripple();
           }
         });
+      },
+      _getAttributes: function(elem) {
+        var attr, attribs, out, _i, _len;
+        out = {};
+        attribs = elem[0].attributes;
+        for (_i = 0, _len = attribs.length; _i < _len; _i++) {
+          attr = attribs[_i];
+          out[attr.name] = attr.value;
+        }
+        if (_.isEmpty(out)) {
+          return null;
+        } else {
+          return out;
+        }
+      },
+      getState: function() {
+        var attr, policyState, text;
+        policyState = this.get('document').find('Management PolicyState');
+        text = policyState.text();
+        attr = this._getAttributes(policyState);
+        if (attr === null) {
+          return text;
+        } else {
+          return _.extend(attr, {
+            'text': text
+          });
+        }
+      },
+      isCancelled: function() {
+        var state;
+        state = this.getState();
+        if (typeof state === 'object' && (state.text = 'CANCELLEDPOLICY')) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+      isQuote: function() {
+        var state, text;
+        state = this.getState();
+        text = typeof state === 'object' ? state.text : state;
+        return text === this.states.ACTIVE_QUOTE || text === this.states.EXPIRED_QUOTE;
+      },
+      isPendingCancel: function(bool) {
+        var pending;
+        pending = this.get('json').Management.PendingCancellation || false;
+        if (bool && pending) {
+          return true;
+        }
+        return pending;
+      },
+      getCancellationEffectiveDate: function() {
+        var effective_date, state;
+        state = this.getState();
+        effective_date = null;
+        switch (state) {
+          case "ACTIVEPOLICY":
+            if (this.isPendingCancel(true)) {
+              effective_date = this.isPendingCancel().cancellationEffectiveDate;
+            }
+            break;
+          case "CANCELLEDPOLICY":
+            effective_date = this.get('json').Management.PolicyState.effectiveDate;
+            break;
+          default:
+            effective_date = null;
+        }
+        return effective_date;
+      },
+      getCancellationReasonCode: function() {
+        var pending, reason_code, state;
+        state = this.getState();
+        reason_code = null;
+        pending = this.isPendingCancel();
+        state = typeof state === 'object' ? state.text : state;
+        switch (state) {
+          case 'ACTIVEPOLICY':
+            if (pending) {
+              reason_code = parseInt(pending.reasonCode, 10);
+            }
+            break;
+          case 'CANCELLEDPOLICY':
+            reason_code = this.get('json').Management.PolicyState.reasonCode;
+            reason_code = parseInt(reason_code, 10);
+            break;
+          default:
+            reason_code = null;
+        }
+        return reason_code;
+      },
+      getTerms: function() {
+        var terms;
+        terms = false;
+        if (this.get('json').Terms.Term != null) {
+          terms = this.get('json').Terms.Term;
+        }
+        if (_.isArray(terms)) {
+          return terms;
+        }
+        if (_.isObject(terms)) {
+          return [terms];
+        }
+      },
+      getLastTerm: function() {
+        if (this.getTerms()) {
+          return this.getTerms().pop();
+        } else {
+          return {};
+        }
+      },
+      getCustomerData: function(type) {
+        var customer;
+        if (type === null || type === void 0) {
+          return false;
+        }
+        customer = _.filter(this.get('json').Customers.Customer, function(c) {
+          return c.type === type;
+        });
+        if (customer.length > 0) {
+          return customer[0].DataItem;
+        } else {
+          return false;
+        }
+      },
+      getIntervalsOfTerm: function(term) {
+        var intervals, out;
+        if (term === null || term === void 0) {
+          return false;
+        }
+        if (_.isArray(term)) {
+          term = term.shift();
+        }
+        intervals = [];
+        out = false;
+        if (term.Intervals != null) {
+          if (_.isArray(term.Intervals.Interval)) {
+            out = term.Intervals.Interval;
+          } else {
+            out = [term.Intervals.Interval];
+          }
+        }
+        return out;
+      },
+      getLastInterval: function() {
+        var term;
+        term = this.getIntervalsOfTerm(this.getLastTerm());
+        if (term && _.isArray(term)) {
+          return term.pop();
+        } else {
+          return {};
+        }
+      },
+      getProductName: function() {
+        var name, terms;
+        name = null;
+        terms = this.getLastTerm().DataItem;
+        name = "" + (this.getDataItem(terms, 'OpProgram')) + "-" + (this.getDataItem(terms, 'OpPolicyType')) + "-" + (this.getDataItem(terms, 'OpPropertyState'));
+        return name.toLowerCase();
+      },
+      getDataItem: function(items, name) {
+        var data_obj;
+        if (items === void 0 || name === void 0) {
+          return false;
+        }
+        data_obj = _.filter(items, function(item) {
+          return item.name === name;
+        });
+        if (_.isArray(data_obj) && _.has(data_obj[0], 'value')) {
+          return data_obj[0].value;
+        } else {
+          return false;
+        }
+      },
+      getIdentifier: function(name) {
+        if (name === null || name === void 0) {
+          return false;
+        }
+        return this.get('document').find("Identifier Indentifiers[name=" + name + "]").attr('value');
+      },
+      isIssued: function() {
+        var history;
+        history = this.get('document').find('EventHistory Event[type=Issue]');
+        if (history.length > 0) {
+          return true;
+        } else {
+          return false;
+        }
+      },
+      _stripTimeFromDate: function(date) {
+        var clean, t;
+        clean = date;
+        t = date.indexOf('T');
+        if (t > -1) {
+          clean = clean.substring(0, t);
+        }
+        date = new Date(clean);
+        return "" + (date.getFullYear()) + "-" + (date.getMonth()) + "-" + (date.getDate());
+      },
+      getEffectiveDate: function() {
+        var date;
+        date = this.get('document').find('Terms Term EffectiveDate').text();
+        if (date !== void 0 || date !== '') {
+          return this._stripTimeFromDate(date);
+        } else {
+          return false;
+        }
+      },
+      getExpirationDate: function() {
+        var date;
+        date = this.get('document').find('Terms Term ExpirationDate').text();
+        if (date !== void 0 || date !== '') {
+          return this._stripTimeFromDate(date);
+        } else {
+          return false;
+        }
+      },
+      setModelState: function() {
+        this.set('state', this.getState());
+        this.set('quote', this.isQuote());
+        this.set('pendingCancel', this.isPendingCancel());
+        this.set('cancellationEffectiveDate', this.getCancellationEffectiveDate());
+        this.set('cancelled', this.isCancelled());
+        this.set('terms', this.getTerms());
+        this.set('lastInterval', this.getLastInterval());
+        this.set('insuredData', this.getCustomerData('Insured'));
+        this.set('mortgageeData', this.getCustomerData('Mortgagee'));
+        this.set('additionalInterestData', this.getCustomerData('AdditionalInterest'));
+        this.set('productName', this.getProductName());
+        this.set('insight_id', this.getIdentifier('InsightPolicyId'));
+        this.set('isIssued', this.isIssued());
+        this.set('effectiveDate', this.getEffectiveDate());
+        return this.set('expirationDate', this.getExpirationDate());
       }
     });
     return PolicyModel;
