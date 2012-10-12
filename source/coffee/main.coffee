@@ -1,7 +1,8 @@
 require
   baseUrl: 'js'
   paths: 
-    jquery     : 'lib/jquery-1.7.2.min'
+    jquery     : 'lib/jquery-1.8.2'
+    jqueryui   : 'lib/jquery-ui-1.9.0.custom.min'
     underscore : 'lib/underscore-min'
     backbone   : 'lib/backbone-min'
     amplify    : 'lib/amplify'

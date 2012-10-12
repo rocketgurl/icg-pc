@@ -1336,6 +1336,16 @@ Module: Policy
 .ru-list a:hover, .ru-list .policy-nav li a.select, .policy-nav li .ru-list a.select {
   color: #165788;
 }
+.ru-list input {
+  color: #007ac9;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  font-size: 1.4rem;
+  font-weight: bold;
+  border: 0;
+  width: 80px;
+  cursor: pointer;
+}
 
 .ru-loss-history {
   display: block;

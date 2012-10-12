@@ -3,10 +3,14 @@ define [
   'Messenger',
   'text!modules/RenewalUnderwriting/templates/tpl_renewal_underwriting_container.html',
   'text!modules/RenewalUnderwriting/templates/tpl_renewal_underwriting_assignee.html',
-  'text!modules/RenewalUnderwriting/templates/tpl_renewal_underwriting_disposition.html'
+  'text!modules/RenewalUnderwriting/templates/tpl_renewal_underwriting_disposition.html',
+  'jqueryui'
 ], (BaseView, Messenger, tpl_ru_container, tpl_ru_assignees, tpl_ru_disposition) ->
 
   RenewalUnderwritingView = BaseView.extend
+
+    CHANGESET  : {}
+    DATEPICKER : ''
 
     events :
       'click a[href=assigned_to]' : (e) -> 
@@ -14,6 +18,12 @@ define [
 
       'click a[href=current_disposition]' : (e) -> 
         @changeDisposition(@process_event e)
+
+      'click a[href=review_period]' : (e) -> 
+        @reviewPeriod(@process_event e)
+
+      'click a[href=review_deadline]' : (e) -> 
+        @reviewDeadline(@process_event e)
 
       'click .menu-close' : (e) ->
         @clear_menu e
@@ -35,7 +45,7 @@ define [
       # This is just for testing the loader, remove delay
       load = _.bind(@policy.fetchRenewalMetadata, @policy)
       _.delay(load, 1000)
-      
+
       this # so we can chain
 
     removeLoader : ->
@@ -114,13 +124,78 @@ define [
 
       @attach_menu el, tpl_ru_disposition, data
 
+    reviewPeriod : (el) ->
+      @$el.find('input[name=reviewPeriod]').datepicker("show")
+
+    reviewDeadline : (el) ->
+      @$el.find('input[name=reviewDeadline]').datepicker("show")
+
+    attachDatepickers : ->
+
+      @dateChanged   = _.bind(@dateChanged, this)
+      @setDatepicker = _.bind(@setDatepicker, this)
+
+      options =
+        dateFormat : 'yy-mm-dd'
+        onClose    : @dateChanged
+        beforeShow : @setDatepicker
+
+      @$el.find('input[name=reviewPeriod]').datepicker(options)
+      @$el.find('input[name=reviewDeadline]').datepicker(options)
+
+    # Get the field information from the HTML Element in DATEPICKER and pass
+    # to processChange to see if we need to save anything.  
+    # @param `field` _String_ name of CHANGESET field 
+    dateChanged : (date) ->
+      field = "renewal.#{$(@DATEPICKER).attr('name')}"
+      if @processChange field, date
+        @Amplify.publish(@policy_view.cid, 'success', "Saved changes!", 2000)
+
+    # **Did a value change?**  
+    # Check the CHANGESET to see if a value changed. For the field we check
+    # for the existence of a '.' and split on that to deal with deeper values
+    # in the CHANGESET.  
+    #
+    # @param `field` _String_ name of CHANGESET field  
+    # @param `val` _String_ value of field that changed  
+    # @return _Boolean_
+    processChange : (field, val) ->
+      old_val = ''
+      field = if field.indexOf('.') > -1 then field.split('.') else field
+      if _.isArray(field)
+        old_val = @CHANGESET[field[0]][field[1]]
+      else
+        old_val = field
+
+      if old_val != val
+        # This is where we would save the value to the server
+        console.log("CHANGED: #{field} to #{val}")
+        true
+      else
+        console.log("NO CHANGE")
+        false
+
+    # Set the value of DATEPICKER for use in determining changes.  
+    # @param `el` _HTML Element_  
+    setDatepicker : (el) ->
+      @DATEPICKER = el
+
     renewalSuccess : (resp) ->
       if resp?
         resp.cid = @cid
+
+        # Store a changeset to send back to server
+        @CHANGESET =
+          renewal : _.omit(resp.renewal, ["inspectionOrdered", "renewalReviewRequired"])
+          insuranceScore : resp.insuranceScore.currentDisposition
+
         @$el.html @Mustache.render tpl_ru_container, resp
         @removeLoader()
         @show()
+        @attachDatepickers()
 
     renewalError : (resp) ->
       @Amplify.publish(@policy_view.cid, 'warning', "Could not retrieve renewal underwriting information: #{resp.statusText} (#{resp.status})")
+
+
 
