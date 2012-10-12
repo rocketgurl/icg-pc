@@ -22,11 +22,11 @@ define([
     // Setup ENV
     beforeEach(function(){
       WorkspaceController.services = {
-        ixdirectory: 'http://policycentral.src/ixdirectory/api/rest/v2/',
-        pxcentral: 'http://policycentral.src/pxcentral/api/rest/v1/',
-        ixlibrary: 'http://policycentral.src/ixlibrary/api/sdo/rest/v1/',
-        ixdoc: 'http://policycentral.src/ixdoc/api/rest/v2/',
-        ixadmin: 'http://policycentral.src/config/ics/staging/ixadmin'
+        ixdirectory: 'http://policycentral.dev/ixdirectory/api/rest/v2/',
+        pxcentral: 'http://policycentral.dev/pxcentral/api/rest/v1/',
+        ixlibrary: 'http://policycentral.dev/ixlibrary/api/sdo/rest/v1/',
+        ixdoc: 'http://policycentral.dev/ixdoc/api/rest/v2/',
+        ixadmin: 'http://policycentral.dev/config/ics/staging/ixadmin'
       };
     });
 
@@ -153,87 +153,138 @@ define([
   // POLICY MODEL
   describe('PolicyModel', function () {
 
-    var policy = new PolicyModel({
-      id      : 'CRU4Q-71064',
-      urlRoot : 'https://policycentral.dev/pxcentral/api/rest/v1/',
+    var policy_A = new PolicyModel({
+      id      : '71049-active.xml',
+      urlRoot : 'mocks/',
       digest  : 'Y3J1NHRAY3J1MzYwLmNvbTphYmMxMjM='
     });
+
+    var policy_B = new PolicyModel({
+      id      : '29-pending.xml',
+      urlRoot : 'mocks/',
+      digest  : 'Y3J1NHRAY3J1MzYwLmNvbTphYmMxMjM='
+    });
+
+    var policy_C = new PolicyModel({
+      id      : '30-cancelled.xml',
+      urlRoot : 'mocks/',
+      digest  : 'Y3J1NHRAY3J1MzYwLmNvbTphYmMxMjM='
+    });
+
+    // Handy list of policy objects
+    var policies = [policy_A, policy_B, policy_C];
 
     var ajax_count = 0;
 
     beforeEach(function(){
       if (ajax_count < 1) {
         var callback = jasmine.createSpy();
-        policy.fetch({
+        policy_A.fetch({
+          success : callback
+        });
+        policy_B.fetch({
+          success : callback
+        });
+        policy_C.fetch({
           success : callback
         });
         waitsFor(function() {
           ajax_count++;
-          return callback.callCount > 0;
-        }, "Timeout BOOM!", 5000)
+          return callback.callCount > 2;
+        }, "Timeout BOOM!", 1000)
       }
     })
 
+    // Policies are objects and Backbone Models
     it ('is an object', function () {
-      expect(policy).toEqual(jasmine.any(Object));
+      _.each(policies, function(policy){
+        expect(policy).toEqual(jasmine.any(Object));
+        expect(policy instanceof Backbone.Model).toBe(true);
+      })
     });
 
-    it ('has a URL', function () {
-      runs(function(){
-        expect(policy.url()).toBe('https://policycentral.dev/pxcentral/api/rest/v1/policies/CRU4Q-71064');
-      });
-    });
-
+    // Policies have XML and JSON documents
     it ('has a policy document', function () {
       runs(function(){
-        expect(policy.get('document')).not.toBeNull();
-        expect(policy.get('document')).toEqual(jasmine.any(Object));
+        _.each(policies, function(policy){
+          // has an XML document
+          expect(policy.get('document')).not.toBeNull();
+          expect(policy.get('document')).toEqual(jasmine.any(Object));
+
+          // has as JSON document
+          expect(policy.get('json')).not.toBeNull();
+          expect(policy.get('json')).toEqual(jasmine.any(Object));
+          expect(policy.get('json').schemaVersion).toEqual("2.6");
+          expect(policy.get('raw_xml')).toEqual(jasmine.any(String));
+        })
       });
     });
 
     it ('has a pxServerIndex', function () {
       runs(function(){
-        expect(policy.get_pxServerIndex()).toBe('71064');
+        expect(policy_A.get_pxServerIndex()).toBe('71049');
+        expect(policy_B.get_pxServerIndex()).toBe('29');
+        expect(policy_C.get_pxServerIndex()).toBe('30');
       });
     });
 
-    it ('has a poliy holder', function () {
+    it ('has a policy holder', function () {
       runs(function(){
-        expect(policy.get_policy_holder()).toBe('TEST, CHRIS');
+        expect(policy_A.get_policy_holder()).toBe('TEST, DOCUMENT');
+        expect(policy_B.get_policy_holder()).toBe('Abrams, John');
+        expect(policy_C.get_policy_holder()).toBe('Abrams, John');
       });
     });
 
-    it ('has a poliy period', function () {
+    // Check the policy period dates of the policies
+    it ('has a policy period', function () {
       runs(function(){
-        expect(policy.get_policy_period()).toBe('2012-06-04 - 2013-06-04');
+
+        var dates = [
+          '2012-06-28 - 2013-06-28',
+          '2010-10-29 - 2011-10-29',
+          '2010-10-29 - 2011-10-29'
+        ]
+
+        _.each(policies, function(policy, index){
+          expect(policy.get_policy_period()).toBe(dates[index]);
+        });
       });
     });
 
-    it ('has an ipm header', function () {
+    it ('has an IPM header', function () {
       runs(function(){
-        console.log(policy.get_ipm_header());
-        var ipm_header = {
-          carrier : "Acceptance Casualty Insurance Company",
-          holder  : "TEST, CHRIS",
-          id      : "SCH007106400",
-          period  : "2012-06-04 - 2013-06-04",
-          product : "HO3",
-          state   : "ACTIVEPOLICY"
-        }
-        expect(policy.get_ipm_header()).toEqual(jasmine.any(Object));
-        expect(policy.get_ipm_header()).toEqual(ipm_header);
+
+        var headers = [
+          { id : 'SCS007104900', product : 'HO3', holder : 'TEST, DOCUMENT', state : 'ACTIVEPOLICY', period : '2012-06-28 - 2013-06-28', carrier : 'Acceptance Casualty Insurance Company' },
+          { carrier: "Smart Insurance Company", holder: "Abrams, John", id: "NYH000002900", period: "2010-10-29 - 2011-10-29", product: "HO3", state: "ACTIVEPOLICY" },
+          { carrier: "Smart Insurance Company", holder: "Abrams, John", id: "NYH000002900", period: "2010-10-29 - 2011-10-29", product: "HO3", state: "CANCELLEDPOLICY" },
+        ];
+
+        _.each(policies, function(policy, index){
+          expect(policy.get_ipm_header()).toEqual(jasmine.any(Object));
+          expect(policy.get_ipm_header()).toEqual(headers[index]);
+        });
+
       });
     });
 
     it ('has a system of record', function () {
       runs(function(){
-        expect(policy.getSystemOfRecord()).toBe('pxServer');
+        _.each(policies, function(policy, index){
+          expect(policy.getSystemOfRecord()).toBe('mxServer');
+        });
       });
     });
 
     it ('is not an IPM policy', function () {
       runs(function(){
-        expect(policy.isIPM()).toBe(false);
+
+        _.each(policies, function(policy, index){
+          expect(policy.isIPM()).toBe(true);
+        });
+
+        
       });
     });
 
