@@ -2,8 +2,8 @@ define([
   "jquery", 
   "underscore", 
   "WorkspaceController", 
-  "modules/SearchContextCollection",
-  "modules/PolicyModel",
+  "modules/Search/SearchContextCollection",
+  "modules/Policy/PolicyModel",
   "amplify",
   "loader"], 
   function(
@@ -155,7 +155,7 @@ define([
 
     var policy = new PolicyModel({
       id      : 'CRU4Q-71064',
-      urlRoot : 'https://policycentral.src/pxcentral/api/rest/v1/',
+      urlRoot : 'https://policycentral.dev/pxcentral/api/rest/v1/',
       digest  : 'Y3J1NHRAY3J1MzYwLmNvbTphYmMxMjM='
     });
 
@@ -170,7 +170,7 @@ define([
         waitsFor(function() {
           ajax_count++;
           return callback.callCount > 0;
-        }, "Timeout BOOM!", 10000)
+        }, "Timeout BOOM!", 5000)
       }
     })
 
@@ -180,7 +180,7 @@ define([
 
     it ('has a URL', function () {
       runs(function(){
-        expect(policy.url()).toBe('https://policycentral.src/pxcentral/api/rest/v1/policies/CRU4Q-71064');
+        expect(policy.url()).toBe('https://policycentral.dev/pxcentral/api/rest/v1/policies/CRU4Q-71064');
       });
     });
 
