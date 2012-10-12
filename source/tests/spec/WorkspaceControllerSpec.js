@@ -179,20 +179,18 @@ define([
     beforeEach(function(){
       if (ajax_count < 1) {
         var callback = jasmine.createSpy();
-        policy_A.fetch({
-          success : callback
-        });
-        policy_B.fetch({
-          success : callback
-        });
-        policy_C.fetch({
-          success : callback
-        });
+
+        _.each(policies, function(policy){
+          policy.fetch({
+            success : callback
+          });
+        })
+
         waitsFor(function() {
-          ajax_count++;
           return callback.callCount > 2;
         }, "Timeout BOOM!", 1000)
       }
+      ajax_count++;
     })
 
     // Policies are objects and Backbone Models
@@ -222,17 +220,19 @@ define([
 
     it ('has a pxServerIndex', function () {
       runs(function(){
-        expect(policy_A.get_pxServerIndex()).toBe('71049');
-        expect(policy_B.get_pxServerIndex()).toBe('29');
-        expect(policy_C.get_pxServerIndex()).toBe('30');
+        var nums = ['71049', '29', '30']
+        _.each(policies, function(policy, index){
+          expect(policy.get_pxServerIndex()).toBe(nums[index]);
+        })
       });
     });
 
     it ('has a policy holder', function () {
       runs(function(){
-        expect(policy_A.get_policy_holder()).toBe('TEST, DOCUMENT');
-        expect(policy_B.get_policy_holder()).toBe('Abrams, John');
-        expect(policy_C.get_policy_holder()).toBe('Abrams, John');
+        var names = ['TEST, DOCUMENT','Abrams, John','Abrams, John']
+        _.each(policies, function(policy, index){
+          expect(policy.get_policy_holder()).toBe(names[index]);
+        })
       });
     });
 
