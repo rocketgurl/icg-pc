@@ -1,0 +1,26 @@
+{
+    "terms": [
+        {
+            "name": "RescindPendingCancelReason",
+            "label": "Reason Code",
+            "enumerations": [
+                {
+                    "value": "1",
+                    "label": "Insured Request"
+                },
+                {
+                    "value": "28",
+                    "label": "Due To Compliance Or Legal Reasons"
+                },
+                {
+                    "value": "29",
+                    "label": "Underwriting Reason For Cancellation Resolved"
+                },
+                {
+					"value": "201",
+					"label": "Payment received"
+				}
+            ]
+        }
+    ]
+}
