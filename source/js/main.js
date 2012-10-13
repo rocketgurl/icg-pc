@@ -6,7 +6,7 @@
     paths: {
       jquery: 'lib/jquery-1.8.2',
       jqueryui: 'lib/jquery-ui-1.9.0.custom.min',
-      underscore: 'lib/underscore-min',
+      underscore: 'lib/underscore',
       backbone: 'lib/backbone-min',
       amplify: 'lib/amplify',
       mustache: 'lib/requirejs.mustache',
