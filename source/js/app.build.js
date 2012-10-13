@@ -4,7 +4,7 @@
     dir: "../../build",
     mainConfigFile: 'main.js',
     paths : {
-      jquery     : 'lib/jquery-1.8.2.min',
+      jquery     : 'lib/jquery-1.8.2',
       underscore : 'lib/underscore',
       backbone   : 'lib/backbone-min',
       amplify    : 'lib/amplify',
