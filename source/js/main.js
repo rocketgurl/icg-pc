@@ -44,7 +44,7 @@
     }
   });
 
-  define(['jquery', 'underscore', 'backbone', 'WorkspaceController', 'UserModel', 'ConfigModel', 'WorkspaceStateModel', 'WorkspaceStateCollection', 'WorkspaceLoginView', 'WorkspaceCanvasView', 'WorkspaceNavView', 'WorkspaceRouter', 'modules/Search/SearchContextCollection', 'Messenger', 'base64', 'MenuHelper', 'AppRules', 'Helpers', 'Cookie', 'domReady', 'xml2json'], function($, _, Backbone, WorkspaceController, UserModel, ConfigModel, WorkspaceStateModel, WorkspaceStateCollection, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter, SearchContextCollection, Messenger, Base64, MenuHelper, AppRules, Helpers, Cookie, domReady) {
+  define(['jquery', 'underscore', 'backbone', 'WorkspaceController', 'UserModel', 'ConfigModel', 'WorkspaceStateModel', 'WorkspaceStateCollection', 'WorkspaceLoginView', 'WorkspaceCanvasView', 'WorkspaceNavView', 'WorkspaceRouter', 'modules/Search/SearchContextCollection', 'Messenger', 'base64', 'MenuHelper', 'AppRules', 'Helpers', 'Cookie', 'xml2json', 'domReady'], function($, _, Backbone, WorkspaceController, UserModel, ConfigModel, WorkspaceStateModel, WorkspaceStateCollection, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter, SearchContextCollection, Messenger, Base64, MenuHelper, AppRules, Helpers, Cookie, xml2json, domReady) {
     return domReady(function() {
       window.workspace = WorkspaceController;
       return window.workspace.init();
