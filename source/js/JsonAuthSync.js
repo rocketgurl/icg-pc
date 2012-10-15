@@ -2,9 +2,9 @@
 (function() {
 
   define(['jquery', 'underscore', 'backbone'], function($, _, Backbone) {
-    var CrippledClientSync, originalSync;
+    var JSONAuthSync, originalSync;
     originalSync = Backbone.sync;
-    CrippledClientSync = function(method, model, options) {
+    return JSONAuthSync = function(method, model, options) {
       var methodMap, type;
       methodMap = {
         'create': 'POST',
@@ -14,17 +14,12 @@
       };
       type = methodMap[method];
       options = _.extend(options, {
-        dataType: 'xml',
-        contentType: 'application/xml',
-        processData: false,
         withCredentials: true
       });
       if (model.get('digest') != null) {
         options.basic_auth_digest = model.get('digest');
       }
       options.beforeSend = function(xhr) {
-        xhr.setRequestHeader('X-Crippled-Client', 'yes');
-        xhr.setRequestHeader('X-Rest-Method', type);
         xhr.setRequestHeader('X-Requested-With', 'XMLHTTPRequest');
         if (options.basic_auth_digest) {
           xhr.setRequestHeader('X-Authorization', "Basic " + options.basic_auth_digest);
@@ -33,7 +28,6 @@
       };
       return originalSync.apply(Backbone, [method, model, options]);
     };
-    return CrippledClientSync;
   });
 
 }).call(this);

@@ -1,11 +1,12 @@
 define [
   'BaseView',
   'Messenger',
+  'modules/RenewalUnderwriting/RenewalUnderwritingModel',
   'text!modules/RenewalUnderwriting/templates/tpl_renewal_underwriting_container.html',
   'text!modules/RenewalUnderwriting/templates/tpl_renewal_underwriting_assignee.html',
   'text!modules/RenewalUnderwriting/templates/tpl_renewal_underwriting_disposition.html',
   'jqueryui'
-], (BaseView, Messenger, tpl_ru_container, tpl_ru_assignees, tpl_ru_disposition) ->
+], (BaseView, Messenger, RenewalUnderwritingModel, tpl_ru_container, tpl_ru_assignees, tpl_ru_disposition) ->
 
   RenewalUnderwritingView = BaseView.extend
 
@@ -33,18 +34,37 @@ define [
       @policy      = options.policy
       @policy_view = options.policy_view
 
-      @policy.on 'renewal:success', @renewalSuccess, this
-      @policy.on 'renewal:error', @renewalError, this
+      # Setup model for moving metadata around
+      @renewal_model = new RenewalUnderwritingModel(
+          id      : @policy.id
+          urlRoot : @policy.urlRoot
+          digest  : @policy.get 'digest'
+        )
+
+      # Attach events to model
+      @renewal_model.on 'renewal:success', @renewalSuccess, this
+      @renewal_model.on 'renewal:error', @renewalError, this
 
     render : ->
       @show()
       $("#ru-loader-#{@policy_view.cid}").show()
       @loader = @Helpers.loader("ru-spinner-#{@policy_view.cid}", 80, '#696969')
       @loader.setFPS(48)
-      
+     
       # This is just for testing the loader, remove delay
-      load = _.bind(@policy.fetchRenewalMetadata, @policy)
-      _.delay(load, 1000)
+      # load = _.bind(@renewal_model.fetchRenewalMetadata, @policy)
+      # _.delay(load, 1000)
+
+      @renewal_model.fetch(
+          # url : @url('/underwriting')
+          url : '/mocks/renewal_underwriting_get.json' #mocks
+          success : (model, resp) ->
+            model.trigger('renewal:success', resp)
+            model.use_cripple()
+          error : (model, resp) ->
+            model.trigger('renewal:error', resp)
+            model.use_cripple()
+        )
 
       this # so we can chain
 
@@ -169,6 +189,14 @@ define [
 
       if old_val != val
         # This is where we would save the value to the server
+        if _.isArray(field)
+          # Update the changeset and set model
+          @CHANGESET[field[0]][field[1]] = val
+          @renewal_model.set(field[0], @CHANGESET[field[0]])
+        else
+          @renewal_model.set(field, val)
+
+        console.log @renewal_model.attributes
         console.log("CHANGED: #{field} to #{val}")
         true
       else
