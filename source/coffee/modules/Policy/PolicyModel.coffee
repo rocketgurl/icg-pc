@@ -66,25 +66,5 @@ define [
     isIPM : ->
       if @getSystemOfRecord() == 'mxServer' then true else false
 
-    # **Fetch Renewal Metadata**  
-    # We need to temporarily switch back to a JSON parse method in our model
-    # and attempt to get renewal underwriting metadata  
-    #
-    # @return _Object_
-    fetchRenewalMetadata : ->
-      @use_backbone()
-      @fetch(
-          # url : @url('/underwriting')
-          url : '/mocks/renewal_underwriting_get.json' #mocks
-          success : (model, resp) ->
-            model.trigger('renewal:success', resp)
-            model.use_cripple()
-          error : (model, resp) ->
-            model.trigger('renewal:error', resp)
-            model.use_cripple()
-        )
-
-
-
       
   PolicyModel

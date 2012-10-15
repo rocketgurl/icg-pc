@@ -6,9 +6,10 @@ define [
   'amplify',
   'LocalStorageSync',
   'CrippledClientSync',
+  'JSONAuthSync',
   'xmlSync',
   'xml2json'
-], ($, _, Backbone, Store, amplify, LocalStorageSync, CrippledClientSync, XMLSync) ->
+], ($, _, Backbone, Store, amplify, LocalStorageSync, CrippledClientSync, JSONAuthSync, XMLSync) ->
 
   #### BaseModel
   #
@@ -20,6 +21,9 @@ define [
 
     # store a ref to Backbone's sync so we can use it again
     backboneSync  : Backbone.sync
+
+    # Traditional Backbone JSON sync + Basic Auth
+    backboneAuthSync : JSONAuthSync
 
     # store a ref to Backbone's parse so we can use it again
     backboneParse : Backbone.Model.prototype.parse
@@ -95,6 +99,11 @@ define [
     # Switch back to traditional JSON handling
     use_backbone : () ->
       @sync  = @backboneSync
+      @parse = @backboneParse
+
+    # Switch back to traditional JSON handling + Basic Auth
+    use_backbone_auth : () ->
+      @sync  = @backboneAuthSync
       @parse = @backboneParse
 
     # hook into Amplify.js on all models
