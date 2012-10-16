@@ -1,0 +1,15 @@
+<h1>Integrated Policy Management</h1>
+<div class="ipm-home-action-view">
+	<ul>
+		{{#ACTIONS}}
+		<li>
+			{{label}}
+			<ul>
+				{{#actions}}
+					<li><a href="{{view}}">{{label}}</a></li>
+				{{/actions}}
+			</ul>
+		</li>
+		{{/ACTIONS}}
+	</ul>
+</div>

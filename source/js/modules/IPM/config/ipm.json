@@ -1,0 +1,44 @@
+{
+    "PRODUCTS_PATH": "modules/IPM/products/",
+    "PRODUCTS": [
+        "ofcc-dp3-ny",
+        "ofcc-ho3-ak",
+        "wic-ho3-al",
+        "wic-hwo-al",
+        "wic-ho3-la",
+        "acic-ho3-sc"
+    ],
+    "ACTIONS_PATH": "modules/IPM/actions/",
+    "ACTIONS": [
+        {
+            "label": "Billing & Accounting",
+            "actions": [
+                {
+                    "label": "Make Payment",
+                    "view": "MakePayment"
+                },
+                {
+                    "label": "Invoice",
+                    "view": "Invoice"
+                }
+            ]
+        },
+        {
+            "label": "Policy Administration",
+            "actions": [
+                {
+                    "label": "Issue (automatic)",
+                    "view": "IssueAutomatic"
+                },
+                {
+                    "label": "Issue (manual)",
+                    "view": "IssueManual"
+                },
+                {
+                    "label": "Renew",
+                    "view": "Renew"
+                }
+            ]
+        }
+    ]
+}

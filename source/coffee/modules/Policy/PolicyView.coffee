@@ -6,8 +6,9 @@ define [
   'swfobject',
   'text!modules/Policy/templates/tpl_policy_container.html',
   'text!modules/Policy/templates/tpl_ipm_header.html',
-  'text!modules/RenewalUnderwriting/templates/tpl_renewal_underwriting_wrapper.html'
-], (BaseView, Messenger, Base64, RenewalUnderwritingView, swfobject, tpl_policy_container, tpl_ipm_header, tpl_ru_wrapper) ->
+  'text!modules/RenewalUnderwriting/templates/tpl_renewal_underwriting_wrapper.html',
+  'modules/IPM/IPMModule'
+], (BaseView, Messenger, Base64, RenewalUnderwritingView, swfobject, tpl_policy_container, tpl_ipm_header, tpl_ru_wrapper, IPMModule) ->
 
   PolicyView = BaseView.extend
 
@@ -50,9 +51,11 @@ define [
         @render_state = true
 
       # If this is a non-IPM policy then remove IPM changes from nav
+      # otherwise go ahead and create an IPMModule
       if @model.isIPM() == false
         @$el.find('.policy-nav a[href=ipmchanges]').parent('li').hide();
-
+      else
+        @IPM = new IPMModule(@model, $("#policy-ipm-#{@cid}"))
 
       # Cache commonly used jQuery elements
       @cache_elements()
@@ -61,16 +64,16 @@ define [
       @actions = @policy_nav_links.map (idx, item) -> return $(this).attr('href')
 
       # iFrame properties
-      props =
-        policy_id : @model.get('pxServerIndex')
-        ipm_auth  : @model.get('digest')
-        routes    : @controller.services
+      # props =
+      #   policy_id : @model.get('pxServerIndex')
+      #   ipm_auth  : @model.get('digest')
+      #   routes    : @controller.services
 
       # Load iFrame and pass in policy properties
-      @iframe.attr('src', '/mxadmin/index.html')
-      @iframe.bind 'load', =>
-        @iframe[0].contentWindow.inject_properties(props)
-        @iframe[0].contentWindow.load_mxAdmin()
+      # @iframe.attr('src', '/mxadmin/index.html')
+      # @iframe.bind 'load', =>
+      #   @iframe[0].contentWindow.inject_properties(props)
+      #   @iframe[0].contentWindow.load_mxAdmin()
 
       # Hide the view
       @$el.hide()
@@ -242,16 +245,22 @@ define [
       @build_policy_header()
       @policy_header.show()
 
-      @iframe.show()
-      @iframe.attr('src', '/mxadmin/index.html')
-      @resize_element(@iframe, @policy_header.height())
+      ipm_container = $("#policy-ipm-#{@cid}")
+      ipm_container.show()
+      @resize_element(ipm_container, @policy_header.height())
+
+      # @iframe.show()
+      # @iframe.attr('src', '/mxadmin/index.html')
+      # @resize_element(@iframe, @policy_header.height())
 
     # Hide IPM Changes
     teardown_ipmchanges : ->
       if @policy_header
         @policy_header.hide()
         @$el.find("#policy-header-#{@cid}").hide()
-        @iframe.hide()
+        # @iframe.hide()
+        ipm_container = $("#policy-ipm-#{@cid}")
+        ipm_container.hide()
 
     # Load Renewal Underwriting Views
     show_renewalunderwriting : ->

@@ -1114,7 +1114,7 @@ td.search-views-admin > a {
   text-decoration: none;
 }
 
-.search-loader {
+.search-loader, .ipm-loader {
   display: none;
   position: absolute;
   z-index: 1400;
@@ -1122,7 +1122,7 @@ td.search-views-admin > a {
   text-align: center;
   margin: 50px 0 0 0;
 }
-.search-loader h2 {
+.search-loader h2, .ipm-loader h2 {
   display: inline-block;
   margin: 10px auto;
   padding: 50px;
@@ -1134,7 +1134,7 @@ td.search-views-admin > a {
   font-size: 24px;
   font-size: 2.4rem;
 }
-.search-loader h2 span {
+.search-loader h2 span, .ipm-loader h2 span {
   display: block;
   margin: 0 0 20px 0;
 }
@@ -1227,7 +1227,7 @@ Module: Policy
   color: #fe8400;
 }
 
-.ru-container {
+.ru-container, .ipm-container {
   *zoom: 1;
   width: 96.4%;
   margin-left: auto;
@@ -1238,12 +1238,12 @@ Module: Policy
   background-color: #f4f4f4;
   display: none;
 }
-.ru-container:after {
+.ru-container:after, .ipm-container:after {
   content: "";
   display: table;
   clear: both;
 }
-.ru-container h1, .ru-container h2 {
+.ru-container h1, .ipm-container h1, .ru-container h2, .ipm-container h2 {
   width: 100%;
   float: right;
   margin-right: 0;
@@ -1252,13 +1252,13 @@ Module: Policy
   font-weight: bold;
   margin: 15px 0 0 0;
 }
-.ru-container h1 {
+.ru-container h1, .ipm-container h1 {
   color: #002857;
   font-size: 24px;
   font-size: 2.4rem;
   text-shadow: 0 1px white;
 }
-.ru-container h2 {
+.ru-container h2, .ipm-container h2 {
   color: dimgrey;
   font-size: 18px;
   font-size: 1.8rem;
@@ -1382,4 +1382,75 @@ Module: Policy
 .ru-loader h2 span {
   display: block;
   margin: 0 0 10px 0;
+}
+
+.ipm-container {
+  border: 0;
+  min-height: 100%;
+}
+
+.ipm-flash {
+  margin: 0;
+  -webkit-border-radius: 0px;
+  -moz-border-radius: 0px;
+  -ms-border-radius: 0px;
+  -o-border-radius: 0px;
+  border-radius: 0px;
+}
+
+.ipm-home-action-view {
+  width: 100%;
+  float: right;
+  margin-right: 0;
+  #margin-left: -1em;
+  display: inline;
+  margin-top: 20px;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+.ipm-home-action-view ul li {
+  font-size: 16px;
+  font-size: 1.6rem;
+  font-weight: bold;
+  width: 30%;
+  display: block;
+  margin: 20px 10px;
+  float: left;
+}
+
+.ipm-home-action-view ul li:nth-child(4n) {
+  clear: left;
+}
+
+.ipm-home-action-view ul li ul {
+  width: 100%;
+  border: 0;
+  margin: 10px 0 5px 0;
+}
+
+.ipm-home-action-view ul > li > ul > li {
+  font-weight: normal;
+  width: 100%;
+  border: 0;
+  margin: 5px 0;
+  padding: 0;
+}
+
+.ipm-home-action-view ul > li > ul > li a {
+  text-decoration: none;
+  display: block;
+  padding: 8px;
+  border-radius: 4px;
+  background: #e7e7e7;
+  color: #007ac9;
+  text-shadow: 0 1px white;
+}
+.ipm-home-action-view ul > li > ul > li a:hover, .ipm-home-action-view .policy-nav ul > li > ul > li a.select, .policy-nav .ipm-home-action-view ul > li > ul > li a.select {
+  background-color: #165788;
+  color: white;
+  text-shadow: 0 1px #081f30;
+}
+
+.ipm-loader h2 {
+  margin-left: -100px;
 }

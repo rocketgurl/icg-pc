@@ -37,7 +37,8 @@ define [
     # @return _String_
     get_pxServerIndex : ->
       doc = @get 'document'
-      @set 'pxServerIndex', doc.find('Identifiers Identifier[name=pxServerIndex]').attr('value')
+      if doc?
+        @set 'pxServerIndex', doc.find('Identifiers Identifier[name=pxServerIndex]').attr('value')
       @get 'pxServerIndex'
 
     # **Build a last, first policy holder name**  

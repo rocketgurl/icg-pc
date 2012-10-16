@@ -63,7 +63,6 @@ define([
       _.each(policies, function(policy){
         expect(policy).toEqual(jasmine.any(Object));
         expect(policy instanceof Backbone.Model).toBe(true);
-        console.log(policy);
       })
     });
 

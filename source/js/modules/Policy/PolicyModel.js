@@ -28,7 +28,9 @@
       get_pxServerIndex: function() {
         var doc;
         doc = this.get('document');
-        this.set('pxServerIndex', doc.find('Identifiers Identifier[name=pxServerIndex]').attr('value'));
+        if (doc != null) {
+          this.set('pxServerIndex', doc.find('Identifiers Identifier[name=pxServerIndex]').attr('value'));
+        }
         return this.get('pxServerIndex');
       },
       get_policy_holder: function() {

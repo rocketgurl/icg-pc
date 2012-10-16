@@ -1,0 +1,65 @@
+.ipm-container {
+	@extend .ru-container;
+	border: 0;
+	min-height: 100%;
+}
+
+.ipm-flash {
+	margin: 0;
+	@include border-radius(0px);
+}
+
+.ipm-home-action-view {
+	@include span-columns(12 omega, 12);
+	margin-top: 20px;
+	@include sans;
+}
+
+.ipm-home-action-view ul li {
+	@include font-size(16);
+	font-weight: bold;
+	width: 30%;
+	display: block;
+	margin: 20px 10px;
+	float: left;
+}
+
+.ipm-home-action-view ul li:nth-child(4n) {
+	clear: left;
+}
+
+.ipm-home-action-view ul li ul {
+	width: 100%;
+	border: 0;
+	margin: 10px 0 5px 0;
+}
+
+.ipm-home-action-view ul > li > ul > li {
+	font-weight: normal;
+	width: 100%;
+	border: 0;
+	margin: 5px 0;
+	padding: 0;
+}
+
+.ipm-home-action-view ul > li > ul > li a {
+	text-decoration: none;
+	display: block;
+	padding: 8px;
+	border-radius: 4px;
+	background: darken(#f4f4f4, 5);
+	color: $colblue;
+	@include emboss;
+	&:hover {
+		background-color: $blue;
+		color: $white;
+		@include emboss(darken($blue, 20));
+	}
+}
+
+.ipm-loader {
+	@extend .search-loader;
+	h2 {
+		margin-left: -100px;
+	}
+}

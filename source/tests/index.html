@@ -6,7 +6,7 @@
 
   <link rel="shortcut icon" type="image/png" href="lib/jasmine-1.2.0/jasmine_favicon.png">
   <link rel="stylesheet" type="text/css" href="lib/jasmine-1.2.0/jasmine.css">
-  <script type="text/javascript" src="../js/lib/underscore-min.js"></script>
+  <script type="text/javascript" src="../js/lib/underscore.js"></script>
   <script type="text/javascript" src="lib/jasmine-1.2.0/jasmine.js"></script>
   <script type="text/javascript" src="lib/jasmine-1.2.0/jasmine-html.js"></script>
 
@@ -62,8 +62,9 @@
         "jquery",
         "../tests/spec/WorkspaceControllerSpec",
         "../tests/spec/PolicyModelSpec",
+        "../tests/spec/IPMSpec",
         "domReady"],
-        function($, WorkspaceControllerSpec, PolicyModelSpec, domReady) {
+        function($, WorkspaceControllerSpec, PolicyModelSpec, IPMSpec, domReady) {
         return domReady(function() {
             var jasmineEnv = jasmine.getEnv();
             jasmineEnv.updateInterval = 1000;
@@ -85,7 +86,10 @@
   </script>
 
 </head>
-
 <body>
+    <!-- TEMPLATE: Flash Message Container -->
+    <script type="text/template" id="tpl-flash-message">
+      <div id="flash-message-{{cid}}" class="flash-message"></div>
+    </script>
 </body>
 </html>
