@@ -110,10 +110,11 @@
         var el_height;
         offset = offset || 0;
         el_height = Math.floor((($(window).height() - (220 + offset)) / $(window).height()) * 100) + "%";
-        return el.css({
+        el.css({
           'min-height': el_height,
           'height': $(window).height() - (220 + offset)
         });
+        return console.log(el.css('height'));
       },
       build_policy_header: function() {
         if (this.policy_header.html() === "") {
@@ -122,15 +123,20 @@
         return this.policy_header.show();
       },
       show_overview: function() {
-        var flash_obj,
+        var flash_obj, resize, resizer,
           _this = this;
         this.$el.show();
         if (this.$el.find("#policy-summary-" + this.cid).length === 0) {
           this.$el.find("#policy-header-" + this.cid).after(this.policy_summary);
-          this.policy_summary = this.$el.find("#policy-summary-" + this.cid);
+          this.policy_summary = this.$el.find("#policy-workspace-" + this.cid);
         }
         if (this.policy_summary.length > 0) {
-          this.resize_element(this.policy_summary);
+          this.resize_element(this.$el.find("#policy-workspace-" + this.cid));
+          resizer = _.bind(function() {
+            return this.resize_element(this.$el.find("#policy-workspace-" + this.cid));
+          }, this);
+          resize = _.debounce(resizer, 300);
+          $(window).resize(resize);
           flash_obj = $(swfobject.getObjectById("policy-summary-" + this.cid));
           if (_.isEmpty(flash_obj)) {
             flash_obj = $("#policy-summary-" + this.cid);
@@ -138,7 +144,7 @@
           flash_obj.show();
         }
         if (this.flash_loaded === false) {
-          return swfobject.embedSWF("../swf/PolicySummary.swf", "policy-summary-" + this.cid, "100%", this.policy_summary.height(), "9.0.0", null, null, {
+          return swfobject.embedSWF("../swf/PolicySummary.swf", "policy-summary-" + this.cid, "100%", "100%", "9.0.0", null, null, {
             allowScriptAccess: 'always'
           }, null, function(e) {
             return _this.flash_callback(e);

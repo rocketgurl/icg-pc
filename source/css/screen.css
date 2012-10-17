@@ -1192,6 +1192,10 @@ Module: Policy
   padding: 0;
 }
 
+.policy-flash {
+  min-height: 90%;
+}
+
 .policy-header {
   background: white;
   border: #ddd 1px solid;

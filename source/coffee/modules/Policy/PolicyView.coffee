@@ -142,6 +142,8 @@ define [
         'min-height' : el_height
         'height'     : $(window).height() - (220 + offset)
         )
+      console.log el.css('height')
+
 
     # If the policy_header doesn't exist then build it, otherwise
     # just make visible
@@ -159,10 +161,19 @@ define [
       # so we need to check if its there and drop it back in if its not
       if @$el.find("#policy-summary-#{@cid}").length is 0
         @$el.find("#policy-header-#{@cid}").after(@policy_summary)
-        @policy_summary = @$el.find("#policy-summary-#{@cid}")
+        @policy_summary = @$el.find("#policy-workspace-#{@cid}")
 
       if @policy_summary.length > 0
-        @resize_element @policy_summary
+        @resize_element @$el.find("#policy-workspace-#{@cid}")
+
+        # Now attach a resize event to the window to help Flash
+        resizer = _.bind(
+          ->
+            @resize_element(@$el.find("#policy-workspace-#{@cid}"))            
+          , this)
+        resize = _.debounce(resizer, 300);
+        $(window).resize(resize);
+
         # We need to hook into the correct flash container
         # using SWFObject (hackety hack hack)
         flash_obj = $(swfobject.getObjectById("policy-summary-#{@cid}"))
@@ -179,7 +190,7 @@ define [
           "../swf/PolicySummary.swf",
           "policy-summary-#{@cid}",
           "100%",
-          @policy_summary.height(),
+          "100%", # @policy_summary.height(),
           "9.0.0"
           null,
           null,
