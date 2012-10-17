@@ -26,7 +26,10 @@
         this.el.id = this.app.app;
         this.options.controller.trigger('stack_add', this);
         require(["modules/" + this.options.module_type], function(Module) {
-          return _this.module = new Module(_this, _this.app);
+          _this.module = new Module(_this, _this.app);
+          if (_.has(Module.prototype, 'load')) {
+            return _this.module.load();
+          }
         });
         return this.render();
       },

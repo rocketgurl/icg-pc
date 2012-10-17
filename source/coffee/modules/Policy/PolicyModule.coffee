@@ -29,7 +29,7 @@ define [
       _.extend @, Backbone.Events
 
       # Kick off application
-      @load()
+      # @load()
       
     # Any bootstrapping should happen here. When done remove the loader image.
     # view.remove_loader will callback Module.render()

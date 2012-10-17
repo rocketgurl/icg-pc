@@ -15,7 +15,6 @@
           this.params = this.app.params;
         }
         _.extend(this, Backbone.Events);
-        this.load();
       }
 
       PolicyModule.prototype.load = function() {

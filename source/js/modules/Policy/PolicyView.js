@@ -110,11 +110,10 @@
         var el_height;
         offset = offset || 0;
         el_height = Math.floor((($(window).height() - (220 + offset)) / $(window).height()) * 100) + "%";
-        el.css({
+        return el.css({
           'min-height': el_height,
           'height': $(window).height() - (220 + offset)
         });
-        return console.log(el.css('height'));
       },
       build_policy_header: function() {
         if (this.policy_header.html() === "") {

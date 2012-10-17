@@ -142,8 +142,6 @@ define [
         'min-height' : el_height
         'height'     : $(window).height() - (220 + offset)
         )
-      console.log el.css('height')
-
 
     # If the policy_header doesn't exist then build it, otherwise
     # just make visible
