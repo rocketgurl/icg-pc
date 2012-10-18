@@ -4,6 +4,7 @@
   define(['jquery', 'underscore', 'backbone', 'Store', 'amplify', 'LocalStorageSync', 'CrippledClientSync', 'JSONAuthSync', 'xmlSync', 'xml2json'], function($, _, Backbone, Store, amplify, LocalStorageSync, CrippledClientSync, JSONAuthSync, XMLSync) {
     var BaseModel;
     return BaseModel = Backbone.Model.extend({
+      Helpers: Helpers,
       backboneSync: Backbone.sync,
       backboneAuthSync: JSONAuthSync,
       backboneParse: Backbone.Model.prototype.parse,

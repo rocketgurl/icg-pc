@@ -60,4 +60,8 @@ define [
     random : (min, max) ->
       Math.floor(Math.random() * (max - min + 1)) + min
 
+    # Create a Base64 digest to use in Basic Auth
+    createDigest : (username, password) ->
+      Base64.encode "#{username}:#{password}"
+
   Helpers

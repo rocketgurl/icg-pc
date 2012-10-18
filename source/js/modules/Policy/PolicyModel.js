@@ -35,6 +35,9 @@
         end = doc.find('Terms Term ExpirationDate').text().substr(0, 10);
         return "" + start + " - " + end;
       },
+      get_policy_id: function() {
+        return this.get('document').find('Identifiers Identifier[name=PolicyID]').attr('value');
+      },
       get_ipm_header: function() {
         var doc, ipm_header;
         doc = this.get('document');

@@ -926,7 +926,7 @@ header.module-search i.icon-caret-down {
   color: #165788;
 }
 
-table.module-search, .ru-loss-history {
+table.module-search, .ru-loss-history, .zd-loss-history {
   margin: 0 0 20px 0;
   width: 100%;
   color: #4f4f4f;
@@ -935,50 +935,51 @@ table.module-search, .ru-loss-history {
   border-top: white 1px solid;
   box-shadow: #bababa 0 -1px 0;
 }
-table.module-search td, .ru-loss-history td,
+table.module-search td, .ru-loss-history td, .zd-loss-history td,
 table.module-search th,
-.ru-loss-history th {
+.ru-loss-history th,
+.zd-loss-history th {
   padding: 9px 5px;
 }
-table.module-search th, .ru-loss-history th {
+table.module-search th, .ru-loss-history th, .zd-loss-history th {
   font-weight: bold;
 }
-table.module-search th a, .ru-loss-history th a {
+table.module-search th a, .ru-loss-history th a, .zd-loss-history th a {
   color: #007ac9;
   text-decoration: none;
 }
-table.module-search th a:hover, .ru-loss-history th a:hover, table.module-search th .policy-nav li a.select, .policy-nav li table.module-search th a.select, .ru-loss-history th .policy-nav li a.select, .policy-nav li .ru-loss-history th a.select {
+table.module-search th a:hover, .ru-loss-history th a:hover, .zd-loss-history th a:hover, table.module-search th .policy-nav li a.select, .policy-nav li table.module-search th a.select, .ru-loss-history th .policy-nav li a.select, .policy-nav li .ru-loss-history th a.select, .zd-loss-history th .policy-nav li a.select, .policy-nav li .zd-loss-history th a.select {
   color: #165788;
 }
-table.module-search thead tr th, .ru-loss-history thead tr th {
+table.module-search thead tr th, .ru-loss-history thead tr th, .zd-loss-history thead tr th {
   border-bottom: lightgrey 1px solid;
 }
-table.module-search tbody tr, .ru-loss-history tbody tr {
+table.module-search tbody tr, .ru-loss-history tbody tr, .zd-loss-history tbody tr {
   background: none;
   border: 1px solid transparent;
 }
-table.module-search tbody tr:nth-child(odd), .ru-loss-history tbody tr:nth-child(odd) {
+table.module-search tbody tr:nth-child(odd), .ru-loss-history tbody tr:nth-child(odd), .zd-loss-history tbody tr:nth-child(odd) {
   background-color: white;
 }
-table.module-search tbody tr:last-child td, .ru-loss-history tbody tr:last-child td {
+table.module-search tbody tr:last-child td, .ru-loss-history tbody tr:last-child td, .zd-loss-history tbody tr:last-child td {
   border-bottom: lightgrey 1px solid;
 }
-table.module-search tbody tr:hover td, .ru-loss-history tbody tr:hover td {
+table.module-search tbody tr:hover td, .ru-loss-history tbody tr:hover td, .zd-loss-history tbody tr:hover td {
   background-color: #ffccff;
   border-top: #ff99ff 1px solid;
   border-bottom: #ff99ff 1px solid;
   color: #660066;
   cursor: pointer;
 }
-table.module-search tbody tr:hover td a, .ru-loss-history tbody tr:hover td a {
+table.module-search tbody tr:hover td a, .ru-loss-history tbody tr:hover td a, .zd-loss-history tbody tr:hover td a {
   color: #660066;
 }
-table.module-search tbody td a, .ru-loss-history tbody td a {
+table.module-search tbody td a, .ru-loss-history tbody td a, .zd-loss-history tbody td a {
   color: #4f4f4f;
   text-decoration: none;
   text-transform: uppercase;
 }
-table.module-search tbody td a:hover, .ru-loss-history tbody td a:hover, table.module-search tbody td .policy-nav li a.select, .policy-nav li table.module-search tbody td a.select, .ru-loss-history tbody td .policy-nav li a.select, .policy-nav li .ru-loss-history tbody td a.select {
+table.module-search tbody td a:hover, .ru-loss-history tbody td a:hover, .zd-loss-history tbody td a:hover, table.module-search tbody td .policy-nav li a.select, .policy-nav li table.module-search tbody td a.select, .ru-loss-history tbody td .policy-nav li a.select, .policy-nav li .ru-loss-history tbody td a.select, .zd-loss-history tbody td .policy-nav li a.select, .policy-nav li .zd-loss-history tbody td a.select {
   text-decoration: underline;
 }
 
@@ -1231,7 +1232,7 @@ Module: Policy
   color: #fe8400;
 }
 
-.ru-container {
+.ru-container, .zd-container {
   *zoom: 1;
   width: 96.4%;
   margin-left: auto;
@@ -1242,12 +1243,12 @@ Module: Policy
   background-color: #f4f4f4;
   display: none;
 }
-.ru-container:after {
+.ru-container:after, .zd-container:after {
   content: "";
   display: table;
   clear: both;
 }
-.ru-container h1, .ru-container h2 {
+.ru-container h1, .zd-container h1, .ru-container h2, .zd-container h2 {
   width: 100%;
   float: right;
   margin-right: 0;
@@ -1256,13 +1257,13 @@ Module: Policy
   font-weight: bold;
   margin: 15px 0 0 0;
 }
-.ru-container h1 {
+.ru-container h1, .zd-container h1 {
   color: #002857;
   font-size: 24px;
   font-size: 2.4rem;
   text-shadow: 0 1px white;
 }
-.ru-container h2 {
+.ru-container h2, .zd-container h2 {
   color: dimgrey;
   font-size: 18px;
   font-size: 1.8rem;
@@ -1351,7 +1352,7 @@ Module: Policy
   cursor: pointer;
 }
 
-.ru-loss-history {
+.ru-loss-history, .zd-loss-history {
   display: block;
   width: 100%;
   float: right;
@@ -1359,11 +1360,11 @@ Module: Policy
   #margin-left: -1em;
   display: inline;
 }
-.ru-loss-history td a {
+.ru-loss-history td a, .zd-loss-history td a {
   font-weight: bold;
   color: #007ac9 !important;
 }
-.ru-loss-history td:first-child {
+.ru-loss-history td:first-child, .zd-loss-history td:first-child {
   text-align: center;
 }
 
@@ -1386,4 +1387,14 @@ Module: Policy
 .ru-loader h2 span {
   display: block;
   margin: 0 0 10px 0;
+}
+
+.zd-loss-history {
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.zd-loss-history td {
+  padding-left: 10px;
+  padding-right: 10px;
 }

@@ -6,8 +6,9 @@ define [
   'swfobject',
   'text!modules/Policy/templates/tpl_policy_container.html',
   'text!modules/Policy/templates/tpl_ipm_header.html',
-  'text!modules/RenewalUnderwriting/templates/tpl_renewal_underwriting_wrapper.html'
-], (BaseView, Messenger, Base64, RenewalUnderwritingView, swfobject, tpl_policy_container, tpl_ipm_header, tpl_ru_wrapper) ->
+  'text!modules/RenewalUnderwriting/templates/tpl_renewal_underwriting_wrapper.html',
+  'modules/ZenDesk/ZenDeskView',
+], (BaseView, Messenger, Base64, RenewalUnderwritingView, swfobject, tpl_policy_container, tpl_ipm_header, tpl_ru_wrapper, ZenDeskView) ->
 
   PolicyView = BaseView.extend
 
@@ -23,6 +24,7 @@ define [
       @el           = options.view.el
       @$el          = options.view.$el
       @controller   = options.view.options.controller
+      @services     = @controller.services
       @flash_loaded = false
 
       # If flash is not loaded, then on an activate event
@@ -286,6 +288,34 @@ define [
       $ru_el = $("#renewal-underwriting-#{@cid}")
       if $ru_el.length > 0
         @ru_container.hide()
+
+      if @policy_header
+        @policy_header.hide()
+        @$el.find("#policy-header-#{@cid}").hide()
+
+    show_servicerequests : ->
+      $zd_el = $("#zendesk-#{@cid}")
+      if $zd_el.length == 0
+        $("#policy-workspace-#{@cid}").append("<div id=\"zendesk-#{@cid}\" class=\"zd-container\"></div>")
+        $zd_el = $("#zendesk-#{@cid}")
+
+      # If container not already loaded, then insert element into DOM
+      if @zd_container == null || @zd_container == undefined
+        @zd_container = new ZenDeskView({
+            $el         : $zd_el
+            policy      : @model
+            policy_view : this
+          }).fetch()
+      else
+        @zd_container.show()
+
+      # We need a policy_header
+      @build_policy_header()
+
+    teardown_servicerequests : ->
+      $zd_el = $("#zendesk-#{@cid}")
+      if $zd_el.length > 0
+        @zd_container.hide()
 
       if @policy_header
         @policy_header.hide()
