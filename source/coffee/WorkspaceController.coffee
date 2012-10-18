@@ -35,7 +35,7 @@ define [
       ixlibrary   : './ixlibrary/api/sdo/rest/v1/'
       ixdoc       : './ixdoc/api/rest/v2/'
       ixadmin     : './config/ics/staging/ixadmin' # TESTING ONLY
-      zendesk     : './mocks/zen.php'
+      zendesk     : 'https://staging-services.icg360.org/zendesk'
 
   # Method Combinator (Decorator) 
   # https://github.com/raganwald/method-combinators

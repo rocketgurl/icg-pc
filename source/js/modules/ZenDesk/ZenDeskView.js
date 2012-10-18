@@ -7,22 +7,39 @@
       initialize: function(options) {
         var _ref;
         _ref = [options.$el, options.policy, options.policy_view], this.$el = _ref[0], this.policy = _ref[1], this.policy_view = _ref[2];
+        this.$el.append("<div id=\"zd_shim_" + this.cid + "\" class=\"zd-shim\"><div id=\"zd_loader_" + this.cid + "\" class=\"zd-loader\"></div></div>");
         return this;
       },
       fetch: function() {
+        this.show();
         return this.fetch_tickets(this.policy.get_policy_id());
       },
       render: function() {
-        this.$el.html(this.Mustache.render(tpl_zd_container, {
+        this.remove_loader();
+        return this.$el.find("#zd_shim_" + this.cid).html(this.Mustache.render(tpl_zd_container, {
           results: this.tickets.results
         }));
-        return this.show();
       },
       show: function() {
-        return this.$el.fadeIn('fast');
+        var _this = this;
+        return this.$el.fadeIn('fast', function() {
+          return _this.attach_loader();
+        });
       },
       hide: function() {
         return this.$el.hide();
+      },
+      attach_loader: function() {
+        if ($("#zd_loader_" + this.cid).length > 0) {
+          this.loader = this.Helpers.loader("zd_loader_" + this.cid, 80, '#696969');
+          return this.loader.setFPS(48);
+        }
+      },
+      remove_loader: function() {
+        if (this.loader != null) {
+          this.loader.kill();
+          return $("#zd_loader_" + this.cid).hide();
+        }
       },
       fetch_tickets: function(query) {
         var _this = this;

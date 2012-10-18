@@ -299,6 +299,8 @@ define [
         $("#policy-workspace-#{@cid}").append("<div id=\"zendesk-#{@cid}\" class=\"zd-container\"></div>")
         $zd_el = $("#zendesk-#{@cid}")
 
+      @resize_element @$el.find("#policy-workspace-#{@cid}")
+
       # If container not already loaded, then insert element into DOM
       if @zd_container == null || @zd_container == undefined
         @zd_container = new ZenDeskView({

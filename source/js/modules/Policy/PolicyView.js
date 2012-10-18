@@ -242,6 +242,7 @@
           $("#policy-workspace-" + this.cid).append("<div id=\"zendesk-" + this.cid + "\" class=\"zd-container\"></div>");
           $zd_el = $("#zendesk-" + this.cid);
         }
+        this.resize_element(this.$el.find("#policy-workspace-" + this.cid));
         if (this.zd_container === null || this.zd_container === void 0) {
           this.zd_container = new ZenDeskView({
             $el: $zd_el,

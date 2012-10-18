@@ -14,7 +14,7 @@
         ixlibrary: './ixlibrary/api/sdo/rest/v1/',
         ixdoc: './ixdoc/api/rest/v2/',
         ixadmin: './config/ics/staging/ixadmin',
-        zendesk: './mocks/zen.php'
+        zendesk: 'https://staging-services.icg360.org/zendesk'
       }
     };
     valid_workspace = function(methodBody) {
