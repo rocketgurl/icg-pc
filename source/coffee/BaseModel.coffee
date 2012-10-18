@@ -7,9 +7,10 @@ define [
   'LocalStorageSync',
   'CrippledClientSync',
   'JSONAuthSync',
+  'Helpers',
   'xmlSync',
   'xml2json'
-], ($, _, Backbone, Store, amplify, LocalStorageSync, CrippledClientSync, JSONAuthSync, XMLSync) ->
+], ($, _, Backbone, Store, amplify, LocalStorageSync, CrippledClientSync, JSONAuthSync, Helpers, XMLSync) ->
 
   #### BaseModel
   #
