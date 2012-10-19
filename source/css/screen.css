@@ -1394,9 +1394,6 @@ Module: Policy
   margin-top: 20px;
   margin-bottom: 20px;
 }
-.zd-loss-history tr {
-  width: 100%;
-}
 .zd-loss-history td {
   padding-left: 10px;
   padding-right: 10px;

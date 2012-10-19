@@ -63,6 +63,7 @@
             },
             error: function(jqXHR, textStatus, errorThrown) {
               _this.Amplify.publish(_this.policy_view.cid, 'warning', "This policy is unable to access the ZenDesk API at this time. Message: " + textStatus);
+              _this.remove_loader();
               return false;
             }
           });

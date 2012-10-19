@@ -60,5 +60,6 @@ define [
             @render()
           error: (jqXHR, textStatus, errorThrown) =>
             @Amplify.publish(@policy_view.cid, 'warning', "This policy is unable to access the ZenDesk API at this time. Message: #{textStatus}")
+            @remove_loader()
             false
       this
