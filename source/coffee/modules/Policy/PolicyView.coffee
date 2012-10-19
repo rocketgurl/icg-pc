@@ -55,13 +55,29 @@ define [
       if @model.isIPM() == false
         @$el.find('.policy-nav a[href=ipmchanges]').parent('li').hide();
 
-
       # Cache commonly used jQuery elements
       @cache_elements()
 
       # Get an array of our policy-nav actions
       @actions = @policy_nav_links.map (idx, item) -> return $(this).attr('href')
 
+      # Setup iframe for the Summary SWF
+      @build_and_load_swf_iframe()
+
+      # Hide the view
+      @$el.hide()
+
+      # Register flash message pubsub for this view
+      @messenger = new Messenger(@options.view, @cid)      
+
+      # Our default state is to show the SWF overview
+      if @controller.active_view.cid == @options.view.cid
+        @show_overview()
+        @teardown_ipmchanges()
+
+    # Get policy properties (id, user.digest) and setup the iFrame for
+    # SWFObject, injecting said properties into object.
+    build_and_load_swf_iframe : ->
       # iFrame properties
       props =
         policy_id : @model.get('pxServerIndex')
@@ -73,16 +89,6 @@ define [
       @iframe.bind 'load', =>
         @iframe[0].contentWindow.inject_properties(props)
         @iframe[0].contentWindow.load_mxAdmin()
-
-      # Hide the view
-      @$el.hide()
-
-      # Register flash message pubsub for this view
-      @messenger = new Messenger(@options.view, @cid)      
-
-      if @controller.active_view.cid == @options.view.cid
-        @show_overview()
-        @teardown_ipmchanges()
 
     # Switch nav items on/off
     toggle_nav_state : (el) ->

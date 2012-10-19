@@ -22,8 +22,7 @@
         });
       },
       render: function(options) {
-        var html, props,
-          _this = this;
+        var html;
         html = this.Mustache.render($('#tpl-flash-message').html(), {
           cid: this.cid
         });
@@ -45,22 +44,27 @@
         this.actions = this.policy_nav_links.map(function(idx, item) {
           return $(this).attr('href');
         });
-        props = {
-          policy_id: this.model.get('pxServerIndex'),
-          ipm_auth: this.model.get('digest'),
-          routes: this.controller.services
-        };
-        this.iframe.attr('src', '/mxadmin/index.html');
-        this.iframe.bind('load', function() {
-          _this.iframe[0].contentWindow.inject_properties(props);
-          return _this.iframe[0].contentWindow.load_mxAdmin();
-        });
+        this.build_and_load_swf_iframe();
         this.$el.hide();
         this.messenger = new Messenger(this.options.view, this.cid);
         if (this.controller.active_view.cid === this.options.view.cid) {
           this.show_overview();
           return this.teardown_ipmchanges();
         }
+      },
+      build_and_load_swf_iframe: function() {
+        var props,
+          _this = this;
+        props = {
+          policy_id: this.model.get('pxServerIndex'),
+          ipm_auth: this.model.get('digest'),
+          routes: this.controller.services
+        };
+        this.iframe.attr('src', '/mxadmin/index.html');
+        return this.iframe.bind('load', function() {
+          _this.iframe[0].contentWindow.inject_properties(props);
+          return _this.iframe[0].contentWindow.load_mxAdmin();
+        });
       },
       toggle_nav_state: function(el) {
         this.policy_nav_links.removeClass('select');
