@@ -84,7 +84,8 @@ define [
         ipm_auth  : @model.get('digest')
         routes    : @controller.services
 
-      # Load iFrame and pass in policy properties
+      # Load iFrame and pass in policy properties by binding said properties
+      # to the load event of the iframe itself
       @iframe.attr('src', '/mxadmin/index.html')
       @iframe.bind 'load', =>
         @iframe[0].contentWindow.inject_properties(props)
