@@ -151,10 +151,10 @@ define [
     # Size the iframe to the approximate view area of the workspace
     resize_element : (el, offset) ->
       offset = offset || 0
-      el_height = Math.floor((($(window).height() - (220 + offset))/$(window).height())*100) + "%"
+      el_height = Math.floor((($(window).height() - (184 + offset))/$(window).height())*100) + "%"
       el.css(
         'min-height' : el_height
-        'height'     : $(window).height() - (220 + offset)
+        'height'     : $(window).height() - (184 + offset)
         )
 
     # If the policy_header doesn't exist then build it, otherwise

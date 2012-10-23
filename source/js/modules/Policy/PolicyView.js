@@ -114,10 +114,10 @@
       resize_element: function(el, offset) {
         var el_height;
         offset = offset || 0;
-        el_height = Math.floor((($(window).height() - (220 + offset)) / $(window).height()) * 100) + "%";
+        el_height = Math.floor((($(window).height() - (184 + offset)) / $(window).height()) * 100) + "%";
         return el.css({
           'min-height': el_height,
-          'height': $(window).height() - (220 + offset)
+          'height': $(window).height() - (184 + offset)
         });
       },
       build_policy_header: function() {
