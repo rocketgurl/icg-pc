@@ -15,15 +15,25 @@
         this.services = this.controller.services;
         this.flash_loaded = false;
         this.on('activate', function() {
-          this.show_overview();
-          return this.teardown_ipmchanges();
+          if (this.render()) {
+            this.show_overview();
+            return this.teardown_ipmchanges();
+          }
         });
-        return this.on('deactivate', function() {
+        this.on('deactivate', function() {
           return this.destroy_overview_swf();
+        });
+        return this.on('loaded', function() {
+          if (this.controller.active_view.cid === this.options.view.cid) {
+            return this.trigger('activate');
+          }
         });
       },
       render: function(options) {
         var html;
+        if (this.render_state === true) {
+          true;
+        }
         html = this.Mustache.render($('#tpl-flash-message').html(), {
           cid: this.cid
         });
@@ -48,9 +58,7 @@
         this.build_and_load_swf_iframe();
         this.$el.hide();
         this.messenger = new Messenger(this.options.view, this.cid);
-        if (this.controller.active_view.cid === this.options.view.cid) {
-          return this.trigger('activate');
-        }
+        return true;
       },
       build_and_load_swf_iframe: function() {
         var props,

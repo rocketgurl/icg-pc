@@ -32,8 +32,9 @@ define [
       # from loading always switching to the overview
       # on tab activation
       @on 'activate', () ->
-        @show_overview()
-        @teardown_ipmchanges()
+        if @render()
+          @show_overview()
+          @teardown_ipmchanges()
 
       # On deactivate we destroy the SWF compltely. We have to do this so we
       # can fine window.reload() when you switch back to this tab, otherwise it
@@ -42,7 +43,15 @@ define [
       @on 'deactivate', () ->
         @destroy_overview_swf()
 
+      @on 'loaded', () ->
+        # Our default state is to show the SWF overview
+        if @controller.active_view.cid == @options.view.cid
+          @trigger 'activate'
+
     render : (options) ->
+      if @render_state == true
+        true
+
       # Setup flash module & search container
       html = @Mustache.render $('#tpl-flash-message').html(), { cid : @cid }
       
@@ -54,7 +63,7 @@ define [
       # This is to make sure we only render the one time
       # as we have some weird issues where render is call 
       # multiple times (still tracking down.)
-      if @render_state is false
+      if @render_state == false
         @render_state = true
 
       # If this is a non-IPM policy then remove IPM changes from nav
@@ -74,11 +83,10 @@ define [
       @$el.hide()
 
       # Register flash message pubsub for this view
-      @messenger = new Messenger(@options.view, @cid)      
+      @messenger = new Messenger(@options.view, @cid)
 
-      # Our default state is to show the SWF overview
-      if @controller.active_view.cid == @options.view.cid
-        @trigger 'activate'
+      true   
+
 
     # Get policy properties (id, user.digest) and setup the iFrame for
     # SWFObject, injecting said properties into object.

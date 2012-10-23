@@ -51,7 +51,7 @@
             switch (model.get('fetch_state').code) {
               case "200":
                 model.get_pxServerIndex();
-                return _this.render();
+                return _this.policy_view.trigger('loaded');
               default:
                 _this.view.remove_loader();
                 _this.render({
