@@ -32,9 +32,15 @@ define [
       # from loading always switching to the overview
       # on tab activation
       @on 'activate', () ->
-        if @flash_loaded is false
-          @show_overview()
-          @teardown_ipmchanges()
+        @show_overview()
+        @teardown_ipmchanges()
+
+      # On deactivate we destroy the SWF compltely. We have to do this so we
+      # can fine window.reload() when you switch back to this tab, otherwise it
+      # reloads anyway, but doesn't get any of the data from the server, and
+      # is therefore useless
+      @on 'deactivate', () ->
+        @destroy_overview_swf()
 
     render : (options) ->
       # Setup flash module & search container
@@ -72,8 +78,7 @@ define [
 
       # Our default state is to show the SWF overview
       if @controller.active_view.cid == @options.view.cid
-        @show_overview()
-        @teardown_ipmchanges()
+        @trigger 'activate'
 
     # Get policy properties (id, user.digest) and setup the iFrame for
     # SWFObject, injecting said properties into object.
@@ -190,7 +195,7 @@ define [
         if _.isEmpty flash_obj
           flash_obj = $("#policy-summary-#{@cid}")
 
-        flash_obj.show()
+        flash_obj.css('visibility', 'visible').height('100%')
 
       if @flash_loaded is false
         swfobject.embedSWF(
@@ -209,12 +214,15 @@ define [
             @flash_callback(e)
         )
 
-
-
     # Hide flash overview
     teardown_overview : ->
-      @policy_summary.hide()
-      $("#policy-summary-#{@cid}").hide()
+      # @policy_summary.hide()
+      $("#policy-summary-#{@cid}").css('visibility', 'hidden').height(0)
+
+    # Remove SWFObject/Flash
+    destroy_overview_swf : ->
+      swfobject.removeSWF("policy-summary-#{@cid}")
+      @flash_loaded = false
 
     flash_callback : (e) ->
       if not e.success or e.success is not true

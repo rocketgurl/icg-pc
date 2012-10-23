@@ -14,11 +14,12 @@
         this.controller = options.view.options.controller;
         this.services = this.controller.services;
         this.flash_loaded = false;
-        return this.on('activate', function() {
-          if (this.flash_loaded === false) {
-            this.show_overview();
-            return this.teardown_ipmchanges();
-          }
+        this.on('activate', function() {
+          this.show_overview();
+          return this.teardown_ipmchanges();
+        });
+        return this.on('deactivate', function() {
+          return this.destroy_overview_swf();
         });
       },
       render: function(options) {
@@ -48,8 +49,7 @@
         this.$el.hide();
         this.messenger = new Messenger(this.options.view, this.cid);
         if (this.controller.active_view.cid === this.options.view.cid) {
-          this.show_overview();
-          return this.teardown_ipmchanges();
+          return this.trigger('activate');
         }
       },
       build_and_load_swf_iframe: function() {
@@ -145,7 +145,7 @@
           if (_.isEmpty(flash_obj)) {
             flash_obj = $("#policy-summary-" + this.cid);
           }
-          flash_obj.show();
+          flash_obj.css('visibility', 'visible').height('100%');
         }
         if (this.flash_loaded === false) {
           return swfobject.embedSWF("../swf/PolicySummary.swf", "policy-summary-" + this.cid, "100%", "100%", "9.0.0", null, null, {
@@ -156,8 +156,11 @@
         }
       },
       teardown_overview: function() {
-        this.policy_summary.hide();
-        return $("#policy-summary-" + this.cid).hide();
+        return $("#policy-summary-" + this.cid).css('visibility', 'hidden').height(0);
+      },
+      destroy_overview_swf: function() {
+        swfobject.removeSWF("policy-summary-" + this.cid);
+        return this.flash_loaded = false;
       },
       flash_callback: function(e) {
         var _this = this;

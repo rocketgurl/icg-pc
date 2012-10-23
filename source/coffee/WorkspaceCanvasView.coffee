@@ -83,6 +83,8 @@ define [
     deactivate : ->
       @tab.removeClass('selected')
       @$el.hide();
+      if @module
+        @module.trigger 'deactivate'
 
     # Is this view activated? (boolean) 
     is_active : ->

@@ -62,7 +62,10 @@
       },
       deactivate: function() {
         this.tab.removeClass('selected');
-        return this.$el.hide();
+        this.$el.hide();
+        if (this.module) {
+          return this.module.trigger('deactivate');
+        }
       },
       is_active: function() {
         return this.tab.hasClass('selected');

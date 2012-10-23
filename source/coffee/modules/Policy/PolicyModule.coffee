@@ -85,6 +85,10 @@ define [
       @on 'activate', () ->
         @policy_view.trigger 'activate'
 
+      # When this tab is activated
+      @on 'deactivate', () ->
+        @policy_view.trigger 'deactivate'
+
     # Do whatever rendering animation needs to happen here
     render : (options) ->
       @view.remove_loader(true)

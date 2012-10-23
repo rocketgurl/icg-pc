@@ -74,8 +74,11 @@
             return _this.Amplify.publish(_this.policy_view.cid, 'warning', "" + response + " Sorry.");
           }
         });
-        return this.on('activate', function() {
+        this.on('activate', function() {
           return this.policy_view.trigger('activate');
+        });
+        return this.on('deactivate', function() {
+          return this.policy_view.trigger('deactivate');
         });
       };
 
