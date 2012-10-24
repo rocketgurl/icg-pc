@@ -26,7 +26,10 @@
         this.el.id = this.app.app;
         this.options.controller.trigger('stack_add', this);
         require(["modules/" + this.options.module_type], function(Module) {
-          return _this.module = new Module(_this, _this.app);
+          _this.module = new Module(_this, _this.app);
+          if (_.has(Module.prototype, 'load')) {
+            return _this.module.load();
+          }
         });
         return this.render();
       },
@@ -59,7 +62,10 @@
       },
       deactivate: function() {
         this.tab.removeClass('selected');
-        return this.$el.hide();
+        this.$el.hide();
+        if (this.module) {
+          return this.module.trigger('deactivate');
+        }
       },
       is_active: function() {
         return this.tab.hasClass('selected');

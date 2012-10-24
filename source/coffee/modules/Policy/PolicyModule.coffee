@@ -29,7 +29,7 @@ define [
       _.extend @, Backbone.Events
 
       # Kick off application
-      @load()
+      # @load()
       
     # Any bootstrapping should happen here. When done remove the loader image.
     # view.remove_loader will callback Module.render()
@@ -63,7 +63,7 @@ define [
           switch model.get('fetch_state').code
             when "200"
               model.get_pxServerIndex()
-              @render()
+              @policy_view.trigger 'loaded'
             else
               @view.remove_loader()
               @render({ flash_only : true })
@@ -84,6 +84,10 @@ define [
       # When this tab is activated
       @on 'activate', () ->
         @policy_view.trigger 'activate'
+
+      # When this tab is activated
+      @on 'deactivate', () ->
+        @policy_view.trigger 'deactivate'
 
     # Do whatever rendering animation needs to happen here
     render : (options) ->

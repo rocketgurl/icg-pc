@@ -15,7 +15,6 @@
           this.params = this.app.params;
         }
         _.extend(this, Backbone.Events);
-        this.load();
       }
 
       PolicyModule.prototype.load = function() {
@@ -52,7 +51,7 @@
             switch (model.get('fetch_state').code) {
               case "200":
                 model.get_pxServerIndex();
-                return _this.render();
+                return _this.policy_view.trigger('loaded');
               default:
                 _this.view.remove_loader();
                 _this.render({
@@ -75,8 +74,11 @@
             return _this.Amplify.publish(_this.policy_view.cid, 'warning', "" + response + " Sorry.");
           }
         });
-        return this.on('activate', function() {
+        this.on('activate', function() {
           return this.policy_view.trigger('activate');
+        });
+        return this.on('deactivate', function() {
+          return this.policy_view.trigger('deactivate');
         });
       };
 

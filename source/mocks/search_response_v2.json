@@ -1,167 +1,262 @@
 {
-    "page": 1,
-    "itemsPerPage": 100,
-    "totalItems": 9,
+    "page": 2,
+    "totalItems": 1236,
+    "perPage": 15,
     "policies": [
         {
+            "EffectiveDate": "2012-07-28 00:00:00.0",
+            "RenewalUnderwritingStatus": "",
+            "productLabel": null,
             "insured": {
-                "InsuredLastName": "Freddy",
-                "InsuredName": "Hank Freddy",
-                "InsuredFirstName": "Hank",
-                "InsuredMailingAddressLine1": "123 Sesame St",
-                "InsuredMailingAddressCity": "New York",
-                "InsuredMailingAddressState": "NY",
-                "InsuredMailingAddressZip": "10017"
+                "InsuredLastName": null,
+                "InsuredMailingAddressState": null,
+                "InsuredMailingAddressLine1": null,
+                "InsuredMailingAddressZip": null,
+                "InsuredMailingAddressCity": null
             },
             "identifiers": {
-                "InsightPolicyId": "6d1184b23d7c4a59fa368b33f2c570e8",
-                "pxServerIndex": "21478",
-                "QuoteNumber": "CRU4Q-21478"
+                "PolicyID": "NYH007187000",
+                "QuoteNumber": "CRU4Q-71870"
             },
-            "EffectiveDate": "2010-06-22T20:08:21-04:00",
-            "PolicyState": "ACTIVEQUOTE",
-            "ProductLabel": "DP3",
-            "RenewalUnderwritingStatus": "New"
-        }, 
-        {
-            "insured": {
-                "InsuredLastName": "Platter",
-                "InsuredName": "LuAnne Platter",
-                "InsuredFirstName": "LuAnne",
-                "InsuredMailingAddressLine1": "1313 Mockingbird Ln",
-                "InsuredMailingAddressCity": "New York",
-                "InsuredMailingAddressState": "NY",
-                "InsuredMailingAddressZip": "10017"
-            },
-            "identifiers": {
-                "InsightPolicyId": "6d1184b23d7c4a59fa368b33f2c570e8",
-                "pxServerIndex": "21478",
-                "QuoteNumber": "CRU4Q-21478"
-            },
-            "EffectiveDate": "2010-06-22T20:08:21-04:00",
-            "PolicyState": "ACTIVEQUOTE",
-            "ProductLabel": "DP3",
-            "RenewalUnderwritingStatus": "New"
-        }, 
-        {
-            "insured": {
-                "InsuredLastName": "Cartwright",
-                "InsuredName": "Reginald Cartwright",
-                "InsuredFirstName": "Reginald",
-                "InsuredMailingAddressLine1": "100 Center St.",
-                "InsuredMailingAddressCity": "New York",
-                "InsuredMailingAddressState": "NY",
-                "InsuredMailingAddressZip": "10017"
-            },
-            "identifiers": {
-                "InsightPolicyId": "6d1184b23d7c4a59fa368b33f2c570e8",
-                "pxServerIndex": "21478",
-                "QuoteNumber": "CRU4Q-21478"
-            },
-            "EffectiveDate": "2010-06-22T20:08:21-04:00",
-            "PolicyState": "ACTIVEQUOTE",
-            "ProductLabel": "DP3",
-            "RenewalUnderwritingStatus": "New"
-        }, 
-        {
-            "insured": {
-                "InsuredLastName": "Miller",
-                "InsuredName": "Boatswain Miller",
-                "InsuredFirstName": "Boatswain",
-                "InsuredMailingAddressLine1": "31 Maiden Ln",
-                "InsuredMailingAddressCity": "New York",
-                "InsuredMailingAddressState": "NY",
-                "InsuredMailingAddressZip": "10017"
-            },
-            "identifiers": {
-                "InsightPolicyId": "6d1184b23d7c4a59fa368b33f2c570e8",
-                "pxServerIndex": "21478",
-                "QuoteNumber": "CRU4Q-21478"
-            },
-            "EffectiveDate": "2010-06-22T20:08:21-04:00",
-            "PolicyState": "ACTIVEQUOTE",
-            "ProductLabel": "DP3",
-            "RenewalUnderwritingStatus": "New"
+            "PolicyState": "ACTIVEPOLICY"
         },
         {
+            "EffectiveDate": "2010-09-09 00:00:00.0",
+            "RenewalUnderwritingStatus": "",
+            "productLabel": "HO3",
             "insured": {
-                "InsuredLastName": "Freddy",
-                "InsuredName": "Hank Freddy",
-                "InsuredFirstName": "Hank",
-                "InsuredMailingAddressLine1": "123 Sesame St",
-                "InsuredMailingAddressCity": "New York",
+                "InsuredLastName": "Loreth",
                 "InsuredMailingAddressState": "NY",
-                "InsuredMailingAddressZip": "10017"
+                "InsuredMailingAddressLine1": "1574 Yates Ave",
+                "InsuredMailingAddressZip": "10461",
+                "InsuredMailingAddressCity": "Bronx"
             },
             "identifiers": {
-                "InsightPolicyId": "6d1184b23d7c4a59fa368b33f2c570e8",
-                "pxServerIndex": "21478",
-                "QuoteNumber": "CRU4Q-21478"
+                "PolicyID": "NYH002083700",
+                "QuoteNumber": "CRU4Q-20837"
             },
-            "EffectiveDate": "2010-06-22T20:08:21-04:00",
-            "PolicyState": "ACTIVEQUOTE",
-            "ProductLabel": "DP3",
-            "RenewalUnderwritingStatus": "New"
-        }, 
+            "PolicyState": "ACTIVEPOLICY"
+        },
         {
+            "EffectiveDate": "2011-02-17 05:00:00.0",
+            "RenewalUnderwritingStatus": "",
+            "productLabel": "HO3",
             "insured": {
-                "InsuredLastName": "Platter",
-                "InsuredName": "LuAnne Platter",
-                "InsuredFirstName": "LuAnne",
-                "InsuredMailingAddressLine1": "1313 Mockingbird Ln",
-                "InsuredMailingAddressCity": "New York",
-                "InsuredMailingAddressState": "NY",
-                "InsuredMailingAddressZip": "10017"
+                "InsuredLastName": null,
+                "InsuredMailingAddressState": null,
+                "InsuredMailingAddressLine1": null,
+                "InsuredMailingAddressZip": null,
+                "InsuredMailingAddressCity": null
             },
             "identifiers": {
-                "InsightPolicyId": "6d1184b23d7c4a59fa368b33f2c570e8",
-                "pxServerIndex": "21478",
-                "QuoteNumber": "CRU4Q-21478"
+                "PolicyID": "NYH005515700",
+                "QuoteNumber": "CRU4Q-55157"
             },
-            "EffectiveDate": "2010-06-22T20:08:21-04:00",
-            "PolicyState": "ACTIVEQUOTE",
-            "ProductLabel": "DP3",
-            "RenewalUnderwritingStatus": "New"
-        }, 
+            "PolicyState": "ACTIVEPOLICY"
+        },
         {
+            "EffectiveDate": "2010-11-05 04:00:00.0",
+            "RenewalUnderwritingStatus": "",
+            "productLabel": "HO3",
             "insured": {
-                "InsuredLastName": "Cartwright",
-                "InsuredName": "Reginald Cartwright",
-                "InsuredFirstName": "Reginald",
-                "InsuredMailingAddressLine1": "100 Center St.",
-                "InsuredMailingAddressCity": "New York",
-                "InsuredMailingAddressState": "NY",
-                "InsuredMailingAddressZip": "10017"
+                "InsuredLastName": null,
+                "InsuredMailingAddressState": null,
+                "InsuredMailingAddressLine1": null,
+                "InsuredMailingAddressZip": null,
+                "InsuredMailingAddressCity": null
             },
             "identifiers": {
-                "InsightPolicyId": "6d1184b23d7c4a59fa368b33f2c570e8",
-                "pxServerIndex": "21478",
-                "QuoteNumber": "CRU4Q-21478"
+                "PolicyID": "NYH004372700",
+                "QuoteNumber": "CRU4Q-43727"
             },
-            "EffectiveDate": "2010-06-22T20:08:21-04:00",
-            "PolicyState": "ACTIVEQUOTE",
-            "ProductLabel": "DP3",
-            "RenewalUnderwritingStatus": "New"
-        }, 
+            "PolicyState": "ACTIVEPOLICY"
+        },
         {
+            "EffectiveDate": "2011-04-01 04:00:00.0",
+            "RenewalUnderwritingStatus": "",
+            "productLabel": "HO3",
             "insured": {
-                "InsuredLastName": "Miller",
-                "InsuredName": "Boatswain Miller",
-                "InsuredFirstName": "Boatswain",
-                "InsuredMailingAddressLine1": "31 Maiden Ln",
-                "InsuredMailingAddressCity": "New York",
-                "InsuredMailingAddressState": "NY",
-                "InsuredMailingAddressZip": "10017"
+                "InsuredLastName": null,
+                "InsuredMailingAddressState": null,
+                "InsuredMailingAddressLine1": null,
+                "InsuredMailingAddressZip": null,
+                "InsuredMailingAddressCity": null
             },
             "identifiers": {
-                "InsightPolicyId": "6d1184b23d7c4a59fa368b33f2c570e8",
-                "pxServerIndex": "21478",
-                "QuoteNumber": "CRU4Q-21478"
+                "PolicyID": "NYH005709700",
+                "QuoteNumber": "CRU4Q-57097"
             },
-            "EffectiveDate": "2010-06-22T20:08:21-04:00",
-            "PolicyState": "ACTIVEQUOTE",
-            "ProductLabel": "DP3",
-            "RenewalUnderwritingStatus": "New"
+            "PolicyState": "ACTIVEPOLICY"
+        },
+        {
+            "EffectiveDate": "2012-09-30 00:00:00.0",
+            "RenewalUnderwritingStatus": "",
+            "productLabel": "HO3SL LA",
+            "insured": {
+                "InsuredLastName": "TEBOW",
+                "InsuredMailingAddressState": "LA",
+                "InsuredMailingAddressLine1": "260 SUGARPINE DR",
+                "InsuredMailingAddressZip": "70056",
+                "InsuredMailingAddressCity": "GRETNA"
+            },
+            "identifiers": {
+                "PolicyID": "LUS007195700",
+                "QuoteNumber": "CRU4Q-71957"
+            },
+            "PolicyState": "ACTIVEPOLICY"
+        },
+        {
+            "EffectiveDate": "2011-03-30 04:00:00.0",
+            "RenewalUnderwritingStatus": "",
+            "productLabel": "HO3",
+            "insured": {
+                "InsuredLastName": null,
+                "InsuredMailingAddressState": null,
+                "InsuredMailingAddressLine1": null,
+                "InsuredMailingAddressZip": null,
+                "InsuredMailingAddressCity": null
+            },
+            "identifiers": {
+                "PolicyID": "NYH005947700",
+                "QuoteNumber": "CRU4Q-59477"
+            },
+            "PolicyState": "ACTIVEPOLICY"
+        },
+        {
+            "EffectiveDate": "2010-09-16 04:00:00.0",
+            "RenewalUnderwritingStatus": "",
+            "productLabel": "HO3",
+            "insured": {
+                "InsuredLastName": null,
+                "InsuredMailingAddressState": null,
+                "InsuredMailingAddressLine1": null,
+                "InsuredMailingAddressZip": null,
+                "InsuredMailingAddressCity": null
+            },
+            "identifiers": {
+                "PolicyID": "NYH003409700",
+                "QuoteNumber": "CRU4Q-34097"
+            },
+            "PolicyState": "CANCELLEDPOLICY"
+        },
+        {
+            "EffectiveDate": "2011-03-03 05:00:00.0",
+            "RenewalUnderwritingStatus": "",
+            "productLabel": "HO3",
+            "insured": {
+                "InsuredLastName": null,
+                "InsuredMailingAddressState": null,
+                "InsuredMailingAddressLine1": null,
+                "InsuredMailingAddressZip": null,
+                "InsuredMailingAddressCity": null
+            },
+            "identifiers": {
+                "PolicyID": "NYH006177000",
+                "QuoteNumber": "CRU4Q-61770"
+            },
+            "PolicyState": "ACTIVEPOLICY"
+        },
+        {
+            "EffectiveDate": "2010-12-07 05:00:00.0",
+            "RenewalUnderwritingStatus": "",
+            "productLabel": "HO3",
+            "insured": {
+                "InsuredLastName": null,
+                "InsuredMailingAddressState": null,
+                "InsuredMailingAddressLine1": null,
+                "InsuredMailingAddressZip": null,
+                "InsuredMailingAddressCity": null
+            },
+            "identifiers": {
+                "PolicyID": "NYH004246700",
+                "QuoteNumber": "CRU4Q-42467"
+            },
+            "PolicyState": "ACTIVEPOLICY"
+        },
+        {
+            "EffectiveDate": "2010-08-01 04:00:00.0",
+            "RenewalUnderwritingStatus": "",
+            "productLabel": "HO3",
+            "insured": {
+                "InsuredLastName": null,
+                "InsuredMailingAddressState": null,
+                "InsuredMailingAddressLine1": null,
+                "InsuredMailingAddressZip": null,
+                "InsuredMailingAddressCity": null
+            },
+            "identifiers": {
+                "PolicyID": "NYH002518700",
+                "QuoteNumber": "CRU4Q-25187"
+            },
+            "PolicyState": "ACTIVEPOLICY"
+        },
+        {
+            "EffectiveDate": "2012-09-29 00:00:00.0",
+            "RenewalUnderwritingStatus": "",
+            "productLabel": "HO3 VA",
+            "insured": {
+                "InsuredLastName": "TEST",
+                "InsuredMailingAddressState": "VA",
+                "InsuredMailingAddressLine1": "7262 STOKES DR",
+                "InsuredMailingAddressZip": "23072",
+                "InsuredMailingAddressCity": "HAYES"
+            },
+            "identifiers": {
+                "PolicyID": "VAH007199700",
+                "QuoteNumber": "CRU4Q-71997"
+            },
+            "PolicyState": "ACTIVEPOLICY"
+        },
+        {
+            "EffectiveDate": "2011-01-01 00:00:00.0",
+            "RenewalUnderwritingStatus": "",
+            "productLabel": "HO3",
+            "insured": {
+                "InsuredLastName": null,
+                "InsuredMailingAddressState": null,
+                "InsuredMailingAddressLine1": null,
+                "InsuredMailingAddressZip": null,
+                "InsuredMailingAddressCity": null
+            },
+            "identifiers": {
+                "PolicyID": "NYH003289700",
+                "QuoteNumber": "CRU4Q-32897"
+            },
+            "PolicyState": "ACTIVEPOLICY"
+        },
+        {
+            "EffectiveDate": "2010-08-02 04:00:00.0",
+            "RenewalUnderwritingStatus": "",
+            "productLabel": "HO3",
+            "insured": {
+                "InsuredLastName": null,
+                "InsuredMailingAddressState": null,
+                "InsuredMailingAddressLine1": null,
+                "InsuredMailingAddressZip": null,
+                "InsuredMailingAddressCity": null
+            },
+            "identifiers": {
+                "PolicyID": "NYH002299700",
+                "QuoteNumber": "CRU4Q-22997"
+            },
+            "PolicyState": "ACTIVEPOLICY"
+        },
+        {
+            "EffectiveDate": "2010-10-30 04:00:00.0",
+            "RenewalUnderwritingStatus": "",
+            "productLabel": "HO3",
+            "insured": {
+                "InsuredLastName": null,
+                "InsuredMailingAddressState": null,
+                "InsuredMailingAddressLine1": null,
+                "InsuredMailingAddressZip": null,
+                "InsuredMailingAddressCity": null
+            },
+            "identifiers": {
+                "PolicyID": "NYH003390700",
+                "QuoteNumber": "CRU4Q-33907"
+            },
+            "PolicyState": "ACTIVEPOLICY"
         }
     ]
 }

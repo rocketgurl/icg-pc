@@ -13,7 +13,8 @@
         pxcentral: './pxcentral/api/rest/v1/',
         ixlibrary: './ixlibrary/api/sdo/rest/v1/',
         ixdoc: './ixdoc/api/rest/v2/',
-        ixadmin: './config/ics/staging/ixadmin'
+        ixadmin: './config/ics/staging/ixadmin',
+        zendesk: 'https://staging-services.icg360.org/zendesk'
       }
     };
     valid_workspace = function(methodBody) {
