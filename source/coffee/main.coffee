@@ -8,6 +8,7 @@ require
     amplify    : 'lib/amplify'
     mustache   : 'lib/requirejs.mustache'
     base64     : 'lib/base64'
+    moment     : 'lib/moment'
     xml2json   : 'lib/jquery.xml2json'
     text       : 'lib/text'
     domReady   : 'lib/domReady'
@@ -49,13 +50,14 @@ define [
   'modules/Search/SearchContextCollection',
   'Messenger',
   'base64',
+  'moment',
   'MenuHelper',
   'AppRules',
   'Helpers',
   'Cookie',
   'xml2json',
   'domReady'
-], ($, _, Backbone, WorkspaceController, UserModel, ConfigModel, WorkspaceStateModel, WorkspaceStateCollection, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter, SearchContextCollection, Messenger, Base64, MenuHelper, AppRules, Helpers, Cookie, xml2json, domReady) ->
+], ($, _, Backbone, WorkspaceController, UserModel, ConfigModel, WorkspaceStateModel, WorkspaceStateCollection, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter, SearchContextCollection, Messenger, Base64, moment, MenuHelper, AppRules, Helpers, Cookie, xml2json, domReady) ->
 
   # Initialize application when dom is ready
   domReady ->

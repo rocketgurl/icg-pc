@@ -10,6 +10,7 @@
       amplify    : 'lib/amplify',
       mustache   : 'lib/requirejs.mustache',
       base64     : 'lib/base64',
+      moment     : 'lib/moment',
       xml2json   : 'lib/jquery.xml2json',
       text       : 'lib/text',
       domReady   : 'lib/domReady',
