@@ -299,9 +299,8 @@
         if (!_.isFunction(this.Amplify.store)) {
           this.check_workspace_state();
         }
-        raw_storage = this.Amplify.store();
-        if (raw_storage['ics_policy_central'] != null) {
-          raw_storage = raw_storage['ics_policy_central'];
+        raw_storage = this.Amplify.store('ics_policy_central');
+        if (raw_storage != null) {
           raw_id = _.keys(raw_storage)[0];
           if (raw_id != null) {
             workspaces = this.Workspaces.add({
