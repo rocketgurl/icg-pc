@@ -22,17 +22,25 @@
           pagination: {}
         });
         this.$el.html(html);
-        this.CONTAINER = this.$el.find("#module-referrals-" + this.cid + " .module-referrals tbody");
+        this.CONTAINER = this.$el.find('table.module-referrals tbody');
         return this;
       },
       renderTasks: function(collection) {
-        var _this = this;
-        return this.TASK_VIEWS = collection.map(function(model) {
+        var task, _i, _len, _ref, _results,
+          _this = this;
+        this.TASK_VIEWS = collection.map(function(model) {
           return new ReferralTaskView({
             model: model,
             parent_view: _this
           });
         });
+        _ref = this.TASK_VIEWS;
+        _results = [];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          task = _ref[_i];
+          _results.push(this.CONTAINER.append(task.render()));
+        }
+        return _results;
       }
     });
   });

@@ -5,8 +5,9 @@ define [
   'mustache',
   'modules/ReferralQueue/ReferralQueueView',
   'modules/ReferralQueue/ReferralTaskCollection',
-  'loader'
-], ($, _, Backbone, Mustache, ReferralQueueView, ReferralTaskCollection, CanvasLoader) ->
+  'loader',
+  'Messenger'
+], ($, _, Backbone, Mustache, ReferralQueueView, ReferralTaskCollection, CanvasLoader, Messenger) ->
 
   class ReferralQueue
 
@@ -38,5 +39,5 @@ define [
     # Tell the Queue to render itself and the Collection of tasks to hit the
     # server for some XML
     render : ->
-      @QUEUE_VIEW.render()
-      @TASKS.getReferrals()
+      if @QUEUE_VIEW.render()
+        @TASKS.getReferrals()

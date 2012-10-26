@@ -27,7 +27,7 @@ define [
       @$el.html html
 
       # Find the container to load rows into
-      @CONTAINER = @$el.find("#module-referrals-#{@cid} .module-referrals tbody")
+      @CONTAINER = @$el.find('table.module-referrals tbody')
 
       this
 
@@ -44,3 +44,6 @@ define [
             model       : model,
             parent_view : this
           )
+
+      for task in @TASK_VIEWS
+        @CONTAINER.append(task.render())
