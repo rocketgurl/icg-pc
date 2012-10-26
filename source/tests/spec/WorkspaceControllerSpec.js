@@ -2,8 +2,10 @@ define([
   "jquery", 
   "underscore", 
   "WorkspaceController", 
-  "modules/SearchContextCollection",
-  "modules/PolicyModel",
+  "modules/Search/SearchContextCollection",
+  "modules/Policy/PolicyModel",
+  "modules/ReferralQueue/ReferralTaskCollection",
+  "modules/ReferralQueue/ReferralQueueView",
   "amplify",
   "loader"], 
   function(
@@ -12,6 +14,8 @@ define([
     WorkspaceController, 
     SearchContextCollection,
     PolicyModel,
+    ReferralTaskCollection,
+    ReferralQueueView,
     amplify, 
     CanvasLoader
 ) {
@@ -22,11 +26,11 @@ define([
     // Setup ENV
     beforeEach(function(){
       WorkspaceController.services = {
-        ixdirectory: 'http://policycentral.src/ixdirectory/api/rest/v2/',
-        pxcentral: 'http://policycentral.src/pxcentral/api/rest/v1/',
-        ixlibrary: 'http://policycentral.src/ixlibrary/api/sdo/rest/v1/',
-        ixdoc: 'http://policycentral.src/ixdoc/api/rest/v2/',
-        ixadmin: 'http://policycentral.src/config/ics/staging/ixadmin'
+        ixdirectory: 'http://policycentral.dev/ixdirectory/api/rest/v2/',
+        pxcentral: 'http://policycentral.dev/pxcentral/api/rest/v1/',
+        ixlibrary: 'http://policycentral.dev/ixlibrary/api/sdo/rest/v1/',
+        ixdoc: 'http://policycentral.dev/ixdoc/api/rest/v2/',
+        ixadmin: 'http://policycentral.dev/config/ics/staging/ixadmin'
       };
     });
 
@@ -155,7 +159,7 @@ define([
 
     var policy = new PolicyModel({
       id      : 'CRU4Q-71064',
-      urlRoot : 'https://policycentral.src/pxcentral/api/rest/v1/',
+      urlRoot : 'https://policycentral.dev/pxcentral/api/rest/v1/',
       digest  : 'Y3J1NHRAY3J1MzYwLmNvbTphYmMxMjM='
     });
 
@@ -180,7 +184,7 @@ define([
 
     it ('has a URL', function () {
       runs(function(){
-        expect(policy.url()).toBe('https://policycentral.src/pxcentral/api/rest/v1/policies/CRU4Q-71064');
+        expect(policy.url()).toBe('https://policycentral.dev/pxcentral/api/rest/v1/policies/CRU4Q-71064');
       });
     });
 
@@ -238,5 +242,180 @@ define([
     });
 
   });
+
+  // REFERRAL QUEUE COLLECTION
+  describe('ReferralTaskCollection', function () {
+
+    // media=application/xml&page=1&perPage=50&status=New,Pending
+
+    var settings = {
+      pxcentral: 'https://staging-services.icg360.org/cru-4/pxcentral/api/rest/v1/tasks/',
+      digest  : 'Y3J1NHRAY3J1MzYwLmNvbTphYmMxMjM='
+    }
+
+    var tasks = new ReferralTaskCollection();
+    tasks.url = settings.pxcentral;
+    tasks.digest = settings.digest;
+
+    var ajax_count = 0;
+
+    beforeEach(function(){
+      if (ajax_count < 1) {
+        var callback = jasmine.createSpy();
+        tasks.getReferrals({}, callback);
+        waitsFor(function() {
+          ajax_count++;
+          return callback.callCount > 0;
+        }, "Timeout BOOM!", 10000)
+      }
+    })
+
+    it ('is an object', function () {
+      expect(tasks).toEqual(jasmine.any(Object));
+    });
+
+    it ('has a URL', function () {
+      runs(function(){
+        console.log(tasks);
+        expect(tasks.url).toBe('https://staging-services.icg360.org/cru-4/pxcentral/api/rest/v1/tasks/');
+      });
+    });
+
+    it ('has a itemsPerPage count', function () {
+      runs(function(){
+        expect(tasks.itemsPerPage).toBe('100');
+      });
+    });
+
+    it ('has a totalItems count', function () {
+      runs(function(){
+        expect(tasks.totalItems).toBe('1298');
+      });
+    });
+
+    it ('knows what page it is on (1)', function () {
+      runs(function(){
+        expect(tasks.page).toBe('1');
+      });
+    });
+
+    it ('knows what its search criteria is', function () {
+      runs(function(){
+        expect(tasks.criteria).toBe('isAdmin=false&isPolicyManager=false');
+      });
+    });
+
+    it ('has a default collection of 100 models', function () {
+      runs(function(){
+        expect(tasks.length).toBe(100);
+        expect(tasks.models).toEqual(jasmine.any(Array));
+        expect(tasks.models.length).toEqual(100);
+      });
+    });
+
+    it ('can limit collection to 50 tasks', function () {
+      var callback = jasmine.createSpy();
+      tasks.getReferrals({ 'perPage' : 50 }, callback);
+      waitsFor(function() {
+        return callback.callCount > 0;
+      }, "Timeout BOOM!", 10000)
+      runs(function(){
+        expect(tasks.length).toBe(50);
+        expect(tasks.models).toEqual(jasmine.any(Array));
+        expect(tasks.models.length).toEqual(50);
+        expect(tasks.itemsPerPage).toBe('50');
+      });
+    });
+
+    it ('can get page number 4 of result set', function () {
+      var callback = jasmine.createSpy();
+      tasks.getReferrals({ 'page' : 4 }, callback);
+      waitsFor(function() {
+        return callback.callCount > 0;
+      }, "Timeout BOOM!", 10000)
+      runs(function(){
+        expect(tasks.page).toBe('4');
+      });
+    });
+
+    it ('can get just my referrals (darren.newton@arc90.com - 0)', function () {
+      var callback = jasmine.createSpy();
+      tasks.getReferrals({ 'OwningUnderwriter' : 'darren.newton@arc90.com' }, callback);
+      waitsFor(function() {
+        return callback.callCount > 0;
+      }, "Timeout BOOM!", 10000)
+      runs(function(){
+        expect(tasks.length).toBe(0);
+        expect(tasks.criteria).toBe('owningUnderwriter=darren.newton@arc90.com&isAdmin=false&isPolicyManager=false');
+      });
+    });
+
+  });
+
+
+  // REFERRAL QUEUE VIEW
+  describe('ReferralQueueView', function () {
+
+    // We need a Collection to test our View
+    var settings = {
+      pxcentral: 'https://staging-services.icg360.org/cru-4/pxcentral/api/rest/v1/tasks/',
+      digest  : 'Y3J1NHRAY3J1MzYwLmNvbTphYmMxMjM='
+    }
+
+    var tasks = new ReferralTaskCollection();
+    tasks.url = settings.pxcentral;
+    tasks.digest = settings.digest;
+
+    var ajax_count = 0;
+
+    // beforeEach(function(){
+    //   if (ajax_count < 1) {
+    //     var callback = jasmine.createSpy();
+    //     tasks.getReferrals({ 'perPage' : 50, 'page' : 4, 'status' : 'New,Pending' }, callback);
+    //     waitsFor(function() {
+    //       ajax_count++;
+    //       return callback.callCount > 0;
+    //     }, "Timeout BOOM!", 10000)
+    //   }
+    // })
+
+    // Make a view
+    var view = new ReferralQueueView({ collection : tasks });
+
+    it ('is an object', function () {
+      var callback = jasmine.createSpy();
+      tasks.getReferrals({ 'perPage' : 50, 'page' : 4, 'status' : 'New,Pending' }, callback);
+      waitsFor(function() {
+        return callback.callCount > 0;
+      }, "Timeout BOOM!", 10000)
+      expect(view).toEqual(jasmine.any(Object));
+      console.log(view);
+    });
+
+    describe ('it can generate ReferralTaskViews from the collection:', function () {
+      var callback = jasmine.createSpy();
+      tasks.getReferrals({ 'perPage' : 50, 'page' : 4, 'status' : 'New,Pending' }, callback);
+      waitsFor(function() {
+        return callback.callCount > 0;
+      }, "Timeout BOOM!", 10000)
+
+      it ('has an array of sub views', function(){
+        expect(view.TASK_VIEWS).toEqual(jasmine.any(Array));
+      })
+
+      it ('the sub views are objects and have models', function(){
+        expect(view.TASK_VIEWS[0]).toEqual(jasmine.any(Object));
+        expect(view.TASK_VIEWS[0].model).toEqual(jasmine.any(Object));
+      })
+
+      it ('the sub views are table rows', function(){
+        console.log(view.TASK_VIEWS[0]);
+        expect(view.TASK_VIEWS[0].el instanceof HTMLTableRowElement).toEqual(true);
+      })
+
+    });
+
+  });
+
 
 })
