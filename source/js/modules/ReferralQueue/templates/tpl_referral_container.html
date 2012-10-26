@@ -1,0 +1,41 @@
+<header class="module-referrals" id="module-referrals-{{cid}}">
+	<h1>New Business Referral Queue</h1>
+</header>
+<div id="referrals-loader-{{cid}}" class="referrals-loader">
+	<h2 id="referrals-spinner-{{cid}}"><span>Loading Referrals&hellip;</span></h2>
+</div>
+<table class="module-referrals">
+	<thead>
+		<tr>
+			<th><a class="referrals-sort-link" href="policy-number" data-dir="asc">Policy #</a></th>
+			<th><a class="referrals-sort-link" href="last-name" data-dir="asc">Last name</a></th>
+			<th><a class="referrals-sort-link" href="status" data-dir="asc">Status</a></th>
+			<th><a class="referrals-sort-link" href="last-updated" data-dir="asc">Last updated</a></th>
+			<th><a class="referrals-sort-link" href="type" data-dir="asc">Type</a></th>
+			<th><a class="referrals-sort-link" href="agent" data-dir="asc">Agent</a></th>
+			<th><a class="referrals-sort-link" href="assigned-to" data-dir="asc">Assigned to</a></th>
+		</tr>
+	</thead>
+	<tbody></tbody>
+</table>
+<div id="referrals-pagination-{{cid}}" class="module-referrals pagination">
+	<form action="pagination" method="get" accept-charset="utf-8">
+		<div class="pagination-a">
+			<span>Items </span>
+		</div>
+		<div class="pagination-b">
+			<label for="referrals-pagination-page-{{cid}}">Jump to page:</label>
+			<select class="referrals-pagination-page" name="referrals-pagination-page" id="referrals-pagination-page-{{cid}}">
+			</select>
+		</div>
+		<div class="pagination-c">
+			<label for="referrals-pagination-perpage-{{cid}}">Result count:</label>
+			<select class="referrals-pagination-perpage" name="referrals-pagination-perpage" id="referrals-pagination-perpage-{{cid}}">
+				<option value="25" selected>25 per page</option>
+				<option value="50">50 per page</option>
+				<option value="75">75 per page</option>
+				<option value="100">100 per page</option>
+			</select>
+		</div>
+	</form>
+</div>
