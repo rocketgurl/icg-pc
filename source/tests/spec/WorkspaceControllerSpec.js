@@ -289,7 +289,7 @@ define([
 
     it ('has a totalItems count', function () {
       runs(function(){
-        expect(tasks.totalItems).toBe('1298');
+        expect(tasks.totalItems).toBe('1299');
       });
     });
 
@@ -350,6 +350,70 @@ define([
       });
     });
 
+      describe('ReferralTaskModel', function () {
+        var settings = {
+          pxcentral: 'https://staging-services.icg360.org/cru-4/pxcentral/api/rest/v1/tasks/',
+          digest  : 'Y3J1NHRAY3J1MzYwLmNvbTphYmMxMjM='
+        }
+
+        var tasks = new ReferralTaskCollection();
+        tasks.url = settings.pxcentral;
+        tasks.digest = settings.digest;
+
+        var ajax_count = 0;
+        var callback = jasmine.createSpy();
+        tasks.getReferrals({ 'perPage' : 50, 'page' : 1, 'status' : 'New,Pending' }, callback);
+        waitsFor(function() {
+          return callback.callCount > 0;
+        }, "Timeout BOOM!", 10000)
+
+        it('is an object', function(){
+          expect(tasks.models[0]).toEqual(jasmine.any(Object));
+          console.log(tasks);
+        })
+
+        it('is assigned to someone', function(){
+          var count = [0,11,42,32,24,15,6,7];
+          _.each(count, function(num){
+            expect(tasks.models[num].getAssignedTo()).toEqual("Underwriter");
+          });
+        })
+
+        it('has an Owning Agent', function(){
+          var count = [0,1,23,31,13,25,48,17];
+          var names = [
+            'cru4t@cru360.com',
+            'cru4t@cru360.com',
+            'cru4t@cru360.com',
+            'geicova1',
+            'cru4t@cru360.com',
+            'cru4t@cru360.com',
+            '',
+            'cru4t@cru360.com'
+          ]
+          _.each(count, function(num){
+            expect(tasks.models[num].getOwningAgent()).toBe(names[_.indexOf(count, num)]);
+          });
+        })
+
+        it('is returns an object for its view', function(){
+          expect(tasks.models[0].getViewData()).toEqual(jasmine.any(Object));
+          var keys = [
+            'relatedQuoteId',
+            'insuredLastName',
+            'status',
+            'Type',
+            'lastUpdated',
+            'SubmittedBy'
+          ]
+          _.each(keys, function(key){
+            expect(_.has(tasks.models[0].getViewData(), key)).toEqual(true);
+          })
+          console.log(tasks.models[0].getViewData());
+        })
+
+      });
+
   });
 
 
@@ -381,6 +445,7 @@ define([
 
     // Make a view
     var view = new ReferralQueueView({ collection : tasks });
+    view.CONTAINER = $('<div></div>');
 
     it ('is an object', function () {
       var callback = jasmine.createSpy();
