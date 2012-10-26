@@ -55,9 +55,10 @@
       };
 
       AppRules.prototype.get_modules = function(app_name) {
+        console.log(["APP_NAME", app_name]);
         switch (app_name) {
           case 'policies':
-            return [this.policy_search];
+            return [this.policy_search, this.referral_queue];
           case 'rulesets':
             return [this.policy_search, this.add_app(this.rulesets)];
           case 'policyview':
@@ -103,6 +104,15 @@
         required: false,
         module: 'TestModule',
         params: null
+      };
+
+      AppRules.prototype.referral_queue = {
+        required: false,
+        module: 'ReferralQueue/ReferralQueueModule',
+        app: {
+          app: 'referral_queue',
+          app_label: 'Referrals'
+        }
       };
 
       AppRules.prototype["default"] = {
