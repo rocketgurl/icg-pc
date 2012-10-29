@@ -25,10 +25,10 @@ define [
 
         # Grab some pagination metadata from the response
         _.extend(this, {
-          criteria     : json.criteria
-          itemsPerPage : json.itemsPerPage
-          page         : json.page
-          totalItems   : json.totalItems
+          criteria   : json.criteria
+          perPage    : json.itemsPerPage
+          page       : json.page
+          totalItems : json.totalItems
         })
 
         return json.Task
@@ -43,7 +43,7 @@ define [
     # @param `response` _XML_ Task XML from server 
     #
     success : (collection, response) ->
-      console.log [collection, response] # stub
+      # console.log [collection, response] # stub
 
     # **Get Tasks from Server**  
     # We have the option to pass in a custom success callback to make
@@ -57,9 +57,11 @@ define [
       callback = callback || @success
       query    = query || {}
 
-      # Make sure we're always set for XML
+      # Make sure we're always set for XML and have some sensible defaults
       query = _.extend({
-          media : 'application/xml'
+          media             : 'application/xml'
+          OwningUnderwriter : @email
+          perPage           : 25
         }, query)
 
       @fetch(
@@ -74,3 +76,15 @@ define [
         error : (collection, response) ->
           console.log [collection, response]
       )
+
+    sortTasks : (field, direction) ->
+      @comparator = (a, b) ->
+
+        dir = if direction == 'asc' then 1 else -1
+
+        if a.get(field) < b.get(field) 
+          return dir
+        if a.get(field) > b.get(field) 
+          return -dir
+        0
+      @sort()

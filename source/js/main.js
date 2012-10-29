@@ -19,11 +19,14 @@
       loader: 'lib/heartcode-canvasloader',
       swfobject: 'lib/swfobject'
     },
-    priority: ['jquery'],
+    priority: ['jquery', 'xml2json', 'json'],
     shim: {
       'jquery': {
         deps: ['require'],
         exports: '$'
+      },
+      'xml2json': {
+        deps: ['jquery']
       },
       'json': {
         deps: ['jquery'],
@@ -37,7 +40,6 @@
         deps: ['jquery'],
         exports: 'CanvasLoader'
       },
-      'xml2json': ['jquery'],
       'swfobject': {
         deps: ['require'],
         exports: 'swfobject'

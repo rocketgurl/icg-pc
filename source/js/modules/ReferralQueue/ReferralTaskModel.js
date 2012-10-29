@@ -4,7 +4,9 @@
   define(['BaseModel', 'moment'], function(BaseModel, moment) {
     var ReferralTaskModel;
     return ReferralTaskModel = BaseModel.extend({
-      initialize: function() {},
+      initialize: function() {
+        return this.set('assignedTo', this.getAssignedTo());
+      },
       getAssignedTo: function() {
         switch (this.get('AssignedTo')) {
           case "Underwriting":
@@ -28,7 +30,7 @@
       },
       getViewData: function() {
         var attributes;
-        attributes = _.pick(this.attributes, 'relatedQuoteId', 'insuredLastName', 'status', 'Type', 'lastUpdated', 'SubmittedBy');
+        attributes = _.pick(this.attributes, 'relatedQuoteId', 'insuredLastName', 'status', 'Type', 'lastUpdated', 'SubmittedBy', 'assignedTo');
         moment.calendar = {
           lastDay: '[Yesterday at] LT',
           sameDay: '[Today at] LT',
@@ -38,7 +40,6 @@
           sameElse: 'LLL'
         };
         attributes.lastUpdated = moment(attributes.lastUpdated).calendar();
-        attributes.assignedTo = this.getAssignedTo();
         return attributes;
       }
     });

@@ -10,6 +10,7 @@ define [
   ReferralTaskModel = BaseModel.extend
 
     initialize : ->
+      @set('assignedTo', @getAssignedTo())
 
     # Determine who this task is assigned to based on values in XML
     getAssignedTo : ->
@@ -36,7 +37,8 @@ define [
           'status',
           'Type',
           'lastUpdated',
-          'SubmittedBy'
+          'SubmittedBy',
+          'assignedTo'
         )
       moment.calendar =
         lastDay  : '[Yesterday at] LT',
@@ -46,7 +48,6 @@ define [
         nextWeek : 'dddd [at] LT',
         sameElse : 'LLL'
       attributes.lastUpdated = moment(attributes.lastUpdated).calendar()
-      attributes.assignedTo = @getAssignedTo()
       attributes
 
 

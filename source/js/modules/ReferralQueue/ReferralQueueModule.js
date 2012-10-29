@@ -14,10 +14,12 @@
         this.TASKS = new ReferralTaskCollection();
         this.TASKS.url = this.controller.services.pxcentral + 'tasks';
         this.TASKS.digest = this.controller.user.get('digest');
+        this.TASKS.email = this.controller.user.get('email');
         this.QUEUE_VIEW = new ReferralQueueView({
           module: this,
           collection: this.TASKS,
-          view: this.view
+          view: this.view,
+          owner: this.controller.user.get('email')
         });
         this.messenger = new Messenger(this.QUEUE_VIEW, this.QUEUE_VIEW.cid);
       }

@@ -432,17 +432,6 @@ define([
 
     var ajax_count = 0;
 
-    // beforeEach(function(){
-    //   if (ajax_count < 1) {
-    //     var callback = jasmine.createSpy();
-    //     tasks.getReferrals({ 'perPage' : 50, 'page' : 4, 'status' : 'New,Pending' }, callback);
-    //     waitsFor(function() {
-    //       ajax_count++;
-    //       return callback.callCount > 0;
-    //     }, "Timeout BOOM!", 10000)
-    //   }
-    // })
-
     // Make a view
     var view = new ReferralQueueView({ collection : tasks });
     view.CONTAINER = $('<div></div>');

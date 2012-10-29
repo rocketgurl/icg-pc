@@ -5,6 +5,9 @@
     var ReferralTaskView;
     return ReferralTaskView = BaseView.extend({
       tagName: 'tr',
+      events: {
+        "click": "openPolicy"
+      },
       initialize: function(options) {
         this.PARENT_VIEW = options.parent_view || {};
         return this;
@@ -13,6 +16,16 @@
         var html;
         html = this.Mustache.render(tpl_row, this.model.getViewData());
         return this.$el.append(html);
+      },
+      openPolicy: function(e) {
+        var $el, params;
+        e.preventDefault();
+        $el = $(e.currentTarget);
+        params = {
+          url: this.model.get('relatedQuoteId')
+        };
+        this.PARENT_VIEW.MODULE.view.options.controller.launch_module('policyview', params);
+        return this.PARENT_VIEW.MODULE.view.options.controller.Router.append_module('policyview', params);
       }
     });
   });

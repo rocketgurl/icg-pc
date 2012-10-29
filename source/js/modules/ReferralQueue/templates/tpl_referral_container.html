@@ -1,5 +1,8 @@
 <header class="module-referrals" id="module-referrals-{{cid}}">
 	<h1>New Business Referral Queue</h1>
+	<ul id="referrals-switch-{{cid}}" class="referrals-switch">
+		<li class="active"><a href="myreferrals">My Referrals</a></li><li><a href="allreferrals">All Referrals</a></li>
+	</ul>
 </header>
 <div id="referrals-loader-{{cid}}" class="referrals-loader">
 	<h2 id="referrals-spinner-{{cid}}"><span>Loading Referrals&hellip;</span></h2>
@@ -7,13 +10,13 @@
 <table class="module-referrals">
 	<thead>
 		<tr>
-			<th><a class="referrals-sort-link" href="policy-number" data-dir="asc">Policy #</a></th>
-			<th><a class="referrals-sort-link" href="last-name" data-dir="asc">Last name</a></th>
+			<th><a class="referrals-sort-link" href="relatedQuoteId" data-dir="asc">Policy #</a></th>
+			<th><a class="referrals-sort-link" href="insuredLastName" data-dir="asc">Last name</a></th>
 			<th><a class="referrals-sort-link" href="status" data-dir="asc">Status</a></th>
-			<th><a class="referrals-sort-link" href="last-updated" data-dir="asc">Last updated</a></th>
-			<th><a class="referrals-sort-link" href="type" data-dir="asc">Type</a></th>
-			<th><a class="referrals-sort-link" href="agent" data-dir="asc">Agent</a></th>
-			<th><a class="referrals-sort-link" href="assigned-to" data-dir="asc">Assigned to</a></th>
+			<th><a class="referrals-sort-link" href="Type" data-dir="asc">Type</a></th>
+			<th><a class="referrals-sort-link" href="lastUpdated" data-dir="asc">Last updated</a></th>
+			<th><a class="referrals-sort-link" href="SubmittedBy" data-dir="asc">Agent</a></th>
+			<th><a class="referrals-sort-link" href="assignedTo" data-dir="asc">Assigned to</a></th>
 		</tr>
 	</thead>
 	<tbody></tbody>

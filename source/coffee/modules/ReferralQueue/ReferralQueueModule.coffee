@@ -21,12 +21,14 @@ define [
       @TASKS        = new ReferralTaskCollection()
       @TASKS.url    = @controller.services.pxcentral + 'tasks'
       @TASKS.digest = @controller.user.get 'digest'
+      @TASKS.email  = @controller.user.get 'email'
 
       #Setup view
       @QUEUE_VIEW = new ReferralQueueView(
         module     : this
         collection : @TASKS
         view       : @view
+        owner      : @controller.user.get 'email'
       )
 
       @messenger = new Messenger(@QUEUE_VIEW, @QUEUE_VIEW.cid)

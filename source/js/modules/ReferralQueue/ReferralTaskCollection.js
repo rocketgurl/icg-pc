@@ -12,7 +12,7 @@
           json = $.xml2json(response);
           _.extend(this, {
             criteria: json.criteria,
-            itemsPerPage: json.itemsPerPage,
+            perPage: json.itemsPerPage,
             page: json.page,
             totalItems: json.totalItems
           });
@@ -20,14 +20,14 @@
         }
         return false;
       },
-      success: function(collection, response) {
-        return console.log([collection, response]);
-      },
+      success: function(collection, response) {},
       getReferrals: function(query, callback) {
         callback = callback || this.success;
         query = query || {};
         query = _.extend({
-          media: 'application/xml'
+          media: 'application/xml',
+          OwningUnderwriter: this.email,
+          perPage: 25
         }, query);
         return this.fetch({
           data: query,
@@ -44,6 +44,20 @@
             return console.log([collection, response]);
           }
         });
+      },
+      sortTasks: function(field, direction) {
+        this.comparator = function(a, b) {
+          var dir;
+          dir = direction === 'asc' ? 1 : -1;
+          if (a.get(field) < b.get(field)) {
+            return dir;
+          }
+          if (a.get(field) > b.get(field)) {
+            return -dir;
+          }
+          return 0;
+        };
+        return this.sort();
       }
     });
   });

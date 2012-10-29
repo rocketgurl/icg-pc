@@ -4,6 +4,23 @@
   define(['BaseView', 'Helpers', 'Messenger', 'modules/ReferralQueue/ReferralTaskView', 'text!modules/ReferralQueue/templates/tpl_referral_container.html'], function(BaseView, Helpers, Messenger, ReferralTaskView, tpl_container) {
     var ReferralQueueView;
     return ReferralQueueView = BaseView.extend({
+      PAGINATION_EL: {},
+      SORT_CACHE: {},
+      OWNER_STATE: '',
+      events: {
+        "change .referrals-pagination-page": function() {
+          return this.paginateTasks(this.COLLECTION, this.PAGINATION_EL);
+        },
+        "change .referrals-pagination-perpage": function() {
+          return this.paginateTasks(this.COLLECTION, this.PAGINATION_EL);
+        },
+        "click .referrals-sort-link": function(e) {
+          return this.sortTasks(e, this.COLLECTION);
+        },
+        "click .referrals-switch li": function(e) {
+          return this.toggleOwner(e, this.COLLECTION, this.PAGINATION_EL);
+        }
+      },
       initialize: function(options) {
         this.MODULE = options.module || false;
         this.COLLECTION = options.collection || false;
@@ -23,10 +40,12 @@
         });
         this.$el.html(html);
         this.CONTAINER = this.$el.find('table.module-referrals tbody');
+        this.PAGINATION_EL = this.cachePaginationElements();
+        this.toggleLoader(true);
         return this;
       },
       renderTasks: function(collection) {
-        var task, _i, _len, _ref, _results,
+        var task, _i, _len, _ref,
           _this = this;
         this.TASK_VIEWS = collection.map(function(model) {
           return new ReferralTaskView({
@@ -34,13 +53,124 @@
             parent_view: _this
           });
         });
+        this.CONTAINER.html('');
         _ref = this.TASK_VIEWS;
-        _results = [];
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           task = _ref[_i];
-          _results.push(this.CONTAINER.append(task.render()));
+          this.CONTAINER.append(task.render());
         }
-        return _results;
+        this.toggleLoader();
+        return this.updatePagination(collection, this.PAGINATION_EL);
+      },
+      toggleOwner: function(e, collection, elements) {
+        var $el, query;
+        e.preventDefault();
+        $el = $(e.currentTarget);
+        console.log($el);
+        query = {
+          perPage: elements.per_page.val() || 25,
+          page: elements.jump_to.val() || 1
+        };
+        if ($el.hasClass('active')) {
+
+        } else {
+          $('.referrals-switch').find('li').removeClass('active');
+          $el.addClass('active');
+          if ($el.find('a').attr('href') === 'allreferrals') {
+            query.OwningUnderwriter = this.OWNER_STATE = '';
+          } else {
+            this.OWNER_STATE = this.options.owner;
+          }
+          this.toggleLoader(true);
+          return collection.getReferrals(query);
+        }
+      },
+      paginateTasks: function(collection, elements) {
+        var query;
+        query = {
+          perPage: elements.per_page.val() || 25,
+          page: elements.jump_to.val() || 1,
+          OwningUnderwriter: this.OWNER_STATE
+        };
+        this.toggleLoader(true);
+        return collection.getReferrals(query);
+      },
+      cachePaginationElements: function() {
+        return {
+          items: this.$el.find('.pagination-a'),
+          jump_to: this.$el.find('.referrals-pagination-page'),
+          per_page: this.$el.find('.referrals-pagination-perpage')
+        };
+      },
+      updatePagination: function(collection, elements) {
+        var current_page, end_position, pages, start_position, values;
+        end_position = collection.page * elements.per_page.val();
+        start_position = end_position - elements.per_page.val();
+        start_position = start_position === 0 ? 1 : start_position;
+        elements.items.find('span').html("Items " + start_position + " - " + end_position + " of " + collection.totalItems);
+        pages = _.range(1, Math.round(collection.totalItems / elements.per_page.val()));
+        current_page = parseInt(collection.page, 10);
+        values = _.map(pages, function(page) {
+          if (page === current_page) {
+            return $("<option value=\"" + page + "\" selected>" + page + "</option>");
+          } else {
+            return $("<option value=\"" + page + "\">" + page + "</option>");
+          }
+        });
+        return elements.jump_to.html(values);
+      },
+      toggleLoader: function(bool) {
+        if (bool && !(this.loader != null)) {
+          if ($('html').hasClass('lt-ie9') === false) {
+            this.loader = Helpers.loader("referrals-spinner-" + this.cid, 100, '#ffffff');
+            this.loader.setDensity(70);
+            this.loader.setFPS(48);
+          }
+          return $("#referrals-loader-" + this.cid).show();
+        } else {
+          if ((this.loader != null) && $('html').hasClass('lt-ie9') === false) {
+            this.loader.kill();
+            this.loader = null;
+          }
+          return $("#referrals-loader-" + this.cid).hide();
+        }
+      },
+      sortTasks: function(e, collection) {
+        var $el;
+        e.preventDefault();
+        $el = $(e.currentTarget);
+        this.SORT_CACHE = {
+          'sort': $el.attr('href'),
+          'sortdir': $el.data('dir')
+        };
+        this.remove_indicators();
+        collection.sortTasks(this.SORT_CACHE.sort, this.SORT_CACHE.sortdir);
+        if ($el.data('dir') === 'asc') {
+          $el.data('dir', 'desc');
+          return this.swap_indicator($el, '&#9660;');
+        } else {
+          $el.data('dir', 'asc');
+          return this.swap_indicator($el, '&#9650;');
+        }
+      },
+      swap_indicator: function(el, char) {
+        var reg, text;
+        text = el.html();
+        reg = /▲|▼/gi;
+        if (text.match('▲') || text.match('▼')) {
+          text = text.replace(reg, char);
+          return el.html(text);
+        } else {
+          return el.html(text + (" " + char));
+        }
+      },
+      remove_indicators: function() {
+        return $('.referrals-sort-link').each(function(index, el) {
+          var reg;
+          el = $(el);
+          reg = /▲|▼/gi;
+          return el.html(el.html().replace(reg, ''));
+        });
       }
     });
   });
