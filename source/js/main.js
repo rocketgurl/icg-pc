@@ -47,7 +47,7 @@
     }
   });
 
-  define(['jquery', 'underscore', 'backbone', 'WorkspaceController', 'UserModel', 'ConfigModel', 'WorkspaceStateModel', 'WorkspaceStateCollection', 'WorkspaceLoginView', 'WorkspaceCanvasView', 'WorkspaceNavView', 'WorkspaceRouter', 'modules/Search/SearchContextCollection', 'Messenger', 'base64', 'moment', 'MenuHelper', 'AppRules', 'Helpers', 'Cookie', 'xml2json', 'domReady'], function($, _, Backbone, WorkspaceController, UserModel, ConfigModel, WorkspaceStateModel, WorkspaceStateCollection, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter, SearchContextCollection, Messenger, Base64, moment, MenuHelper, AppRules, Helpers, Cookie, xml2json, domReady) {
+  require(['jquery', 'underscore', 'backbone', 'WorkspaceController', 'domReady', 'xml2json'], function($, _, Backbone, WorkspaceController, domReady) {
     return domReady(function() {
       window.workspace = WorkspaceController;
       return window.workspace.init();

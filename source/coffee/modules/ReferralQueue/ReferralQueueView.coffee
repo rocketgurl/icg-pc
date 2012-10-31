@@ -96,7 +96,6 @@ define [
     toggleOwner : (e, collection, elements) ->
       e.preventDefault()
       $el = $(e.currentTarget)
-      console.log $el
 
       query =
         perPage : elements.per_page.val() || 25

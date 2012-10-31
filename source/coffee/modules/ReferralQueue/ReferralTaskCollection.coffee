@@ -1,7 +1,6 @@
 define [
   'BaseCollection',
-  'modules/ReferralQueue/ReferralTaskModel',
-  'xml2json'
+  'modules/ReferralQueue/ReferralTaskModel'
 ], (BaseCollection, ReferralTaskModel) ->
 
   # Referral Tasks
@@ -21,7 +20,7 @@ define [
     # @return _JSON_
     parse : (response) ->
       if response
-        json = $.xml2json(response)
+        json = $.fn.xml2json(response)
 
         # Grab some pagination metadata from the response
         _.extend(this, {

@@ -73,7 +73,6 @@
         var $el, query;
         e.preventDefault();
         $el = $(e.currentTarget);
-        console.log($el);
         query = {
           perPage: elements.per_page.val() || 25,
           page: elements.jump_to.val() || 1

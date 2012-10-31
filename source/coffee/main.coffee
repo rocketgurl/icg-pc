@@ -35,30 +35,14 @@ require
         deps    : ['require']
         exports : 'swfobject' 
 
-define [
+require [
   'jquery',
   'underscore',
   'backbone',
   'WorkspaceController',
-  'UserModel',
-  'ConfigModel',
-  'WorkspaceStateModel',
-  'WorkspaceStateCollection',
-  'WorkspaceLoginView',
-  'WorkspaceCanvasView',
-  'WorkspaceNavView',
-  'WorkspaceRouter',
-  'modules/Search/SearchContextCollection',
-  'Messenger',
-  'base64',
-  'moment',
-  'MenuHelper',
-  'AppRules',
-  'Helpers',
-  'Cookie',
-  'xml2json',
-  'domReady'
-], ($, _, Backbone, WorkspaceController, UserModel, ConfigModel, WorkspaceStateModel, WorkspaceStateCollection, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter, SearchContextCollection, Messenger, Base64, moment, MenuHelper, AppRules, Helpers, Cookie, xml2json, domReady) ->
+  'domReady',
+  'xml2json'
+], ($, _, Backbone, WorkspaceController, domReady) ->
 
   # Initialize application when dom is ready
   domReady ->

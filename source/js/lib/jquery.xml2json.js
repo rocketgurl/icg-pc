@@ -22,10 +22,10 @@
 define(['jquery'], function($) {
 
   // Avoid collisions
-  (function($) {
+  // (function($) {
 
     // Add function to jQuery namespace
-    $.extend({
+    $.fn.extend({
 
       // converts xml documents and xml text to json object
       xml2json: function(xml, extended) {
@@ -158,7 +158,7 @@ define(['jquery'], function($) {
         // Utility functions End
         //### PARSER LIBRARY END
         // Convert plain text to xml
-        if(typeof xml == 'string') xml = $.text2xml(xml);
+        if(typeof xml == 'string') xml = $.fn.text2xml(xml);
 
         // Quick fail if not xml (or if this is a node)
         if(!xml.nodeType) return;
@@ -199,7 +199,7 @@ define(['jquery'], function($) {
       }
 
     }); // extend $
-  })($);
+  // })(jQuery);
 
 
 });
