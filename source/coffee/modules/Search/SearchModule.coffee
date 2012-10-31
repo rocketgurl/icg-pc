@@ -24,14 +24,12 @@ define [
       # Make sure the controller can handle multiple search data
       @view.options.controller.setup_search_storage()
       
-      # Kick off application
-      @load()
-      
+     
     # Any bootstrapping should happen here. When done remove the loader image.
     # view.remove_loader will callback Module.render()
     #
     load: () ->
-      @callback_delay 500, =>
+      @callback_delay 200, =>
         @view.remove_loader(true)
 
     # Do whatever rendering animation needs to happen here

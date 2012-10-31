@@ -7,9 +7,9 @@ define [
   'LocalStorageSync',
   'CrippledClientSync',
   'JSONAuthSync',
-  'xmlSync',
-  'xml2json'
-], ($, _, Backbone, Store, amplify, LocalStorageSync, CrippledClientSync, JSONAuthSync, XMLSync) ->
+  'Helpers',
+  'xmlSync'
+], ($, _, Backbone, Store, amplify, LocalStorageSync, CrippledClientSync, JSONAuthSync, Helpers, XMLSync) ->
 
   #### BaseModel
   #
@@ -18,6 +18,9 @@ define [
   # Backbone JSON handling. 
   # 
   BaseModel = Backbone.Model.extend
+
+    # make Helpers functions available to all models
+    Helpers : Helpers
 
     # store a ref to Backbone's sync so we can use it again
     backboneSync  : Backbone.sync
@@ -42,7 +45,7 @@ define [
           out.document   = $(tree)
           out.raw_xml    = xhr.responseText
           # out.string_xml = xmlstr
-          out.json       = $.xml2json(out.raw_xml)
+          out.json       = $.fn.xml2json(out.raw_xml)
       out
 
     # Response state (Hackety hack hack)

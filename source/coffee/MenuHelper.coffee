@@ -5,8 +5,7 @@ define [
   'mustache',
   'text!templates/tpl_main_nav.html',
   'text!templates/tpl_sub_nav_container.html',
-  'text!templates/tpl_sub_nav_ul.html',
-  'xml2json'
+  'text!templates/tpl_sub_nav_ul.html'
 ], (require, $, _, Mustache, tpl_main_nav, tpl_sub_nav_container, tpl_sub_nav_ul) ->
 
   #### Menu Helper
@@ -282,7 +281,7 @@ define [
     # key/val object (flatten that sucker a little)
     parse_application : (app) ->
       out = {}
-      app = $.xml2json(app)
+      app = $.fn.xml2json(app)
       _.each app.ConfigItem, (obj) =>
         if _.has obj, 'value'
           out[obj['name']] = obj['value'] 

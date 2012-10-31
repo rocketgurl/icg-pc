@@ -33,6 +33,8 @@ define [
       # Initialize module
       require ["modules/#{@options.module_type}"], (Module) =>
         @module = new Module(@, @app)
+        if _.has(Module.prototype, 'load')
+          @module.load()
 
       @render()
 
@@ -81,6 +83,8 @@ define [
     deactivate : ->
       @tab.removeClass('selected')
       @$el.hide();
+      if @module
+        @module.trigger 'deactivate'
 
     # Is this view activated? (boolean) 
     is_active : ->

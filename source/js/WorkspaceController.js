@@ -13,7 +13,8 @@
         pxcentral: './pxcentral/api/rest/v1/',
         ixlibrary: './ixlibrary/api/sdo/rest/v1/',
         ixdoc: './ixdoc/api/rest/v2/',
-        ixadmin: './config/ics/staging/ixadmin'
+        ixadmin: './config/ics/staging/ixadmin',
+        zendesk: 'https://staging-services.icg360.org/zendesk'
       }
     };
     valid_workspace = function(methodBody) {
@@ -298,9 +299,8 @@
         if (!_.isFunction(this.Amplify.store)) {
           this.check_workspace_state();
         }
-        raw_storage = this.Amplify.store();
-        if (raw_storage['ics_policy_central'] != null) {
-          raw_storage = raw_storage['ics_policy_central'];
+        raw_storage = this.Amplify.store('ics_policy_central');
+        if (raw_storage != null) {
           raw_id = _.keys(raw_storage)[0];
           if (raw_id != null) {
             workspaces = this.Workspaces.add({

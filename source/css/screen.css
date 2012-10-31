@@ -926,7 +926,7 @@ header.module-search i.icon-caret-down {
   color: #165788;
 }
 
-table.module-search, .ru-loss-history {
+table.module-search, .ru-loss-history, .zd-loss-history, table.module-referrals {
   margin: 0 0 20px 0;
   width: 100%;
   color: #4f4f4f;
@@ -935,54 +935,56 @@ table.module-search, .ru-loss-history {
   border-top: white 1px solid;
   box-shadow: #bababa 0 -1px 0;
 }
-table.module-search td, .ru-loss-history td,
+table.module-search td, .ru-loss-history td, .zd-loss-history td, table.module-referrals td,
 table.module-search th,
-.ru-loss-history th {
+.ru-loss-history th,
+.zd-loss-history th,
+table.module-referrals th {
   padding: 9px 5px;
 }
-table.module-search th, .ru-loss-history th {
+table.module-search th, .ru-loss-history th, .zd-loss-history th, table.module-referrals th {
   font-weight: bold;
 }
-table.module-search th a, .ru-loss-history th a {
+table.module-search th a, .ru-loss-history th a, .zd-loss-history th a, table.module-referrals th a {
   color: #007ac9;
   text-decoration: none;
 }
-table.module-search th a:hover, .ru-loss-history th a:hover, table.module-search th .policy-nav li a.select, .policy-nav li table.module-search th a.select, .ru-loss-history th .policy-nav li a.select, .policy-nav li .ru-loss-history th a.select {
+table.module-search th a:hover, .ru-loss-history th a:hover, .zd-loss-history th a:hover, table.module-referrals th a:hover, table.module-search th .policy-nav li a.select, .policy-nav li table.module-search th a.select, .ru-loss-history th .policy-nav li a.select, .policy-nav li .ru-loss-history th a.select, .zd-loss-history th .policy-nav li a.select, .policy-nav li .zd-loss-history th a.select, table.module-referrals th .policy-nav li a.select, .policy-nav li table.module-referrals th a.select {
   color: #165788;
 }
-table.module-search thead tr th, .ru-loss-history thead tr th {
+table.module-search thead tr th, .ru-loss-history thead tr th, .zd-loss-history thead tr th, table.module-referrals thead tr th {
   border-bottom: lightgrey 1px solid;
 }
-table.module-search tbody tr, .ru-loss-history tbody tr {
+table.module-search tbody tr, .ru-loss-history tbody tr, .zd-loss-history tbody tr, table.module-referrals tbody tr {
   background: none;
   border: 1px solid transparent;
 }
-table.module-search tbody tr:nth-child(odd), .ru-loss-history tbody tr:nth-child(odd) {
+table.module-search tbody tr:nth-child(odd), .ru-loss-history tbody tr:nth-child(odd), .zd-loss-history tbody tr:nth-child(odd), table.module-referrals tbody tr:nth-child(odd) {
   background-color: white;
 }
-table.module-search tbody tr:last-child td, .ru-loss-history tbody tr:last-child td {
+table.module-search tbody tr:last-child td, .ru-loss-history tbody tr:last-child td, .zd-loss-history tbody tr:last-child td, table.module-referrals tbody tr:last-child td {
   border-bottom: lightgrey 1px solid;
 }
-table.module-search tbody tr:hover td, .ru-loss-history tbody tr:hover td {
+table.module-search tbody tr:hover td, .ru-loss-history tbody tr:hover td, .zd-loss-history tbody tr:hover td, table.module-referrals tbody tr:hover td {
   background-color: #ffccff;
   border-top: #ff99ff 1px solid;
   border-bottom: #ff99ff 1px solid;
   color: #660066;
   cursor: pointer;
 }
-table.module-search tbody tr:hover td a, .ru-loss-history tbody tr:hover td a {
+table.module-search tbody tr:hover td a, .ru-loss-history tbody tr:hover td a, .zd-loss-history tbody tr:hover td a, table.module-referrals tbody tr:hover td a {
   color: #660066;
 }
-table.module-search tbody td a, .ru-loss-history tbody td a {
+table.module-search tbody td a, .ru-loss-history tbody td a, .zd-loss-history tbody td a, table.module-referrals tbody td a {
   color: #4f4f4f;
   text-decoration: none;
   text-transform: uppercase;
 }
-table.module-search tbody td a:hover, .ru-loss-history tbody td a:hover, table.module-search tbody td .policy-nav li a.select, .policy-nav li table.module-search tbody td a.select, .ru-loss-history tbody td .policy-nav li a.select, .policy-nav li .ru-loss-history tbody td a.select {
+table.module-search tbody td a:hover, .ru-loss-history tbody td a:hover, .zd-loss-history tbody td a:hover, table.module-referrals tbody td a:hover, table.module-search tbody td .policy-nav li a.select, .policy-nav li table.module-search tbody td a.select, .ru-loss-history tbody td .policy-nav li a.select, .policy-nav li .ru-loss-history tbody td a.select, .zd-loss-history tbody td .policy-nav li a.select, .policy-nav li .zd-loss-history tbody td a.select, table.module-referrals tbody td .policy-nav li a.select, .policy-nav li table.module-referrals tbody td a.select {
   text-decoration: underline;
 }
 
-.module-search.pagination {
+.module-search.pagination, .module-referrals.pagination {
   width: 100%;
   float: right;
   margin-right: 0;
@@ -1005,31 +1007,34 @@ table.module-search tbody td a:hover, .ru-loss-history tbody td a:hover, table.m
   -o-border-radius: 6px;
   border-radius: 6px;
 }
-.module-search.pagination form {
+.module-search.pagination form, .module-referrals.pagination form {
   padding: 0 10px;
 }
-.module-search.pagination span {
+.module-search.pagination span, .module-referrals.pagination span {
   position: relative;
   top: 3px;
 }
-.module-search.pagination span,
-.module-search.pagination label {
+.module-search.pagination span, .module-referrals.pagination span,
+.module-search.pagination label,
+.module-referrals.pagination label {
   color: #363636;
   font-weight: bold;
   text-shadow: 0 1px lightgrey;
 }
-.module-search.pagination .pagination-a,
+.module-search.pagination .pagination-a, .module-referrals.pagination .pagination-a,
 .module-search.pagination .pagination-b,
-.module-search.pagination .pagination-c {
+.module-referrals.pagination .pagination-b,
+.module-search.pagination .pagination-c,
+.module-referrals.pagination .pagination-c {
   width: 32.20339%;
   float: left;
   margin-right: 1.69492%;
   display: inline;
 }
-.module-search.pagination .pagination-b {
+.module-search.pagination .pagination-b, .module-referrals.pagination .pagination-b {
   text-align: center;
 }
-.module-search.pagination .pagination-c {
+.module-search.pagination .pagination-c, .module-referrals.pagination .pagination-c {
   float: right;
   margin-right: 0;
   #margin-left: -1em;
@@ -1114,7 +1119,7 @@ td.search-views-admin > a {
   text-decoration: none;
 }
 
-.search-loader, .ipm-loader {
+.search-loader, .ipm-loader, .referrals-loader {
   display: none;
   position: absolute;
   z-index: 1400;
@@ -1122,7 +1127,7 @@ td.search-views-admin > a {
   text-align: center;
   margin: 50px 0 0 0;
 }
-.search-loader h2, .ipm-loader h2 {
+.search-loader h2, .ipm-loader h2, .referrals-loader h2 {
   display: inline-block;
   margin: 10px auto;
   padding: 50px;
@@ -1134,7 +1139,7 @@ td.search-views-admin > a {
   font-size: 24px;
   font-size: 2.4rem;
 }
-.search-loader h2 span, .ipm-loader h2 span {
+.search-loader h2 span, .ipm-loader h2 span, .referrals-loader h2 span {
   display: block;
   margin: 0 0 20px 0;
 }
@@ -1192,6 +1197,10 @@ Module: Policy
   padding: 0;
 }
 
+.policy-flash {
+  min-height: 90%;
+}
+
 .policy-header {
   background: white;
   border: #ddd 1px solid;
@@ -1227,7 +1236,7 @@ Module: Policy
   color: #fe8400;
 }
 
-.ru-container, .ipm-container {
+.ru-container, .ipm-container, .zd-container {
   *zoom: 1;
   width: 96.4%;
   margin-left: auto;
@@ -1238,12 +1247,12 @@ Module: Policy
   background-color: #f4f4f4;
   display: none;
 }
-.ru-container:after, .ipm-container:after {
+.ru-container:after, .ipm-container:after, .zd-container:after {
   content: "";
   display: table;
   clear: both;
 }
-.ru-container h1, .ipm-container h1, .ru-container h2, .ipm-container h2 {
+.ru-container h1, .ipm-container h1, .zd-container h1, .ru-container h2, .ipm-container h2, .zd-container h2 {
   width: 100%;
   float: right;
   margin-right: 0;
@@ -1252,13 +1261,13 @@ Module: Policy
   font-weight: bold;
   margin: 15px 0 0 0;
 }
-.ru-container h1, .ipm-container h1 {
+.ru-container h1, .ipm-container h1, .zd-container h1 {
   color: #002857;
   font-size: 24px;
   font-size: 2.4rem;
   text-shadow: 0 1px white;
 }
-.ru-container h2, .ipm-container h2 {
+.ru-container h2, .ipm-container h2, .zd-container h2 {
   color: dimgrey;
   font-size: 18px;
   font-size: 1.8rem;
@@ -1347,7 +1356,7 @@ Module: Policy
   cursor: pointer;
 }
 
-.ru-loss-history {
+.ru-loss-history, .zd-loss-history {
   display: block;
   width: 100%;
   float: right;
@@ -1355,11 +1364,11 @@ Module: Policy
   #margin-left: -1em;
   display: inline;
 }
-.ru-loss-history td a {
+.ru-loss-history td a, .zd-loss-history td a {
   font-weight: bold;
   color: #007ac9 !important;
 }
-.ru-loss-history td:first-child {
+.ru-loss-history td:first-child, .zd-loss-history td:first-child {
   text-align: center;
 }
 
@@ -1453,4 +1462,85 @@ Module: Policy
 
 .ipm-loader h2 {
   margin-left: -100px;
+}
+
+.zd-loss-history {
+  width: 100%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+.zd-loss-history td {
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.zd-shim {
+  min-height: 50%;
+}
+
+.zd-loader {
+  text-align: center;
+  padding: 20px;
+}
+
+header.module-referrals {
+  margin: 0 0 20px 0;
+}
+header.module-referrals h1 {
+  font-weight: bold;
+  color: #002857;
+  font-size: 24px;
+  font-size: 2.4rem;
+  text-shadow: 0 1px white;
+  display: inline-block;
+  margin: 0 20px 0 0;
+}
+header.module-referrals ul {
+  display: inline-block;
+  position: relative;
+  top: -2px;
+}
+header.module-referrals li {
+  display: inline-block;
+  padding: 6px 14px 6px 14px;
+  border: dimgrey 1px solid;
+  margin: 0;
+  font-size: 14px;
+  font-size: 1.4rem;
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzdhN2E3YSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2JhYmFiYSIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #7a7a7a), color-stop(100%, #bababa));
+  background-image: -webkit-linear-gradient(#7a7a7a, #bababa);
+  background-image: -moz-linear-gradient(#7a7a7a, #bababa);
+  background-image: -o-linear-gradient(#7a7a7a, #bababa);
+  background-image: linear-gradient(#7a7a7a, #bababa);
+  box-shadow: 0 1px 1px white;
+}
+header.module-referrals li a {
+  color: white;
+  text-decoration: none;
+  text-shadow: 0 1px #002857;
+}
+header.module-referrals li:first-child {
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+  border-right: #002857 1px solid;
+}
+header.module-referrals li:last-child {
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+  border-left: #a1a1a1 1px solid;
+}
+header.module-referrals li.active {
+  border-color: #002857;
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzAwN2FjOSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzE2NTc4OCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-size: 100%;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #007ac9), color-stop(100%, #165788));
+  background-image: -webkit-linear-gradient(#007ac9, #165788);
+  background-image: -moz-linear-gradient(#007ac9, #165788);
+  background-image: -o-linear-gradient(#007ac9, #165788);
+  background-image: linear-gradient(#007ac9, #165788);
+}
+header.module-referrals li.active a {
+  color: white;
 }

@@ -8,7 +8,8 @@ define [
   'text!modules/Policy/templates/tpl_ipm_header.html',
   'text!modules/RenewalUnderwriting/templates/tpl_renewal_underwriting_wrapper.html',
   'modules/IPM/IPMModule'
-], (BaseView, Messenger, Base64, RenewalUnderwritingView, swfobject, tpl_policy_container, tpl_ipm_header, tpl_ru_wrapper, IPMModule) ->
+  'modules/ZenDesk/ZenDeskView',
+], (BaseView, Messenger, Base64, RenewalUnderwritingView, swfobject, tpl_policy_container, tpl_ipm_header, tpl_ru_wrapper, IPMModule, ZenDeskView) ->
 
   PolicyView = BaseView.extend
 
@@ -24,6 +25,7 @@ define [
       @el           = options.view.el
       @$el          = options.view.$el
       @controller   = options.view.options.controller
+      @services     = @controller.services
       @flash_loaded = false
 
       # If flash is not loaded, then on an activate event
@@ -31,11 +33,26 @@ define [
       # from loading always switching to the overview
       # on tab activation
       @on 'activate', () ->
-        if @flash_loaded is false
+        if @render()
           @show_overview()
           @teardown_ipmchanges()
 
+      # On deactivate we destroy the SWF compltely. We have to do this so we
+      # can fine window.reload() when you switch back to this tab, otherwise it
+      # reloads anyway, but doesn't get any of the data from the server, and
+      # is therefore useless
+      @on 'deactivate', () ->
+        @destroy_overview_swf()
+
+      @on 'loaded', () ->
+        # Our default state is to show the SWF overview
+        if @controller.active_view.cid == @options.view.cid
+          @trigger 'activate'
+
     render : (options) ->
+      if @render_state == true
+        true
+
       # Setup flash module & search container
       html = @Mustache.render $('#tpl-flash-message').html(), { cid : @cid }
       
@@ -47,7 +64,7 @@ define [
       # This is to make sure we only render the one time
       # as we have some weird issues where render is call 
       # multiple times (still tracking down.)
-      if @render_state is false
+      if @render_state == false
         @render_state = true
 
       # If this is a non-IPM policy then remove IPM changes from nav
@@ -63,6 +80,21 @@ define [
       # Get an array of our policy-nav actions
       @actions = @policy_nav_links.map (idx, item) -> return $(this).attr('href')
 
+      # Setup iframe for the Summary SWF
+      @build_and_load_swf_iframe()
+
+      # Hide the view
+      @$el.hide()
+
+      # Register flash message pubsub for this view
+      @messenger = new Messenger(@options.view, @cid)
+
+      true   
+
+
+    # Get policy properties (id, user.digest) and setup the iFrame for
+    # SWFObject, injecting said properties into object.
+    build_and_load_swf_iframe : ->
       # iFrame properties
       # props =
       #   policy_id : @model.get('pxServerIndex')
@@ -75,15 +107,6 @@ define [
       #   @iframe[0].contentWindow.inject_properties(props)
       #   @iframe[0].contentWindow.load_mxAdmin()
 
-      # Hide the view
-      @$el.hide()
-
-      # Register flash message pubsub for this view
-      @messenger = new Messenger(@options.view, @cid)      
-
-      if @controller.active_view.cid == @options.view.cid
-        @show_overview()
-        @teardown_ipmchanges()
 
     # Switch nav items on/off
     toggle_nav_state : (el) ->
@@ -140,10 +163,10 @@ define [
     # Size the iframe to the approximate view area of the workspace
     resize_element : (el, offset) ->
       offset = offset || 0
-      el_height = Math.floor((($(window).height() - (220 + offset))/$(window).height())*100) + "%"
+      el_height = Math.floor((($(window).height() - (184 + offset))/$(window).height())*100) + "%"
       el.css(
         'min-height' : el_height
-        'height'     : $(window).height() - (220 + offset)
+        'height'     : $(window).height() - (184 + offset)
         )
 
     # If the policy_header doesn't exist then build it, otherwise
@@ -162,10 +185,19 @@ define [
       # so we need to check if its there and drop it back in if its not
       if @$el.find("#policy-summary-#{@cid}").length is 0
         @$el.find("#policy-header-#{@cid}").after(@policy_summary)
-        @policy_summary = @$el.find("#policy-summary-#{@cid}")
+        @policy_summary = @$el.find("#policy-workspace-#{@cid}")
 
       if @policy_summary.length > 0
-        @resize_element @policy_summary
+        @resize_element @$el.find("#policy-workspace-#{@cid}")
+
+        # Now attach a resize event to the window to help Flash
+        resizer = _.bind(
+          ->
+            @resize_element(@$el.find("#policy-workspace-#{@cid}"))            
+          , this)
+        resize = _.debounce(resizer, 300);
+        $(window).resize(resize);
+
         # We need to hook into the correct flash container
         # using SWFObject (hackety hack hack)
         flash_obj = $(swfobject.getObjectById("policy-summary-#{@cid}"))
@@ -175,14 +207,14 @@ define [
         if _.isEmpty flash_obj
           flash_obj = $("#policy-summary-#{@cid}")
 
-        flash_obj.show()
+        flash_obj.css('visibility', 'visible').height('100%')
 
       if @flash_loaded is false
         swfobject.embedSWF(
           "../swf/PolicySummary.swf",
           "policy-summary-#{@cid}",
           "100%",
-          @policy_summary.height(),
+          "100%", # @policy_summary.height(),
           "9.0.0"
           null,
           null,
@@ -194,12 +226,15 @@ define [
             @flash_callback(e)
         )
 
-
-
     # Hide flash overview
     teardown_overview : ->
-      @policy_summary.hide()
-      $("#policy-summary-#{@cid}").hide()
+      # @policy_summary.hide()
+      $("#policy-summary-#{@cid}").css('visibility', 'hidden').height(0)
+
+    # Remove SWFObject/Flash
+    destroy_overview_swf : ->
+      swfobject.removeSWF("policy-summary-#{@cid}")
+      @flash_loaded = false
 
     flash_callback : (e) ->
       if not e.success or e.success is not true
@@ -286,6 +321,36 @@ define [
       $ru_el = $("#renewal-underwriting-#{@cid}")
       if $ru_el.length > 0
         @ru_container.hide()
+
+      if @policy_header
+        @policy_header.hide()
+        @$el.find("#policy-header-#{@cid}").hide()
+
+    show_servicerequests : ->
+      $zd_el = $("#zendesk-#{@cid}")
+      if $zd_el.length == 0
+        $("#policy-workspace-#{@cid}").append("<div id=\"zendesk-#{@cid}\" class=\"zd-container\"></div>")
+        $zd_el = $("#zendesk-#{@cid}")
+
+      @resize_element @$el.find("#policy-workspace-#{@cid}")
+
+      # If container not already loaded, then insert element into DOM
+      if @zd_container == null || @zd_container == undefined
+        @zd_container = new ZenDeskView({
+            $el         : $zd_el
+            policy      : @model
+            policy_view : this
+          }).fetch()
+      else
+        @zd_container.show()
+
+      # We need a policy_header
+      @build_policy_header()
+
+    teardown_servicerequests : ->
+      $zd_el = $("#zendesk-#{@cid}")
+      if $zd_el.length > 0
+        @zd_container.hide()
 
       if @policy_header
         @policy_header.hide()

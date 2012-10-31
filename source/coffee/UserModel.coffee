@@ -1,7 +1,6 @@
 define [
-  'BaseModel',
-  'base64'
-], (BaseModel, Base64) ->
+  'BaseModel'
+], (BaseModel) ->
 
   #### User
   #
@@ -20,7 +19,7 @@ define [
 
       # Create a digest for basic auth and remove password
       if @get('username') and @get('password')
-        @set {'digest' : Base64.encode "#{@get('username')}:#{@get('password')}"}
+        @set {'digest' : @Helpers.createDigest @get('username'), @get('password')}
         delete @attributes.password
 
     # Additional document parsing to load up User with more accessible

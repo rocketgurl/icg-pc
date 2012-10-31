@@ -35,6 +35,7 @@ define [
       ixlibrary   : './ixlibrary/api/sdo/rest/v1/'
       ixdoc       : './ixdoc/api/rest/v2/'
       ixadmin     : './config/ics/staging/ixadmin' # TESTING ONLY
+      zendesk     : 'https://staging-services.icg360.org/zendesk'
 
   # Method Combinator (Decorator) 
   # https://github.com/raganwald/method-combinators
@@ -388,12 +389,10 @@ define [
       # Hit localStorage directly with Amplify
       if !_.isFunction(@Amplify.store)
         @check_workspace_state()
-      raw_storage = @Amplify.store()
-
+      raw_storage = @Amplify.store('ics_policy_central')
       # If already a PC2 object then add a model with its ID and fetch()
       # otherwise create a new model (which will get a new GUID)
-      if raw_storage['ics_policy_central']?
-        raw_storage = raw_storage['ics_policy_central']
+      if raw_storage?
         raw_id = _.keys(raw_storage)[0]
         if raw_id?
           workspaces = @Workspaces.add(
@@ -426,7 +425,7 @@ define [
     # that models are passed around to many instances of 
     # SearchModule. It's a hack, but it works for now.
     setup_search_storage : ->
-      if not @SEARCH?.saved_searches?
+      if !@SEARCH?.saved_searches?
 
         # if !_.isFunction(SearchContextCollection)
         #   throw new Error('SearchContextCollection is not loaded properly')

@@ -10,12 +10,38 @@
       amplify    : 'lib/amplify',
       mustache   : 'lib/requirejs.mustache',
       base64     : 'lib/base64',
+      moment     : 'lib/moment',
       xml2json   : 'lib/jquery.xml2json',
       text       : 'lib/text',
       domReady   : 'lib/domReady',
       json       : 'lib/json2',
       loader     : 'lib/heartcode-canvasloader',
       swfobject  : 'lib/swfobject'
+    },
+    shim: {
+      'jquery': {
+        deps: ['require'],
+        exports: '$'
+      },
+      'xml2json': {
+        deps: ['jquery']
+      },
+      'json': {
+        deps: ['jquery'],
+        exports: 'JSON'
+      },
+      'amplify': {
+        deps: ['jquery', 'json'],
+        exports: 'amplify'
+      },
+      'loader': {
+        deps: ['jquery'],
+        exports: 'CanvasLoader'
+      },
+      'swfobject': {
+        deps: ['require'],
+        exports: 'swfobject'
+      }
     },
     modules: [
         {
@@ -55,6 +81,17 @@
                 "underscore",
                 "swfobject"
             ]
+        },
+        {
+            name : "modules/ReferralQueue/ReferralQueueModule",
+            exclude: [
+                "jquery",
+                "backbone",
+                "mustache",
+                "amplify",
+                "underscore"
+            ]
         }
-    ]
+    ],
+    preserveLicenseComments: false
 })

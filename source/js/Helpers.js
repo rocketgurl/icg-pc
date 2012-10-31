@@ -58,6 +58,26 @@
       },
       random: function(min, max) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
+      },
+      createDigest: function(username, password) {
+        return Base64.encode("" + username + ":" + password);
+      },
+      XMLToString: function(oXML) {
+        if (window.ActiveXObject) {
+          return oXML.xml;
+        } else {
+          return (new XMLSerializer()).serializeToString(oXML);
+        }
+      },
+      XMLFromString: function(sXML) {
+        var oXML;
+        if (window.ActiveXObject) {
+          oXML = new ActiveXObject("Microsoft.XMLDOM");
+          oXML.loadXML(sXML);
+          return oXML;
+        } else {
+          return (new DOMParser()).parseFromString(sXML, "text/xml");
+        }
       }
     };
     return Helpers;

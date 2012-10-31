@@ -50,9 +50,10 @@ define [
 
     # Determine which module definitions to return
     get_modules : (app_name) ->
+      console.log ["APP_NAME", app_name]
       switch app_name
         when 'policies'
-          [@policy_search]
+          [@policy_search, @referral_queue]
         when 'rulesets'
           [@policy_search, @add_app(@rulesets)]
         when 'policyview'
@@ -92,6 +93,13 @@ define [
       required : false
       module   : 'TestModule'
       params   : null
+
+    referral_queue :
+      required : false
+      module : 'ReferralQueue/ReferralQueueModule'
+      app :
+        app       : 'referral_queue'
+        app_label : 'Referrals'
 
     default :
       required : false
