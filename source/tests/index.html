@@ -33,7 +33,8 @@
           domReady   : 'lib/domReady',
           json       : 'lib/json2',
           loader     : 'lib/heartcode-canvasloader',
-          swfobject  : 'lib/swfobject'
+          swfobject  : 'lib/swfobject',
+          moment     : 'lib/moment'
         },
         priority: ['jquery'],
         shim: {
@@ -59,9 +60,11 @@
 
       require([
         "jquery",
+        "moment",
         "../tests/spec/WorkspaceControllerSpec",
+        "../tests/spec/ReferralQueueViewSpec",
         "domReady"],
-        function($, TestSpec, domReady) {
+        function($, moment, WorkspaceControllerSpec, ReferralQueueViewSpec, domReady) {
         return domReady(function() {
             var jasmineEnv = jasmine.getEnv();
             jasmineEnv.updateInterval = 1000;
@@ -86,4 +89,8 @@
 
 <body>
 </body>
+    <!-- TEMPLATE: Flash Message Container -->
+    <script type="text/template" id="tpl-flash-message">
+      <div id="flash-message-{{cid}}" class="flash-message"></div>
+    </script>
 </html>

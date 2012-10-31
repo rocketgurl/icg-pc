@@ -26,11 +26,11 @@ define([
     // Setup ENV
     beforeEach(function(){
       WorkspaceController.services = {
-        ixdirectory: 'http://policycentral.dev/ixdirectory/api/rest/v2/',
-        pxcentral: 'http://policycentral.dev/pxcentral/api/rest/v1/',
-        ixlibrary: 'http://policycentral.dev/ixlibrary/api/sdo/rest/v1/',
-        ixdoc: 'http://policycentral.dev/ixdoc/api/rest/v2/',
-        ixadmin: 'http://policycentral.dev/config/ics/staging/ixadmin'
+        ixdirectory: 'https://policycentral.dev/ixdirectory/api/rest/v2/',
+        pxcentral: 'https://policycentral.dev/pxcentral/api/rest/v1/',
+        ixlibrary: 'https://policycentral.dev/ixlibrary/api/sdo/rest/v1/',
+        ixdoc: 'https://policycentral.dev/ixdoc/api/rest/v2/',
+        ixadmin: 'https://policycentral.dev/config/ics/staging/ixadmin'
       };
     });
 
@@ -262,7 +262,7 @@ define([
     beforeEach(function(){
       if (ajax_count < 1) {
         var callback = jasmine.createSpy();
-        tasks.getReferrals({}, callback);
+        tasks.getReferrals({ OwningUnderwriter : '' }, callback);
         waitsFor(function() {
           ajax_count++;
           return callback.callCount > 0;
@@ -281,9 +281,9 @@ define([
       });
     });
 
-    it ('has a itemsPerPage count', function () {
+    it ('has a PerPage count', function () {
       runs(function(){
-        expect(tasks.itemsPerPage).toBe('100');
+        expect(tasks.perPage).toBe('25');
       });
     });
 
@@ -305,17 +305,17 @@ define([
       });
     });
 
-    it ('has a default collection of 100 models', function () {
+    it ('has a default collection of 25 models', function () {
       runs(function(){
-        expect(tasks.length).toBe(100);
+        expect(tasks.length).toBe(25);
         expect(tasks.models).toEqual(jasmine.any(Array));
-        expect(tasks.models.length).toEqual(100);
+        expect(tasks.models.length).toEqual(25);
       });
     });
 
     it ('can limit collection to 50 tasks', function () {
       var callback = jasmine.createSpy();
-      tasks.getReferrals({ 'perPage' : 50 }, callback);
+      tasks.getReferrals({ 'perPage' : 50, 'OwningUnderwriter' : '' }, callback);
       waitsFor(function() {
         return callback.callCount > 0;
       }, "Timeout BOOM!", 10000)
@@ -323,7 +323,7 @@ define([
         expect(tasks.length).toBe(50);
         expect(tasks.models).toEqual(jasmine.any(Array));
         expect(tasks.models.length).toEqual(50);
-        expect(tasks.itemsPerPage).toBe('50');
+        expect(tasks.perPage).toBe('50');
       });
     });
 
@@ -356,26 +356,33 @@ define([
           digest  : 'Y3J1NHRAY3J1MzYwLmNvbTphYmMxMjM='
         }
 
-        var tasks = new ReferralTaskCollection();
-        tasks.url = settings.pxcentral;
-        tasks.digest = settings.digest;
+        var tasks2 = new ReferralTaskCollection();
+        tasks2.url = settings.pxcentral;
+        tasks2.digest = settings.digest;
 
         var ajax_count = 0;
         var callback = jasmine.createSpy();
-        tasks.getReferrals({ 'perPage' : 50, 'page' : 1, 'status' : 'New,Pending' }, callback);
-        waitsFor(function() {
-          return callback.callCount > 0;
-        }, "Timeout BOOM!", 10000)
+
+        beforeEach(function(){
+          if (ajax_count < 1) {
+            var callback = jasmine.createSpy();
+            tasks2.getReferrals({ 'perPage' : 50, 'page' : 1, 'status' : 'New,Pending', 'OwningUnderwriter' : '' }, callback);
+            waitsFor(function() {
+              ajax_count++;
+              return callback.callCount > 0;
+            }, "Timeout BOOM!", 10000)
+          }
+        })
 
         it('is an object', function(){
-          expect(tasks.models[0]).toEqual(jasmine.any(Object));
-          console.log(tasks);
+          expect(tasks2.models[0]).toEqual(jasmine.any(Object));
+          console.log(tasks2);
         })
 
         it('is assigned to someone', function(){
           var count = [0,11,42,32,24,15,6,7];
           _.each(count, function(num){
-            expect(tasks.models[num].getAssignedTo()).toEqual("Underwriter");
+            expect(tasks2.models[num].getAssignedTo()).toEqual("Underwriter");
           });
         })
 
@@ -392,12 +399,12 @@ define([
             'cru4t@cru360.com'
           ]
           _.each(count, function(num){
-            expect(tasks.models[num].getOwningAgent()).toBe(names[_.indexOf(count, num)]);
+            expect(tasks2.models[num].getOwningAgent()).toBe(names[_.indexOf(count, num)]);
           });
         })
 
         it('is returns an object for its view', function(){
-          expect(tasks.models[0].getViewData()).toEqual(jasmine.any(Object));
+          expect(tasks2.models[0].getViewData()).toEqual(jasmine.any(Object));
           var keys = [
             'relatedQuoteId',
             'insuredLastName',
@@ -407,69 +414,13 @@ define([
             'SubmittedBy'
           ]
           _.each(keys, function(key){
-            expect(_.has(tasks.models[0].getViewData(), key)).toEqual(true);
+            expect(_.has(tasks2.models[0].getViewData(), key)).toEqual(true);
           })
-          console.log(tasks.models[0].getViewData());
+          console.log(tasks2.models[0].getViewData());
         })
 
       });
 
   });
-
-
-  // REFERRAL QUEUE VIEW
-  describe('ReferralQueueView', function () {
-
-    // We need a Collection to test our View
-    var settings = {
-      pxcentral: 'https://staging-services.icg360.org/cru-4/pxcentral/api/rest/v1/tasks/',
-      digest  : 'Y3J1NHRAY3J1MzYwLmNvbTphYmMxMjM='
-    }
-
-    var tasks = new ReferralTaskCollection();
-    tasks.url = settings.pxcentral;
-    tasks.digest = settings.digest;
-
-    var ajax_count = 0;
-
-    // Make a view
-    var view = new ReferralQueueView({ collection : tasks });
-    view.CONTAINER = $('<div></div>');
-
-    it ('is an object', function () {
-      var callback = jasmine.createSpy();
-      tasks.getReferrals({ 'perPage' : 50, 'page' : 4, 'status' : 'New,Pending' }, callback);
-      waitsFor(function() {
-        return callback.callCount > 0;
-      }, "Timeout BOOM!", 10000)
-      expect(view).toEqual(jasmine.any(Object));
-      console.log(view);
-    });
-
-    describe ('it can generate ReferralTaskViews from the collection:', function () {
-      var callback = jasmine.createSpy();
-      tasks.getReferrals({ 'perPage' : 50, 'page' : 4, 'status' : 'New,Pending' }, callback);
-      waitsFor(function() {
-        return callback.callCount > 0;
-      }, "Timeout BOOM!", 10000)
-
-      it ('has an array of sub views', function(){
-        expect(view.TASK_VIEWS).toEqual(jasmine.any(Array));
-      })
-
-      it ('the sub views are objects and have models', function(){
-        expect(view.TASK_VIEWS[0]).toEqual(jasmine.any(Object));
-        expect(view.TASK_VIEWS[0].model).toEqual(jasmine.any(Object));
-      })
-
-      it ('the sub views are table rows', function(){
-        console.log(view.TASK_VIEWS[0]);
-        expect(view.TASK_VIEWS[0].el instanceof HTMLTableRowElement).toEqual(true);
-      })
-
-    });
-
-  });
-
 
 })
