@@ -64,4 +64,21 @@ define [
     createDigest : (username, password) ->
       Base64.encode "#{username}:#{password}"
 
+    # Convert an XML object to a string
+    XMLToString : (oXML) ->
+      if (window.ActiveXObject)
+        oXML.xml;
+      else
+        (new XMLSerializer()).serializeToString(oXML);
+
+    # Create an XML object from a string using the browser's DOMParser
+    XMLFromString : (sXML) ->
+      if (window.ActiveXObject)
+        oXML = new ActiveXObject("Microsoft.XMLDOM")
+        oXML.loadXML(sXML)
+        oXML
+      else
+        (new DOMParser()).parseFromString(sXML, "text/xml")
+
+
   Helpers
