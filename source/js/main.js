@@ -49,6 +49,11 @@
 
   require(['jquery', 'underscore', 'backbone', 'WorkspaceController', 'domReady', 'xml2json'], function($, _, Backbone, WorkspaceController, domReady) {
     return domReady(function() {
+      if ($.fn.xml2json === void 0) {
+        require(["xml2json"], function(xml2json) {
+          return console.log(xml2json);
+        });
+      }
       window.workspace = WorkspaceController;
       return window.workspace.init();
     });

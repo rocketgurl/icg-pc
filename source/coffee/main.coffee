@@ -46,6 +46,12 @@ require [
 
   # Initialize application when dom is ready
   domReady ->
+
+    if $.fn.xml2json == undefined
+      require ["xml2json"], (xml2json) ->
+        console.log xml2json
+
+
     # Oh yes we did! Attached WorkspaceController to the window,
     # because it makes debugging a helluva lot easier.
     window.workspace = WorkspaceController
