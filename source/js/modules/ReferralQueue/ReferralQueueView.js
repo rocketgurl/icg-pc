@@ -26,6 +26,7 @@
         this.COLLECTION = options.collection || false;
         this.PARENT_VIEW = options.view || false;
         this.COLLECTION.bind('reset', this.renderTasks, this);
+        this.COLLECTION.bind('error', this.tasksError, this);
         this.el = this.PARENT_VIEW.el;
         return this.$el = this.PARENT_VIEW.$el;
       },
@@ -39,6 +40,7 @@
           pagination: {}
         });
         this.$el.html(html);
+        this.messenger = new Messenger(this.PARENT_VIEW, this.cid);
         this.CONTAINER = this.$el.find('table.module-referrals tbody');
         this.PAGINATION_EL = this.cachePaginationElements();
         this.toggleLoader(true);
@@ -61,6 +63,11 @@
         }
         this.toggleLoader();
         return this.updatePagination(collection, this.PAGINATION_EL);
+      },
+      tasksError: function(collection, response) {
+        this.toggleLoader();
+        this.Amplify.publish(this.cid, 'warning', "Could not load referrals: " + response.status + " - " + response.statusText);
+        return console.log(["tasksError", collection, response]);
       },
       toggleOwner: function(e, collection, elements) {
         var $el, query;
@@ -120,6 +127,9 @@
         return elements.jump_to.html(values);
       },
       toggleLoader: function(bool) {
+        if ($("#referrals-spinner-" + this.cid).length < 1) {
+          return false;
+        }
         if (bool && !(this.loader != null)) {
           if ($('html').hasClass('lt-ie9') === false) {
             this.loader = Helpers.loader("referrals-spinner-" + this.cid, 100, '#ffffff');
@@ -170,6 +180,58 @@
           el = $(el);
           reg = /▲|▼/gi;
           return el.html(el.html().replace(reg, ''));
+        });
+      },
+      assigneeListSuccess: function(data, status, xhr) {
+        if ((data != null) && status === 'success') {
+          return this.ASSIGNEE_LIST = $(data);
+        }
+      },
+      getAssigneeList: function(url, callback) {
+        var _this = this;
+        url = url || this.MODULE.controller.services.ixlibrary + 'buckets/underwriting/objects/assignee_list.xml';
+        callback = callback || this.assigneeListSuccess;
+        return $.ajax({
+          url: url,
+          type: 'GET',
+          dataType: 'xml',
+          contentType: 'application/xml',
+          headers: {
+            'Authorization': "Basic " + this.COLLECTION.digest,
+            'X-Authorization': "Basic " + this.COLLECTION.digest
+          },
+          success: function(data, textStatus, jqXHR) {
+            console.log(["assigneeListSuccess", data, textStatus]);
+            return callback.apply(_this, [data, textStatus, jqXHR]);
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+            return console.log(jqXHR);
+          }
+        });
+      },
+      putAssigneeList: function(url, callback, list) {
+        var _this = this;
+        url = url || this.MODULE.controller.services.ixlibrary + 'buckets/underwriting/objects/assignee_list.xml';
+        callback = callback || this.assigneeListSuccess;
+        return $.ajax({
+          url: url,
+          type: 'POST',
+          dataType: 'xml',
+          contentType: 'application/xml',
+          data: Helpers.XMLToString(list),
+          headers: {
+            'Authorization': "Basic " + this.COLLECTION.digest,
+            'X-Authorization': "Basic " + this.COLLECTION.digest,
+            'X-Crippled-Client': "yes",
+            'X-Rest-Method': "PUT"
+          },
+          success: function(data, textStatus, jqXHR) {
+            console.log(["assigneeListSuccess", data, textStatus]);
+            return callback.apply(_this, [data, textStatus, jqXHR]);
+          },
+          error: function(jqXHR, textStatus, errorThrown) {
+            return console.log(jqXHR);
+          }
         });
       }
     });

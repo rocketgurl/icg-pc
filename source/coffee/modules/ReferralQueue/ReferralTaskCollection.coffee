@@ -42,8 +42,16 @@ define [
     # @param `collection` _Object_ ReferralTaskCollection  
     # @param `response` _XML_ Task XML from server 
     #
-    success : (collection, response) ->
+    success_callback : (collection, response) ->
       # console.log [collection, response] # stub
+
+    # **Error callback**  
+    #
+    # @param `collection` _Object_ ReferralTaskCollection  
+    # @param `response` _XML_ Task XML from server 
+    #
+    error_callback : (collection, response) ->
+      collection.trigger 'error', collection, response
 
     # **Get Tasks from Server**  
     # We have the option to pass in a custom success callback to make
@@ -54,8 +62,9 @@ define [
     # @param `callback` _Function_ function to call on AJAX success  
     #
     getReferrals : (query, callback) ->
-      callback = callback || @success
-      query    = query || {}
+      success_callback = callback || @success_callback
+      error_callback   = @error_callback
+      query            = query || {}
 
       # Make sure we're always set for XML and have some sensible defaults
       query = _.extend({
@@ -72,16 +81,21 @@ define [
           'Authorization'   : "Basic #{@digest}"
           'X-Authorization' : "Basic #{@digest}"
         success : (collection, response) ->
-          callback.apply(this, [collection, response])
+          success_callback.apply(this, [collection, response])
         error : (collection, response) ->
-          console.log [collection, response]
+          error_callback.apply(this, [collection, response])
       )
 
+    # **Sort columns**  
+    # Set the comparator on the collection and then force a sort. This will
+    # trigger a reset on the collection and re-render it.
+    #
+    # @param `field` _String_ Column name  
+    # @param `direction` _String_ ASC || DESC 
+    #
     sortTasks : (field, direction) ->
       @comparator = (a, b) ->
-
         dir = if direction == 'asc' then 1 else -1
-
         if a.get(field) < b.get(field) 
           return dir
         if a.get(field) > b.get(field) 

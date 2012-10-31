@@ -29,6 +29,7 @@ define [
 
       # When the collection is populated, generate the views
       @COLLECTION.bind('reset', @renderTasks, this);
+      @COLLECTION.bind('error', @tasksError, this);
 
       # Setup our DOM hooks
       @el  = @PARENT_VIEW.el
@@ -39,6 +40,9 @@ define [
       html = @Mustache.render $('#tpl-flash-message').html(), { cid : @cid }
       html += @Mustache.render tpl_container, { cid : @cid, pagination: {} }
       @$el.html html
+
+      # Setup Flash Messenger
+      @messenger = new Messenger(@PARENT_VIEW, @cid)
 
       # Find the container to load rows into
       @CONTAINER = @$el.find('table.module-referrals tbody')
@@ -73,6 +77,22 @@ define [
       @toggleLoader()
       @updatePagination(collection, @PAGINATION_EL)
 
+    # Handle server errors from the Tasks Collection
+    #
+    # @param `collection` _Object_ ReferralTaskCollection  
+    # @param `response` _jqXHR_ Response object  
+    #
+    tasksError : (collection, response) ->
+      @toggleLoader()
+      @Amplify.publish @cid, 'warning', "Could not load referrals: #{response.status} - #{response.statusText}"
+      console.log ["tasksError", collection, response]
+
+    # Toggle the owner field on the UI and trigger collection.getReferrals()
+    #
+    # @param `e` _Event_
+    # @param `collection` _Object_ ReferralTaskCollection  
+    # @param `elements` _Object_ Cached jQuery HTML Elements  
+    #
     toggleOwner : (e, collection, elements) ->
       e.preventDefault()
       $el = $(e.currentTarget)
@@ -143,6 +163,10 @@ define [
 
     # Place a loading animation on top of the content
     toggleLoader : (bool) ->
+      # If this is empty we're probably testing
+      if $("#referrals-spinner-#{@cid}").length < 1
+        return false
+
       if bool and !@loader?
         if $('html').hasClass('lt-ie9') is false
           @loader = Helpers.loader("referrals-spinner-#{@cid}", 100, '#ffffff')
@@ -199,4 +223,53 @@ define [
         el = $(el)
         reg = /▲|▼/gi
         el.html(el.html().replace(reg, ''))
+
+
+    # Success Callback for Assignee List GET/'PUT'  
+    # loads ASSIGNEE_LIST with result XML
+    #
+    # @param `data` _XML_ Response from server  
+    # @param `status` _String_ HTTP success/fail    
+    # @param `xhr` _jqXHR_ jQuery XHR object   
+    #
+    assigneeListSuccess : (data, status, xhr) ->
+      if data? && status == 'success'
+        @ASSIGNEE_LIST = $(data)
+
+    getAssigneeList : (url, callback) ->
+      url = url || @MODULE.controller.services.ixlibrary + 'buckets/underwriting/objects/assignee_list.xml' 
+      callback = callback || @assigneeListSuccess
+      $.ajax
+        url         : url
+        type        : 'GET'
+        dataType    : 'xml'
+        contentType : 'application/xml'
+        headers     :
+          'Authorization'   : "Basic #{@COLLECTION.digest}"
+          'X-Authorization' : "Basic #{@COLLECTION.digest}"
+        success : (data, textStatus, jqXHR) =>
+          console.log ["assigneeListSuccess", data, textStatus]
+          callback.apply(this, [data, textStatus, jqXHR])
+        error: (jqXHR, textStatus, errorThrown) =>
+          console.log jqXHR
+
+    putAssigneeList : (url, callback, list) ->
+      url = url || @MODULE.controller.services.ixlibrary + 'buckets/underwriting/objects/assignee_list.xml' 
+      callback = callback || @assigneeListSuccess
+      $.ajax
+        url         : url
+        type        : 'POST'
+        dataType    : 'xml'
+        contentType : 'application/xml'
+        data        : Helpers.XMLToString list
+        headers     :
+          'Authorization'     : "Basic #{@COLLECTION.digest}"
+          'X-Authorization'   : "Basic #{@COLLECTION.digest}"
+          'X-Crippled-Client' : "yes"
+          'X-Rest-Method'     : "PUT"
+        success : (data, textStatus, jqXHR) =>
+          console.log ["assigneeListSuccess", data, textStatus]
+          callback.apply(this, [data, textStatus, jqXHR])
+        error: (jqXHR, textStatus, errorThrown) =>
+          console.log jqXHR
 

@@ -31,8 +31,6 @@ define [
         owner      : @controller.user.get 'email'
       )
 
-      @messenger = new Messenger(@QUEUE_VIEW, @QUEUE_VIEW.cid)
-
     # Remove loader graphic. This will cause the CanvasView to trigger our
     # render() method 
     load : ->

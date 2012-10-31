@@ -21,7 +21,6 @@
           view: this.view,
           owner: this.controller.user.get('email')
         });
-        this.messenger = new Messenger(this.QUEUE_VIEW, this.QUEUE_VIEW.cid);
       }
 
       ReferralQueue.prototype.load = function() {

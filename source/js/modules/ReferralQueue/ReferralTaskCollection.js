@@ -20,9 +20,14 @@
         }
         return false;
       },
-      success: function(collection, response) {},
+      success_callback: function(collection, response) {},
+      error_callback: function(collection, response) {
+        return collection.trigger('error', collection, response);
+      },
       getReferrals: function(query, callback) {
-        callback = callback || this.success;
+        var error_callback, success_callback;
+        success_callback = callback || this.success_callback;
+        error_callback = this.error_callback;
         query = query || {};
         query = _.extend({
           media: 'application/xml',
@@ -38,10 +43,10 @@
             'X-Authorization': "Basic " + this.digest
           },
           success: function(collection, response) {
-            return callback.apply(this, [collection, response]);
+            return success_callback.apply(this, [collection, response]);
           },
           error: function(collection, response) {
-            return console.log([collection, response]);
+            return error_callback.apply(this, [collection, response]);
           }
         });
       },
