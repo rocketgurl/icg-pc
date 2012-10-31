@@ -21,6 +21,7 @@ define [
     # @params `POLICY` _Object_ PolicyModel  
     # @params `CONTAINER` _HTML Element_ element to render inside of   
     # @return _this_  
+    #
     constructor : (@POLICY, @CONTAINER) ->
       # No Policy, No Container, No Dice!
       if !@POLICY || !@CONTAINER

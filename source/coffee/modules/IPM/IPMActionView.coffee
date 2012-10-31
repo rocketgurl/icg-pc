@@ -18,7 +18,8 @@ define [
       
       delete @options
 
-    # Stub render. Your Action View should define this
+    # Your Action View should define the following methods:
+  
     render : -> 
 
     validate : ->
