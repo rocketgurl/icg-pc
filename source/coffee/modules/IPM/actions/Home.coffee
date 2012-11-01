@@ -11,6 +11,10 @@ define [
 
     initialize : ->
       super
+      @ACTION_NAME = "Home"
+
+    ready : ->
+      @render()
 
     dispatch : (e) ->
       e.preventDefault();
@@ -19,4 +23,5 @@ define [
 
     render : ->
       actions = @MODULE.CONFIG.ACTIONS
-      @MODULE.VIEW.Mustache.render(tpl_home_action, @MODULE.CONFIG)
+      html = @MODULE.VIEW.Mustache.render(tpl_home_action, @MODULE.CONFIG)
+      @trigger "loaded", html

@@ -17,14 +17,35 @@
 
       IPMActionView.prototype.initialize = function(options) {
         this["super"] = IPMActionView.prototype;
+        if (options.PARENT_VIEW != null) {
+          this.PARENT_VIEW = options.PARENT_VIEW;
+        }
         if (options.MODULE != null) {
           this.MODULE = options.MODULE;
         }
         if (this.MODULE.CONTAINER) {
           this.$el = this.MODULE.CONTAINER;
         }
-        return delete this.options;
+        delete this.options;
+        return this.on('ready', this.ready, this);
       };
+
+      IPMActionView.prototype.fetchTemplates = function(policy, action, callback) {
+        var model, path, view;
+        if (!(policy != null) || !(action != null)) {
+          return false;
+        }
+        path = "js/modules/IPM/products/" + (policy.get('productName')) + "/forms/" + (_.slugify(action));
+        model = $.getJSON("" + path + "/model.json").pipe(function(resp) {
+          return resp;
+        });
+        view = $.get("" + path + "/view.html", null, null, "text").pipe(function(resp) {
+          return resp;
+        });
+        return $.when(model, view).then(callback, this.PARENT_VIEW.actionError);
+      };
+
+      IPMActionView.prototype.ready = function() {};
 
       IPMActionView.prototype.render = function() {};
 

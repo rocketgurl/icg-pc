@@ -38,9 +38,16 @@ define [
         { cid : @cid }
       )
 
-      # Setup element
+      # Setup elements
       @$el = @MODULE.CONTAINER
-
+      @buildHtmlElements()
+  
+      # If we're in a default state then launch home
+      if _.isEmpty @VIEW_STATE
+        @route 'Home'
+    
+    # Build and render needed HTML elements within the view
+    buildHtmlElements : ->
       # Drop flash message template and add class just for ipm layout
       @$el.html(@FLASH_HTML)
       @$el.find("#flash-message-#{@cid}").addClass('ipm-flash')
@@ -55,14 +62,18 @@ define [
       # Drop container shim into place
       @$el.append("<div id=\"ipm-container-#{@cid}\" class=\"ipm-container\"></div>")
 
-      # If we're in a default state then launch home
-      if _.isEmpty @VIEW_STATE
-        @route 'Home'
-    
+
     # Check if IPMActionView is in cache and send to render, otherwise
     # load it with Require.js
+    #
+    # **Callback Village** - when we initialize an ActionView we set a "loaded"
+    # event listener on it which should pass the view's HTML to @render(). We
+    # also trigger a "ready" event on the view letting it know to go ahead and
+    # do whatever build out it needs to.
+    #
+    # @param `action` _String_ name of IPMActionView to loade w/ require()
+    #
     route : (action) ->
-
       # Save our current location
       @VIEW_STATE = action
 
@@ -71,32 +82,41 @@ define [
       if !_.has(@VIEW_CACHE, action)
         @insert_loader()
         require ["#{@MODULE.CONFIG.ACTIONS_PATH}#{action}"], (Action) =>
-          @VIEW_CACHE[action] = new Action(MODULE : @MODULE)
-          @render(@VIEW_CACHE[action])
+          @VIEW_CACHE[action] = new Action(
+            MODULE      : @MODULE
+            PARENT_VIEW : this
+          )
+          @VIEW_CACHE[action].on("loaded", @render, this)
+          @VIEW_CACHE[action].trigger "ready"
         , (err) =>
             failedId = err.requireModules && err.requireModules[0]
             @Amplify.publish(@cid, 'warning', "We could not load #{failedId}. Sorry.")
             @route 'Home'
 
       else
-        @render(@VIEW_CACHE[action])
+        @VIEW_CACHE[action].on("loaded", @render, this)
+        @VIEW_CACHE[action].trigger "ready"
 
     # **Render**  
     # render() expects action to have a render() method which returns
     # HTML ready to go.
+    #
+    # @param `action` _IPMActionView_ Instantiated ActionView from route()  
+    #
     render :
       dlogger \
-      (action) ->
+      (html) ->
         @remove_loader()
 
         # Drop in HTML with a fadeOut/In transition
         container = @$el.find("#ipm-container-#{@cid}")
         container.fadeOut 'fast', =>
-          container.html(action.render()).fadeIn('fast')
+          container.html(html).fadeIn('fast')
 
         # Register flash message pubsub for this view
         @messenger = new Messenger(this, @cid) 
 
+    # Drop a loader graphic into the view
     insert_loader : ->
       @LOADER = @Helpers.loader("ipm-spinner-#{@cid}", 100, '#ffffff')
       @LOADER.setDensity(70)
@@ -104,8 +124,16 @@ define [
       @$el.find("#ipm-loader-#{@cid}").show()
         
     remove_loader : ->
-      @LOADER.kill()
-      @$el.find("#ipm-loader-#{@cid}").hide()
+      if @LOADER?
+        @LOADER.kill()
+        @$el.find("#ipm-loader-#{@cid}").hide()
+
+    # Display an error from the action, usually not being able to load a file
+    actionError : (jqXHR) =>
+      name = @VIEW_STATE || ""
+      error_msg = "Could not load view/model for #{@MODULE.POLICY.get('productName')} #{name} : #{jqXHR.status}"
+      @Amplify.publish(@cid, 'warning', "#{error_msg}")
+      @remove_loader()
 
 
 
