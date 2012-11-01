@@ -15,6 +15,7 @@ require
     json       : 'lib/json2'
     loader     : 'lib/heartcode-canvasloader'
     swfobject  : 'lib/swfobject'
+    u_string   : 'lib/underscore.string'
   priority: ['jquery','xml2json','json']
   shim:
       'jquery' : 
@@ -34,15 +35,21 @@ require
       'swfobject' :
         deps    : ['require']
         exports : 'swfobject' 
+      'u_string' : 
+        deps : ['underscore']
 
 require [
   'jquery',
   'underscore',
   'backbone',
   'WorkspaceController',
+  'u_string',
   'domReady',
   'xml2json'
-], ($, _, Backbone, WorkspaceController, domReady) ->
+], ($, _, Backbone, WorkspaceController, u_string, domReady) ->
+
+  # Setup underscore.string
+  _.mixin(_.str.exports())
 
   # Initialize application when dom is ready
   domReady ->

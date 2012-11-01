@@ -16,7 +16,8 @@
       domReady   : 'lib/domReady',
       json       : 'lib/json2',
       loader     : 'lib/heartcode-canvasloader',
-      swfobject  : 'lib/swfobject'
+      swfobject  : 'lib/swfobject',
+      u_string   : 'lib/underscore.string'
     },
     shim: {
       'jquery': {
@@ -41,6 +42,9 @@
       'swfobject': {
         deps: ['require'],
         exports: 'swfobject'
+      },
+      'u_string': {
+        deps: ['underscore']
       }
     },
     modules: [
