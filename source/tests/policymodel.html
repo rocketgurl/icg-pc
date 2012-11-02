@@ -2,7 +2,7 @@
   "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
-  <title>Policy Central 2.0 | Testing Regime</title>
+  <title>Policy Central 2.0 | Policy Model Testing Regime</title>
 
   <link rel="shortcut icon" type="image/png" href="lib/jasmine-1.2.0/jasmine_favicon.png">
   <link rel="stylesheet" type="text/css" href="lib/jasmine-1.2.0/jasmine.css">
@@ -35,8 +35,7 @@
           json       : 'lib/json2',
           loader     : 'lib/heartcode-canvasloader',
           swfobject  : 'lib/swfobject',
-          moment     : 'lib/moment',
-          u_string: 'lib/underscore.string'
+          moment     : 'lib/moment'
         },
         priority: ['jquery'],
         shim: {
@@ -56,9 +55,6 @@
             deps: ['jquery'],
             exports: 'CanvasLoader'
           },
-          'u_string': {
-            deps: ['underscore']
-          },
           'xml2json': ['jquery']
         }
       });
@@ -66,19 +62,11 @@
       require([
         "jquery",
         "moment",
-        "../tests/spec/WorkspaceControllerSpec",
         "../tests/spec/PolicyModelSpec",
-        "../tests/spec/IPMSpec",
-        "../tests/spec/ReferralTaskSpec",
-        "../tests/spec/ReferralQueueViewSpec",
-        "u_string",
         "domReady",
         "xml2json"],
-        function($, moment, WorkspaceControllerSpec, PolicyModelSpec, IPMSpec, ReferralTaskSpec, ReferralQueueViewSpec, u_string, domReady) {
+        function($, moment, PolicyModelSpec, domReady) {
         return domReady(function() {
-            _.mixin(_.str.exports());
-
-
             var jasmineEnv = jasmine.getEnv();
             jasmineEnv.updateInterval = 1000;
 

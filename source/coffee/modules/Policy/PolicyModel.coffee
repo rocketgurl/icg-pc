@@ -218,15 +218,10 @@ define [
       if term == null || term == undefined
         return false
 
-      if _.isArray term
-        term = term.shift()
+      out = []
 
-      intervals = []
-
-      out = false
-
-      if term.Intervals?
-        if _.isArray term.Intervals.Interval
+      if _.has(term, 'Intervals') && _.has(term.Intervals, 'Interval')
+        if _.isArray(term.Intervals.Interval)
           out = term.Intervals.Interval
         else
           out = [term.Intervals.Interval]
@@ -239,9 +234,10 @@ define [
     getLastInterval : ->
       term = @getIntervalsOfTerm(@getLastTerm())
       if term && _.isArray(term)
-        term.pop()
+        out = term[term.length - 1]
       else
-        {}
+        out = {}
+      out
 
     # **Derive the product name from policy information**  
     # @return _String_
@@ -251,25 +247,13 @@ define [
       name = "#{@getDataItem(terms, 'OpProgram')}-#{@getDataItem(terms, 'OpPolicyType')}-#{@getDataItem(terms, 'OpPropertyState')}"
       name.toLowerCase()
 
-    # **Extract the value of a named <DataItem> from a collection**  
-    # @return _String_ | _False_
-    getDataItem : (items, name) ->
-      if items == undefined || name == undefined
-        return false
-
-      data_obj = _.filter(items, (item) -> return item.name == name)
-      if _.isArray(data_obj) && _.has(data_obj[0], 'value')
-        data_obj[0].value
-      else
-        false
-
     # **Find <Identifier> by name and return value or false**  
     # @param `name` _String_ name attr of element
     # @return _String_ | _False_
     getIdentifier : (name) ->
       if name == null || name == undefined
         return false
-      @get('document').find("Identifier Indentifiers[name=#{name}]").attr('value')
+      @get('document').find("Identifiers Identifier[name=#{name}]").attr('value')
 
     # **Find <Event> with type=Issue**  
     # @return _Boolean_ 
@@ -287,14 +271,22 @@ define [
     # against it, we'll just remove the "T" and everything after it.
     #
     # @param `date` _String_ A date string  
-    # @return _String_ 
+    # @return _String_ An ISO formatted date string
     _stripTimeFromDate : (date) ->
-      clean = date
-      t = date.indexOf('T')
+      clean  = date
+      t      = date.indexOf('T')
       if t > -1
         clean = clean.substring(0, t)
-      date = new Date(clean)
-      "#{date.getFullYear()}-#{date.getMonth()}-#{date.getDate()}"
+      @_formatDate clean
+
+    # Format a date, defaulting to ISO format
+    #
+    # @param `date` _String_ A date string  
+    # @param `format` _String_ A date format string  
+    # @return _String_ 
+    _formatDate : (date, format) ->
+      format = format || 'YYYY-MM-DD'
+      moment(date).format(format)
 
     # **Determine policy effective date** from XML and convert to
     # standardized format  
@@ -315,6 +307,80 @@ define [
         @_stripTimeFromDate date
       else
         false
+
+    # For each vocabTerms look for a Term DataItem and get its value. We favor
+    # the Op{name} version of the DataItem
+    #
+    # @param `vocabTerms` _Object_ list of terms from ixVocab / model.json    
+    # @return _Object_  
+    #
+    getTermDataItemValues : (vocabTerms) ->
+      out = {}
+      for term in vocabTerms.terms
+        out[term.name] = 
+          @get('document').find("Terms Term DataItem[name=Op#{term.name}]").attr('value') ||
+          @get('document').find("Terms Term DataItem[name=#{term.name}]").attr('value')
+        if out[term.name] == undefined
+          out[term.name] = false
+      out
+
+    # **Extract the value of a named <DataItem> from a JSON collection**  
+    # @return _String_ | _False_
+    getDataItem : (items, name) ->
+      if items == undefined || name == undefined
+        return false
+      data_obj = _.filter(items, (item) -> return item.name == name)
+      if _.isArray(data_obj) && data_obj[0]?
+        data_obj[0].value
+      else
+        false
+
+    # For each terms look for a JSON list DataItem and get its value.
+    #
+    # @param `list` _Object_ JSON DataItems list    
+    # @param `terms` _Array_ list of terms to search for      
+    # @return _Object_  
+    #    
+    getDataItemValues : (list, terms) ->
+      out = {}
+      for term in terms
+        out[term] = @getDataItem list, term
+      out
+
+    # Check vocabTerms for enumerations fields and append to the viewData
+    # object with a default field added.
+    #
+    # @param `viewData` _Object_ An object of Data Items to append enums to  
+    # @param `vocabTerms` _Object_ list of terms from ixVocab / model.json 
+    # @return _Object_  
+    #
+    getEnumerations : (viewData, vocabTerms) ->
+      viewData ?= {}
+      empty =
+        value : ''
+        label : 'Select'
+
+      for term in vocabTerms.terms
+        if _.has(term, 'enumerations') && term.enumerations.length > 0
+          viewData["Enums#{term.name}"] = [].concat empty, term.enumerations
+
+      viewData
+
+    # Return Policy data for use in overviews
+    getPolicyOverview : ->
+      terms = [
+        'InsuredFirstName',
+        'InsuredMiddleName',
+        'InsuredLastName',
+        'InsuredMailingAddressLine1',
+        'InsuredMailingAddressLine2',
+        'InsuredMailingAddressCity',
+        'InsuredMailingAddressState',
+        'InsuredMailingAddressZip'
+      ]
+      customerData = @get 'insuredData'
+      @getDataItemValues(customerData, terms)
+
 
     # **Set a variety of properties on the model based on XML policy data**  
     setModelState : ->

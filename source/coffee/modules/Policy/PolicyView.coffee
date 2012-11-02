@@ -72,7 +72,7 @@ define [
       if @model.isIPM() == false
         @$el.find('.policy-nav a[href=ipmchanges]').parent('li').hide();
       else
-        @IPM = new IPMModule(@model, $("#policy-ipm-#{@cid}"))
+        @IPM = new IPMModule(@model, $("#policy-ipm-#{@cid}"), @controller.user)
 
       # Cache commonly used jQuery elements
       @cache_elements()

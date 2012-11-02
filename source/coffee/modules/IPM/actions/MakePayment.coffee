@@ -9,11 +9,37 @@ define [
       super
 
     ready : ->
-      @fetchTemplates(@MODULE.POLICY, 'make-payment', @render)
+      @fetchTemplates(@MODULE.POLICY, 'make-payment', @processView)
 
-    success : (model, view) ->
-      console.log ['MakePayment::success', model, view]
+    # Build a viewData object to populate the template form with
+    processView : (vocabTerms, view) =>
+      super vocabTerms, view
+      viewData = @MODULE.POLICY.getTermDataItemValues(vocabTerms)
+      viewData = @MODULE.POLICY.getEnumerations(viewData, vocabTerms)
+      viewData = _.extend(
+        viewData,
+        @MODULE.POLICY.getPolicyOverview(),
+        { policyOverview : true }
+      )
+      @render viewData, view
 
-    render : (model, view) =>
-      html = @MODULE.VIEW.Mustache.render(view, model)
+    render : (viewData, view) ->
+      html = @MODULE.VIEW.Mustache.render(view, viewData)
       @trigger "loaded", html
+
+    # **Process Form**
+    # On submit we do some action specific processing and then send to the
+    # TransactionRequest monster
+    #
+    submit : (e) ->
+      super e
+
+      # Action specific processing
+      @VALUES.formValues.positivePaymentAmount = \
+        Math.abs(@VALUES.formValues.paymentAmount || 0)
+
+      @VALUES.formValues.paymentAmount = \
+        -1 * @VALUES.formValues.positivePaymentAmount
+
+      console.log @VALUES
+

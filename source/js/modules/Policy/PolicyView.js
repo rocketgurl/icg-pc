@@ -51,7 +51,7 @@
         if (this.model.isIPM() === false) {
           this.$el.find('.policy-nav a[href=ipmchanges]').parent('li').hide();
         } else {
-          this.IPM = new IPMModule(this.model, $("#policy-ipm-" + this.cid));
+          this.IPM = new IPMModule(this.model, $("#policy-ipm-" + this.cid), this.controller.user);
         }
         this.cache_elements();
         this.actions = this.policy_nav_links.map(function(idx, item) {

@@ -19,7 +19,7 @@ define([
 
     // We need a Collection to test our View
     var settings = {
-      pxcentral: 'https://staging-services.icg360.org/cru-4/pxcentral/api/rest/v1/tasks/',
+      pxcentral: '/pxcentral/api/rest/v1/tasks/',
       digest  : 'Y3J1NHRAY3J1MzYwLmNvbTphYmMxMjM='
     }
 
@@ -61,7 +61,7 @@ define([
       it('can GET an assignees list', function (){
         var callbackz = jasmine.createSpy();
         view.getAssigneeList(
-          'https://staging-services.icg360.org/cru-4/ixlibrary/api/sdo/rest/v1/buckets/underwriting/objects/assignee_list.xml', 
+          '/ixlibrary/api/sdo/rest/v1/buckets/underwriting/objects/assignee_list.xml', 
           callbackz
         );
         waitsFor(function() {
@@ -76,7 +76,7 @@ define([
       it('can PUT as assignees list', function (){
         var callbackz = jasmine.createSpy();
         view.putAssigneeList(
-          'https://staging-services.icg360.org/cru-4/ixlibrary/api/sdo/rest/v1/buckets/underwriting/objects/assignee_list.xml', 
+          '/ixlibrary/api/sdo/rest/v1/buckets/underwriting/objects/assignee_list.xml', 
           callbackz,
           view.ASSIGNEE_LIST[0]
         );

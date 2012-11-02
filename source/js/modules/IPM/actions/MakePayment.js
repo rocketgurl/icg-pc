@@ -11,7 +11,7 @@
       __extends(MakePaymentAction, _super);
 
       function MakePaymentAction() {
-        this.render = __bind(this.render, this);
+        this.processView = __bind(this.processView, this);
         return MakePaymentAction.__super__.constructor.apply(this, arguments);
       }
 
@@ -20,17 +20,31 @@
       };
 
       MakePaymentAction.prototype.ready = function() {
-        return this.fetchTemplates(this.MODULE.POLICY, 'make-payment', this.render);
+        return this.fetchTemplates(this.MODULE.POLICY, 'make-payment', this.processView);
       };
 
-      MakePaymentAction.prototype.success = function(model, view) {
-        return console.log(['MakePayment::success', model, view]);
+      MakePaymentAction.prototype.processView = function(vocabTerms, view) {
+        var viewData;
+        MakePaymentAction.__super__.processView.call(this, vocabTerms, view);
+        viewData = this.MODULE.POLICY.getTermDataItemValues(vocabTerms);
+        viewData = this.MODULE.POLICY.getEnumerations(viewData, vocabTerms);
+        viewData = _.extend(viewData, this.MODULE.POLICY.getPolicyOverview(), {
+          policyOverview: true
+        });
+        return this.render(viewData, view);
       };
 
-      MakePaymentAction.prototype.render = function(model, view) {
+      MakePaymentAction.prototype.render = function(viewData, view) {
         var html;
-        html = this.MODULE.VIEW.Mustache.render(view, model);
+        html = this.MODULE.VIEW.Mustache.render(view, viewData);
         return this.trigger("loaded", html);
+      };
+
+      MakePaymentAction.prototype.submit = function(e) {
+        MakePaymentAction.__super__.submit.call(this, e);
+        this.VALUES.formValues.positivePaymentAmount = Math.abs(this.VALUES.formValues.paymentAmount || 0);
+        this.VALUES.formValues.paymentAmount = -1 * this.VALUES.formValues.positivePaymentAmount;
+        return console.log(this.VALUES);
       };
 
       return MakePaymentAction;

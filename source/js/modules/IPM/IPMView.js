@@ -49,15 +49,15 @@
         this.$el.html(this.FLASH_HTML);
         this.$el.find("#flash-message-" + this.cid).addClass('ipm-flash');
         this.$el.append("<div id=\"ipm-loader-" + this.cid + "\" class=\"ipm-loader\">\n  <h2 id=\"ipm-spinner-" + this.cid + "\"><span>Loading action&hellip;</span></h2>\n</div>");
-        return this.$el.append("<div id=\"ipm-container-" + this.cid + "\" class=\"ipm-container\"></div>");
+        return this.$el.append("<form accept-charset=\"utf-8\" id=\"ipm-form-" + this.cid + "\">\n  <div id=\"ipm-container-" + this.cid + "\" class=\"ipm-container\"></div>\n</form>");
       };
 
       IPMView.prototype.route = function(action) {
         var _this = this;
         this.VIEW_STATE = action;
+        this.insert_loader();
         if (!_.has(this.VIEW_CACHE, action)) {
-          this.insert_loader();
-          return require(["" + this.MODULE.CONFIG.ACTIONS_PATH + action], function(Action) {
+          require(["" + this.MODULE.CONFIG.ACTIONS_PATH + action], function(Action) {
             _this.VIEW_CACHE[action] = new Action({
               MODULE: _this.MODULE,
               PARENT_VIEW: _this
@@ -72,8 +72,9 @@
           });
         } else {
           this.VIEW_CACHE[action].on("loaded", this.render, this);
-          return this.VIEW_CACHE[action].trigger("ready");
+          this.VIEW_CACHE[action].trigger("ready");
         }
+        return this;
       };
 
       IPMView.prototype.render = dlogger(function(html) {
@@ -88,16 +89,26 @@
       });
 
       IPMView.prototype.insert_loader = function() {
-        this.LOADER = this.Helpers.loader("ipm-spinner-" + this.cid, 100, '#ffffff');
-        this.LOADER.setDensity(70);
-        this.LOADER.setFPS(48);
-        return this.$el.find("#ipm-loader-" + this.cid).show();
+        this.$el.find("#ipm-loader-" + this.cid).show();
+        try {
+          this.LOADER = this.Helpers.loader("ipm-spinner-" + this.cid, 100, '#ffffff');
+          this.LOADER.setDensity(70);
+          return this.LOADER.setFPS(48);
+        } catch (e) {
+          return this.$el.find("#ipm-loader-" + this.cid).hide();
+        }
       };
 
       IPMView.prototype.remove_loader = function() {
-        if (this.LOADER != null) {
-          this.LOADER.kill();
-          return this.$el.find("#ipm-loader-" + this.cid).hide();
+        try {
+          if ((this.LOADER != null) && this.LOADER !== void 0) {
+            this.LOADER.kill();
+            this.LOADER = null;
+            return this.$el.find("#ipm-loader-" + this.cid).hide();
+          }
+        } catch (e) {
+          this.$el.find("#canvasLoader").remove();
+          return console.log([e, this.$el.find("#ipm-spinner-" + this.cid).html()]);
         }
       };
 

@@ -197,16 +197,12 @@
         }
       },
       getIntervalsOfTerm: function(term) {
-        var intervals, out;
+        var out;
         if (term === null || term === void 0) {
           return false;
         }
-        if (_.isArray(term)) {
-          term = term.shift();
-        }
-        intervals = [];
-        out = false;
-        if (term.Intervals != null) {
+        out = [];
+        if (_.has(term, 'Intervals') && _.has(term.Intervals, 'Interval')) {
           if (_.isArray(term.Intervals.Interval)) {
             out = term.Intervals.Interval;
           } else {
@@ -216,13 +212,14 @@
         return out;
       },
       getLastInterval: function() {
-        var term;
+        var out, term;
         term = this.getIntervalsOfTerm(this.getLastTerm());
         if (term && _.isArray(term)) {
-          return term.pop();
+          out = term[term.length - 1];
         } else {
-          return {};
+          out = {};
         }
+        return out;
       },
       getProductName: function() {
         var name, terms;
@@ -231,25 +228,11 @@
         name = "" + (this.getDataItem(terms, 'OpProgram')) + "-" + (this.getDataItem(terms, 'OpPolicyType')) + "-" + (this.getDataItem(terms, 'OpPropertyState'));
         return name.toLowerCase();
       },
-      getDataItem: function(items, name) {
-        var data_obj;
-        if (items === void 0 || name === void 0) {
-          return false;
-        }
-        data_obj = _.filter(items, function(item) {
-          return item.name === name;
-        });
-        if (_.isArray(data_obj) && _.has(data_obj[0], 'value')) {
-          return data_obj[0].value;
-        } else {
-          return false;
-        }
-      },
       getIdentifier: function(name) {
         if (name === null || name === void 0) {
           return false;
         }
-        return this.get('document').find("Identifier Indentifiers[name=" + name + "]").attr('value');
+        return this.get('document').find("Identifiers Identifier[name=" + name + "]").attr('value');
       },
       isIssued: function() {
         var history;
@@ -267,8 +250,11 @@
         if (t > -1) {
           clean = clean.substring(0, t);
         }
-        date = new Date(clean);
-        return "" + (date.getFullYear()) + "-" + (date.getMonth()) + "-" + (date.getDate());
+        return this._formatDate(clean);
+      },
+      _formatDate: function(date, format) {
+        format = format || 'YYYY-MM-DD';
+        return moment(date).format(format);
       },
       getEffectiveDate: function() {
         var date;
@@ -287,6 +273,66 @@
         } else {
           return false;
         }
+      },
+      getTermDataItemValues: function(vocabTerms) {
+        var out, term, _i, _len, _ref;
+        out = {};
+        _ref = vocabTerms.terms;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          term = _ref[_i];
+          out[term.name] = this.get('document').find("Terms Term DataItem[name=Op" + term.name + "]").attr('value') || this.get('document').find("Terms Term DataItem[name=" + term.name + "]").attr('value');
+          if (out[term.name] === void 0) {
+            out[term.name] = false;
+          }
+        }
+        return out;
+      },
+      getDataItem: function(items, name) {
+        var data_obj;
+        if (items === void 0 || name === void 0) {
+          return false;
+        }
+        data_obj = _.filter(items, function(item) {
+          return item.name === name;
+        });
+        if (_.isArray(data_obj) && (data_obj[0] != null)) {
+          return data_obj[0].value;
+        } else {
+          return false;
+        }
+      },
+      getDataItemValues: function(list, terms) {
+        var out, term, _i, _len;
+        out = {};
+        for (_i = 0, _len = terms.length; _i < _len; _i++) {
+          term = terms[_i];
+          out[term] = this.getDataItem(list, term);
+        }
+        return out;
+      },
+      getEnumerations: function(viewData, vocabTerms) {
+        var empty, term, _i, _len, _ref;
+        if (viewData == null) {
+          viewData = {};
+        }
+        empty = {
+          value: '',
+          label: 'Select'
+        };
+        _ref = vocabTerms.terms;
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          term = _ref[_i];
+          if (_.has(term, 'enumerations') && term.enumerations.length > 0) {
+            viewData["Enums" + term.name] = [].concat(empty, term.enumerations);
+          }
+        }
+        return viewData;
+      },
+      getPolicyOverview: function() {
+        var customerData, terms;
+        terms = ['InsuredFirstName', 'InsuredMiddleName', 'InsuredLastName', 'InsuredMailingAddressLine1', 'InsuredMailingAddressLine2', 'InsuredMailingAddressCity', 'InsuredMailingAddressState', 'InsuredMailingAddressZip'];
+        customerData = this.get('insuredData');
+        return this.getDataItemValues(customerData, terms);
       },
       setModelState: function() {
         this.set('state', this.getState());

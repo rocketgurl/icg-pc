@@ -60,7 +60,11 @@ define [
       """)
 
       # Drop container shim into place
-      @$el.append("<div id=\"ipm-container-#{@cid}\" class=\"ipm-container\"></div>")
+      @$el.append("""
+        <form accept-charset="utf-8" id="ipm-form-#{@cid}">
+          <div id=\"ipm-container-#{@cid}\" class=\"ipm-container\"></div>
+        </form>
+      """)
 
 
     # Check if IPMActionView is in cache and send to render, otherwise
@@ -76,11 +80,10 @@ define [
     route : (action) ->
       # Save our current location
       @VIEW_STATE = action
-
+      @insert_loader()
       # Cache or load. If we have a load error, then throw up a message and
       # re-route back to the home view
       if !_.has(@VIEW_CACHE, action)
-        @insert_loader()
         require ["#{@MODULE.CONFIG.ACTIONS_PATH}#{action}"], (Action) =>
           @VIEW_CACHE[action] = new Action(
             MODULE      : @MODULE
@@ -96,6 +99,8 @@ define [
       else
         @VIEW_CACHE[action].on("loaded", @render, this)
         @VIEW_CACHE[action].trigger "ready"
+
+      this
 
     # **Render**  
     # render() expects action to have a render() method which returns
@@ -118,15 +123,25 @@ define [
 
     # Drop a loader graphic into the view
     insert_loader : ->
-      @LOADER = @Helpers.loader("ipm-spinner-#{@cid}", 100, '#ffffff')
-      @LOADER.setDensity(70)
-      @LOADER.setFPS(48)
       @$el.find("#ipm-loader-#{@cid}").show()
+      try
+        @LOADER = @Helpers.loader("ipm-spinner-#{@cid}", 100, '#ffffff')
+        @LOADER.setDensity(70)
+        @LOADER.setFPS(48)
+      catch e
+        @$el.find("#ipm-loader-#{@cid}").hide()
+    
         
     remove_loader : ->
-      if @LOADER?
-        @LOADER.kill()
-        @$el.find("#ipm-loader-#{@cid}").hide()
+      try
+        if @LOADER? && @LOADER != undefined
+          @LOADER.kill()
+          @LOADER = null
+          @$el.find("#ipm-loader-#{@cid}").hide()
+      catch e
+        @$el.find("#canvasLoader").remove()
+        console.log [e, @$el.find("#ipm-spinner-#{@cid}").html()]
+    
 
     # Display an error from the action, usually not being able to load a file
     actionError : (jqXHR) =>

@@ -20,9 +20,10 @@ define [
     # **Constructor**  
     # @params `POLICY` _Object_ PolicyModel  
     # @params `CONTAINER` _HTML Element_ element to render inside of   
+    # @params `USER` _Object_ UserModel  
     # @return _this_  
     #
-    constructor : (@POLICY, @CONTAINER) ->
+    constructor : (@POLICY, @CONTAINER, @USER) ->
       # No Policy, No Container, No Dice!
       if !@POLICY || !@CONTAINER
         throw new Error('FATAL - Missing PolicyModel or HTML Container.')

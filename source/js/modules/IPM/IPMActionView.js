@@ -15,8 +15,16 @@
 
       IPMActionView.prototype.MODULE = {};
 
+      IPMActionView.prototype.VALUES = {};
+
+      IPMActionView.prototype.TPL_CACHE = {};
+
+      IPMActionView.prototype.events = {
+        "submit form": "submit",
+        "click .form_actions a": "goHome"
+      };
+
       IPMActionView.prototype.initialize = function(options) {
-        this["super"] = IPMActionView.prototype;
         if (options.PARENT_VIEW != null) {
           this.PARENT_VIEW = options.PARENT_VIEW;
         }
@@ -35,14 +43,69 @@
         if (!(policy != null) || !(action != null)) {
           return false;
         }
-        path = "js/modules/IPM/products/" + (policy.get('productName')) + "/forms/" + (_.slugify(action));
-        model = $.getJSON("" + path + "/model.json").pipe(function(resp) {
-          return resp;
+        path = "/js/" + this.MODULE.CONFIG.PRODUCTS_PATH + (policy.get('productName')) + "/forms/" + (_.slugify(action));
+        if (!_.has(this.TPL_CACHE, action)) {
+          model = $.getJSON("" + path + "/model.json").pipe(function(resp) {
+            return resp;
+          });
+          view = $.get("" + path + "/view.html", null, null, "text").pipe(function(resp) {
+            return resp;
+          });
+          return $.when(model, view).then(callback, this.PARENT_VIEW.actionError);
+        } else {
+          return callback(this.TPL_CACHE[action].model, this.TPL_CACHE[action].view);
+        }
+      };
+
+      IPMActionView.prototype.goHome = function(e) {
+        e.preventDefault();
+        return this.PARENT_VIEW.route('Home');
+      };
+
+      IPMActionView.prototype.getFormValues = function(form) {
+        var formValues, item, _i, _len, _ref;
+        formValues = {};
+        _ref = form.serializeArray();
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          item = _ref[_i];
+          formValues[item.name] = item.value;
+        }
+        return formValues;
+      };
+
+      IPMActionView.prototype.getChangedValues = function(form) {
+        var changed;
+        changed = [];
+        form.find(':input').each(function(i, element) {
+          var el, name, val;
+          el = $(element);
+          val = el.val();
+          name = el.attr('name');
+          if (el.is('select')) {
+            if (el.data('value') !== val) {
+              return changed.push(name);
+            }
+          } else if (el.is('textarea')) {
+            if (val.trim() !== '') {
+              changed.push(name);
+            }
+            if (val.trim() === '' && el.data('hadValue')) {
+              return changed.push(name);
+            }
+          } else {
+            if (val !== element.getAttribute('value')) {
+              return changed.push(name);
+            }
+          }
         });
-        view = $.get("" + path + "/view.html", null, null, "text").pipe(function(resp) {
-          return resp;
-        });
-        return $.when(model, view).then(callback, this.PARENT_VIEW.actionError);
+        return changed;
+      };
+
+      IPMActionView.prototype.processView = function(vocabTerms, view) {
+        return this.TPL_CACHE[this.PARENT_VIEW.VIEW_STATE] = {
+          model: vocabTerms,
+          view: view
+        };
       };
 
       IPMActionView.prototype.ready = function() {};
@@ -52,6 +115,16 @@
       IPMActionView.prototype.validate = function() {};
 
       IPMActionView.prototype.preview = function() {};
+
+      IPMActionView.prototype.submit = function(e) {
+        var form;
+        e.preventDefault();
+        form = this.$el.find('form');
+        return this.VALUES = {
+          formValues: this.getFormValues(form),
+          changedValues: this.getChangedValues(form)
+        };
+      };
 
       return IPMActionView;
 

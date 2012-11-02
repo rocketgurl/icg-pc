@@ -9,11 +9,12 @@
 
       IPMModule.prototype.ACTION = null;
 
-      function IPMModule(POLICY, CONTAINER) {
+      function IPMModule(POLICY, CONTAINER, USER) {
         var config,
           _this = this;
         this.POLICY = POLICY;
         this.CONTAINER = CONTAINER;
+        this.USER = USER;
         if (!this.POLICY || !this.CONTAINER) {
           throw new Error('FATAL - Missing PolicyModel or HTML Container.');
         }
