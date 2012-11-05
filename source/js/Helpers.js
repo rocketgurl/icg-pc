@@ -78,6 +78,13 @@
         } else {
           return (new DOMParser()).parseFromString(sXML, "text/xml");
         }
+      },
+      formatDate: function(date, format) {
+        format = format || 'YYYY-MM-DD';
+        return moment(date).format(format);
+      },
+      makeTimestamp: function() {
+        return moment(new Date()).format('YYYY-MM-DDTHH:mm:ss.sssZ');
       }
     };
     return Helpers;

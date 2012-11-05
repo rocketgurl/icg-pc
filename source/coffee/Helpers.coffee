@@ -80,5 +80,19 @@ define [
       else
         (new DOMParser()).parseFromString(sXML, "text/xml")
 
+    # Format a date, defaulting to ISO format
+    #
+    # @param `date` _String_ A date string  
+    # @param `format` _String_ A date format string  
+    # @return _String_  
+    #
+    formatDate : (date, format) ->
+      format = format || 'YYYY-MM-DD'
+      moment(date).format(format)
+
+    # Create an ISO timestamp
+    makeTimestamp : ->
+      moment(new Date()).format('YYYY-MM-DDTHH:mm:ss.sssZ')
+
 
   Helpers
