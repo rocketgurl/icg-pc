@@ -24,6 +24,8 @@ define [
       @render viewData, view
 
     render : (viewData, view) ->
+      super
+
       html = @MODULE.VIEW.Mustache.render(view, viewData)
       @trigger "loaded", html
 
@@ -34,12 +36,16 @@ define [
     submit : (e) ->
       super e
 
-      # Action specific processing
+      # @@ Action specific processing
       @VALUES.formValues.positivePaymentAmount = \
         Math.abs(@VALUES.formValues.paymentAmount || 0)
 
       @VALUES.formValues.paymentAmount = \
         -1 * @VALUES.formValues.positivePaymentAmount
 
-      console.log @VALUES
-
+      # Assemble the ChangeSet XML and send to server
+      @CHANGE_SET.commitChange(
+          @CHANGE_SET.getPolicyChangeSet(@VALUES)
+          @callbackSuccess,
+          @callbackError
+        )

@@ -1,27 +1,30 @@
 define [
   'BaseView',
-  'Messenger'
-], (BaseView, Messenger) ->
+  'Messenger',
+  'modules/IPM/IPMChangeSet'
+], (BaseView, Messenger, IPMChangeSet) ->
 
   # IPMActionView
   # ====  
   # IPM sub views (action views) inherit from this base view 
   class IPMActionView extends BaseView
     
-    MODULE    : {} # Containing module
-    VALUES    : {} # Form values
-    TPL_CACHE : {} # Template Cache
+    MODULE     : {} # Containing module
+    VALUES     : {} # Form values
+    TPL_CACHE  : {} # Template Cache
+    CHANGE_SET : {}
 
     events :
-       "submit form"           : "submit"
-       "click .form_actions a" : "goHome"
+      "click form input.button" : "submit"
+      "click .form_actions a"   : "goHome"
 
     initialize : (options) ->
-      @PARENT_VIEW = options.PARENT_VIEW if options.PARENT_VIEW?
-      @MODULE      = options.MODULE if options.MODULE?
+      @PARENT_VIEW = options.PARENT_VIEW || {}
+      @MODULE      = options.MODULE || {}
+      @CHANGE_SET  = new IPMChangeSet(@MODULE.POLICY, @PARENT_VIEW.VIEW_STATE, @MODULE.USER)
       @$el         = @MODULE.CONTAINER if @MODULE.CONTAINER
       
-      delete @options
+      @options = null
 
       @on('ready', @ready, this)
 
@@ -55,12 +58,22 @@ define [
       e.preventDefault()
       @PARENT_VIEW.route 'Home'
 
+    # **Get the form values**  
+    #
+    # @param `form` _HTML Form Element_  
+    # @return _Object_ key:val object of form values  
+    #
     getFormValues : (form) ->
       formValues = {}
       for item in form.serializeArray()
         formValues[item.name] = item.value
       formValues
 
+    # **Which form values changed?**  
+    #
+    # @param `form` _HTML Form Element_  
+    # @return _Object_ key:val object of changed form values  
+    #
     getChangedValues : (form) ->
       changed = []
       form.find(':input').each (i, element) ->
@@ -92,6 +105,12 @@ define [
         model : vocabTerms
         view  : view
 
+    callbackSuccess : (data, status, jqXHR) =>
+      console.log jqXHR
+     
+    callbackError : (jqXHR, status, error) =>
+      console.log jqXHR
+
     # Your Action View should define the following methods:
     ready : ->
 
@@ -101,9 +120,14 @@ define [
 
     preview : ->
 
+    # **Submit form** - set the form values on the ActionView for 
+    # use in inherited ActionViews
+    #
+    # @param `e` _Event_ Submit event   
+    #
     submit : (e) ->
       e.preventDefault()
-      form          = @$el.find('form')      
+      form = @$el.find('form')      
       @VALUES =
         formValues    : @getFormValues form
         changedValues : @getChangedValues form

@@ -7,7 +7,7 @@ define [
   # Do some basic console logging if debugging is switched on
   dlogger = (methodBody) ->
     ->
-      if @DEBUG?
+      if @DEBUG != false && @DEBUG?
         console.log "DEBUG IPMView ->"
         console.log [this, @options, arguments]
 

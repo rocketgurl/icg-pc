@@ -15,8 +15,8 @@
         this.POLICY = POLICY;
         this.CONTAINER = CONTAINER;
         this.USER = USER;
-        if (!this.POLICY || !this.CONTAINER) {
-          throw new Error('FATAL - Missing PolicyModel or HTML Container.');
+        if (!this.POLICY || !this.CONTAINER || !this.USER) {
+          throw new Error('FATAL - Missing PolicyModel, HTML Container or User.');
         }
         config = $.getJSON('/js/modules/IPM/config/ipm.json').pipe(function(resp) {
           return resp;
@@ -33,8 +33,7 @@
         this.CONFIG = CONFIG;
         if (this.CONFIG != null) {
           return this.VIEW = new IPMView({
-            MODULE: this,
-            DEBUG: true
+            MODULE: this
           });
         }
       };

@@ -9,7 +9,8 @@ define([
   "modules/IPM/IPMChangeSet",
   "UserModel",
   "amplify",
-  "loader"], 
+  "loader",
+  "xml2json"], 
   function(
     $, 
     _, 
@@ -24,6 +25,14 @@ define([
     CanvasLoader
 ) {
 
+ var user = {}
+
+user = new UserModel({
+  urlRoot  : 'mocks/',
+  username : 'cru4t@cru360.com',
+  password : 'abc123'
+});
+
 // Load up a Policy and then an IPMModule
 var policy = new PolicyModel({
   id      : '71049-active.xml',
@@ -33,7 +42,7 @@ var policy = new PolicyModel({
 
 
 
-var ipm = window.ipm = new IPMModule(policy, $('<div></div>'));
+var ipm = window.ipm = new IPMModule(policy, $('<div></div>'), user);
 
 describe('IPM Module', function (){
 
@@ -83,12 +92,11 @@ describe('IPM Module', function (){
     //     'MODULE' : ipm,
     //     'DEBUG'  : true
     //   });
-
+    console.log(['VIEW',ipm.VIEW])
     var action = new IPMActionView({
-      PARENT_VIEW : ipm.VIEW,
-      MODULE : ipm
+      MODULE : ipm,
+      PARENT_VIEW : ipm.VIEW
     })
-    console.log(action)
 
     it ('IPMView is an object and Backbone.View', function () {
       expect(ipm.VIEW).toEqual(jasmine.any(Object));
@@ -120,7 +128,7 @@ describe('IPM Module', function (){
     var VALUES = {
       changedValues : ['appliedDate','paymentAmount','paymentMethod'],
       formValues : {
-        appliedDate           : "2011-15-01",
+        appliedDate           : "2011-01-15",
         paymentAmount         : -124,
         paymentBatch          : "",
         paymentMethod         : "300",
@@ -130,7 +138,7 @@ describe('IPM Module', function (){
       }
     };
 
-    var ChangeSet = new IPMChangeSet(ipm.POLICY, 'MakePayment', VALUES, user);
+    var ChangeSet = new IPMChangeSet(ipm.POLICY, 'MakePayment', user);
 
     it ('IPMChangeSet is an object and a change set', function () {
       expect(ChangeSet).toEqual(jasmine.any(Object));
@@ -164,16 +172,35 @@ describe('IPM Module', function (){
       expect(ChangeSet.ACTION).toBe('MakePayment');
     });
 
-    it ('IPMChangeSet has form values', function () {
-      expect(ChangeSet.VALUES).toEqual(jasmine.any(Object));
-      expect(ChangeSet.VALUES.changedValues).toEqual(jasmine.any(Array));
-      expect(ChangeSet.VALUES.formValues).toEqual(jasmine.any(Object));
+    it ('IPMChangeSet can make a Policy Context object', function () {
+      var context = {
+        id            : "d1716d6e86334c4db583278d5889deb4",
+        user          : "cru4t@cru360.com",
+        version       : "4",
+        timestamp     : moment(new Date()).format('YYYY-MM-DDTHH:mm:ss.sssZ'),
+        datestamp     : moment(new Date()).format("YYYY-MM-DD"),
+        effectiveDate : moment("2012-11-05").format('YYYY-MM-DDTHH:mm:ss.sssZ'),
+        appliedDate   : moment("2011-01-15").format('YYYY-MM-DDTHH:mm:ss.sssZ'),
+        comment       : "posted by Policy Central IPM Module"
+      }
+      VALUES.formValues.effectiveDate = "2012-11-05";
+      expect(ChangeSet.getPolicyContext(policy, user, VALUES)).toEqual(jasmine.any(Object));
+      expect(ChangeSet.getPolicyContext(policy, user, VALUES)).toEqual(context);
     });
 
-    it ('IPMChangeSet can make a PolicyChangeSet document', function () {
-      console.log(ChangeSet.getPolicyChangeSet());
-      console.log(user);
-      // expect(ChangeSet.POLICY).toEqual(jasmine.any(Object));
+    it ('IPMChangeSet can make a Policy Change Set XML Document', function () {
+      console.log(ChangeSet.getPolicyChangeSet(VALUES))
+      expect(ChangeSet.getPolicyChangeSet(VALUES)).toEqual(jasmine.any(String));
+    });
+
+    it ('IPMChangeSet can getPayloadType from ChangeSet XML', function () {
+      var xml = ChangeSet.getPolicyChangeSet(VALUES)
+      expect(ChangeSet.getPayloadType($.parseXML(xml))).toEqual('policychangeset');
+    });
+
+    it ('IPMChangeSet can getSchemaVersion from ChangeSet XML', function () {
+      var xml = ChangeSet.getPolicyChangeSet(VALUES)
+      expect(ChangeSet.getSchemaVersion($.parseXML(xml))).toEqual('3.1');
     });
 
   });

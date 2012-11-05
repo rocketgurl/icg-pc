@@ -36,6 +36,7 @@
 
       MakePaymentAction.prototype.render = function(viewData, view) {
         var html;
+        MakePaymentAction.__super__.render.apply(this, arguments);
         html = this.MODULE.VIEW.Mustache.render(view, viewData);
         return this.trigger("loaded", html);
       };
@@ -44,7 +45,7 @@
         MakePaymentAction.__super__.submit.call(this, e);
         this.VALUES.formValues.positivePaymentAmount = Math.abs(this.VALUES.formValues.paymentAmount || 0);
         this.VALUES.formValues.paymentAmount = -1 * this.VALUES.formValues.positivePaymentAmount;
-        return console.log(this.VALUES);
+        return this.CHANGE_SET.commitChange(this.CHANGE_SET.getPolicyChangeSet(this.VALUES), this.callbackSuccess, this.callbackError);
       };
 
       return MakePaymentAction;

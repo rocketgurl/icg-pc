@@ -8,7 +8,7 @@
     var IPMView, dlogger;
     dlogger = function(methodBody) {
       return function() {
-        if (this.DEBUG != null) {
+        if (this.DEBUG !== false && (this.DEBUG != null)) {
           console.log("DEBUG IPMView ->");
           console.log([this, this.options, arguments]);
         }
