@@ -328,6 +328,16 @@
         }
         return viewData;
       },
+      getValueByPath: function(path, dataItem) {
+        if (path == null) {
+          path = '';
+        }
+        if (dataItem != null) {
+          return this.get('document').find(path).attr('value');
+        } else {
+          return this.get('document').find(path).text();
+        }
+      },
       getPolicyOverview: function() {
         var customerData, terms;
         terms = ['InsuredFirstName', 'InsuredMiddleName', 'InsuredLastName', 'InsuredMailingAddressLine1', 'InsuredMailingAddressLine2', 'InsuredMailingAddressCity', 'InsuredMailingAddressState', 'InsuredMailingAddressZip'];

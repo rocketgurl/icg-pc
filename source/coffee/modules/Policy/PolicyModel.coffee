@@ -366,6 +366,21 @@ define [
 
       viewData
 
+    # Convenience method to find a value in the Policy XML. Can handle DataItem
+    # fields by setting the dataItem bool to true
+    #
+    # @param `path` _String_ jQuery path to use in search  
+    # @param `dataItem` _Boolean_ search for DataItem instead of text node 
+    # @return _String_  
+    #
+    getValueByPath : (path, dataItem) ->
+      path ?= ''
+      if dataItem?
+        @get('document').find(path).attr('value')
+      else
+        @get('document').find(path).text()
+
+
     # Return Policy data for use in overviews
     getPolicyOverview : ->
       terms = [
