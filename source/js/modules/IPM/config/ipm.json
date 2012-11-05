@@ -20,6 +20,30 @@
                 {
                     "label": "Invoice",
                     "view": "Invoice"
+                },
+                {
+                    "label": "Apply charges",
+                    "view": "ApplyCharges"
+                },
+                {
+                    "label": "Change payment plan",
+                    "view": "ChangePaymentPlan"
+                },
+                {
+                    "label": "Premium disbursement",
+                    "view": "PremiumDisbursement"
+                },
+                {
+                    "label": "Reverse disbursement",
+                    "view": "ReverseDisbursement"
+                },
+                {
+                    "label": "Reverse payment",
+                    "view": "ReversePayment"
+                },
+                {
+                    "label": "Write off charges",
+                    "view": "WriteOffCharges"
                 }
             ]
         },
@@ -37,6 +61,39 @@
                 {
                     "label": "Renew",
                     "view": "Renew"
+                },
+                {
+                    "label": "Cancel/Reinstate",
+                    "view": "CancelReinstate"
+                },
+                {
+                    "label": "Endorse",
+                    "view": "Endorse"
+                },
+                {
+                    "label": "Change customer",
+                    "view": "ChangeCustomer"
+                },
+                {
+                    "label": "Update mortgage",
+                    "view": "UpdateMortgage"
+                },
+                {
+                    "label": "Change additional interest",
+                    "view": "ChangeAdditionalInterest"
+                }
+            ]
+        },
+        {
+            "label": "Tools",
+            "actions": [
+                {
+                    "label": "Generate document",
+                    "view": "GenerateDocument"
+                },
+                {
+                    "label": "Edit term data",
+                    "view": "EditTermData"
                 }
             ]
         }
