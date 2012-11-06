@@ -2,13 +2,13 @@ define [
   'modules/IPM/IPMActionView'
 ], (IPMActionView) ->
 
-  class MakePaymentAction extends IPMActionView
+  class EndorseAction extends IPMActionView
 
     initialize : ->
       super
 
     ready : ->
-      @fetchTemplates(@MODULE.POLICY, 'make-payment', @processView)
+      @fetchTemplates(@MODULE.POLICY, 'endorse', @processView)
 
     # Build a viewData object to populate the template form with
     processView : (vocabTerms, view) =>

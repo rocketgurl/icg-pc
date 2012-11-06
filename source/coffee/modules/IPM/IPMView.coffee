@@ -61,9 +61,7 @@ define [
 
       # Drop container shim into place
       @$el.append("""
-        <form accept-charset="utf-8" id="ipm-form-#{@cid}">
           <div id=\"ipm-container-#{@cid}\" class=\"ipm-container\"></div>
-        </form>
       """)
 
 

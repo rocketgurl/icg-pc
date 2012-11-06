@@ -49,7 +49,7 @@
         this.$el.html(this.FLASH_HTML);
         this.$el.find("#flash-message-" + this.cid).addClass('ipm-flash');
         this.$el.append("<div id=\"ipm-loader-" + this.cid + "\" class=\"ipm-loader\">\n  <h2 id=\"ipm-spinner-" + this.cid + "\"><span>Loading action&hellip;</span></h2>\n</div>");
-        return this.$el.append("<form accept-charset=\"utf-8\" id=\"ipm-form-" + this.cid + "\">\n  <div id=\"ipm-container-" + this.cid + "\" class=\"ipm-container\"></div>\n</form>");
+        return this.$el.append("<div id=\"ipm-container-" + this.cid + "\" class=\"ipm-container\"></div>");
       };
 
       IPMView.prototype.route = function(action) {

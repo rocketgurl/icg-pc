@@ -1,7 +1,14 @@
 .ipm-container {
-	@extend .ru-container;
+	// $container-width: 100%;
+	// $gutter-width: 1em;
+	// $grid-padding: 1.8%;
+	// @include container;
+	margin: 0;
+	background-color: #f4f4f4;
 	border: 0;
-	min-height: 100%;
+	overflow: auto;
+	border: blue 2px solid;
+	height: 100%;
 }
 
 .ipm-flash {
@@ -62,4 +69,41 @@
 	h2 {
 		margin-left: -100px;
 	}
+}
+
+.ipm-container {
+
+	#content {
+		border: red 1px solid;
+		padding: 20px !important;
+	}
+
+	#content_header {
+		padding: 0;
+
+		h2 {
+			@include font-size(18);
+			line-height: 140%;
+			margin: 0 0 5px 0;
+			padding: 0 0 5px 0;
+			@include emboss;
+			color: darken($darkgray, 10);
+			border-bottom: darken($lightgray, 20) 1px solid;
+		}
+	}
+
+	#content_body {
+		
+	}
+
+	.policyOverview {
+		h1 {
+			@include font-size(14);
+			margin: 10px 0;
+		}
+		ul li {
+			@include font-size(12);
+		}
+	}
+
 }

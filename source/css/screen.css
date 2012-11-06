@@ -1236,7 +1236,7 @@ Module: Policy
   color: #fe8400;
 }
 
-.ru-container, .ipm-container, .zd-container {
+.ru-container, .zd-container {
   *zoom: 1;
   width: 96.4%;
   margin-left: auto;
@@ -1247,12 +1247,12 @@ Module: Policy
   background-color: #f4f4f4;
   display: none;
 }
-.ru-container:after, .ipm-container:after, .zd-container:after {
+.ru-container:after, .zd-container:after {
   content: "";
   display: table;
   clear: both;
 }
-.ru-container h1, .ipm-container h1, .zd-container h1, .ru-container h2, .ipm-container h2, .zd-container h2 {
+.ru-container h1, .zd-container h1, .ru-container h2, .zd-container h2 {
   width: 100%;
   float: right;
   margin-right: 0;
@@ -1261,13 +1261,13 @@ Module: Policy
   font-weight: bold;
   margin: 15px 0 0 0;
 }
-.ru-container h1, .ipm-container h1, .zd-container h1 {
+.ru-container h1, .zd-container h1 {
   color: #002857;
   font-size: 24px;
   font-size: 2.4rem;
   text-shadow: 0 1px white;
 }
-.ru-container h2, .ipm-container h2, .zd-container h2 {
+.ru-container h2, .zd-container h2 {
   color: dimgrey;
   font-size: 18px;
   font-size: 1.8rem;
@@ -1394,8 +1394,12 @@ Module: Policy
 }
 
 .ipm-container {
+  margin: 0;
+  background-color: #f4f4f4;
   border: 0;
-  min-height: 100%;
+  overflow: auto;
+  border: blue 2px solid;
+  height: 100%;
 }
 
 .ipm-flash {
@@ -1462,6 +1466,33 @@ Module: Policy
 
 .ipm-loader h2 {
   margin-left: -100px;
+}
+
+.ipm-container #content {
+  border: red 1px solid;
+  padding: 20px !important;
+}
+.ipm-container #content_header {
+  padding: 0;
+}
+.ipm-container #content_header h2 {
+  font-size: 18px;
+  font-size: 1.8rem;
+  line-height: 140%;
+  margin: 0 0 5px 0;
+  padding: 0 0 5px 0;
+  text-shadow: 0 1px white;
+  color: #4f4f4f;
+  border-bottom: #bababa 1px solid;
+}
+.ipm-container .policyOverview h1 {
+  font-size: 14px;
+  font-size: 1.4rem;
+  margin: 10px 0;
+}
+.ipm-container .policyOverview ul li {
+  font-size: 12px;
+  font-size: 1.2rem;
 }
 
 .zd-loss-history {
