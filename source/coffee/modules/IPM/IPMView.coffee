@@ -46,7 +46,7 @@ define [
       if _.isEmpty @VIEW_STATE
         @route 'Home'
     
-    # Build and render needed HTML elements within the view
+    # **Build and render needed HTML elements within the view**
     buildHtmlElements : ->
       # Drop flash message template and add class just for ipm layout
       @$el.html(@FLASH_HTML)
@@ -74,12 +74,12 @@ define [
     # If the ActionView already exists in the cache, then we just tell it to
     # show itself (fadeIn) and all the existing ones to switch off.
     #
-    # **Callback Village** - when we initialize an ActionView we set a "loaded"
+    # _Callback Village_ - when we initialize an ActionView we set a "loaded"
     # event listener on it which should pass the ActionView itseld to @render(). 
     # We also trigger a "ready" event on the view letting it know to go ahead and
     # do whatever buildup it needs to.
     #
-    # @param `action` _String_ name of IPMActionView to loade w/ require()
+    # @param `action` _String_ name of IPMActionView to loade w/ require()  
     #
     route : (action) ->
       # Save our current location
@@ -136,8 +136,8 @@ define [
     # element is appended to the IPMView container (@$el) and any callbacks
     # are fired.
     #
-    # @param `action_view` _Object_ IPMActionView    
-    # @param `callback` _Function_    
+    # @param `action_view` _Object_ IPMActionView  
+    # @param `callback` _Function_  
     #
     render :
       dlogger \

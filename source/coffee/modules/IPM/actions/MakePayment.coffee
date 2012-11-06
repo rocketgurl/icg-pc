@@ -33,10 +33,8 @@ define [
 
     render : (viewData, view) ->
       super
-
       viewData = viewData || @viewData
       view     = view || @view
-
       @$el.html(@MODULE.VIEW.Mustache.render(view, viewData))
 
     # **Process Form**
