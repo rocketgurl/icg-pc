@@ -176,8 +176,9 @@
         }
       },
       getLastTerm: function() {
-        if (this.getTerms()) {
-          return this.getTerms().pop();
+        var terms;
+        if (terms = this.getTerms()) {
+          return terms.pop();
         } else {
           return {};
         }

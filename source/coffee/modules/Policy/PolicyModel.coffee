@@ -190,8 +190,8 @@ define [
     # TODO: Check to make sure we're not just looking for <Intervals>  
     # @return _Obj (XML)_
     getLastTerm : ->
-      if @getTerms()
-        @getTerms().pop()
+      if terms = @getTerms()
+        terms.pop()
       else
         {}
 
