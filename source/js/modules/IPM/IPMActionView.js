@@ -29,7 +29,8 @@
 
       IPMActionView.prototype.events = {
         "click form input.button": "submit",
-        "click .form_actions a": "goHome"
+        "click .form_actions a": "goHome",
+        "click fieldset h3": "toggleFieldset"
       };
 
       IPMActionView.prototype.initialize = function(options) {
@@ -62,6 +63,25 @@
       IPMActionView.prototype.goHome = function(e) {
         e.preventDefault();
         return this.PARENT_VIEW.route('Home');
+      };
+
+      IPMActionView.prototype.toggleFieldset = function(e) {
+        var a, a_html, container, h3;
+        e.preventDefault();
+        h3 = $(e.currentTarget);
+        a = h3.find('a');
+        container = h3.parent().find('.collapsibleFieldContainer');
+        if (container.css('display') === 'none') {
+          container.css('display', 'block');
+        } else {
+          container.css('display', 'none');
+        }
+        a_html = a.html();
+        return a.html(a.data('altText')).data('altText', a_html);
+      };
+
+      IPMActionView.prototype.postProcessView = function() {
+        return $('.labelRequired').append('<em>*</em>');
       };
 
       IPMActionView.prototype.getFormValues = function(form) {

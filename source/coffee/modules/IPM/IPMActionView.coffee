@@ -19,6 +19,7 @@ define [
     events :
       "click form input.button" : "submit"
       "click .form_actions a"   : "goHome"
+      "click fieldset h3"       : "toggleFieldset"
 
     initialize : (options) ->
       @PARENT_VIEW = options.PARENT_VIEW || {}
@@ -58,6 +59,35 @@ define [
     goHome : (e) ->
       e.preventDefault()
       @PARENT_VIEW.route 'Home'
+
+    # Open/close fieldsets 
+    #
+    # @param `e` _Event_  
+    #
+    toggleFieldset : (e) ->
+      e.preventDefault()
+      h3        = $(e.currentTarget)
+      a         = h3.find('a')
+      container = h3.parent().find('.collapsibleFieldContainer')
+
+      # Toggle visibility states
+      if container.css('display') == 'none'
+        container.css('display', 'block')
+      else
+        container.css('display', 'none')
+
+      # Swap anchor text
+      a_html = a.html()
+      a.html(a.data('altText')).data('altText', a_html)
+
+
+    # **Post process the rendered view**  
+    # This is where we add things like required labels and such after the
+    # ActionView has been rendered. You can add to this through inheritance
+    # using `super` in your actions
+    #
+    postProcessView : ->
+      $('.labelRequired').append('<em>*</em>')
 
     # **Get the form values**  
     #
