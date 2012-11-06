@@ -94,5 +94,19 @@ define [
     makeTimestamp : ->
       moment(new Date()).format('YYYY-MM-DDTHH:mm:ss.sssZ')
 
+    # Resize and element to the approximate height of the workspace
+    #
+    # @param `el` _HTML Element_ element to resize  
+    # @param `offset` _Integer_ additional padding  
+    #
+    resize_element : (el, offset) ->
+      offset = offset || 0
+      el_height = Math.floor((($(window).height() - (184 + offset))/$(window).height())*100) + "%"
+      el.css(
+        'min-height' : el_height
+        'height'     : $(window).height() - (184 + offset)
+        )
+      console.log $(window).height() - (184 + offset)
+
 
   Helpers

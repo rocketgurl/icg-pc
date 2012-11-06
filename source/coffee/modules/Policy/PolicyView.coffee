@@ -160,15 +160,6 @@ define [
       @policy_nav_links = @$el.find("#policy-nav-#{@cid} a")
       @policy_summary   = @$el.find("#policy-summary-#{@cid}")
 
-    # Size the iframe to the approximate view area of the workspace
-    resize_element : (el, offset) ->
-      offset = offset || 0
-      el_height = Math.floor((($(window).height() - (184 + offset))/$(window).height())*100) + "%"
-      el.css(
-        'min-height' : el_height
-        'height'     : $(window).height() - (184 + offset)
-        )
-
     # If the policy_header doesn't exist then build it, otherwise
     # just make visible
     build_policy_header : ->
@@ -188,12 +179,12 @@ define [
         @policy_summary = @$el.find("#policy-workspace-#{@cid}")
 
       if @policy_summary.length > 0
-        @resize_element @$el.find("#policy-workspace-#{@cid}")
+        @Helpers.resize_element @$el.find("#policy-workspace-#{@cid}")
 
         # Now attach a resize event to the window to help Flash
         resizer = _.bind(
           ->
-            @resize_element(@$el.find("#policy-workspace-#{@cid}"))            
+            @Helpers.resize_element(@$el.find("#policy-workspace-#{@cid}"))            
           , this)
         resize = _.debounce(resizer, 300);
         $(window).resize(resize);
@@ -282,11 +273,11 @@ define [
 
       ipm_container = $("#policy-ipm-#{@cid}")
       ipm_container.show()
-      @resize_element(ipm_container, @policy_header.height())
+      @Helpers.resize_element(ipm_container, @policy_header.height())
 
       # @iframe.show()
       # @iframe.attr('src', '/mxadmin/index.html')
-      # @resize_element(@iframe, @policy_header.height())
+      # @Helpers.resize_element(@iframe, @policy_header.height())
 
     # Hide IPM Changes
     teardown_ipmchanges : ->
@@ -332,7 +323,7 @@ define [
         $("#policy-workspace-#{@cid}").append("<div id=\"zendesk-#{@cid}\" class=\"zd-container\"></div>")
         $zd_el = $("#zendesk-#{@cid}")
 
-      @resize_element @$el.find("#policy-workspace-#{@cid}")
+      @Helpers.resize_element @$el.find("#policy-workspace-#{@cid}")
 
       # If container not already loaded, then insert element into DOM
       if @zd_container == null || @zd_container == undefined

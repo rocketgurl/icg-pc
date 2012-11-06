@@ -85,6 +85,16 @@
       },
       makeTimestamp: function() {
         return moment(new Date()).format('YYYY-MM-DDTHH:mm:ss.sssZ');
+      },
+      resize_element: function(el, offset) {
+        var el_height;
+        offset = offset || 0;
+        el_height = Math.floor((($(window).height() - (184 + offset)) / $(window).height()) * 100) + "%";
+        el.css({
+          'min-height': el_height,
+          'height': $(window).height() - (184 + offset)
+        });
+        return console.log($(window).height() - (184 + offset));
       }
     };
     return Helpers;
