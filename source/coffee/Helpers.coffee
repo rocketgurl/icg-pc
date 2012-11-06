@@ -106,7 +106,6 @@ define [
         'min-height' : el_height
         'height'     : $(window).height() - (184 + offset)
         )
-      console.log $(window).height() - (184 + offset)
 
 
   Helpers
