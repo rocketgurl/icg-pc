@@ -10,15 +10,31 @@
 	height: 100%;
 }
 
+.ipm-header {
+	@include sans;
+	@include font-size(18);
+	@include emboss;
+	font-weight: bold;
+	color: $blue;
+	padding: 20px 0 0 20px;
+	margin: 0;
+}
+
 .ipm-flash {
 	margin: 0;
 	@include border-radius(0px);
 }
 
 .ipm-home-action-view {
-	@include span-columns(12 omega, 12);
-	margin-top: 20px;
+	margin: 20px 0 0 0;
+	text-align: center;
 	@include sans;
+}
+
+.ipm-home-action-view ul {
+	width: 98%;
+	margin: 0 auto;
+	text-align: left;
 }
 
 .ipm-home-action-view ul li {
@@ -89,9 +105,6 @@
 		}
 	}
 
-	#content_body {
-
-	}
 
 	.policyOverview {
 		margin: 10px 0 20px 0;
@@ -110,8 +123,24 @@
 		}
 	}
 
+	.button {
+		@include simple-color(hue(#2b90d2), saturation(#2b90d2), lightness(#2b90d2));
+	}
+
+	div.form_actions {
+		margin: 10px 0 0 0;
+		a {
+			vertical-align: top;
+			margin: 2px 0 0 0;
+			display: inline-block;
+			text-decoration: none;
+			@include simple-color(hue($lightgray), saturation($lightgray), lightness($lightgray));
+			padding: 9px 12px 10px 12px !important;
+		}
+	}
+
 	fieldset {
-		border-top: darken($lightgray, 20) 1px solid;
+		border-top: darken($lightgray, 10) 1px solid;
 		padding: 5px 0;
 		margin: 0;
 
@@ -157,7 +186,6 @@
 			color: darken($darkgray,10);
 			position: relative;
 			display: inline-block;
-			vertical-align: top;
 			width: 250px !important;
 			padding: 0 0 0 5px;
 			i {
@@ -202,13 +230,15 @@
 			padding: 4px;
 		}
 
-		select, option {
+		select {
 			@include sans;
 			@include font-size(14);
 		}
 
 		textarea {
 			@include sans;
+			@include font-size(14);
+			padding: 5px;
 			width: 50%;
 			min-height: 120px;
 		}
@@ -217,7 +247,6 @@
 		fieldset {
 			padding: 10px;
 			background: $white;
-			box-shadow: darken($lightgray, 20) 0 0 3px;
 			border: 0;
 			margin: 15px 0;
 
@@ -238,8 +267,28 @@
 			border: 0;
 		}
 	}
+
+	fieldset.defaultOpen {
+		border-top: 0px;
+	}
+
 	.defaultOpen .collapsibleFieldContainer {
 		display: block;
+	}
+
+	#rate_validation_override {
+		margin: 20px 0;
+		padding: 10px;
+		background: adjust_hue(lighten($orange, 35), 11);
+		@include background-image(linear-gradient(adjust_hue(lighten($orange, 35), 11), lighten($orange, 35)));
+		border-radius: 6px;
+		border: lighten($orange, 30) 1px solid;
+		label {
+			color: darken($orange, 10);
+			@include font-size(16);
+			font-weight: bold;
+			width: auto !important;
+		}
 	}
 
 }
