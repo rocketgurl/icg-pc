@@ -1,0 +1,74 @@
+<!DOCTYPE html>  <html> <head>   <title>ReferralTaskCollection.coffee</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="ReferralQueueModule.html">                 ReferralQueueModule.coffee               </a>                                           <a class="source" href="ReferralQueueView.html">                 ReferralQueueView.coffee               </a>                                           <a class="source" href="ReferralTaskCollection.html">                 ReferralTaskCollection.coffee               </a>                                           <a class="source" href="ReferralTaskModel.html">                 ReferralTaskModel.coffee               </a>                                           <a class="source" href="ReferralTaskView.html">                 ReferralTaskView.coffee               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               ReferralTaskCollection.coffee             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre><span class="nx">define</span> <span class="p">[</span>
+  <span class="s">&#39;BaseCollection&#39;</span><span class="p">,</span>
+  <span class="s">&#39;modules/ReferralQueue/ReferralTaskModel&#39;</span>
+<span class="p">],</span> <span class="nf">(BaseCollection, ReferralTaskModel) -&gt;</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <h1>Referral Tasks</h1>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nv">ReferralTaskCollection = </span><span class="nx">BaseCollection</span><span class="p">.</span><span class="nx">extend</span>
+
+    <span class="nv">model : </span><span class="nx">ReferralTaskModel</span>
+
+    <span class="nv">initialize : </span><span class="o">-&gt;</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p><strong>Parse response</strong> <br />
+We need to get the XML from pxCentral into a nice JSON format for our
+models.</p>
+
+<p>@param <code>response</code> <em>XML</em> Task XML returned from server <br />
+@return <em>JSON</em></p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nv">parse : </span><span class="nf">(response) -&gt;</span>
+      <span class="k">if</span> <span class="nx">response</span>
+        <span class="nv">json = </span><span class="nx">$</span><span class="p">.</span><span class="nx">fn</span><span class="p">.</span><span class="nx">xml2json</span><span class="p">(</span><span class="nx">response</span><span class="p">)</span></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>Grab some pagination metadata from the response</p>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="nx">_</span><span class="p">.</span><span class="nx">extend</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="p">{</span>
+          <span class="nv">criteria   : </span><span class="nx">json</span><span class="p">.</span><span class="nx">criteria</span>
+          <span class="nv">perPage    : </span><span class="nx">json</span><span class="p">.</span><span class="nx">itemsPerPage</span>
+          <span class="nv">page       : </span><span class="nx">json</span><span class="p">.</span><span class="nx">page</span>
+          <span class="nv">totalItems : </span><span class="nx">json</span><span class="p">.</span><span class="nx">totalItems</span>
+        <span class="p">})</span>
+
+        <span class="k">return</span> <span class="nx">json</span><span class="p">.</span><span class="nx">Task</span>
+      <span class="kc">false</span></pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p><strong>Success callback</strong> <br />
+We have the option to pass in a custom success callback to make
+testing easier. Wrapping fetch() in this method also makes it easy
+to override the default Backbone.sync with our custome headers.</p>
+
+<p>@param <code>collection</code> <em>Object</em> ReferralTaskCollection <br />
+@param <code>response</code> <em>XML</em> Task XML from server </p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nv">success_callback : </span><span class="nf">(collection, response) -&gt;</span></pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p>console.log [collection, response] # stub</p>             </td>             <td class="code">               <div class="highlight"><pre></pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <p><strong>Error callback</strong>  </p>
+
+<p>@param <code>collection</code> <em>Object</em> ReferralTaskCollection <br />
+@param <code>response</code> <em>XML</em> Task XML from server </p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nv">error_callback : </span><span class="nf">(collection, response) -&gt;</span>
+      <span class="nx">collection</span><span class="p">.</span><span class="nx">trigger</span> <span class="s">&#39;error&#39;</span><span class="p">,</span> <span class="nx">collection</span><span class="p">,</span> <span class="nx">response</span></pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <p><strong>Get Tasks from Server</strong> <br />
+We have the option to pass in a custom success callback to make
+testing easier. Wrapping fetch() in this method also makes it easy
+to override the default Backbone.sync with our custome headers.</p>
+
+<p>@param <code>query</code> <em>Object</em> Query params for server call 
+@param <code>callback</code> <em>Function</em> function to call on AJAX success  </p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nv">getReferrals : </span><span class="nf">(query, callback) -&gt;</span>
+      <span class="nv">success_callback = </span><span class="nx">callback</span> <span class="o">||</span> <span class="nx">@success_callback</span>
+      <span class="nv">error_callback   = </span><span class="nx">@error_callback</span>
+      <span class="nv">query            = </span><span class="nx">query</span> <span class="o">||</span> <span class="p">{}</span></pre></div>             </td>           </tr>                               <tr id="section-9">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-9">&#182;</a>               </div>               <p>Make sure we're always set for XML and have some sensible defaults</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="nv">query = </span><span class="nx">_</span><span class="p">.</span><span class="nx">extend</span><span class="p">({</span>
+          <span class="nv">media             : </span><span class="s">&#39;application/xml&#39;</span>
+          <span class="nv">OwningUnderwriter : </span><span class="nx">@email</span>
+          <span class="nv">perPage           : </span><span class="mi">25</span>
+        <span class="p">},</span> <span class="nx">query</span><span class="p">)</span>
+
+      <span class="nx">@fetch</span><span class="p">(</span>
+        <span class="nv">data        : </span><span class="nx">query</span>
+        <span class="nv">dataType    : </span><span class="s">&#39;xml&#39;</span>
+        <span class="nv">contentType : </span><span class="s">&#39;application/xml&#39;</span>
+        <span class="nv">headers     :</span>
+          <span class="s">&#39;Authorization&#39;</span>   <span class="o">:</span> <span class="s">&quot;Basic </span><span class="si">#{</span><span class="nx">@digest</span><span class="si">}</span><span class="s">&quot;</span>
+          <span class="s">&#39;X-Authorization&#39;</span> <span class="o">:</span> <span class="s">&quot;Basic </span><span class="si">#{</span><span class="nx">@digest</span><span class="si">}</span><span class="s">&quot;</span>
+        <span class="nv">success : </span><span class="nf">(collection, response) -&gt;</span>
+          <span class="nx">success_callback</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="p">[</span><span class="nx">collection</span><span class="p">,</span> <span class="nx">response</span><span class="p">])</span>
+        <span class="nv">error : </span><span class="nf">(collection, response) -&gt;</span>
+          <span class="nx">error_callback</span><span class="p">.</span><span class="nx">apply</span><span class="p">(</span><span class="k">this</span><span class="p">,</span> <span class="p">[</span><span class="nx">collection</span><span class="p">,</span> <span class="nx">response</span><span class="p">])</span>
+      <span class="p">)</span></pre></div>             </td>           </tr>                               <tr id="section-10">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-10">&#182;</a>               </div>               <p><strong>Sort columns</strong> <br />
+Set the comparator on the collection and then force a sort. This will
+trigger a reset on the collection and re-render it.</p>
+
+<p>@param <code>field</code> <em>String</em> Column name <br />
+@param <code>direction</code> <em>String</em> ASC || DESC </p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nv">sortTasks : </span><span class="nf">(field, direction) -&gt;</span>
+      <span class="vi">@comparator = </span><span class="nf">(a, b) -&gt;</span>
+        <span class="nv">dir = </span><span class="k">if</span> <span class="nx">direction</span> <span class="o">==</span> <span class="s">&#39;asc&#39;</span> <span class="k">then</span> <span class="mi">1</span> <span class="k">else</span> <span class="o">-</span><span class="mi">1</span>
+        <span class="k">if</span> <span class="nx">a</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">field</span><span class="p">)</span> <span class="o">&lt;</span> <span class="nx">b</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">field</span><span class="p">)</span> 
+          <span class="k">return</span> <span class="nx">dir</span>
+        <span class="k">if</span> <span class="nx">a</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">field</span><span class="p">)</span> <span class="o">&gt;</span> <span class="nx">b</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="nx">field</span><span class="p">)</span> 
+          <span class="k">return</span> <span class="o">-</span><span class="nx">dir</span>
+        <span class="mi">0</span>
+      <span class="nx">@sort</span><span class="p">()</span>
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
