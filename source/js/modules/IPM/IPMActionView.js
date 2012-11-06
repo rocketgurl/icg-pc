@@ -25,6 +25,8 @@
 
       IPMActionView.prototype.CHANGE_SET = {};
 
+      IPMActionView.prototype.tagName = 'div';
+
       IPMActionView.prototype.events = {
         "click form input.button": "submit",
         "click .form_actions a": "goHome"
@@ -34,9 +36,6 @@
         this.PARENT_VIEW = options.PARENT_VIEW || {};
         this.MODULE = options.MODULE || {};
         this.CHANGE_SET = new IPMChangeSet(this.MODULE.POLICY, this.PARENT_VIEW.VIEW_STATE, this.MODULE.USER);
-        if (this.MODULE.CONTAINER) {
-          this.$el = this.MODULE.CONTAINER;
-        }
         this.options = null;
         return this.on('ready', this.ready, this);
       };

@@ -20,6 +20,7 @@
       };
 
       EndorseAction.prototype.ready = function() {
+        EndorseAction.__super__.ready.apply(this, arguments);
         return this.fetchTemplates(this.MODULE.POLICY, 'endorse', this.processView);
       };
 
@@ -32,14 +33,16 @@
           policyOverview: true,
           policyId: this.MODULE.POLICY.get_pxServerIndex()
         });
-        return this.render(viewData, view);
+        this.viewData = viewData;
+        this.view = view;
+        return this.trigger("loaded", this, this.postProcessView);
       };
 
       EndorseAction.prototype.render = function(viewData, view) {
-        var html;
         EndorseAction.__super__.render.apply(this, arguments);
-        html = this.MODULE.VIEW.Mustache.render(view, viewData);
-        return this.trigger("loaded", html);
+        viewData = viewData || this.viewData;
+        view = view || this.view;
+        return this.$el.html(this.MODULE.VIEW.Mustache.render(view, viewData));
       };
 
       EndorseAction.prototype.submit = function(e) {

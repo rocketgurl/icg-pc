@@ -8,6 +8,7 @@ define [
       super
 
     ready : ->
+      super
       @fetchTemplates(@MODULE.POLICY, 'make-payment', @processView)
 
     # Build a viewData object to populate the template form with
@@ -23,13 +24,20 @@ define [
           policyId : @MODULE.POLICY.get_pxServerIndex()
         }
       )
-      @render viewData, view
+
+      @viewData = viewData
+      @view     = view
+
+      @trigger "loaded", this
+      
 
     render : (viewData, view) ->
       super
 
-      html = @MODULE.VIEW.Mustache.render(view, viewData)
-      @trigger "loaded", html
+      viewData = viewData || @viewData
+      view     = view || @view
+
+      @$el.html(@MODULE.VIEW.Mustache.render(view, viewData))
 
     # **Process Form**
     # On submit we do some action specific processing and then send to the

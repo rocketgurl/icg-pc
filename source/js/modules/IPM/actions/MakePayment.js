@@ -20,6 +20,7 @@
       };
 
       MakePaymentAction.prototype.ready = function() {
+        MakePaymentAction.__super__.ready.apply(this, arguments);
         return this.fetchTemplates(this.MODULE.POLICY, 'make-payment', this.processView);
       };
 
@@ -32,14 +33,16 @@
           policyOverview: true,
           policyId: this.MODULE.POLICY.get_pxServerIndex()
         });
-        return this.render(viewData, view);
+        this.viewData = viewData;
+        this.view = view;
+        return this.trigger("loaded", this);
       };
 
       MakePaymentAction.prototype.render = function(viewData, view) {
-        var html;
         MakePaymentAction.__super__.render.apply(this, arguments);
-        html = this.MODULE.VIEW.Mustache.render(view, viewData);
-        return this.trigger("loaded", html);
+        viewData = viewData || this.viewData;
+        view = view || this.view;
+        return this.$el.html(this.MODULE.VIEW.Mustache.render(view, viewData));
       };
 
       MakePaymentAction.prototype.submit = function(e) {

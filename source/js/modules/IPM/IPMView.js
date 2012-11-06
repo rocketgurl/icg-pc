@@ -58,12 +58,15 @@
         this.insert_loader();
         if (!_.has(this.VIEW_CACHE, action)) {
           require(["" + this.MODULE.CONFIG.ACTIONS_PATH + action], function(Action) {
-            _this.VIEW_CACHE[action] = new Action({
+            var ActionView;
+            _this.VIEW_CACHE[action] = $("<div id=\"dom-container-" + action + "\" class=\"dom-container\"></div>");
+            ActionView = new Action({
               MODULE: _this.MODULE,
               PARENT_VIEW: _this
             });
-            _this.VIEW_CACHE[action].on("loaded", _this.render, _this);
-            return _this.VIEW_CACHE[action].trigger("ready");
+            _this.hideOpenViews();
+            ActionView.on("loaded", _this.render, _this);
+            return ActionView.trigger("ready");
           }, function(err) {
             var failedId;
             failedId = err.requireModules && err.requireModules[0];
@@ -71,19 +74,44 @@
             return _this.route('Home');
           });
         } else {
-          this.VIEW_CACHE[action].on("loaded", this.render, this);
-          this.VIEW_CACHE[action].trigger("ready");
+          this.remove_loader();
+          this.hideOpenViews(function() {
+            return _this.VIEW_CACHE[action].fadeIn('fast');
+          });
         }
         return this;
       };
 
-      IPMView.prototype.render = dlogger(function(html) {
+      IPMView.prototype.hideOpenViews = function(callback) {
+        var action, view, _ref, _results;
+        _ref = this.VIEW_CACHE;
+        _results = [];
+        for (action in _ref) {
+          view = _ref[action];
+          if (view.css('display') === 'block') {
+            _results.push(view.fadeOut('fast', function() {
+              if (callback != null) {
+                return callback();
+              }
+            }));
+          } else {
+            _results.push(void 0);
+          }
+        }
+        return _results;
+      };
+
+      IPMView.prototype.render = dlogger(function(action_view, callback) {
         var container,
           _this = this;
         this.remove_loader();
         container = this.$el.find("#ipm-container-" + this.cid);
         container.fadeOut('fast', function() {
-          return container.html(html).fadeIn('fast');
+          action_view.setElement(_this.VIEW_CACHE[_this.VIEW_STATE]).render();
+          container.append(_this.VIEW_CACHE[_this.VIEW_STATE]).fadeIn('fast');
+          if (callback) {
+            return callback();
+          }
         });
         return this.messenger = new Messenger(this, this.cid);
       });

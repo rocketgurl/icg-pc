@@ -14,6 +14,8 @@ define [
     TPL_CACHE  : {} # Template Cache
     CHANGE_SET : {}
 
+    tagName : 'div'
+
     events :
       "click form input.button" : "submit"
       "click .form_actions a"   : "goHome"
@@ -22,7 +24,6 @@ define [
       @PARENT_VIEW = options.PARENT_VIEW || {}
       @MODULE      = options.MODULE || {}
       @CHANGE_SET  = new IPMChangeSet(@MODULE.POLICY, @PARENT_VIEW.VIEW_STATE, @MODULE.USER)
-      @$el         = @MODULE.CONTAINER if @MODULE.CONTAINER
       
       @options = null
 
@@ -112,6 +113,7 @@ define [
       console.log jqXHR
 
     # Your Action View should define the following methods:
+
     ready : ->
 
     render : -> 

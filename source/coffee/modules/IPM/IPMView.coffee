@@ -22,7 +22,7 @@ define [
     # Keep track of our current sub-view
     VIEW_STATE : ''
     VIEW_CACHE : {}
-
+    
     FLASH_HTML : ''
     LOADER     : {}
 
@@ -65,13 +65,19 @@ define [
       """)
 
 
-    # Check if IPMActionView is in cache and send to render, otherwise
-    # load it with Require.js
+    # **Router**  
+    # @VIEW_CACHE stores rendered IPMActionView instances. When route is fired
+    # we check the cache to see if it exists, if not we create a new DOM
+    # element and then load the IPMActionView with Require.js, then kick off
+    # some events on the ActionView that should lead to it getting rendered.
+    #
+    # If the ActionView already exists in the cache, then we just tell it to
+    # show itself (fadeIn) and all the existing ones to switch off.
     #
     # **Callback Village** - when we initialize an ActionView we set a "loaded"
-    # event listener on it which should pass the view's HTML to @render(). We
-    # also trigger a "ready" event on the view letting it know to go ahead and
-    # do whatever build out it needs to.
+    # event listener on it which should pass the ActionView itseld to @render(). 
+    # We also trigger a "ready" event on the view letting it know to go ahead and
+    # do whatever buildup it needs to.
     #
     # @param `action` _String_ name of IPMActionView to loade w/ require()
     #
@@ -79,42 +85,74 @@ define [
       # Save our current location
       @VIEW_STATE = action
       @insert_loader()
+
       # Cache or load. If we have a load error, then throw up a message and
       # re-route back to the home view
       if !_.has(@VIEW_CACHE, action)
         require ["#{@MODULE.CONFIG.ACTIONS_PATH}#{action}"], (Action) =>
-          @VIEW_CACHE[action] = new Action(
+
+          @VIEW_CACHE[action] = $("<div id=\"dom-container-#{action}\" class=\"dom-container\"></div>")
+
+          ActionView = new Action(
             MODULE      : @MODULE
             PARENT_VIEW : this
           )
-          @VIEW_CACHE[action].on("loaded", @render, this)
-          @VIEW_CACHE[action].trigger "ready"
+
+          @hideOpenViews()
+
+          ActionView.on("loaded", @render, this)
+          ActionView.trigger "ready"
+
         , (err) =>
             failedId = err.requireModules && err.requireModules[0]
             @Amplify.publish(@cid, 'warning', "We could not load #{failedId}. Sorry.")
             @route 'Home'
 
       else
-        @VIEW_CACHE[action].on("loaded", @render, this)
-        @VIEW_CACHE[action].trigger "ready"
+        @remove_loader()
+        @hideOpenViews =>
+          @VIEW_CACHE[action].fadeIn('fast')
 
       this
 
-    # **Render**  
-    # render() expects action to have a render() method which returns
-    # HTML ready to go.
+    # **Hide all open ActionViews**  
+    # Loop through @VIEW_CACHE and any view with display:block are hidden. An
+    # optional callback can be passed in as well, fired when fade is complete.
     #
-    # @param `action` _IPMActionView_ Instantiated ActionView from route()  
+    # @param `callback` _Function_  
+    #
+    hideOpenViews : (callback) ->
+      for action, view of @VIEW_CACHE
+        if view.css('display') == 'block'
+          view.fadeOut('fast', -> 
+              if callback?
+                callback()
+            )
+
+    # **Render**  
+    # Expects an ActionView object (returned from IPMActionView with the
+    # loader event). The ActionViews's element is set to the VIEW_CACHE
+    # element created earlier, and then ActionView renders(). The VIEW_CACHE
+    # element is appended to the IPMView container (@$el) and any callbacks
+    # are fired.
+    #
+    # @param `action_view` _Object_ IPMActionView    
+    # @param `callback` _Function_    
     #
     render :
       dlogger \
-      (html) ->
+      (action_view, callback) ->
         @remove_loader()
 
         # Drop in HTML with a fadeOut/In transition
         container = @$el.find("#ipm-container-#{@cid}")
         container.fadeOut 'fast', =>
-          container.html(html).fadeIn('fast')
+          action_view.setElement(@VIEW_CACHE[@VIEW_STATE]).render()
+          container.append(@VIEW_CACHE[@VIEW_STATE]).fadeIn('fast')
+          
+          # call callback if present
+          if callback
+            callback()
 
         # Register flash message pubsub for this view
         @messenger = new Messenger(this, @cid) 

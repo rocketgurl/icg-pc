@@ -23,7 +23,8 @@
       };
 
       HomeAction.prototype.ready = function() {
-        return this.render();
+        HomeAction.__super__.ready.apply(this, arguments);
+        return this.trigger("loaded", this);
       };
 
       HomeAction.prototype.dispatch = function(e) {
@@ -37,7 +38,7 @@
         var actions, html;
         actions = this.MODULE.CONFIG.ACTIONS;
         html = this.MODULE.VIEW.Mustache.render(tpl_home_action, this.MODULE.CONFIG);
-        return this.trigger("loaded", html);
+        return this.$el.html(html);
       };
 
       return HomeAction;
