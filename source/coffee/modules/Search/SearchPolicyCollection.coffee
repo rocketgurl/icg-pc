@@ -45,24 +45,31 @@ define [
 
     # Calculate the page jump option tags
     calculate_pagejumps : ->
-      pages = Math.round(+@pagination.total_items / +@pagination.per_page)
-      selects = ""
-      for page in [1..pages]
-        selected = ''
-        if page is @pagination.page
-          selected = ' selected'
-        selects += """
-            <option value="#{page}"#{selected}>#{page}</option>
-          """
-          
-      selects
+      per_page     = $('.search-pagination-perpage').val()
+      pages        = [1..Math.round(+@pagination.total_items / per_page)]
+      current_page = parseInt(@pagination.page, 10)
+      values       = _.map pages, (page) ->
+        if page == current_page
+          return $("<option value=\"#{page}\" selected>#{page}</option>")
+        else
+          return $("<option value=\"#{page}\">#{page}</option>")
+      
+      values
 
     # Build the items count string for pagination
     calculate_metadata : ->
-      finish = +@pagination.page * +@pagination.per_page
-      start = finish - +@pagination.per_page
-      start = 1 if start is 0
-      @pagination.items = "#{start} - #{finish} of #{@pagination.total_items}"
+      per_page = $('.search-pagination-perpage').val()
+
+      if @pagination.total_items < per_page
+        end_position   = @pagination.total_items
+        start_position = 1
+      else
+        end_position   = +@pagination.page * per_page
+        start_position = end_position - per_page
+
+      start_position = if start_position == 0 then 1 else start_position
+
+      @pagination.items = "##{start_position} - #{end_position} of #{@pagination.total_items}"
 
     # If you happen to be IE8 then we have to brute force striped
     # table rows, because you're lame.

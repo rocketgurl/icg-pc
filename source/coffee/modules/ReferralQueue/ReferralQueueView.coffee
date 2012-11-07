@@ -144,9 +144,17 @@ define [
     # 
     updatePagination : (collection, elements) ->
       # Items count
-      end_position = collection.page * elements.per_page.val()
-      start_position = end_position - elements.per_page.val()
+      per_page = elements.per_page.val()
+
+      if collection.totalItems < per_page
+        end_position   = collection.totalItems
+        start_position = 1
+      else
+        end_position   = collection.page * per_page
+        start_position = end_position - per_page
+
       start_position = if start_position == 0 then 1 else start_position
+
       elements.items.find('span').html("Items #{start_position} - #{end_position} of #{collection.totalItems}")
 
       # Jump to pages
