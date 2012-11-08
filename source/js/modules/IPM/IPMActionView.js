@@ -107,7 +107,7 @@
           val = el.val();
           name = el.attr('name');
           if (el.is('select')) {
-            if (el.data('value') !== val) {
+            if (el.data('value') != val) {
               return changed.push(name);
             }
           } else if (el.is('textarea')) {

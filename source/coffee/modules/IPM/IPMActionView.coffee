@@ -117,9 +117,16 @@ define [
         val  = el.val()
         name = el.attr 'name'
 
-        # Check on data-value of <select> element
+        # Check on data-value of <select> element  
+        # 
+        # _Note:_ We are explicity using '!=' instead of CoffeeScript's 
+        # automatic conversion to '!==' because the values from the form
+        # are all different types and we need loose comparisons to prevent 
+        # writing a shit ton of explicit detections & coercion code. 
+        # This could cause an issue going forward, hence the note. - DN
+        #
         if el.is 'select'
-          if el.data('value') != val
+          if `el.data('value') != val`
             changed.push name
 
         # Check on <textarea> fields.
