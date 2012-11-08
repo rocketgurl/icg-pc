@@ -82,12 +82,17 @@ define [
 
 
     # **Post process the rendered view**  
+    #
     # This is where we add things like required labels and such after the
     # ActionView has been rendered. You can add to this through inheritance
     # using `super` in your actions
     #
     postProcessView : ->
       $('.labelRequired').append('<em>*</em>')
+
+      # Set all Enum selects to their default values
+      $('select[data-value]').val ->
+        $(this).attr('data-value')
 
     # **Get the form values**  
     #

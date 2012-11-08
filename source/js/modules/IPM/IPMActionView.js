@@ -81,7 +81,10 @@
       };
 
       IPMActionView.prototype.postProcessView = function() {
-        return $('.labelRequired').append('<em>*</em>');
+        $('.labelRequired').append('<em>*</em>');
+        return $('select[data-value]').val(function() {
+          return $(this).attr('data-value');
+        });
       };
 
       IPMActionView.prototype.getFormValues = function(form) {
