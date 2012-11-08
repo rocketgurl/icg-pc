@@ -67,7 +67,7 @@ describe('ReferralTaskCollection', function () {
 
   it ('has a totalItems count', function () {
     runs(function(){
-      expect(tasks.totalItems).toBe('1299');
+      expect(tasks.totalItems).toBe('298');
     });
   });
 
@@ -79,7 +79,7 @@ describe('ReferralTaskCollection', function () {
 
   it ('knows what its search criteria is', function () {
     runs(function(){
-      expect(tasks.criteria).toBe('isAdmin=false&isPolicyManager=false');
+      expect(tasks.criteria).toBe('status=new,pending&isAdmin=true&isPolicyManager=false');
     });
   });
 
@@ -123,6 +123,7 @@ describe('ReferralTaskCollection', function () {
       return callback.callCount > 0;
     }, "Timeout BOOM!", 10000)
     runs(function(){
+      console.log(['tasks.length', tasks.length])
       expect(tasks.length).toBe(0);
       expect(tasks.criteria).toBe('owningUnderwriter=darren.newton@arc90.com&isAdmin=false&isPolicyManager=false');
     });
@@ -159,25 +160,35 @@ describe('ReferralTaskCollection', function () {
 
       it('is assigned to someone', function(){
         var count = [0,11,42,32,24,15,6,7];
-        _.each(count, function(num){
-          expect(tasks2.models[num].getAssignedTo()).toEqual("Underwriter");
+        var names = [
+          'e01625j',
+          'rachel@thepaceagency.com',
+          'sslifer1',
+          'e56461a',
+          'e25808a',
+          'jessicarobson@allstate.com',
+          'e41848a',
+          'e61731c'
+        ]
+        _.each(count, function(num, index){
+          expect(tasks2.models[num].getAssignedTo()).toEqual(names[index]);
         });
       })
 
       it('has an Owning Agent', function(){
         var count = [0,1,23,31,13,25,48,17];
         var names = [
-          'cru4t@cru360.com',
-          'cru4t@cru360.com',
-          'cru4t@cru360.com',
-          'geicova1',
-          'cru4t@cru360.com',
-          'cru4t@cru360.com',
-          '',
-          'cru4t@cru360.com'
+          'e01625j',
+          'sedenfield@aiasc.com',
+          'e01691j',
+          'e65496a',
+          'e40220n',
+          'e72247d',
+          'maullc@nationwide.com',
+          'TracyKimble'
         ]
-        _.each(count, function(num){
-          expect(tasks2.models[num].getOwningAgent()).toBe(names[_.indexOf(count, num)]);
+        _.each(count, function(num, index){
+          expect(tasks2.models[num].getOwningAgent()).toBe(names[index]);
         });
       })
 

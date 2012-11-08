@@ -44,7 +44,7 @@ define([
     beforeEach(function(){
       if (ajax_count < 1) {
         var callback = jasmine.createSpy();
-        tasks3.getReferrals({ 'perPage' : 20, 'page' : 1, 'status' : 'New,Pending', 'OwningUnderwriter' : '' }, callback);
+        tasks3.getReferrals({ 'perPage' : 25, 'page' : 1, 'status' : 'New,Pending', 'OwningUnderwriter' : '' }, callback);
         waitsFor(function() {
           ajax_count++;
           return callback.callCount > 0;
