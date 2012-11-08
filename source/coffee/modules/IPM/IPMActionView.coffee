@@ -94,6 +94,12 @@ define [
       $('select[data-value]').val ->
         $(this).attr('data-value')
 
+      # Attach datepickers where appropriate
+      date_options = 
+        dateFormat : 'yy-mm-dd'
+
+      $('.datepicker').datepicker(date_options)
+
     # **Get the form values**  
     #
     # @param `form` _HTML Form Element_  

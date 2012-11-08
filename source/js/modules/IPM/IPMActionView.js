@@ -81,10 +81,15 @@
       };
 
       IPMActionView.prototype.postProcessView = function() {
+        var date_options;
         $('.labelRequired').append('<em>*</em>');
-        return $('select[data-value]').val(function() {
+        $('select[data-value]').val(function() {
           return $(this).attr('data-value');
         });
+        date_options = {
+          dateFormat: 'yy-mm-dd'
+        };
+        return $('.datepicker').datepicker(date_options);
       };
 
       IPMActionView.prototype.getFormValues = function(form) {
