@@ -1,0 +1,100 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+  "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <title>Policy Central 2.0 | Policy Model Testing Regime</title>
+
+  <link rel="shortcut icon" type="image/png" href="lib/jasmine-1.2.0/jasmine_favicon.png">
+  <link rel="stylesheet" type="text/css" href="lib/jasmine-1.2.0/jasmine.css">
+  <script type="text/javascript" src="../js/lib/underscore.js"></script>
+  <script type="text/javascript" src="lib/jasmine-1.2.0/jasmine.js"></script>
+  <script type="text/javascript" src="lib/jasmine-1.2.0/jasmine-html.js"></script>
+
+  <!-- include source files here... -->
+  <script src="../js/lib/require.js"></script>
+
+  <!-- SPECS -->
+  <script type="text/javascript" src="spec/SpecHelper.js"></script>
+
+  <script type="text/javascript">
+    (function() {
+
+
+      require({
+        baseUrl: '../js',
+        paths: {
+          jquery     : 'lib/jquery-1.8.2',
+          underscore : 'lib/underscore',
+          backbone   : 'lib/backbone-min',
+          amplify    : 'lib/amplify',
+          mustache   : 'lib/requirejs.mustache',
+          base64     : 'lib/base64',
+          xml2json   : 'lib/jquery.xml2json',
+          text       : 'lib/text',
+          domReady   : 'lib/domReady',
+          json       : 'lib/json2',
+          loader     : 'lib/heartcode-canvasloader',
+          swfobject  : 'lib/swfobject',
+          moment     : 'lib/moment'
+        },
+        priority: ['jquery'],
+        shim: {
+          'jquery': {
+            deps: ['require'],
+            exports: '$'
+          },
+          'json': {
+            deps: ['jquery'],
+            exports: 'JSON'
+          },
+          'amplify': {
+            deps: ['jquery', 'json'],
+            exports: 'amplify'
+          },
+          'loader': {
+            deps: ['jquery'],
+            exports: 'CanvasLoader'
+          },
+          'xml2json': ['jquery']
+        }
+      });
+
+      require([
+        "jquery",
+        "moment",
+        "../tests/spec/PolicyModelSpec",
+        "domReady",
+        "xml2json"],
+        function($, moment, PolicyModelSpec, domReady) {
+        return domReady(function() {
+            var jasmineEnv = jasmine.getEnv();
+            jasmineEnv.updateInterval = 1000;
+
+            var htmlReporter = new jasmine.HtmlReporter();
+
+            jasmineEnv.addReporter(htmlReporter);
+
+            jasmineEnv.specFilter = function(spec) {
+              return htmlReporter.specFilter(spec);
+            };
+
+            jasmineEnv.execute();
+        });
+      });
+      
+
+    })();
+  </script>
+
+</head>
+<body>
+    <!-- TEMPLATE: Flash Message Container -->
+    <script type="text/template" id="tpl-flash-message">
+      <div id="flash-message-{{cid}}" class="flash-message"></div>
+    </script>
+</body>
+    <!-- TEMPLATE: Flash Message Container -->
+    <script type="text/template" id="tpl-flash-message">
+      <div id="flash-message-{{cid}}" class="flash-message"></div>
+    </script>
+</html>

@@ -20,11 +20,13 @@ define [
     # **Constructor**  
     # @params `POLICY` _Object_ PolicyModel  
     # @params `CONTAINER` _HTML Element_ element to render inside of   
+    # @params `USER` _Object_ UserModel  
     # @return _this_  
-    constructor : (@POLICY, @CONTAINER) ->
+    #
+    constructor : (@POLICY, @CONTAINER, @USER) ->
       # No Policy, No Container, No Dice!
-      if !@POLICY || !@CONTAINER
-        throw new Error('FATAL - Missing PolicyModel or HTML Container.')
+      if !@POLICY || !@CONTAINER || !@USER
+        throw new Error('FATAL - Missing PolicyModel, HTML Container or User.')
 
       # Fetch config in a deferred and then load the module
       config = $.getJSON('/js/modules/IPM/config/ipm.json')
@@ -45,5 +47,4 @@ define [
       if @CONFIG?
         @VIEW = new IPMView(
             MODULE : this
-            DEBUG  : true
           )

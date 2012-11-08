@@ -4,6 +4,8 @@ define([
   "WorkspaceController", 
   "modules/Search/SearchContextCollection",
   "modules/Policy/PolicyModel",
+  "modules/ReferralQueue/ReferralTaskCollection",
+  "modules/ReferralQueue/ReferralQueueView",
   "amplify",
   "loader"], 
   function(
@@ -12,6 +14,8 @@ define([
     WorkspaceController, 
     SearchContextCollection,
     PolicyModel,
+    ReferralTaskCollection,
+    ReferralQueueView,
     amplify, 
     CanvasLoader
 ) {
@@ -22,11 +26,11 @@ define([
     // Setup ENV
     beforeEach(function(){
       WorkspaceController.services = {
-        ixdirectory: 'http://policycentral.dev/ixdirectory/api/rest/v2/',
-        pxcentral: 'http://policycentral.dev/pxcentral/api/rest/v1/',
-        ixlibrary: 'http://policycentral.dev/ixlibrary/api/sdo/rest/v1/',
-        ixdoc: 'http://policycentral.dev/ixdoc/api/rest/v2/',
-        ixadmin: 'http://policycentral.dev/config/ics/staging/ixadmin'
+        ixdirectory: 'https://policycentral.dev/ixdirectory/api/rest/v2/',
+        pxcentral: 'https://policycentral.dev/pxcentral/api/rest/v1/',
+        ixlibrary: 'https://policycentral.dev/ixlibrary/api/sdo/rest/v1/',
+        ixdoc: 'https://policycentral.dev/ixdoc/api/rest/v2/',
+        ixadmin: 'https://policycentral.dev/config/ics/staging/ixadmin'
       };
     });
 
@@ -149,4 +153,6 @@ define([
     });
 
   });
+
+
 })

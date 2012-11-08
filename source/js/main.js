@@ -11,18 +11,23 @@
       amplify: 'lib/amplify',
       mustache: 'lib/requirejs.mustache',
       base64: 'lib/base64',
+      moment: 'lib/moment',
       xml2json: 'lib/jquery.xml2json',
       text: 'lib/text',
       domReady: 'lib/domReady',
       json: 'lib/json2',
       loader: 'lib/heartcode-canvasloader',
-      swfobject: 'lib/swfobject'
+      swfobject: 'lib/swfobject',
+      u_string: 'lib/underscore.string'
     },
-    priority: ['jquery'],
+    priority: ['jquery', 'xml2json', 'json'],
     shim: {
       'jquery': {
         deps: ['require'],
         exports: '$'
+      },
+      'xml2json': {
+        deps: ['jquery']
       },
       'json': {
         deps: ['jquery'],
@@ -36,16 +41,24 @@
         deps: ['jquery'],
         exports: 'CanvasLoader'
       },
-      'xml2json': ['jquery'],
       'swfobject': {
         deps: ['require'],
         exports: 'swfobject'
+      },
+      'u_string': {
+        deps: ['underscore']
       }
     }
   });
 
-  define(['jquery', 'underscore', 'backbone', 'WorkspaceController', 'UserModel', 'ConfigModel', 'WorkspaceStateModel', 'WorkspaceStateCollection', 'WorkspaceLoginView', 'WorkspaceCanvasView', 'WorkspaceNavView', 'WorkspaceRouter', 'modules/Search/SearchContextCollection', 'Messenger', 'base64', 'MenuHelper', 'AppRules', 'Helpers', 'Cookie', 'xml2json', 'domReady'], function($, _, Backbone, WorkspaceController, UserModel, ConfigModel, WorkspaceStateModel, WorkspaceStateCollection, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter, SearchContextCollection, Messenger, Base64, MenuHelper, AppRules, Helpers, Cookie, xml2json, domReady) {
+  require(['jquery', 'underscore', 'backbone', 'WorkspaceController', 'u_string', 'domReady', 'xml2json'], function($, _, Backbone, WorkspaceController, u_string, domReady) {
+    _.mixin(_.str.exports());
     return domReady(function() {
+      if ($.fn.xml2json === void 0) {
+        require(["xml2json"], function(xml2json) {
+          return console.log(xml2json);
+        });
+      }
       window.workspace = WorkspaceController;
       return window.workspace.init();
     });

@@ -18,7 +18,13 @@
       };
 
       HomeAction.prototype.initialize = function() {
-        return HomeAction.__super__.initialize.apply(this, arguments);
+        HomeAction.__super__.initialize.apply(this, arguments);
+        return this.ACTION_NAME = "Home";
+      };
+
+      HomeAction.prototype.ready = function() {
+        HomeAction.__super__.ready.apply(this, arguments);
+        return this.trigger("loaded", this);
       };
 
       HomeAction.prototype.dispatch = function(e) {
@@ -29,9 +35,10 @@
       };
 
       HomeAction.prototype.render = function() {
-        var actions;
+        var actions, html;
         actions = this.MODULE.CONFIG.ACTIONS;
-        return this.MODULE.VIEW.Mustache.render(tpl_home_action, this.MODULE.CONFIG);
+        html = this.MODULE.VIEW.Mustache.render(tpl_home_action, this.MODULE.CONFIG);
+        return this.$el.html(html);
       };
 
       return HomeAction;

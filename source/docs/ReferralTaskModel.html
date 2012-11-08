@@ -1,0 +1,45 @@
+<!DOCTYPE html>  <html> <head>   <title>ReferralTaskModel.coffee</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="ReferralQueueModule.html">                 ReferralQueueModule.coffee               </a>                                           <a class="source" href="ReferralQueueView.html">                 ReferralQueueView.coffee               </a>                                           <a class="source" href="ReferralTaskCollection.html">                 ReferralTaskCollection.coffee               </a>                                           <a class="source" href="ReferralTaskModel.html">                 ReferralTaskModel.coffee               </a>                                           <a class="source" href="ReferralTaskView.html">                 ReferralTaskView.coffee               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               ReferralTaskModel.coffee             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre><span class="nx">define</span> <span class="p">[</span>
+  <span class="s">&#39;BaseModel&#39;</span><span class="p">,</span>
+  <span class="s">&#39;moment&#39;</span>
+<span class="p">],</span> <span class="nf">(BaseModel, moment) -&gt;</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <h1>Referral Task</h1>
+
+<p>Referral Tasks for the queue collection</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="nv">ReferralTaskModel = </span><span class="nx">BaseModel</span><span class="p">.</span><span class="nx">extend</span>
+
+    <span class="nv">initialize : </span><span class="o">-&gt;</span>
+      <span class="nx">@set</span><span class="p">(</span><span class="s">&#39;assignedTo&#39;</span><span class="p">,</span> <span class="nx">@getAssignedTo</span><span class="p">())</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>Determine who this task is assigned to based on values in XML</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nv">getAssignedTo : </span><span class="o">-&gt;</span>
+      <span class="k">switch</span> <span class="nx">@</span><span class="p">.</span><span class="nx">get</span><span class="p">(</span><span class="s">&#39;AssignedTo&#39;</span><span class="p">)</span>
+        <span class="k">when</span> <span class="s">&quot;Underwriting&quot;</span> <span class="k">then</span> <span class="s">&quot;Underwriter&quot;</span>
+        <span class="k">when</span> <span class="s">&quot;Agent&quot;</span> <span class="k">then</span> <span class="nx">@getOwningAgent</span><span class="p">()</span>
+        <span class="k">else</span> <span class="s">&quot;&quot;</span></pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>Find OwningAgent within DataItem array</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nv">getOwningAgent : </span><span class="o">-&gt;</span>
+      <span class="k">if</span> <span class="nx">@get</span><span class="p">(</span><span class="s">&#39;DataItem&#39;</span><span class="p">)</span><span class="o">?</span>
+        <span class="nv">item = </span><span class="nx">_</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">@get</span><span class="p">(</span><span class="s">&#39;DataItem&#39;</span><span class="p">),</span> <span class="nf">(item) -&gt;</span>
+            <span class="k">return</span> <span class="nx">_</span><span class="p">.</span><span class="nx">has</span><span class="p">(</span><span class="nx">item</span><span class="p">,</span> <span class="s">&#39;name&#39;</span><span class="p">)</span> <span class="o">&amp;&amp;</span> <span class="nx">item</span><span class="p">.</span><span class="nx">name</span> <span class="o">==</span> <span class="s">&#39;OwningAgent&#39;</span>
+          <span class="p">)</span>
+        <span class="k">if</span> <span class="nx">item</span><span class="o">?</span>
+          <span class="nx">item</span><span class="p">.</span><span class="nx">value</span>
+      <span class="k">else</span>
+        <span class="k">return</span> <span class="s">&#39;&#39;</span></pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>Return an Object with all the needed fields for the table row view</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nv">getViewData : </span><span class="o">-&gt;</span>
+      <span class="nv">attributes = </span><span class="nx">_</span><span class="p">.</span><span class="nx">pick</span><span class="p">(</span><span class="nx">@attributes</span><span class="p">,</span>
+          <span class="s">&#39;relatedQuoteId&#39;</span><span class="p">,</span>
+          <span class="s">&#39;insuredLastName&#39;</span><span class="p">,</span>
+          <span class="s">&#39;status&#39;</span><span class="p">,</span>
+          <span class="s">&#39;Type&#39;</span><span class="p">,</span>
+          <span class="s">&#39;lastUpdated&#39;</span><span class="p">,</span>
+          <span class="s">&#39;SubmittedBy&#39;</span><span class="p">,</span>
+          <span class="s">&#39;assignedTo&#39;</span>
+        <span class="p">)</span>
+      <span class="nv">moment.calendar =</span>
+        <span class="nv">lastDay  : </span><span class="s">&#39;[Yesterday at] LT&#39;</span><span class="p">,</span>
+        <span class="nv">sameDay  : </span><span class="s">&#39;[Today at] LT&#39;</span><span class="p">,</span>
+        <span class="nv">nextDay  : </span><span class="s">&#39;[Tomorrow at] LT&#39;</span><span class="p">,</span>
+        <span class="nv">lastWeek : </span><span class="s">&#39;[last] dddd [at] LT&#39;</span><span class="p">,</span>
+        <span class="nv">nextWeek : </span><span class="s">&#39;dddd [at] LT&#39;</span><span class="p">,</span>
+        <span class="nv">sameElse : </span><span class="s">&#39;LLL&#39;</span>
+      <span class="nv">attributes.lastUpdated = </span><span class="nx">moment</span><span class="p">(</span><span class="nx">attributes</span><span class="p">.</span><span class="nx">lastUpdated</span><span class="p">).</span><span class="nx">calendar</span><span class="p">()</span>
+      <span class="nx">attributes</span>
+
+
+
+      
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 

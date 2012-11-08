@@ -14,7 +14,10 @@
       }
 
       SearchModule.prototype.load = function() {
-        return this.view.remove_loader(true);
+        var _this = this;
+        return this.callback_delay(200, function() {
+          return _this.view.remove_loader(true);
+        });
       };
 
       SearchModule.prototype.render = function() {

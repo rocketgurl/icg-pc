@@ -64,4 +64,48 @@ define [
     createDigest : (username, password) ->
       Base64.encode "#{username}:#{password}"
 
+    # Convert an XML object to a string
+    XMLToString : (oXML) ->
+      if (window.ActiveXObject)
+        oXML.xml;
+      else
+        (new XMLSerializer()).serializeToString(oXML);
+
+    # Create an XML object from a string using the browser's DOMParser
+    XMLFromString : (sXML) ->
+      if (window.ActiveXObject)
+        oXML = new ActiveXObject("Microsoft.XMLDOM")
+        oXML.loadXML(sXML)
+        oXML
+      else
+        (new DOMParser()).parseFromString(sXML, "text/xml")
+
+    # Format a date, defaulting to ISO format
+    #
+    # @param `date` _String_ A date string  
+    # @param `format` _String_ A date format string  
+    # @return _String_  
+    #
+    formatDate : (date, format) ->
+      format = format || 'YYYY-MM-DD'
+      moment(date).format(format)
+
+    # Create an ISO timestamp
+    makeTimestamp : ->
+      moment(new Date()).format('YYYY-MM-DDTHH:mm:ss.sssZ')
+
+    # Resize and element to the approximate height of the workspace
+    #
+    # @param `el` _HTML Element_ element to resize  
+    # @param `offset` _Integer_ additional padding  
+    #
+    resize_element : (el, offset) ->
+      offset = offset || 0
+      el_height = Math.floor((($(window).height() - (184 + offset))/$(window).height())*100) + "%"
+      el.css(
+        'min-height' : el_height
+        'height'     : $(window).height() - (184 + offset)
+        )
+
+
   Helpers

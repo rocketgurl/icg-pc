@@ -51,7 +51,7 @@
         if (this.model.isIPM() === false) {
           this.$el.find('.policy-nav a[href=ipmchanges]').parent('li').hide();
         } else {
-          this.IPM = new IPMModule(this.model, $("#policy-ipm-" + this.cid));
+          this.IPM = new IPMModule(this.model, $("#policy-ipm-" + this.cid), this.controller.user);
         }
         this.cache_elements();
         this.actions = this.policy_nav_links.map(function(idx, item) {
@@ -108,15 +108,6 @@
         this.policy_nav_links = this.$el.find("#policy-nav-" + this.cid + " a");
         return this.policy_summary = this.$el.find("#policy-summary-" + this.cid);
       },
-      resize_element: function(el, offset) {
-        var el_height;
-        offset = offset || 0;
-        el_height = Math.floor((($(window).height() - (184 + offset)) / $(window).height()) * 100) + "%";
-        return el.css({
-          'min-height': el_height,
-          'height': $(window).height() - (184 + offset)
-        });
-      },
       build_policy_header: function() {
         if (this.policy_header.html() === "") {
           this.policy_header.html(this.Mustache.render(tpl_ipm_header, this.model.get_ipm_header()));
@@ -132,9 +123,9 @@
           this.policy_summary = this.$el.find("#policy-workspace-" + this.cid);
         }
         if (this.policy_summary.length > 0) {
-          this.resize_element(this.$el.find("#policy-workspace-" + this.cid));
+          this.Helpers.resize_element(this.$el.find("#policy-workspace-" + this.cid));
           resizer = _.bind(function() {
-            return this.resize_element(this.$el.find("#policy-workspace-" + this.cid));
+            return this.Helpers.resize_element(this.$el.find("#policy-workspace-" + this.cid));
           }, this);
           resize = _.debounce(resizer, 300);
           $(window).resize(resize);
@@ -200,7 +191,7 @@
         this.policy_header.show();
         ipm_container = $("#policy-ipm-" + this.cid);
         ipm_container.show();
-        return this.resize_element(ipm_container, this.policy_header.height());
+        return this.Helpers.resize_element(ipm_container, this.policy_header.height());
       },
       teardown_ipmchanges: function() {
         var ipm_container;
@@ -249,7 +240,7 @@
           $("#policy-workspace-" + this.cid).append("<div id=\"zendesk-" + this.cid + "\" class=\"zd-container\"></div>");
           $zd_el = $("#zendesk-" + this.cid);
         }
-        this.resize_element(this.$el.find("#policy-workspace-" + this.cid));
+        this.Helpers.resize_element(this.$el.find("#policy-workspace-" + this.cid));
         if (this.zd_container === null || this.zd_container === void 0) {
           this.zd_container = new ZenDeskView({
             $el: $zd_el,
