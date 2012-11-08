@@ -52,6 +52,7 @@ describe('IPM Module', function (){
 
 
     beforeEach(function(){
+
       if (ajax_count < 1) {
         var callback = jasmine.createSpy();
         policy.fetch({
@@ -189,8 +190,15 @@ describe('IPM Module', function (){
     });
 
     it ('IPMChangeSet can make a Policy Change Set XML Document', function () {
-      console.log(ChangeSet.getPolicyChangeSet(VALUES))
-      expect(ChangeSet.getPolicyChangeSet(VALUES)).toEqual(jasmine.any(String));
+
+      var xml = '<PolicyChangeSet schemaVersion="3.1"><Initiation><Initiator type="user">cru4t@cru360.com</Initiator></Initiation><Target><Identifiers><Identifier name="InsightPolicyId" value="d1716d6e86334c4db583278d5889deb4" /></Identifiers><SourceVersion>4</SourceVersion></Target><EffectiveDate>2012-11-05T00:00:00.000-05:00</EffectiveDate><AppliedDate>2011-01-15T00:00:00.000-05:00</AppliedDate><Comment>posted by Policy Central IPM Module</Comment><Ledger><LineItem value="-124" type="PAYMENT" ><Memo></Memo><DataItem name="Reference" value="" /><DataItem name="PaymentMethod" value="300" /></LineItem></Ledger><EventHistory><Event type="Payment"><DataItem name="PaymentAmount" value="124" /><DataItem name="PaymentMethod" value="300" /><DataItem name="PaymentReference" value="" /><DataItem name="PaymentBatch" value="" /><DataItem name="PostmarkDate" value="" /><DataItem name="AppliedDate" value="2011-01-15T00:00:00.000-05:00" /></Event></EventHistory></PolicyChangeSet>';
+
+      // Timestamps will never match so remove them
+      var changeSet = ChangeSet.getPolicyChangeSet(VALUES).replace(/timestamp="([\w\d-:.]*)"/g, '');
+
+      expect(changeSet).toEqual(jasmine.any(String));
+      expect(changeSet).beEquivalentTo(xml);
+
     });
 
     it ('IPMChangeSet can getPayloadType from ChangeSet XML', function () {
