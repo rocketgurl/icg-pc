@@ -253,11 +253,12 @@ define([
 
     it ('A policy can generate overivew data from itself', function () {
       runs(function(){
+
         var test = {
-          InsuredFirstName: "Document",
-          InsuredLastName: "Test",
-          InsuredMailingAddressCity: "Hilton Head",
-          InsuredMailingAddressLine1: "41 Purple Martin Ln",
+          InsuredFirstName: "DOCUMENT",
+          InsuredLastName: "TEST",
+          InsuredMailingAddressCity: "HILTON HEAD",
+          InsuredMailingAddressLine1: "41 PURPLE MARTIN LN",
           InsuredMailingAddressLine2: "",
           InsuredMailingAddressState: "SC",
           InsuredMailingAddressZip: "29926",
