@@ -152,7 +152,8 @@ define [
           
           # call callback if present
           if callback
-            callback()
+            func = _.bind callback, action_view # bind context to callback
+            func()
 
         # Register flash message pubsub for this view
         @messenger = new Messenger(this, @cid) 

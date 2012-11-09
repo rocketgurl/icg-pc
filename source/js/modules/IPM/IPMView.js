@@ -107,10 +107,12 @@
         this.remove_loader();
         container = this.$el.find("#ipm-container-" + this.cid);
         container.fadeOut('fast', function() {
+          var func;
           action_view.setElement(_this.VIEW_CACHE[_this.VIEW_STATE]).render();
           container.append(_this.VIEW_CACHE[_this.VIEW_STATE]).fadeIn('fast');
           if (callback) {
-            return callback();
+            func = _.bind(callback, action_view);
+            return func();
           }
         });
         return this.messenger = new Messenger(this, this.cid);
