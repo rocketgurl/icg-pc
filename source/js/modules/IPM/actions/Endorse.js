@@ -92,12 +92,10 @@
         form = values.formValues;
         policy = this.MODULE.POLICY;
         term = policy.getLastTerm();
-        console.log(['parseIntervals : term', term]);
         intervals = term.Intervals && term.Intervals.Interval;
         if (!_.isArray(intervals)) {
           intervals = [intervals];
         }
-        console.log(['parseIntervals : intervals', intervals]);
         msInDay = 24 * 60 * 60 * 1000;
         termStart = Date.parse(term.EffectiveDate);
         termEnd = Date.parse(term.ExpirationDate);
@@ -154,7 +152,6 @@
             }
           }
         }
-        console.log(['parseIntervals : parsed', parsed]);
         return parsed;
       };
 

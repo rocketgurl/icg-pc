@@ -104,7 +104,10 @@ define [
         if data = coverage_a.data 'calculations'
           @COVERAGE_CALCULATIONS = (eval("(#{data})"))
 
-    # Build values for TransactionRequest
+    # **Build values for TransactionRequest**  
+    # This takes the form fields and builds up a big data set to use in the TR
+    # and preview. It's an almost direct port from mxAdmin and could use some
+    # refactoring.
     #
     # @param `values` _Object_ @VALUES object  
     # @return _Object_  
@@ -116,16 +119,12 @@ define [
       # Term from Policy XML
       term = policy.getLastTerm()
 
-      console.log ['parseIntervals : term', term]
-
       # This is a short circuit operation to get the Interval property
       intervals = term.Intervals && term.Intervals.Interval
 
       # If there is only a single internal, drop into an array.
       if !_.isArray(intervals)
         intervals = [intervals]
-
-      console.log ['parseIntervals : intervals', intervals]
 
       # Milliseconds in day, used to date calcs
       msInDay     = 24 * 60 * 60 * 1000
@@ -144,6 +143,7 @@ define [
           fmtEndDate   : @Helpers.stripTimeFromDate(term.ExpirationDate, 'MMM D YY')
           days         : Math.round((termEnd - termStart) / msInDay)
 
+      # These are the fields to get rounded
       term_fields =
         grandSubtotalNonCatUnadjusted : 'GrandSubtotalNonCatUnadjusted'
         grandSubtotalCatUnadjusted    : 'GrandSubtotalCatUnadjusted'
@@ -210,8 +210,6 @@ define [
         for field, value of interval
           if !_.has(parsed, field)
             parsed[field] = value
-
-      console.log ['parseIntervals : parsed', parsed]
 
       parsed
 
