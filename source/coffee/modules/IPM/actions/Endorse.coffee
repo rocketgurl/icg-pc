@@ -4,6 +4,9 @@ define [
 
   class EndorseAction extends IPMActionView
 
+    # Custom calculations objects
+    COVERAGE_CALCULATIONS : {}
+
     initialize : ->
       super
 
@@ -67,4 +70,80 @@ define [
           @CHANGE_SET.getPolicyChangeSet(@VALUES)
           @callbackSuccess,
           @callbackError
+    # Add Coverage Calulation behaviors to Endorse forms
+    postProcessView : ->
+      super
+
+      # Attach coverage.change event to inputs
+      @$el.find('input').bind 'coverage:calculate', @calculateCoverage
+
+      # Bind listener to <select>s that alter other fields
+      @$el.find('select[data-affects]').bind 'change', @triggerCoverageCalculation
+
+      # Bind listener specifically to CoverageA <input>
+      @$el.find('input[name=CoverageA]').bind 'input', (e) =>
+        @triggerAllCoverageCalculations()
+        @deriveCoverageACalculations()
+
+      # Find any custom calculations tucked away in data attrs for later
+      # use in calculations
+      coverage_a = @$el.find('input[name=CoverageA]')
+      if coverage_a.length > 0
+        if data = coverage_a.data 'calculations'
+          @COVERAGE_CALCULATIONS = (eval("(#{data})"))
         )
+    # Recalculate the value of the element relative to CoverageA.  
+    # _Note_: The value is not the percentage in the label but the
+    # enumeration value which is percentage * 100 
+    #
+    # @param `e` _Event_  
+    # @param `val` _Integer_  
+    #
+    calculateCoverage : (e, val) =>
+      coverage_a = parseInt(@$el.find('input[name=CoverageA]').val(), 10)
+      new_value  = Math.round((coverage_a * val) / 10000);
+      $(e.currentTarget).val(new_value);
+
+    # When a <select> with a data-affects attr is changed we need to find the
+    # input that it affects (data-affects) and trigger a coverage:calculate 
+    # event passing in the value of this <select> 
+    #
+    # @param `e` _Event_  
+    #
+    triggerCoverageCalculation : (e) =>
+      el = $(e.currentTarget)
+      @$el.find("input[name=#{el.data('affects')}]").trigger(
+          'coverage:calculate',
+          el.val()
+        )
+
+    # Loop through all <select>s with data-affects and trigger
+    # coverage:calculate  
+    #
+    triggerAllCoverageCalculations : ->
+      @$el.find('select[data-affects]').each (index, el) =>
+        el = $(el)
+        if el.val()
+          @$el.find("input[name=#{el.data('affects')}]").trigger(
+            'coverage:calculate',
+            el.val()
+          )
+
+    # If CoverageA is present as well as @COVERAGE_CALCULATIONS then
+    # loop through the cached calcs and do the math on CoverageA's
+    # value, setting the new value back to the element that needs is.
+    #
+    # _Example:_      
+    # CoverageCalc is { CoverageD : '.2' } so get the value of 
+    # CoverageA and multiply it by .2, then apply that value to
+    # the <input> for CoverageD.
+    #
+    deriveCoverageACalculations : ->
+      if !_.isEmpty @COVERAGE_CALCULATIONS
+        coverage_a = @$el.find('input[name=CoverageA]')
+        if coverage_a.length > 0 || coverage_a.val()?
+          value_a = coverage_a.val()
+          for key, val of @COVERAGE_CALCULATIONS
+            calc_val = value_a * parseFloat val
+            @$el.find("input[name=#{key}]").val calc_val
+

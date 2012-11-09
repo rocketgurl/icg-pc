@@ -11,9 +11,15 @@
       __extends(EndorseAction, _super);
 
       function EndorseAction() {
+        this.triggerCoverageCalculation = __bind(this.triggerCoverageCalculation, this);
+
+        this.calculateCoverage = __bind(this.calculateCoverage, this);
+
         this.processView = __bind(this.processView, this);
         return EndorseAction.__super__.constructor.apply(this, arguments);
       }
+
+      EndorseAction.prototype.COVERAGE_CALCULATIONS = {};
 
       EndorseAction.prototype.initialize = function() {
         return EndorseAction.__super__.initialize.apply(this, arguments);
@@ -50,6 +56,62 @@
         this.VALUES.formValues.positivePaymentAmount = Math.abs(this.VALUES.formValues.paymentAmount || 0);
         this.VALUES.formValues.paymentAmount = -1 * this.VALUES.formValues.positivePaymentAmount;
         return this.CHANGE_SET.commitChange(this.CHANGE_SET.getPolicyChangeSet(this.VALUES), this.callbackSuccess, this.callbackError);
+      EndorseAction.prototype.postProcessView = function() {
+        var coverage_a, data,
+          _this = this;
+        EndorseAction.__super__.postProcessView.apply(this, arguments);
+        this.$el.find('input').bind('coverage:calculate', this.calculateCoverage);
+        this.$el.find('select[data-affects]').bind('change', this.triggerCoverageCalculation);
+        this.$el.find('input[name=CoverageA]').bind('input', function(e) {
+          _this.triggerAllCoverageCalculations();
+          return _this.deriveCoverageACalculations();
+        });
+        coverage_a = this.$el.find('input[name=CoverageA]');
+        if (coverage_a.length > 0) {
+          if (data = coverage_a.data('calculations')) {
+            return this.COVERAGE_CALCULATIONS = eval("(" + data + ")");
+          }
+        }
+      };
+      EndorseAction.prototype.calculateCoverage = function(e, val) {
+        var coverage_a, new_value;
+        coverage_a = parseInt(this.$el.find('input[name=CoverageA]').val(), 10);
+        new_value = Math.round((coverage_a * val) / 10000);
+        return $(e.currentTarget).val(new_value);
+      };
+
+      EndorseAction.prototype.triggerCoverageCalculation = function(e) {
+        var el;
+        el = $(e.currentTarget);
+        return this.$el.find("input[name=" + (el.data('affects')) + "]").trigger('coverage:calculate', el.val());
+      };
+
+      EndorseAction.prototype.triggerAllCoverageCalculations = function() {
+        var _this = this;
+        return this.$el.find('select[data-affects]').each(function(index, el) {
+          el = $(el);
+          if (el.val()) {
+            return _this.$el.find("input[name=" + (el.data('affects')) + "]").trigger('coverage:calculate', el.val());
+          }
+        });
+      };
+
+      EndorseAction.prototype.deriveCoverageACalculations = function() {
+        var calc_val, coverage_a, key, val, value_a, _ref, _results;
+        if (!_.isEmpty(this.COVERAGE_CALCULATIONS)) {
+          coverage_a = this.$el.find('input[name=CoverageA]');
+          if (coverage_a.length > 0 || (coverage_a.val() != null)) {
+            value_a = coverage_a.val();
+            _ref = this.COVERAGE_CALCULATIONS;
+            _results = [];
+            for (key in _ref) {
+              val = _ref[key];
+              calc_val = value_a * parseFloat(val);
+              _results.push(this.$el.find("input[name=" + key + "]").val(calc_val));
+            }
+            return _results;
+          }
+        }
       };
 
       return EndorseAction;
