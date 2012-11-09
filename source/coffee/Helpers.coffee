@@ -80,6 +80,23 @@ define [
       else
         (new DOMParser()).parseFromString(sXML, "text/xml")
 
+    # Some date strings we'll be dealing with are formatted with a full
+    # timestamp like: "2011-01-15T23:00:00-04:00". The time, after the "T"
+    # can sometimes cause weird rounding issues with the day. To safegaurd
+    # against it, we'll just remove the "T" and everything after it.
+    #
+    # @param `date` _String_ A date string  
+    # @param `format` _String_ (optional) A date format string   
+    # @return _String_ An ISO formatted date string  
+    #
+    stripTimeFromDate : (date, format) ->
+      format = format ? null
+      clean  = date
+      t      = date.indexOf('T')
+      if t > -1
+        clean = clean.substring(0, t)
+      @formatDate clean, format
+
     # Format a date, defaulting to ISO format
     #
     # @param `date` _String_ A date string  

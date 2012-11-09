@@ -79,6 +79,16 @@
           return (new DOMParser()).parseFromString(sXML, "text/xml");
         }
       },
+      stripTimeFromDate: function(date, format) {
+        var clean, t;
+        format = format != null ? format : null;
+        clean = date;
+        t = date.indexOf('T');
+        if (t > -1) {
+          clean = clean.substring(0, t);
+        }
+        return this.formatDate(clean, format);
+      },
       formatDate: function(date, format) {
         format = format || 'YYYY-MM-DD';
         return moment(date).format(format);
