@@ -325,25 +325,11 @@ define [
       out
 
     # **Extract the value of a named <DataItem> from a JSON collection**  
-    # _Alert_: Policies contain multiple versions of some fields, and we favor
-    # the Op{name} version of the DataItem  
-    #
-    # @param `items` _Object_ list of terms   
-    # @param `name` _String_ name of term value to find   
     # @return _String_ | _False_
-    #
     getDataItem : (items, name) ->
       if items == undefined || name == undefined
         return false
-      op_name = "Op#{name}"
-
-      # First try to find OpName
-      data_obj = _.filter(items, (item) -> return item.name == op_name)
-
-      # If no OpName then look for the original name
-      if data_obj.length == 0
-        data_obj = _.filter(items, (item) -> return item.name == name)
-
+      data_obj = _.filter(items, (item) -> return item.name == name)
       if _.isArray(data_obj) && data_obj[0]?
         data_obj[0].value
       else

@@ -52,10 +52,23 @@
       };
 
       EndorseAction.prototype.submit = function(e) {
+        var current_policy, options;
         EndorseAction.__super__.submit.call(this, e);
-        this.VALUES.formValues.positivePaymentAmount = Math.abs(this.VALUES.formValues.paymentAmount || 0);
-        this.VALUES.formValues.paymentAmount = -1 * this.VALUES.formValues.positivePaymentAmount;
-        return this.CHANGE_SET.commitChange(this.CHANGE_SET.getPolicyChangeSet(this.VALUES), this.callbackSuccess, this.callbackError);
+        console.log(['Submit', this.VALUES]);
+        this.VALUES.formValues.transactionType = 'Endorsement';
+        current_policy = this.parseIntervals(this.VALUES);
+        if (this.VALUES.formValues.comment === '') {
+          this.VALUES.formValues.comment = '__deleteEmptyProperty';
+        }
+        options = {};
+        if (_.has(this.VALUES.formValues, 'preview')) {
+          options.headers = {
+            'X-Commit': false
+          };
+        }
+        return this.CHANGE_SET.commitChange(this.CHANGE_SET.getTransactionRequest(this.VALUES, this.viewData), this.callbackSuccess, this.callbackError, options);
+      };
+
       EndorseAction.prototype.postProcessView = function() {
         var coverage_a, data,
           _this = this;
@@ -73,6 +86,98 @@
           }
         }
       };
+
+      EndorseAction.prototype.parseIntervals = function(values) {
+        var adjustments, data_items, endDate, field, form, interval, interval_field_names, interval_fields, interval_o, intervals, msInDay, parsed, policy, startDate, term, termEnd, termStart, term_fields, value, _i, _len, _ref, _ref1;
+        form = values.formValues;
+        policy = this.MODULE.POLICY;
+        term = policy.getLastTerm();
+        console.log(['parseIntervals : term', term]);
+        intervals = term.Intervals && term.Intervals.Interval;
+        if (!_.isArray(intervals)) {
+          intervals = [intervals];
+        }
+        console.log(['parseIntervals : intervals', intervals]);
+        msInDay = 24 * 60 * 60 * 1000;
+        termStart = Date.parse(term.EffectiveDate);
+        termEnd = Date.parse(term.ExpirationDate);
+        parsed = {
+          intervals: [],
+          term: {
+            startDate: termStart,
+            endDate: termEnd,
+            fmtStartDate: this.Helpers.stripTimeFromDate(term.EffectiveDate, 'MMM D YY'),
+            fmtEndDate: this.Helpers.stripTimeFromDate(term.ExpirationDate, 'MMM D YY'),
+            days: Math.round((termEnd - termStart) / msInDay)
+          }
+        };
+        term_fields = {
+          grandSubtotalNonCatUnadjusted: 'GrandSubtotalNonCatUnadjusted',
+          grandSubtotalCatUnadjusted: 'GrandSubtotalCatUnadjusted',
+          grandSubtotalNonCat: 'GrandSubtotalNonCat',
+          grandSubtotalCat: 'GrandSubtotalCat',
+          grandSubtotalUnadjusted: 'GrandSubtotalUnadjusted',
+          grandSubtotal: 'GrandSubtotal',
+          termGrandSubtotalAdjustment: 'TermGrandSubtotalAdjustment',
+          fees: 'TotalFees',
+          grandTotal: 'TotalPremium'
+        };
+        parsed.term = _.extend(parsed.term, this.roundTermFields(term.DataItem, term_fields));
+        interval_field_names = ['grandSubtotalNonCat', 'grandSubtotalCat', 'grandSubtotalUnadjusted', 'grandSubtotal', 'fees', 'grandTotal'];
+        interval_fields = _.omit(term_fields, _.difference(_.keys(term_fields), interval_field_names));
+        adjustments = {
+          nonCatAdjustment: (_ref = form.NonHurricanePremiumDollarAdjustmentFRC) != null ? _ref : 0,
+          catAdjustment: (_ref1 = form.HurricanePremiumDollarAdjustmentFRC) != null ? _ref1 : 0
+        };
+        for (_i = 0, _len = intervals.length; _i < _len; _i++) {
+          interval = intervals[_i];
+          startDate = Date.parse(interval.StartDate);
+          endDate = Date.parse(interval.EndDate);
+          interval_o = {
+            startDate: startDate,
+            endDate: endDate,
+            fmtStartDate: this.Helpers.stripTimeFromDate(interval.StartDate, 'MMM D YY'),
+            fmtEndDate: this.Helpers.stripTimeFromDate(interval.EndDate, 'MMM D YY'),
+            days: Math.round((endDate - startDate) / msInDay)
+          };
+          data_items = this.processIntervalFields(interval.DataItem, interval_fields, adjustments);
+          parsed.intervals.push(_.extend(interval_o, data_items));
+        }
+        parsed.intervals = _.sortBy(parsed.intervals, 'startDate');
+        parsed.intervals[parsed.intervals.length - 1].isNew = true;
+        if (!_.has(parsed.term, 'grandSubTotal')) {
+          interval = parsed.intervals[parsed.intervals.length - 1];
+          for (field in interval) {
+            value = interval[field];
+            if (!_.has(parsed, field)) {
+              parsed[field] = value;
+            }
+          }
+        }
+        console.log(['parseIntervals : parsed', parsed]);
+        return parsed;
+      };
+
+      EndorseAction.prototype.processIntervalFields = function(terms, fields, adj) {
+        var processed;
+        fields = this.roundTermFields(terms, fields);
+        processed = {
+          grandSubtotalNonCatUnadjusted: Math.round(parseInt(fields.grandSubtotalNonCat, 10) - ~~adj.nonCatAdjustment),
+          grandSubtotalCatUnadjusted: Math.round(parseInt(fields.grandSubtotalCat, 10) - ~~adj.catAdjustment)
+        };
+        return _.extend(fields, processed, adj);
+      };
+
+      EndorseAction.prototype.roundTermFields = function(terms, term_fields) {
+        var field, key, out;
+        out = {};
+        for (key in term_fields) {
+          field = term_fields[key];
+          out[key] = Math.round(this.MODULE.POLICY.getDataItem(terms, field));
+        }
+        return out;
+      };
+
       EndorseAction.prototype.calculateCoverage = function(e, val) {
         var coverage_a, new_value;
         coverage_a = parseInt(this.$el.find('input[name=CoverageA]').val(), 10);

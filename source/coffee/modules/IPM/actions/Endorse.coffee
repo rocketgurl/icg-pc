@@ -26,10 +26,8 @@ define [
     #
     processView : (vocabTerms, view) =>
       super vocabTerms, view
-
       viewData = @MODULE.POLICY.getTermDataItemValues(vocabTerms)
       viewData = @MODULE.POLICY.getEnumerations(viewData, vocabTerms)
-
       viewData = _.extend(
         viewData,
         @MODULE.POLICY.getPolicyOverview(),
@@ -38,10 +36,8 @@ define [
           policyId : @MODULE.POLICY.get_pxServerIndex()
         }
       )
-
       @viewData = viewData
       @view     = view
-
       @trigger "loaded", this, @postProcessView
 
     render : (viewData, view) ->
@@ -50,7 +46,6 @@ define [
       view     = view || @view
       @$el.html(@MODULE.VIEW.Mustache.render(view, viewData))
 
-
     # **Process Form**
     # On submit we do some action specific processing and then send to the
     # TransactionRequest monster
@@ -58,18 +53,35 @@ define [
     submit : (e) ->
       super e
 
-      # @@ Action specific processing
-      @VALUES.formValues.positivePaymentAmount = \
-        Math.abs(@VALUES.formValues.paymentAmount || 0)
+      console.log ['Submit', @VALUES]
+      
+      @VALUES.formValues.transactionType = 'Endorsement'
 
-      @VALUES.formValues.paymentAmount = \
-        -1 * @VALUES.formValues.positivePaymentAmount
+      # Derive intervals from the form values and policy
+      current_policy = @parseIntervals(@VALUES)
 
-      # Assemble the ChangeSet XML and send to server
+      # We selectively delete certain empty values later
+      if @VALUES.formValues.comment == ''
+        @VALUES.formValues.comment = '__deleteEmptyProperty'
+
+      # Options for ChangeSet
+      options = {}
+
+      # Preview require additional headers
+      if _.has(@VALUES.formValues, 'preview')
+        options.headers =
+          'X-Commit' : false
+
+      # xml = @CHANGE_SET.getTransactionRequest(@VALUES, @viewData)
+
+      # Assemble the Transaction Request XML and send to server
       @CHANGE_SET.commitChange(
-          @CHANGE_SET.getPolicyChangeSet(@VALUES)
-          @callbackSuccess,
-          @callbackError
+        @CHANGE_SET.getTransactionRequest(@VALUES, @viewData),
+        @callbackSuccess,
+        @callbackError,
+        options
+      )
+
     # Add Coverage Calulation behaviors to Endorse forms
     postProcessView : ->
       super
@@ -91,7 +103,150 @@ define [
       if coverage_a.length > 0
         if data = coverage_a.data 'calculations'
           @COVERAGE_CALCULATIONS = (eval("(#{data})"))
+
+    # Build values for TransactionRequest
+    #
+    # @param `values` _Object_ @VALUES object  
+    # @return _Object_  
+    #
+    parseIntervals : (values) ->
+      form   = values.formValues
+      policy = @MODULE.POLICY
+
+      # Term from Policy XML
+      term = policy.getLastTerm()
+
+      console.log ['parseIntervals : term', term]
+
+      # This is a short circuit operation to get the Interval property
+      intervals = term.Intervals && term.Intervals.Interval
+
+      # If there is only a single internal, drop into an array.
+      if !_.isArray(intervals)
+        intervals = [intervals]
+
+      console.log ['parseIntervals : intervals', intervals]
+
+      # Milliseconds in day, used to date calcs
+      msInDay     = 24 * 60 * 60 * 1000
+
+      # We use these for some date math later
+      termStart = Date.parse term.EffectiveDate
+      termEnd   = Date.parse term.ExpirationDate
+
+      # Object we will be returning
+      parsed =
+        intervals : []
+        term :
+          startDate    : termStart
+          endDate      : termEnd
+          fmtStartDate : @Helpers.stripTimeFromDate(term.EffectiveDate, 'MMM D YY')
+          fmtEndDate   : @Helpers.stripTimeFromDate(term.ExpirationDate, 'MMM D YY')
+          days         : Math.round((termEnd - termStart) / msInDay)
+
+      term_fields =
+        grandSubtotalNonCatUnadjusted : 'GrandSubtotalNonCatUnadjusted'
+        grandSubtotalCatUnadjusted    : 'GrandSubtotalCatUnadjusted'
+        grandSubtotalNonCat           : 'GrandSubtotalNonCat'
+        grandSubtotalCat              : 'GrandSubtotalCat'
+        grandSubtotalUnadjusted       : 'GrandSubtotalUnadjusted'
+        grandSubtotal                 : 'GrandSubtotal'
+        termGrandSubtotalAdjustment   : 'TermGrandSubtotalAdjustment'
+        fees                          : 'TotalFees'
+        grandTotal                    : 'TotalPremium'
+
+      # Process term_fields to get clean numbers
+      parsed.term = _.extend(parsed.term, @roundTermFields(term.DataItem, term_fields)) 
+
+      # Create a fields obj for intervals by fitering out unneeded keys
+      interval_field_names = [
+        'grandSubtotalNonCat',
+        'grandSubtotalCat',
+        'grandSubtotalUnadjusted',
+        'grandSubtotal',
+        'fees',
+        'grandTotal'
+      ]
+      interval_fields = _.omit(
+        term_fields,
+        _.difference(_.keys(term_fields), interval_field_names)
         )
+
+      # Adjustment values used in interval processing
+      adjustments =
+        nonCatAdjustment : form.NonHurricanePremiumDollarAdjustmentFRC ? 0
+        catAdjustment    : form.HurricanePremiumDollarAdjustmentFRC ? 0
+
+      # Loop over intervals and parse values, storing in parse.intervals
+      for interval in intervals
+        startDate  = Date.parse interval.StartDate
+        endDate    = Date.parse interval.EndDate
+
+        interval_o = 
+          startDate    : startDate
+          endDate      : endDate
+          fmtStartDate : @Helpers.stripTimeFromDate(interval.StartDate, 'MMM D YY')
+          fmtEndDate   : @Helpers.stripTimeFromDate(interval.EndDate, 'MMM D YY')
+          days         : Math.round((endDate - startDate) / msInDay)
+
+        data_items = @processIntervalFields(
+          interval.DataItem,
+          interval_fields,
+          adjustments
+        )
+
+        # Push the processed interval object onto parsed.intervals array
+        parsed.intervals.push _.extend interval_o, data_items
+
+      # Sort intervals and mark the newest one as 'isNew'
+      parsed.intervals = _.sortBy(parsed.intervals, 'startDate')
+      parsed.intervals[parsed.intervals.length - 1].isNew = true
+
+      # If there is no term.grandSubTotal then copy fields from the 
+      # last sorted interval into the top level of parsed. I have no
+      # idea why we do this as of yet. 11/09/2012 - DN  
+      if !_.has(parsed.term, 'grandSubTotal')
+        interval = parsed.intervals[parsed.intervals.length - 1]
+        for field, value of interval
+          if !_.has(parsed, field)
+            parsed[field] = value
+
+      console.log ['parseIntervals : parsed', parsed]
+
+      parsed
+
+    # process interval fields, rounding them and then doing various calcs
+    #
+    # @param `terms` _Object_ Interval DataItems  
+    # @param `fields` _Object_ interval fields key:val  
+    # @param `adj` _Object_ adjustment values 
+    # @return _Object_  combined processed values  
+    #
+    processIntervalFields : (terms, fields, adj) ->
+      fields = @roundTermFields(terms, fields)
+
+      processed =
+        grandSubtotalNonCatUnadjusted : Math.round(
+          (parseInt(fields.grandSubtotalNonCat, 10) - ~~(adj.nonCatAdjustment))
+        )
+        grandSubtotalCatUnadjusted : Math.round(
+          (parseInt(fields.grandSubtotalCat, 10) - ~~(adj.catAdjustment))
+        )
+
+      _.extend(fields, processed, adj)
+
+    # Find a set of term fields and return their rounded values
+    #
+    # @param `terms` _Object_ DataItems 
+    # @param `term_fields` _Object_ term fields key:val  
+    # @return _Object_  
+    #
+    roundTermFields : (terms, term_fields) ->
+      out = {}
+      for key, field of term_fields
+        out[key] = Math.round(@MODULE.POLICY.getDataItem(terms, field))
+      out
+
     # Recalculate the value of the element relative to CoverageA.  
     # _Note_: The value is not the percentage in the label but the
     # enumeration value which is percentage * 100 
