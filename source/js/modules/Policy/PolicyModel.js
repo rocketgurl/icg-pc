@@ -289,13 +289,19 @@
         return out;
       },
       getDataItem: function(items, name) {
-        var data_obj;
+        var data_obj, op_name;
         if (items === void 0 || name === void 0) {
           return false;
         }
+        op_name = "Op" + name;
         data_obj = _.filter(items, function(item) {
-          return item.name === name;
+          return item.name === op_name;
         });
+        if (data_obj.length === 0) {
+          data_obj = _.filter(items, function(item) {
+            return item.name === name;
+          });
+        }
         if (_.isArray(data_obj) && (data_obj[0] != null)) {
           return data_obj[0].value;
         } else {
