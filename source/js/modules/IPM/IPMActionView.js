@@ -89,7 +89,9 @@
         date_options = {
           dateFormat: 'yy-mm-dd'
         };
-        return $('.datepicker').datepicker(date_options);
+        if ($.datepicker) {
+          return $('.datepicker').datepicker(date_options);
+        }
       };
 
       IPMActionView.prototype.getFormValues = function(form) {

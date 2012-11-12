@@ -98,7 +98,8 @@ define [
       date_options = 
         dateFormat : 'yy-mm-dd'
 
-      $('.datepicker').datepicker(date_options)
+      if $.datepicker
+        $('.datepicker').datepicker(date_options)
 
     # **Get the form values**  
     #
