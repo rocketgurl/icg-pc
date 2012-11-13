@@ -42,8 +42,18 @@ define [
             , delay
 
     
-
       @flash_container.on 'click', 'i', (e) =>
         e.preventDefault()
         @flash_container.fadeOut 'fast'
 
+      # Attach click handler to error message options list
+      @flash_container.on 'click', '.error_details a', (e) =>
+        e.preventDefault()
+        $(this).next().toggle()
+        $(this).toggle(
+          ->
+            $(this).html('<i class="icon-plus-sign"></i> Hide error details')
+          ,
+          ->
+            $(this).html('<i class="icon-plus-sign"></i> Show error details')
+        )

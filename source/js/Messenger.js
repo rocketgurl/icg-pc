@@ -32,9 +32,18 @@
             }
           }
         });
-        return this.flash_container.on('click', 'i', function(e) {
+        this.flash_container.on('click', 'i', function(e) {
           e.preventDefault();
           return _this.flash_container.fadeOut('fast');
+        });
+        return this.flash_container.on('click', '.error_details a', function(e) {
+          e.preventDefault();
+          $(_this).next().toggle();
+          return $(_this).toggle(function() {
+            return $(this).html('<i class="icon-plus-sign"></i> Hide error details');
+          }, function() {
+            return $(this).html('<i class="icon-plus-sign"></i> Show error details');
+          });
         });
       };
 
