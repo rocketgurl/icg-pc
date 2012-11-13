@@ -94,6 +94,10 @@
         }
       };
 
+      IPMActionView.prototype.postProcessPreview = function() {
+        return delete this.viewData.preview;
+      };
+
       IPMActionView.prototype.getFormValues = function(form) {
         var formValues, item, _i, _len, _ref;
         formValues = {};
@@ -133,7 +137,7 @@
         return changed;
       };
 
-      IPMActionView.prototype.processView = function(vocabTerms, view) {
+      IPMActionView.prototype.processViewData = function(vocabTerms, view) {
         return this.TPL_CACHE[this.PARENT_VIEW.VIEW_STATE] = {
           model: vocabTerms,
           view: view
@@ -146,6 +150,16 @@
 
       IPMActionView.prototype.callbackError = function(jqXHR, status, error) {
         return console.log(jqXHR);
+      };
+
+      IPMActionView.prototype.callbackPreview = function(data, status, jqXHR) {
+        var prev_document;
+        prev_document = this.MODULE.POLICY.get('document');
+        this.MODULE.POLICY.attributes = this.MODULE.POLICY.parse(data, jqXHR);
+        if (this.MODULE.POLICY.set('prev_document', prev_document)) {
+          this.MODULE.POLICY.setModelState();
+        }
+        return this.processPreview(this.TPL_CACHE[this.PARENT_VIEW.VIEW_STATE].model, this.TPL_CACHE[this.PARENT_VIEW.VIEW_STATE].view);
       };
 
       IPMActionView.prototype.ready = function() {};

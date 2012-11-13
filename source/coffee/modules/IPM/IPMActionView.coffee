@@ -101,6 +101,10 @@ define [
       if $.datepicker
         $('.datepicker').datepicker(date_options)
 
+    # **Post process the preview of the form**  
+    postProcessPreview : ->
+      delete @viewData.preview
+
     # **Get the form values**  
     #
     # @param `form` _HTML Form Element_  
@@ -150,7 +154,7 @@ define [
       changed
 
     # Keep a cache of loaded files for this action
-    processView : (vocabTerms, view) ->
+    processViewData : (vocabTerms, view) ->
       @TPL_CACHE[@PARENT_VIEW.VIEW_STATE] =
         model : vocabTerms
         view  : view
@@ -160,6 +164,32 @@ define [
      
     callbackError : (jqXHR, status, error) =>
       console.log jqXHR
+
+    # **Preview Callback**  
+    # If a policy comes back to for Preview we need to do a little processing
+    # before we display it to the user. This is called by ActionView as part
+    # of the IPMChangeSet.commitChange() callback.
+    #
+    # * First, inject the new policy XML into the model and setModelState()
+    # * Second, pass the view and model.js to ActionView.processPreview()
+    #
+    # @param `data` _XML_ PolicyModel
+    # @param `status` _String_ Status of callback 
+    # @param `jqXHR` _Object_ XHR object  
+    #
+    callbackPreview : (data, status, jqXHR) =>
+      # Swap out Policy XML with new XML, saving the old one
+      prev_document             = @MODULE.POLICY.get('document')
+      @MODULE.POLICY.attributes = @MODULE.POLICY.parse(data, jqXHR)
+
+      # Tell the model to set its state based on the new XML values
+      if @MODULE.POLICY.set('prev_document', prev_document)
+        @MODULE.POLICY.setModelState()
+
+      @processPreview(
+        @TPL_CACHE[@PARENT_VIEW.VIEW_STATE].model,
+        @TPL_CACHE[@PARENT_VIEW.VIEW_STATE].view
+      )
 
     # Your Action View should define the following methods:
 
