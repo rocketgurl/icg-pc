@@ -11,7 +11,6 @@ define [
   # Handles building a Change Set or TR and shipping off to pxCentral 
   #
   # NOTES:  
-  # * Need to handle XML templates for different requests (files? Cache them.)
   # * Need to AJAX the TRs to/from server and handle different states such as
   # Validations, errors, previews, etc.
   # 
@@ -178,6 +177,8 @@ define [
       options = options ? {}
       xmldoc  = $.parseXML(xml) # Parse xml w/jQuery
       payload_schema = "schema=#{@getPayloadType(xmldoc)}.#{@getSchemaVersion(xmldoc)}"
+
+      console.log ['Policy.url()', @POLICY.url()]
 
       # Assemble the AJAX params
       defaults =
