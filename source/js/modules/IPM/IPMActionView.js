@@ -155,13 +155,20 @@
       };
 
       IPMActionView.prototype.callbackPreview = function(data, status, jqXHR) {
-        var prev_document;
-        prev_document = this.MODULE.POLICY.get('document');
-        this.MODULE.POLICY.attributes = this.MODULE.POLICY.parse(data, jqXHR);
-        if (this.MODULE.POLICY.set('prev_document', prev_document)) {
-          this.MODULE.POLICY.setModelState();
-        }
+        this.resetPolicyModel(data, jqXHR);
         return this.processPreview(this.TPL_CACHE[this.PARENT_VIEW.VIEW_STATE].model, this.TPL_CACHE[this.PARENT_VIEW.VIEW_STATE].view);
+      };
+
+      IPMActionView.prototype.resetPolicyModel = function(data, jqXHR) {
+        var key, new_attributes, val;
+        new_attributes = this.MODULE.POLICY.parse(data, jqXHR);
+        new_attributes.prev_document = this.MODULE.POLICY.get('document');
+        for (key in new_attributes) {
+          val = new_attributes[key];
+          this.MODULE.POLICY.attributes[key] = val;
+        }
+        this.MODULE.POLICY.trigger('change', this.MODULE.POLICY);
+        return this.MODULE.POLICY;
       };
 
       IPMActionView.prototype.ready = function() {};

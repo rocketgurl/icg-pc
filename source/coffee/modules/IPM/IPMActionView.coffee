@@ -179,18 +179,34 @@ define [
     # @param `jqXHR` _Object_ XHR object  
     #
     callbackPreview : (data, status, jqXHR) =>
-      # Swap out Policy XML with new XML, saving the old one
-      prev_document             = @MODULE.POLICY.get('document')
-      @MODULE.POLICY.attributes = @MODULE.POLICY.parse(data, jqXHR)
-
-      # Tell the model to set its state based on the new XML values
-      if @MODULE.POLICY.set('prev_document', prev_document)
-        @MODULE.POLICY.setModelState()
-
+      @resetPolicyModel(data, jqXHR)
       @processPreview(
         @TPL_CACHE[@PARENT_VIEW.VIEW_STATE].model,
         @TPL_CACHE[@PARENT_VIEW.VIEW_STATE].view
       )
+
+    # **Load new XML into PolicyModel**  
+    #
+    # Inject the new policy XML into the model and setModelState()
+    #
+    # @param `data` _XML_ PolicyModel
+    # @param `jqXHR` _Object_ XHR object  
+    # @return _Object_ PolicyModel
+    #
+    resetPolicyModel : (data, jqXHR) ->
+      # Swap out Policy XML with new XML, saving the old one
+      new_attributes = @MODULE.POLICY.parse(data, jqXHR)
+      new_attributes.prev_document = @MODULE.POLICY.get('document')
+
+      # Model.set() chokes on something in the object, so we just
+      # jam the values into attributes directly. So sorry Mr. Ashkenas.
+      for key, val of new_attributes
+        @MODULE.POLICY.attributes[key] = val
+
+      # Tell the model to set its state based on the new XML values
+      @MODULE.POLICY.trigger 'change', @MODULE.POLICY
+
+      @MODULE.POLICY
 
     # Your Action View should define the following methods:
 
