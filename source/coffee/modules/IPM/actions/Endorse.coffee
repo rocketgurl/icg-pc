@@ -100,7 +100,7 @@ define [
       options = {}
 
       # Success callback
-      callback = @callbackSuccess
+      callbackFunc = @callbackSuccess
 
       # Preview require additional headers
       if _.has(@VALUES.formValues, 'preview')

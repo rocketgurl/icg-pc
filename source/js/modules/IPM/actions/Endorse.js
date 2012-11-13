@@ -82,7 +82,7 @@
           this.VALUES.formValues.comment = '__deleteEmptyProperty';
         }
         options = {};
-        callback = this.callbackSuccess;
+        callbackFunc = this.callbackSuccess;
         if (_.has(this.VALUES.formValues, 'preview')) {
           callbackFunc = this.callbackPreview;
           options.headers = {
