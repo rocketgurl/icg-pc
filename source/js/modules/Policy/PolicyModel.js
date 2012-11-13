@@ -178,7 +178,7 @@
       getLastTerm: function() {
         var terms;
         if (terms = this.getTerms()) {
-          return terms.pop();
+          return _.last(terms);
         } else {
           return {};
         }

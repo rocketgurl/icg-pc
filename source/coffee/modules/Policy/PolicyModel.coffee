@@ -191,7 +191,7 @@ define [
     # @return _Obj (XML)_
     getLastTerm : ->
       if terms = @getTerms()
-        terms.pop()
+        _.last terms
       else
         {}
 
