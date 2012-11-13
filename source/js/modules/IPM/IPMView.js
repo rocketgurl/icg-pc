@@ -150,6 +150,10 @@
         return this.remove_loader();
       };
 
+      IPMView.prototype.displayMessage = function(type, msg, delay) {
+        return this.Amplify.publish(this.cid, type, msg, delay);
+      };
+
       return IPMView;
 
     })(BaseView);

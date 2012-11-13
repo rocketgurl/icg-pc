@@ -187,6 +187,11 @@ define [
       @Amplify.publish(@cid, 'warning', "#{error_msg}")
       @remove_loader()
 
+    # Display a flash message. This is a convenience method making it
+    # easier for IPMActionViews to trigger a message.
+    displayMessage : (type, msg, delay) ->
+      @Amplify.publish(@cid, type, msg, delay)
+
 
 
 
