@@ -15,32 +15,6 @@ define [
       super
       @fetchTemplates(@MODULE.POLICY, 'endorse', @processView)
 
-    # **Build a viewData object to populate the template form with**  
-    #
-    # Takes the model.json and creates a custom data object for this view. We
-    # then set that object to @viewData and the view to @view.
-    #
-    # @param `vocabTerms` _Object_ model.json  
-    # @param `view` _String_ HTML template
-    # @return _Array_ [viewData object, view object]    
-    #
-    processViewData : (vocabTerms, view) =>
-      super vocabTerms, view
-      viewData = @MODULE.POLICY.getTermDataItemValues(vocabTerms)
-      viewData = @MODULE.POLICY.getEnumerations(viewData, vocabTerms)
-      viewData = _.extend(
-        viewData,
-        @MODULE.POLICY.getPolicyOverview(),
-        { 
-          policyOverview : true
-          policyId : @MODULE.POLICY.get_pxServerIndex()
-        }
-      )
-      @viewData = viewData
-      @view     = view
-
-      [viewData, view]
-
     # **Build view data objects and trigger loaded event**  
     #
     # Takes the model.json and creates a custom data object for this view. We
@@ -68,14 +42,6 @@ define [
 
       @trigger("loaded", this, @postProcessPreview)
 
-    render : (viewData, view) ->
-      super
-      viewData = viewData || @viewData
-      view     = view || @view
-      @$el.html(@MODULE.VIEW.Mustache.render(view, viewData))
-
-      console.log ['ActionView : render', viewData]
-
     # **Process Form**
     # On submit we do some action specific processing and then send to the
     # TransactionRequest monster
@@ -83,8 +49,6 @@ define [
     submit : (e) ->
       super e
 
-      console.log ['Submit', @VALUES]
-      
       @VALUES.formValues.transactionType = 'Endorsement'
 
       # Derive intervals from the form values and policy, we use
@@ -175,11 +139,7 @@ define [
       # This is a short circuit operation to get the Interval property
       intervals = term.Intervals && term.Intervals.Interval
 
-      console.log ['POLICY', @MODULE.POLICY]
-      console.log ['parseIntervals : term', term]
-      console.log ['parseIntervals : intervals', term.Intervals]
-
-      # If there is only a single internal, drop into an array.
+       # If there is only a single internal, drop into an array.
       if !_.isArray(intervals)
         intervals = [intervals]
 

@@ -12,6 +12,8 @@
 
       function MakePaymentAction() {
         this.processView = __bind(this.processView, this);
+
+        this.processViewData = __bind(this.processViewData, this);
         return MakePaymentAction.__super__.constructor.apply(this, arguments);
       }
 
@@ -24,32 +26,20 @@
         return this.fetchTemplates(this.MODULE.POLICY, 'make-payment', this.processView);
       };
 
-      MakePaymentAction.prototype.processView = function(vocabTerms, view) {
-        var viewData;
-        MakePaymentAction.__super__.processView.call(this, vocabTerms, view);
-        viewData = this.MODULE.POLICY.getTermDataItemValues(vocabTerms);
-        viewData = this.MODULE.POLICY.getEnumerations(viewData, vocabTerms);
-        viewData = _.extend(viewData, this.MODULE.POLICY.getPolicyOverview(), {
-          policyOverview: true,
-          policyId: this.MODULE.POLICY.get_pxServerIndex()
-        });
-        this.viewData = viewData;
-        this.view = view;
-        return this.trigger("loaded", this);
+      MakePaymentAction.prototype.processViewData = function(vocabTerms, view) {
+        return MakePaymentAction.__super__.processViewData.call(this, vocabTerms, view);
       };
 
-      MakePaymentAction.prototype.render = function(viewData, view) {
-        MakePaymentAction.__super__.render.apply(this, arguments);
-        viewData = viewData || this.viewData;
-        view = view || this.view;
-        return this.$el.html(this.MODULE.VIEW.Mustache.render(view, viewData));
+      MakePaymentAction.prototype.processView = function(vocabTerms, view) {
+        this.processViewData(vocabTerms, view);
+        return this.trigger("loaded", this, this.postProcessView);
       };
 
       MakePaymentAction.prototype.submit = function(e) {
         MakePaymentAction.__super__.submit.call(this, e);
         this.VALUES.formValues.positivePaymentAmount = Math.abs(this.VALUES.formValues.paymentAmount || 0);
         this.VALUES.formValues.paymentAmount = -1 * this.VALUES.formValues.positivePaymentAmount;
-        return this.CHANGE_SET.commitChange(this.CHANGE_SET.getPolicyChangeSet(this.VALUES), this.callbackSuccess, this.callbackError);
+        return this.ChangeSet.commitChange(this.ChangeSet.getPolicyChangeSet(this.VALUES), this.callbackSuccess, this.callbackError);
       };
 
       return MakePaymentAction;

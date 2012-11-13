@@ -18,8 +18,6 @@
         this.processPreview = __bind(this.processPreview, this);
 
         this.processView = __bind(this.processView, this);
-
-        this.processViewData = __bind(this.processViewData, this);
         return EndorseAction.__super__.constructor.apply(this, arguments);
       }
 
@@ -38,20 +36,6 @@
         return this.fetchTemplates(this.MODULE.POLICY, 'endorse', this.processView);
       };
 
-      EndorseAction.prototype.processViewData = function(vocabTerms, view) {
-        var viewData;
-        EndorseAction.__super__.processViewData.call(this, vocabTerms, view);
-        viewData = this.MODULE.POLICY.getTermDataItemValues(vocabTerms);
-        viewData = this.MODULE.POLICY.getEnumerations(viewData, vocabTerms);
-        viewData = _.extend(viewData, this.MODULE.POLICY.getPolicyOverview(), {
-          policyOverview: true,
-          policyId: this.MODULE.POLICY.get_pxServerIndex()
-        });
-        this.viewData = viewData;
-        this.view = view;
-        return [viewData, view];
-      };
-
       EndorseAction.prototype.processView = function(vocabTerms, view) {
         this.processViewData(vocabTerms, view);
         return this.trigger("loaded", this, this.postProcessView);
@@ -64,18 +48,9 @@
         return this.trigger("loaded", this, this.postProcessPreview);
       };
 
-      EndorseAction.prototype.render = function(viewData, view) {
-        EndorseAction.__super__.render.apply(this, arguments);
-        viewData = viewData || this.viewData;
-        view = view || this.view;
-        this.$el.html(this.MODULE.VIEW.Mustache.render(view, viewData));
-        return console.log(['ActionView : render', viewData]);
-      };
-
       EndorseAction.prototype.submit = function(e) {
-        var callback, callbackFunc, options, override_validation_state;
+        var callbackFunc, options, override_validation_state;
         EndorseAction.__super__.submit.call(this, e);
-        console.log(['Submit', this.VALUES]);
         this.VALUES.formValues.transactionType = 'Endorsement';
         this.current_policy_intervals = this.parseIntervals(this.VALUES);
         if (this.VALUES.formValues.comment === '') {
@@ -125,9 +100,6 @@
         policy = this.MODULE.POLICY;
         term = policy.getLastTerm();
         intervals = term.Intervals && term.Intervals.Interval;
-        console.log(['POLICY', this.MODULE.POLICY]);
-        console.log(['parseIntervals : term', term]);
-        console.log(['parseIntervals : intervals', term.Intervals]);
         if (!_.isArray(intervals)) {
           intervals = [intervals];
         }

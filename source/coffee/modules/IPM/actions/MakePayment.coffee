@@ -11,31 +11,30 @@ define [
       super
       @fetchTemplates(@MODULE.POLICY, 'make-payment', @processView)
 
-    # Build a viewData object to populate the template form with
-    processView : (vocabTerms, view) =>
+    # **Build a viewData object to populate the template form with**  
+    #
+    # Takes the model.json and creates a custom data object for this view. We
+    # then set that object to @viewData and the view to @view.
+    #
+    # @param `vocabTerms` _Object_ model.json  
+    # @param `view` _String_ HTML template
+    # @return _Array_ [viewData object, view object]    
+    #
+    processViewData : (vocabTerms, view) =>
       super vocabTerms, view
-      viewData = @MODULE.POLICY.getTermDataItemValues(vocabTerms)
-      viewData = @MODULE.POLICY.getEnumerations(viewData, vocabTerms)
-      viewData = _.extend(
-        viewData,
-        @MODULE.POLICY.getPolicyOverview(),
-        { 
-          policyOverview : true
-          policyId : @MODULE.POLICY.get_pxServerIndex()
-        }
-      )
 
-      @viewData = viewData
-      @view     = view
-
-      @trigger "loaded", this
-      
-
-    render : (viewData, view) ->
-      super
-      viewData = viewData || @viewData
-      view     = view || @view
-      @$el.html(@MODULE.VIEW.Mustache.render(view, viewData))
+    # **Build view data objects and trigger loaded event**  
+    #
+    # Takes the model.json and creates a custom data object for this view. We
+    # then trigger the `loaded` event passing @postProcessView as the callback. 
+    # This will attach any necessary behaviors to the rendered form.  
+    #
+    # @param `vocabTerms` _Object_ model.json  
+    # @param `view` _String_ HTML template    
+    #
+    processView : (vocabTerms, view) =>
+      @processViewData(vocabTerms, view)
+      @trigger "loaded", this, @postProcessView      
 
     # **Process Form**
     # On submit we do some action specific processing and then send to the
@@ -52,8 +51,8 @@ define [
         -1 * @VALUES.formValues.positivePaymentAmount
 
       # Assemble the ChangeSet XML and send to server
-      @CHANGE_SET.commitChange(
-          @CHANGE_SET.getPolicyChangeSet(@VALUES)
+      @ChangeSet.commitChange(
+          @ChangeSet.getPolicyChangeSet(@VALUES)
           @callbackSuccess,
           @callbackError
         )
