@@ -6,13 +6,14 @@ define [
 
   # IPMActionView
   # ====  
-  # IPM sub views (action views) inherit from this base view 
+  # IPM sub views (action views) inherit from this base view  
   class IPMActionView extends BaseView
     
-    MODULE     : {} # Containing module
-    VALUES     : {} # Form values
-    TPL_CACHE  : {} # Template Cache
-    CHANGE_SET : {}
+    MODULE    : {} # Containing module
+    VALUES    : {} # Form values
+    TPL_CACHE : {} # Template Cache
+
+    ChangeSet : {} # IPMChangeSet
 
     tagName : 'div'
 
@@ -24,7 +25,7 @@ define [
     initialize : (options) ->
       @PARENT_VIEW = options.PARENT_VIEW || {}
       @MODULE      = options.MODULE || {}
-      @CHANGE_SET  = new IPMChangeSet(@MODULE.POLICY, @PARENT_VIEW.VIEW_STATE, @MODULE.USER)
+      @ChangeSet   = new IPMChangeSet(@MODULE.POLICY, @PARENT_VIEW.VIEW_STATE, @MODULE.USER)
       
       @options = null
 
@@ -202,14 +203,19 @@ define [
     preview : ->
 
     # **Submit form** - set the form values on the ActionView for 
-    # use in inherited ActionViews
+    # use in inherited ActionViews. Only do this if there is an actual form,
+    # otherwise we're probably in a preview state and need to hold onto the
+    # original form values.
+    #
+    # _Note:_ This method should be extended in child views
     #
     # @param `e` _Event_ Submit event   
     #
     submit : (e) ->
       e.preventDefault()
-      form = @$el.find('form')      
-      @VALUES =
-        formValues    : @getFormValues form
-        changedValues : @getChangedValues form
+      form = @$el.find('form')
+      if form.length > 0      
+        @VALUES =
+          formValues    : @getFormValues form
+          changedValues : @getChangedValues form
 

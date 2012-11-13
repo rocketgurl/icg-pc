@@ -11,6 +11,8 @@
       __extends(IPMActionView, _super);
 
       function IPMActionView() {
+        this.callbackPreview = __bind(this.callbackPreview, this);
+
         this.callbackError = __bind(this.callbackError, this);
 
         this.callbackSuccess = __bind(this.callbackSuccess, this);
@@ -23,7 +25,7 @@
 
       IPMActionView.prototype.TPL_CACHE = {};
 
-      IPMActionView.prototype.CHANGE_SET = {};
+      IPMActionView.prototype.ChangeSet = {};
 
       IPMActionView.prototype.tagName = 'div';
 
@@ -36,7 +38,7 @@
       IPMActionView.prototype.initialize = function(options) {
         this.PARENT_VIEW = options.PARENT_VIEW || {};
         this.MODULE = options.MODULE || {};
-        this.CHANGE_SET = new IPMChangeSet(this.MODULE.POLICY, this.PARENT_VIEW.VIEW_STATE, this.MODULE.USER);
+        this.ChangeSet = new IPMChangeSet(this.MODULE.POLICY, this.PARENT_VIEW.VIEW_STATE, this.MODULE.USER);
         this.options = null;
         return this.on('ready', this.ready, this);
       };
@@ -174,10 +176,12 @@
         var form;
         e.preventDefault();
         form = this.$el.find('form');
-        return this.VALUES = {
-          formValues: this.getFormValues(form),
-          changedValues: this.getChangedValues(form)
-        };
+        if (form.length > 0) {
+          return this.VALUES = {
+            formValues: this.getFormValues(form),
+            changedValues: this.getChangedValues(form)
+          };
+        }
       };
 
       return IPMActionView;
