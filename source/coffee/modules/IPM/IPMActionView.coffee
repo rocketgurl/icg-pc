@@ -160,6 +160,20 @@ define [
         model : vocabTerms
         view  : view
 
+      viewData = @MODULE.POLICY.getTermDataItemValues(vocabTerms)
+      viewData = @MODULE.POLICY.getEnumerations(viewData, vocabTerms)
+      viewData = _.extend(
+        viewData,
+        @MODULE.POLICY.getPolicyOverview(),
+        { 
+          policyOverview : true
+          policyId : @MODULE.POLICY.get_pxServerIndex()
+        }
+      )
+      @viewData = viewData
+      @view     = view
+
+      [viewData, view]
     callbackSuccess : (data, status, jqXHR) =>
       console.log jqXHR
      
@@ -212,7 +226,20 @@ define [
 
     ready : ->
 
-    render : -> 
+    # **Build view data objects and trigger loaded event**  
+    #
+    # Takes the model.json and creates a custom data object for this view. We
+    # then trigger the `loaded` event passing @postProcessView as the callback. 
+    # This will attach any necessary behaviors to the rendered form.  
+    #
+    # @param `vocabTerms` _Object_ model.json  
+    # @param `view` _String_ HTML template    
+    #
+    render : (viewData, view) ->
+      super
+      viewData = viewData || @viewData
+      view     = view || @view
+      @$el.html(@MODULE.VIEW.Mustache.render(view, viewData))
 
     validate : ->
 

@@ -140,10 +140,20 @@
       };
 
       IPMActionView.prototype.processViewData = function(vocabTerms, view) {
-        return this.TPL_CACHE[this.PARENT_VIEW.VIEW_STATE] = {
+        var viewData;
+        this.TPL_CACHE[this.PARENT_VIEW.VIEW_STATE] = {
           model: vocabTerms,
           view: view
         };
+        viewData = this.MODULE.POLICY.getTermDataItemValues(vocabTerms);
+        viewData = this.MODULE.POLICY.getEnumerations(viewData, vocabTerms);
+        viewData = _.extend(viewData, this.MODULE.POLICY.getPolicyOverview(), {
+          policyOverview: true,
+          policyId: this.MODULE.POLICY.get_pxServerIndex()
+        });
+        this.viewData = viewData;
+        this.view = view;
+        return [viewData, view];
       };
 
       IPMActionView.prototype.callbackSuccess = function(data, status, jqXHR) {
@@ -173,7 +183,12 @@
 
       IPMActionView.prototype.ready = function() {};
 
-      IPMActionView.prototype.render = function() {};
+      IPMActionView.prototype.render = function(viewData, view) {
+        IPMActionView.__super__.render.apply(this, arguments);
+        viewData = viewData || this.viewData;
+        view = view || this.view;
+        return this.$el.html(this.MODULE.VIEW.Mustache.render(view, viewData));
+      };
 
       IPMActionView.prototype.validate = function() {};
 
