@@ -25,6 +25,8 @@
 
       IPMActionView.prototype.TPL_CACHE = {};
 
+      IPMActionView.prototype.ERRORS = {};
+
       IPMActionView.prototype.ChangeSet = {};
 
       IPMActionView.prototype.tagName = 'div';
@@ -157,11 +159,29 @@
       };
 
       IPMActionView.prototype.callbackSuccess = function(data, status, jqXHR) {
-        return console.log(jqXHR);
+        var msg;
+        msg = "" + this.PARENT_VIEW.VIEW_STATE + " completed successfully";
+        this.PARENT_VIEW.displayMessage('success', msg, 12000);
+        this.resetPolicyModel(data, jqXHR);
+        return this.processView(this.TPL_CACHE[this.PARENT_VIEW.VIEW_STATE].model, this.TPL_CACHE[this.PARENT_VIEW.VIEW_STATE].view);
       };
 
       IPMActionView.prototype.callbackError = function(jqXHR, status, error) {
-        return console.log(jqXHR);
+        var json, regex;
+        if (!jqXHR) {
+          this.PARENT_VIEW.displayError('warning', 'Fatal: Error received with no response from server');
+          return false;
+        }
+        if (jqXHR.responseText != null) {
+          regex = /\[(.*?)\]/g;
+          json = regex.exec(jqXHR.responseText);
+          if ((json != null) && this.PARENT_VIEW.VIEW_STATE === 'Endorse') {
+            this.ERRORS = this.errorParseJSON(jqXHR, json);
+          } else {
+            this.ERRORS = this.errorParseHTML(jqXHR);
+          }
+        }
+        return this.displayError('warning', this.ERRORS);
       };
 
       IPMActionView.prototype.callbackPreview = function(data, status, jqXHR) {
@@ -204,6 +224,53 @@
             changedValues: this.getChangedValues(form)
           };
         }
+      };
+
+      IPMActionView.prototype.errorParseHTML = function(jqXHR) {
+        var status_code, tmp, true_status_code, _ref;
+        status_code = jqXHR.status;
+        true_status_code = (_ref = jqXHR.getResponseHeader('X-True-Statuscode')) != null ? _ref : null;
+        tmp = $('<div />').html(jqXHR.responseText);
+        this.ERRORS.title = tmp.find('h1:first').text();
+        this.ERRORS.desc = tmp.find('p:first').text();
+        this.ERRORS.details = tmp.find('ol:first');
+        if (this.ERRORS.details.length === 0) {
+          this.ERRORS.details = tmp.find('ul:first');
+          if (this.ERRORS.details.length === 0) {
+            this.ERRORS.details = null;
+          }
+        }
+        tmp = null;
+        if (!(true_status_code != null)) {
+          this.ERRORS.title = "" + status_code + " " + this.ERRORS.tile;
+        }
+        return this.ERRORS;
+      };
+
+      IPMActionView.prototype.errorParseJSON = function(jqXHR, json) {
+        var response, _ref, _ref1, _ref2;
+        if ((json != null) && (json[0] != null)) {
+          response = (_ref = JSON.parse(json[0])) != null ? _ref : null;
+        }
+        if (response[0] != null) {
+          this.ERRORS.title = (_ref1 = response[0].message) != null ? _ref1 : null;
+          this.ERRORS.desc = (_ref2 = response[0].detail) != null ? _ref2 : null;
+          this.ERRORS.details = null;
+        }
+        if (this.ERRORS.title === 'Rate Validation Failed') {
+          this.$el.find('#rate_validation_override').fadeIn('fast');
+        }
+        return this.ERRORS;
+      };
+
+      IPMActionView.prototype.displayError = function(type, error) {
+        var msg;
+        msg = "<h3>" + error.title + "</h3><p>" + error.desc + "</p>";
+        if (error.details != null) {
+          msg = "" + msg + "\n<div class=\"error_details\">\n  <a href=\"#\"><i class=\"icon-plus-sign\"></i> Show error details</a>\n  " + error.details + "\n</div>";
+        }
+        this.PARENT_VIEW.displayMessage(type, msg);
+        return msg;
       };
 
       return IPMActionView;

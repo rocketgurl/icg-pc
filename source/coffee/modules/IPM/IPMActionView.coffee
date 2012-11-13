@@ -12,6 +12,7 @@ define [
     MODULE    : {} # Containing module
     VALUES    : {} # Form values
     TPL_CACHE : {} # Template Cache
+    ERRORS    : {} # Manage error states from server
 
     ChangeSet : {} # IPMChangeSet
 
@@ -174,11 +175,54 @@ define [
       @view     = view
 
       [viewData, view]
+
+    # **Success handling from ChangeSet**
+    #
+    # @param `data` _XML_ Policy XML  
+    # @param `status` _String_ Status of callback  
+    # @param `jqXHR` _Object_ XHR object  
+    #
     callbackSuccess : (data, status, jqXHR) =>
-      console.log jqXHR
-     
+      msg = "#{@PARENT_VIEW.VIEW_STATE} completed successfully"
+      @PARENT_VIEW.displayMessage('success', msg, 12000)
+
+      # Load returned policy into PolicyModel
+      @resetPolicyModel(data, jqXHR)
+
+      # Re-render the form
+      @processView(
+        @TPL_CACHE[@PARENT_VIEW.VIEW_STATE].model,
+        @TPL_CACHE[@PARENT_VIEW.VIEW_STATE].view
+      )
+
+    # **Error handling from ChangeSet**
+    #
+    # @param `jqXHR` _Object_ XHR object  
+    # @param `status` _String_ Status of callback  
+    # @param `error` _String_ Error  
+    #
     callbackError : (jqXHR, status, error) =>
-      console.log jqXHR
+      # If we don't get an XHR response, then something very bad has
+      # happened indeed.
+      if !jqXHR
+        @PARENT_VIEW.displayError(
+          'warning',
+          'Fatal: Error received with no response from server'
+        )
+        return false
+
+      if jqXHR.responseText?
+        regex = /\[(.*?)\]/g
+        json  = regex.exec(jqXHR.responseText)
+
+        # If this is an endorse action and the response is JSON then there is
+        # a high chance this could be a rate validation error.
+        if json? && @PARENT_VIEW.VIEW_STATE == 'Endorse'
+          @ERRORS = @errorParseJSON(jqXHR, json)
+        else
+          @ERRORS = @errorParseHTML(jqXHR)
+
+      @displayError 'warning', @ERRORS
 
     # **Preview Callback**  
     # If a policy comes back to for Preview we need to do a little processing
@@ -262,3 +306,84 @@ define [
           formValues    : @getFormValues form
           changedValues : @getChangedValues form
 
+    # **Parse error message from HTML response**
+    #
+    # @param `jqXHR` _Object_ XHR object  
+    # @return _Object_ Error object  
+    #
+    errorParseHTML : (jqXHR) ->
+      # Assemble error message
+      status_code      = jqXHR.status
+      true_status_code = jqXHR.getResponseHeader('X-True-Statuscode') ? null
+
+      # The error response comes back as HTML, which we need to pull apart
+      # into a meaningful message of some sort using jQuery.
+      tmp            = $('<div />').html(jqXHR.responseText)
+      @ERRORS.title   = tmp.find('h1:first').text()
+      @ERRORS.desc    = tmp.find('p:first').text()
+      @ERRORS.details = tmp.find('ol:first')
+
+      # We need to check the error message for lists (ol/ul). Some of the 
+      # services incorrectly send back <ul>s so we need to check both, or
+      # set details to null if neither are present.
+      if @ERRORS.details.length == 0
+        @ERRORS.details = tmp.find('ul:first')
+        if @ERRORS.details.length == 0
+          @ERRORS.details = null
+
+      tmp = null # reset the container
+
+      # If we didn't receive an X-True-Statuscode header then we prepend the
+      # HTTP status code to the title.
+      if !true_status_code?
+        @ERRORS.title = "#{status_code} #{@ERRORS.tile}"
+
+      @ERRORS
+
+    # **Parse error message from JSON embedded in HTML response**
+    # Make the rate validation override form available if this is a rate
+    # validation issue.
+    #
+    # @param `jqXHR` _Object_ XHR object  
+    # @param `json` _String_ JSON encoded text  
+    # @return _Object_ Error object  
+    #
+    errorParseJSON : (jqXHR, json) ->
+      if json? && json[0]?
+        response = JSON.parse(json[0]) ? null
+
+      if response[0]?
+        @ERRORS.title   = response[0].message ? null
+        @ERRORS.desc    = response[0].detail ? null
+        @ERRORS.details = null
+
+      if @ERRORS.title == 'Rate Validation Failed'
+        @$el.find('#rate_validation_override').fadeIn('fast')
+
+      @ERRORS
+
+
+
+    # **Display error message**   
+    # Build an error message from the error object provided by callbackError
+    #
+    # @param `type` _String_ warning|notice  
+    # @param `error` _Object_ Collection of error fragments for assembly 
+    #
+    displayError : (type, error) ->
+      msg = "<h3>#{error.title}</h3><p>#{error.desc}</p>"
+
+      # If details exist, build list container and append to msg
+      if error.details?
+        msg = """
+            #{msg}
+            <div class="error_details">
+              <a href="#"><i class="icon-plus-sign"></i> Show error details</a>
+              #{error.details}
+            </div>
+          """
+
+      # Display the error message
+      @PARENT_VIEW.displayMessage(type, msg)
+
+      msg
