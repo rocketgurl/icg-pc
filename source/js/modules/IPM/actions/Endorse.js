@@ -15,11 +15,19 @@
 
         this.calculateCoverage = __bind(this.calculateCoverage, this);
 
+        this.processPreview = __bind(this.processPreview, this);
+
         this.processView = __bind(this.processView, this);
+
+        this.processViewData = __bind(this.processViewData, this);
         return EndorseAction.__super__.constructor.apply(this, arguments);
       }
 
-      EndorseAction.prototype.COVERAGE_CALCULATIONS = {};
+      EndorseAction.prototype.coverage_calculations = {};
+
+      EndorseAction.prototype.transaction_request_xml = null;
+
+      EndorseAction.prototype.override_validation_state = false;
 
       EndorseAction.prototype.initialize = function() {
         return EndorseAction.__super__.initialize.apply(this, arguments);
@@ -30,9 +38,9 @@
         return this.fetchTemplates(this.MODULE.POLICY, 'endorse', this.processView);
       };
 
-      EndorseAction.prototype.processView = function(vocabTerms, view) {
+      EndorseAction.prototype.processViewData = function(vocabTerms, view) {
         var viewData;
-        EndorseAction.__super__.processView.call(this, vocabTerms, view);
+        EndorseAction.__super__.processViewData.call(this, vocabTerms, view);
         viewData = this.MODULE.POLICY.getTermDataItemValues(vocabTerms);
         viewData = this.MODULE.POLICY.getEnumerations(viewData, vocabTerms);
         viewData = _.extend(viewData, this.MODULE.POLICY.getPolicyOverview(), {
@@ -41,32 +49,56 @@
         });
         this.viewData = viewData;
         this.view = view;
+        return [viewData, view];
+      };
+
+      EndorseAction.prototype.processView = function(vocabTerms, view) {
+        this.processViewData(vocabTerms, view);
         return this.trigger("loaded", this, this.postProcessView);
+      };
+
+      EndorseAction.prototype.processPreview = function(vocabTerms, view) {
+        this.processViewData(vocabTerms, view);
+        this.viewData.preview = this.parseIntervals(this.VALUES);
+        this.viewData.current_policy = this.current_policy_intervals;
+        return this.trigger("loaded", this, this.postProcessPreview);
       };
 
       EndorseAction.prototype.render = function(viewData, view) {
         EndorseAction.__super__.render.apply(this, arguments);
         viewData = viewData || this.viewData;
         view = view || this.view;
-        return this.$el.html(this.MODULE.VIEW.Mustache.render(view, viewData));
+        this.$el.html(this.MODULE.VIEW.Mustache.render(view, viewData));
+        return console.log(['ActionView : render', viewData]);
       };
 
       EndorseAction.prototype.submit = function(e) {
-        var current_policy, options;
+        var callback, callbackFunc, options, override_validation_state;
         EndorseAction.__super__.submit.call(this, e);
         console.log(['Submit', this.VALUES]);
         this.VALUES.formValues.transactionType = 'Endorsement';
-        current_policy = this.parseIntervals(this.VALUES);
+        this.current_policy_intervals = this.parseIntervals(this.VALUES);
         if (this.VALUES.formValues.comment === '') {
           this.VALUES.formValues.comment = '__deleteEmptyProperty';
         }
         options = {};
+        callback = this.callbackSuccess;
         if (_.has(this.VALUES.formValues, 'preview')) {
+          callbackFunc = this.callbackPreview;
           options.headers = {
             'X-Commit': false
           };
         }
-        return this.CHANGE_SET.commitChange(this.CHANGE_SET.getTransactionRequest(this.VALUES, this.viewData), this.callbackSuccess, this.callbackError, options);
+        if ((this.VALUES.formValues.id_rv_override != null) && this.VALUES.formValues.id_rv_override === '1') {
+          options.headers = _.extend(options.headers, {
+            'Override-Validation-Block': true
+          });
+          override_validation_state = true;
+        }
+        if (!(this.transaction_request_xml != null)) {
+          this.transaction_request_xml = this.ChangeSet.getTransactionRequest(this.VALUES, this.viewData);
+        }
+        return this.ChangeSet.commitChange(this.transaction_request_xml, callbackFunc, this.callbackError, options);
       };
 
       EndorseAction.prototype.postProcessView = function() {
@@ -82,7 +114,7 @@
         coverage_a = this.$el.find('input[name=CoverageA]');
         if (coverage_a.length > 0) {
           if (data = coverage_a.data('calculations')) {
-            return this.COVERAGE_CALCULATIONS = eval("(" + data + ")");
+            return this.coverage_calculations = eval("(" + data + ")");
           }
         }
       };
@@ -93,6 +125,9 @@
         policy = this.MODULE.POLICY;
         term = policy.getLastTerm();
         intervals = term.Intervals && term.Intervals.Interval;
+        console.log(['POLICY', this.MODULE.POLICY]);
+        console.log(['parseIntervals : term', term]);
+        console.log(['parseIntervals : intervals', term.Intervals]);
         if (!_.isArray(intervals)) {
           intervals = [intervals];
         }
@@ -200,11 +235,11 @@
 
       EndorseAction.prototype.deriveCoverageACalculations = function() {
         var calc_val, coverage_a, key, val, value_a, _ref, _results;
-        if (!_.isEmpty(this.COVERAGE_CALCULATIONS)) {
+        if (!_.isEmpty(this.coverage_calculations)) {
           coverage_a = this.$el.find('input[name=CoverageA]');
           if (coverage_a.length > 0 || (coverage_a.val() != null)) {
             value_a = coverage_a.val();
-            _ref = this.COVERAGE_CALCULATIONS;
+            _ref = this.coverage_calculations;
             _results = [];
             for (key in _ref) {
               val = _ref[key];
@@ -215,6 +250,8 @@
           }
         }
       };
+
+      EndorseAction.prototype.preview = function() {};
 
       return EndorseAction;
 

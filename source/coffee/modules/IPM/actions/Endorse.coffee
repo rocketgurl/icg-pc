@@ -3,9 +3,10 @@ define [
 ], (IPMActionView) ->
 
   class EndorseAction extends IPMActionView
-
-    # Custom calculations objects
-    COVERAGE_CALCULATIONS : {}
+    
+    coverage_calculations     : {} # Custom calculations objects
+    transaction_request_xml   : null
+    override_validation_state : false # used to override rate validation
 
     initialize : ->
       super
@@ -17,14 +18,13 @@ define [
     # **Build a viewData object to populate the template form with**  
     #
     # Takes the model.json and creates a custom data object for this view. We
-    # then set that object to @viewData and the view to @view and trigger the
-    # `loaded` event passing @postProcessView as the callback. This will
-    # attach any necessary behaviors to the rendered form.  
+    # then set that object to @viewData and the view to @view.
     #
     # @param `vocabTerms` _Object_ model.json  
-    # @param `view` _String_ HTML template    
+    # @param `view` _String_ HTML template
+    # @return _Array_ [viewData object, view object]    
     #
-    processView : (vocabTerms, view) =>
+    processViewData : (vocabTerms, view) =>
       super vocabTerms, view
       viewData = @MODULE.POLICY.getTermDataItemValues(vocabTerms)
       viewData = @MODULE.POLICY.getEnumerations(viewData, vocabTerms)
@@ -38,13 +38,43 @@ define [
       )
       @viewData = viewData
       @view     = view
+
+      [viewData, view]
+
+    # **Build view data objects and trigger loaded event**  
+    #
+    # Takes the model.json and creates a custom data object for this view. We
+    # then trigger the `loaded` event passing @postProcessView as the callback. 
+    # This will attach any necessary behaviors to the rendered form.  
+    #
+    # @param `vocabTerms` _Object_ model.json  
+    # @param `view` _String_ HTML template    
+    #
+    processView : (vocabTerms, view) =>
+      @processViewData(vocabTerms, view)
       @trigger "loaded", this, @postProcessView
+
+    # **Process Preview**  
+    #
+    # Same as processView() but we add an interval obj to viewData to tell the
+    # Mustache template to render a different part for the user. This is
+    # a separate function so that it would be explicit what is being called
+    # in the callbackPreview()
+    #
+    processPreview : (vocabTerms, view) =>
+      @processViewData(vocabTerms, view)
+      @viewData.preview        = @parseIntervals(@VALUES)
+      @viewData.current_policy = @current_policy_intervals
+
+      @trigger("loaded", this, @postProcessPreview)
 
     render : (viewData, view) ->
       super
       viewData = viewData || @viewData
       view     = view || @view
       @$el.html(@MODULE.VIEW.Mustache.render(view, viewData))
+
+      console.log ['ActionView : render', viewData]
 
     # **Process Form**
     # On submit we do some action specific processing and then send to the
@@ -57,8 +87,10 @@ define [
       
       @VALUES.formValues.transactionType = 'Endorsement'
 
-      # Derive intervals from the form values and policy
-      current_policy = @parseIntervals(@VALUES)
+      # Derive intervals from the form values and policy, we use
+      # this in the Preview, comparing it against what comes back
+      # from the server
+      @current_policy_intervals = @parseIntervals(@VALUES)
 
       # We selectively delete certain empty values later
       if @VALUES.formValues.comment == ''
@@ -67,22 +99,43 @@ define [
       # Options for ChangeSet
       options = {}
 
+      # Success callback
+      callback = @callbackSuccess
+
       # Preview require additional headers
       if _.has(@VALUES.formValues, 'preview')
+        callbackFunc = @callbackPreview
         options.headers =
           'X-Commit' : false
 
-      # xml = @CHANGE_SET.getTransactionRequest(@VALUES, @viewData)
+      # **ICS-1042 / ICS-429**  
+      # If the user ticks the override input then we need to add custom header
+      # to the request. We also set state so we can remember this across 
+      # different requests.
+      #
+      if @VALUES.formValues.id_rv_override? && @VALUES.formValues.id_rv_override == '1'
+        options.headers = _.extend(
+          options.headers,
+          { 'Override-Validation-Block' : true }
+        )
+        override_validation_state = true
+
+      # Store TR XML for use after preview, prevents having to rebuild it
+      if !@transaction_request_xml?
+        @transaction_request_xml = @ChangeSet.getTransactionRequest(@VALUES, @viewData)
 
       # Assemble the Transaction Request XML and send to server
-      @CHANGE_SET.commitChange(
-        @CHANGE_SET.getTransactionRequest(@VALUES, @viewData),
-        @callbackSuccess,
+      @ChangeSet.commitChange(
+        @transaction_request_xml,
+        callbackFunc,
         @callbackError,
         options
       )
 
-    # Add Coverage Calulation behaviors to Endorse forms
+    # **Apply behaviors to default form after rendering**  
+    #
+    # * Add Coverage Calulation behaviors
+    #
     postProcessView : ->
       super
 
@@ -102,9 +155,9 @@ define [
       coverage_a = @$el.find('input[name=CoverageA]')
       if coverage_a.length > 0
         if data = coverage_a.data 'calculations'
-          @COVERAGE_CALCULATIONS = (eval("(#{data})"))
+          @coverage_calculations = (eval("(#{data})"))
 
-    # **Build values for TransactionRequest**  
+    # **Build Intervals values for TransactionRequest & Previews**  
     # This takes the form fields and builds up a big data set to use in the TR
     # and preview. It's an almost direct port from mxAdmin and could use some
     # refactoring.
@@ -121,6 +174,10 @@ define [
 
       # This is a short circuit operation to get the Interval property
       intervals = term.Intervals && term.Intervals.Interval
+
+      console.log ['POLICY', @MODULE.POLICY]
+      console.log ['parseIntervals : term', term]
+      console.log ['parseIntervals : intervals', term.Intervals]
 
       # If there is only a single internal, drop into an array.
       if !_.isArray(intervals)
@@ -282,7 +339,7 @@ define [
             el.val()
           )
 
-    # If CoverageA is present as well as @COVERAGE_CALCULATIONS then
+    # If CoverageA is present as well as @coverage_calculations then
     # loop through the cached calcs and do the math on CoverageA's
     # value, setting the new value back to the element that needs is.
     #
@@ -292,11 +349,12 @@ define [
     # the <input> for CoverageD.
     #
     deriveCoverageACalculations : ->
-      if !_.isEmpty @COVERAGE_CALCULATIONS
+      if !_.isEmpty @coverage_calculations
         coverage_a = @$el.find('input[name=CoverageA]')
         if coverage_a.length > 0 || coverage_a.val()?
           value_a = coverage_a.val()
-          for key, val of @COVERAGE_CALCULATIONS
+          for key, val of @coverage_calculations
             calc_val = value_a * parseFloat val
             @$el.find("input[name=#{key}]").val calc_val
 
+    preview : ->
