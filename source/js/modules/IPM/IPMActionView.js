@@ -86,7 +86,11 @@
 
       IPMActionView.prototype.postProcessView = function() {
         var date_options;
-        $('.labelRequired').append('<em>*</em>');
+        $('.labelRequired').each(function() {
+          if (!$(this).hasClass('processed')) {
+            return $(this).append('<em>*</em>').addClass('processed');
+          }
+        });
         $('select[data-value]').val(function() {
           return $(this).attr('data-value');
         });

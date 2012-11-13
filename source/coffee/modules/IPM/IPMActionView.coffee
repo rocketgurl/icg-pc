@@ -90,7 +90,9 @@ define [
     # using `super` in your actions
     #
     postProcessView : ->
-      $('.labelRequired').append('<em>*</em>')
+      $('.labelRequired').each ->
+        if !$(this).hasClass('processed') 
+          $(this).append('<em>*</em>').addClass('processed')
 
       # Set all Enum selects to their default values
       $('select[data-value]').val ->
