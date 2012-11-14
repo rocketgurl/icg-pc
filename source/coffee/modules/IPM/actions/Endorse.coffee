@@ -4,12 +4,11 @@ define [
 
   class EndorseAction extends IPMActionView
     
-    coverage_calculations     : {} # Custom calculations objects
-    transaction_request_xml   : null
-    override_validation_state : false # used to override rate validation
-
     initialize : ->
       super
+      @coverage_calculations     = {} # Custom calculations objects
+      @transaction_request_xml   = null
+      @override_validation_state = false # used to override rate validation
 
     ready : ->
       super

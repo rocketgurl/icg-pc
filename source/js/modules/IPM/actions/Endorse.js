@@ -21,14 +21,11 @@
         return EndorseAction.__super__.constructor.apply(this, arguments);
       }
 
-      EndorseAction.prototype.coverage_calculations = {};
-
-      EndorseAction.prototype.transaction_request_xml = null;
-
-      EndorseAction.prototype.override_validation_state = false;
-
       EndorseAction.prototype.initialize = function() {
-        return EndorseAction.__super__.initialize.apply(this, arguments);
+        EndorseAction.__super__.initialize.apply(this, arguments);
+        this.coverage_calculations = {};
+        this.transaction_request_xml = null;
+        return this.override_validation_state = false;
       };
 
       EndorseAction.prototype.ready = function() {
