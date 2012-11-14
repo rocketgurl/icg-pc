@@ -12,9 +12,8 @@ define [
     tagName : 'div'
 
     events :
-      "click form input.button" : "submit"
-      "click .form_actions a"   : "goHome"
-      "click fieldset h3"       : "toggleFieldset"
+      "click .form_actions a" : "goHome"
+      "click fieldset h3"     : "toggleFieldset"
 
     initialize : (options) ->
       @PARENT_VIEW = options.PARENT_VIEW || {}
@@ -31,8 +30,8 @@ define [
 
     # **fetchTemplates** grab the model.json and view.html for processing  
     #
-    # @param `policy` _Object_ PolicyModel
-    # @param `action` _String_ Name of this action 
+    # @param `policy` _Object_ PolicyModel  
+    # @param `action` _String_ Name of this action  
     # @param `callback` _Function_ function to call on AJAX success  
     #
     fetchTemplates : (policy, action, callback) ->
@@ -102,9 +101,21 @@ define [
       if $.datepicker
         $('.datepicker').datepicker(date_options)
 
+      # Attach event listener to preview button
+      @$el.find('form input.button[type=submit]').on(
+          'click',
+          (e) =>
+            @submit e
+        )
+
     # **Post process the preview of the form**  
     postProcessPreview : ->
       delete @viewData.preview
+
+      # Check for inputs in the preview mode, which will require additional
+      # hooks and processing
+      if @$el.find('.data_table input').length > 0
+        @processPreviewForm(@$el.find('.data_table'))
 
     # **Get the form values**  
     #
@@ -174,6 +185,94 @@ define [
       @view     = view
 
       [viewData, view]
+
+    # **Handle calculations in preview fields**  
+    # Some products can manipulate fields in the preview phase. We need to
+    # attach some behaviors to those fields and then run the numbers. We also
+    # need to attach some flags to the form so the submit handler will know
+    # what to do on a "re-submit".
+    #
+    # @param `table` _HTML Element_ jQuery wrapped <table>  
+    #
+    processPreviewForm : (table) ->
+      # Disable button until something changes
+      update_button = @$el.find('#updatePreview')
+      update_button.attr('disabled', true)
+
+      # if an Adjustment value is changed for either category then we need
+      # to re-caclculate that category's Adjusted value
+      table.find('tr.calc_row input').each (i, val) ->
+        $input        = $(this) # cache the jQuery wrapped element
+        parentRow     = $input.closest 'tr.calc_row'
+        unadjustedVal = parseInt($input.parent().prev().text(), 10) || 0
+        adjustedElem  = $input.parent().next()
+        subTotalElem  = parentRow.find 'td.subtotal'
+
+        # As typing happens update this category's Adjustment value
+        # http://stackoverflow.com/questions/5971645/what-is-the-double-tilde-operator-in-javascript#5971668
+        $input.on 'keyup', (e) ->
+          adjustmentVal = ~~(this.value)
+          subTotalView  = ~~(subTotalElem.text())
+
+          # Update the adjustment value
+          adjustedElem.text(unadjustedVal + adjustmentVal)
+
+          # Re-calc subtotal
+          subTotalElem.trigger 'adjust'
+
+          # Re-enable button
+          update_button.attr('disabled', false)
+
+      # Each time either category's adjustment values are changes, we also need
+      # to update Premium Before Fees (grandSubtotal)
+      table.find('tr.calc_row').each (i, val) ->
+        $tr            = $(this) # cache the jQuery wrapped element
+        calculatedVals = $tr.find 'td.calculated_value'
+        subtotalElem   = $tr.find 'td.subtotal'
+        feesElem       = $tr.find 'td.fees'
+        totalElem      = $tr.find 'td.total'
+        originSubtotal = parseInt(subtotalElem.text(), 10) || 0
+        fees           = parseInt(feesElem.text(), 10) || 0
+        originTotal    = parseInt(totalElem.text(), 10) || 0
+
+        subtotalElem.on 'adjust', ->
+          newSubtotal = 0
+          newTotal = 0
+
+          # Subtotal is sum of calculated values
+          calculatedVals.each (i, val) ->
+            amt         = parseInt($(this).text(), 10) || 0
+            newSubtotal = newSubtotal + amt
+
+          # Subtotal is Cat plus NonCat Adjusted values. 1000 format.
+          subtotalElem.text(newSubtotal)
+
+          # total is subtotal plus fees. 1000 format.
+          totalElem.text(newSubtotal + fees)
+
+
+      # Create click handler for updatePreview button and inject hidden form
+      # field into the DOM.
+      #
+      # Maintain state within the table itself. I think this is to prevent
+      # multiple submits of the new data
+      #
+      if !table.data('initialized')
+        table.data('initialized', true)
+        update_button.on 'click', =>
+          @$el.find('form')
+            .append('<input type="hidden" id="id_preview" name="preview" value="re-preview">')
+          @submit()
+
+      # Attach event listener to confirm button, changing the value of the
+      # hidden preview field to 'confirm'
+      @$el.find('form input.button[type=submit]').on(
+          'click',
+          (e) =>
+            @$el.find('form input[name=preview]').attr('value', 'confirm')
+            @submit e
+        )
+
 
     # **Success handling from ChangeSet**
     #
@@ -295,15 +394,39 @@ define [
     #
     # _Note:_ This method should be extended in child views
     #
-    # @param `e` _Event_ Submit event   
+    # @param `e` _Event_ Submit event (Optional) 
     #
     submit : (e) ->
-      e.preventDefault()
+      if e?
+        e.preventDefault()
+
       form = @$el.find('form')
-      if form.length > 0      
-        @VALUES =
-          formValues    : @getFormValues form
-          changedValues : @getChangedValues form
+      if form.length > 0 
+
+        @VALUES.formValues    = @getFormValues form
+        @VALUES.changedValues = @getChangedValues form
+
+        # If we have previous values then cons them onto the new values
+        if _.has(@VALUES, 'previousValues')
+          @VALUES.formValues = _.extend(
+            @VALUES.previousValues.formValues,
+            @VALUES.formValues            
+          )
+          @VALUES.changedValues = \
+            _.uniq @VALUES.changedValues.concat(@VALUES.previousValues.changedValues)
+
+        # In previews we need to keep the previous form states as we re-calc
+        # and re-submit the TransactionRequests multiple times, making changes.
+        # We purposefully delete the preview field in our saved set as we don't
+        # want it overriding the combined value later (we use it to trigger
+        # things.) We use _.clone because we want the data, not a ref to the obj
+        #
+        if _.has(@VALUES.formValues, 'preview') && @VALUES.formValues.preview != 'confirm'
+          @VALUES.previousValues = 
+            formValues    : _.clone @VALUES.formValues
+            changedValues : _.clone @VALUES.changedValues
+          delete @VALUES.previousValues.formValues.preview # we don't want this
+
 
     # **Parse error message from HTML response**
     #

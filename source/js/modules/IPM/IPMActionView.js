@@ -22,7 +22,6 @@
       IPMActionView.prototype.tagName = 'div';
 
       IPMActionView.prototype.events = {
-        "click form input.button": "submit",
         "click .form_actions a": "goHome",
         "click fieldset h3": "toggleFieldset"
       };
@@ -78,7 +77,8 @@
       };
 
       IPMActionView.prototype.postProcessView = function() {
-        var date_options;
+        var date_options,
+          _this = this;
         $('.labelRequired').each(function() {
           if (!$(this).hasClass('processed')) {
             return $(this).append('<em>*</em>').addClass('processed');
@@ -91,12 +91,18 @@
           dateFormat: 'yy-mm-dd'
         };
         if ($.datepicker) {
-          return $('.datepicker').datepicker(date_options);
+          $('.datepicker').datepicker(date_options);
         }
+        return this.$el.find('form input.button[type=submit]').on('click', function(e) {
+          return _this.submit(e);
+        });
       };
 
       IPMActionView.prototype.postProcessPreview = function() {
-        return delete this.viewData.preview;
+        delete this.viewData.preview;
+        if (this.$el.find('.data_table input').length > 0) {
+          return this.processPreviewForm(this.$el.find('.data_table'));
+        }
       };
 
       IPMActionView.prototype.getFormValues = function(form) {
@@ -153,6 +159,63 @@
         this.viewData = viewData;
         this.view = view;
         return [viewData, view];
+      };
+
+      IPMActionView.prototype.processPreviewForm = function(table) {
+        var update_button,
+          _this = this;
+        update_button = this.$el.find('#updatePreview');
+        update_button.attr('disabled', true);
+        table.find('tr.calc_row input').each(function(i, val) {
+          var $input, adjustedElem, parentRow, subTotalElem, unadjustedVal;
+          $input = $(this);
+          parentRow = $input.closest('tr.calc_row');
+          unadjustedVal = parseInt($input.parent().prev().text(), 10) || 0;
+          adjustedElem = $input.parent().next();
+          subTotalElem = parentRow.find('td.subtotal');
+          return $input.on('keyup', function(e) {
+            var adjustmentVal, subTotalView;
+            adjustmentVal = ~~this.value;
+            subTotalView = ~~(subTotalElem.text());
+            adjustedElem.text(unadjustedVal + adjustmentVal);
+            subTotalElem.trigger('adjust');
+            return update_button.attr('disabled', false);
+          });
+        });
+        table.find('tr.calc_row').each(function(i, val) {
+          var $tr, calculatedVals, fees, feesElem, originSubtotal, originTotal, subtotalElem, totalElem;
+          $tr = $(this);
+          calculatedVals = $tr.find('td.calculated_value');
+          subtotalElem = $tr.find('td.subtotal');
+          feesElem = $tr.find('td.fees');
+          totalElem = $tr.find('td.total');
+          originSubtotal = parseInt(subtotalElem.text(), 10) || 0;
+          fees = parseInt(feesElem.text(), 10) || 0;
+          originTotal = parseInt(totalElem.text(), 10) || 0;
+          return subtotalElem.on('adjust', function() {
+            var newSubtotal, newTotal;
+            newSubtotal = 0;
+            newTotal = 0;
+            calculatedVals.each(function(i, val) {
+              var amt;
+              amt = parseInt($(this).text(), 10) || 0;
+              return newSubtotal = newSubtotal + amt;
+            });
+            subtotalElem.text(newSubtotal);
+            return totalElem.text(newSubtotal + fees);
+          });
+        });
+        if (!table.data('initialized')) {
+          table.data('initialized', true);
+          update_button.on('click', function() {
+            _this.$el.find('form').append('<input type="hidden" id="id_preview" name="preview" value="re-preview">');
+            return _this.submit();
+          });
+        }
+        return this.$el.find('form input.button[type=submit]').on('click', function(e) {
+          _this.$el.find('form input[name=preview]').attr('value', 'confirm');
+          return _this.submit(e);
+        });
       };
 
       IPMActionView.prototype.callbackSuccess = function(data, status, jqXHR) {
@@ -213,13 +276,24 @@
 
       IPMActionView.prototype.submit = function(e) {
         var form;
-        e.preventDefault();
+        if (e != null) {
+          e.preventDefault();
+        }
         form = this.$el.find('form');
         if (form.length > 0) {
-          return this.VALUES = {
-            formValues: this.getFormValues(form),
-            changedValues: this.getChangedValues(form)
-          };
+          this.VALUES.formValues = this.getFormValues(form);
+          this.VALUES.changedValues = this.getChangedValues(form);
+          if (_.has(this.VALUES, 'previousValues')) {
+            this.VALUES.formValues = _.extend(this.VALUES.previousValues.formValues, this.VALUES.formValues);
+            this.VALUES.changedValues = _.uniq(this.VALUES.changedValues.concat(this.VALUES.previousValues.changedValues));
+          }
+          if (_.has(this.VALUES.formValues, 'preview') && this.VALUES.formValues.preview !== 'confirm') {
+            this.VALUES.previousValues = {
+              formValues: _.clone(this.VALUES.formValues),
+              changedValues: _.clone(this.VALUES.changedValues)
+            };
+            return delete this.VALUES.previousValues.formValues.preview;
+          }
         }
       };
 

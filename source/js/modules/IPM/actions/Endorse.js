@@ -48,6 +48,7 @@
       EndorseAction.prototype.submit = function(e) {
         var callbackFunc, options, override_validation_state;
         EndorseAction.__super__.submit.call(this, e);
+        console.log(['submit', this.VALUES]);
         this.VALUES.formValues.transactionType = 'Endorsement';
         this.current_policy_intervals = this.parseIntervals(this.VALUES);
         if (this.VALUES.formValues.comment === '') {
@@ -56,10 +57,12 @@
         options = {};
         callbackFunc = this.callbackSuccess;
         if (_.has(this.VALUES.formValues, 'preview')) {
-          callbackFunc = this.callbackPreview;
-          options.headers = {
-            'X-Commit': false
-          };
+          if (this.VALUES.formValues.preview !== 'confirm') {
+            callbackFunc = this.callbackPreview;
+            options.headers = {
+              'X-Commit': false
+            };
+          }
         }
         if ((this.VALUES.formValues.id_rv_override != null) && this.VALUES.formValues.id_rv_override === '1') {
           options.headers = _.extend(options.headers, {
@@ -67,10 +70,7 @@
           });
           override_validation_state = true;
         }
-        if (!(this.transaction_request_xml != null)) {
-          this.transaction_request_xml = this.ChangeSet.getTransactionRequest(this.VALUES, this.viewData);
-        }
-        return this.ChangeSet.commitChange(this.transaction_request_xml, callbackFunc, this.callbackError, options);
+        return this.ChangeSet.commitChange(this.ChangeSet.getTransactionRequest(this.VALUES, this.viewData), callbackFunc, this.callbackError, options);
       };
 
       EndorseAction.prototype.postProcessView = function() {
@@ -92,7 +92,7 @@
       };
 
       EndorseAction.prototype.parseIntervals = function(values) {
-        var adjustments, data_items, endDate, field, form, interval, interval_field_names, interval_fields, interval_o, intervals, msInDay, parsed, policy, startDate, term, termEnd, termStart, term_fields, value, _i, _len, _ref, _ref1;
+        var adjustments, data_items, endDate, form, interval, interval_field_names, interval_fields, interval_o, intervals, msInDay, parsed, policy, startDate, term, termEnd, termStart, term_fields, _i, _len, _ref, _ref1;
         form = values.formValues;
         policy = this.MODULE.POLICY;
         term = policy.getLastTerm();
@@ -147,15 +147,7 @@
         }
         parsed.intervals = _.sortBy(parsed.intervals, 'startDate');
         parsed.intervals[parsed.intervals.length - 1].isNew = true;
-        if (!_.has(parsed.term, 'grandSubTotal')) {
-          interval = parsed.intervals[parsed.intervals.length - 1];
-          for (field in interval) {
-            value = interval[field];
-            if (!_.has(parsed, field)) {
-              parsed[field] = value;
-            }
-          }
-        }
+        console.log(['parseIntervals', parsed]);
         return parsed;
       };
 

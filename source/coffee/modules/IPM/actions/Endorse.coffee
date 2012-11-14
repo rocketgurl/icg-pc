@@ -48,6 +48,8 @@ define [
     submit : (e) ->
       super e
 
+      console.log ['submit', @VALUES]
+
       @VALUES.formValues.transactionType = 'Endorsement'
 
       # Derive intervals from the form values and policy, we use
@@ -65,11 +67,14 @@ define [
       # Success callback
       callbackFunc = @callbackSuccess
 
-      # Preview require additional headers
+      # Previews require a different callback and an extra header.
+      # The header prevents the changes from committing to the DB.
+      # If preview is set to 'confirm', then ignore & commit to the DB.
       if _.has(@VALUES.formValues, 'preview')
-        callbackFunc = @callbackPreview
-        options.headers =
-          'X-Commit' : false
+        if @VALUES.formValues.preview != 'confirm'
+          callbackFunc = @callbackPreview
+          options.headers =
+            'X-Commit' : false
 
       # **ICS-1042 / ICS-429**  
       # If the user ticks the override input then we need to add custom header
@@ -83,13 +88,9 @@ define [
         )
         override_validation_state = true
 
-      # Store TR XML for use after preview, prevents having to rebuild it
-      if !@transaction_request_xml?
-        @transaction_request_xml = @ChangeSet.getTransactionRequest(@VALUES, @viewData)
-
       # Assemble the Transaction Request XML and send to server
       @ChangeSet.commitChange(
-        @transaction_request_xml,
+        @ChangeSet.getTransactionRequest(@VALUES, @viewData),
         callbackFunc,
         @callbackError,
         options
@@ -212,20 +213,23 @@ define [
         )
 
         # Push the processed interval object onto parsed.intervals array
-        parsed.intervals.push _.extend interval_o, data_items
+        parsed.intervals.push(_.extend(interval_o, data_items))
 
-      # Sort intervals and mark the newest one as 'isNew'
+      # Sort intervals and mark the newest one as 'isNew' - this is
+      # used in the Preview tables
       parsed.intervals = _.sortBy(parsed.intervals, 'startDate')
       parsed.intervals[parsed.intervals.length - 1].isNew = true
 
       # If there is no term.grandSubTotal then copy fields from the 
       # last sorted interval into the top level of parsed. I have no
       # idea why we do this as of yet. 11/09/2012 - DN  
-      if !_.has(parsed.term, 'grandSubTotal')
-        interval = parsed.intervals[parsed.intervals.length - 1]
-        for field, value of interval
-          if !_.has(parsed, field)
-            parsed[field] = value
+      # if !_.has(parsed.term, 'grandSubTotal')
+      #   interval = parsed.intervals[parsed.intervals.length - 1]
+      #   for field, value of interval
+      #     if !_.has(parsed, field)
+      #       parsed[field] = value
+
+      console.log ['parseIntervals', parsed]
 
       parsed
 
