@@ -36,7 +36,7 @@
         });
         this.$el = this.MODULE.CONTAINER;
         this.buildHtmlElements();
-        if (_.isEmpty(this.VIEW_STATE || this.VIEW_STATE === 'Home')) {
+        if (_.isEmpty(this.VIEW_STATE)) {
           return this.route('Home');
         }
       };

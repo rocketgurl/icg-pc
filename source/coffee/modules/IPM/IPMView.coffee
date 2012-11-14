@@ -43,7 +43,7 @@ define [
       @buildHtmlElements()
   
       # If we're in a default state then launch home
-      if _.isEmpty @VIEW_STATE || @VIEW_STATE == 'Home'
+      if _.isEmpty @VIEW_STATE
         @route 'Home'
     
     # **Build and render needed HTML elements within the view**
