@@ -16,9 +16,6 @@ define [
     events : 
       "click .policy-nav a" : "dispatch"
 
-    # We have not been rendered
-    render_state : false
-
     # We need to brute force the View's container to the 
     # WorkspaceCanvasView's el
     initialize : (options) ->
@@ -28,14 +25,21 @@ define [
       @services     = @controller.services
       @flash_loaded = false
 
+      # We have not been rendered
+      @render_state = false
+
+      # PolicyModel has not loaded
+      @loaded_state = false
+
       # If flash is not loaded, then on an activate event
       # we need to load the flash up. This prevents us
       # from loading always switching to the overview
       # on tab activation
       @on 'activate', () ->
-        if @render()
-          @show_overview()
-          @teardown_ipmchanges()
+        if @loaded_state
+          if @render()
+            @show_overview()
+            @teardown_ipmchanges()
 
       # On deactivate we destroy the SWF compltely. We have to do this so we
       # can fine window.reload() when you switch back to this tab, otherwise it
@@ -45,6 +49,7 @@ define [
         @destroy_overview_swf()
 
       @on 'loaded', () ->
+        @loaded_state = true
         # Our default state is to show the SWF overview
         if @controller.active_view.cid == @options.view.cid
           @trigger 'activate'
@@ -271,7 +276,7 @@ define [
       @build_policy_header()
       @policy_header.show()
 
-      ipm_container = $("#policy-ipm-#{@cid}")
+      ipm_container = @$el.find("#policy-ipm-#{@cid}")
       ipm_container.show()
       @Helpers.resize_element(ipm_container, @policy_header.height())
 
@@ -285,7 +290,7 @@ define [
         @policy_header.hide()
         @$el.find("#policy-header-#{@cid}").hide()
         # @iframe.hide()
-        ipm_container = $("#policy-ipm-#{@cid}")
+        ipm_container = @$el.find("#policy-ipm-#{@cid}")
         ipm_container.hide()
 
     # Load Renewal Underwriting Views

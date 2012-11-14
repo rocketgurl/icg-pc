@@ -7,23 +7,27 @@
       events: {
         "click .policy-nav a": "dispatch"
       },
-      render_state: false,
       initialize: function(options) {
         this.el = options.view.el;
         this.$el = options.view.$el;
         this.controller = options.view.options.controller;
         this.services = this.controller.services;
         this.flash_loaded = false;
+        this.render_state = false;
+        this.loaded_state = false;
         this.on('activate', function() {
-          if (this.render()) {
-            this.show_overview();
-            return this.teardown_ipmchanges();
+          if (this.loaded_state) {
+            if (this.render()) {
+              this.show_overview();
+              return this.teardown_ipmchanges();
+            }
           }
         });
         this.on('deactivate', function() {
           return this.destroy_overview_swf();
         });
         return this.on('loaded', function() {
+          this.loaded_state = true;
           if (this.controller.active_view.cid === this.options.view.cid) {
             return this.trigger('activate');
           }
@@ -189,7 +193,7 @@
         var ipm_container;
         this.build_policy_header();
         this.policy_header.show();
-        ipm_container = $("#policy-ipm-" + this.cid);
+        ipm_container = this.$el.find("#policy-ipm-" + this.cid);
         ipm_container.show();
         return this.Helpers.resize_element(ipm_container, this.policy_header.height());
       },
@@ -198,7 +202,7 @@
         if (this.policy_header) {
           this.policy_header.hide();
           this.$el.find("#policy-header-" + this.cid).hide();
-          ipm_container = $("#policy-ipm-" + this.cid);
+          ipm_container = this.$el.find("#policy-ipm-" + this.cid);
           return ipm_container.hide();
         }
       },
