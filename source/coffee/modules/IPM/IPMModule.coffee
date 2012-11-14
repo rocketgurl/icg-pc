@@ -24,9 +24,7 @@ define [
       # Current action state
       @ACTION = null
 
-      console.log ['IPMModule : constructor : policy', @POLICY]
-
-      # No Policy, No Container, No Dice!
+        # No Policy, No Container, No Dice!
       if !@POLICY || !@CONTAINER || !@USER
         throw new Error('FATAL - Missing PolicyModel, HTML Container or User.')
 
