@@ -125,7 +125,6 @@
         options = options != null ? options : {};
         xmldoc = $.parseXML(xml);
         payload_schema = "schema=" + (this.getPayloadType(xmldoc)) + "." + (this.getSchemaVersion(xmldoc));
-        console.log(['Policy.url()', this.POLICY.url()]);
         defaults = {
           url: this.POLICY.url(),
           type: 'POST',

@@ -178,8 +178,6 @@ define [
       xmldoc  = $.parseXML(xml) # Parse xml w/jQuery
       payload_schema = "schema=#{@getPayloadType(xmldoc)}.#{@getSchemaVersion(xmldoc)}"
 
-      console.log ['Policy.url()', @POLICY.url()]
-
       # Assemble the AJAX params
       defaults =
         url         : @POLICY.url()
