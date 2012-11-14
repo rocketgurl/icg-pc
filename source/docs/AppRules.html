@@ -36,7 +36,6 @@ to be used in validate_app</p>             </td>             <td class="code">  
         <span class="nx">app_name</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s">&#39;_&#39;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
       <span class="k">else</span>
         <span class="nx">app_name</span></pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p>Determine which module definitions to return</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nv">get_modules : </span><span class="nf">(app_name) -&gt;</span>
-      <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="p">[</span><span class="s">&quot;APP_NAME&quot;</span><span class="p">,</span> <span class="nx">app_name</span><span class="p">]</span>
       <span class="k">switch</span> <span class="nx">app_name</span>
         <span class="k">when</span> <span class="s">&#39;policies&#39;</span>
           <span class="p">[</span><span class="nx">@policy_search</span><span class="p">,</span> <span class="nx">@referral_queue</span><span class="p">]</span>

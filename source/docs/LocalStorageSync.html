@@ -4,19 +4,19 @@
   <span class="s">&#39;amplify&#39;</span>
 <span class="p">],</span> <span class="nf">($, _, amplify) -&gt;</span>
 
-	<span class="nv">LocalStorageSync = </span><span class="nf">(method, model, options) -&gt;</span>
-  	<span class="nv">store = </span><span class="nx">model</span><span class="p">.</span><span class="nx">localStorage</span> <span class="o">||</span> <span class="nx">model</span><span class="p">.</span><span class="nx">collection</span><span class="p">.</span><span class="nx">localStorage</span>
-  	<span class="k">switch</span> <span class="nx">method</span>
-  		<span class="k">when</span> <span class="s">&quot;read&quot;</span>
-  			<span class="k">if</span> <span class="nx">model</span><span class="p">.</span><span class="nx">id</span>
-  				<span class="nv">resp = </span><span class="nx">store</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">model</span><span class="p">)</span> 
-  			<span class="k">else</span> 
-  				<span class="nv">resp = </span><span class="nx">store</span><span class="p">.</span><span class="nx">findAll</span><span class="p">()</span>
-  		<span class="k">when</span> <span class="s">&quot;create&quot;</span> <span class="k">then</span> <span class="nv">resp = </span><span class="nx">store</span><span class="p">.</span><span class="nx">create</span> <span class="nx">model</span>
-  		<span class="k">when</span> <span class="s">&quot;update&quot;</span> <span class="k">then</span> <span class="nv">resp = </span><span class="nx">store</span><span class="p">.</span><span class="nx">update</span> <span class="nx">model</span>
-  		<span class="k">when</span> <span class="s">&quot;delete&quot;</span> <span class="k">then</span> <span class="nv">resp = </span><span class="nx">store</span><span class="p">.</span><span class="nx">destroy</span> <span class="nx">model</span>
+  <span class="nv">LocalStorageSync = </span><span class="nf">(method, model, options) -&gt;</span>
+    <span class="nv">store = </span><span class="nx">model</span><span class="p">.</span><span class="nx">localStorage</span> <span class="o">||</span> <span class="nx">model</span><span class="p">.</span><span class="nx">collection</span><span class="p">.</span><span class="nx">localStorage</span>
+    <span class="k">switch</span> <span class="nx">method</span>
+      <span class="k">when</span> <span class="s">&quot;read&quot;</span>
+        <span class="k">if</span> <span class="nx">model</span><span class="p">.</span><span class="nx">id</span>
+          <span class="nv">resp = </span><span class="nx">store</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="nx">model</span><span class="p">)</span> 
+        <span class="k">else</span> 
+          <span class="nv">resp = </span><span class="nx">store</span><span class="p">.</span><span class="nx">findAll</span><span class="p">()</span>
+      <span class="k">when</span> <span class="s">&quot;create&quot;</span> <span class="k">then</span> <span class="nv">resp = </span><span class="nx">store</span><span class="p">.</span><span class="nx">create</span> <span class="nx">model</span>
+      <span class="k">when</span> <span class="s">&quot;update&quot;</span> <span class="k">then</span> <span class="nv">resp = </span><span class="nx">store</span><span class="p">.</span><span class="nx">update</span> <span class="nx">model</span>
+      <span class="k">when</span> <span class="s">&quot;delete&quot;</span> <span class="k">then</span> <span class="nv">resp = </span><span class="nx">store</span><span class="p">.</span><span class="nx">destroy</span> <span class="nx">model</span>
 
-  	<span class="k">if</span> <span class="nx">resp</span> <span class="k">then</span> <span class="nx">options</span><span class="p">.</span><span class="nx">success</span><span class="p">(</span><span class="nx">resp</span><span class="p">)</span> <span class="k">else</span> <span class="nx">options</span><span class="p">.</span><span class="nx">error</span> <span class="s">&quot;Record not fonund&quot;</span>
+    <span class="k">if</span> <span class="nx">resp</span> <span class="k">then</span> <span class="nx">options</span><span class="p">.</span><span class="nx">success</span><span class="p">(</span><span class="nx">resp</span><span class="p">)</span> <span class="k">else</span> <span class="nx">options</span><span class="p">.</span><span class="nx">error</span> <span class="s">&quot;Record not fonund&quot;</span>
 
   <span class="nx">LocalStorageSync</span>
 

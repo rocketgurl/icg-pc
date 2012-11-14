@@ -24,9 +24,17 @@ to close the flash message</p>
             <span class="p">,</span> <span class="nx">delay</span>
 
     
-
       <span class="nx">@flash_container</span><span class="p">.</span><span class="kc">on</span> <span class="s">&#39;click&#39;</span><span class="p">,</span> <span class="s">&#39;i&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="o">=&gt;</span>
         <span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">()</span>
-        <span class="nx">@flash_container</span><span class="p">.</span><span class="nx">fadeOut</span> <span class="s">&#39;fast&#39;</span>
+        <span class="nx">@flash_container</span><span class="p">.</span><span class="nx">fadeOut</span> <span class="s">&#39;fast&#39;</span></pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <p>Attach click handler to error message options list</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="nx">@flash_container</span><span class="p">.</span><span class="kc">on</span> <span class="s">&#39;click&#39;</span><span class="p">,</span> <span class="s">&#39;.error_details a&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="o">=&gt;</span>
+        <span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">()</span>
+        <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">next</span><span class="p">().</span><span class="nx">toggle</span><span class="p">()</span>
+        <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">toggle</span><span class="p">(</span>
+          <span class="o">-&gt;</span>
+            <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s">&#39;&lt;i class=&quot;icon-plus-sign&quot;&gt;&lt;/i&gt; Hide error details&#39;</span><span class="p">)</span>
+          <span class="p">,</span>
+          <span class="o">-&gt;</span>
+            <span class="nx">$</span><span class="p">(</span><span class="k">this</span><span class="p">).</span><span class="nx">html</span><span class="p">(</span><span class="s">&#39;&lt;i class=&quot;icon-plus-sign&quot;&gt;&lt;/i&gt; Show error details&#39;</span><span class="p">)</span>
+        <span class="p">)</span>
 
 </pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 
