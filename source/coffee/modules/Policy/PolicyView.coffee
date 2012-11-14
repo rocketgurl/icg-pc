@@ -31,15 +31,24 @@ define [
       # PolicyModel has not loaded
       @loaded_state = false
 
+      # Save current route state for this view
+      @current_route = null
+
       # If flash is not loaded, then on an activate event
       # we need to load the flash up. This prevents us
       # from loading always switching to the overview
       # on tab activation
       @on 'activate', () ->
         if @loaded_state
+          # This is our first load, so show the SWF
           if @render()
             @show_overview()
             @teardown_ipmchanges()
+          # Only show it again if this is the overview route 
+          else if @current_route == 'overview' || @current_route == null
+            @show_overview()
+            @teardown_ipmchanges()
+
 
       # On deactivate we destroy the SWF compltely. We have to do this so we
       # can fine window.reload() when you switch back to this tab, otherwise it
@@ -56,7 +65,7 @@ define [
 
     render : (options) ->
       if @render_state == true
-        true
+        return false
 
       # Setup flash module & search container
       html = @Mustache.render $('#tpl-flash-message').html(), { cid : @cid }
@@ -127,15 +136,30 @@ define [
       $e     = $(e.currentTarget)
       action = $e.attr('href')
 
+      @route action, $e
+
+    # **Route**  
+    # Call the `action` and teardown all other views
+    #
+    # @param `action` _String_ action name  
+    # @param `el` _HTML Element_    
+    # @return _Boolean_  
+    #
+    route : (action, el) ->
+      if !action?
+        false
+      @current_route = action
       @teardown_actions _.filter(@actions, (item) -> 
         return item != action
       )
-
-      @toggle_nav_state $e # turn select state on/off
+      @toggle_nav_state el # turn select state on/off
 
       func = @["show_#{action}"]
       if _.isFunction(func)
         func.apply(this)
+
+      true
+
 
     # Take an array of actions (or action) and use it
     # to call it's teardown function (if it exists)
@@ -180,10 +204,10 @@ define [
       # SWFObject deletes the policy-summary container when it removes Flash
       # so we need to check if its there and drop it back in if its not
       if @$el.find("#policy-summary-#{@cid}").length is 0
-        @$el.find("#policy-header-#{@cid}").after(@policy_summary)
-        @policy_summary = @$el.find("#policy-workspace-#{@cid}")
+        @$el.find("#policy-header-#{@cid}").after("""<div id="policy-summary-#{@cid}" class="policy-iframe policy-swf"></div>""")
+        @policy_summary = @$el.find("#policy-summary-#{@cid}")
 
-      if @policy_summary.length > 0
+      if @$el.find("#policy-workspace-#{@cid}").length > 0
         @Helpers.resize_element @$el.find("#policy-workspace-#{@cid}")
 
         # Now attach a resize event to the window to help Flash

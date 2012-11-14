@@ -15,9 +15,13 @@
         this.flash_loaded = false;
         this.render_state = false;
         this.loaded_state = false;
+        this.current_route = null;
         this.on('activate', function() {
           if (this.loaded_state) {
             if (this.render()) {
+              this.show_overview();
+              return this.teardown_ipmchanges();
+            } else if (this.current_route === 'overview' || this.current_route === null) {
               this.show_overview();
               return this.teardown_ipmchanges();
             }
@@ -36,7 +40,7 @@
       render: function(options) {
         var html;
         if (this.render_state === true) {
-          true;
+          return false;
         }
         html = this.Mustache.render($('#tpl-flash-message').html(), {
           cid: this.cid
@@ -72,18 +76,27 @@
         return el.addClass('select');
       },
       dispatch: function(e) {
-        var $e, action, func;
+        var $e, action;
         e.preventDefault();
         $e = $(e.currentTarget);
         action = $e.attr('href');
+        return this.route(action, $e);
+      },
+      route: function(action, el) {
+        var func;
+        if (!(action != null)) {
+          false;
+        }
+        this.current_route = action;
         this.teardown_actions(_.filter(this.actions, function(item) {
           return item !== action;
         }));
-        this.toggle_nav_state($e);
+        this.toggle_nav_state(el);
         func = this["show_" + action];
         if (_.isFunction(func)) {
-          return func.apply(this);
+          func.apply(this);
         }
+        return true;
       },
       teardown_actions: function(actions) {
         var action, func, _i, _len, _results;
@@ -123,10 +136,10 @@
           _this = this;
         this.$el.show();
         if (this.$el.find("#policy-summary-" + this.cid).length === 0) {
-          this.$el.find("#policy-header-" + this.cid).after(this.policy_summary);
-          this.policy_summary = this.$el.find("#policy-workspace-" + this.cid);
+          this.$el.find("#policy-header-" + this.cid).after("<div id=\"policy-summary-" + this.cid + "\" class=\"policy-iframe policy-swf\"></div>");
+          this.policy_summary = this.$el.find("#policy-summary-" + this.cid);
         }
-        if (this.policy_summary.length > 0) {
+        if (this.$el.find("#policy-workspace-" + this.cid).length > 0) {
           this.Helpers.resize_element(this.$el.find("#policy-workspace-" + this.cid));
           resizer = _.bind(function() {
             return this.Helpers.resize_element(this.$el.find("#policy-workspace-" + this.cid));
