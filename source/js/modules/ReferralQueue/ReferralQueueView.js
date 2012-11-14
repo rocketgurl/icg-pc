@@ -109,9 +109,15 @@
         };
       },
       updatePagination: function(collection, elements) {
-        var current_page, end_position, pages, start_position, values;
-        end_position = collection.page * elements.per_page.val();
-        start_position = end_position - elements.per_page.val();
+        var current_page, end_position, pages, per_page, start_position, values;
+        per_page = elements.per_page.val();
+        if (collection.totalItems < per_page) {
+          end_position = collection.totalItems;
+          start_position = 1;
+        } else {
+          end_position = collection.page * per_page;
+          start_position = end_position - per_page;
+        }
         start_position = start_position === 0 ? 1 : start_position;
         elements.items.find('span').html("Items " + start_position + " - " + end_position + " of " + collection.totalItems);
         pages = _.range(1, Math.round(collection.totalItems / elements.per_page.val()));
