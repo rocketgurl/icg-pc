@@ -24,15 +24,11 @@
         return IPMView.__super__.constructor.apply(this, arguments);
       }
 
-      IPMView.prototype.VIEW_STATE = '';
-
-      IPMView.prototype.VIEW_CACHE = {};
-
-      IPMView.prototype.FLASH_HTML = '';
-
-      IPMView.prototype.LOADER = {};
-
       IPMView.prototype.initialize = function(options) {
+        this.VIEW_STATE = '';
+        this.VIEW_CACHE = {};
+        this.FLASH_HTML = '';
+        this.LOADER = {};
         this.DEBUG = options.DEBUG != null;
         this.MODULE = options.MODULE || false;
         this.FLASH_HTML = this.Mustache.render($('#tpl-flash-message').html(), {
@@ -40,7 +36,7 @@
         });
         this.$el = this.MODULE.CONTAINER;
         this.buildHtmlElements();
-        if (_.isEmpty(this.VIEW_STATE)) {
+        if (_.isEmpty(this.VIEW_STATE || this.VIEW_STATE === 'Home')) {
           return this.route('Home');
         }
       };
@@ -59,7 +55,7 @@
         if (!_.has(this.VIEW_CACHE, action)) {
           require(["" + this.MODULE.CONFIG.ACTIONS_PATH + action], function(Action) {
             var ActionView;
-            _this.VIEW_CACHE[action] = $("<div id=\"dom-container-" + action + "\" class=\"dom-container\"></div>");
+            _this.VIEW_CACHE[action] = $("<div id=\"dom-container-" + _this.cid + "-" + action + "\" class=\"dom-container\"></div>");
             ActionView = new Action({
               MODULE: _this.MODULE,
               PARENT_VIEW: _this

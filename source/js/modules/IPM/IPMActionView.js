@@ -19,16 +19,6 @@
         return IPMActionView.__super__.constructor.apply(this, arguments);
       }
 
-      IPMActionView.prototype.MODULE = {};
-
-      IPMActionView.prototype.VALUES = {};
-
-      IPMActionView.prototype.TPL_CACHE = {};
-
-      IPMActionView.prototype.ERRORS = {};
-
-      IPMActionView.prototype.ChangeSet = {};
-
       IPMActionView.prototype.tagName = 'div';
 
       IPMActionView.prototype.events = {
@@ -41,6 +31,9 @@
         this.PARENT_VIEW = options.PARENT_VIEW || {};
         this.MODULE = options.MODULE || {};
         this.ChangeSet = new IPMChangeSet(this.MODULE.POLICY, this.PARENT_VIEW.VIEW_STATE, this.MODULE.USER);
+        this.VALUES = {};
+        this.TPL_CACHE = {};
+        this.ERRORS = {};
         this.options = null;
         return this.on('ready', this.ready, this);
       };

@@ -7,14 +7,14 @@
 
       IPMModule.prototype.Amplify = amplify;
 
-      IPMModule.prototype.ACTION = null;
-
       function IPMModule(POLICY, CONTAINER, USER) {
         var config,
           _this = this;
         this.POLICY = POLICY;
         this.CONTAINER = CONTAINER;
         this.USER = USER;
+        this.ACTION = null;
+        console.log(['IPMModule : constructor : policy', this.POLICY]);
         if (!this.POLICY || !this.CONTAINER || !this.USER) {
           throw new Error('FATAL - Missing PolicyModel, HTML Container or User.');
         }

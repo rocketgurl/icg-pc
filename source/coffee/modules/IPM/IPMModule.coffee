@@ -14,9 +14,6 @@ define [
     # pubsub interface
     Amplify : amplify
 
-    # Current action state
-    ACTION : null
-
     # **Constructor**  
     # @params `POLICY` _Object_ PolicyModel  
     # @params `CONTAINER` _HTML Element_ element to render inside of   
@@ -24,6 +21,11 @@ define [
     # @return _this_  
     #
     constructor : (@POLICY, @CONTAINER, @USER) ->
+      # Current action state
+      @ACTION = null
+
+      console.log ['IPMModule : constructor : policy', @POLICY]
+
       # No Policy, No Container, No Dice!
       if !@POLICY || !@CONTAINER || !@USER
         throw new Error('FATAL - Missing PolicyModel, HTML Container or User.')

@@ -9,13 +9,6 @@ define [
   # IPM sub views (action views) inherit from this base view  
   class IPMActionView extends BaseView
     
-    MODULE    : {} # Containing module
-    VALUES    : {} # Form values
-    TPL_CACHE : {} # Template Cache
-    ERRORS    : {} # Manage error states from server
-
-    ChangeSet : {} # IPMChangeSet
-
     tagName : 'div'
 
     events :
@@ -27,6 +20,10 @@ define [
       @PARENT_VIEW = options.PARENT_VIEW || {}
       @MODULE      = options.MODULE || {}
       @ChangeSet   = new IPMChangeSet(@MODULE.POLICY, @PARENT_VIEW.VIEW_STATE, @MODULE.USER)
+      
+      @VALUES      = {} # Form values
+      @TPL_CACHE   = {} # Template Cache
+      @ERRORS      = {} # Manage error states from server
       
       @options = null
 

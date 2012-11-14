@@ -19,16 +19,16 @@ define [
   # actions views. 
   class IPMView extends BaseView
 
-    # Keep track of our current sub-view
-    VIEW_STATE : ''
-    VIEW_CACHE : {}
-    
-    FLASH_HTML : ''
-    LOADER     : {}
-
     # Set up our working area but injecting various HTML containers into the 
     # DOM then kick off the default route
     initialize : (options) ->
+      # Keep track of our current sub-view
+      @VIEW_STATE = ''
+      @VIEW_CACHE = {}
+      
+      @FLASH_HTML = ''
+      @LOADER     = {}
+
       @DEBUG  = options.DEBUG?
       @MODULE = options.MODULE || false
 
@@ -43,7 +43,7 @@ define [
       @buildHtmlElements()
   
       # If we're in a default state then launch home
-      if _.isEmpty @VIEW_STATE
+      if _.isEmpty @VIEW_STATE || @VIEW_STATE == 'Home'
         @route 'Home'
     
     # **Build and render needed HTML elements within the view**
@@ -91,7 +91,7 @@ define [
       if !_.has(@VIEW_CACHE, action)
         require ["#{@MODULE.CONFIG.ACTIONS_PATH}#{action}"], (Action) =>
 
-          @VIEW_CACHE[action] = $("<div id=\"dom-container-#{action}\" class=\"dom-container\"></div>")
+          @VIEW_CACHE[action] = $("<div id=\"dom-container-#{@cid}-#{action}\" class=\"dom-container\"></div>")
 
           ActionView = new Action(
             MODULE      : @MODULE
