@@ -413,20 +413,21 @@ define [
 
     # **Set a variety of properties on the model based on XML policy data**  
     setModelState : ->
-      @set('state', @getState())
-      @set('quote', @isQuote())
-      @set('pendingCancel', @isPendingCancel())
-      @set('cancellationEffectiveDate', @getCancellationEffectiveDate())
-      @set('cancelled', @isCancelled())
-      @set('terms', @getTerms())
-      @set('lastInterval', @getLastInterval())
-      @set('insuredData', @getCustomerData('Insured'))
-      @set('mortgageeData', @getCustomerData('Mortgagee'))
-      @set('additionalInterestData', @getCustomerData('AdditionalInterest'))
-      @set('productName', @getProductName())
-      @set('insight_id', @getIdentifier('InsightPolicyId'))
-      @set('isIssued', @isIssued())
-      @set('effectiveDate', @getEffectiveDate())
-      @set('expirationDate', @getExpirationDate())
+      if @get('document')? || @get('document') != undefined
+        @set('state', @getState())
+        @set('quote', @isQuote())
+        @set('pendingCancel', @isPendingCancel())
+        @set('cancellationEffectiveDate', @getCancellationEffectiveDate())
+        @set('cancelled', @isCancelled())
+        @set('terms', @getTerms())
+        @set('lastInterval', @getLastInterval())
+        @set('insuredData', @getCustomerData('Insured'))
+        @set('mortgageeData', @getCustomerData('Mortgagee'))
+        @set('additionalInterestData', @getCustomerData('AdditionalInterest'))
+        @set('productName', @getProductName())
+        @set('insight_id', @getIdentifier('InsightPolicyId'))
+        @set('isIssued', @isIssued())
+        @set('effectiveDate', @getEffectiveDate())
+        @set('expirationDate', @getExpirationDate())
 
   PolicyModel

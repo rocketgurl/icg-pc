@@ -352,21 +352,23 @@
         return this.getDataItemValues(customerData, terms);
       },
       setModelState: function() {
-        this.set('state', this.getState());
-        this.set('quote', this.isQuote());
-        this.set('pendingCancel', this.isPendingCancel());
-        this.set('cancellationEffectiveDate', this.getCancellationEffectiveDate());
-        this.set('cancelled', this.isCancelled());
-        this.set('terms', this.getTerms());
-        this.set('lastInterval', this.getLastInterval());
-        this.set('insuredData', this.getCustomerData('Insured'));
-        this.set('mortgageeData', this.getCustomerData('Mortgagee'));
-        this.set('additionalInterestData', this.getCustomerData('AdditionalInterest'));
-        this.set('productName', this.getProductName());
-        this.set('insight_id', this.getIdentifier('InsightPolicyId'));
-        this.set('isIssued', this.isIssued());
-        this.set('effectiveDate', this.getEffectiveDate());
-        return this.set('expirationDate', this.getExpirationDate());
+        if ((this.get('document') != null) || this.get('document') !== void 0) {
+          this.set('state', this.getState());
+          this.set('quote', this.isQuote());
+          this.set('pendingCancel', this.isPendingCancel());
+          this.set('cancellationEffectiveDate', this.getCancellationEffectiveDate());
+          this.set('cancelled', this.isCancelled());
+          this.set('terms', this.getTerms());
+          this.set('lastInterval', this.getLastInterval());
+          this.set('insuredData', this.getCustomerData('Insured'));
+          this.set('mortgageeData', this.getCustomerData('Mortgagee'));
+          this.set('additionalInterestData', this.getCustomerData('AdditionalInterest'));
+          this.set('productName', this.getProductName());
+          this.set('insight_id', this.getIdentifier('InsightPolicyId'));
+          this.set('isIssued', this.isIssued());
+          this.set('effectiveDate', this.getEffectiveDate());
+          return this.set('expirationDate', this.getExpirationDate());
+        }
       }
     });
     return PolicyModel;
