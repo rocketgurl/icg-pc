@@ -403,7 +403,7 @@ define [
       if e?
         e.preventDefault()
 
-      @PARENT_VIEW.insert_loader() # Add loader
+      @PARENT_VIEW.insert_loader('Processing policy') # Add loader
 
       form = @$el.find('form')
       if form.length > 0 

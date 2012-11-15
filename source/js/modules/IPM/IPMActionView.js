@@ -280,7 +280,7 @@
         if (e != null) {
           e.preventDefault();
         }
-        this.PARENT_VIEW.insert_loader();
+        this.PARENT_VIEW.insert_loader('Processing policy');
         form = this.$el.find('form');
         if (form.length > 0) {
           this.VALUES.formValues = this.getFormValues(form);
