@@ -167,6 +167,7 @@ define [
         @LOADER.setFPS(48)
       catch e
         @$el.find("#ipm-loader-#{@cid}").hide()
+      this
     
         
     remove_loader : ->
@@ -178,6 +179,7 @@ define [
       catch e
         @$el.find("#canvasLoader").remove()
         console.log [e, @$el.find("#ipm-spinner-#{@cid}").html()]
+      this
     
 
     # Display an error from the action, usually not being able to load a file
@@ -191,6 +193,7 @@ define [
     # easier for IPMActionViews to trigger a message.
     displayMessage : (type, msg, delay) ->
       @Amplify.publish(@cid, type, msg, delay)
+      this
 
 
 

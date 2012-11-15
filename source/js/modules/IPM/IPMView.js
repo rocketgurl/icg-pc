@@ -119,10 +119,11 @@
         try {
           this.LOADER = this.Helpers.loader("ipm-spinner-" + this.cid, 100, '#ffffff');
           this.LOADER.setDensity(70);
-          return this.LOADER.setFPS(48);
+          this.LOADER.setFPS(48);
         } catch (e) {
-          return this.$el.find("#ipm-loader-" + this.cid).hide();
+          this.$el.find("#ipm-loader-" + this.cid).hide();
         }
+        return this;
       };
 
       IPMView.prototype.remove_loader = function() {
@@ -130,12 +131,13 @@
           if ((this.LOADER != null) && this.LOADER !== void 0) {
             this.LOADER.kill();
             this.LOADER = null;
-            return this.$el.find("#ipm-loader-" + this.cid).hide();
+            this.$el.find("#ipm-loader-" + this.cid).hide();
           }
         } catch (e) {
           this.$el.find("#canvasLoader").remove();
-          return console.log([e, this.$el.find("#ipm-spinner-" + this.cid).html()]);
+          console.log([e, this.$el.find("#ipm-spinner-" + this.cid).html()]);
         }
+        return this;
       };
 
       IPMView.prototype.actionError = function(jqXHR) {
@@ -147,7 +149,8 @@
       };
 
       IPMView.prototype.displayMessage = function(type, msg, delay) {
-        return this.Amplify.publish(this.cid, type, msg, delay);
+        this.Amplify.publish(this.cid, type, msg, delay);
+        return this;
       };
 
       return IPMView;
