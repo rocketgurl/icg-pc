@@ -287,11 +287,13 @@ define [
       # Load returned policy into PolicyModel
       @resetPolicyModel(data, jqXHR)
 
+      @PARENT_VIEW.route 'Home'
+
       # Re-render the form
-      @processView(
-        @TPL_CACHE[@PARENT_VIEW.VIEW_STATE].model,
-        @TPL_CACHE[@PARENT_VIEW.VIEW_STATE].view
-      )
+      # @processView(
+      #   @TPL_CACHE[@PARENT_VIEW.VIEW_STATE].model,
+      #   @TPL_CACHE[@PARENT_VIEW.VIEW_STATE].view
+      # )
 
     # **Error handling from ChangeSet**
     #

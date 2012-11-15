@@ -223,7 +223,7 @@
         msg = "" + this.PARENT_VIEW.VIEW_STATE + " completed successfully";
         this.PARENT_VIEW.displayMessage('success', msg, 12000).remove_loader();
         this.resetPolicyModel(data, jqXHR);
-        return this.processView(this.TPL_CACHE[this.PARENT_VIEW.VIEW_STATE].model, this.TPL_CACHE[this.PARENT_VIEW.VIEW_STATE].view);
+        return this.PARENT_VIEW.route('Home');
       };
 
       IPMActionView.prototype.callbackError = function(jqXHR, status, error) {
