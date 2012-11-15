@@ -12,7 +12,6 @@ define [
     tagName : 'div'
 
     events :
-      "click .form_actions a" : "goHome"
       "click fieldset h3"     : "toggleFieldset"
 
     initialize : (options) ->
@@ -56,7 +55,7 @@ define [
     #
     goHome : (e) ->
       e.preventDefault()
-      @PARENT_VIEW.route 'Home'
+      @PARENT_VIEW.route 'Home'        
 
     # Open/close fieldsets 
     #
@@ -86,6 +85,10 @@ define [
     # using `super` in your actions
     #
     postProcessView : ->
+      # Initial cancle button goes back to home screen
+      @$el.find('.form_actions a').on 'click', (e) =>
+        @goHome(e)
+
       $('.labelRequired').each ->
         if !$(this).hasClass('processed') 
           $(this).append('<em>*</em>').addClass('processed')
@@ -111,6 +114,14 @@ define [
     # **Post process the preview of the form**  
     postProcessPreview : ->
       delete @viewData.preview
+
+      # Swap out click event on cancel button to just reset to beginning state
+      @$el.find('.form_actions a').on 'click', (e) =>
+        e.preventDefault()
+        @processView(
+          @TPL_CACHE[@PARENT_VIEW.VIEW_STATE].model,
+          @TPL_CACHE[@PARENT_VIEW.VIEW_STATE].view
+        )
 
       # .data_tables in the preview require additional hooks and processing
       if @$el.find('.data_table').length > 0

@@ -22,7 +22,6 @@
       IPMActionView.prototype.tagName = 'div';
 
       IPMActionView.prototype.events = {
-        "click .form_actions a": "goHome",
         "click fieldset h3": "toggleFieldset"
       };
 
@@ -79,6 +78,9 @@
       IPMActionView.prototype.postProcessView = function() {
         var date_options,
           _this = this;
+        this.$el.find('.form_actions a').on('click', function(e) {
+          return _this.goHome(e);
+        });
         $('.labelRequired').each(function() {
           if (!$(this).hasClass('processed')) {
             return $(this).append('<em>*</em>').addClass('processed');
@@ -99,7 +101,12 @@
       };
 
       IPMActionView.prototype.postProcessPreview = function() {
+        var _this = this;
         delete this.viewData.preview;
+        this.$el.find('.form_actions a').on('click', function(e) {
+          e.preventDefault();
+          return _this.processView(_this.TPL_CACHE[_this.PARENT_VIEW.VIEW_STATE].model, _this.TPL_CACHE[_this.PARENT_VIEW.VIEW_STATE].view);
+        });
         if (this.$el.find('.data_table').length > 0) {
           return this.processPreviewForm(this.$el.find('.data_table'));
         }
