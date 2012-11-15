@@ -5,7 +5,7 @@ define [
 ], (BaseView, Messenger, IPMChangeSet) ->
 
   # IPMActionView
-  # ====  
+  # ----  
   # IPM sub views (action views) inherit from this base view  
   class IPMActionView extends BaseView
     
@@ -112,9 +112,8 @@ define [
     postProcessPreview : ->
       delete @viewData.preview
 
-      # Check for inputs in the preview mode, which will require additional
-      # hooks and processing
-      if @$el.find('.data_table input').length > 0
+      # .data_tables in the preview require additional hooks and processing
+      if @$el.find('.data_table').length > 0
         @processPreviewForm(@$el.find('.data_table'))
 
     # **Get the form values**  
@@ -266,7 +265,7 @@ define [
 
       # Attach event listener to confirm button, changing the value of the
       # hidden preview field to 'confirm'
-      @$el.find('form input.button[type=submit]').on(
+      @$el.find('form input[type=submit]').on(
           'click',
           (e) =>
             @$el.find('form input[name=preview]').attr('value', 'confirm')

@@ -100,7 +100,7 @@
 
       IPMActionView.prototype.postProcessPreview = function() {
         delete this.viewData.preview;
-        if (this.$el.find('.data_table input').length > 0) {
+        if (this.$el.find('.data_table').length > 0) {
           return this.processPreviewForm(this.$el.find('.data_table'));
         }
       };
@@ -212,7 +212,7 @@
             return _this.submit();
           });
         }
-        return this.$el.find('form input.button[type=submit]').on('click', function(e) {
+        return this.$el.find('form input[type=submit]').on('click', function(e) {
           _this.$el.find('form input[name=preview]').attr('value', 'confirm');
           return _this.submit(e);
         });
