@@ -282,7 +282,8 @@ define [
     #
     callbackSuccess : (data, status, jqXHR) =>
       msg = "#{@PARENT_VIEW.VIEW_STATE} completed successfully"
-      @PARENT_VIEW.displayMessage('success', msg, 12000)
+
+      @PARENT_VIEW.displayMessage('success', msg, 12000).remove_loader()
 
       # Load returned policy into PolicyModel
       @resetPolicyModel(data, jqXHR)
@@ -306,7 +307,8 @@ define [
         @PARENT_VIEW.displayError(
           'warning',
           'Fatal: Error received with no response from server'
-        )
+        ).remove_loader()
+
         return false
 
       if jqXHR.responseText?
@@ -340,6 +342,7 @@ define [
         @TPL_CACHE[@PARENT_VIEW.VIEW_STATE].model,
         @TPL_CACHE[@PARENT_VIEW.VIEW_STATE].view
       )
+      @PARENT_VIEW.remove_loader()
 
     # **Load new XML into PolicyModel**  
     #
@@ -399,6 +402,8 @@ define [
     submit : (e) ->
       if e?
         e.preventDefault()
+
+      @PARENT_VIEW.insert_loader() # Add loader
 
       form = @$el.find('form')
       if form.length > 0 

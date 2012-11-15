@@ -221,7 +221,7 @@
       IPMActionView.prototype.callbackSuccess = function(data, status, jqXHR) {
         var msg;
         msg = "" + this.PARENT_VIEW.VIEW_STATE + " completed successfully";
-        this.PARENT_VIEW.displayMessage('success', msg, 12000);
+        this.PARENT_VIEW.displayMessage('success', msg, 12000).remove_loader();
         this.resetPolicyModel(data, jqXHR);
         return this.processView(this.TPL_CACHE[this.PARENT_VIEW.VIEW_STATE].model, this.TPL_CACHE[this.PARENT_VIEW.VIEW_STATE].view);
       };
@@ -229,7 +229,7 @@
       IPMActionView.prototype.callbackError = function(jqXHR, status, error) {
         var json, regex;
         if (!jqXHR) {
-          this.PARENT_VIEW.displayError('warning', 'Fatal: Error received with no response from server');
+          this.PARENT_VIEW.displayError('warning', 'Fatal: Error received with no response from server').remove_loader();
           return false;
         }
         if (jqXHR.responseText != null) {
@@ -246,7 +246,8 @@
 
       IPMActionView.prototype.callbackPreview = function(data, status, jqXHR) {
         this.resetPolicyModel(data, jqXHR);
-        return this.processPreview(this.TPL_CACHE[this.PARENT_VIEW.VIEW_STATE].model, this.TPL_CACHE[this.PARENT_VIEW.VIEW_STATE].view);
+        this.processPreview(this.TPL_CACHE[this.PARENT_VIEW.VIEW_STATE].model, this.TPL_CACHE[this.PARENT_VIEW.VIEW_STATE].view);
+        return this.PARENT_VIEW.remove_loader();
       };
 
       IPMActionView.prototype.resetPolicyModel = function(data, jqXHR) {
@@ -279,6 +280,7 @@
         if (e != null) {
           e.preventDefault();
         }
+        this.PARENT_VIEW.insert_loader();
         form = this.$el.find('form');
         if (form.length > 0) {
           this.VALUES.formValues = this.getFormValues(form);
