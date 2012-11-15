@@ -127,6 +127,20 @@
 		@include simple-color(hue(#2b90d2), saturation(#2b90d2), lightness(#2b90d2));
 	}
 
+	#updatePreview {
+		float: right;
+		margin: 0;
+	}
+
+	#updatePreview[disabled=disabled] {
+		@include simple-color(hue(#eee), saturation(#eee), lightness(#eee));
+		color: #ccc;
+	}
+
+	input[value=Confirm] {
+		@include simple-color(hue(#37a93c), saturation(#37a93c), lightness(#37a93c));
+	}
+
 	div.form_actions {
 		margin: 10px 0 0 0;
 		a {
@@ -291,4 +305,95 @@
 		}
 	}
 
+}
+
+// Preview Data Table
+.data_table {
+	width: 100%;
+	background: $white;
+	border: darken($lightgray, 10) 1px solid;
+	thead {
+		border-bottom: darken($lightgray, 10) 1px solid;
+		tr {
+			background: darken($lightgray, 3);
+		}
+	}
+	th {
+		@include font-size(12);
+		font-weight: bold;
+		padding: 4px 8px;
+		text-align: center;
+	}
+	td {
+		@include font-size(14);
+		padding: 8px;
+		text-align: right;
+		color: $darkgray;
+
+		input[type=text] {
+			@include font-size(14);
+			width: 50px;
+			padding: 1px 3px;
+			text-align: right;
+		}
+	}
+	.calculated_value,
+	.subtotal {
+		color: #000;
+		font-weight: bold;
+	}
+	tbody {
+		tr {
+			td:first-child {
+				width: 120px;
+			}
+			td:nth-child(-n+3) {
+				text-align: left;
+				white-space: nowrap;
+			}
+
+			&:hover {
+				background-color: $rowselect;
+				border-top: darken($rowselect, 10) 1px solid;
+				border-bottom: darken($rowselect, 10) 1px solid;
+				td {
+					color: darken($rowselect, 70);
+				}
+			}
+		}
+	}
+
+	tbody tr:last-child {
+		td {
+			padding-bottom: 8px;
+		}
+	}	
+
+	tr.dividing_row {
+		border-top: darken($lightgray, 10) 1px solid;
+
+		&:hover {
+			background-color: transparent;
+			border-top: darken($lightgray, 10) 1px solid;
+			border-bottom: transparent 0px solid;
+			color: transparent;
+		}
+	}
+	.col_hurricane,
+	.col_non_hurricane {
+		background: darken($lightgray, 1);
+	}
+	.col_group_heading {
+		background: darken($lightgray, 8);
+		padding: 8px 5px;
+	}
+	colgroup {
+		border: darken($lightgray, 10) 1px solid;
+		border-width: 0 1px 0 1px;
+	}
+	h4 {
+		font-weight: bold;
+		margin-top: 4px;
+		color: #000;
+	}
 }
