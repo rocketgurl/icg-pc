@@ -159,9 +159,13 @@ define [
         @messenger = new Messenger(this, @cid) 
 
     # Drop a loader graphic into the view
-    insert_loader : ->
+    insert_loader : (msg) ->
       @$el.find("#ipm-loader-#{@cid}").show()
       try
+        # Drop in message is present
+        if msg?
+          $("#ipm-spinner-#{@cid} span").html(msg)
+
         @LOADER = @Helpers.loader("ipm-spinner-#{@cid}", 100, '#ffffff')
         @LOADER.setDensity(70)
         @LOADER.setFPS(48)
@@ -176,8 +180,9 @@ define [
           @LOADER.kill()
           @LOADER = null
           @$el.find("#ipm-loader-#{@cid}").hide()
+          @$el.find("#ipm-spinner-#{@cid} div").remove()
       catch e
-        @$el.find("#canvasLoader").remove()
+        @$el.find("#ipm-spinner-#{@cid} div").remove()
         console.log [e, @$el.find("#ipm-spinner-#{@cid}").html()]
       this
     

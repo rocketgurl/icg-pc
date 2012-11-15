@@ -114,9 +114,12 @@
         return this.messenger = new Messenger(this, this.cid);
       });
 
-      IPMView.prototype.insert_loader = function() {
+      IPMView.prototype.insert_loader = function(msg) {
         this.$el.find("#ipm-loader-" + this.cid).show();
         try {
+          if (msg != null) {
+            $("#ipm-spinner-" + this.cid + " span").html(msg);
+          }
           this.LOADER = this.Helpers.loader("ipm-spinner-" + this.cid, 100, '#ffffff');
           this.LOADER.setDensity(70);
           this.LOADER.setFPS(48);
@@ -132,9 +135,10 @@
             this.LOADER.kill();
             this.LOADER = null;
             this.$el.find("#ipm-loader-" + this.cid).hide();
+            this.$el.find("#ipm-spinner-" + this.cid + " div").remove();
           }
         } catch (e) {
-          this.$el.find("#canvasLoader").remove();
+          this.$el.find("#ipm-spinner-" + this.cid + " div").remove();
           console.log([e, this.$el.find("#ipm-spinner-" + this.cid).html()]);
         }
         return this;
