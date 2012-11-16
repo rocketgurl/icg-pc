@@ -12,6 +12,7 @@
       mustache: 'lib/requirejs.mustache',
       base64: 'lib/base64',
       moment: 'lib/moment',
+      momentrange: 'lib/moment-range',
       xml2json: 'lib/jquery.xml2json',
       text: 'lib/text',
       domReady: 'lib/domReady',
@@ -47,6 +48,9 @@
       },
       'u_string': {
         deps: ['underscore']
+      },
+      'momentrange': {
+        deps: ['moment']
       }
     }
   });

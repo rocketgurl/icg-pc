@@ -1,21 +1,22 @@
 require
   baseUrl: 'js'
   paths: 
-    jquery     : 'lib/jquery-1.8.2'
-    jqueryui   : 'lib/jquery-ui-1.9.0.custom.min'
-    underscore : 'lib/underscore'
-    backbone   : 'lib/backbone-min'
-    amplify    : 'lib/amplify'
-    mustache   : 'lib/requirejs.mustache'
-    base64     : 'lib/base64'
-    moment     : 'lib/moment'
-    xml2json   : 'lib/jquery.xml2json'
-    text       : 'lib/text'
-    domReady   : 'lib/domReady'
-    json       : 'lib/json2'
-    loader     : 'lib/heartcode-canvasloader'
-    swfobject  : 'lib/swfobject'
-    u_string   : 'lib/underscore.string'
+    jquery      : 'lib/jquery-1.8.2'
+    jqueryui    : 'lib/jquery-ui-1.9.0.custom.min'
+    underscore  : 'lib/underscore'
+    backbone    : 'lib/backbone-min'
+    amplify     : 'lib/amplify'
+    mustache    : 'lib/requirejs.mustache'
+    base64      : 'lib/base64'
+    moment      : 'lib/moment'
+    momentrange : 'lib/moment-range'
+    xml2json    : 'lib/jquery.xml2json'
+    text        : 'lib/text'
+    domReady    : 'lib/domReady'
+    json        : 'lib/json2'
+    loader      : 'lib/heartcode-canvasloader'
+    swfobject   : 'lib/swfobject'
+    u_string    : 'lib/underscore.string'
   priority: ['jquery','xml2json','json']
   shim:
       'jquery' : 
@@ -37,6 +38,8 @@ require
         exports : 'swfobject' 
       'u_string' : 
         deps : ['underscore']
+      'momentrange' :
+        deps : ['moment']
 
 require [
   'jquery',
