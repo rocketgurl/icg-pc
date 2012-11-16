@@ -1,8 +1,9 @@
 define [
   'BaseView',
   'Messenger',
-  'modules/IPM/IPMChangeSet'
-], (BaseView, Messenger, IPMChangeSet) ->
+  'modules/IPM/IPMChangeSet',
+  'modules/IPM/IPMFormValidation'
+], (BaseView, Messenger, IPMChangeSet, IPMFormValidation) ->
 
   # IPMActionView
   # ----  
@@ -15,9 +16,10 @@ define [
       "click fieldset h3"     : "toggleFieldset"
 
     initialize : (options) ->
-      @PARENT_VIEW = options.PARENT_VIEW || {}
-      @MODULE      = options.MODULE || {}
-      @ChangeSet   = new IPMChangeSet(@MODULE.POLICY, @PARENT_VIEW.VIEW_STATE, @MODULE.USER)
+      @PARENT_VIEW    = options.PARENT_VIEW || {}
+      @MODULE         = options.MODULE || {}
+      @ChangeSet      = new IPMChangeSet(@MODULE.POLICY, @PARENT_VIEW.VIEW_STATE, @MODULE.USER)
+      @FormValidation = new IPMFormValidation()
       
       @VALUES      = {} # Form values
       @TPL_CACHE   = {} # Template Cache
@@ -26,6 +28,13 @@ define [
       @options = null
 
       @on('ready', @ready, this)
+
+      # We need to validate form submits
+      if _.isFunction(@submit)
+        @submit = _.wrap @submit, (submit) =>
+          args = _.toArray arguments
+          if @validate()
+            submit(args[1])
 
     # **fetchTemplates** grab the model.json and view.html for processing  
     #
@@ -95,7 +104,7 @@ define [
 
       # Attach datepickers where appropriate
       date_options = 
-        dateFormat : 'yy-mm-dd'
+        dateFormat      : 'yy-mm-dd'
 
       if $.datepicker
         $('.datepicker').datepicker(date_options)
@@ -395,6 +404,18 @@ define [
       @$el.html(@MODULE.VIEW.Mustache.render(view, viewData))
 
     validate : ->
+      required_fields = @$el.find('input[required], select[required]')
+      errors = @FormValidation.validateFields(required_fields)
+
+      if _.isEmpty errors
+        true
+      else
+        @PARENT_VIEW.displayMessage(
+          'warning',
+          @FormValidation.displayErrorMsg(errors)
+        )
+        false
+
 
     preview : ->
 
@@ -407,7 +428,7 @@ define [
     #
     # @param `e` _Event_ Submit event (Optional) 
     #
-    submit : (e) ->
+    submit : (e) =>
       if e?
         e.preventDefault()
 

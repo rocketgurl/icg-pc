@@ -4,13 +4,15 @@
     __hasProp = {}.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
-  define(['BaseView', 'Messenger', 'modules/IPM/IPMChangeSet'], function(BaseView, Messenger, IPMChangeSet) {
+  define(['BaseView', 'Messenger', 'modules/IPM/IPMChangeSet', 'modules/IPM/IPMFormValidation'], function(BaseView, Messenger, IPMChangeSet, IPMFormValidation) {
     var IPMActionView;
     return IPMActionView = (function(_super) {
 
       __extends(IPMActionView, _super);
 
       function IPMActionView() {
+        this.submit = __bind(this.submit, this);
+
         this.callbackPreview = __bind(this.callbackPreview, this);
 
         this.callbackError = __bind(this.callbackError, this);
@@ -26,14 +28,25 @@
       };
 
       IPMActionView.prototype.initialize = function(options) {
+        var _this = this;
         this.PARENT_VIEW = options.PARENT_VIEW || {};
         this.MODULE = options.MODULE || {};
         this.ChangeSet = new IPMChangeSet(this.MODULE.POLICY, this.PARENT_VIEW.VIEW_STATE, this.MODULE.USER);
+        this.FormValidation = new IPMFormValidation();
         this.VALUES = {};
         this.TPL_CACHE = {};
         this.ERRORS = {};
         this.options = null;
-        return this.on('ready', this.ready, this);
+        this.on('ready', this.ready, this);
+        if (_.isFunction(this.submit)) {
+          return this.submit = _.wrap(this.submit, function(submit) {
+            var args;
+            args = _.toArray(arguments);
+            if (_this.validate()) {
+              return submit(args[1]);
+            }
+          });
+        }
       };
 
       IPMActionView.prototype.fetchTemplates = function(policy, action, callback) {
@@ -273,7 +286,17 @@
         return this.$el.html(this.MODULE.VIEW.Mustache.render(view, viewData));
       };
 
-      IPMActionView.prototype.validate = function() {};
+      IPMActionView.prototype.validate = function() {
+        var errors, required_fields;
+        required_fields = this.$el.find('input[required], select[required]');
+        errors = this.FormValidation.validateFields(required_fields);
+        if (_.isEmpty(errors)) {
+          return true;
+        } else {
+          this.PARENT_VIEW.displayMessage('warning', this.FormValidation.displayErrorMsg(errors));
+          return false;
+        }
+      };
 
       IPMActionView.prototype.preview = function() {};
 

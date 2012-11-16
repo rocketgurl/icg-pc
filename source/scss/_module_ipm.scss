@@ -105,7 +105,6 @@
 		}
 	}
 
-
 	.policyOverview {
 		margin: 10px 0 20px 0;
 		background: $white;
@@ -239,6 +238,15 @@
 		{
 		    color: #a00;
 		}
+		input.validation_error,
+		textarea.validation_error, 
+		{
+		    box-shadow: 0 0 5px rgba(160, 0, 0, 1);
+		}
+		select.validation_error
+		{
+			background: #fcc;
+		}
 
 		input {
 			vertical-align: top;
@@ -250,6 +258,7 @@
 			min-width: 2em;
 			padding: 4px;
 		}
+
 
 		select {
 			@include sans;
