@@ -227,10 +227,17 @@
 			}
 		}
 		label.labelRequired {
-			font-weight: bold;
-			em {
-				color: darken(#ff0000, 17);
+		    color: #444;
+		    font-weight: bold;
+			&:after
+			{
+				color: #752E2E;
+				content: ' *';
 			}
+		}
+		label.validation_error 
+		{
+		    color: #a00;
 		}
 
 		input {

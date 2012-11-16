@@ -1791,10 +1791,15 @@ Module: Policy
   opacity: .8;
 }
 .ipm-container fieldset label.labelRequired {
+  color: #444;
   font-weight: bold;
 }
-.ipm-container fieldset label.labelRequired em {
-  color: #a80000;
+.ipm-container fieldset label.labelRequired:after {
+  color: #752E2E;
+  content: ' *';
+}
+.ipm-container fieldset label.validation_error {
+  color: #a00;
 }
 .ipm-container fieldset input {
   vertical-align: top;
