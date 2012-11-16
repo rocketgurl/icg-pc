@@ -81,11 +81,6 @@
         this.$el.find('.form_actions a').on('click', function(e) {
           return _this.goHome(e);
         });
-        $('.labelRequired').each(function() {
-          if (!$(this).hasClass('processed')) {
-            return $(this).append('<em>*</em>').addClass('processed');
-          }
-        });
         $('select[data-value]').val(function() {
           return $(this).attr('data-value');
         });

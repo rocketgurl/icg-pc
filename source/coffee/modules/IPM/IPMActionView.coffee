@@ -89,10 +89,6 @@ define [
       @$el.find('.form_actions a').on 'click', (e) =>
         @goHome(e)
 
-      $('.labelRequired').each ->
-        if !$(this).hasClass('processed') 
-          $(this).append('<em>*</em>').addClass('processed')
-
       # Set all Enum selects to their default values
       $('select[data-value]').val ->
         $(this).attr('data-value')
