@@ -23,7 +23,7 @@
             _this.flash_container.addClass(type);
           }
           if (msg != null) {
-            msg += ' <i class="icon-remove-sign"></i>';
+            msg = "<i class=\"icon-remove-sign\"></i> " + msg;
             _this.flash_container.html(msg).fadeIn('fast');
             if (delay != null) {
               return _.delay(function() {

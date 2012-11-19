@@ -12,9 +12,11 @@
           var args;
           args = _.toArray(arguments);
           if (func(args[1])) {
-            return _this.showErrorState(args[1]);
+            _this.showErrorState(args[1]);
+            return true;
           } else {
-            return _this.removeErrorState(args[1]);
+            _this.removeErrorState(args[1]);
+            return false;
           }
         });
         _.each(['showErrorState', 'removeErrorState'], function(f) {
@@ -73,7 +75,6 @@
         details = _.map(errors, function(err) {
           return "<li>" + ($(err).parent().find('label').html()) + "</li>";
         });
-        console.log(details);
         return "Please complete the required fields below\n<div class=\"error_details\">\n  <ul>\n    " + (details.join('')) + "\n  </ul>\n</div>";
       };
 

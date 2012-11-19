@@ -406,7 +406,6 @@ define [
     validate : ->
       required_fields = @$el.find('input[required], select[required]')
       errors = @FormValidation.validateFields(required_fields)
-
       if _.isEmpty errors
         true
       else
@@ -415,7 +414,6 @@ define [
           @FormValidation.displayErrorMsg(errors)
         )
         false
-
 
     preview : ->
 

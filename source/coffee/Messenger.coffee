@@ -32,7 +32,7 @@ define [
         if type?
           @flash_container.addClass type
         if msg?
-          msg += ' <i class="icon-remove-sign"></i>'
+          msg = """<i class="icon-remove-sign"></i> #{msg}"""
           @flash_container.html(msg).fadeIn('fast')
 
           # After a short delay remove the flash message

@@ -16,13 +16,15 @@ define [
     constructor : (@validators) ->
 
       # If a field does not validate (come back as true) then we
-      # send need to mark it in the UI
+      # send need to mark it in the UI - send back a Boolean!
       @validateField = _.wrap @validateField, (func) =>
         args = _.toArray arguments
         if func(args[1])
           @showErrorState(args[1])
+          true # error!
         else
           @removeErrorState(args[1])
+          false # passes
 
       # These functions need a jQuery wrapped element, so we
       # ensure they get one (DRY)
@@ -51,6 +53,7 @@ define [
       if !(el instanceof jQuery)
         el = $(el)
 
+      # _Note:_ true means it failed
       if el.val() == '' || el.val() == undefined
         return true
 
@@ -101,8 +104,6 @@ define [
     displayErrorMsg : (errors) ->
       details = _.map errors, (err) ->
         "<li>#{$(err).parent().find('label').html()}</li>"
-
-      console.log details
 
       """
         Please complete the required fields below
