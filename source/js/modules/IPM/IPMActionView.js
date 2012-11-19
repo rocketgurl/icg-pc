@@ -165,8 +165,11 @@
           model: vocabTerms,
           view: view
         };
-        viewData = this.MODULE.POLICY.getTermDataItemValues(vocabTerms);
-        viewData = this.MODULE.POLICY.getEnumerations(viewData, vocabTerms);
+        viewData = {};
+        if (vocabTerms != null) {
+          viewData = this.MODULE.POLICY.getTermDataItemValues(vocabTerms);
+          viewData = this.MODULE.POLICY.getEnumerations(viewData, vocabTerms);
+        }
         viewData = _.extend(viewData, this.MODULE.POLICY.getPolicyOverview(), {
           policyOverview: true,
           policyId: this.MODULE.POLICY.get_pxServerIndex()

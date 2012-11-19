@@ -180,14 +180,24 @@ define [
 
       changed
 
-    # Keep a cache of loaded files for this action
+    # Use the vocabTerms (model.json) to derive the policy data the form needs 
+    # specific to this ActionView and cache it.
+    #
+    # @param `vocabTerms` _Object_ model.json    
+    # @param `view` _HTML Template_    
+    # @return _Array_ [viewData, view]  
+    #
     processViewData : (vocabTerms, view) ->
       @TPL_CACHE[@PARENT_VIEW.VIEW_STATE] =
         model : vocabTerms
         view  : view
 
-      viewData = @MODULE.POLICY.getTermDataItemValues(vocabTerms)
-      viewData = @MODULE.POLICY.getEnumerations(viewData, vocabTerms)
+      viewData = {}
+
+      if vocabTerms?
+        viewData = @MODULE.POLICY.getTermDataItemValues(vocabTerms)
+        viewData = @MODULE.POLICY.getEnumerations(viewData, vocabTerms)
+
       viewData = _.extend(
         viewData,
         @MODULE.POLICY.getPolicyOverview(),
