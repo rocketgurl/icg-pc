@@ -103,7 +103,9 @@ define [
     #  
     displayErrorMsg : (errors) ->
       details = _.map errors, (err) ->
-        "<li>#{$(err).parent().find('label').html()}</li>"
+        $label = $(err).parent().find('label')
+        $label.find('i').remove()
+        "<li>#{$label.html()}</li>"
 
       """
         Please complete the required fields below

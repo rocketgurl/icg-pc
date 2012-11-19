@@ -73,7 +73,10 @@
       IPMFormValidation.prototype.displayErrorMsg = function(errors) {
         var details;
         details = _.map(errors, function(err) {
-          return "<li>" + ($(err).parent().find('label').html()) + "</li>";
+          var $label;
+          $label = $(err).parent().find('label');
+          $label.find('i').remove();
+          return "<li>" + ($label.html()) + "</li>";
         });
         return "Please complete the required fields below\n<div class=\"error_details\">\n  <ul>\n    " + (details.join('')) + "\n  </ul>\n</div>";
       };
