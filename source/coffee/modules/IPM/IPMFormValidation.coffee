@@ -117,6 +117,7 @@ define [
 
     # Rules
     # -----
+    # TODO: Maybe wrap these in the jQuery checker up top
 
     dateRange : (el) ->
       start  = moment(el.data('minDate')).subtract('days', 1)
@@ -126,6 +127,17 @@ define [
 
       whence.within(range);
 
-
     money : (el) ->
       parseFloat(el.val()) > 0
+
+    # Determine if a number falls within a range. Only one attr (min/max)
+    # needs to be defined.
+    number : (el) ->
+      val = parseInt(el.val(), 10)
+      min = if el.attr('min') then parseInt(el.attr('min'), 10) else null
+      max = if el.attr('max') then parseInt(el.attr('max'), 10) else null
+      if min && val < min
+        false
+      if max && val > max
+        false
+      true

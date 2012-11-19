@@ -91,6 +91,20 @@
         return parseFloat(el.val()) > 0;
       };
 
+      IPMFormValidation.prototype.number = function(el) {
+        var max, min, val;
+        val = parseInt(el.val(), 10);
+        min = el.attr('min') ? parseInt(el.attr('min'), 10) : null;
+        max = el.attr('max') ? parseInt(el.attr('max'), 10) : null;
+        if (min && val < min) {
+          false;
+        }
+        if (max && val > max) {
+          false;
+        }
+        return true;
+      };
+
       return IPMFormValidation;
 
     })();
