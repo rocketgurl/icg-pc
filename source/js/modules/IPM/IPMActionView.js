@@ -280,8 +280,6 @@
         return this.MODULE.POLICY;
       };
 
-      IPMActionView.prototype.ready = function() {};
-
       IPMActionView.prototype.render = function(viewData, view) {
         IPMActionView.__super__.render.apply(this, arguments);
         viewData = viewData || this.viewData;
@@ -300,8 +298,6 @@
           return false;
         }
       };
-
-      IPMActionView.prototype.preview = function() {};
 
       IPMActionView.prototype.submit = function(e) {
         var form;
@@ -373,6 +369,10 @@
         this.PARENT_VIEW.displayMessage(type, msg);
         return msg;
       };
+
+      IPMActionView.prototype.ready = function() {};
+
+      IPMActionView.prototype.preview = function() {};
 
       return IPMActionView;
 

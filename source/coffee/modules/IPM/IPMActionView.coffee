@@ -394,10 +394,6 @@ define [
 
       @MODULE.POLICY
 
-    # Your Action View should define the following methods:
-
-    ready : ->
-
     # **Build view data objects and trigger loaded event**  
     #
     # Takes the model.json and creates a custom data object for this view. We
@@ -413,6 +409,10 @@ define [
       view     = view || @view
       @$el.html(@MODULE.VIEW.Mustache.render(view, viewData))
 
+    # Validate form with IPMFormValidation and display any errors
+    #
+    # @return _Boolean_ 
+    #
     validate : ->
       required_fields = @$el.find('input[required], select[required]')
       errors = @FormValidation.validateFields(required_fields)
@@ -424,8 +424,6 @@ define [
           @FormValidation.displayErrorMsg(errors)
         )
         false
-
-    preview : ->
 
     # **Submit form** - set the form values on the ActionView for 
     # use in inherited ActionViews. Only do this if there is an actual form,
@@ -526,8 +524,6 @@ define [
 
       @ERRORS
 
-
-
     # **Display error message**   
     # Build an error message from the error object provided by callbackError
     #
@@ -551,3 +547,9 @@ define [
       @PARENT_VIEW.displayMessage(type, msg)
 
       msg
+
+    # Your Action View should define the following methods:
+
+    ready : ->
+
+    preview : ->
