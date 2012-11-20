@@ -249,7 +249,7 @@ define([
     // media=application/xml&page=1&perPage=50&status=New,Pending
 
     var settings = {
-      pxcentral: 'https://staging-services.icg360.org/cru-4/pxcentral/api/rest/v1/tasks/',
+      pxcentral: 'https://policycentral.dev/pxcentral/api/rest/v1/tasks',
       digest  : 'Y3J1NHRAY3J1MzYwLmNvbTphYmMxMjM='
     }
 
@@ -277,7 +277,7 @@ define([
     it ('has a URL', function () {
       runs(function(){
         console.log(tasks);
-        expect(tasks.url).toBe('https://staging-services.icg360.org/cru-4/pxcentral/api/rest/v1/tasks/');
+        expect(tasks.url).toBe('https://policycentral.dev/pxcentral/api/rest/v1/tasks');
       });
     });
 
@@ -352,7 +352,7 @@ define([
 
       describe('ReferralTaskModel', function () {
         var settings = {
-          pxcentral: 'https://staging-services.icg360.org/cru-4/pxcentral/api/rest/v1/tasks/',
+          pxcentral: 'https://policycentral.dev/pxcentral/api/rest/v1/tasks',
           digest  : 'Y3J1NHRAY3J1MzYwLmNvbTphYmMxMjM='
         }
 
