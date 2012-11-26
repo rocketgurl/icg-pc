@@ -187,10 +187,13 @@ body {
   width: 100%;
 }
 .search-menus .menu-col, .ru-menus .menu-col, .rq-menus .menu-col {
-  width: 45%;
+  width: 49%;
   display: inline-block;
-  margin: 0 10px;
+  margin: 0;
   padding: 0;
+}
+.search-menus .menu-col:first-child, .ru-menus .menu-col:first-child, .rq-menus .menu-col:first-child {
+  margin-right: 8px;
 }
 .search-menus table, .ru-menus table, .rq-menus table {
   width: 100%;
@@ -1667,13 +1670,13 @@ header.module-referrals .button-manage-assignees:active {
 }
 
 .rq-manage-assignees {
-  width: 550px;
+  width: 640px;
   margin: 0 25%;
 }
 .rq-manage-assignees p {
-  margin: 20px 10px 0 10px;
-  font-size: 12px;
-  font-size: 1.2rem;
+  margin: 20px 20px 0 20px;
+  font-size: 14px;
+  font-size: 1.4rem;
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
   color: dimgrey;
 }
@@ -1681,12 +1684,24 @@ header.module-referrals .button-manage-assignees:active {
   margin-top: 14px;
   margin-bottom: 14px;
 }
+.rq-manage-assignees .menu-col h2 {
+  padding: 0 0 0 10px;
+}
+.rq-manage-assignees .menu-col:first-child h2 {
+  padding-left: 20px;
+}
+.rq-manage-assignees .menu-col:first-child ul {
+  margin-left: 20px;
+}
+.rq-manage-assignees .menu-col:nth-child(2n) ul {
+  margin-right: 20px;
+}
 .rq-manage-assignees h2 {
   font-size: 16px;
   font-size: 1.6rem;
 }
 .rq-manage-assignees ul {
-  margin: 15px 0 10px 0;
+  margin: 15px 10px 10px 10px;
   display: block;
   height: 300px;
   overflow: auto;

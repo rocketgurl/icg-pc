@@ -14,11 +14,15 @@
 	}
 
 	.menu-col {
-		width: 45%;
+		width: 49%;
 		display: inline-block;
-		margin: 0 10px;
+		margin: 0;
 		padding: 0;
 	}
+
+	.menu-col:first-child {
+		margin-right: 8px;
+	};
 
 	table {
 		width: 100%;
