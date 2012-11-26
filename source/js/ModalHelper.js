@@ -22,11 +22,23 @@
         } else {
           menu.fadeIn('fast');
         }
-        this.overlay_trigger(container.find(className));
+        this.overlayTrigger(container.find(className));
         return menu;
       };
 
-      ModalHelper.prototype.clear_menu = function(e) {
+      ModalHelper.prototype.attachHandlers = function(menu) {
+        var _this = this;
+        return $('.menu-close').on('click', function(e) {
+          e.preventDefault();
+          return _this.clearMenu(menu);
+        });
+      };
+
+      ModalHelper.prototype.removeMenu = function() {
+        return this.el.parent().find(this.className).remove();
+      };
+
+      ModalHelper.prototype.clearMenu = function(e) {
         if (e.currentTarget != null) {
           $(e.currentTarget).parents(this.className).fadeOut(100);
         } else {
@@ -35,7 +47,7 @@
         return $('.modal-overlay').remove();
       };
 
-      ModalHelper.prototype.overlay_trigger = function(menu) {
+      ModalHelper.prototype.overlayTrigger = function(menu) {
         var overlay,
           _this = this;
         overlay = $("<div></div>").addClass('modal-overlay').css({
@@ -46,9 +58,10 @@
           background: 'transparent'
         });
         $('body').prepend(overlay);
-        return $(overlay).on('click', function(e) {
-          return _this.clear_menu(menu);
+        $(overlay).on('click', function(e) {
+          return _this.clearMenu(menu);
         });
+        return this.attachHandlers(menu);
       };
 
       return ModalHelper;

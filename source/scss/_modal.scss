@@ -1,0 +1,128 @@
+%menu-base {
+	display: block;
+	position: absolute;
+	z-index: 650;
+	border-radius: 6px;
+	border: $blue 1px solid;
+	background: $white;
+	min-width: 250px;
+	display: none;
+	box-shadow: darken($lightgray, 30) 0 0 4px 1px;
+
+	.menu-body {
+		width: 100%;
+	}
+
+	.menu-col {
+		width: 45%;
+		display: inline-block;
+		margin: 0 10px;
+		padding: 0;
+	}
+
+	table {
+		width: 100%;
+		tr td {
+			padding: 10px;
+		}
+	}
+
+	thead {
+		tr:first-child th:first-child { border-top-left-radius: 4px; }
+		tr:first-child th:last-child { border-top-right-radius: 4px; }
+		tr {
+			background-color: $blue;
+			th {
+				color: $white;
+				padding: 10px;
+			}
+		}
+	}
+
+	.menu-header {
+		border-top-left-radius: 4px;
+		border-top-right-radius: 4px;
+		background-color: $blue;
+		color: $white !important;
+		@include font-size(14);
+		padding: 10px;
+
+		i {
+			float: right;
+			cursor: pointer;
+		}
+	}
+
+	h2 {
+		font-weight: bold;
+	}
+
+	h3 {
+		margin: 4px 0;
+		color: $darkgray;
+	}
+
+	form {
+		margin: 10px 0 0 0;
+	}
+
+	label {
+		display: block;
+		margin: 6px 0;
+	}
+
+	input[type=text] {
+		display: block;
+		min-width: 220px;
+		padding: 3px;
+		@include sans;
+		@include font-size(14);
+	}
+
+	.search_form_submit {
+		text-align: right;
+		margin: 5px 0;
+	}
+
+	.menu-buttons {
+		text-align: right;
+		padding: 0 20px;
+		margin-bottom: 20px;
+	}
+
+	.menu-cancel {
+		@include simple-color(hue($lightgray), saturation($lightgray), lightness($lightgray));
+	}
+
+	.menu-confirm {
+		@include simple-color(hue(#37a93c), saturation(#37a93c), lightness(#37a93c));
+	}
+
+	.menu-status {
+		@include sans;
+		@include font-size(14);
+		font-weight: bold;
+		padding: 0 10px 0 0;
+	}
+
+	.menu-success {
+		color: #37a93c;
+	}
+
+	.menu-error {
+		color: darken($warning-base, 20);
+	}
+
+	.menu-loading {
+		color: $darkgray;
+		font-style: italic;
+	}
+
+}
+
+.menu-close {
+	text-align: right;
+	i {
+		cursor: pointer;
+	}
+}

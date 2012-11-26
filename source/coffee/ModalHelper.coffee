@@ -26,12 +26,22 @@ define [
       else
         menu.fadeIn('fast')
 
-      @overlay_trigger container.find(className)
+      @overlayTrigger container.find(className)
 
       menu
 
+    # Attach handlers to (x) to close the modal
+    attachHandlers : (menu) ->
+      $('.menu-close').on 'click', (e) =>
+        e.preventDefault()
+        @clearMenu menu
+
+    # Permanently remove menu from DOM
+    removeMenu : ->
+      @el.parent().find(@className).remove()
+
     # Remove menu
-    clear_menu : (e) ->
+    clearMenu : (e) ->
       if e.currentTarget?
         $(e.currentTarget).parents(@className).fadeOut(100)
       else
@@ -41,7 +51,7 @@ define [
 
     # Drops a transparent div underneath menu to act as trigger to remove
     # the menu
-    overlay_trigger : (menu) ->
+    overlayTrigger : (menu) ->
       overlay = $("<div></div>")
                   .addClass('modal-overlay')
                   .css({
@@ -54,4 +64,6 @@ define [
 
       $('body').prepend(overlay)
       $(overlay).on 'click', (e) =>
-        @clear_menu menu
+        @clearMenu menu
+
+      @attachHandlers(menu)
