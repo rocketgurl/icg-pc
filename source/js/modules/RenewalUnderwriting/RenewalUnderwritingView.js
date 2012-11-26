@@ -20,7 +20,10 @@
           return this.reviewDeadline(this.process_event(e));
         },
         'click .menu-close': function(e) {
-          return this.clear_menu(e);
+          return this.Modal.clear_menu(e);
+        },
+        'click .ru-assignees-row a': function(e) {
+          return this.selectAssignee(this.process_event(e));
         }
       },
       initialize: function(options) {
@@ -67,42 +70,6 @@
         e.preventDefault();
         return $(e.currentTarget);
       },
-      attach_menu: function(el, template, view_data) {
-        var container, menu;
-        container = el.parent();
-        menu = container.find('.ru-menus');
-        if (menu.length === 0) {
-          menu = this.Mustache.render(template, view_data);
-          container.append(menu).find('div').fadeIn(200);
-        } else {
-          menu.fadeIn('fast');
-        }
-        return this.overlay_trigger(container.find('.ru-menus'));
-      },
-      clear_menu: function(e) {
-        if (e.currentTarget != null) {
-          $(e.currentTarget).parents('.ru-menus').fadeOut(100);
-        } else {
-          e.fadeOut('fast');
-        }
-        return $('.ru-overlay').remove();
-      },
-      overlay_trigger: function(menu) {
-        var overlay,
-          _this = this;
-        this.menu = menu;
-        overlay = $("<div></div>").addClass('ru-overlay').css({
-          width: '100%',
-          height: '100%',
-          position: 'absolute',
-          zIndex: 640,
-          background: 'transparent'
-        });
-        $('body').prepend(overlay);
-        return $(overlay).on('click', function(e) {
-          return _this.clear_menu(_this.menu);
-        });
-      },
       changeAssignment: function(el) {
         var data;
         data = {
@@ -120,7 +87,10 @@
             }
           ]
         };
-        return this.attach_menu(el, tpl_ru_assignees, data);
+        return this.Modal.attach_menu(el, '.ru-menus', tpl_ru_assignees, data);
+      },
+      selectAssignee: function(el) {
+        return console.log(['selectAssignee', el]);
       },
       changeDisposition: function(el) {
         var data;
@@ -139,7 +109,7 @@
             }
           ]
         };
-        return this.attach_menu(el, tpl_ru_disposition, data);
+        return this.Modal.attach_menu(el, '.ru-menus', tpl_ru_disposition, data);
       },
       reviewPeriod: function(el) {
         return this.$el.find('input[name=reviewPeriod]').datepicker("show");

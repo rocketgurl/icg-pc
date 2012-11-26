@@ -27,7 +27,10 @@ define [
         @reviewDeadline(@process_event e)
 
       'click .menu-close' : (e) ->
-        @clear_menu e
+        @Modal.clear_menu e
+
+      'click .ru-assignees-row a' : (e) ->
+        @selectAssignee(@process_event e)
 
     initialize : (options) ->
       @$el         = options.$el
@@ -82,44 +85,6 @@ define [
       e.preventDefault()
       $(e.currentTarget)
 
-    # Render a menu and attach it to el. Only create the menu once.
-    attach_menu : (el, template, view_data) ->
-      container = el.parent()
-      menu      = container.find('.ru-menus')
-      if menu.length == 0
-        menu = @Mustache.render template, view_data
-        container.append(menu).find('div').fadeIn(200)
-      else
-        menu.fadeIn('fast')
-
-      @overlay_trigger container.find('.ru-menus')
-
-    # Remove menu
-    clear_menu : (e) ->
-      if e.currentTarget?
-        $(e.currentTarget).parents('.ru-menus').fadeOut(100)
-      else
-        e.fadeOut('fast')
-
-      $('.ru-overlay').remove()
-
-    # Drops a transparent div underneath menu to act as trigger to remove
-    # the menu
-    overlay_trigger : (@menu) ->
-      overlay = $("<div></div>")
-                  .addClass('ru-overlay')
-                  .css({
-                    width      : '100%'
-                    height     : '100%'
-                    position   : 'absolute'
-                    zIndex     : 640
-                    background : 'transparent'
-                  })
-
-      $('body').prepend(overlay)
-      $(overlay).on 'click', (e) =>
-        @clear_menu @menu
-
     # Stub data for changeAssignment menu
     changeAssignment : (el) ->
       data = 
@@ -130,7 +95,10 @@ define [
           { id : 3, name : 'Cipher' }
         ]
 
-      @attach_menu el, tpl_ru_assignees, data
+      @Modal.attach_menu el, '.ru-menus', tpl_ru_assignees, data
+
+    selectAssignee : (el) ->
+      console.log ['selectAssignee', el]
 
 
     changeDisposition : (el) ->
@@ -142,7 +110,7 @@ define [
           { id : 3, name : 'Vaporized' }
         ]
 
-      @attach_menu el, tpl_ru_disposition, data
+      @Modal.attach_menu el, '.ru-menus', tpl_ru_disposition, data
 
     reviewPeriod : (el) ->
       @$el.find('input[name=reviewPeriod]').datepicker("show")
