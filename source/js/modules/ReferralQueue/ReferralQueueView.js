@@ -38,6 +38,7 @@
         this.MODULE = options.module || false;
         this.COLLECTION = options.collection || false;
         this.PARENT_VIEW = options.view || false;
+        ixlibrary = options.ixlibrary || false;
         this.COLLECTION.bind('reset', this.renderTasks, this);
         this.COLLECTION.bind('error', this.tasksError, this);
         this.el = this.PARENT_VIEW.el;

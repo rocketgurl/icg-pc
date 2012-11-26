@@ -33,9 +33,11 @@ define [
         @clearAssignees(e)
 
     initialize : (options) ->
-      @MODULE        = options.module || false
-      @COLLECTION    = options.collection || false
-      @PARENT_VIEW   = options.view || false
+      @MODULE      = options.module || false
+      @COLLECTION  = options.collection || false
+      @PARENT_VIEW = options.view || false
+      
+      ixlibrary    = options.ixlibrary || false
 
       # When the collection is populated, generate the views
       @COLLECTION.bind('reset', @renderTasks, this);

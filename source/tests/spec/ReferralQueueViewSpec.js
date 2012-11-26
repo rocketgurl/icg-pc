@@ -32,6 +32,7 @@ define([
     // Make a view
     var options = {
       collection : tasks3,
+      ixlibrary : '/ixlibrary/api/sdo/rest/v1/buckets/underwriting/objects/assignee_list.xml',
       view : {
         el : 'div',
         $el : $('<div><table class="module-referrals"><tbody></tbody></table></div>')
@@ -39,7 +40,6 @@ define([
     }
 
     var view = new ReferralQueueView(options).render();
-    view.AssigneeList.url = '/ixlibrary/api/sdo/rest/v1/buckets/underwriting/objects/assignee_list.xml'
     view.AssigneeList.set('digest', 'Y3J1NHRAY3J1MzYwLmNvbTphYmMxMjM=');
 
     beforeEach(function(){
@@ -70,13 +70,13 @@ define([
         var error = function(model, xhr, options) {
           console.log(['putList ERROR', model, xhr, options]);
         };
-        view.AssigneeList.fetch({
-          success : callbackz,
-          'error' : error
-        });
-        waitsFor(function() {
-          return callbackz.callCount > 0;
-        }, "view.getAssigneeList", 10000);
+        // view.AssigneeList.fetch({
+        //   success : callbackz,
+        //   'error' : error
+        // });
+        // waitsFor(function() {
+        //   return callbackz.callCount > 0;
+        // }, "view.getAssigneeList", 2000);
         runs(function(){
           console.log(['view.getAssigneeList', callbackz.mostRecentCall.args]);
           expect(view.AssigneeList.get('json')).toEqual(assignee_json);
