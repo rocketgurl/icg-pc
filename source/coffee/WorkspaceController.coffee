@@ -451,11 +451,11 @@ define [
     #
     launch_workspace : ->
       # If not logged in then back to login
-      if @is_loggedin is false
+      if @is_loggedin == false
         return
 
       menu = @config.get 'menu'
-      if menu is false
+      if menu == false
         @Amplify.publish 'controller', 'warning', "Sorry, you do not have access to any items in this environment."
         return
 
@@ -485,6 +485,7 @@ define [
         @services[node] = @config.get_universal_service(@workspace_state, node)
 
       @launch_app app
+
       if @check_persisted_apps()
         # Is this a search? attempt to launch it
         if @current_state.module?

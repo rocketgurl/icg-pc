@@ -6,8 +6,9 @@ define [
   'modules/ReferralQueue/ReferralQueueView',
   'modules/ReferralQueue/ReferralTaskCollection',
   'loader',
-  'Messenger'
-], ($, _, Backbone, Mustache, ReferralQueueView, ReferralTaskCollection, CanvasLoader, Messenger) ->
+  'Messenger',
+  'Helpers'
+], ($, _, Backbone, Mustache, ReferralQueueView, ReferralTaskCollection, CanvasLoader, Messenger, Helpers) ->
 
   class ReferralQueue
 
@@ -34,7 +35,8 @@ define [
     # Remove loader graphic. This will cause the CanvasView to trigger our
     # render() method 
     load : ->
-      @view.remove_loader(true)
+      Helpers.callback_delay 200, =>
+        @view.remove_loader(true)
 
     # Tell the Queue to render itself and the Collection of tasks to hit the
     # server for some XML
