@@ -1,0 +1,28 @@
+<!DOCTYPE html>  <html> <head>   <title>Home.coffee</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="Endorse.html">                 Endorse.coffee               </a>                                           <a class="source" href="Home.html">                 Home.coffee               </a>                                           <a class="source" href="MakePayment.html">                 MakePayment.coffee               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               Home.coffee             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre><span class="nx">define</span> <span class="p">[</span>
+  <span class="s">&#39;modules/IPM/IPMActionView&#39;</span><span class="p">,</span>
+  <span class="s">&#39;text!modules/IPM/templates/tpl_home_action.html&#39;</span>
+<span class="p">],</span> <span class="nf">(IPMActionView, tpl_home_action) -&gt;</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>Build the main list of action views for the default page</p>             </td>             <td class="code">               <div class="highlight"><pre>  <span class="k">class</span> <span class="nx">HomeAction</span> <span class="k">extends</span> <span class="nx">IPMActionView</span>
+
+    <span class="nv">events :</span>
+      <span class="s">&quot;click .ipm-home-action-view a&quot;</span> <span class="o">:</span> <span class="s">&quot;dispatch&quot;</span>
+
+    <span class="nv">initialize : </span><span class="o">-&gt;</span>
+      <span class="k">super</span>
+      <span class="vi">@ACTION_NAME = </span><span class="s">&quot;Home&quot;</span>
+
+    <span class="nv">ready : </span><span class="o">-&gt;</span>
+      <span class="k">super</span>
+      <span class="nx">@trigger</span> <span class="s">&quot;loaded&quot;</span><span class="p">,</span> <span class="k">this</span>
+
+    <span class="nv">dispatch : </span><span class="nf">(e) -&gt;</span>
+      <span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">();</span>
+      <span class="nv">view  = </span><span class="nx">$</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">currentTarget</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s">&#39;href&#39;</span><span class="p">)</span>
+      <span class="nx">@MODULE</span><span class="p">.</span><span class="nx">VIEW</span><span class="p">.</span><span class="nx">route</span><span class="p">(</span><span class="nx">view</span><span class="p">)</span>
+
+    <span class="nv">render : </span><span class="o">-&gt;</span>
+      <span class="nv">actions = </span><span class="nx">@MODULE</span><span class="p">.</span><span class="nx">CONFIG</span><span class="p">.</span><span class="nx">ACTIONS</span>
+      <span class="nv">html = </span><span class="nx">@MODULE</span><span class="p">.</span><span class="nx">VIEW</span><span class="p">.</span><span class="nx">Mustache</span><span class="p">.</span><span class="nx">render</span><span class="p">(</span><span class="nx">tpl_home_action</span><span class="p">,</span> <span class="nx">@MODULE</span><span class="p">.</span><span class="nx">CONFIG</span><span class="p">)</span>
+      <span class="nx">@$el</span><span class="p">.</span><span class="nx">html</span><span class="p">(</span><span class="nx">html</span><span class="p">)</span>
+      
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 

@@ -22,6 +22,20 @@
       Modal: new ModalHelper(),
       logger: function(msg) {
         return this.Amplify.publish('log', msg);
+      },
+      dispose: function() {
+        if (Backbone.View.dispose != null) {
+          return Backbone.View.dispose;
+        } else {
+          this.undelegateEvents();
+          if (this.model && this.model.off) {
+            this.model.off(null, null, this);
+          }
+          if (this.collection && this.collection.off) {
+            this.collection.off(null, null, this);
+          }
+          return this;
+        }
       }
     });
   });

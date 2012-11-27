@@ -23,7 +23,7 @@
           item = _.find(this.get('DataItem'), function(item) {
             return _.has(item, 'name') && item.name === 'OwningAgent';
           });
-          if (((item != null ? item.value : void 0) != null) || '') {
+          if (item != null) {
             return item.value;
           }
         } else {

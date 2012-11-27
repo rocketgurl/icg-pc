@@ -25,7 +25,8 @@ define [
         item = _.find(@get('DataItem'), (item) ->
             return _.has(item, 'name') && item.name == 'OwningAgent'
           )
-        item.value if item?.value? || ''
+        if item?
+          item.value
       else
         return ''
 

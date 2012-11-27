@@ -78,6 +78,32 @@
         } else {
           return (new DOMParser()).parseFromString(sXML, "text/xml");
         }
+      },
+      stripTimeFromDate: function(date, format) {
+        var clean, t;
+        format = format != null ? format : null;
+        clean = date;
+        t = date.indexOf('T');
+        if (t > -1) {
+          clean = clean.substring(0, t);
+        }
+        return this.formatDate(clean, format);
+      },
+      formatDate: function(date, format) {
+        format = format || 'YYYY-MM-DD';
+        return moment(date).format(format);
+      },
+      makeTimestamp: function() {
+        return moment(new Date()).format('YYYY-MM-DDTHH:mm:ss.sssZ');
+      },
+      resize_element: function(el, offset) {
+        var el_height;
+        offset = offset || 0;
+        el_height = Math.floor((($(window).height() - (184 + offset)) / $(window).height()) * 100) + "%";
+        return el.css({
+          'min-height': el_height,
+          'height': $(window).height() - (184 + offset)
+        });
       }
     };
     return Helpers;

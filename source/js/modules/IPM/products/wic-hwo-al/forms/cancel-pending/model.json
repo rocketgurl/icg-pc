@@ -1,0 +1,54 @@
+{
+	"terms": [
+		{
+			"name": "CancelPendingReason",
+			"label": "Reason Code",
+			"enumerations": [
+				{
+					"value": "1",
+					"label": "Insured request"
+				},
+				{
+					"value": "2",
+					"label": "Nonpayment of premium"
+				},
+				{
+					"value": "6",
+					"label": "Physical changes in the property "
+				},
+				{
+					"value": "7",
+					"label": "Increase in liability hazards beyond what is normally accepted"
+				},
+				{
+					"value": "8",
+					"label": "Increase in property hazards beyond what is normally accepted"
+				},
+				{
+					"value": "9",
+					"label": "Overexposed in area where risk is located"
+				},
+				{
+					"value": "10",
+					"label": "Change in occupancy status"
+				},
+				{
+					"value": "11",
+					"label": "Other underwriting reasons"
+				},
+				{
+					"value": "13",
+					"label": "Change in ownership"
+				},
+				{
+					"value": "14",
+					"label": "Missing required documentation"
+				},
+				{
+                    "value": "16", 
+                    "label": "Nonpayment of Premium - Flat"
+                }
+			]
+		}
+	]
+}

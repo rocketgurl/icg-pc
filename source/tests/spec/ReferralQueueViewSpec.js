@@ -145,23 +145,18 @@ define([
       
       it ('has an array of sub views', function(){
         expect(view.TASK_VIEWS).toEqual(jasmine.any(Array));
-      })
+      });
 
       it ('the sub views are objects and have models', function(){
         expect(view.TASK_VIEWS[0]).toEqual(jasmine.any(Object));
         expect(view.TASK_VIEWS[0].model).toEqual(jasmine.any(Object));
-      })
+      });
 
       it ('the sub views are table rows', function(){
         console.log(view.TASK_VIEWS[0]);
         expect(view.TASK_VIEWS[0].el instanceof HTMLTableRowElement).toEqual(true);
-      })
+      });
 
     });
-
   });
-
-
-
-
 });
