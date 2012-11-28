@@ -60,9 +60,9 @@ define([
 
     describe('ReferralQueueView can manage an assignee list via ReferralAssigneesModel', function () {
 
-      var assignee_xml = '<AssigneeList><Assignee identity="art.greitzer@cru360.com" active="true" new_business="false" renewals="false" /><Assignee identity="ms@cru360.com" active="false" new_business="false" renewals="false" /><Assignee identity="ctn@ics360.com" active="false" new_business="false" renewals="false" /><Assignee identity="michele.williams@cru360.com" active="true" new_business="false" renewals="true" /><Assignee identity="ck@cru360.com" active="true" new_business="false" renewals="false" /><Assignee identity="ak@cru360.com" active="false" new_business="false" renewals="false" /><Assignee identity="mm@ics360.com" active="true" new_business="false" renewals="false" /><Assignee identity="dtuser03" active="true" new_business="false" renewals="false" /><Assignee identity="allenr" active="true" new_business="false" renewals="false" /></AssigneeList>';
+      var assignee_xml = '<AssigneeList><Assignee identity="art.greitzer@cru360.com" active="true" new_business="false" renewals="false" /><Assignee identity="ms@cru360.com" active="false" new_business="true" renewals="false" /><Assignee identity="ctn@ics360.com" active="false" new_business="false" renewals="false" /><Assignee identity="michele.williams@cru360.com" active="true" new_business="false" renewals="true" /><Assignee identity="ck@cru360.com" active="true" new_business="false" renewals="false" /><Assignee identity="ak@cru360.com" active="false" new_business="false" renewals="false" /><Assignee identity="mm@ics360.com" active="true" new_business="false" renewals="false" /><Assignee identity="dtuser03" active="true" new_business="false" renewals="false" /><Assignee identity="allenr" active="true" new_business="false" renewals="false" /></AssigneeList>';
 
-      var assignee_json = { Assignee : [ { identity : 'art.greitzer@cru360.com', active : 'true', new_business : 'false', renewals : 'false' }, { identity : 'ms@cru360.com', active : 'false', new_business : 'false', renewals : 'false' }, { identity : 'ctn@ics360.com', active : 'false', new_business : 'false', renewals : 'false' }, { identity : 'michele.williams@cru360.com', active : 'true', new_business : 'false', renewals : 'true' }, { identity : 'ck@cru360.com', active : 'true', new_business : 'false', renewals : 'false' }, { identity : 'ak@cru360.com', active : 'false', new_business : 'false', renewals : 'false' }, { identity : 'mm@ics360.com', active : 'true', new_business : 'false', renewals : 'false' }, { identity : 'dtuser03', active : 'true', new_business : 'false', renewals : 'false' }, { identity : 'allenr', active : 'true', new_business : 'false', renewals : 'false' } ] };
+      var assignee_json = { Assignee : [ { identity : 'art.greitzer@cru360.com', active : 'true', new_business : 'false', renewals : 'false' }, { identity : 'ms@cru360.com', active : 'false', new_business : 'true', renewals : 'false' }, { identity : 'ctn@ics360.com', active : 'false', new_business : 'false', renewals : 'false' }, { identity : 'michele.williams@cru360.com', active : 'true', new_business : 'false', renewals : 'true' }, { identity : 'ck@cru360.com', active : 'true', new_business : 'false', renewals : 'false' }, { identity : 'ak@cru360.com', active : 'false', new_business : 'false', renewals : 'false' }, { identity : 'mm@ics360.com', active : 'true', new_business : 'false', renewals : 'false' }, { identity : 'dtuser03', active : 'true', new_business : 'false', renewals : 'false' }, { identity : 'allenr', active : 'true', new_business : 'false', renewals : 'false' } ] };
 
 
       it('View can GET an assignees list via model', function (){
@@ -83,6 +83,12 @@ define([
           expect(view.AssigneeList.get('json')).toEqual(jasmine.any(Object));
           expect(view.AssigneeList.get('document').find('Assignee').length).toBe(9);
         });
+      });
+
+      it('ReferralAssigneesModel can provide an array of just renewals', function(){
+        var renewals = view.AssigneeList.getRenewals();
+        var test = [{"identity":"michele.williams@cru360.com","active":true,"new_business":false,"renewals":true}];
+         expect(renewals).toEqual(test);
       });
 
       it('model can convert assignees list JSON to XML', function (){
@@ -109,7 +115,7 @@ define([
 
       it('can change the Assignees JSON and PUT the new XML', function (){
 
-        var new_json = { Assignee : [ { identity : 'art.greitzer@cru360.com', active : 'true', new_business : 'false', renewals : 'false' }, { identity : 'ms@cru360.com', active : 'false', new_business : 'false', renewals : 'false' }, { identity : 'ctn@ics360.com', active : 'false', new_business : 'false', renewals : 'false' }, { identity : 'michele.williams@cru360.com', active : 'true', new_business : 'false', renewals : 'true' }, { identity : 'ck@cru360.com', active : 'true', new_business : 'false', renewals : 'false' }, { identity : 'ak@cru360.com', active : 'false', new_business : 'false', renewals : 'false' }, { identity : 'mm@ics360.com', active : 'true', new_business : 'false', renewals : 'false' }, { identity : 'dtuser03', active : 'true', new_business : 'true', renewals : 'false' }, { identity : 'allenr', active : 'true', new_business : 'false', renewals : 'true' } ] };
+        var new_json = { Assignee : [ { identity : 'art.greitzer@cru360.com', active : 'true', new_business : 'false', renewals : 'false' }, { identity : 'ms@cru360.com', active : 'false', new_business : 'true', renewals : 'false' }, { identity : 'ctn@ics360.com', active : 'false', new_business : 'false', renewals : 'false' }, { identity : 'michele.williams@cru360.com', active : 'true', new_business : 'false', renewals : 'true' }, { identity : 'ck@cru360.com', active : 'true', new_business : 'false', renewals : 'false' }, { identity : 'ak@cru360.com', active : 'false', new_business : 'false', renewals : 'false' }, { identity : 'mm@ics360.com', active : 'true', new_business : 'false', renewals : 'false' }, { identity : 'dtuser03', active : 'true', new_business : 'true', renewals : 'false' }, { identity : 'allenr', active : 'true', new_business : 'false', renewals : 'true' } ] };
 
         view.AssigneeList.set('json', new_json);
 
@@ -135,10 +141,16 @@ define([
 
       it('can parse real booleans from strings in the JSON', function(){
         var json = view.AssigneeList.get('json');
-        var bools = [ { identity : 'art.greitzer@cru360.com', active : true, new_business : false, renewals : false }, { identity : 'ms@cru360.com', active : false, new_business : false, renewals : false }, { identity : 'ctn@ics360.com', active : false, new_business : false, renewals : false }, { identity : 'michele.williams@cru360.com', active : true, new_business : false, renewals : true }, { identity : 'ck@cru360.com', active : true, new_business : false, renewals : false }, { identity : 'ak@cru360.com', active : false, new_business : false, renewals : false }, { identity : 'mm@ics360.com', active : true, new_business : false, renewals : false }, { identity : 'dtuser03', active : true, new_business : false, renewals : false }, { identity : 'allenr', active : true, new_business : false, renewals : false } ]
+        var bools = [ { identity : 'art.greitzer@cru360.com', active : true, new_business : false, renewals : false }, { identity : 'ms@cru360.com', active : false, new_business : true, renewals : false }, { identity : 'ctn@ics360.com', active : false, new_business : false, renewals : false }, { identity : 'michele.williams@cru360.com', active : true, new_business : false, renewals : true }, { identity : 'ck@cru360.com', active : true, new_business : false, renewals : false }, { identity : 'ak@cru360.com', active : false, new_business : false, renewals : false }, { identity : 'mm@ics360.com', active : true, new_business : false, renewals : false }, { identity : 'dtuser03', active : true, new_business : false, renewals : false }, { identity : 'allenr', active : true, new_business : false, renewals : false } ]
         var parsed = view.AssigneeList.parseBooleans(json.Assignee);
         expect(parsed).toEqual(bools);
       });
+    });
+
+    it('ReferralAssigneesModel can provide an array of just new business', function(){
+      var newbz = view.AssigneeList.getNewBusiness();
+      var test = [{ identity : 'ms@cru360.com', active : false, new_business : true, renewals : false }];
+       expect(newbz).toEqual(test);
     });
 
     describe ('it can generate ReferralTaskViews from the collection:', function () {

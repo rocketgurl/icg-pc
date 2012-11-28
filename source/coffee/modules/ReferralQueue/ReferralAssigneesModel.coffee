@@ -7,6 +7,14 @@ define [
     initialize : ->
       @use_cripple()
 
+    getRenewals : ->
+      json = @parseBooleans @get('json').Assignee
+      _.where json, { renewals : true }
+
+    getNewBusiness : ->
+      json = @parseBooleans @get('json').Assignee
+      _.where json, { new_business : true }
+
     # **PUT XML to server and fire callbacks**  
     # 
     # @return _jqXHR_  
@@ -72,8 +80,6 @@ define [
           new_business : JSON.parse(item.new_business)
           renewals     : JSON.parse(item.renewals)
         }
-
-
 
     # **Convert Assignees JSON to XML**  
     # 
