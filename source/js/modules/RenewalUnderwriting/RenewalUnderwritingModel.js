@@ -17,9 +17,6 @@
         if (error == null) {
           error = this.putError;
         }
-        fragment = {
-          renewal: fragment
-        };
         return this.save({}, {
           data: JSON.stringify(fragment),
           contentType: 'application/json',
