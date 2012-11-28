@@ -88,8 +88,7 @@ define [
       # _.delay(load, 1000)
 
       @RenewalModel.fetch(
-          # url : @url('/underwriting')
-          url : '/mocks/renewal_underwriting_get.json' #mocks
+          url : "#{@policy.get('urlRoot')}policies/#{@id}/underwriting"
           success : (model, resp) ->
             model.trigger('renewal:success', resp)
           error : (model, resp) ->

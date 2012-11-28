@@ -72,7 +72,7 @@
         this.loader = this.Helpers.loader("ru-spinner-" + this.policy_view.cid, 80, '#696969');
         this.loader.setFPS(48);
         this.RenewalModel.fetch({
-          url: '/mocks/renewal_underwriting_get.json',
+          url: "" + (this.policy.get('urlRoot')) + "policies/" + this.id + "/underwriting",
           success: function(model, resp) {
             return model.trigger('renewal:success', resp);
           },
