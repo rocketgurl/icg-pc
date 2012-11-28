@@ -5,13 +5,14 @@
     mainConfigFile: 'main.js',
     paths : {
       jquery      : 'lib/jquery-1.8.2',
+      jqueryui    : 'lib/jquery-ui-1.9.0.custom.min',
       underscore  : 'lib/underscore',
       backbone    : 'lib/backbone-min',
       amplify     : 'lib/amplify',
       mustache    : 'lib/requirejs.mustache',
       base64      : 'lib/base64',
       moment      : 'lib/moment',
-      momentrange : 'lib/moment-range'
+      momentrange : 'lib/moment-range',
       xml2json    : 'lib/jquery.xml2json',
       text        : 'lib/text',
       domReady    : 'lib/domReady',
@@ -94,7 +95,8 @@
                 "backbone",
                 "mustache",
                 "amplify",
-                "underscore"
+                "underscore",
+                "swfobject"
             ]
         }
     ],
