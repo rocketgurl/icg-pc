@@ -26,9 +26,6 @@ define [
       success ?= @putSuccess
       error  ?= @putError
 
-      fragment = 
-        renewal : fragment
-
       @save({},{ 
           data        : JSON.stringify fragment 
           contentType : 'application/json'

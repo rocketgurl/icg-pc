@@ -34,6 +34,10 @@ define [
         @selectAssignee(@process_event e)
         @$el.find('.menu-close').trigger('click')
 
+      'click .ru-disposition-row a' : (e) ->
+        @selectDisposition(@process_event e)
+        @$el.find('.menu-close').trigger('click')
+
     initialize : (options) ->
       @$el         = options.$el
       @policy      = options.policy
@@ -122,6 +126,9 @@ define [
     selectAssignee : (el) ->
       @processChange 'renewal.assignedTo', $(el).html()
 
+    selectDisposition : (el) ->
+      @processChange 'insuranceScore.currentDisposition', $(el).html()
+
     changeDisposition : (el) ->
       data = 
         cid : @cid
@@ -175,6 +182,8 @@ define [
       else
         old_val = field
 
+      @CHANGED_FIELD = field # yes, state.
+
       if old_val != val
         # This is where we would save the value to the server
         if _.isArray(field)
@@ -184,7 +193,7 @@ define [
         else
           @RenewalModel.set(field, val)
 
-        @RenewalModel.putFragment(@putSuccess, @putError, @CHANGESET.renewal)
+        @RenewalModel.putFragment(@putSuccess, @putError, @CHANGESET)
       else
         @Amplify.publish(@policy_view.cid, 'notice', "No changes made", 2000)
         false
@@ -194,12 +203,20 @@ define [
     setDatepicker : (el) ->
       @DATEPICKER = el
 
+    # On successful save we use the CHANGED_FIELD state to figure out
+    # which HTML element to update with a new value
     putSuccess : (model, response, options) ->
-      assigned_to = @CHANGESET.renewal.assignedTo
-      if assigned_to?
-        @$el.find('a[href=assigned_to]').html(
-            """#{assigned_to}&nbsp;<i class="icon-pencil"></i>"""
-          )
+      if @CHANGED_FIELD?
+        target_el = switch @CHANGED_FIELD[1]
+          when 'assignedTo' then 'assigned_to'
+          when 'currentDisposition' then 'current_disposition'
+          else ''
+
+      new_value = @CHANGESET[@CHANGED_FIELD[0]][@CHANGED_FIELD[1]]
+
+      @$el.find("a[href=#{target_el}]").html(
+        """#{new_value}&nbsp;<i class="icon-pencil"></i>"""
+      )
 
       @Amplify.publish(@policy_view.cid, 'success', "Saved changes!", 2000)
 
@@ -218,7 +235,8 @@ define [
         # Store a changeset to send back to server
         @CHANGESET =
           renewal : _.omit(resp.renewal, ["inspectionOrdered", "renewalReviewRequired"])
-          insuranceScore : resp.insuranceScore.currentDisposition
+          insuranceScore : 
+            currentDisposition : resp.insuranceScore.currentDisposition
 
         @$el.html @Mustache.render tpl_ru_container, resp
         @removeLoader()

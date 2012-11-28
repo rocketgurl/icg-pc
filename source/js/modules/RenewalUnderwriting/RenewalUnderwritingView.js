@@ -25,6 +25,10 @@
         'click .ru-assignees-row a': function(e) {
           this.selectAssignee(this.process_event(e));
           return this.$el.find('.menu-close').trigger('click');
+        },
+        'click .ru-disposition-row a': function(e) {
+          this.selectDisposition(this.process_event(e));
+          return this.$el.find('.menu-close').trigger('click');
         }
       },
       initialize: function(options) {
@@ -107,6 +111,9 @@
       selectAssignee: function(el) {
         return this.processChange('renewal.assignedTo', $(el).html());
       },
+      selectDisposition: function(el) {
+        return this.processChange('insuranceScore.currentDisposition', $(el).html());
+      },
       changeDisposition: function(el) {
         var data;
         data = {
@@ -158,6 +165,7 @@
         } else {
           old_val = field;
         }
+        this.CHANGED_FIELD = field;
         if (old_val !== val) {
           if (_.isArray(field)) {
             this.CHANGESET[field[0]][field[1]] = val;
@@ -165,7 +173,7 @@
           } else {
             this.RenewalModel.set(field, val);
           }
-          return this.RenewalModel.putFragment(this.putSuccess, this.putError, this.CHANGESET.renewal);
+          return this.RenewalModel.putFragment(this.putSuccess, this.putError, this.CHANGESET);
         } else {
           this.Amplify.publish(this.policy_view.cid, 'notice', "No changes made", 2000);
           return false;
@@ -175,11 +183,21 @@
         return this.DATEPICKER = el;
       },
       putSuccess: function(model, response, options) {
-        var assigned_to;
-        assigned_to = this.CHANGESET.renewal.assignedTo;
-        if (assigned_to != null) {
-          this.$el.find('a[href=assigned_to]').html("" + assigned_to + "&nbsp;<i class=\"icon-pencil\"></i>");
+        var new_value, target_el;
+        if (this.CHANGED_FIELD != null) {
+          target_el = (function() {
+            switch (this.CHANGED_FIELD[1]) {
+              case 'assignedTo':
+                return 'assigned_to';
+              case 'currentDisposition':
+                return 'current_disposition';
+              default:
+                return '';
+            }
+          }).call(this);
         }
+        new_value = this.CHANGESET[this.CHANGED_FIELD[0]][this.CHANGED_FIELD[1]];
+        this.$el.find("a[href=" + target_el + "]").html("" + new_value + "&nbsp;<i class=\"icon-pencil\"></i>");
         this.Amplify.publish(this.policy_view.cid, 'success', "Saved changes!", 2000);
         return this.AssigneeList.fetch({
           success: this.assigneesFetchSuccess,
@@ -194,7 +212,9 @@
           resp.cid = this.cid;
           this.CHANGESET = {
             renewal: _.omit(resp.renewal, ["inspectionOrdered", "renewalReviewRequired"]),
-            insuranceScore: resp.insuranceScore.currentDisposition
+            insuranceScore: {
+              currentDisposition: resp.insuranceScore.currentDisposition
+            }
           };
           this.$el.html(this.Mustache.render(tpl_ru_container, resp));
           this.removeLoader();
