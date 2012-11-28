@@ -7,6 +7,20 @@
       initialize: function() {
         return this.use_cripple();
       },
+      getRenewals: function() {
+        var json;
+        json = this.parseBooleans(this.get('json').Assignee);
+        return _.where(json, {
+          renewals: true
+        });
+      },
+      getNewBusiness: function() {
+        var json;
+        json = this.parseBooleans(this.get('json').Assignee);
+        return _.where(json, {
+          new_business: true
+        });
+      },
       putList: function(success, error) {
         var xml,
           _this = this;

@@ -20,3 +20,18 @@ define [
     url : ->
       "#{@get('urlRoot')}policies/#{@id}/underwriting"
 
+    # We don't want to send the whole model back to pxCentral, just a
+    # small JSON fragment, so we override Backbone a bit.
+    putFragment : (success, error, fragment) ->
+      success ?= @putSuccess
+      error  ?= @putError
+
+      fragment = 
+        renewal : fragment
+
+      @save({},{ 
+          data        : JSON.stringify fragment 
+          contentType : 'application/json'
+          success     : success
+          error       : error
+        })
