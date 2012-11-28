@@ -8,6 +8,7 @@
 #
 require "bundler"
 require "fileutils"
+require "nokogiri"
 
 # Path to RquireJS build config
 RJS_CONFIG = File.join('source', 'js', 'app.build.js').gsub(File::SEPARATOR, File::ALT_SEPARATOR || File::SEPARATOR)
@@ -36,7 +37,7 @@ PRUNE = {
 task :default => [:build]
 
 # Build task
-task :build => [:compile, :prune_build]
+task :build => [:compile, :prune_build, :version]
 
 # Compile and build project with RequireJS
 task :compile do
@@ -72,6 +73,38 @@ task :prune_build do
     puts green "  >> Pruned build files"
   end
 
+end
+
+# Append the latest commit hash to the footer of index.html
+task :version do
+  version = `git describe --tags --always HEAD`
+  append_version_number version.chomp!, "index.html"
+end
+
+# Return File.join() in a manner safe for Windows
+def file_join_safe(path_a, path_b)
+  File.join(path_a, path_b).gsub(File::SEPARATOR, File::ALT_SEPARATOR || File::SEPARATOR)
+end
+
+# Update the version number in index.html
+def append_version_number(version, file)
+  prefix      = File.dirname(__FILE__)
+  target_file = file_join_safe(prefix, BUILD_DIR)
+  target_file = file_join_safe(target_file, file)
+
+  f = File.open(target_file)
+  doc = Nokogiri::HTML(f)
+  f.close
+
+  span = doc.css "#version-number"
+  span.each do |s|
+    s.content = "#{version}"
+  end
+
+  File.open(target_file, 'w') { |f| 
+    f.puts doc.to_html
+  }
+  puts ">> VERSION #{version} APPENDED"
 end
 
 # Return File.join() in a manner safe for Windows
