@@ -15,6 +15,10 @@ header.module-referrals {
 		position: relative;
 		top: -6px;
 	}
+	.button-manage-assignees[disabled=disabled] {
+		@include simple-color(hue(#eee), saturation(#eee), lightness(#eee));
+		color: #ccc;
+	}
 }
 
 .referrals-switch {

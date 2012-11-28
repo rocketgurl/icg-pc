@@ -79,6 +79,10 @@ define [
       # Throw up our loading image until the tasks come in
       @toggleLoader(true)
 
+      # If we couldn't load assignee_list.xml then disable the button
+      if @ASSIGNEE_STATE == false
+        @$el.find('.button-manage-assignees').attr('disabled', true)
+
       this
 
     # **Render tasks**  
@@ -261,11 +265,15 @@ define [
     # correctly in Mustache
     toggleManageAssignees : (e) ->
       e.preventDefault()
-      assignees = @AssigneeList.parseBooleans(@AssigneeList.get('json').Assignee)
-      @Modal.attach_menu $(e.currentTarget), '.rq-menus', tpl_menu_assignees, {assignees : assignees}
+      if @AssigneeList.get('json')?
+        assignees = @AssigneeList.parseBooleans(@AssigneeList.get('json').Assignee)
+        @Modal.attach_menu $(e.currentTarget), '.rq-menus', tpl_menu_assignees, {assignees : assignees}
+      else
+        @Amplify.publish @cid, 'warning', "Unable to load assignees from server."
 
     renderAssigneesError : (model, xhr, options) ->
-      @Amplify.publish @cid, 'warning', "Could not load assignees: #{xhr.status} - #{xhr.statusText}"
+      @ASSIGNEE_STATE = false
+      @Amplify.publish 'controller', 'warning', "Warning - could not load assignees xml: #{xhr.status} - #{xhr.statusText}"
 
     # The two lists of checkboxes are combined into one array of objects. Then
     # map over the Assignee JSON from the model, plucking objects from our

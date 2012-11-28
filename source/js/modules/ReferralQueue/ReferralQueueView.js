@@ -72,6 +72,9 @@
         this.CONTAINER = this.$el.find('table.module-referrals tbody');
         this.PAGINATION_EL = this.cachePaginationElements();
         this.toggleLoader(true);
+        if (this.ASSIGNEE_STATE === false) {
+          this.$el.find('.button-manage-assignees').attr('disabled', true);
+        }
         return this;
       },
       renderTasks: function(collection) {
@@ -218,13 +221,18 @@
       toggleManageAssignees: function(e) {
         var assignees;
         e.preventDefault();
-        assignees = this.AssigneeList.parseBooleans(this.AssigneeList.get('json').Assignee);
-        return this.Modal.attach_menu($(e.currentTarget), '.rq-menus', tpl_menu_assignees, {
-          assignees: assignees
-        });
+        if (this.AssigneeList.get('json') != null) {
+          assignees = this.AssigneeList.parseBooleans(this.AssigneeList.get('json').Assignee);
+          return this.Modal.attach_menu($(e.currentTarget), '.rq-menus', tpl_menu_assignees, {
+            assignees: assignees
+          });
+        } else {
+          return this.Amplify.publish(this.cid, 'warning', "Unable to load assignees from server.");
+        }
       },
       renderAssigneesError: function(model, xhr, options) {
-        return this.Amplify.publish(this.cid, 'warning', "Could not load assignees: " + xhr.status + " - " + xhr.statusText);
+        this.ASSIGNEE_STATE = false;
+        return this.Amplify.publish('controller', 'warning', "Warning - could not load assignees xml: " + xhr.status + " - " + xhr.statusText);
       },
       saveAssignees: function(e) {
         var json, merged, values;
