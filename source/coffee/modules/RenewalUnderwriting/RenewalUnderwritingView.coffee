@@ -38,6 +38,15 @@ define [
         @selectDisposition(@process_event e)
         @$el.find('.menu-close').trigger('click')
 
+      'click .renewal_reason' : (e) ->
+        @editRenewalReason(@process_event e)
+
+      'click .cancel' : (e) ->
+        @cancelRenewalReason(@process_event e)
+
+      'click .confirm' : (e) ->
+        @persistRenewalReason(@process_event e)
+
     initialize : (options) ->
       @$el         = options.$el
       @policy      = options.policy
@@ -165,6 +174,37 @@ define [
       field = "renewal.#{$(@DATEPICKER).attr('name')}"
       @processChange field, date
 
+    editRenewalReason : ($el) ->
+      content = $el.html()
+      $parent = $el.parent()
+      $el.hide()
+      $parent.find('textarea').show()
+      $parent.find('.buttons').show()
+
+    cancelRenewalReason : ($el) ->
+      $parent = $el.parent().parent()
+      $parent.find('.renewal_reason').show()
+      $parent.find('textarea').hide()
+      $parent.find('.buttons').hide()
+
+    persistRenewalReason : ($el) ->
+      $parent = $el.parent().parent()
+      $el.attr('disabled', true)
+      $parent.find('textarea').attr('disabled', true)
+
+      @processChange 'renewal.reason', $parent.find('textarea').val()
+
+    # On a successfull save the renewal.reason <textarea> needs to be rest
+    # to its initial state with the new content in place
+    resetRenewalReason : ($el) ->
+      $el.attr('disabled', false)
+      $parent = $el.parent()
+      $parent.find('.confirm').attr('disabled', false)
+      $parent.find('.renewal_reason').html($el.val()).show()
+      $parent.find('.buttons').hide()
+      $el.hide()
+
+
     # **Did a value change?**  
     # Check the CHANGESET to see if a value changed. For the field we check
     # for the existence of a '.' and split on that to deal with deeper values
@@ -210,6 +250,7 @@ define [
         currentDisposition : 'a[href=current_disposition]'
         reviewDeadline     : 'input[name=reviewDeadline]'
         reviewPeriod       : 'input[name=reviewPeriod]'
+        reason             : 'textarea[name=reason]'
 
       if @CHANGED_FIELD?
         target_el = elements[@CHANGED_FIELD[1]]
@@ -220,6 +261,14 @@ define [
 
       if $el.is('a')
         $el.html("""#{new_value}&nbsp;<i class="icon-pencil"></i>""")
+
+      if $el.is('textarea') && new_class == 'complete'
+        @resetRenewalReason $el
+
+      if $el.is('textarea') && new_class == 'incomplete'
+        $el.attr('disabled', false)
+        $el.parent().find('.confirm').attr('disabled', false)
+
 
     # Set the value of DATEPICKER for use in determining changes.  
     # @param `el` _HTML Element_  

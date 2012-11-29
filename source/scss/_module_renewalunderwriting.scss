@@ -57,6 +57,56 @@
 		font-weight: bold;
 		color: $darkblue;
 	}
+
+	.buttons {
+		display: none;
+		text-align: right;
+	}
+
+	button.confirm {
+		@include simple-color(hue(#37a93c), saturation(#37a93c), lightness(#37a93c));
+	}
+
+	button.confirm[disabled=disabled] {
+		@include simple-color(hue(#eee), saturation(#eee), lightness(#eee));
+		color: #ccc;
+	}
+
+	button.cancel {
+		@include simple-color(hue($lightgray), saturation($lightgray), lightness($lightgray));
+	}
+
+	.renewal_reason {
+		color: $colblue;
+		padding: 10px;
+		border: $white 1px solid;
+		background: lighten($lightgray, 3);
+		border-radius: 4px;
+	}
+
+	.renewal_reason:hover {
+		cursor: pointer;
+		border: darken($rowselect, 5) 1px solid;
+		background: lighten($rowselect, 6);
+		color: $blue;
+	}
+
+	textarea {
+		display: none;
+		width: 92%;
+		min-height: 120px;
+		border: darken($lightgray, 10) 1px solid;
+		@include font-size(14);
+		@include sans;
+		color: $darkgray;
+		padding: 10px;
+		border-radius: 4px;
+	}
+
+	textarea[disabled=disabled] {
+		font-style: italic;
+		color: darken($lightgray, 10);
+	}
 }
 
 .ru-hybrid {
