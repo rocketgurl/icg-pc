@@ -147,7 +147,6 @@ define [
       @$el.find('input[name=reviewDeadline]').datepicker("show")
 
     attachDatepickers : ->
-
       @dateChanged   = _.bind(@dateChanged, this)
       @setDatepicker = _.bind(@setDatepicker, this)
 
@@ -182,7 +181,7 @@ define [
       else
         old_val = field
 
-      @CHANGED_FIELD = field # yes, state.
+      @CHANGED_FIELD = field # We need to maintain state for @updateElement
 
       if old_val != val
         # This is where we would save the value to the server
@@ -193,10 +192,34 @@ define [
         else
           @RenewalModel.set(field, val)
 
+        @updateElement 'loading'
         @RenewalModel.putFragment(@putSuccess, @putError, @CHANGESET)
+
       else
         @Amplify.publish(@policy_view.cid, 'notice', "No changes made", 2000)
         false
+
+    # Apply styles to elements to indicate loading/complete status. <a>'s
+    # also need new html content inserted
+    #
+    # @param `new_class` _String_ className to apply  
+    #
+    updateElement : (new_class) ->
+      elements = 
+        assignedTo         : 'a[href=assigned_to]'
+        currentDisposition : 'a[href=current_disposition]'
+        reviewDeadline     : 'input[name=reviewDeadline]'
+        reviewPeriod       : 'input[name=reviewPeriod]'
+
+      if @CHANGED_FIELD?
+        target_el = elements[@CHANGED_FIELD[1]]
+        new_value = @CHANGESET[@CHANGED_FIELD[0]][@CHANGED_FIELD[1]]
+
+      $el = @$el.find target_el 
+      $el.removeClass().addClass(new_class)
+
+      if $el.is('a')
+        $el.html("""#{new_value}&nbsp;<i class="icon-pencil"></i>""")
 
     # Set the value of DATEPICKER for use in determining changes.  
     # @param `el` _HTML Element_  
@@ -206,18 +229,7 @@ define [
     # On successful save we use the CHANGED_FIELD state to figure out
     # which HTML element to update with a new value
     putSuccess : (model, response, options) ->
-      if @CHANGED_FIELD?
-        target_el = switch @CHANGED_FIELD[1]
-          when 'assignedTo' then 'assigned_to'
-          when 'currentDisposition' then 'current_disposition'
-          else ''
-
-      new_value = @CHANGESET[@CHANGED_FIELD[0]][@CHANGED_FIELD[1]]
-
-      @$el.find("a[href=#{target_el}]").html(
-        """#{new_value}&nbsp;<i class="icon-pencil"></i>"""
-      )
-
+      @updateElement 'complete'
       @Amplify.publish(@policy_view.cid, 'success', "Saved changes!", 2000)
 
       # Refresh the Assignee List
@@ -226,6 +238,7 @@ define [
         error   : @assigneesFetchError
 
     putError : () ->
+      @updateElement 'incomplete'
       @Amplify.publish(@policy_view.cid, 'warning', "Could not save!", 2000)
 
     renewalSuccess : (resp) ->
