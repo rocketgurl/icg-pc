@@ -173,31 +173,36 @@
           } else {
             this.RenewalModel.set(field, val);
           }
+          this.updateElement('loading');
           return this.RenewalModel.putFragment(this.putSuccess, this.putError, this.CHANGESET);
         } else {
           this.Amplify.publish(this.policy_view.cid, 'notice', "No changes made", 2000);
           return false;
         }
       },
+      updateElement: function(new_class) {
+        var $el, elements, new_value, target_el;
+        elements = {
+          assignedTo: 'a[href=assigned_to]',
+          currentDisposition: 'a[href=current_disposition]',
+          reviewDeadline: 'input[name=reviewDeadline]',
+          reviewPeriod: 'input[name=reviewPeriod]'
+        };
+        if (this.CHANGED_FIELD != null) {
+          target_el = elements[this.CHANGED_FIELD[1]];
+          new_value = this.CHANGESET[this.CHANGED_FIELD[0]][this.CHANGED_FIELD[1]];
+        }
+        $el = this.$el.find(target_el);
+        $el.removeClass().addClass(new_class);
+        if ($el.is('a')) {
+          return $el.html("" + new_value + "&nbsp;<i class=\"icon-pencil\"></i>");
+        }
+      },
       setDatepicker: function(el) {
         return this.DATEPICKER = el;
       },
       putSuccess: function(model, response, options) {
-        var new_value, target_el;
-        if (this.CHANGED_FIELD != null) {
-          target_el = (function() {
-            switch (this.CHANGED_FIELD[1]) {
-              case 'assignedTo':
-                return 'assigned_to';
-              case 'currentDisposition':
-                return 'current_disposition';
-              default:
-                return '';
-            }
-          }).call(this);
-        }
-        new_value = this.CHANGESET[this.CHANGED_FIELD[0]][this.CHANGED_FIELD[1]];
-        this.$el.find("a[href=" + target_el + "]").html("" + new_value + "&nbsp;<i class=\"icon-pencil\"></i>");
+        this.updateElement('complete');
         this.Amplify.publish(this.policy_view.cid, 'success', "Saved changes!", 2000);
         return this.AssigneeList.fetch({
           success: this.assigneesFetchSuccess,
@@ -205,6 +210,7 @@
         });
       },
       putError: function() {
+        this.updateElement('incomplete');
         return this.Amplify.publish(this.policy_view.cid, 'warning', "Could not save!", 2000);
       },
       renewalSuccess: function(resp) {

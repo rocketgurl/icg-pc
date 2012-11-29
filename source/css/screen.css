@@ -1517,6 +1517,14 @@ Module: Policy
   width: 80px;
   cursor: pointer;
 }
+.ru-list .loading {
+  color: lightgrey;
+  font-style: italic;
+}
+.ru-list .incomplete {
+  color: #72101b;
+  font-style: italic;
+}
 
 .ru-loss-history, .zd-loss-history {
   display: block;
