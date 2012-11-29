@@ -29,6 +29,15 @@
         'click .ru-disposition-row a': function(e) {
           this.selectDisposition(this.process_event(e));
           return this.$el.find('.menu-close').trigger('click');
+        },
+        'click .renewal_reason': function(e) {
+          return this.editRenewalReason(this.process_event(e));
+        },
+        'click .cancel': function(e) {
+          return this.cancelRenewalReason(this.process_event(e));
+        },
+        'click .confirm': function(e) {
+          return this.persistRenewalReason(this.process_event(e));
         }
       },
       initialize: function(options) {
@@ -156,6 +165,37 @@
         field = "renewal." + ($(this.DATEPICKER).attr('name'));
         return this.processChange(field, date);
       },
+      editRenewalReason: function($el) {
+        var $parent, content;
+        content = $el.html();
+        $parent = $el.parent();
+        $el.hide();
+        $parent.find('textarea').show();
+        return $parent.find('.buttons').show();
+      },
+      cancelRenewalReason: function($el) {
+        var $parent;
+        $parent = $el.parent().parent();
+        $parent.find('.renewal_reason').show();
+        $parent.find('textarea').hide();
+        return $parent.find('.buttons').hide();
+      },
+      persistRenewalReason: function($el) {
+        var $parent;
+        $parent = $el.parent().parent();
+        $el.attr('disabled', true);
+        $parent.find('textarea').attr('disabled', true);
+        return this.processChange('renewal.reason', $parent.find('textarea').val());
+      },
+      resetRenewalReason: function($el) {
+        var $parent;
+        $el.attr('disabled', false);
+        $parent = $el.parent();
+        $parent.find('.confirm').attr('disabled', false);
+        $parent.find('.renewal_reason').html($el.val()).show();
+        $parent.find('.buttons').hide();
+        return $el.hide();
+      },
       processChange: function(field, val) {
         var old_val;
         old_val = '';
@@ -186,7 +226,8 @@
           assignedTo: 'a[href=assigned_to]',
           currentDisposition: 'a[href=current_disposition]',
           reviewDeadline: 'input[name=reviewDeadline]',
-          reviewPeriod: 'input[name=reviewPeriod]'
+          reviewPeriod: 'input[name=reviewPeriod]',
+          reason: 'textarea[name=reason]'
         };
         if (this.CHANGED_FIELD != null) {
           target_el = elements[this.CHANGED_FIELD[1]];
@@ -195,7 +236,14 @@
         $el = this.$el.find(target_el);
         $el.removeClass().addClass(new_class);
         if ($el.is('a')) {
-          return $el.html("" + new_value + "&nbsp;<i class=\"icon-pencil\"></i>");
+          $el.html("" + new_value + "&nbsp;<i class=\"icon-pencil\"></i>");
+        }
+        if ($el.is('textarea') && new_class === 'complete') {
+          this.resetRenewalReason($el);
+        }
+        if ($el.is('textarea') && new_class === 'incomplete') {
+          $el.attr('disabled', false);
+          return $el.parent().find('.confirm').attr('disabled', false);
         }
       },
       setDatepicker: function(el) {
