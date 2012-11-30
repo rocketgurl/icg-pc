@@ -78,7 +78,9 @@ define [
     # **Get <SystemOfRecord>** - used to determine IPM eligibility.  
     # @return _String_
     getSystemOfRecord : ->
-      @get('document').find('Management SystemOfRecord').text()
+      doc = @get('document')
+      if doc?
+        doc.find('Management SystemOfRecord').text()
 
     # **Is this an IPM policy?**  
     # @return _Boolean_
@@ -244,7 +246,7 @@ define [
     getProductName : ->
       name = null
       terms = @getLastTerm().DataItem
-      name = "#{@getDataItem(terms, 'OpProgram')}-#{@getDataItem(terms, 'OpPolicyType')}-#{@getDataItem(terms, 'OpPropertyState')}"
+      name = "#{@getDataItem(terms, 'Program')}-#{@getDataItem(terms, 'PolicyType')}-#{@getDataItem(terms, 'PropertyState')}"
       name.toLowerCase()
 
     # **Find <Identifier> by name and return value or false**  

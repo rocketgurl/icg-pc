@@ -64,7 +64,11 @@
         return ipm_header;
       },
       getSystemOfRecord: function() {
-        return this.get('document').find('Management SystemOfRecord').text();
+        var doc;
+        doc = this.get('document');
+        if (doc != null) {
+          return doc.find('Management SystemOfRecord').text();
+        }
       },
       isIPM: function() {
         if (this.getSystemOfRecord() === 'mxServer') {
@@ -226,7 +230,7 @@
         var name, terms;
         name = null;
         terms = this.getLastTerm().DataItem;
-        name = "" + (this.getDataItem(terms, 'OpProgram')) + "-" + (this.getDataItem(terms, 'OpPolicyType')) + "-" + (this.getDataItem(terms, 'OpPropertyState'));
+        name = "" + (this.getDataItem(terms, 'Program')) + "-" + (this.getDataItem(terms, 'PolicyType')) + "-" + (this.getDataItem(terms, 'PropertyState'));
         return name.toLowerCase();
       },
       getIdentifier: function(name) {
