@@ -8,6 +8,8 @@ define [
   #
   PolicyModel = BaseModel.extend
 
+    NAME : 'Policy'
+
     # Policy states
     # -------------
     states : 
@@ -127,7 +129,7 @@ define [
     # @return _Boolean_ 
     isCancelled : ->
       state     = @getState()
-      if typeof state == 'object' && state.text = 'CANCELLEDPOLICY'
+      if typeof state == 'object' && state.text == 'CANCELLEDPOLICY'
         true
       else
         false
@@ -255,9 +257,9 @@ define [
     # **Derive the product name from policy information**  
     # @return _String_
     getProductName : ->
-      name = null
+      name  = null
       terms = @getLastTerm().DataItem
-      name = "#{@getDataItem(terms, 'Program')}-#{@getDataItem(terms, 'PolicyType')}-#{@getDataItem(terms, 'PropertyState')}"
+      name  = "#{@getDataItem(terms, 'Program')}-#{@getDataItem(terms, 'PolicyType')}-#{@getDataItem(terms, 'PropertyState')}"
       name.toLowerCase()
 
     # **Find <Identifier> by name and return value or false**  

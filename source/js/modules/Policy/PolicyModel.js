@@ -4,6 +4,7 @@
   define(['BaseModel'], function(BaseModel) {
     var PolicyModel;
     PolicyModel = BaseModel.extend({
+      NAME: 'Policy',
       states: {
         ACTIVE_POLICY: 'ACTIVEPOLICY',
         ACTIVE_QUOTE: 'ACTIVEQUOTE',
@@ -114,7 +115,7 @@
       isCancelled: function() {
         var state;
         state = this.getState();
-        if (typeof state === 'object' && (state.text = 'CANCELLEDPOLICY')) {
+        if (typeof state === 'object' && state.text === 'CANCELLEDPOLICY') {
           return true;
         } else {
           return false;

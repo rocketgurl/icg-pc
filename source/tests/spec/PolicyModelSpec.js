@@ -160,7 +160,7 @@ define([
 
     it ('can get a policy state : getState()', function () {
 
-      var states = ['ACTIVEPOLICY','ACTIVEPOLICY',{ effectiveDate : '2011-01-15T00:00:00-04:00', reasonCode : '5', text : 'CANCELLEDPOLICY' }];
+      var states = [{ text : 'ACTIVEPOLICY' },{ text : 'ACTIVEPOLICY' },{ effectiveDate : '2011-01-15T00:00:00-04:00', reasonCode : '5', text : 'CANCELLEDPOLICY' }];
       
       runs(function(){
         _.each(policies, function(policy, index){
