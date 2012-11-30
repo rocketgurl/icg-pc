@@ -50,6 +50,7 @@
             model.response_state();
             switch (model.get('fetch_state').code) {
               case "200":
+                model.setModelState();
                 model.get_pxServerIndex();
                 return _this.policy_view.trigger('loaded');
               default:
@@ -57,7 +58,8 @@
                 _this.render({
                   flash_only: true
                 });
-                return _this.Amplify.publish(_this.policy_view.cid, 'warning', "" + (model.get('fetch_state').text) + " - " + ($(resp).find('p').text()) + " Sorry.");
+                _this.Amplify.publish(_this.policy_view.cid, 'warning', "" + (model.get('fetch_state').text) + " - " + ($(resp).find('p').text()) + " Sorry.");
+                return _this.policy_view.trigger('loaded');
             }
           },
           error: function(model, resp) {

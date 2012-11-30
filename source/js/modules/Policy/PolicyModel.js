@@ -14,8 +14,16 @@
       initialize: function() {
         this.use_cripple();
         return this.on('change', function(e) {
-          return e.setModelState();
+          return e.checkModelState();
         });
+      },
+      checkModelState: function() {
+        if (this.get('fetch_state') === void 0) {
+          this.response_state();
+          if (this.get('fetch_state').code === '200') {
+            return this.setModelState();
+          }
+        }
       },
       url: function(route) {
         var url;

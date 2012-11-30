@@ -62,12 +62,14 @@ define [
           model.response_state()
           switch model.get('fetch_state').code
             when "200"
+              model.setModelState()
               model.get_pxServerIndex()
               @policy_view.trigger 'loaded'
             else
               @view.remove_loader()
               @render({ flash_only : true })
               @Amplify.publish(@policy_view.cid, 'warning', "#{model.get('fetch_state').text} - #{$(resp).find('p').text()} Sorry.")
+              @policy_view.trigger 'loaded'
        error : (model, resp) =>
           @render({ flash_only : true })
           @view.remove_loader()
