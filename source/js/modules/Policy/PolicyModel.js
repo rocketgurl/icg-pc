@@ -87,17 +87,16 @@
       },
       _getAttributes: function(elem) {
         var attr, attribs, out, _i, _len;
-        out = {};
-        attribs = elem[0].attributes;
-        for (_i = 0, _len = attribs.length; _i < _len; _i++) {
-          attr = attribs[_i];
-          out[attr.name] = attr.value;
+        out = null;
+        if ((elem[0] != null) && (elem[0].attributes != null)) {
+          out = {};
+          attribs = elem[0].attributes;
+          for (_i = 0, _len = attribs.length; _i < _len; _i++) {
+            attr = attribs[_i];
+            out[attr.name] = attr.value;
+          }
         }
-        if (_.isEmpty(out)) {
-          return null;
-        } else {
-          return out;
-        }
+        return out;
       },
       getState: function() {
         var attr, policyState, text;

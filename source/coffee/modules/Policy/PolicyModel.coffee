@@ -99,11 +99,15 @@ define [
     # @param `elem` _jQuery Element_
     # @return _Obj_ | _Null_
     _getAttributes : (elem) ->
-      out = {}
-      attribs = elem[0].attributes
-      for attr in attribs
-        out[attr.name] = attr.value 
-      return if _.isEmpty(out) then null else out
+      out = null
+
+      if elem[0]? && elem[0].attributes?
+        out = {}
+        attribs = elem[0].attributes
+        for attr in attribs
+          out[attr.name] = attr.value 
+
+      out
 
     # **Determine the state of a policy**  
     # If a node has no attributes, the node's text value is returned. 
