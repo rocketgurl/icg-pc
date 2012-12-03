@@ -22,7 +22,11 @@
         if (this.get('fetch_state') === void 0) {
           this.response_state();
           if (this.get('fetch_state').code === '200') {
-            return this.setModelState();
+            try {
+              return this.setModelState();
+            } catch (e) {
+              return this.trigger('policy_error', this);
+            }
           }
         }
       },
@@ -266,8 +270,10 @@
         return this._formatDate(clean);
       },
       _formatDate: function(date, format) {
-        format = format || 'YYYY-MM-DD';
-        return moment(date).format(format);
+        format = format != null ? format : 'YYYY-MM-DD';
+        if (moment(date) != null) {
+          return moment(date).format(format);
+        }
       },
       getEffectiveDate: function() {
         var date;

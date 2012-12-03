@@ -184,7 +184,6 @@ define [
 
     resize_view : (element, offset) ->
       offset = offset ? @POLICY_HEADER_OFFSET
-      console.log offset
       @Helpers.resize_element(element, offset)
 
     # Load Flex Policy Summary

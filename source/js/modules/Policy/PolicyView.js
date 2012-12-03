@@ -134,7 +134,6 @@
       },
       resize_view: function(element, offset) {
         offset = offset != null ? offset : this.POLICY_HEADER_OFFSET;
-        console.log(offset);
         return this.Helpers.resize_element(element, offset);
       },
       show_overview: function() {

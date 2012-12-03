@@ -38,6 +38,9 @@
           module: this,
           model: this.policy_model
         });
+        this.policy_model.on('policy_error', function(e) {
+          return console.log(['Policy Error', e]);
+        });
         this.messenger = new Messenger(this.policy_view, this.policy_view.cid);
         digest = this.view.options.controller.user.get('digest');
         window.pol = this.policy_model;
@@ -58,7 +61,7 @@
                 _this.render({
                   flash_only: true
                 });
-                _this.Amplify.publish(_this.policy_view.cid, 'warning', "" + (model.get('fetch_state').text) + " - " + ($(resp).find('p').text()) + " Sorry.");
+                _this.Amplify.publish(_this.policy_view.cid, 'warning', "" + (model.get('fetch_state').text) + " - " + ($(resp).find('p').text()) + " - Sorry.");
                 return _this.policy_view.trigger('loaded');
             }
           },

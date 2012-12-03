@@ -51,6 +51,9 @@ define [
         model  : @policy_model
         )
 
+      @policy_model.on 'policy_error', (e) ->
+        console.log ['Policy Error', e]
+
       @messenger = new Messenger(@policy_view, @policy_view.cid)
       digest     = @view.options.controller.user.get('digest')
       window.pol = @policy_model
@@ -68,7 +71,7 @@ define [
             else
               @view.remove_loader()
               @render({ flash_only : true })
-              @Amplify.publish(@policy_view.cid, 'warning', "#{model.get('fetch_state').text} - #{$(resp).find('p').text()} Sorry.")
+              @Amplify.publish(@policy_view.cid, 'warning', "#{model.get('fetch_state').text} - #{$(resp).find('p').text()} - Sorry.")
               @policy_view.trigger 'loaded'
        error : (model, resp) =>
           @render({ flash_only : true })

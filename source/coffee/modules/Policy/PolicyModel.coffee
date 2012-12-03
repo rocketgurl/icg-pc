@@ -31,7 +31,10 @@ define [
       if @get('fetch_state') == undefined
         @response_state()
         if @get('fetch_state').code == '200'
-          @setModelState()
+          try
+            @setModelState()
+          catch e
+            @trigger 'policy_error', this    
 
     # **Assemble urls for Policies**  
     # @params _String_  
@@ -300,8 +303,9 @@ define [
     # @param `format` _String_ A date format string  
     # @return _String_ 
     _formatDate : (date, format) ->
-      format = format || 'YYYY-MM-DD'
-      moment(date).format(format)
+      format = format ? 'YYYY-MM-DD'
+      if moment(date)?
+        moment(date).format(format)
 
     # **Determine policy effective date** from XML and convert to
     # standardized format  
