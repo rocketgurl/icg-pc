@@ -177,7 +177,7 @@ define [
     # just make visible
     build_policy_header : ->
       if @policy_header.html() == ""
-        @policy_header.html @Mustache.render tpl_ipm_header, @model.get_ipm_header()
+        @policy_header.html @Mustache.render tpl_ipm_header, @model.getIpmHeader()
       
       @policy_header.show()
       @POLICY_HEADER_OFFSET = @policy_header.height()

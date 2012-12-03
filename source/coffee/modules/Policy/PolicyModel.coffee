@@ -55,19 +55,27 @@ define [
 
     # **Build a last, first policy holder name**  
     # @return _String_
-    get_policy_holder : ->
-      doc = @get 'document'
-      last = doc.find('Customers Customer[type=Insured] DataItem[name=OpInsuredLastName]').attr('value')
-      first = doc.find('Customers Customer[type=Insured] DataItem[name=OpInsuredFirstName]').attr('value')
-      "#{last}, #{first}"
+    getPolicyHolder : ->
+      doc          = @get 'document'
+      insured_data = @getCustomerData 'Insured'
+      last         = @getDataItem(insured_data, 'InsuredLastName')
+      first        = @getDataItem(insured_data, 'InsuredFirstName')
+
+      if last
+        last = _.titleize(last.toLowerCase())
+
+      if first
+        first = _.titleize(first.toLowerCase())
+
+      @Helpers.concatStrings(last, first, ', ')
 
     # **Build a policy period date range for use in IPM header**  
     # @return _String_
-    get_policy_period : ->
+    getPolicyPeriod : ->
       doc   = @get 'document'
       start = doc.find('Terms Term EffectiveDate').text().substr(0,10)
       end   = doc.find('Terms Term ExpirationDate').text().substr(0,10)
-      "#{start} - #{end}"
+      @Helpers.concatStrings(start, end, ' - ')
 
     # **Return the full policy id taken from the XML**  
     # @return _String_
@@ -76,15 +84,17 @@ define [
 
     # **Build an object containing information for the IPM header**  
     # @return _Object_
-    get_ipm_header : ->
+    getIpmHeader : ->
       doc = @get 'document'
-      ipm_header =
-        id      : doc.find('Identifiers Identifier[name=PolicyID]').attr('value')
-        product : doc.find('Terms Term DataItem[name=OpProductLabel]').attr('value')
-        holder  : @get_policy_holder()
-        state   : doc.find('Management PolicyState').text()
-        period  : @get_policy_period()
-        carrier : doc.find('Management Carrier').text()
+      imp_header = {}
+      if doc?
+        ipm_header =
+          id      : @getIdentifier 'PolicyID'
+          product : @getTermDataItemValue 'ProductLabel'
+          holder  : @getPolicyHolder()
+          state   : @get('state').text || @get('state')
+          period  : @getPolicyPeriod()
+          carrier : doc.find('Management Carrier').text()
       ipm_header
 
     # **Get <SystemOfRecord>** - used to determine IPM eligibility.  
@@ -123,7 +133,7 @@ define [
       policyState = @get('document').find('Management PolicyState')
       text        = policyState.text()
       attr        = @_getAttributes(policyState)
-      if attr is null
+      if attr == null
         text
       else
         _.extend(attr, { 'text' : text })
@@ -212,6 +222,7 @@ define [
         _.last terms
       else
         {}
+
 
     # **Return array of Customer <DataItem> objects by customer type**  
     # @param `type` _String_ 
@@ -336,12 +347,21 @@ define [
     getTermDataItemValues : (vocabTerms) ->
       out = {}
       for term in vocabTerms.terms
-        out[term.name] = 
-          @get('document').find("Terms Term DataItem[name=Op#{term.name}]").attr('value') ||
-          @get('document').find("Terms Term DataItem[name=#{term.name}]").attr('value')
+        out[term.name] = @getTermDataItemValue(term.name)
         if out[term.name] == undefined
           out[term.name] = false
       out
+
+    # We favor the Op{name} version of the DataItem
+    #
+    # @param `name` _String_    
+    # @return _String_  
+    #
+    getTermDataItemValue : (name) ->
+      doc = @get('document')
+      if doc?
+        value = doc.find("Terms Term DataItem[name=Op#{name}]").attr('value') ||         doc.find("Terms Term DataItem[name=#{name}]").attr('value')
+      value
 
     # **Extract the value of a named <DataItem> from a JSON collection**  
     # _Alert_: Policies contain multiple versions of some fields, and we favor

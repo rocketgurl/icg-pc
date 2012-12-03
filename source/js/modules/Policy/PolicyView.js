@@ -127,7 +127,7 @@
       },
       build_policy_header: function() {
         if (this.policy_header.html() === "") {
-          this.policy_header.html(this.Mustache.render(tpl_ipm_header, this.model.get_ipm_header()));
+          this.policy_header.html(this.Mustache.render(tpl_ipm_header, this.model.getIpmHeader()));
         }
         this.policy_header.show();
         return this.POLICY_HEADER_OFFSET = this.policy_header.height();

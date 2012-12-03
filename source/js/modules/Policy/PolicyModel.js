@@ -46,34 +46,44 @@
         }
         return this.get('pxServerIndex');
       },
-      get_policy_holder: function() {
-        var doc, first, last;
+      getPolicyHolder: function() {
+        var doc, first, insured_data, last;
         doc = this.get('document');
-        last = doc.find('Customers Customer[type=Insured] DataItem[name=OpInsuredLastName]').attr('value');
-        first = doc.find('Customers Customer[type=Insured] DataItem[name=OpInsuredFirstName]').attr('value');
-        return "" + last + ", " + first;
+        insured_data = this.getCustomerData('Insured');
+        last = this.getDataItem(insured_data, 'InsuredLastName');
+        first = this.getDataItem(insured_data, 'InsuredFirstName');
+        if (last) {
+          last = _.titleize(last.toLowerCase());
+        }
+        if (first) {
+          first = _.titleize(first.toLowerCase());
+        }
+        return this.Helpers.concatStrings(last, first, ', ');
       },
-      get_policy_period: function() {
+      getPolicyPeriod: function() {
         var doc, end, start;
         doc = this.get('document');
         start = doc.find('Terms Term EffectiveDate').text().substr(0, 10);
         end = doc.find('Terms Term ExpirationDate').text().substr(0, 10);
-        return "" + start + " - " + end;
+        return this.Helpers.concatStrings(start, end, ' - ');
       },
       get_policy_id: function() {
         return this.get('document').find('Identifiers Identifier[name=PolicyID]').attr('value');
       },
-      get_ipm_header: function() {
-        var doc, ipm_header;
+      getIpmHeader: function() {
+        var doc, imp_header, ipm_header;
         doc = this.get('document');
-        ipm_header = {
-          id: doc.find('Identifiers Identifier[name=PolicyID]').attr('value'),
-          product: doc.find('Terms Term DataItem[name=OpProductLabel]').attr('value'),
-          holder: this.get_policy_holder(),
-          state: doc.find('Management PolicyState').text(),
-          period: this.get_policy_period(),
-          carrier: doc.find('Management Carrier').text()
-        };
+        imp_header = {};
+        if (doc != null) {
+          ipm_header = {
+            id: this.getIdentifier('PolicyID'),
+            product: this.getTermDataItemValue('ProductLabel'),
+            holder: this.getPolicyHolder(),
+            state: this.get('state').text || this.get('state'),
+            period: this.getPolicyPeriod(),
+            carrier: doc.find('Management Carrier').text()
+          };
+        }
         return ipm_header;
       },
       getSystemOfRecord: function() {
@@ -299,12 +309,20 @@
         _ref = vocabTerms.terms;
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           term = _ref[_i];
-          out[term.name] = this.get('document').find("Terms Term DataItem[name=Op" + term.name + "]").attr('value') || this.get('document').find("Terms Term DataItem[name=" + term.name + "]").attr('value');
+          out[term.name] = this.getTermDataItemValue(term.name);
           if (out[term.name] === void 0) {
             out[term.name] = false;
           }
         }
         return out;
+      },
+      getTermDataItemValue: function(name) {
+        var doc, value;
+        doc = this.get('document');
+        if (doc != null) {
+          value = doc.find("Terms Term DataItem[name=Op" + name + "]").attr('value') || doc.find("Terms Term DataItem[name=" + name + "]").attr('value');
+        }
+        return value;
       },
       getDataItem: function(items, name) {
         var data_obj, op_name;

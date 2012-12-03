@@ -101,9 +101,9 @@ define([
 
     it ('has a policy holder', function () {
       runs(function(){
-        var names = ['TEST, DOCUMENT','Abrams, John','Abrams, John']
+        var names = ['Test, Document','Abrams, John','Abrams, John']
         _.each(policies, function(policy, index){
-          expect(policy.get_policy_holder()).toBe(names[index]);
+          expect(policy.getPolicyHolder()).toBe(names[index]);
         })
       });
     });
@@ -119,7 +119,7 @@ define([
         ]
 
         _.each(policies, function(policy, index){
-          expect(policy.get_policy_period()).toBe(dates[index]);
+          expect(policy.getPolicyPeriod()).toBe(dates[index]);
         });
       });
     });
@@ -128,14 +128,14 @@ define([
       runs(function(){
 
         var headers = [
-          { id : 'SCS007104900', product : 'HO3', holder : 'TEST, DOCUMENT', state : 'ACTIVEPOLICY', period : '2012-06-28 - 2013-06-28', carrier : 'Acceptance Casualty Insurance Company' },
+          { id : 'SCS007104900', product : 'HO3', holder : 'Test, Document', state : 'ACTIVEPOLICY', period : '2012-06-28 - 2013-06-28', carrier : 'Acceptance Casualty Insurance Company' },
           { carrier: "Smart Insurance Company", holder: "Abrams, John", id: "NYH000002900", period: "2010-10-29 - 2011-10-29", product: "HO3", state: "ACTIVEPOLICY" },
           { carrier: "Smart Insurance Company", holder: "Abrams, John", id: "NYH000002900", period: "2010-10-29 - 2011-10-29", product: "HO3", state: "CANCELLEDPOLICY" },
         ];
 
         _.each(policies, function(policy, index){
-          expect(policy.get_ipm_header()).toEqual(jasmine.any(Object));
-          expect(policy.get_ipm_header()).toEqual(headers[index]);
+          expect(policy.getIpmHeader()).toEqual(jasmine.any(Object));
+          expect(policy.getIpmHeader()).toEqual(headers[index]);
         });
 
       });
