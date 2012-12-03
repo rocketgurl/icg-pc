@@ -1350,17 +1350,23 @@ Module: Policy
   display: inline;
 }
 
-.policy-iframe {
+.policy-module {
   width: 100%;
   background: white;
   display: block;
   border: #ddd 1px solid;
   margin: 0;
   padding: 0;
+  position: relative;
+  top: -10px;
 }
 
 .policy-flash {
   min-height: 90%;
+}
+
+.policy-swf {
+  margin: 0;
 }
 
 .policy-header {

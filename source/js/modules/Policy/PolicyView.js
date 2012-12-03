@@ -65,12 +65,12 @@
         this.actions = this.policy_nav_links.map(function(idx, item) {
           return $(this).attr('href');
         });
-        this.build_and_load_swf_iframe();
+        this.build_policy_header();
+        this.policy_header.show();
         this.$el.hide();
         this.messenger = new Messenger(this.options.view, this.cid);
         return true;
       },
-      build_and_load_swf_iframe: function() {},
       toggle_nav_state: function(el) {
         this.policy_nav_links.removeClass('select');
         return el.addClass('select');
@@ -129,7 +129,13 @@
         if (this.policy_header.html() === "") {
           this.policy_header.html(this.Mustache.render(tpl_ipm_header, this.model.get_ipm_header()));
         }
-        return this.policy_header.show();
+        this.policy_header.show();
+        return this.POLICY_HEADER_OFFSET = this.policy_header.height();
+      },
+      resize_view: function(element, offset) {
+        offset = offset != null ? offset : this.POLICY_HEADER_OFFSET;
+        console.log(offset);
+        return this.Helpers.resize_element(element, offset);
       },
       show_overview: function() {
         var flash_obj, resize, resizer,
@@ -140,9 +146,9 @@
           this.policy_summary = this.$el.find("#policy-summary-" + this.cid);
         }
         if (this.$el.find("#policy-workspace-" + this.cid).length > 0) {
-          this.Helpers.resize_element(this.$el.find("#policy-workspace-" + this.cid));
+          this.resize_view(this.$el.find("#policy-workspace-" + this.cid), 0);
           resizer = _.bind(function() {
-            return this.Helpers.resize_element(this.$el.find("#policy-workspace-" + this.cid));
+            return this.resize_view(this.$el.find("#policy-workspace-" + this.cid), 0);
           }, this);
           resize = _.debounce(resizer, 300);
           $(window).resize(resize);
@@ -150,10 +156,10 @@
           if (_.isEmpty(flash_obj)) {
             flash_obj = $("#policy-summary-" + this.cid);
           }
-          flash_obj.css('visibility', 'visible').height('100%');
+          flash_obj.css('visibility', 'visible').height('93%');
         }
         if (this.flash_loaded === false) {
-          return swfobject.embedSWF("../swf/PolicySummary.swf", "policy-summary-" + this.cid, "100%", "100%", "9.0.0", null, null, {
+          return swfobject.embedSWF("../swf/PolicySummary.swf", "policy-summary-" + this.cid, "100%", "93%", "9.0.0", null, null, {
             allowScriptAccess: 'always'
           }, null, function(e) {
             return _this.flash_callback(e);
@@ -204,20 +210,14 @@
       },
       show_ipmchanges: function() {
         var ipm_container;
-        this.build_policy_header();
-        this.policy_header.show();
         ipm_container = this.$el.find("#policy-ipm-" + this.cid);
         ipm_container.show();
-        return this.Helpers.resize_element(ipm_container, this.policy_header.height());
+        return this.resize_view(ipm_container);
       },
       teardown_ipmchanges: function() {
         var ipm_container;
-        if (this.policy_header) {
-          this.policy_header.hide();
-          this.$el.find("#policy-header-" + this.cid).hide();
-          ipm_container = this.$el.find("#policy-ipm-" + this.cid);
-          return ipm_container.hide();
-        }
+        ipm_container = this.$el.find("#policy-ipm-" + this.cid);
+        return ipm_container.hide();
       },
       show_renewalunderwriting: function() {
         var $ru_el;
@@ -227,27 +227,23 @@
             cid: this.cid
           }));
           $ru_el = $("#renewal-underwriting-" + this.cid);
+          $ru_el.addClass('policy-module');
         }
         if (this.ru_container === null || this.ru_container === void 0) {
-          this.ru_container = new RenewalUnderwritingView({
+          return this.ru_container = new RenewalUnderwritingView({
             $el: $ru_el,
             policy: this.model,
             policy_view: this
           }).render();
         } else {
-          this.ru_container.show();
+          return this.ru_container.show();
         }
-        return this.build_policy_header();
       },
       teardown_renewalunderwriting: function() {
         var $ru_el;
         $ru_el = $("#renewal-underwriting-" + this.cid);
         if ($ru_el.length > 0) {
-          this.ru_container.hide();
-        }
-        if (this.policy_header) {
-          this.policy_header.hide();
-          return this.$el.find("#policy-header-" + this.cid).hide();
+          return this.ru_container.hide();
         }
       },
       show_servicerequests: function() {
@@ -256,28 +252,24 @@
         if ($zd_el.length === 0) {
           $("#policy-workspace-" + this.cid).append("<div id=\"zendesk-" + this.cid + "\" class=\"zd-container\"></div>");
           $zd_el = $("#zendesk-" + this.cid);
+          $zd_el.addClass('policy-module');
         }
-        this.Helpers.resize_element(this.$el.find("#policy-workspace-" + this.cid));
+        this.resize_view(this.$el.find($zd_el));
         if (this.zd_container === null || this.zd_container === void 0) {
-          this.zd_container = new ZenDeskView({
+          return this.zd_container = new ZenDeskView({
             $el: $zd_el,
             policy: this.model,
             policy_view: this
           }).fetch();
         } else {
-          this.zd_container.show();
+          return this.zd_container.show();
         }
-        return this.build_policy_header();
       },
       teardown_servicerequests: function() {
         var $zd_el;
         $zd_el = $("#zendesk-" + this.cid);
         if ($zd_el.length > 0) {
-          this.zd_container.hide();
-        }
-        if (this.policy_header) {
-          this.policy_header.hide();
-          return this.$el.find("#policy-header-" + this.cid).hide();
+          return this.zd_container.hide();
         }
       }
     });

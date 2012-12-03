@@ -94,8 +94,8 @@ define [
       # Get an array of our policy-nav actions
       @actions = @policy_nav_links.map (idx, item) -> return $(this).attr('href')
 
-      # Setup iframe for the Summary SWF
-      @build_and_load_swf_iframe()
+      @build_policy_header()
+      @policy_header.show()
 
       # Hide the view
       @$el.hide()
@@ -104,22 +104,6 @@ define [
       @messenger = new Messenger(@options.view, @cid)
 
       true   
-
-
-    # Get policy properties (id, user.digest) and setup the iFrame for
-    # SWFObject, injecting said properties into object.
-    build_and_load_swf_iframe : ->
-      # iFrame properties
-      # props =
-      #   policy_id : @model.get('pxServerIndex')
-      #   ipm_auth  : @model.get('digest')
-      #   routes    : @controller.services
-
-      # Load iFrame and pass in policy properties
-      # @iframe.attr('src', '/mxadmin/index.html')
-      # @iframe.bind 'load', =>
-      #   @iframe[0].contentWindow.inject_properties(props)
-      #   @iframe[0].contentWindow.load_mxAdmin()
 
 
     # Switch nav items on/off
@@ -196,6 +180,12 @@ define [
         @policy_header.html @Mustache.render tpl_ipm_header, @model.get_ipm_header()
       
       @policy_header.show()
+      @POLICY_HEADER_OFFSET = @policy_header.height()
+
+    resize_view : (element, offset) ->
+      offset = offset ? @POLICY_HEADER_OFFSET
+      console.log offset
+      @Helpers.resize_element(element, offset)
 
     # Load Flex Policy Summary
     show_overview : ->
@@ -208,12 +198,12 @@ define [
         @policy_summary = @$el.find("#policy-summary-#{@cid}")
 
       if @$el.find("#policy-workspace-#{@cid}").length > 0
-        @Helpers.resize_element @$el.find("#policy-workspace-#{@cid}")
+        @resize_view(@$el.find("#policy-workspace-#{@cid}"), 0)
 
         # Now attach a resize event to the window to help Flash
         resizer = _.bind(
           ->
-            @Helpers.resize_element(@$el.find("#policy-workspace-#{@cid}"))            
+            @resize_view(@$el.find("#policy-workspace-#{@cid}"), 0)         
           , this)
         resize = _.debounce(resizer, 300);
         $(window).resize(resize);
@@ -227,14 +217,14 @@ define [
         if _.isEmpty flash_obj
           flash_obj = $("#policy-summary-#{@cid}")
 
-        flash_obj.css('visibility', 'visible').height('100%')
+        flash_obj.css('visibility', 'visible').height('93%')
 
       if @flash_loaded is false
         swfobject.embedSWF(
           "../swf/PolicySummary.swf",
           "policy-summary-#{@cid}",
           "100%",
-          "100%", # @policy_summary.height(),
+          "93%", # @policy_summary.height(),
           "9.0.0"
           null,
           null,
@@ -248,7 +238,6 @@ define [
 
     # Hide flash overview
     teardown_overview : ->
-      # @policy_summary.hide()
       $("#policy-summary-#{@cid}").css('visibility', 'hidden').height(0)
 
     # Remove SWFObject/Flash
@@ -296,26 +285,15 @@ define [
       @flash_loaded = true # set state
 
     # Load mxAdmin into workarea and inject policy header
-    show_ipmchanges : ->
-      @build_policy_header()
-      @policy_header.show()
-
+    show_ipmchanges : ->      
       ipm_container = @$el.find("#policy-ipm-#{@cid}")
       ipm_container.show()
-      @Helpers.resize_element(ipm_container, @policy_header.height())
-
-      # @iframe.show()
-      # @iframe.attr('src', '/mxadmin/index.html')
-      # @Helpers.resize_element(@iframe, @policy_header.height())
+      @resize_view(ipm_container)
 
     # Hide IPM Changes
     teardown_ipmchanges : ->
-      if @policy_header
-        @policy_header.hide()
-        @$el.find("#policy-header-#{@cid}").hide()
-        # @iframe.hide()
-        ipm_container = @$el.find("#policy-ipm-#{@cid}")
-        ipm_container.hide()
+      ipm_container = @$el.find("#policy-ipm-#{@cid}")
+      ipm_container.hide()
 
     # Load Renewal Underwriting Views
     show_renewalunderwriting : ->
@@ -323,6 +301,7 @@ define [
       if $ru_el.length == 0
         $("#policy-workspace-#{@cid}").append @Mustache.render tpl_ru_wrapper, { cid : @cid }
         $ru_el = $("#renewal-underwriting-#{@cid}")
+        $ru_el.addClass 'policy-module'
 
       # If container not already loaded, then insert element into DOM
       if @ru_container == null || @ru_container == undefined
@@ -334,25 +313,19 @@ define [
       else
         @ru_container.show()
 
-      # We need a policy_header
-      @build_policy_header()
-
     teardown_renewalunderwriting : ->
       $ru_el = $("#renewal-underwriting-#{@cid}")
       if $ru_el.length > 0
         @ru_container.hide()
-
-      if @policy_header
-        @policy_header.hide()
-        @$el.find("#policy-header-#{@cid}").hide()
 
     show_servicerequests : ->
       $zd_el = $("#zendesk-#{@cid}")
       if $zd_el.length == 0
         $("#policy-workspace-#{@cid}").append("<div id=\"zendesk-#{@cid}\" class=\"zd-container\"></div>")
         $zd_el = $("#zendesk-#{@cid}")
+        $zd_el.addClass 'policy-module'
 
-      @Helpers.resize_element @$el.find("#policy-workspace-#{@cid}")
+      @resize_view(@$el.find($zd_el))
 
       # If container not already loaded, then insert element into DOM
       if @zd_container == null || @zd_container == undefined
@@ -364,16 +337,9 @@ define [
       else
         @zd_container.show()
 
-      # We need a policy_header
-      @build_policy_header()
-
     teardown_servicerequests : ->
       $zd_el = $("#zendesk-#{@cid}")
       if $zd_el.length > 0
         @zd_container.hide()
-
-      if @policy_header
-        @policy_header.hide()
-        @$el.find("#policy-header-#{@cid}").hide()
 
   PolicyView
