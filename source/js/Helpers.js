@@ -104,6 +104,18 @@
           'min-height': el_height,
           'height': $(window).height() - (184 + offset)
         });
+      },
+      concatStrings: function(a, b, separator) {
+        var out;
+        separator = separator != null ? separator : ', ';
+        out = " ";
+        if (a) {
+          out = _.trim("" + a);
+        }
+        if (b) {
+          out = _.trim("" + out + separator + b);
+        }
+        return out;
       }
     };
     return Helpers;

@@ -124,5 +124,20 @@ define [
         'height'     : $(window).height() - (184 + offset)
         )
 
+    # Super simple function to concat two strings with a seperator.
+    #
+    # @param `a` _String_    
+    # @param `b` _String_    
+    # @param `separator` _String_    
+    # @returns _String_    
+    #
+    concatStrings : (a, b, separator) ->
+      separator = separator ? ', '
+      out = " "
+      if a
+        out = _.trim("#{a}")
+      if b
+        out = _.trim("#{out}#{separator}#{b}")
+      out
 
   Helpers
