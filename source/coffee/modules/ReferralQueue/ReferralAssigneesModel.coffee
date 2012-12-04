@@ -53,11 +53,20 @@ define [
     # @param `xhr` _jqXHR_ jQuery XHR object   
     #
     putSuccess : (model, data, textStatus, xhr) ->
+      errors =
+        statuscode  : xhr.getResponseHeader('X-True-Statuscode')
+        status_code : xhr.getResponseHeader('X-True-Status-Code')
+        statustext  : xhr.getResponseHeader('X-True-Statustext')
+        status_text : xhr.getResponseHeader('X-True-Status-Text')
+        msg         : xhr.getResponseHeader('X-Error-Message')
 
       # Cripple Client: anything other than X-True-Statuscode 200 is a fail
-      if xhr.getResponseHeader('X-True-Statuscode') != '200'
-        model.trigger 'fail', xhr.getResponseHeader('X-True-Statustext')
-        return model
+      if errors.statuscode? || errors.status_code?
+        code = errors.statuscode ? errors.status_code
+        text = errors.statustext ? errors.status_text
+        if code != '200'
+          model.trigger 'fail', "#{code} #{text}"
+          return model
 
       parsed_data = model.parse(data, xhr)
       for key, val of parsed_data
