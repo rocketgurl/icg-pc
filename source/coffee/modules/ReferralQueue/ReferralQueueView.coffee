@@ -331,7 +331,7 @@ define [
       @$el.find('.menu-status')
           .show()
           .html("""<strong class="menu-error">Error saving: #{msg}</strong>""")
-          .delay(3000)
+          .delay(5000)
           .fadeOut('slow')
 
     toggleCheckbox : (e) ->

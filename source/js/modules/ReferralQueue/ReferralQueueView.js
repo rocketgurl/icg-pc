@@ -282,7 +282,7 @@
         return this.$el.find('.menu-status').show().html('<strong class="menu-success">Assignee List saved!</strong>').delay(2000).fadeOut('slow');
       },
       assigneeError: function(msg) {
-        return this.$el.find('.menu-status').show().html("<strong class=\"menu-error\">Error saving: " + msg + "</strong>").delay(3000).fadeOut('slow');
+        return this.$el.find('.menu-status').show().html("<strong class=\"menu-error\">Error saving: " + msg + "</strong>").delay(5000).fadeOut('slow');
       },
       toggleCheckbox: function(e) {
         var $cb;

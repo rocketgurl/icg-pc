@@ -55,7 +55,7 @@ define [
     putSuccess : (model, data, textStatus, xhr) ->
       # Cripple Client: anything other than X-True-Statuscode 200 is a fail
       if xhr.getResponseHeader('X-True-Status-Code') != '200'
-        model.trigger 'fail', xhr.getResponseHeader('X-True-Status-Text')
+        model.trigger 'fail', "#{xhr.getResponseHeader('X-True-Status-Code')} #{xhr.getResponseHeader('X-True-Status-Text')}"
         return model
 
       parsed_data = model.parse(data, xhr)
