@@ -59,21 +59,10 @@
         });
       },
       putSuccess: function(model, data, textStatus, xhr) {
-        var code, errors, key, parsed_data, text, val, _ref, _ref1;
-        errors = {
-          statuscode: xhr.getResponseHeader('X-True-Statuscode'),
-          status_code: xhr.getResponseHeader('X-True-Status-Code'),
-          statustext: xhr.getResponseHeader('X-True-Statustext'),
-          status_text: xhr.getResponseHeader('X-True-Status-Text'),
-          msg: xhr.getResponseHeader('X-Error-Message')
-        };
-        if ((errors.statuscode != null) || (errors.status_code != null)) {
-          code = (_ref = errors.statuscode) != null ? _ref : errors.status_code;
-          text = (_ref1 = errors.statustext) != null ? _ref1 : errors.status_text;
-          if (code !== '200') {
-            model.trigger('fail', "" + code + " " + text);
-            return model;
-          }
+        var key, parsed_data, val;
+        if (xhr.getResponseHeader('X-True-Status-Code') !== '200') {
+          model.trigger('fail', xhr.getResponseHeader('X-True-Status-Text'));
+          return model;
         }
         parsed_data = model.parse(data, xhr);
         for (key in parsed_data) {
