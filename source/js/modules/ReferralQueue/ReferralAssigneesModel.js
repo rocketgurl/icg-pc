@@ -60,6 +60,10 @@
       },
       putSuccess: function(model, data, textStatus, xhr) {
         var key, parsed_data, val;
+        if (xhr.getResponseHeader('X-True-Statuscode') !== '200') {
+          model.trigger('fail', xhr.getResponseHeader('X-True-Statustext'));
+          return model;
+        }
         parsed_data = model.parse(data, xhr);
         for (key in parsed_data) {
           val = parsed_data[key];

@@ -53,6 +53,12 @@ define [
     # @param `xhr` _jqXHR_ jQuery XHR object   
     #
     putSuccess : (model, data, textStatus, xhr) ->
+
+      # Cripple Client: anything other than X-True-Statuscode 200 is a fail
+      if xhr.getResponseHeader('X-True-Statuscode') != '200'
+        model.trigger 'fail', xhr.getResponseHeader('X-True-Statustext')
+        return model
+
       parsed_data = model.parse(data, xhr)
       for key, val of parsed_data
         model.attributes[key] = val
