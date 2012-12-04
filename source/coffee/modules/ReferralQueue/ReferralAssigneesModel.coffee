@@ -71,16 +71,22 @@ define [
     putError : (model, xhr, textStatus, errorThrown) ->
       model.trigger 'fail', errorThrown
 
-    # Turn string representations of booleans into actual booleans
+    # Turn string representations of booleans into actual booleans. If we don't
+    # have the new attributes (new_business & renewals) then we add them.
     parseBooleans : (arr) ->
-      console.log ['parseBooleans : arr', arr]
       arr = _.map arr, (item) ->
-        console.log ['parseBooleans : item', item]
+        # Guard rails
+        new_business = renewals = false
+        if _.has(item, 'new_business')
+          new_business = JSON.parse(item.new_business)
+        if _.has(item, 'renewals')
+          renewals = JSON.parse(item.renewals)
+
         {
           identity     : item.identity
           active       : JSON.parse(item.active)
-          new_business : JSON.parse(item.new_business)
-          renewals     : JSON.parse(item.renewals)
+          new_business : new_business
+          renewals     : renewals
         }
 
     # **Convert Assignees JSON to XML**  

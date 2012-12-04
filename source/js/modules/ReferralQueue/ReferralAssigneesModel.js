@@ -72,14 +72,20 @@
         return model.trigger('fail', errorThrown);
       },
       parseBooleans: function(arr) {
-        console.log(['parseBooleans : arr', arr]);
         return arr = _.map(arr, function(item) {
-          console.log(['parseBooleans : item', item]);
+          var new_business, renewals;
+          new_business = renewals = false;
+          if (_.has(item, 'new_business')) {
+            new_business = JSON.parse(item.new_business);
+          }
+          if (_.has(item, 'renewals')) {
+            renewals = JSON.parse(item.renewals);
+          }
           return {
             identity: item.identity,
             active: JSON.parse(item.active),
-            new_business: JSON.parse(item.new_business),
-            renewals: JSON.parse(item.renewals)
+            new_business: new_business,
+            renewals: renewals
           };
         });
       },
