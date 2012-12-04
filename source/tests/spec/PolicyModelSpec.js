@@ -442,6 +442,23 @@ define([
       });
     });
 
+    it ('Names can be formatted', function () {
+      runs(function(){
+        var names = [
+          "O'Brien",
+          "D'Souza",
+          "Van Damm",
+          "Johnson Jr.",
+          "Homer Esq."
+        ]
+
+        _.each(names, function(name){
+          console.log(name)
+          expect(policy_A.Helpers.properName(name)).toBe(name);
+        });        
+      });
+    });
+
   });
 
 });

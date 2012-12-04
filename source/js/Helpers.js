@@ -105,6 +105,45 @@
           'height': $(window).height() - (184 + offset)
         });
       },
+      properName: function(name) {
+        name = this.parseNamePrefix(name.toLowerCase());
+        name = this.parseNameSuffix(name);
+        return name;
+      },
+      parseNamePrefix: function(name) {
+        var prefixes, result;
+        prefixes = ['mac', 'mc', 'van', "d'", "o'"];
+        result = _.find(prefixes, function(prefix) {
+          var re;
+          re = RegExp(prefix, "i");
+          return re.test(name);
+        });
+        if (result !== void 0) {
+          name = name.split(result);
+          name[0] = result;
+          name = _.map(name, function(fragment) {
+            return _.titleize(fragment);
+          });
+          name = name.join('');
+        } else {
+          name = _.titleize(name);
+        }
+        return name;
+      },
+      parseNameSuffix: function(name) {
+        var re, result, suffixes;
+        suffixes = ['jr', 'snr', 'phd', 'esq', 'cpa'];
+        result = _.find(suffixes, function(suffix) {
+          var re;
+          re = RegExp(suffix, "i");
+          return re.test(name);
+        });
+        if (result !== void 0) {
+          re = RegExp(result, "i");
+          name = name.replace(re, _.titleize(result));
+        }
+        return name;
+      },
       concatStrings: function(a, b, separator) {
         var out;
         separator = separator != null ? separator : ', ';

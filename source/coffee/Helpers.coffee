@@ -124,6 +124,56 @@ define [
         'height'     : $(window).height() - (184 + offset)
         )
 
+    # Take a name and properly capitalize it
+    #
+    # @param `name` _String_    
+    # @returns _String_    
+    #
+    properName : (name) ->
+      name = @parseNamePrefix(name.toLowerCase())
+      name = @parseNameSuffix(name)
+      name
+
+    # Properly capitalize complex names (ex: MacGuffin, O'Shea)
+    #
+    # @param `name` _String_    
+    # @returns _String_    
+    #
+    parseNamePrefix : (name) ->
+      prefixes = ['mac', 'mc', 'van', "d'", "o'"]
+      result = _.find prefixes, (prefix) ->
+        re = RegExp(prefix, "i")
+        re.test(name)
+
+      if result != undefined
+        name    = name.split(result)
+        name[0] = result
+        name = _.map(name, (fragment) -> 
+            _.titleize(fragment)
+          )
+        name = name.join('')
+      else
+        name = _.titleize name
+
+      name
+
+    # Capitalize the suffixes
+    #
+    # @param `name` _String_    
+    # @returns _String_    
+    #
+    parseNameSuffix : (name) ->
+      suffixes = ['jr', 'snr', 'phd', 'esq', 'cpa']
+      result = _.find suffixes, (suffix) ->
+        re = RegExp(suffix, "i")
+        re.test(name)
+
+      if result != undefined
+        re   = RegExp(result, "i")
+        name = name.replace(re, _.titleize(result))
+
+      name
+
     # Super simple function to concat two strings with a seperator.
     #
     # @param `a` _String_    

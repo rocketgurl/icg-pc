@@ -62,10 +62,9 @@ define [
       first        = @getDataItem(insured_data, 'InsuredFirstName')
 
       if last
-        last = _.titleize(last.toLowerCase())
-
+        last = @Helpers.properName last
       if first
-        first = _.titleize(first.toLowerCase())
+        first = @Helpers.properName first
 
       @Helpers.concatStrings(last, first, ', ')
 

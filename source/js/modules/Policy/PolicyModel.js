@@ -53,10 +53,10 @@
         last = this.getDataItem(insured_data, 'InsuredLastName');
         first = this.getDataItem(insured_data, 'InsuredFirstName');
         if (last) {
-          last = _.titleize(last.toLowerCase());
+          last = this.Helpers.properName(last);
         }
         if (first) {
-          first = _.titleize(first.toLowerCase());
+          first = this.Helpers.properName(first);
         }
         return this.Helpers.concatStrings(last, first, ', ');
       },
