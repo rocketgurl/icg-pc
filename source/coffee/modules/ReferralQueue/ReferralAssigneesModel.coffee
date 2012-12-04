@@ -73,7 +73,9 @@ define [
 
     # Turn string representations of booleans into actual booleans
     parseBooleans : (arr) ->
+      console.log ['parseBooleans : arr', arr]
       arr = _.map arr, (item) ->
+        console.log ['parseBooleans : item', item]
         {
           identity     : item.identity
           active       : JSON.parse(item.active)

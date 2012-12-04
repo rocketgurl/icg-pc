@@ -72,7 +72,9 @@
         return model.trigger('fail', errorThrown);
       },
       parseBooleans: function(arr) {
+        console.log(['parseBooleans : arr', arr]);
         return arr = _.map(arr, function(item) {
+          console.log(['parseBooleans : item', item]);
           return {
             identity: item.identity,
             active: JSON.parse(item.active),
