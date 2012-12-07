@@ -10,8 +10,8 @@
     ics360 = {
       services: {
         ixdirectory: './ixdirectory/api/rest/v2/',
-        pxcentral: 'pxcentral/api/rest/v1/',
-        ixlibrary: 'ixlibrary/api/sdo/rest/v1/',
+        pxcentral_base: 'pxcentral/api/rest/v1/',
+        ixlibrary_base: 'ixlibrary/api/sdo/rest/v1/',
         ixdoc: './ixdoc/api/rest/v2/',
         ixadmin: './config/ics/staging/ixadmin',
         zendesk: 'https://staging-services.icg360.org/zendesk'
@@ -367,8 +367,8 @@
           $('#header').css('height', '95px');
         }
         if (url = this.config.get_pxCentral(this.workspace_state)) {
-          this.services.pxcentral = "" + url + this.services.pxcentral;
-          this.services.ixlibrary = "" + url + this.services.ixlibrary;
+          this.services.pxcentral = "" + url + this.services.pxcentral_base;
+          this.services.ixlibrary = "" + url + this.services.ixlibrary_base;
         }
         _ref = ['cxserver', 'ixdirectory', 'ixprofiler', 'ixrelay', 'ixvocab'];
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {

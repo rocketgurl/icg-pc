@@ -31,12 +31,12 @@ define [
   #
   ics360 =
     services :
-      ixdirectory : './ixdirectory/api/rest/v2/'
-      pxcentral   : 'pxcentral/api/rest/v1/'
-      ixlibrary   : 'ixlibrary/api/sdo/rest/v1/'
-      ixdoc       : './ixdoc/api/rest/v2/'
-      ixadmin     : './config/ics/staging/ixadmin' # TESTING ONLY
-      zendesk     : 'https://staging-services.icg360.org/zendesk'
+      ixdirectory    : './ixdirectory/api/rest/v2/'
+      pxcentral_base : 'pxcentral/api/rest/v1/'
+      ixlibrary_base : 'ixlibrary/api/sdo/rest/v1/'
+      ixdoc          : './ixdoc/api/rest/v2/'
+      ixadmin        : './config/ics/staging/ixadmin' # TESTING ONLY
+      zendesk        : 'https://staging-services.icg360.org/zendesk'
 
   # Method Combinator (Decorator) 
   # https://github.com/raganwald/method-combinators
@@ -476,8 +476,8 @@ define [
 
       # Set the path to pxCentral & ixLibrary to the correct instance
       if url = @config.get_pxCentral(@workspace_state)
-        @services.pxcentral = "#{url}#{@services.pxcentral}"
-        @services.ixlibrary = "#{url}#{@services.ixlibrary}"
+        @services.pxcentral = "#{url}#{@services.pxcentral_base}"
+        @services.ixlibrary = "#{url}#{@services.ixlibrary_base}"
 
       for node in ['cxserver', 'ixdirectory', 'ixprofiler', 'ixrelay', 'ixvocab']
         @services[node] = @config.get_universal_service(@workspace_state, node)
