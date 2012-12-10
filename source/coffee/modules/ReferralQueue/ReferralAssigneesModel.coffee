@@ -34,10 +34,8 @@ define [
         contentType : 'application/xml'
         data        : xml
         headers     :
-          'Authorization'     : "Basic #{@get('digest')}"
-          'X-Authorization'   : "Basic #{@get('digest')}"
-          'X-Crippled-Client' : "yes"
-          'X-Rest-Method'     : "PUT"
+          'Authorization'   : "Basic #{@get('digest')}"
+          'X-Authorization' : "Basic #{@get('digest')}"
         success : (data, textStatus, jqXHR) =>
           if success?
             success.apply(this, [this, data, textStatus, jqXHR])
@@ -53,11 +51,6 @@ define [
     # @param `xhr` _jqXHR_ jQuery XHR object   
     #
     putSuccess : (model, data, textStatus, xhr) ->
-      # Cripple Client: anything other than X-True-Statuscode 200 is a fail
-      if xhr.getResponseHeader('X-True-Status-Code') != '200'
-        model.trigger 'fail', "#{xhr.getResponseHeader('X-True-Status-Code')} #{xhr.getResponseHeader('X-True-Status-Text')}"
-        return model
-
       parsed_data = model.parse(data, xhr)
       for key, val of parsed_data
         model.attributes[key] = val

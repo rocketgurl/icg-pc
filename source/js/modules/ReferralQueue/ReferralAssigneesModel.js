@@ -42,9 +42,7 @@
           data: xml,
           headers: {
             'Authorization': "Basic " + (this.get('digest')),
-            'X-Authorization': "Basic " + (this.get('digest')),
-            'X-Crippled-Client': "yes",
-            'X-Rest-Method': "PUT"
+            'X-Authorization': "Basic " + (this.get('digest'))
           },
           success: function(data, textStatus, jqXHR) {
             if (success != null) {
@@ -60,10 +58,6 @@
       },
       putSuccess: function(model, data, textStatus, xhr) {
         var key, parsed_data, val;
-        if (xhr.getResponseHeader('X-True-Status-Code') !== '200') {
-          model.trigger('fail', "" + (xhr.getResponseHeader('X-True-Status-Code')) + " " + (xhr.getResponseHeader('X-True-Status-Text')));
-          return model;
-        }
         parsed_data = model.parse(data, xhr);
         for (key in parsed_data) {
           val = parsed_data[key];
