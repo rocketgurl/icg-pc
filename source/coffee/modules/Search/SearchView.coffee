@@ -108,7 +108,7 @@ define [
       q           = @$el.find('input[type=search]').val() ? ''
 
       query =
-        q           : q
+        q           : _.trim q
         perpage     : perpage
         page        : page
         policystate : policystate
