@@ -176,7 +176,12 @@ define [
       # Items count
       per_page = elements.per_page.val()
 
-      if collection.totalItems < per_page
+      # Coerce strings into actual numbers via destructuring
+      [per_page, collection.totalItems, collection.page] = _.map([per_page, collection.totalItems, collection.page], (num) ->
+          parseInt(num, 10)
+        )
+
+      if per_page > collection.totalItems
         end_position   = collection.totalItems
         start_position = 1
       else
