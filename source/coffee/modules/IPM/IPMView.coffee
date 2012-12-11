@@ -105,7 +105,7 @@ define [
 
         , (err) =>
             failedId = err.requireModules && err.requireModules[0]
-            @Amplify.publish(@cid, 'warning', "We could not load #{failedId}. Sorry.")
+            @Amplify.publish(@cid, 'warning', "We could not load #{failedId}. Sorry.", null, 'nomove')
             @route 'Home'
 
       else
@@ -191,13 +191,13 @@ define [
     actionError : (jqXHR) =>
       name = @VIEW_STATE || ""
       error_msg = "Could not load view/model for #{@MODULE.POLICY.get('productName')} #{name} : #{jqXHR.status}"
-      @Amplify.publish(@cid, 'warning', "#{error_msg}")
+      @Amplify.publish(@cid, 'warning', "#{error_msg}", null, 'nomove')
       @remove_loader()
 
     # Display a flash message. This is a convenience method making it
     # easier for IPMActionViews to trigger a message.
     displayMessage : (type, msg, delay) ->
-      @Amplify.publish(@cid, type, msg, delay)
+      @Amplify.publish(@cid, type, msg, delay, 'nomove')
       this
 
 

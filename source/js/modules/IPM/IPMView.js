@@ -66,7 +66,7 @@
           }, function(err) {
             var failedId;
             failedId = err.requireModules && err.requireModules[0];
-            _this.Amplify.publish(_this.cid, 'warning', "We could not load " + failedId + ". Sorry.");
+            _this.Amplify.publish(_this.cid, 'warning', "We could not load " + failedId + ". Sorry.", null, 'nomove');
             return _this.route('Home');
           });
         } else {
@@ -148,12 +148,12 @@
         var error_msg, name;
         name = this.VIEW_STATE || "";
         error_msg = "Could not load view/model for " + (this.MODULE.POLICY.get('productName')) + " " + name + " : " + jqXHR.status;
-        this.Amplify.publish(this.cid, 'warning', "" + error_msg);
+        this.Amplify.publish(this.cid, 'warning', "" + error_msg, null, 'nomove');
         return this.remove_loader();
       };
 
       IPMView.prototype.displayMessage = function(type, msg, delay) {
-        this.Amplify.publish(this.cid, type, msg, delay);
+        this.Amplify.publish(this.cid, type, msg, delay, 'nomove');
         return this;
       };
 

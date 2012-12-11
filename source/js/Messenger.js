@@ -5,6 +5,21 @@
     var Messenger;
     return Messenger = (function() {
 
+      Messenger.prototype.animation_options = {
+        "default": {
+          start: {
+            top: "+=115"
+          },
+          end: {
+            top: "-=115"
+          }
+        },
+        nomove: {
+          start: false,
+          end: false
+        }
+      };
+
       function Messenger(view, id) {
         this.view = view;
         this.id = id;
@@ -18,46 +33,45 @@
 
       Messenger.prototype.register = function(id) {
         var _this = this;
-        amplify.subscribe(id, function(type, msg, delay) {
+        return amplify.subscribe(id, function(type, msg, delay, animation) {
+          if (animation != null) {
+            animation = _this.animation_options[animation];
+          } else {
+            animation = _this.animation_options["default"];
+          }
           if (type != null) {
             _this.flash_container.addClass(type);
           }
           if (msg != null) {
-            msg = "<i class=\"icon-remove-sign\"></i> " + msg;
+            msg = "<span><i class=\"icon-remove-sign\"></i>" + msg + "</span>";
             _this.flash_container.html(msg).animate({
               opacity: 1
             }, 500);
-            _this.flash_container.parent().animate({
-              top: "+=120"
-            }, 500);
+            _this.flash_container.parent().animate(animation.start, 500);
             if (delay != null) {
-              return _.delay(function() {
+              _.delay(function() {
                 _this.flash_container.html(msg).animate({
                   opacity: 0
                 }, 500);
-                return _this.flash_container.parent().animate({
-                  top: "-=120"
-                }, 500);
+                return _this.flash_container.parent().animate(animation.end, 500);
               }, delay);
             }
           }
-        });
-        this.flash_container.on('click', 'i', function(e) {
-          e.preventDefault();
-          _this.flash_container.animate({
-            opacity: 0
-          }, 300);
-          return _this.flash_container.parent().animate({
-            top: "-=120"
-          }, 300);
-        });
-        return this.flash_container.on('click', '.error_details a', function(e) {
-          e.preventDefault();
-          $(_this).next().toggle();
-          return $(_this).toggle(function() {
-            return $(this).html('<i class="icon-plus-sign"></i> Hide error details');
-          }, function() {
-            return $(this).html('<i class="icon-plus-sign"></i> Show error details');
+          _this.flash_container.on('click', function(e) {
+            e.preventDefault();
+            _this.flash_container.animate({
+              opacity: 0
+            }, 300);
+            return _this.flash_container.parent().animate(animation.end, 300);
+          });
+          return _this.flash_container.on('click', '.error_details a', function(e) {
+            e.preventDefault();
+            $(_this).next().toggle();
+            return $(_this).toggle(function() {
+              return $(this).html('<i class="icon-plus-sign"></i> Hide error details');
+            }, function() {
+              return $(this).html('<i class="icon-plus-sign"></i> Show error details');
+            });
           });
         });
       };

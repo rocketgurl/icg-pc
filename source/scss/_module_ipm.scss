@@ -21,8 +21,21 @@
 }
 
 .ipm-flash {
-	margin: 0;
+	margin: 100px 0 0 0;
 	@include border-radius(0px);
+	box-shadow: none;
+	width: 100%;
+	padding: 0;
+	margin-left: -1px;
+
+	span {
+		display: block;
+		padding: 20px;
+	}
+}
+
+.policy-module .flash-shim {
+	padding: 20px;
 }
 
 .ipm-home-action-view {
