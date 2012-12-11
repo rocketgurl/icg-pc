@@ -359,7 +359,7 @@ body {
   color: #37a93c;
 }
 .search-menus .menu-error, .ru-menus .menu-error, .rq-menus .menu-error {
-  color: #813c47;
+  color: #430d16;
 }
 .search-menus .menu-loading, .ru-menus .menu-loading, .rq-menus .menu-loading {
   color: dimgrey;
@@ -389,10 +389,10 @@ body {
 #header-container {
   *zoom: 1;
   width: 97%;
-  margin-left: auto;
-  margin-right: auto;
   padding-left: 1.5%;
   padding-right: 1.5%;
+  margin-left: auto;
+  margin-right: auto;
   padding: 0;
 }
 #header-container:after {
@@ -617,10 +617,10 @@ body {
 #workspace nav {
   *zoom: 1;
   width: 97%;
-  margin-left: auto;
-  margin-right: auto;
   padding-left: 1.5%;
   padding-right: 1.5%;
+  margin-left: auto;
+  margin-right: auto;
   background: transparent;
   position: relative;
   top: -32px;
@@ -770,12 +770,12 @@ body {
 #workspace article {
   *zoom: 1;
   width: 97%;
-  margin-left: auto;
-  margin-right: auto;
   padding-left: 1.5%;
   padding-right: 1.5%;
-  padding: 20px 0;
-  margin-top: -32px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 0 0 20px 0;
+  margin-top: -12px;
 }
 #workspace article:after {
   content: "";
@@ -828,21 +828,35 @@ body {
   border: 0px;
 }
 
+.flash-message-container {
+  width: 100%;
+  position: absolute;
+  z-index: 5234;
+  top: -100px;
+  left: 0;
+  text-align: center;
+  margin: 0;
+  padding: 0;
+}
+
 .flash-message {
-  margin: 0 0 20px 0;
-  font-size: 14px;
-  font-size: 1.4rem;
-  padding: 10px 20px;
+  font-size: 18px;
+  font-size: 1.8rem;
   -webkit-border-radius: 6px;
   -moz-border-radius: 6px;
   -ms-border-radius: 6px;
   -o-border-radius: 6px;
   border-radius: 6px;
-  display: none;
+  position: absolute;
+  box-shadow: 0 0 10px #333;
+  opacity: 0;
+  padding: 20px;
   font-weight: bold;
+  width: 95%;
+  text-align: left;
+  margin: 0 10px;
 }
 .flash-message i {
-  top: -3px;
   float: right;
   cursor: pointer;
   font-size: 20px;
@@ -850,15 +864,17 @@ body {
   position: relative;
 }
 .flash-message h3 {
-  font-size: 16px;
-  font-size: 1.6rem;
   margin: 0;
 }
 .flash-message p {
+  font-size: 14px;
+  font-size: 1.4rem;
   font-weight: normal;
   margin: 0 0 5px 0;
 }
 .flash-message ul, .flash-message ol {
+  font-size: 14px;
+  font-size: 1.4rem;
   font-weight: normal;
   margin: 10px 0;
 }
@@ -869,42 +885,42 @@ body {
 }
 
 .success {
-  background-color: #d5ebd6;
-  color: #407241;
-  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2Q1ZWJkNiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzkwY2E5MyIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-color: #34a500;
+  color: white;
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzM0YTUwMCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzJjOGMwMCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
   background-size: 100%;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #d5ebd6), color-stop(100%, #90ca93));
-  background-image: -webkit-linear-gradient(#d5ebd6, #90ca93);
-  background-image: -moz-linear-gradient(#d5ebd6, #90ca93);
-  background-image: -o-linear-gradient(#d5ebd6, #90ca93);
-  background-image: linear-gradient(#d5ebd6, #90ca93);
-  border: #6dba71 1px solid;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #34a500), color-stop(100%, #2c8c00));
+  background-image: -webkit-linear-gradient(#34a500, #2c8c00);
+  background-image: -moz-linear-gradient(#34a500, #2c8c00);
+  background-image: -o-linear-gradient(#34a500, #2c8c00);
+  background-image: linear-gradient(#34a500, #2c8c00);
+  border: #2c8c00 1px solid;
 }
 
 .notice {
-  background-color: #eeec8b;
-  color: #934a00;
-  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2VlZWM4YiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2QzYzM1NCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-color: #fcd450;
+  color: #7e6102;
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZjZDQ1MCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iI2ZjZDA0MSIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
   background-size: 100%;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #eeec8b), color-stop(100%, #d3c354));
-  background-image: -webkit-linear-gradient(#eeec8b, #d3c354);
-  background-image: -moz-linear-gradient(#eeec8b, #d3c354);
-  background-image: -o-linear-gradient(#eeec8b, #d3c354);
-  background-image: linear-gradient(#eeec8b, #d3c354);
-  border: #d3c354 1px solid;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #fcd450), color-stop(100%, #fcd041));
+  background-image: -webkit-linear-gradient(#fcd450, #fcd041);
+  background-image: -moz-linear-gradient(#fcd450, #fcd041);
+  background-image: -o-linear-gradient(#fcd450, #fcd041);
+  background-image: linear-gradient(#fcd450, #fcd041);
+  border: #fcd041 1px solid;
 }
 
 .warning {
-  background-color: #ba6976;
+  background-color: #981e32;
   color: white;
-  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2JhNjk3NiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzcyMTAxYiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
+  background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzk4MWUzMiIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzk4MWUzMiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA==');
   background-size: 100%;
-  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #ba6976), color-stop(100%, #72101b));
-  background-image: -webkit-linear-gradient(#ba6976, #72101b);
-  background-image: -moz-linear-gradient(#ba6976, #72101b);
-  background-image: -o-linear-gradient(#ba6976, #72101b);
-  background-image: linear-gradient(#ba6976, #72101b);
-  border: #72101b 1px solid;
+  background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #981e32), color-stop(100%, #981e32));
+  background-image: -webkit-linear-gradient(#981e32, #981e32);
+  background-image: -moz-linear-gradient(#981e32, #981e32);
+  background-image: -o-linear-gradient(#981e32, #981e32);
+  background-image: linear-gradient(#981e32, #981e32);
+  border: #981e32 1px solid;
 }
 
 .module-loader {
@@ -1407,10 +1423,10 @@ Module: Policy
 .ru-container, .zd-container {
   *zoom: 1;
   width: 96.4%;
-  margin-left: auto;
-  margin-right: auto;
   padding-left: 1.8%;
   padding-right: 1.8%;
+  margin-left: auto;
+  margin-right: auto;
   border: #ddd 1px solid;
   background-color: #f4f4f4;
   display: none;
@@ -1455,8 +1471,6 @@ Module: Policy
 .ru-block:nth-child(4n) {
   float: right;
   margin-right: 0;
-  #margin-left: -1em;
-  display: inline;
 }
 
 .ru-block-shim {
@@ -1697,7 +1711,7 @@ Module: Policy
   font-style: italic;
 }
 .ru-list .incomplete {
-  color: #72101b;
+  color: #981e32;
   font-style: italic;
 }
 

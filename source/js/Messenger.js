@@ -24,17 +24,32 @@
           }
           if (msg != null) {
             msg = "<i class=\"icon-remove-sign\"></i> " + msg;
-            _this.flash_container.html(msg).fadeIn('fast');
+            _this.flash_container.html(msg).animate({
+              opacity: 1
+            }, 500);
+            _this.flash_container.parent().animate({
+              top: "+=120"
+            }, 500);
             if (delay != null) {
               return _.delay(function() {
-                return _this.flash_container.html(msg).fadeOut('slow');
+                _this.flash_container.html(msg).animate({
+                  opacity: 0
+                }, 500);
+                return _this.flash_container.parent().animate({
+                  top: "-=120"
+                }, 500);
               }, delay);
             }
           }
         });
         this.flash_container.on('click', 'i', function(e) {
           e.preventDefault();
-          return _this.flash_container.fadeOut('fast');
+          _this.flash_container.animate({
+            opacity: 0
+          }, 300);
+          return _this.flash_container.parent().animate({
+            top: "-=120"
+          }, 300);
         });
         return this.flash_container.on('click', '.error_details a', function(e) {
           e.preventDefault();

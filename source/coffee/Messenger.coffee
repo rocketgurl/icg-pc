@@ -33,18 +33,39 @@ define [
           @flash_container.addClass type
         if msg?
           msg = """<i class="icon-remove-sign"></i> #{msg}"""
-          @flash_container.html(msg).fadeIn('fast')
+          @flash_container.html(msg)
+            .animate({
+                  opacity : 1
+                  }, 500)
+          @flash_container.parent()
+            .animate({
+                top     : "+=120"
+                }, 500)
+
 
           # After a short delay remove the flash message
           if delay?
             _.delay =>
-              @flash_container.html(msg).fadeOut('slow')            
+              @flash_container.html(msg) 
+                .animate({
+                  opacity : 0
+                  }, 500)
+              @flash_container.parent()
+                .animate({
+                    top     : "-=120"
+                    }, 500)           
             , delay
 
     
       @flash_container.on 'click', 'i', (e) =>
         e.preventDefault()
-        @flash_container.fadeOut 'fast'
+        @flash_container.animate({
+              opacity : 0
+            }, 300)
+        @flash_container.parent()
+          .animate({
+              top     : "-=120"
+              }, 300)
 
       # Attach click handler to error message options list
       @flash_container.on 'click', '.error_details a', (e) =>

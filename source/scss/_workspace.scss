@@ -130,8 +130,8 @@
 	article {
 		
 		@include container;
-		padding: 20px 0;
-		margin-top: -32px; // Correct position offset from tabs
+		padding: 0 0 20px 0;
+		margin-top: -12px; // Correct position offset from tabs
 	}
 	#canvas {
 		@include span-columns(12 omega, 12);
@@ -172,30 +172,44 @@
 	}
 }
 
+.flash-message-container {
+	width: 100%;
+	position: absolute;
+	z-index: 5234;
+	top: -100px;
+	left: 0;
+	text-align: center;
+	margin: 0;
+	padding: 0;
+}
 
 .flash-message {
-	margin: 0 0 20px 0;
-	@include font-size(14);
-	padding: 10px 20px;
+	@include font-size(18);
 	@include border-radius(6px);
-	display: none;
+	position: absolute;
+	box-shadow: 0 0 10px #333;
+	opacity: 0;
+	padding: 20px;	
 	font-weight: bold;
+	width: 95%;
+	text-align: left;
+	margin: 0 10px;
 	i {
-		top: -3px;
 		float: right;
 		cursor: pointer;
 		@include font-size(20);
 		position: relative;
 	}
 	h3 {
-		@include font-size(16);
 		margin: 0;
 	}
 	p {
+		@include font-size(14);
 		font-weight: normal;
 		margin: 0 0 5px 0;
 	}
 	ul, ol {
+		@include font-size(14);
 		font-weight: normal;
 		margin: 10px 0;
 	}
@@ -208,8 +222,8 @@
 .success {
 	background-color: $success-base;
 	color: $success-text;
-	@include background-image(linear-gradient($success-base, darken($success-base, 20)));
-	border: darken($success-base, 30) 1px solid;
+	@include background-image(linear-gradient($success-base, $success-bottom));
+	border: $success-bottom 1px solid;
 }
 .notice {
 	background-color: $notice-base;

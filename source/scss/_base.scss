@@ -26,15 +26,21 @@ $white     : #fff;
 $colblue   : #007ac9; // Sortable column headers & such
 $rowselect : #ffccff;
 
+$yellow      : #fcd450;
+$green       : #247200;
+$green-light : #97ee6f;
+$red         : #981e32;
+
 // Flash Msg. Colors
-$success-text   : #407241;
-$success-base   : #d5ebd6;
-$notice-text    : #934a00;
-$notice-base    : #eeec8b;
-$notice-bottom  : #d3c354;
+$success-text   : #fff;
+$success-base   : lighten($green, 10);
+$success-bottom : lighten($green, 5);
+$notice-text    : darken($yellow, 40);
+$notice-base    : $yellow;
+$notice-bottom  : darken($yellow, 3);
 $warning-text   : #ffffff;
-$warning-base   : #ba6976;
-$warning-bottom : #72101b;
+$warning-base   : $red;
+$warning-bottom : $red;
 
 // Core font stacks
 @mixin sans {
