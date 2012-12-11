@@ -44,7 +44,8 @@
           }
           if (msg != null) {
             msg = "<span><i class=\"icon-remove-sign\"></i>" + msg + "</span>";
-            _this.flash_container.html(msg).animate({
+            _this.flash_container.parent().show();
+            _this.flash_container.html(msg).show().animate({
               opacity: 1
             }, 500);
             _this.flash_container.parent().animate(animation.start, 500);
@@ -53,7 +54,9 @@
                 _this.flash_container.html(msg).animate({
                   opacity: 0
                 }, 500);
-                return _this.flash_container.parent().animate(animation.end, 500);
+                return _this.flash_container.parent().animate(animation.end, 500, function() {
+                  return $(this).hide();
+                });
               }, delay);
             }
           }
@@ -62,7 +65,9 @@
             _this.flash_container.animate({
               opacity: 0
             }, 300);
-            return _this.flash_container.parent().animate(animation.end, 300);
+            return _this.flash_container.parent().animate(animation.end, 300, function() {
+              return $(this).hide();
+            });
           });
           return _this.flash_container.on('click', '.error_details a', function(e) {
             e.preventDefault();

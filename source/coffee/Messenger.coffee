@@ -49,7 +49,9 @@ define [
           @flash_container.addClass type
         if msg?
           msg = """<span><i class="icon-remove-sign"></i>#{msg}</span>"""
+          @flash_container.parent().show()  
           @flash_container.html(msg)
+            .show()
             .animate({
                   opacity : 1
                   }, 500)
@@ -63,7 +65,9 @@ define [
                 .animate({
                   opacity : 0
                   }, 500)
-              @flash_container.parent().animate(animation.end, 500)  
+              @flash_container.parent().animate(animation.end, 500, ->
+                  $(this).hide()
+                )  
             , delay
 
     
@@ -72,7 +76,9 @@ define [
           @flash_container.animate({
                 opacity : 0
               }, 300)
-          @flash_container.parent().animate(animation.end, 300)
+          @flash_container.parent().animate(animation.end, 300, ->
+                $(this).hide()
+            )
 
         # Attach click handler to error message options list
         @flash_container.on 'click', '.error_details a', (e) =>

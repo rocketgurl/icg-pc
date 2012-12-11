@@ -186,6 +186,7 @@
 .flash-message {
 	@include font-size(18);
 	@include border-radius(6px);
+	display: none;
 	position: absolute;
 	box-shadow: 0 0 10px #333;
 	opacity: 0;
