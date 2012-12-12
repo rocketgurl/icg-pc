@@ -25,10 +25,14 @@ define [
     #
     constructor : (@view, @id) ->
       if @view.$el?
-        @flash_container = @view.$el.find("#flash-message-#{@id}")
+        @flash_message = @view.$el.find("#flash-message-#{@id}")
       else
-        @flash_container = @view.find("#flash-message-#{@id}")
+        @flash_message = @view.find("#flash-message-#{@id}")
         
+      @container = $(".flash-message-container")
+      if @container.length == 0
+        @container = $("#flash-message-controller")
+
       @register @id
 
 
@@ -46,42 +50,42 @@ define [
 
         # set className
         if type?
-          @flash_container.addClass type
+          @flash_message.addClass type
         if msg?
           msg = """<span><i class="icon-remove-sign"></i>#{msg}</span>"""
-          @flash_container.parent().show()  
-          @flash_container.html(msg)
+          @container.show()  
+          @flash_message.html(msg)
             .show()
             .animate({
                   opacity : 1
                   }, 500)
-          @flash_container.parent().animate(animation.start, 500)
+          @container.animate(animation.start, 500)
 
 
           # After a short delay remove the flash message
           if delay?
             _.delay =>
-              @flash_container.html(msg)
+              @flash_message.html(msg)
                 .animate({
                   opacity : 0
                   }, 500)
-              @flash_container.parent().animate(animation.end, 500, ->
+              @container.animate(animation.end, 500, ->
                   $(this).hide()
                 )  
             , delay
 
     
-        @flash_container.on 'click', (e) =>
+        @flash_message.on 'click', (e) =>
           e.preventDefault()
-          @flash_container.animate({
+          @flash_message.animate({
                 opacity : 0
               }, 300)
-          @flash_container.parent().animate(animation.end, 300, ->
-                $(this).hide()
+          @container.animate(animation.end, 300, ->
+              $(this).hide()
             )
 
         # Attach click handler to error message options list
-        @flash_container.on 'click', '.error_details a', (e) =>
+        @flash_message.on 'click', '.error_details a', (e) =>
           e.preventDefault()
           $(this).next().toggle()
           $(this).toggle(
