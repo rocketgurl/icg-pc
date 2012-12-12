@@ -101,7 +101,6 @@ define [
       # _.delay(load, 1000)
 
       @RenewalModel.fetch(
-          url : "#{@policy.get('urlRoot')}policies/#{@id}/underwriting"
           success : (model, resp) ->
             model.trigger('renewal:success', resp)
           error : (model, resp) ->
