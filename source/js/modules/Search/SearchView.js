@@ -106,7 +106,7 @@
         policystate = (_ref2 = this.$el.find('.query-type').val()) != null ? _ref2 : '';
         q = (_ref3 = this.$el.find('input[type=search]').val()) != null ? _ref3 : '';
         query = {
-          q: q,
+          q: _.trim(q),
           perpage: perpage,
           page: page,
           policystate: policystate

@@ -55,7 +55,6 @@
       };
 
       AppRules.prototype.get_modules = function(app_name) {
-        console.log(["APP_NAME", app_name]);
         switch (app_name) {
           case 'policies':
             return [this.policy_search, this.referral_queue];

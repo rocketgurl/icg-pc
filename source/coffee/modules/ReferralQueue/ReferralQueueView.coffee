@@ -3,8 +3,10 @@ define [
   'Helpers',
   'Messenger',
   'modules/ReferralQueue/ReferralTaskView',
-  'text!modules/ReferralQueue/templates/tpl_referral_container.html'
-], (BaseView, Helpers, Messenger, ReferralTaskView, tpl_container) ->
+  'modules/ReferralQueue/ReferralAssigneesModel',
+  'text!modules/ReferralQueue/templates/tpl_referral_container.html',
+  'text!modules/ReferralQueue/templates/tpl_manage_assignees.html'
+], (BaseView, Helpers, Messenger, ReferralTaskView, ReferralAssigneesModel, tpl_container, tpl_menu_assignees) ->
 
   ReferralQueueView = BaseView.extend
 
@@ -21,11 +23,21 @@ define [
         @sortTasks(e, @COLLECTION)
       "click .referrals-switch li" : (e) ->
         @toggleOwner(e, @COLLECTION, @PAGINATION_EL)
+      "click .button-manage-assignees" : (e) ->
+        @toggleManageAssignees(e)
+      "click .menu-confirm" : (e) ->
+        @saveAssignees(e)
+      "change input[type=checkbox]" : (e) ->
+        @toggleCheckbox(e)
+      "click .menu-cancel" : (e) ->
+        @clearAssignees(e)
 
     initialize : (options) ->
-      @MODULE        = options.module || false
-      @COLLECTION    = options.collection || false
-      @PARENT_VIEW   = options.view || false
+      @MODULE      = options.module || false
+      @COLLECTION  = options.collection || false
+      @PARENT_VIEW = options.view || false
+      
+      ixlibrary    = options.ixlibrary || false
 
       # When the collection is populated, generate the views
       @COLLECTION.bind('reset', @renderTasks, this);
@@ -34,6 +46,20 @@ define [
       # Setup our DOM hooks
       @el  = @PARENT_VIEW.el
       @$el = @PARENT_VIEW.$el
+
+      # Create an AssigneeList model to manage the XML list
+      if @MODULE != false
+        digest    = @MODULE.controller.user.get 'digest'
+        ixlibrary = "#{@MODULE.controller.services.ixlibrary}buckets/underwriting/objects/assignee_list.xml"
+
+      @AssigneeList     = new ReferralAssigneesModel({ digest : digest })
+      @AssigneeList.url = ixlibrary
+      errorCallback     = _.bind @renderAssigneesError, this
+      @AssigneeList.fetch
+        error : errorCallback
+
+      @AssigneeList.on 'change', @assigneeSuccess, this 
+      @AssigneeList.on 'fail', @assigneeError, this 
 
     render : ->
       # Setup flash module & main container
@@ -52,6 +78,10 @@ define [
 
       # Throw up our loading image until the tasks come in
       @toggleLoader(true)
+
+      # If we couldn't load assignee_list.xml then disable the button
+      if @ASSIGNEE_STATE == false
+        @$el.find('.button-manage-assignees').attr('disabled', true)
 
       this
 
@@ -146,7 +176,12 @@ define [
       # Items count
       per_page = elements.per_page.val()
 
-      if collection.totalItems < per_page
+      # Coerce strings into actual numbers via destructuring
+      [per_page, collection.totalItems, collection.page] = _.map([per_page, collection.totalItems, collection.page], (num) ->
+          parseInt(num, 10)
+        )
+
+      if per_page > collection.totalItems
         end_position   = collection.totalItems
         start_position = 1
       else
@@ -231,52 +266,84 @@ define [
         reg = /▲|▼/gi
         el.html(el.html().replace(reg, ''))
 
+    # JSON data from AssigneeList needs some additional parsing to render
+    # correctly in Mustache
+    toggleManageAssignees : (e) ->
+      e.preventDefault()
+      if @AssigneeList.get('json')?
+        assignees = @AssigneeList.parseBooleans(@AssigneeList.get('json').Assignee)
+        @Modal.attach_menu $(e.currentTarget), '.rq-menus', tpl_menu_assignees, {assignees : assignees}
+      else
+        @Amplify.publish @cid, 'warning', "Unable to load assignees from server."
 
-    # Success Callback for Assignee List GET/'PUT'  
-    # loads ASSIGNEE_LIST with result XML
+    renderAssigneesError : (model, xhr, options) ->
+      @ASSIGNEE_STATE = false
+      @Amplify.publish 'controller', 'warning', "Warning - could not load assignees xml: #{xhr.status} - #{xhr.statusText}"
+
+    # The two lists of checkboxes are combined into one array of objects. Then
+    # map over the Assignee JSON from the model, plucking objects from our
+    # combined array with the same identity and merging in their new values.
+    # The updated Assignee JSON is set back to the model, which generates XML
+    # and PUTs it back to the server.
     #
-    # @param `data` _XML_ Response from server  
-    # @param `status` _String_ HTTP success/fail    
-    # @param `xhr` _jqXHR_ jQuery XHR object   
-    #
-    assigneeListSuccess : (data, status, xhr) ->
-      if data? && status == 'success'
-        @ASSIGNEE_LIST = $(data)
+    saveAssignees : (e) ->
+      e.preventDefault()
+      @assigneeLoader()
+      values = []
+      json   = @AssigneeList.get('json').Assignee
 
-    getAssigneeList : (url, callback) ->
-      url = url || @MODULE.controller.services.ixlibrary + 'buckets/underwriting/objects/assignee_list.xml' 
-      callback = callback || @assigneeListSuccess
-      $.ajax
-        url         : url
-        type        : 'GET'
-        dataType    : 'xml'
-        contentType : 'application/xml'
-        headers     :
-          'Authorization'   : "Basic #{@COLLECTION.digest}"
-          'X-Authorization' : "Basic #{@COLLECTION.digest}"
-        success : (data, textStatus, jqXHR) =>
-          console.log ["assigneeListSuccess", data, textStatus]
-          callback.apply(this, [data, textStatus, jqXHR])
-        error: (jqXHR, textStatus, errorThrown) =>
-          console.log jqXHR
+      # Combine lists into array with some processing on identity
+      @$el.find('input[type=checkbox]').each (index, val) ->
+        name = $(val).attr('name')
+        if name.indexOf('newbiz_') > -1
+          values.push
+            identity     : name.replace /newbiz_/gi, ''
+            new_business : $(val).val()
+        else
+          values.push
+            identity : name.replace /renewal_/gi, ''
+            renewals : $(val).val()
 
-    putAssigneeList : (url, callback, list) ->
-      url = url || @MODULE.controller.services.ixlibrary + 'buckets/underwriting/objects/assignee_list.xml' 
-      callback = callback || @assigneeListSuccess
-      $.ajax
-        url         : url
-        type        : 'POST'
-        dataType    : 'xml'
-        contentType : 'application/xml'
-        data        : Helpers.XMLToString list
-        headers     :
-          'Authorization'     : "Basic #{@COLLECTION.digest}"
-          'X-Authorization'   : "Basic #{@COLLECTION.digest}"
-          'X-Crippled-Client' : "yes"
-          'X-Rest-Method'     : "PUT"
-        success : (data, textStatus, jqXHR) =>
-          console.log ["assigneeListSuccess", data, textStatus]
-          callback.apply(this, [data, textStatus, jqXHR])
-        error: (jqXHR, textStatus, errorThrown) =>
-          console.log jqXHR
+      merged = _.map json, (assignee) ->
+        items = _.where values, { identity : assignee.identity }
+        if items.length > 1
+          _.extend assignee, items[0], items[1]
+        else
+          _.extend assignee, items[0]
 
+      @AssigneeList.set 'json', { Assignee : merged }
+      @AssigneeList.putList()
+
+    # Remove the menu from DOM so it will be generated fresh erasing any
+    # changes from the user
+    clearAssignees : (e) ->
+      e.preventDefault()
+      @Modal.removeMenu()
+
+    assigneeLoader : ->
+      @$el.find('.menu-status')
+          .show()
+          .html('<strong class="menu-loading">Saving changes&hellip;</strong>')   
+
+    assigneeSuccess : (model) ->
+      @$el.find('.menu-status')
+          .show()
+          .html('<strong class="menu-success">Assignee List saved!</strong>')
+          .delay(2000)
+          .fadeOut('slow')
+
+    assigneeError : (msg) ->
+      @$el.find('.menu-status')
+          .show()
+          .html("""<strong class="menu-error">Error saving: #{msg}</strong>""")
+          .delay(5000)
+          .fadeOut('slow')
+
+    toggleCheckbox : (e) ->
+      $cb = $(e.currentTarget)
+      if $cb.attr('checked')
+        $cb.val('true')
+      else
+        $cb.val('false')
+      $cb
+  

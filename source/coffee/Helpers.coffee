@@ -80,5 +80,114 @@ define [
       else
         (new DOMParser()).parseFromString(sXML, "text/xml")
 
+    # Some date strings we'll be dealing with are formatted with a full
+    # timestamp like: "2011-01-15T23:00:00-04:00". The time, after the "T"
+    # can sometimes cause weird rounding issues with the day. To safegaurd
+    # against it, we'll just remove the "T" and everything after it.
+    #
+    # @param `date` _String_ A date string  
+    # @param `format` _String_ (optional) A date format string   
+    # @return _String_ An ISO formatted date string  
+    #
+    stripTimeFromDate : (date, format) ->
+      format = format ? null
+      clean  = date
+      t      = date.indexOf('T')
+      if t > -1
+        clean = clean.substring(0, t)
+      @formatDate clean, format
+
+    # Format a date, defaulting to ISO format
+    #
+    # @param `date` _String_ A date string  
+    # @param `format` _String_ A date format string  
+    # @return _String_  
+    #
+    formatDate : (date, format) ->
+      format = format || 'YYYY-MM-DD'
+      moment(date).format(format)
+
+    # Create an ISO timestamp
+    makeTimestamp : ->
+      moment(new Date()).format('YYYY-MM-DDTHH:mm:ss.sssZ')
+
+    # Resize and element to the approximate height of the workspace
+    #
+    # @param `el` _HTML Element_ element to resize  
+    # @param `offset` _Integer_ additional padding  
+    #
+    resize_element : (el, offset) ->
+      offset = offset || 0
+      el_height = Math.floor((($(window).height() - (184 + offset))/$(window).height())*100) + "%"
+      el.css(
+        'min-height' : el_height
+        'height'     : $(window).height() - (184 + offset)
+        )
+
+    # Take a name and properly capitalize it
+    #
+    # @param `name` _String_    
+    # @returns _String_    
+    #
+    properName : (name) ->
+      name = @parseNamePrefix(name.toLowerCase())
+      name = @parseNameSuffix(name)
+      name
+
+    # Properly capitalize complex names (ex: MacGuffin, O'Shea)
+    #
+    # @param `name` _String_    
+    # @returns _String_    
+    #
+    parseNamePrefix : (name) ->
+      prefixes = ['mac', 'mc', 'van', "d'", "o'"]
+      result = _.find prefixes, (prefix) ->
+        re = RegExp(prefix, "i")
+        re.test(name)
+
+      if result != undefined
+        name    = name.split(result)
+        name[0] = result
+        name = _.map(name, (fragment) -> 
+            _.titleize(fragment)
+          )
+        name = name.join('')
+      else
+        name = _.titleize name
+
+      name
+
+    # Capitalize the suffixes
+    #
+    # @param `name` _String_    
+    # @returns _String_    
+    #
+    parseNameSuffix : (name) ->
+      suffixes = ['jr', 'snr', 'phd', 'esq', 'cpa']
+      result = _.find suffixes, (suffix) ->
+        re = RegExp(suffix, "i")
+        re.test(name)
+
+      if result != undefined
+        re   = RegExp(result, "i")
+        name = name.replace(re, _.titleize(result))
+
+      name
+
+    # Super simple function to concat two strings with a seperator.
+    #
+    # @param `a` _String_    
+    # @param `b` _String_    
+    # @param `separator` _String_    
+    # @returns _String_    
+    #
+    concatStrings : (a, b, separator) ->
+      separator = separator ? ', '
+      out = " "
+      if a
+        out = _.trim("#{a}")
+      if b
+        out = _.trim("#{out}#{separator}#{b}")
+      out
 
   Helpers

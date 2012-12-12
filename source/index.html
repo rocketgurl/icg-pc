@@ -73,7 +73,7 @@
 					<li><a href="" title="">Privacy policy</a></li>
 					<li><a href="" title="">Terms of service</a></li>
 					<li><a href="" title="">Support</a></li>
-					<li><span id="version-number">&#976;eta</span></li>
+					<li>βeta <span id="version-number"></span></li>
 				</ul>
 			</footer>
 		</article>
@@ -96,7 +96,9 @@
 
     <!-- TEMPLATE: Flash Message Container -->
     <script type="text/template" id="tpl-flash-message">
-    	<div id="flash-message-{{cid}}" class="flash-message"></div>
+    	<div class="flash-message-container">
+    		<div id="flash-message-{{cid}}" class="flash-message"></div>
+    	</div>    	
     </script>
 
     <!-- TEMPLATE: Search Tab -->
@@ -109,6 +111,5 @@
     	<li{{{tab_class}}}><a href="{{tab_url}}">{{tab_label}}</a><i class="icon-remove-sign" title="close this tab"></i></li>
     </script>
 
-<script type="text/javascript" src="https://arc90dev.atlassian.net/s/en_US-3oiw1w/769/203/1.1/_/download/batch/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector/com.atlassian.jira.collector.plugin.jira-issue-collector-plugin:issuecollector.js?collectorId=88684e14"></script>
 </body>
 </html>

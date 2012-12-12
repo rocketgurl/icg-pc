@@ -9,6 +9,20 @@
       },
       url: function() {
         return "" + (this.get('urlRoot')) + "policies/" + this.id + "/underwriting";
+      },
+      putFragment: function(success, error, fragment) {
+        if (success == null) {
+          success = this.putSuccess;
+        }
+        if (error == null) {
+          error = this.putError;
+        }
+        return this.save({}, {
+          data: JSON.stringify(fragment),
+          contentType: 'application/json',
+          success: success,
+          error: error
+        });
       }
     });
   });

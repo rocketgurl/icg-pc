@@ -1,0 +1,42 @@
+<!DOCTYPE html>  <html> <head>   <title>MakePayment.coffee</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="Endorse.html">                 Endorse.coffee               </a>                                           <a class="source" href="Home.html">                 Home.coffee               </a>                                           <a class="source" href="MakePayment.html">                 MakePayment.coffee               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               MakePayment.coffee             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre><span class="nx">define</span> <span class="p">[</span>
+  <span class="s">&#39;modules/IPM/IPMActionView&#39;</span>
+<span class="p">],</span> <span class="nf">(IPMActionView) -&gt;</span>
+
+  <span class="k">class</span> <span class="nx">MakePaymentAction</span> <span class="k">extends</span> <span class="nx">IPMActionView</span>
+
+    <span class="nv">initialize : </span><span class="o">-&gt;</span>
+      <span class="k">super</span>
+
+    <span class="nv">ready : </span><span class="o">-&gt;</span>
+      <span class="k">super</span>
+      <span class="nx">@fetchTemplates</span><span class="p">(</span><span class="nx">@MODULE</span><span class="p">.</span><span class="nx">POLICY</span><span class="p">,</span> <span class="s">&#39;make-payment&#39;</span><span class="p">,</span> <span class="nx">@processView</span><span class="p">)</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p><strong>Build a viewData object to populate the template form with</strong>  </p>
+
+<p>Takes the model.json and creates a custom data object for this view. We
+then set that object to @viewData and the view to @view.</p>
+
+<p>@param <code>vocabTerms</code> <em>Object</em> model.json <br />
+@param <code>view</code> <em>String</em> HTML template
+@return <em>Array</em> [viewData object, view object]    </p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nv">processViewData : </span><span class="p">(</span><span class="nx">vocabTerms</span><span class="p">,</span> <span class="nx">view</span><span class="p">)</span> <span class="o">=&gt;</span>
+      <span class="k">super</span> <span class="nx">vocabTerms</span><span class="p">,</span> <span class="nx">view</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p><strong>Build view data objects and trigger loaded event</strong>  </p>
+
+<p>Takes the model.json and creates a custom data object for this view. We
+then trigger the <code>loaded</code> event passing @postProcessView as the callback. 
+This will attach any necessary behaviors to the rendered form.  </p>
+
+<p>@param <code>vocabTerms</code> <em>Object</em> model.json <br />
+@param <code>view</code> <em>String</em> HTML template    </p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nv">processView : </span><span class="p">(</span><span class="nx">vocabTerms</span><span class="p">,</span> <span class="nx">view</span><span class="p">)</span> <span class="o">=&gt;</span>
+      <span class="nx">@processViewData</span><span class="p">(</span><span class="nx">vocabTerms</span><span class="p">,</span> <span class="nx">view</span><span class="p">)</span>
+      <span class="nx">@trigger</span> <span class="s">&quot;loaded&quot;</span><span class="p">,</span> <span class="k">this</span><span class="p">,</span> <span class="nx">@postProcessView</span>      </pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p><strong>Process Form</strong>
+On submit we do some action specific processing and then send to the
+TransactionRequest monster</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nv">submit : </span><span class="nf">(e) -&gt;</span>
+      <span class="k">super</span> <span class="nx">e</span></pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>@@ Action specific processing</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="vi">@VALUES.formValues.positivePaymentAmount = </span><span class="o">\</span>
+        <span class="nb">Math</span><span class="p">.</span><span class="nx">abs</span><span class="p">(</span><span class="nx">@VALUES</span><span class="p">.</span><span class="nx">formValues</span><span class="p">.</span><span class="nx">paymentAmount</span> <span class="o">||</span> <span class="mi">0</span><span class="p">)</span>
+
+      <span class="vi">@VALUES.formValues.paymentAmount = </span><span class="o">\</span>
+        <span class="o">-</span><span class="mi">1</span> <span class="o">*</span> <span class="nx">@VALUES</span><span class="p">.</span><span class="nx">formValues</span><span class="p">.</span><span class="nx">positivePaymentAmount</span></pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p>Assemble the ChangeSet XML and send to server</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="nx">@ChangeSet</span><span class="p">.</span><span class="nx">commitChange</span><span class="p">(</span>
+          <span class="nx">@ChangeSet</span><span class="p">.</span><span class="nx">getPolicyChangeSet</span><span class="p">(</span><span class="nx">@VALUES</span><span class="p">)</span>
+          <span class="nx">@callbackSuccess</span><span class="p">,</span>
+          <span class="nx">@callbackError</span>
+        <span class="p">)</span>
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 

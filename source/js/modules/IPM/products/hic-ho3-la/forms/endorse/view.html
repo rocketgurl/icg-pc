@@ -1,0 +1,1772 @@
+<!-- Product: HIC HO3 Louisiana -->
+ 
+	<form action="endorse" method="get" accept-charset="utf-8" class="collapsedSections">
+	<div id="content">
+
+	<div id="content_header">
+		<h2>{{#preview}}Previewing {{/preview}} Endorsement for {{ policyId }}</h2>
+	</div>
+
+	{{^preview}}
+	<div class="content_body">
+		{{#policyOverview}}
+		<section class="policyOverview">
+			<h1>Policy Overview</h1>
+			<ul>
+				<li>{{InsuredFirstName}} {{InsuredMiddleName}} {{InsuredLastName}}</li>
+				<li>{{InsuredMailingAddressLine1}}</li>
+				<li>{{InsuredMailingAddressLine2}}</li>
+				<li>{{InsuredMailingAddressCity}}, {{InsuredMailingAddressState}} {{InsuredMailingAddressZip}}</li>
+			</ul>
+		</section>
+		{{/policyOverview}}
+		
+		<fieldset class="defaultOpen horizontalFields extraWide">
+			<h3>Summary <a data-alt-text="close">change</a></h3>
+			<div class="collapsibleFieldContainer">
+				
+		<div>
+			<label for="id_effectiveDate" class="labelRequired">Effective Date <i>effectiveDate</i></label>
+			<input type="text" id="id_effectiveDate" name="effectiveDate" value="{{effectiveDate}}" class="datepicker" required >
+		</div>
+
+		<div>
+			<label for="id_reasonCode" class="labelRequired">Reason Code <i>reasonCode</i></label>
+			<select id="id_reasonCode" name="reasonCode" data-value="{{EndorseReason}}" required >
+				{{#EnumsEndorseReason}}
+                <option value="{{value}}">{{label}}</option>
+                {{/EnumsEndorseReason}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_comment">Comment <i>comment</i></label>
+			<textarea id="id_comment" name="comment"></textarea>
+		</div>
+
+			</div>
+		</fieldset>
+		<fieldset class="horizontalFields extraWide">
+			<h3>Location <a data-alt-text="close">change</a></h3>
+			<div class="collapsibleFieldContainer">
+						<fieldset>
+				<legend>Risk Address</legend>
+				
+		<div>
+			<label for="id_PropertyStreetNumber" class="labelRequired">Street Number <i>PropertyStreetNumber</i></label>
+			<input type="text" id="id_PropertyStreetNumber" name="PropertyStreetNumber" value="{{PropertyStreetNumber}}" required >
+		</div>
+
+		<div>
+			<label for="id_PropertyStreetName" class="labelRequired">Street Name <i>PropertyStreetName</i></label>
+			<input type="text" id="id_PropertyStreetName" name="PropertyStreetName" value="{{PropertyStreetName}}" required >
+		</div>
+
+		<div>
+			<label for="id_PropertyAddressLine2" >Address Line 2 <i>PropertyAddressLine2</i></label>
+			<input type="text" id="id_PropertyAddressLine2" name="PropertyAddressLine2" value="{{PropertyAddressLine2}}"  >
+		</div>
+
+		<div>
+			<label for="id_PropertyCity" class="labelRequired">City <i>PropertyCity</i></label>
+			<input type="text" id="id_PropertyCity" name="PropertyCity" value="{{PropertyCity}}" required >
+		</div>
+
+<!-- State is LA Only -->
+		<div>
+			<label for="id_PropertyState" class="labelRequired">State <i>PropertyState</i></label>
+			<select id="id_PropertyState" name="PropertyState" data-value="{{PropertyState}}" required >
+				{{#EnumsPropertyState}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsPropertyState}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_PropertyZipCode" class="labelRequired">Zip Code <i>PropertyZipCode</i></label>
+			<input type="text" id="id_PropertyZipCode" name="PropertyZipCode" value="{{PropertyZipCode}}" required >
+		</div>
+
+		<div>
+			<label for="id_PropertyZipCodePlusFour" >Zip Plus Four <i>PropertyZipCodePlusFour</i></label>
+			<input type="text" id="id_PropertyZipCodePlusFour" name="PropertyZipCodePlusFour" value="{{PropertyZipCodePlusFour}}"  >
+		</div>
+
+		<div>
+			<label for="id_PropertyHazardLocation" class="labelRequired">Property Hazard Location <i>PropertyHazardLocation</i></label>
+			<select id="id_PropertyHazardLocation" name="PropertyHazardLocation" data-value="{{PropertyHazardLocation}}" required >
+				{{#EnumsPropertyHazardLocation}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsPropertyHazardLocation}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_PropertyHazardLocationLastUpdated" class="labelRequired">Property Hazard Location Last Updated <i>PropertyHazardLocationLastUpdated</i></label>
+			<input type="text" id="id_PropertyHazardLocationLastUpdated" name="PropertyHazardLocationLastUpdated" value="{{PropertyHazardLocationLastUpdated}}" class="datepicker" required >
+		</div>
+
+		</fieldset>
+
+		<fieldset>
+				<legend>Other</legend>
+				
+		<div>
+			<label for="id_DistanceToCoast" class="labelRequired">Distance To Primary Coastline <i>DistanceToCoast</i></label>
+			<input type="text" id="id_DistanceToCoast" name="DistanceToCoast" value="{{DistanceToCoast}}" required >
+		</div>
+
+		<div>
+			<label for="id_DistanceToCoastSecondary" class="labelRequired">Distance To Secondary Coastline <i>DistanceToCoastSecondary</i></label>
+			<input type="text" id="id_DistanceToCoastSecondary" name="DistanceToCoastSecondary" value="{{DistanceToCoastSecondary}}" required >
+		</div>
+
+		<div>
+			<label for="id_ProtectionClass" class="labelRequired">Protection Class <i>ProtectionClass</i></label>
+			<select id="id_ProtectionClass" name="ProtectionClass" data-value="{{ProtectionClass}}" required >
+				{{#EnumsProtectionClass}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsProtectionClass}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_DistanceToFireDepartment" class="labelRequired">Miles to Primary Responding Fire Station <i>DistanceToFireDepartment</i></label>
+			<input type="text" id="id_DistanceToFireDepartment" name="DistanceToFireDepartment" value="{{DistanceToFireDepartment}}" required >
+		</div>
+
+		<div>
+			<label for="id_DistanceFireHydrant" class="labelRequired">Distance (In Feet) To Nearest Fire Hydrant <i>DistanceFireHydrant</i></label>
+			<select id="id_DistanceFireHydrant" name="DistanceFireHydrant" data-value="{{DistanceFireHydrant}}" required >
+				{{#EnumsDistanceFireHydrant}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsDistanceFireHydrant}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_VisibleFromRoad" class="labelRequired">Visible From Main, Public Road? <i>VisibleFromRoad</i></label>
+			<select id="id_VisibleFromRoad" name="VisibleFromRoad" data-value="{{VisibleFromRoad}}" required >
+				{{#EnumsVisibleFromRoad}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsVisibleFromRoad}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_AllWeatherAccess" class="labelRequired">Accessible In All Weather? <i>AllWeatherAccess</i></label>
+			<select id="id_AllWeatherAccess" name="AllWeatherAccess" data-value="{{AllWeatherAccess}}" required >
+				{{#EnumsAllWeatherAccess}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsAllWeatherAccess}}
+			</select>
+		</div>
+
+		</fieldset>
+
+			</div>
+		</fieldset>
+		<fieldset class="horizontalFields extraWide">
+			<h3>Section I &amp; II Limits of Liability <a data-alt-text="close">change</a></h3>
+			<div class="collapsibleFieldContainer">
+						<fieldset>
+				<legend>Basic Coverage & Deductible Options</legend>
+				
+		<div>
+			<label for="id_ReplacementCostBuilding" class="labelRequired">Replacement Cost Of Dwelling <i>ReplacementCostBuilding</i></label>
+			<input type="text" id="id_ReplacementCostBuilding" name="ReplacementCostBuilding" value="{{ReplacementCostBuilding}}" required >
+		</div>
+
+		<div>
+			<label for="id_CoverageA" class="labelRequired">Coverage A <i>CoverageA</i></label>
+			<input type="text" id="id_CoverageA" name="CoverageA" value="{{CoverageA}}" required >
+		</div>
+
+		<div>
+			<label for="id_OptionCoverageB" class="labelRequired">Coverage B (% Of Coverage A) <i>OptionCoverageB</i></label>
+			<select id="id_OptionCoverageB" name="OptionCoverageB" data-value="{{OptionCoverageB}}" required >
+				{{#EnumsOptionCoverageB}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsOptionCoverageB}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_CoverageB">Coverage B <i>CoverageB</i></label>
+			<input type="text" id="id_CoverageB" name="CoverageB" value="{{CoverageB}}" readonly>
+		</div>
+
+		<div>
+			<label for="id_OptionCoverageC" class="labelRequired">Coverage C (% Of Coverage A) <i>OptionCoverageC</i></label>
+			<select id="id_OptionCoverageC" name="OptionCoverageC" data-value="{{OptionCoverageC}}" required >
+				{{#EnumsOptionCoverageC}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsOptionCoverageC}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_CoverageC">Coverage C <i>CoverageC</i></label>
+			<input type="text" id="id_CoverageC" name="CoverageC" value="{{CoverageC}}" readonly>
+		</div>
+
+		<div>
+			<label for="id_OptionCoverageD" class="labelRequired">Coverage D (% of Coverage A) <i>OptionCoverageD</i></label>
+			<select id="id_OptionCoverageD" name="OptionCoverageD" data-value="{{OptionCoverageD}}" required disabled="yes">
+				{{#EnumsOptionCoverageD}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsOptionCoverageD}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_CoverageD">Coverage D <i>CoverageD</i></label>
+			<input type="text" id="id_CoverageD" name="CoverageD" value="{{CoverageD}}" readonly>
+		</div>
+
+		<div>
+			<label for="id_CoverageE" class="labelRequired">Coverage E (Personal Liability) <i>CoverageE</i></label>
+			<select id="id_CoverageE" name="CoverageE" data-value="{{CoverageE}}" required >
+				{{#EnumsCoverageE}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsCoverageE}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_CoverageF" class="labelRequired">Coverage F (Medical Payments) <i>CoverageF</i></label>
+			<select id="id_CoverageF" name="CoverageF" data-value="{{CoverageF}}" required >
+				{{#EnumsCoverageF}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsCoverageF}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_HurricaneDeductible" class="labelRequired">Hurricane Deductible <i>HurricaneDeductible</i></label>
+			<select id="id_HurricaneDeductible" name="HurricaneDeductible" data-value="{{HurricaneDeductible}}" required >
+				{{#EnumsHurricaneDeductible}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsHurricaneDeductible}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_AllOtherPerilsDeductible" class="labelRequired">All Other Perils Deductible $ <i>AllOtherPerilsDeductible</i></label>
+			<select id="id_AllOtherPerilsDeductible" name="AllOtherPerilsDeductible" data-value="{{AllOtherPerilsDeductible}}" required >
+				{{#EnumsAllOtherPerilsDeductible}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsAllOtherPerilsDeductible}}
+			</select>
+		</div>
+
+		</fieldset>
+
+		<fieldset>
+				<legend>Scheduled Other Structures</legend>
+				
+		<div>
+			<label for="id_OtherStructures1Type" >1st Scheduled Structure - Type <i>OtherStructures1Type</i></label>
+			<select id="id_OtherStructures1Type" name="OtherStructures1Type" data-value="{{OtherStructures1Type}}"  >
+				{{#EnumsOtherStructures1Type}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsOtherStructures1Type}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_OtherStructures1Occupancy" >1st Scheduled Structure - Occupancy <i>OtherStructures1Occupancy</i></label>
+			<select id="id_OtherStructures1Occupancy" name="OtherStructures1Occupancy" data-value="{{OtherStructures1Occupancy}}"  >
+				{{#EnumsOtherStructures1Occupancy}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsOtherStructures1Occupancy}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_OtherStructures1Coverage" >1st Scheduled Structure - Limit <i>OtherStructures1Coverage</i></label>
+			<input type="text" id="id_OtherStructures1Coverage" name="OtherStructures1Coverage" value="{{OtherStructures1Coverage}}"  >
+		</div>
+
+		<div>
+			<label for="id_OtherStructures1BusinessType" >1st Scheduled Structure - Business Type <i>OtherStructures1BusinessType</i></label>
+			<input type="text" id="id_OtherStructures1BusinessType" name="OtherStructures1BusinessType" value="{{OtherStructures1BusinessType}}"  >
+		</div>
+
+		<div>
+			<label for="id_OtherStructures2Type" >2nd Scheduled Structure - Type <i>OtherStructures2Type</i></label>
+			<select id="id_OtherStructures2Type" name="OtherStructures2Type" data-value="{{OtherStructures2Type}}"  >
+				{{#EnumsOtherStructures2Type}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsOtherStructures2Type}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_OtherStructures2Occupancy" >2nd Scheduled Structure - Occupancy <i>OtherStructures2Occupancy</i></label>
+			<select id="id_OtherStructures2Occupancy" name="OtherStructures2Occupancy" data-value="{{OtherStructures2Occupancy}}"  >
+				{{#EnumsOtherStructures2Occupancy}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsOtherStructures2Occupancy}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_OtherStructures2Coverage" >2nd Scheduled Structure - Limit <i>OtherStructures2Coverage</i></label>
+			<input type="text" id="id_OtherStructures2Coverage" name="OtherStructures2Coverage" value="{{OtherStructures2Coverage}}"  >
+		</div>
+
+		<div>
+			<label for="id_OtherStructures2BusinessType" >2nd Scheduled Structure - Business Type <i>OtherStructures2BusinessType</i></label>
+			<input type="text" id="id_OtherStructures2BusinessType" name="OtherStructures2BusinessType" value="{{OtherStructures2BusinessType}}"  >
+		</div>
+
+		<div>
+			<label for="id_OtherStructures3Type" >3rd Scheduled Structure - Type <i>OtherStructures3Type</i></label>
+			<select id="id_OtherStructures3Type" name="OtherStructures3Type" data-value="{{OtherStructures3Type}}"  >
+				{{#EnumsOtherStructures3Type}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsOtherStructures3Type}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_OtherStructures3Occupancy" >3rd Scheduled Structure - Occupancy <i>OtherStructures3Occupancy</i></label>
+			<select id="id_OtherStructures3Occupancy" name="OtherStructures3Occupancy" data-value="{{OtherStructures3Occupancy}}"  >
+				{{#EnumsOtherStructures3Occupancy}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsOtherStructures3Occupancy}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_OtherStructures3Coverage" >3rd Scheduled Structure - Limit <i>OtherStructures3Coverage</i></label>
+			<input type="text" id="id_OtherStructures3Coverage" name="OtherStructures3Coverage" value="{{OtherStructures3Coverage}}"  >
+		</div>
+
+		<div>
+			<label for="id_OtherStructures3BusinessType" >3rd Scheduled Structure - Business Type <i>OtherStructures3BusinessType</i></label>
+			<input type="text" id="id_OtherStructures3BusinessType" name="OtherStructures3BusinessType" value="{{OtherStructures3BusinessType}}"  >
+		</div>
+
+		</fieldset>
+
+			</div>
+		</fieldset>
+		<fieldset class="horizontalFields extraWide">
+			<h3>Construction &amp; Protection <a data-alt-text="close">change</a></h3>
+			<div class="collapsibleFieldContainer">
+						<fieldset>
+				<legend>Dwelling Exterior</legend>
+				
+		<div>
+			<label for="id_SquareFootUnderRoof" class="labelRequired">Living Area <i>SquareFootUnderRoof</i></label>
+			<input type="text" id="id_SquareFootUnderRoof" name="SquareFootUnderRoof" value="{{SquareFootUnderRoof}}" required >
+		</div>
+
+		<div>
+			<label for="id_ConstructionYear" class="labelRequired">Construction Year - Dwelling <i>ConstructionYear</i></label>
+			<input type="text" id="id_ConstructionYear" name="ConstructionYear" value="{{ConstructionYear}}" required >
+		</div>
+
+		<div>
+			<label for="id_ConstructionYearRoof" class="labelRequired">Construction Year - Roof <i>ConstructionYearRoof</i></label>
+			<input type="text" id="id_ConstructionYearRoof" name="ConstructionYearRoof" value="{{ConstructionYearRoof}}" required >
+		</div>
+
+		<div>
+			<label for="id_ConstructionType" class="labelRequired">Construction Type <i>ConstructionType</i></label>
+			<select id="id_ConstructionType" name="ConstructionType" data-value="{{ConstructionType}}" required >
+				{{#EnumsConstructionType}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsConstructionType}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_MasonryVeneerPercentage" >Masonry Veneer % <i>MasonryVeneerPercentage</i></label>
+			<select id="id_MasonryVeneerPercentage" name="MasonryVeneerPercentage" data-value="{{MasonryVeneerPercentage}}"  >
+				{{#EnumsMasonryVeneerPercentage}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsMasonryVeneerPercentage}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_StructureType" class="labelRequired">Structure Type <i>StructureType</i></label>
+			<select id="id_StructureType" name="StructureType" data-value="{{StructureType}}" required >
+				{{#EnumsStructureType}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsStructureType}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_NumberOfStories" class="labelRequired">Number Of Stories <i>NumberOfStories</i></label>
+			<select id="id_NumberOfStories" name="NumberOfStories" data-value="{{NumberOfStories}}" required >
+				{{#EnumsNumberOfStories}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsNumberOfStories}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_TownHouseStructureType" ># Of Units In Fire Division <i>TownHouseStructureType</i></label>
+			<select id="id_TownHouseStructureType" name="TownHouseStructureType" data-value="{{TownHouseStructureType}}"  >
+				{{#EnumsTownHouseStructureType}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsTownHouseStructureType}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_HomeStyle" class="labelRequired">Home Style <i>HomeStyle</i></label>
+			<select id="id_HomeStyle" name="HomeStyle" data-value="{{HomeStyle}}" required >
+				{{#EnumsHomeStyle}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsHomeStyle}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_GarageType" class="labelRequired">Type Of Garage Or Carport <i>GarageType</i></label>
+			<select id="id_GarageType" name="GarageType" data-value="{{GarageType}}" required >
+				{{#EnumsGarageType}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsGarageType}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_FoundationType" class="labelRequired">Foundation Type <i>FoundationType</i></label>
+			<select id="id_FoundationType" name="FoundationType" data-value="{{FoundationType}}" required >
+				{{#EnumsFoundationType}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsFoundationType}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_Basement" >Basement Type <i>Basement</i></label>
+			<select id="id_Basement" name="Basement" data-value="{{Basement}}"  >
+				{{#EnumsBasement}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsBasement}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_FoundationBasementPercentage" >% Basement Percentage <i>FoundationBasementPercentage</i></label>
+			<select id="id_FoundationBasementPercentage" name="FoundationBasementPercentage" data-value="{{FoundationBasementPercentage}}"  >
+				{{#EnumsFoundationBasementPercentage}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsFoundationBasementPercentage}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_BasementPercentComplete" >Basement Percentage Finished <i>BasementPercentComplete</i></label>
+			<select id="id_BasementPercentComplete" name="BasementPercentComplete" data-value="{{BasementPercentComplete}}"  >
+				{{#EnumsBasementPercentComplete}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsBasementPercentComplete}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_HomeFeatures1" class="labelRequired">1st Additional Home Feature <i>HomeFeatures1</i></label>
+			<select id="id_HomeFeatures1" name="HomeFeatures1" data-value="{{HomeFeatures1}}" required >
+				{{#EnumsHomeFeatures1}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsHomeFeatures1}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_HomeFeatures2" class="labelRequired">2nd Additional Home Feature <i>HomeFeatures2</i></label>
+			<select id="id_HomeFeatures2" name="HomeFeatures2" data-value="{{HomeFeatures2}}" required >
+				{{#EnumsHomeFeatures2}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsHomeFeatures2}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_HomeFeatures3" class="labelRequired">3rd Additional Home Feature <i>HomeFeatures3</i></label>
+			<select id="id_HomeFeatures3" name="HomeFeatures3" data-value="{{HomeFeatures3}}" required >
+				{{#EnumsHomeFeatures3}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsHomeFeatures3}}
+			</select>
+		</div>
+
+		</fieldset>
+
+		<fieldset>
+				<legend>Dwelling Interior</legend>
+				
+		<div>
+			<label for="id_NumberOfKitchens" class="labelRequired">Number Of Kitchens <i>NumberOfKitchens</i></label>
+			<select id="id_NumberOfKitchens" name="NumberOfKitchens" data-value="{{NumberOfKitchens}}" required >
+				{{#EnumsNumberOfKitchens}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsNumberOfKitchens}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_KitchenQuality" class="labelRequired">Kitchen Grade <i>KitchenQuality</i></label>
+			<select id="id_KitchenQuality" name="KitchenQuality" data-value="{{KitchenQuality}}" required >
+				{{#EnumsKitchenQuality}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsKitchenQuality}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_NumberOfFullBaths" class="labelRequired">Number Of Full Bathrooms <i>NumberOfFullBaths</i></label>
+			<select id="id_NumberOfFullBaths" name="NumberOfFullBaths" data-value="{{NumberOfFullBaths}}" required >
+				{{#EnumsNumberOfFullBaths}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsNumberOfFullBaths}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_FullBathQuality" class="labelRequired">Full Bathroom Grade <i>FullBathQuality</i></label>
+			<select id="id_FullBathQuality" name="FullBathQuality" data-value="{{FullBathQuality}}" required >
+				{{#EnumsFullBathQuality}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsFullBathQuality}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_NumberOfHalfBaths" class="labelRequired">Number Of Half Bathrooms <i>NumberOfHalfBaths</i></label>
+			<select id="id_NumberOfHalfBaths" name="NumberOfHalfBaths" data-value="{{NumberOfHalfBaths}}" required >
+				{{#EnumsNumberOfHalfBaths}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsNumberOfHalfBaths}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_HalfBathQuality" >Half Bathroom Grade <i>HalfBathQuality</i></label>
+			<select id="id_HalfBathQuality" name="HalfBathQuality" data-value="{{HalfBathQuality}}"  >
+				{{#EnumsHalfBathQuality}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsHalfBathQuality}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_NumberOfFireplaces" class="labelRequired">Number Of Fireplaces <i>NumberOfFireplaces</i></label>
+			<select id="id_NumberOfFireplaces" name="NumberOfFireplaces" data-value="{{NumberOfFireplaces}}" required >
+				{{#EnumsNumberOfFireplaces}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsNumberOfFireplaces}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_CentralAir" class="labelRequired">Central Air Conditioning? <i>CentralAir</i></label>
+			<select id="id_CentralAir" name="CentralAir" data-value="{{CentralAir}}" required >
+				{{#EnumsCentralAir}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsCentralAir}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_WoodStove" class="labelRequired">Is There A Wood, Wood Pellet Or Coal Stove? <i>WoodStove</i></label>
+			<select id="id_WoodStove" name="WoodStove" data-value="{{WoodStove}}" required >
+				{{#EnumsWoodStove}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsWoodStove}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_WSApproved" >Professionally installed and Inspected? <i>WSApproved</i></label>
+			<select id="id_WSApproved" name="WSApproved" data-value="{{WSApproved}}"  >
+				{{#EnumsWSApproved}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsWSApproved}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_WSSupplementalHeatOnly" >Supplemental heat source only? <i>WSSupplementalHeatOnly</i></label>
+			<select id="id_WSSupplementalHeatOnly" name="WSSupplementalHeatOnly" data-value="{{WSSupplementalHeatOnly}}"  >
+				{{#EnumsWSSupplementalHeatOnly}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsWSSupplementalHeatOnly}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_WSVentedChimney" >Vented to tile-lined or insulated chimney? <i>WSVentedChimney</i></label>
+			<select id="id_WSVentedChimney" name="WSVentedChimney" data-value="{{WSVentedChimney}}"  >
+				{{#EnumsWSVentedChimney}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsWSVentedChimney}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_WSSeparateFlue" >Separate flue from other heat sources? <i>WSSeparateFlue</i></label>
+			<select id="id_WSSeparateFlue" name="WSSeparateFlue" data-value="{{WSSeparateFlue}}"  >
+				{{#EnumsWSSeparateFlue}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsWSSeparateFlue}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_KeroseneHeater" class="labelRequired">Is there a kerosene or electric space heater? <i>KeroseneHeater</i></label>
+			<select id="id_KeroseneHeater" name="KeroseneHeater" data-value="{{KeroseneHeater}}" required >
+				{{#EnumsKeroseneHeater}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsKeroseneHeater}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_KeroseneHeaterSupplementalHeatOnly" >Supplemental heat source only? <i>KeroseneHeaterSupplementalHeatOnly</i></label>
+			<select id="id_KeroseneHeaterSupplementalHeatOnly" name="KeroseneHeaterSupplementalHeatOnly" data-value="{{KeroseneHeaterSupplementalHeatOnly}}"  >
+				{{#EnumsKeroseneHeaterSupplementalHeatOnly}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsKeroseneHeaterSupplementalHeatOnly}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_KeroseneHeaterAge" >Age of the heater <i>KeroseneHeaterAge</i></label>
+			<select id="id_KeroseneHeaterAge" name="KeroseneHeaterAge" data-value="{{KeroseneHeaterAge}}"  >
+				{{#EnumsKeroseneHeaterAge}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsKeroseneHeaterAge}}
+			</select>
+		</div>
+
+		</fieldset>
+
+		<fieldset>
+				<legend>Other Structures</legend>
+				
+		<div>
+			<label for="id_PoolType" class="labelRequired">Swimming Pool On Property? <i>PoolType</i></label>
+			<select id="id_PoolType" name="PoolType" data-value="{{PoolType}}" required >
+				{{#EnumsPoolType}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsPoolType}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_DivingBoardSlide" >Is there a Diving Board or Slide? <i>DivingBoardSlide</i></label>
+			<select id="id_DivingBoardSlide" name="DivingBoardSlide" data-value="{{DivingBoardSlide}}"  >
+				{{#EnumsDivingBoardSlide}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsDivingBoardSlide}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_PoolFence" >Is The Property Around Pool Fenced Or Screened? <i>PoolFence</i></label>
+			<select id="id_PoolFence" name="PoolFence" data-value="{{PoolFence}}"  >
+				{{#EnumsPoolFence}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsPoolFence}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_ImmovablePoolLadder" >Is There An Immovable Ladder Present? <i>ImmovablePoolLadder</i></label>
+			<select id="id_ImmovablePoolLadder" name="ImmovablePoolLadder" data-value="{{ImmovablePoolLadder}}"  >
+				{{#EnumsImmovablePoolLadder}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsImmovablePoolLadder}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_UnlockedPoolGate" >Is pool attached to decking without a locking gate? <i>UnlockedPoolGate</i></label>
+			<select id="id_UnlockedPoolGate" name="UnlockedPoolGate" data-value="{{UnlockedPoolGate}}"  >
+				{{#EnumsUnlockedPoolGate}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsUnlockedPoolGate}}
+			</select>
+		</div>
+
+		</fieldset>
+
+		<fieldset>
+				<legend>Protective Devices</legend>
+				
+		<div>
+			<label for="id_BurglarAlarm" class="labelRequired">Burglar Alarm <i>BurglarAlarm</i></label>
+			<select id="id_BurglarAlarm" name="BurglarAlarm" data-value="{{BurglarAlarm}}" required >
+				{{#EnumsBurglarAlarm}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsBurglarAlarm}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_FireAlarm" class="labelRequired">Fire Alarm <i>FireAlarm</i></label>
+			<select id="id_FireAlarm" name="FireAlarm" data-value="{{FireAlarm}}" required >
+				{{#EnumsFireAlarm}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsFireAlarm}}
+			</select>
+		</div>
+
+		</fieldset>
+
+		<fieldset>
+				<legend>Windstorm Mitigation Features</legend>
+				
+		<div>
+			<label for="id_RoofGeometryType" class="labelRequired">Roof Geometry Type <i>RoofGeometryType</i></label>
+			<select id="id_RoofGeometryType" name="RoofGeometryType" data-value="{{RoofGeometryType}}" required >
+				{{#EnumsRoofGeometryType}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsRoofGeometryType}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_RoofCoveringType" class="labelRequired">Roof Covering Material <i>RoofCoveringType</i></label>
+			<select id="id_RoofCoveringType" name="RoofCoveringType" data-value="{{RoofCoveringType}}" required >
+				{{#EnumsRoofCoveringType}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsRoofCoveringType}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_MultiLayeredRoofing" class="labelRequired">More than two layers of shingles or roof materials? <i>MultiLayeredRoofing</i></label>
+			<select id="id_MultiLayeredRoofing" name="MultiLayeredRoofing" data-value="{{MultiLayeredRoofing}}" required >
+				{{#EnumsMultiLayeredRoofing}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsMultiLayeredRoofing}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_OpeningProtectionType" class="labelRequired">Opening Protection <i>OpeningProtectionType</i></label>
+			<select id="id_OpeningProtectionType" name="OpeningProtectionType" data-value="{{OpeningProtectionType}}" required >
+				{{#EnumsOpeningProtectionType}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsOpeningProtectionType}}
+			</select>
+		</div>
+
+		</fieldset>
+
+			</div>
+		</fieldset>
+		<fieldset class="horizontalFields extraWide">
+			<h3>Occupancy &amp; Property Usage <a data-alt-text="close">change</a></h3>
+			<div class="collapsibleFieldContainer">
+						<fieldset>
+				<legend>Occupancy</legend>
+				
+		<div>
+			<label for="id_PropertyOccupancy" class="labelRequired">Property Occupancy <i>PropertyOccupancy</i></label>
+			<select id="id_PropertyOccupancy" name="PropertyOccupancy" data-value="{{PropertyOccupancy}}" required >
+				{{#EnumsPropertyOccupancy}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsPropertyOccupancy}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_PropertyUsage" class="labelRequired">Property Usage <i>PropertyUsage</i></label>
+			<select id="id_PropertyUsage" name="PropertyUsage" data-value="{{PropertyUsage}}" required >
+				{{#EnumsPropertyUsage}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsPropertyUsage}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_MonthsUnoccupied" class="labelRequired">Number Of Months Unoccupied? <i>MonthsUnoccupied</i></label>
+			<select id="id_MonthsUnoccupied" name="MonthsUnoccupied" data-value="{{MonthsUnoccupied}}" required >
+				{{#EnumsMonthsUnoccupied}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsMonthsUnoccupied}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_ResidenceHeldInTrust" class="labelRequired">Residence Held in Trust <i>ResidenceHeldInTrust</i></label>
+			<select id="id_ResidenceHeldInTrust" name="ResidenceHeldInTrust" data-value="{{ResidenceHeldInTrust}}" required >
+				{{#EnumsResidenceHeldInTrust}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsResidenceHeldInTrust}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_TrusteeOccupancy" >Trustee Occupancy <i>TrusteeOccupancy</i></label>
+			<select id="id_TrusteeOccupancy" name="TrusteeOccupancy" data-value="{{TrusteeOccupancy}}"  >
+				{{#EnumsTrusteeOccupancy}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsTrusteeOccupancy}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_TrustName" >Trust Name <i>TrustName</i></label>
+			<input type="text" id="id_TrustName" name="TrustName" value="{{TrustName}}"  >
+		</div>
+
+		<div>
+			<label for="id_TrusteeName" >Trustee Name <i>TrusteeName</i></label>
+			<input type="text" id="id_TrusteeName" name="TrusteeName" value="{{TrusteeName}}"  >
+		</div>
+
+		<div>
+			<label for="id_GrantorName" >Grantor Name <i>GrantorName</i></label>
+			<input type="text" id="id_GrantorName" name="GrantorName" value="{{GrantorName}}"  >
+		</div>
+
+		<div>
+			<label for="id_BeneficiaryName" >Beneficiary Name <i>BeneficiaryName</i></label>
+			<input type="text" id="id_BeneficiaryName" name="BeneficiaryName" value="{{BeneficiaryName}}"  >
+		</div>
+
+		</fieldset>
+
+			</div>
+		</fieldset>
+		<fieldset class="horizontalFields extraWide">
+			<h3>Optional Coverage <a data-alt-text="close">change</a></h3>
+			<div class="collapsibleFieldContainer">
+				
+		<div>
+			<label for="id_FunctionalReplacementCost" class="labelRequired">Functional Replacement Cost For Dwelling <i>FunctionalReplacementCost</i></label>
+			<select id="id_FunctionalReplacementCost" name="FunctionalReplacementCost" data-value="{{FunctionalReplacementCost}}" required >
+				{{#EnumsFunctionalReplacementCost}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsFunctionalReplacementCost}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_IncreasedOrdinanceLimit" class="labelRequired">Ordinance Or Law <i>IncreasedOrdinanceLimit</i></label>
+			<select id="id_IncreasedOrdinanceLimit" name="IncreasedOrdinanceLimit" data-value="{{IncreasedOrdinanceLimit}}" required >
+				{{#EnumsIncreasedOrdinanceLimit}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsIncreasedOrdinanceLimit}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_LossAssessmentCoverage" class="labelRequired">Loss Assessment <i>LossAssessmentCoverage</i></label>
+			<select id="id_LossAssessmentCoverage" name="LossAssessmentCoverage" data-value="{{LossAssessmentCoverage}}" required >
+				{{#EnumsLossAssessmentCoverage}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsLossAssessmentCoverage}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_IdentityFraudCoverage" class="labelRequired">Identity Theft Expense <i>IdentityFraudCoverage</i></label>
+			<select id="id_IdentityFraudCoverage" name="IdentityFraudCoverage" data-value="{{IdentityFraudCoverage}}" required >
+				{{#EnumsIdentityFraudCoverage}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsIdentityFraudCoverage}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_WaterBackupCoverage" class="labelRequired">Water Backup <i>WaterBackupCoverage</i></label>
+			<select id="id_WaterBackupCoverage" name="WaterBackupCoverage" data-value="{{WaterBackupCoverage}}" required >
+				{{#EnumsWaterBackupCoverage}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsWaterBackupCoverage}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_PersonalInjuryCoverage" class="labelRequired">Personal Injury <i>PersonalInjuryCoverage</i></label>
+			<select id="id_PersonalInjuryCoverage" name="PersonalInjuryCoverage" data-value="{{PersonalInjuryCoverage}}" required >
+				{{#EnumsPersonalInjuryCoverage}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsPersonalInjuryCoverage}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_BusinessPropertyLimit" class="labelRequired">Increased Limits on Business Property <i>BusinessPropertyLimit</i></label>
+			<select id="id_BusinessPropertyLimit" name="BusinessPropertyLimit" data-value="{{BusinessPropertyLimit}}" required >
+				{{#EnumsBusinessPropertyLimit}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsBusinessPropertyLimit}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_AnimalLiability" class="labelRequired">Limited Dog Liability <i>AnimalLiability</i></label>
+			<select id="id_AnimalLiability" name="AnimalLiability" data-value="{{AnimalLiability}}" required >
+				{{#EnumsAnimalLiability}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsAnimalLiability}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_GoldSpecialLimits" class="labelRequired">Gold, Silver, Pewter For Loss Of Theft <i>GoldSpecialLimits</i></label>
+			<select id="id_GoldSpecialLimits" name="GoldSpecialLimits" data-value="{{GoldSpecialLimits}}" required >
+				{{#EnumsGoldSpecialLimits}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsGoldSpecialLimits}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_JewelrySpecialLimits" class="labelRequired">Jewelry, Watches, And Furs For Loss Of Theft <i>JewelrySpecialLimits</i></label>
+			<select id="id_JewelrySpecialLimits" name="JewelrySpecialLimits" data-value="{{JewelrySpecialLimits}}" required >
+				{{#EnumsJewelrySpecialLimits}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsJewelrySpecialLimits}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_CurrencySpecialLimits" class="labelRequired">Money, Bank Notes, Coins <i>CurrencySpecialLimits</i></label>
+			<select id="id_CurrencySpecialLimits" name="CurrencySpecialLimits" data-value="{{CurrencySpecialLimits}}" required >
+				{{#EnumsCurrencySpecialLimits}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsCurrencySpecialLimits}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_SecuritiesSpecialLimits" class="labelRequired">Securities, Accounts, Deeds <i>SecuritiesSpecialLimits</i></label>
+			<select id="id_SecuritiesSpecialLimits" name="SecuritiesSpecialLimits" data-value="{{SecuritiesSpecialLimits}}" required >
+				{{#EnumsSecuritiesSpecialLimits}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsSecuritiesSpecialLimits}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_FirearmsSpecialLimits" class="labelRequired">Firearms For Loss Of Theft <i>FirearmsSpecialLimits</i></label>
+			<select id="id_FirearmsSpecialLimits" name="FirearmsSpecialLimits" data-value="{{FirearmsSpecialLimits}}" required >
+				{{#EnumsFirearmsSpecialLimits}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsFirearmsSpecialLimits}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_ElectronicsSpecialLimits" class="labelRequired">Electronic Apparatus <i>ElectronicsSpecialLimits</i></label>
+			<select id="id_ElectronicsSpecialLimits" name="ElectronicsSpecialLimits" data-value="{{ElectronicsSpecialLimits}}" required >
+				{{#EnumsElectronicsSpecialLimits}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsElectronicsSpecialLimits}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_ElectronicsSpecialLimitsLocation" >Electronic Apparatus Location <i>ElectronicsSpecialLimitsLocation</i></label>
+			<select id="id_ElectronicsSpecialLimitsLocation" name="ElectronicsSpecialLimitsLocation" data-value="{{ElectronicsSpecialLimitsLocation}}"  >
+				{{#EnumsElectronicsSpecialLimitsLocation}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsElectronicsSpecialLimitsLocation}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_EarthquakeCoverage" class="labelRequired">Earthquake Coverage <i>EarthquakeCoverage</i></label>
+			<select id="id_EarthquakeCoverage" name="EarthquakeCoverage" data-value="{{EarthquakeCoverage}}" required >
+				{{#EnumsEarthquakeCoverage}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsEarthquakeCoverage}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_EarthquakeDeductible" >Earthquake Deductible % <i>EarthquakeDeductible</i></label>
+			<select id="id_EarthquakeDeductible" name="EarthquakeDeductible" data-value="{{EarthquakeDeductible}}"  >
+				{{#EnumsEarthquakeDeductible}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsEarthquakeDeductible}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_EarthquakeMasonryVeneerExclusion" class="labelRequired">Exclude Masonry Veneer Coverage? <i>EarthquakeMasonryVeneerExclusion</i></label>
+			<select id="id_EarthquakeMasonryVeneerExclusion" name="EarthquakeMasonryVeneerExclusion" data-value="{{EarthquakeMasonryVeneerExclusion}}" required >
+				{{#EnumsEarthquakeMasonryVeneerExclusion}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsEarthquakeMasonryVeneerExclusion}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_EarthquakeLossAssessmentCoverage" >Earthquake Loss Assessment <i>EarthquakeLossAssessmentCoverage</i></label>
+			<select id="id_EarthquakeLossAssessmentCoverage" name="EarthquakeLossAssessmentCoverage" data-value="{{EarthquakeLossAssessmentCoverage}}"  >
+				{{#EnumsEarthquakeLossAssessmentCoverage}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsEarthquakeLossAssessmentCoverage}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_IncidentalBusinessOccupancy" class="labelRequired">Permitted Incidental Occupancies – Residence Premises  <i>IncidentalBusinessOccupancy</i></label>
+			<select id="id_IncidentalBusinessOccupancy" name="IncidentalBusinessOccupancy" data-value="{{IncidentalBusinessOccupancy}}" required >
+				{{#EnumsIncidentalBusinessOccupancy}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsIncidentalBusinessOccupancy}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_IncidentalBusinessOccupancyType" >Business Type <i>IncidentalBusinessOccupancyType</i></label>
+			<input type="text" id="id_IncidentalBusinessOccupancyType" name="IncidentalBusinessOccupancyType" value="{{IncidentalBusinessOccupancyType}}"  >
+		</div>
+
+		<div>
+			<label for="id_IncidentalBusinessOccupancyDescription" >Business Description <i>IncidentalBusinessOccupancyDescription</i></label>
+			<input type="text" id="id_IncidentalBusinessOccupancyDescription" name="IncidentalBusinessOccupancyDescription" value="{{IncidentalBusinessOccupancyDescription}}"  >
+		</div>
+
+			</div>
+		</fieldset>
+		<fieldset class="horizontalFields extraWide">
+			<h3>Credits, Discounts and Surcharges <a data-alt-text="close">change</a></h3>
+			<div class="collapsibleFieldContainer">
+				
+		<div>
+			<label for="id_MultiPolicy" class="labelRequired">Mult-Policy Discount <i>MultiPolicy</i></label>
+			<select id="id_MultiPolicy" name="MultiPolicy" data-value="{{MultiPolicy}}" required >
+				{{#EnumsMultiPolicy}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsMultiPolicy}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_AutoPolicyCarrier" >Auto Policy Carrier <i>AutoPolicyCarrier</i></label>
+			<input type="text" id="id_AutoPolicyCarrier" name="AutoPolicyCarrier" value="{{AutoPolicyCarrier}}"  >
+		</div>
+
+		<div>
+			<label for="id_AutoPolicyNumber" >Auto Policy Number <i>AutoPolicyNumber</i></label>
+			<input type="text" id="id_AutoPolicyNumber" name="AutoPolicyNumber" value="{{AutoPolicyNumber}}"  >
+		</div>
+
+		<div>
+			<label for="id_PrimeTimeDiscount" class="labelRequired">Prime Time Discount <i>PrimeTimeDiscount</i></label>
+			<select id="id_PrimeTimeDiscount" name="PrimeTimeDiscount" data-value="{{PrimeTimeDiscount}}" required >
+				{{#EnumsPrimeTimeDiscount}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsPrimeTimeDiscount}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_HandrailWalkwayLiability" class="labelRequired">Handrail Walkway Liability <i>HandrailWalkwayLiability</i></label>
+			<select id="id_HandrailWalkwayLiability" name="HandrailWalkwayLiability" data-value="{{HandrailWalkwayLiability}}" required >
+				{{#EnumsHandrailWalkwayLiability}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsHandrailWalkwayLiability}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_Insured1BirthDate" >Insured Date Of Birth <i>Insured1BirthDate</i></label>
+			<input type="text" id="id_Insured1BirthDate" name="Insured1BirthDate" value="{{Insured1BirthDate}}" class="datepicker"  >
+		</div>
+
+		<div>
+			<label for="id_BCEquivalent" class="labelRequired">Building Code Equivalency <i>BCEquivalent</i></label>
+			<select id="id_BCEquivalent" name="BCEquivalent" data-value="{{BCEquivalent}}" required >
+				{{#EnumsBCEquivalent}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsBCEquivalent}}
+			</select>
+		</div>
+
+			</div>
+		</fieldset>
+		<fieldset class="horizontalFields extraWide">
+			<h3>Scheduled Property <a data-alt-text="close">change</a></h3>
+			<div class="collapsibleFieldContainer">
+						<fieldset>
+				<legend>Article 1</legend>
+				
+		<div>
+			<label for="id_ScheduledPersonalProperty1Type" >Type <i>ScheduledPersonalProperty1Type</i></label>
+			<select id="id_ScheduledPersonalProperty1Type" name="ScheduledPersonalProperty1Type" data-value="{{ScheduledPersonalProperty1Type}}"  >
+				{{#EnumsScheduledPersonalProperty1Type}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsScheduledPersonalProperty1Type}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_ScheduledPersonalProperty1Limit" >Limit <i>ScheduledPersonalProperty1Limit</i></label>
+			<input type="text" id="id_ScheduledPersonalProperty1Limit" name="ScheduledPersonalProperty1Limit" value="{{ScheduledPersonalProperty1Limit}}"  >
+		</div>
+
+		<div>
+			<label for="id_ScheduledPersonalProperty1Description" >Description <i>ScheduledPersonalProperty1Description</i></label>
+			<input type="text" id="id_ScheduledPersonalProperty1Description" name="ScheduledPersonalProperty1Description" value="{{ScheduledPersonalProperty1Description}}"  >
+		</div>
+
+		<div>
+			<label for="id_ScheduledPersonalProperty1LossSettlement" >Loss Settlement <i>ScheduledPersonalProperty1LossSettlement</i></label>
+			<select id="id_ScheduledPersonalProperty1LossSettlement" name="ScheduledPersonalProperty1LossSettlement" data-value="{{ScheduledPersonalProperty1LossSettlement}}"  >
+				{{#EnumsScheduledPersonalProperty1LossSettlement}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsScheduledPersonalProperty1LossSettlement}}
+			</select>
+		</div>
+
+		</fieldset>
+
+		<fieldset>
+				<legend>Article 2</legend>
+				
+		<div>
+			<label for="id_ScheduledPersonalProperty2Type" >Type <i>ScheduledPersonalProperty2Type</i></label>
+			<select id="id_ScheduledPersonalProperty2Type" name="ScheduledPersonalProperty2Type" data-value="{{ScheduledPersonalProperty2Type}}"  >
+				{{#EnumsScheduledPersonalProperty2Type}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsScheduledPersonalProperty2Type}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_ScheduledPersonalProperty2Limit" >Limit <i>ScheduledPersonalProperty2Limit</i></label>
+			<input type="text" id="id_ScheduledPersonalProperty2Limit" name="ScheduledPersonalProperty2Limit" value="{{ScheduledPersonalProperty2Limit}}"  >
+		</div>
+
+		<div>
+			<label for="id_ScheduledPersonalProperty2Description" >Description <i>ScheduledPersonalProperty2Description</i></label>
+			<input type="text" id="id_ScheduledPersonalProperty2Description" name="ScheduledPersonalProperty2Description" value="{{ScheduledPersonalProperty2Description}}"  >
+		</div>
+
+		<div>
+			<label for="id_ScheduledPersonalProperty2LossSettlement" >Loss Settlement <i>ScheduledPersonalProperty2LossSettlement</i></label>
+			<select id="id_ScheduledPersonalProperty2LossSettlement" name="ScheduledPersonalProperty2LossSettlement" data-value="{{ScheduledPersonalProperty2LossSettlement}}"  >
+				{{#EnumsScheduledPersonalProperty2LossSettlement}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsScheduledPersonalProperty2LossSettlement}}
+			</select>
+		</div>
+
+		</fieldset>
+
+		<fieldset>
+				<legend>Article 3</legend>
+				
+		<div>
+			<label for="id_ScheduledPersonalProperty3Type" >Type <i>ScheduledPersonalProperty3Type</i></label>
+			<select id="id_ScheduledPersonalProperty3Type" name="ScheduledPersonalProperty3Type" data-value="{{ScheduledPersonalProperty3Type}}"  >
+				{{#EnumsScheduledPersonalProperty3Type}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsScheduledPersonalProperty3Type}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_ScheduledPersonalProperty3Limit" >Limit <i>ScheduledPersonalProperty3Limit</i></label>
+			<input type="text" id="id_ScheduledPersonalProperty3Limit" name="ScheduledPersonalProperty3Limit" value="{{ScheduledPersonalProperty3Limit}}"  >
+		</div>
+
+		<div>
+			<label for="id_ScheduledPersonalProperty3Description" >Description <i>ScheduledPersonalProperty3Description</i></label>
+			<input type="text" id="id_ScheduledPersonalProperty3Description" name="ScheduledPersonalProperty3Description" value="{{ScheduledPersonalProperty3Description}}"  >
+		</div>
+
+		<div>
+			<label for="id_ScheduledPersonalProperty3LossSettlement" >Loss Settlement <i>ScheduledPersonalProperty3LossSettlement</i></label>
+			<select id="id_ScheduledPersonalProperty3LossSettlement" name="ScheduledPersonalProperty3LossSettlement" data-value="{{ScheduledPersonalProperty3LossSettlement}}"  >
+				{{#EnumsScheduledPersonalProperty3LossSettlement}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsScheduledPersonalProperty3LossSettlement}}
+			</select>
+		</div>
+
+		</fieldset>
+
+		<fieldset>
+				<legend>Article 4</legend>
+				
+		<div>
+			<label for="id_ScheduledPersonalProperty4Type" >Type <i>ScheduledPersonalProperty4Type</i></label>
+			<select id="id_ScheduledPersonalProperty4Type" name="ScheduledPersonalProperty4Type" data-value="{{ScheduledPersonalProperty4Type}}"  >
+				{{#EnumsScheduledPersonalProperty4Type}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsScheduledPersonalProperty4Type}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_ScheduledPersonalProperty4Limit" >Limit <i>ScheduledPersonalProperty4Limit</i></label>
+			<input type="text" id="id_ScheduledPersonalProperty4Limit" name="ScheduledPersonalProperty4Limit" value="{{ScheduledPersonalProperty4Limit}}"  >
+		</div>
+
+		<div>
+			<label for="id_ScheduledPersonalProperty4Description" >Description <i>ScheduledPersonalProperty4Description</i></label>
+			<input type="text" id="id_ScheduledPersonalProperty4Description" name="ScheduledPersonalProperty4Description" value="{{ScheduledPersonalProperty4Description}}"  >
+		</div>
+
+		<div>
+			<label for="id_ScheduledPersonalProperty4LossSettlement" >Loss Settlement <i>ScheduledPersonalProperty4LossSettlement</i></label>
+			<select id="id_ScheduledPersonalProperty4LossSettlement" name="ScheduledPersonalProperty4LossSettlement" data-value="{{ScheduledPersonalProperty4LossSettlement}}"  >
+				{{#EnumsScheduledPersonalProperty4LossSettlement}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsScheduledPersonalProperty4LossSettlement}}
+			</select>
+		</div>
+
+		</fieldset>
+
+		<fieldset>
+				<legend>Article 5</legend>
+				
+		<div>
+			<label for="id_ScheduledPersonalProperty5Type" >Type <i>ScheduledPersonalProperty5Type</i></label>
+			<select id="id_ScheduledPersonalProperty5Type" name="ScheduledPersonalProperty5Type" data-value="{{ScheduledPersonalProperty5Type}}"  >
+				{{#EnumsScheduledPersonalProperty5Type}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsScheduledPersonalProperty5Type}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_ScheduledPersonalProperty5Limit" >Limit <i>ScheduledPersonalProperty5Limit</i></label>
+			<input type="text" id="id_ScheduledPersonalProperty5Limit" name="ScheduledPersonalProperty5Limit" value="{{ScheduledPersonalProperty5Limit}}"  >
+		</div>
+
+		<div>
+			<label for="id_ScheduledPersonalProperty5Description" >Description <i>ScheduledPersonalProperty5Description</i></label>
+			<input type="text" id="id_ScheduledPersonalProperty5Description" name="ScheduledPersonalProperty5Description" value="{{ScheduledPersonalProperty5Description}}"  >
+		</div>
+
+		<div>
+			<label for="id_ScheduledPersonalProperty5LossSettlement" >Loss Settlement <i>ScheduledPersonalProperty5LossSettlement</i></label>
+			<select id="id_ScheduledPersonalProperty5LossSettlement" name="ScheduledPersonalProperty5LossSettlement" data-value="{{ScheduledPersonalProperty5LossSettlement}}"  >
+				{{#EnumsScheduledPersonalProperty5LossSettlement}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsScheduledPersonalProperty5LossSettlement}}
+			</select>
+		</div>
+
+		</fieldset>
+
+		<fieldset>
+				<legend>Article 6</legend>
+				
+		<div>
+			<label for="id_ScheduledPersonalProperty6Type" >Type <i>ScheduledPersonalProperty6Type</i></label>
+			<select id="id_ScheduledPersonalProperty6Type" name="ScheduledPersonalProperty6Type" data-value="{{ScheduledPersonalProperty6Type}}"  >
+				{{#EnumsScheduledPersonalProperty6Type}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsScheduledPersonalProperty6Type}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_ScheduledPersonalProperty6Limit" >Limit <i>ScheduledPersonalProperty6Limit</i></label>
+			<input type="text" id="id_ScheduledPersonalProperty6Limit" name="ScheduledPersonalProperty6Limit" value="{{ScheduledPersonalProperty6Limit}}"  >
+		</div>
+
+		<div>
+			<label for="id_ScheduledPersonalProperty6Description" >Description <i>ScheduledPersonalProperty6Description</i></label>
+			<input type="text" id="id_ScheduledPersonalProperty6Description" name="ScheduledPersonalProperty6Description" value="{{ScheduledPersonalProperty6Description}}"  >
+		</div>
+
+		<div>
+			<label for="id_ScheduledPersonalProperty6LossSettlement" >Loss Settlement <i>ScheduledPersonalProperty6LossSettlement</i></label>
+			<select id="id_ScheduledPersonalProperty6LossSettlement" name="ScheduledPersonalProperty6LossSettlement" data-value="{{ScheduledPersonalProperty6LossSettlement}}"  >
+				{{#EnumsScheduledPersonalProperty6LossSettlement}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsScheduledPersonalProperty6LossSettlement}}
+			</select>
+		</div>
+
+		</fieldset>
+
+		<fieldset>
+				<legend>Article 7</legend>
+				
+		<div>
+			<label for="id_ScheduledPersonalProperty7Type" >Type <i>ScheduledPersonalProperty7Type</i></label>
+			<select id="id_ScheduledPersonalProperty7Type" name="ScheduledPersonalProperty7Type" data-value="{{ScheduledPersonalProperty7Type}}"  >
+				{{#EnumsScheduledPersonalProperty7Type}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsScheduledPersonalProperty7Type}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_ScheduledPersonalProperty7Limit" >Limit <i>ScheduledPersonalProperty7Limit</i></label>
+			<input type="text" id="id_ScheduledPersonalProperty7Limit" name="ScheduledPersonalProperty7Limit" value="{{ScheduledPersonalProperty7Limit}}"  >
+		</div>
+
+		<div>
+			<label for="id_ScheduledPersonalProperty7Description" >Description <i>ScheduledPersonalProperty7Description</i></label>
+			<input type="text" id="id_ScheduledPersonalProperty7Description" name="ScheduledPersonalProperty7Description" value="{{ScheduledPersonalProperty7Description}}"  >
+		</div>
+
+		<div>
+			<label for="id_ScheduledPersonalProperty7LossSettlement" >Loss Settlement <i>ScheduledPersonalProperty7LossSettlement</i></label>
+			<select id="id_ScheduledPersonalProperty7LossSettlement" name="ScheduledPersonalProperty7LossSettlement" data-value="{{ScheduledPersonalProperty7LossSettlement}}"  >
+				{{#EnumsScheduledPersonalProperty7LossSettlement}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsScheduledPersonalProperty7LossSettlement}}
+			</select>
+		</div>
+
+		</fieldset>
+
+		<fieldset>
+				<legend>Article 8</legend>
+				
+		<div>
+			<label for="id_ScheduledPersonalProperty8Type" >Type <i>ScheduledPersonalProperty8Type</i></label>
+			<select id="id_ScheduledPersonalProperty8Type" name="ScheduledPersonalProperty8Type" data-value="{{ScheduledPersonalProperty8Type}}"  >
+				{{#EnumsScheduledPersonalProperty8Type}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsScheduledPersonalProperty8Type}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_ScheduledPersonalProperty8Limit" >Limit <i>ScheduledPersonalProperty8Limit</i></label>
+			<input type="text" id="id_ScheduledPersonalProperty8Limit" name="ScheduledPersonalProperty8Limit" value="{{ScheduledPersonalProperty8Limit}}"  >
+		</div>
+
+		<div>
+			<label for="id_ScheduledPersonalProperty8Description" >Description <i>ScheduledPersonalProperty8Description</i></label>
+			<input type="text" id="id_ScheduledPersonalProperty8Description" name="ScheduledPersonalProperty8Description" value="{{ScheduledPersonalProperty8Description}}"  >
+		</div>
+
+		<div>
+			<label for="id_ScheduledPersonalProperty8LossSettlement" >Loss Settlement <i>ScheduledPersonalProperty8LossSettlement</i></label>
+			<select id="id_ScheduledPersonalProperty8LossSettlement" name="ScheduledPersonalProperty8LossSettlement" data-value="{{ScheduledPersonalProperty8LossSettlement}}"  >
+				{{#EnumsScheduledPersonalProperty8LossSettlement}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsScheduledPersonalProperty8LossSettlement}}
+			</select>
+		</div>
+
+		</fieldset>
+
+		<fieldset>
+				<legend>Article 9</legend>
+				
+		<div>
+			<label for="id_ScheduledPersonalProperty9Type" >Type <i>ScheduledPersonalProperty9Type</i></label>
+			<select id="id_ScheduledPersonalProperty9Type" name="ScheduledPersonalProperty9Type" data-value="{{ScheduledPersonalProperty9Type}}"  >
+				{{#EnumsScheduledPersonalProperty9Type}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsScheduledPersonalProperty9Type}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_ScheduledPersonalProperty9Limit" >Limit <i>ScheduledPersonalProperty9Limit</i></label>
+			<input type="text" id="id_ScheduledPersonalProperty9Limit" name="ScheduledPersonalProperty9Limit" value="{{ScheduledPersonalProperty9Limit}}"  >
+		</div>
+
+		<div>
+			<label for="id_ScheduledPersonalProperty9Description" >Description <i>ScheduledPersonalProperty9Description</i></label>
+			<input type="text" id="id_ScheduledPersonalProperty9Description" name="ScheduledPersonalProperty9Description" value="{{ScheduledPersonalProperty9Description}}"  >
+		</div>
+
+		<div>
+			<label for="id_ScheduledPersonalProperty9LossSettlement" >Loss Settlement <i>ScheduledPersonalProperty9LossSettlement</i></label>
+			<select id="id_ScheduledPersonalProperty9LossSettlement" name="ScheduledPersonalProperty9LossSettlement" data-value="{{ScheduledPersonalProperty9LossSettlement}}"  >
+				{{#EnumsScheduledPersonalProperty9LossSettlement}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsScheduledPersonalProperty9LossSettlement}}
+			</select>
+		</div>
+
+		</fieldset>
+
+		<fieldset>
+				<legend>Article 10</legend>
+				
+		<div>
+			<label for="id_ScheduledPersonalProperty10Type" >Type <i>ScheduledPersonalProperty10Type</i></label>
+			<select id="id_ScheduledPersonalProperty10Type" name="ScheduledPersonalProperty10Type" data-value="{{ScheduledPersonalProperty10Type}}"  >
+				{{#EnumsScheduledPersonalProperty10Type}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsScheduledPersonalProperty10Type}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_ScheduledPersonalProperty10Limit" >Limit <i>ScheduledPersonalProperty10Limit</i></label>
+			<input type="text" id="id_ScheduledPersonalProperty10Limit" name="ScheduledPersonalProperty10Limit" value="{{ScheduledPersonalProperty10Limit}}"  >
+		</div>
+
+		<div>
+			<label for="id_ScheduledPersonalProperty10Description" >Description <i>ScheduledPersonalProperty10Description</i></label>
+			<input type="text" id="id_ScheduledPersonalProperty10Description" name="ScheduledPersonalProperty10Description" value="{{ScheduledPersonalProperty10Description}}"  >
+		</div>
+
+		<div>
+			<label for="id_ScheduledPersonalProperty10LossSettlement" >Loss Settlement <i>ScheduledPersonalProperty10LossSettlement</i></label>
+			<select id="id_ScheduledPersonalProperty10LossSettlement" name="ScheduledPersonalProperty10LossSettlement" data-value="{{ScheduledPersonalProperty10LossSettlement}}"  >
+				{{#EnumsScheduledPersonalProperty10LossSettlement}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsScheduledPersonalProperty10LossSettlement}}
+			</select>
+		</div>
+
+		</fieldset>
+
+			</div>
+		</fieldset>
+		<fieldset class="horizontalFields extraWide">
+			<h3>Loss History <a data-alt-text="close">change</a></h3>
+			<div class="collapsibleFieldContainer">
+				
+		<div>
+			<label for="id_NumberOfClaims" class="labelRequired">Number Of Claims In Last 6 Years <i>NumberOfClaims</i></label>
+			<select id="id_NumberOfClaims" name="NumberOfClaims" data-value="{{NumberOfClaims}}" required disabled="yes">
+				{{#EnumsNumberOfClaims}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsNumberOfClaims}}
+			</select>
+		</div>
+		<fieldset>
+				<legend>Loss 1</legend>
+				
+		<div>
+			<label for="id_LossAmount1" >Amount <i>LossAmount1</i></label>
+			<input type="text" id="id_LossAmount1" name="LossAmount1" value="{{LossAmount1}}"  readonly>
+		</div>
+
+		<div>
+			<label for="id_LossDate1" >Date <i>LossDate1</i></label>
+			<input type="text" id="id_LossDate1" name="LossDate1" value="{{LossDate1}}" class="datepicker"  readonly>
+		</div>
+
+		<div>
+			<label for="id_LossType1" >Type <i>LossType1</i></label>
+			<select id="id_LossType1" name="LossType1" data-value="{{LossType1}}"  disabled="yes">
+				{{#EnumsLossType1}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsLossType1}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_LossCatIndicator1" >Cat Indicator <i>LossCatIndicator1</i></label>
+			<select id="id_LossCatIndicator1" name="LossCatIndicator1" data-value="{{LossCatIndicator1}}"  disabled="yes">
+				{{#EnumsLossCatIndicator1}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsLossCatIndicator1}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_LossDescription1" >Description <i>LossDescription1</i></label>
+			<input type="text" id="id_LossDescription1" name="LossDescription1" value="{{LossDescription1}}"  readonly>
+		</div>
+
+		</fieldset>
+
+		<fieldset>
+				<legend>Loss 2</legend>
+				
+		<div>
+			<label for="id_LossAmount2" >Amount <i>LossAmount2</i></label>
+			<input type="text" id="id_LossAmount2" name="LossAmount2" value="{{LossAmount2}}"  readonly>
+		</div>
+
+		<div>
+			<label for="id_LossDate2" >Date <i>LossDate2</i></label>
+			<input type="text" id="id_LossDate2" name="LossDate2" value="{{LossDate2}}" class="datepicker"  readonly>
+		</div>
+
+		<div>
+			<label for="id_LossType2" >Type <i>LossType2</i></label>
+			<select id="id_LossType2" name="LossType2" data-value="{{LossType2}}"  disabled="yes">
+				{{#EnumsLossType2}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsLossType2}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_LossCatIndicator2" >Cat Indicator <i>LossCatIndicator2</i></label>
+			<select id="id_LossCatIndicator2" name="LossCatIndicator2" data-value="{{LossCatIndicator2}}"  disabled="yes">
+				{{#EnumsLossCatIndicator2}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsLossCatIndicator2}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_LossDescription2" >Description <i>LossDescription2</i></label>
+			<input type="text" id="id_LossDescription2" name="LossDescription2" value="{{LossDescription2}}"  readonly>
+		</div>
+
+		</fieldset>
+
+		<fieldset>
+				<legend>Loss 3</legend>
+				
+		<div>
+			<label for="id_LossAmount3" >Amount <i>LossAmount3</i></label>
+			<input type="text" id="id_LossAmount3" name="LossAmount3" value="{{LossAmount3}}"  readonly>
+		</div>
+
+		<div>
+			<label for="id_LossDate3" >Date <i>LossDate3</i></label>
+			<input type="text" id="id_LossDate3" name="LossDate3" value="{{LossDate3}}" class="datepicker"  readonly>
+		</div>
+
+		<div>
+			<label for="id_LossType3" >Type <i>LossType3</i></label>
+			<select id="id_LossType3" name="LossType3" data-value="{{LossType3}}"  disabled="yes">
+				{{#EnumsLossType3}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsLossType3}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_LossCatIndicator3" >Cat Indicator <i>LossCatIndicator3</i></label>
+			<select id="id_LossCatIndicator3" name="LossCatIndicator3" data-value="{{LossCatIndicator3}}"  disabled="yes">
+				{{#EnumsLossCatIndicator3}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsLossCatIndicator3}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_LossDescription3" >Description <i>LossDescription3</i></label>
+			<input type="text" id="id_LossDescription3" name="LossDescription3" value="{{LossDescription3}}"  readonly>
+		</div>
+
+		</fieldset>
+
+		<fieldset>
+				<legend>Loss 4</legend>
+				
+		<div>
+			<label for="id_LossAmount4" >Amount <i>LossAmount4</i></label>
+			<input type="text" id="id_LossAmount4" name="LossAmount4" value="{{LossAmount4}}"  readonly>
+		</div>
+
+		<div>
+			<label for="id_LossDate4" >Date <i>LossDate4</i></label>
+			<input type="text" id="id_LossDate4" name="LossDate4" value="{{LossDate4}}" class="datepicker"  readonly>
+		</div>
+
+		<div>
+			<label for="id_LossType4" >Type <i>LossType4</i></label>
+			<select id="id_LossType4" name="LossType4" data-value="{{LossType4}}"  disabled="yes">
+				{{#EnumsLossType4}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsLossType4}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_LossCatIndicator4" >Cat Indicator <i>LossCatIndicator4</i></label>
+			<select id="id_LossCatIndicator4" name="LossCatIndicator4" data-value="{{LossCatIndicator4}}"  disabled="yes">
+				{{#EnumsLossCatIndicator4}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsLossCatIndicator4}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_LossDescription4" >Description <i>LossDescription4</i></label>
+			<input type="text" id="id_LossDescription4" name="LossDescription4" value="{{LossDescription4}}"  readonly>
+		</div>
+
+		</fieldset>
+
+		<fieldset>
+				<legend>Loss 5</legend>
+				
+		<div>
+			<label for="id_LossAmount5" >Amount <i>LossAmount5</i></label>
+			<input type="text" id="id_LossAmount5" name="LossAmount5" value="{{LossAmount5}}"  readonly>
+		</div>
+
+		<div>
+			<label for="id_LossDate5" >Date <i>LossDate5</i></label>
+			<input type="text" id="id_LossDate5" name="LossDate5" value="{{LossDate5}}" class="datepicker"  readonly>
+		</div>
+
+		<div>
+			<label for="id_LossType5" >Type <i>LossType5</i></label>
+			<select id="id_LossType5" name="LossType5" data-value="{{LossType5}}"  disabled="yes">
+				{{#EnumsLossType5}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsLossType5}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_LossCatIndicator5" >Cat Indicator <i>LossCatIndicator5</i></label>
+			<select id="id_LossCatIndicator5" name="LossCatIndicator5" data-value="{{LossCatIndicator5}}"  disabled="yes">
+				{{#EnumsLossCatIndicator5}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsLossCatIndicator5}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_LossDescription5" >Description <i>LossDescription5</i></label>
+			<input type="text" id="id_LossDescription5" name="LossDescription5" value="{{LossDescription5}}"  readonly>
+		</div>
+
+		</fieldset>
+
+			</div>
+		</fieldset>
+
+		<div class="form_actions">
+			<input type="submit" class="button" value="Preview"> <a href="home">Nevermind, go back</a>
+		</div>
+	</div>
+	<input type="hidden" id="id_preview" name="preview" value="true">
+	{{/preview}}
+
+	{{#preview}}
+	<div class="content_body preview">
+		<div class="table_wrapping">
+			<table class="data_table" summary="Table containing preview of endorsement.">
+				<col span="1" class="col_labels"></col>
+				<col span="2"></col>
+				<col span="1" class="col_days"></col>
+				<col span="1" class="col_non_hurricane"></col>
+				<col span="1" class="col_hurricane"></col>
+				<col span="3" class="col_amounts"></col>
+				<thead>
+		   		<tr>
+		   			<th>&nbsp;</th>
+		   			<th>Starts</th>
+		   			<th>Ends</th>
+		   			<th>#&nbsp;Days</th>
+		   			<th class="col_group_cap_open col_group_cap_close">Non-Hurricane Premium</th>
+		   			<th class="col_group_cap_open col_group_cap_close">Hurricane Premium</th>
+		   			<th>Premium Before Fees</th>
+		   			<th>Total Fees and Taxes</th>
+		   			<th>Total Premium and Fees</th>
+		   		</tr>
+				</thead>
+				
+				<tbody>
+					<tr>
+						<td>Proposed Term</td>
+						<td>{{#term}}{{fmtStartDate}}{{/term}}</td>
+						<td>{{#term}}{{fmtEndDate}}{{/term}}</td>
+						<td>{{#term}}{{days}}{{/term}}</td>
+						<td>{{#term}}{{grandSubtotalNonCat}}{{/term}}</td>
+						<td>{{#term}}{{grandSubtotalCat}}{{/term}}</td>
+						<td>{{#term}}{{grandSubtotal}}{{/term}}</td>
+						<td>{{#term}}{{fees}}{{/term}}</td>
+						<td>{{#term}}{{grandTotal}}{{/term}}</td>
+					</tr>
+					
+					<tr>
+						{{#current_policy}}
+						<td>Current Term</td>
+						<td>{{#term}}{{fmtStartDate}}{{/term}}</td>
+						<td>{{#term}}{{fmtEndDate}}{{/term}}</td>
+						<td>{{#term}}{{days}}{{/term}}</td>
+						<td>{{#term}}{{grandSubtotalNonCat}}{{/term}}</td>
+						<td>{{#term}}{{grandSubtotalCat}}{{/term}}</td>
+						<td>{{#term}}{{grandSubtotal}}{{/term}}</td>
+						<td>{{#term}}{{fees}}{{/term}}</td>
+						<td>{{#term}}{{grandTotal}}{{/term}}</td>
+						{{/current_policy}}
+					</tr>
+					
+					<tr class="dividing_row">
+						<td colspan="3">
+							<h4>Proposed Policy</h4>
+						</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+					</tr>
+					
+					{{#intervals}}
+					<tr {{#isNew}}class="calc_row"{{/isNew}}>
+						<td>Interval</td>
+						<td>{{fmtStartDate}}</td>
+						<td>{{fmtEndDate}}</td>
+						<td>{{days}}</td>
+						
+						<!--The new interval-->
+					{{#isNew}}
+						<td>{{grandSubtotalNonCatUnadjusted}}</td>
+						<td>{{grandSubtotalCatUnadjusted}}</td>
+						<td class="subtotal">{{grandSubtotal}}</td>
+					{{/isNew}}
+						
+						<!--All other intervals-->
+					{{^isNew}}
+						<td>{{grandSubtotalNonCat}}</td>
+						<td>{{grandSubtotalCat}}</td>
+						<td>{{grandSubtotal}}</td>
+					{{/isNew}}
+												
+						<td>-</td>
+						<td>-</td>
+					</tr>
+					{{/intervals}}
+					
+					<tr class="dividing_row">
+						<td colspan="3">
+							<h4>Current Policy</h4>
+						</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+						<td>&nbsp;</td>
+					</tr>
+					
+					{{#current_policy}}
+					{{#intervals}}
+					<tr>
+						<td>Interval</td>
+						<td>{{fmtStartDate}}</td>
+						<td>{{fmtEndDate}}</td>
+						<td>{{days}}</td>
+						<td>{{grandSubtotalNonCat}}</td>
+						<td>{{grandSubtotalCat}}</td>
+						<td>{{grandSubtotal}}</td>
+						<td>-</td>
+						<td>-</td>
+					</tr>
+					{{/intervals}}
+					{{/current_policy}}
+				</tbody>
+			</table>
+		</div>
+		
+		<div class="form_actions">
+			<input type="submit" class="button" value="Confirm"> <a href="home">Cancel</a>
+		</div>
+	</div>
+	{{/preview}}
+	</div>
+</form>
+

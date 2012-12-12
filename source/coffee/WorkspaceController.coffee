@@ -24,18 +24,19 @@ define [
   amplify.subscribe 'log', (msg) ->
     console.log msg
 
-  #### Services
-  #
-  # Insight 360 Service URLs
+  # Services
+  # ----
+  # pxCentral and ixLibrary are base urls that are modified later in
+  # launch_workspace()
   #
   ics360 =
     services :
-      ixdirectory : './ixdirectory/api/rest/v2/'
-      pxcentral   : './pxcentral/api/rest/v1/'
-      ixlibrary   : './ixlibrary/api/sdo/rest/v1/'
-      ixdoc       : './ixdoc/api/rest/v2/'
-      ixadmin     : './config/ics/staging/ixadmin' # TESTING ONLY
-      zendesk     : 'https://staging-services.icg360.org/zendesk'
+      ixdirectory    : './ixdirectory/api/rest/v2/'
+      pxcentral_base : 'pxcentral/api/rest/v1/'
+      ixlibrary_base : 'ixlibrary/api/sdo/rest/v1/'
+      ixdoc          : './ixdoc/api/rest/v2/'
+      ixadmin        : './config/ics/staging/ixadmin' # TESTING ONLY
+      zendesk        : 'https://staging-services.icg360.org/zendesk'
 
   # Method Combinator (Decorator) 
   # https://github.com/raganwald/method-combinators
@@ -451,11 +452,11 @@ define [
     #
     launch_workspace : ->
       # If not logged in then back to login
-      if @is_loggedin is false
+      if @is_loggedin == false
         return
 
       menu = @config.get 'menu'
-      if menu is false
+      if menu == false
         @Amplify.publish 'controller', 'warning', "Sorry, you do not have access to any items in this environment."
         return
 
@@ -473,18 +474,16 @@ define [
       if $('#header').height() < 95
         $('#header').css('height', '95px')
 
-      # Set the path to pxCentral to the correct instance
+      # Set the path to pxCentral & ixLibrary to the correct instance
       if url = @config.get_pxCentral(@workspace_state)
-        # testing URL
-        # /pxcentral/api/rest/v1/
-        # https://staging-services.ics360.org/cru-6/ 
-        # url = url.replace('staging-services.ics360.org', 'ics-intweb-01.ics.local:1111')
-        @services.pxcentral = "#{url}pxcentral/api/rest/v1/"
+        @services.pxcentral = "#{url}#{@services.pxcentral_base}"
+        @services.ixlibrary = "#{url}#{@services.ixlibrary_base}"
 
       for node in ['cxserver', 'ixdirectory', 'ixprofiler', 'ixrelay', 'ixvocab']
         @services[node] = @config.get_universal_service(@workspace_state, node)
 
       @launch_app app
+
       if @check_persisted_apps()
         # Is this a search? attempt to launch it
         if @current_state.module?

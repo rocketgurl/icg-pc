@@ -12,12 +12,14 @@
       mustache: 'lib/requirejs.mustache',
       base64: 'lib/base64',
       moment: 'lib/moment',
+      momentrange: 'lib/moment-range',
       xml2json: 'lib/jquery.xml2json',
       text: 'lib/text',
       domReady: 'lib/domReady',
       json: 'lib/json2',
       loader: 'lib/heartcode-canvasloader',
-      swfobject: 'lib/swfobject'
+      swfobject: 'lib/swfobject',
+      u_string: 'lib/underscore.string'
     },
     priority: ['jquery', 'xml2json', 'json'],
     shim: {
@@ -43,11 +45,18 @@
       'swfobject': {
         deps: ['require'],
         exports: 'swfobject'
+      },
+      'u_string': {
+        deps: ['underscore']
+      },
+      'momentrange': {
+        deps: ['moment']
       }
     }
   });
 
-  require(['jquery', 'underscore', 'backbone', 'WorkspaceController', 'domReady', 'xml2json'], function($, _, Backbone, WorkspaceController, domReady) {
+  require(['jquery', 'underscore', 'backbone', 'WorkspaceController', 'u_string', 'domReady', 'xml2json'], function($, _, Backbone, WorkspaceController, u_string, domReady) {
+    _.mixin(_.str.exports());
     return domReady(function() {
       if ($.fn.xml2json === void 0) {
         require(["xml2json"], function(xml2json) {

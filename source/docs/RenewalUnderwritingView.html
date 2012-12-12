@@ -1,0 +1,189 @@
+<!DOCTYPE html>  <html> <head>   <title>RenewalUnderwritingView.coffee</title>   <meta http-equiv="content-type" content="text/html; charset=UTF-8">   <link rel="stylesheet" media="all" href="docco.css" /> </head> <body>   <div id="container">     <div id="background"></div>            <div id="jump_to">         Jump To &hellip;         <div id="jump_wrapper">           <div id="jump_page">                                           <a class="source" href="IPMActionView.html">                 IPMActionView.coffee               </a>                                           <a class="source" href="IPMChangeSet.html">                 IPMChangeSet.coffee               </a>                                           <a class="source" href="IPMModule.html">                 IPMModule.coffee               </a>                                           <a class="source" href="IPMView.html">                 IPMView.coffee               </a>                                           <a class="source" href="PolicyModel.html">                 PolicyModel.coffee               </a>                                           <a class="source" href="PolicyModule.html">                 PolicyModule.coffee               </a>                                           <a class="source" href="PolicyView.html">                 PolicyView.coffee               </a>                                           <a class="source" href="ReferralQueueModule.html">                 ReferralQueueModule.coffee               </a>                                           <a class="source" href="ReferralQueueView.html">                 ReferralQueueView.coffee               </a>                                           <a class="source" href="ReferralTaskCollection.html">                 ReferralTaskCollection.coffee               </a>                                           <a class="source" href="ReferralTaskModel.html">                 ReferralTaskModel.coffee               </a>                                           <a class="source" href="ReferralTaskView.html">                 ReferralTaskView.coffee               </a>                                           <a class="source" href="RenewalUnderwritingModel.html">                 RenewalUnderwritingModel.coffee               </a>                                           <a class="source" href="RenewalUnderwritingView.html">                 RenewalUnderwritingView.coffee               </a>                                           <a class="source" href="SearchContextCollection.html">                 SearchContextCollection.coffee               </a>                                           <a class="source" href="SearchContextModel.html">                 SearchContextModel.coffee               </a>                                           <a class="source" href="SearchContextView.html">                 SearchContextView.coffee               </a>                                           <a class="source" href="SearchModule.html">                 SearchModule.coffee               </a>                                           <a class="source" href="SearchPolicyCollection.html">                 SearchPolicyCollection.coffee               </a>                                           <a class="source" href="SearchPolicyModel.html">                 SearchPolicyModel.coffee               </a>                                           <a class="source" href="SearchPolicyView.html">                 SearchPolicyView.coffee               </a>                                           <a class="source" href="SearchView.html">                 SearchView.coffee               </a>                                           <a class="source" href="ZenDeskView.html">                 ZenDeskView.coffee               </a>                        </div>         </div>       </div>          <table cellpadding="0" cellspacing="0">       <thead>         <tr>           <th class="docs">             <h1>               RenewalUnderwritingView.coffee             </h1>           </th>           <th class="code">           </th>         </tr>       </thead>       <tbody>                               <tr id="section-1">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-1">&#182;</a>               </div>                            </td>             <td class="code">               <div class="highlight"><pre><span class="nx">define</span> <span class="p">[</span>
+  <span class="s">&#39;BaseView&#39;</span><span class="p">,</span>
+  <span class="s">&#39;Messenger&#39;</span><span class="p">,</span>
+  <span class="s">&#39;modules/RenewalUnderwriting/RenewalUnderwritingModel&#39;</span><span class="p">,</span>
+  <span class="s">&#39;text!modules/RenewalUnderwriting/templates/tpl_renewal_underwriting_container.html&#39;</span><span class="p">,</span>
+  <span class="s">&#39;text!modules/RenewalUnderwriting/templates/tpl_renewal_underwriting_assignee.html&#39;</span><span class="p">,</span>
+  <span class="s">&#39;text!modules/RenewalUnderwriting/templates/tpl_renewal_underwriting_disposition.html&#39;</span><span class="p">,</span>
+  <span class="s">&#39;jqueryui&#39;</span>
+<span class="p">],</span> <span class="nf">(BaseView, Messenger, RenewalUnderwritingModel, tpl_ru_container, tpl_ru_assignees, tpl_ru_disposition) -&gt;</span>
+
+  <span class="nv">RenewalUnderwritingView = </span><span class="nx">BaseView</span><span class="p">.</span><span class="nx">extend</span>
+
+    <span class="nv">CHANGESET  : </span><span class="p">{}</span>
+    <span class="nv">DATEPICKER : </span><span class="s">&#39;&#39;</span>
+
+    <span class="nv">events :</span>
+      <span class="s">&#39;click a[href=assigned_to]&#39;</span> <span class="o">:</span> <span class="nf">(e) -&gt;</span> 
+        <span class="nx">@changeAssignment</span><span class="p">(</span><span class="nx">@process_event</span> <span class="nx">e</span><span class="p">)</span>
+
+      <span class="s">&#39;click a[href=current_disposition]&#39;</span> <span class="o">:</span> <span class="nf">(e) -&gt;</span> 
+        <span class="nx">@changeDisposition</span><span class="p">(</span><span class="nx">@process_event</span> <span class="nx">e</span><span class="p">)</span>
+
+      <span class="s">&#39;click a[href=review_period]&#39;</span> <span class="o">:</span> <span class="nf">(e) -&gt;</span> 
+        <span class="nx">@reviewPeriod</span><span class="p">(</span><span class="nx">@process_event</span> <span class="nx">e</span><span class="p">)</span>
+
+      <span class="s">&#39;click a[href=review_deadline]&#39;</span> <span class="o">:</span> <span class="nf">(e) -&gt;</span> 
+        <span class="nx">@reviewDeadline</span><span class="p">(</span><span class="nx">@process_event</span> <span class="nx">e</span><span class="p">)</span>
+
+      <span class="s">&#39;click .menu-close&#39;</span> <span class="o">:</span> <span class="nf">(e) -&gt;</span>
+        <span class="nx">@clear_menu</span> <span class="nx">e</span>
+
+    <span class="nv">initialize : </span><span class="nf">(options) -&gt;</span>
+      <span class="vi">@$el         = </span><span class="nx">options</span><span class="p">.</span><span class="nx">$el</span>
+      <span class="vi">@policy      = </span><span class="nx">options</span><span class="p">.</span><span class="nx">policy</span>
+      <span class="vi">@policy_view = </span><span class="nx">options</span><span class="p">.</span><span class="nx">policy_view</span></pre></div>             </td>           </tr>                               <tr id="section-2">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-2">&#182;</a>               </div>               <p>Setup model for moving metadata around</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="vi">@renewal_model = </span><span class="k">new</span> <span class="nx">RenewalUnderwritingModel</span><span class="p">(</span>
+          <span class="nv">id      : </span><span class="nx">@policy</span><span class="p">.</span><span class="nx">id</span>
+          <span class="nv">urlRoot : </span><span class="nx">@policy</span><span class="p">.</span><span class="nx">urlRoot</span>
+          <span class="nv">digest  : </span><span class="nx">@policy</span><span class="p">.</span><span class="nx">get</span> <span class="s">&#39;digest&#39;</span>
+        <span class="p">)</span></pre></div>             </td>           </tr>                               <tr id="section-3">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-3">&#182;</a>               </div>               <p>Attach events to model</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="nx">@renewal_model</span><span class="p">.</span><span class="kc">on</span> <span class="s">&#39;renewal:success&#39;</span><span class="p">,</span> <span class="nx">@renewalSuccess</span><span class="p">,</span> <span class="k">this</span>
+      <span class="nx">@renewal_model</span><span class="p">.</span><span class="kc">on</span> <span class="s">&#39;renewal:error&#39;</span><span class="p">,</span> <span class="nx">@renewalError</span><span class="p">,</span> <span class="k">this</span>
+
+    <span class="nv">render : </span><span class="o">-&gt;</span>
+      <span class="nx">@show</span><span class="p">()</span>
+      <span class="nx">$</span><span class="p">(</span><span class="s">&quot;</span><span class="err">#</span><span class="s">ru-loader-</span><span class="si">#{</span><span class="nx">@policy_view</span><span class="p">.</span><span class="nx">cid</span><span class="si">}</span><span class="s">&quot;</span><span class="p">).</span><span class="nx">show</span><span class="p">()</span>
+      <span class="vi">@loader = </span><span class="nx">@Helpers</span><span class="p">.</span><span class="nx">loader</span><span class="p">(</span><span class="s">&quot;ru-spinner-</span><span class="si">#{</span><span class="nx">@policy_view</span><span class="p">.</span><span class="nx">cid</span><span class="si">}</span><span class="s">&quot;</span><span class="p">,</span> <span class="mi">80</span><span class="p">,</span> <span class="s">&#39;#696969&#39;</span><span class="p">)</span>
+      <span class="nx">@loader</span><span class="p">.</span><span class="nx">setFPS</span><span class="p">(</span><span class="mi">48</span><span class="p">)</span>
+     </pre></div>             </td>           </tr>                               <tr id="section-4">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-4">&#182;</a>               </div>               <p>This is just for testing the loader, remove delay
+load = <em>.bind(@renewal</em>model.fetchRenewalMetadata, @policy)
+_.delay(load, 1000)</p>             </td>             <td class="code">               <div class="highlight"><pre>      <span class="nx">@renewal_model</span><span class="p">.</span><span class="nx">fetch</span><span class="p">(</span></pre></div>             </td>           </tr>                               <tr id="section-5">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-5">&#182;</a>               </div>               <p>url : @url('/underwriting')</p>             </td>             <td class="code">               <div class="highlight"><pre>          <span class="nv">url : </span><span class="s">&#39;/mocks/renewal_underwriting_get.json&#39;</span> <span class="c1">#mocks</span>
+          <span class="nv">success : </span><span class="nf">(model, resp) -&gt;</span>
+            <span class="nx">model</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s">&#39;renewal:success&#39;</span><span class="p">,</span> <span class="nx">resp</span><span class="p">)</span>
+            <span class="nx">model</span><span class="p">.</span><span class="nx">use_cripple</span><span class="p">()</span>
+          <span class="nv">error : </span><span class="nf">(model, resp) -&gt;</span>
+            <span class="nx">model</span><span class="p">.</span><span class="nx">trigger</span><span class="p">(</span><span class="s">&#39;renewal:error&#39;</span><span class="p">,</span> <span class="nx">resp</span><span class="p">)</span>
+            <span class="nx">model</span><span class="p">.</span><span class="nx">use_cripple</span><span class="p">()</span>
+        <span class="p">)</span>
+
+      <span class="k">this</span> <span class="c1"># so we can chain</span>
+
+    <span class="nv">removeLoader : </span><span class="o">-&gt;</span>
+      <span class="nx">@loader</span><span class="p">.</span><span class="nx">kill</span><span class="p">()</span>
+      <span class="nx">$</span><span class="p">(</span><span class="s">&quot;</span><span class="err">#</span><span class="s">ru-loader-</span><span class="si">#{</span><span class="nx">@cid</span><span class="si">}</span><span class="s">&quot;</span><span class="p">).</span><span class="nx">hide</span><span class="p">()</span>
+
+    <span class="nv">show : </span><span class="o">-&gt;</span>
+      <span class="nx">@$el</span><span class="p">.</span><span class="nx">fadeIn</span><span class="p">(</span><span class="s">&#39;fast&#39;</span><span class="p">)</span>
+
+    <span class="nv">hide : </span><span class="o">-&gt;</span>
+      <span class="nx">@$el</span><span class="p">.</span><span class="nx">hide</span><span class="p">()</span>
+
+    <span class="nv">process_event : </span><span class="nf">(e) -&gt;</span>
+      <span class="nx">e</span><span class="p">.</span><span class="nx">preventDefault</span><span class="p">()</span>
+      <span class="nx">$</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">currentTarget</span><span class="p">)</span></pre></div>             </td>           </tr>                               <tr id="section-6">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-6">&#182;</a>               </div>               <p>Render a menu and attach it to el. Only create the menu once.</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nv">attach_menu : </span><span class="nf">(el, template, view_data) -&gt;</span>
+      <span class="nv">container = </span><span class="nx">el</span><span class="p">.</span><span class="nx">parent</span><span class="p">()</span>
+      <span class="nv">menu      = </span><span class="nx">container</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s">&#39;.ru-menus&#39;</span><span class="p">)</span>
+      <span class="k">if</span> <span class="nx">menu</span><span class="p">.</span><span class="nx">length</span> <span class="o">==</span> <span class="mi">0</span>
+        <span class="nv">menu = </span><span class="nx">@Mustache</span><span class="p">.</span><span class="nx">render</span> <span class="nx">template</span><span class="p">,</span> <span class="nx">view_data</span>
+        <span class="nx">container</span><span class="p">.</span><span class="nx">append</span><span class="p">(</span><span class="nx">menu</span><span class="p">).</span><span class="nx">find</span><span class="p">(</span><span class="s">&#39;div&#39;</span><span class="p">).</span><span class="nx">fadeIn</span><span class="p">(</span><span class="mi">200</span><span class="p">)</span>
+      <span class="k">else</span>
+        <span class="nx">menu</span><span class="p">.</span><span class="nx">fadeIn</span><span class="p">(</span><span class="s">&#39;fast&#39;</span><span class="p">)</span>
+
+      <span class="nx">@overlay_trigger</span> <span class="nx">container</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s">&#39;.ru-menus&#39;</span><span class="p">)</span></pre></div>             </td>           </tr>                               <tr id="section-7">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-7">&#182;</a>               </div>               <p>Remove menu</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nv">clear_menu : </span><span class="nf">(e) -&gt;</span>
+      <span class="k">if</span> <span class="nx">e</span><span class="p">.</span><span class="nx">currentTarget</span><span class="o">?</span>
+        <span class="nx">$</span><span class="p">(</span><span class="nx">e</span><span class="p">.</span><span class="nx">currentTarget</span><span class="p">).</span><span class="nx">parents</span><span class="p">(</span><span class="s">&#39;.ru-menus&#39;</span><span class="p">).</span><span class="nx">fadeOut</span><span class="p">(</span><span class="mi">100</span><span class="p">)</span>
+      <span class="k">else</span>
+        <span class="nx">e</span><span class="p">.</span><span class="nx">fadeOut</span><span class="p">(</span><span class="s">&#39;fast&#39;</span><span class="p">)</span>
+
+      <span class="nx">$</span><span class="p">(</span><span class="s">&#39;.ru-overlay&#39;</span><span class="p">).</span><span class="nx">remove</span><span class="p">()</span></pre></div>             </td>           </tr>                               <tr id="section-8">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-8">&#182;</a>               </div>               <p>Drops a transparent div underneath menu to act as trigger to remove
+the menu</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nv">overlay_trigger : </span><span class="nf">(@menu) -&gt;</span>
+      <span class="nv">overlay = </span><span class="nx">$</span><span class="p">(</span><span class="s">&quot;&lt;div&gt;&lt;/div&gt;&quot;</span><span class="p">)</span>
+                  <span class="p">.</span><span class="nx">addClass</span><span class="p">(</span><span class="s">&#39;ru-overlay&#39;</span><span class="p">)</span>
+                  <span class="p">.</span><span class="nx">css</span><span class="p">({</span>
+                    <span class="nv">width      : </span><span class="s">&#39;100%&#39;</span>
+                    <span class="nv">height     : </span><span class="s">&#39;100%&#39;</span>
+                    <span class="nv">position   : </span><span class="s">&#39;absolute&#39;</span>
+                    <span class="nv">zIndex     : </span><span class="mi">640</span>
+                    <span class="nv">background : </span><span class="s">&#39;transparent&#39;</span>
+                  <span class="p">})</span>
+
+      <span class="nx">$</span><span class="p">(</span><span class="s">&#39;body&#39;</span><span class="p">).</span><span class="nx">prepend</span><span class="p">(</span><span class="nx">overlay</span><span class="p">)</span>
+      <span class="nx">$</span><span class="p">(</span><span class="nx">overlay</span><span class="p">).</span><span class="kc">on</span> <span class="s">&#39;click&#39;</span><span class="p">,</span> <span class="p">(</span><span class="nx">e</span><span class="p">)</span> <span class="o">=&gt;</span>
+        <span class="nx">@clear_menu</span> <span class="nx">@menu</span></pre></div>             </td>           </tr>                               <tr id="section-9">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-9">&#182;</a>               </div>               <p>Stub data for changeAssignment menu</p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nv">changeAssignment : </span><span class="nf">(el) -&gt;</span>
+      <span class="nv">data = </span>
+        <span class="nv">cid : </span><span class="nx">@cid</span>
+        <span class="nv">assignees : </span><span class="p">[</span>
+          <span class="p">{</span> <span class="nv">id : </span><span class="mi">1</span><span class="p">,</span> <span class="nv">name : </span><span class="s">&#39;Alice&#39;</span> <span class="p">}</span>
+          <span class="p">{</span> <span class="nv">id : </span><span class="mi">2</span><span class="p">,</span> <span class="nv">name : </span><span class="s">&#39;Bob&#39;</span> <span class="p">}</span>
+          <span class="p">{</span> <span class="nv">id : </span><span class="mi">3</span><span class="p">,</span> <span class="nv">name : </span><span class="s">&#39;Cipher&#39;</span> <span class="p">}</span>
+        <span class="p">]</span>
+
+      <span class="nx">@attach_menu</span> <span class="nx">el</span><span class="p">,</span> <span class="nx">tpl_ru_assignees</span><span class="p">,</span> <span class="nx">data</span>
+
+
+    <span class="nv">changeDisposition : </span><span class="nf">(el) -&gt;</span>
+      <span class="nv">data = </span>
+        <span class="nv">cid : </span><span class="nx">@cid</span>
+        <span class="nv">dispositions : </span><span class="p">[</span>
+          <span class="p">{</span> <span class="nv">id : </span><span class="mi">1</span><span class="p">,</span> <span class="nv">name : </span><span class="s">&#39;Pending&#39;</span> <span class="p">}</span>
+          <span class="p">{</span> <span class="nv">id : </span><span class="mi">2</span><span class="p">,</span> <span class="nv">name : </span><span class="s">&#39;Dead&#39;</span> <span class="p">}</span>
+          <span class="p">{</span> <span class="nv">id : </span><span class="mi">3</span><span class="p">,</span> <span class="nv">name : </span><span class="s">&#39;Vaporized&#39;</span> <span class="p">}</span>
+        <span class="p">]</span>
+
+      <span class="nx">@attach_menu</span> <span class="nx">el</span><span class="p">,</span> <span class="nx">tpl_ru_disposition</span><span class="p">,</span> <span class="nx">data</span>
+
+    <span class="nv">reviewPeriod : </span><span class="nf">(el) -&gt;</span>
+      <span class="nx">@$el</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s">&#39;input[name=reviewPeriod]&#39;</span><span class="p">).</span><span class="nx">datepicker</span><span class="p">(</span><span class="s">&quot;show&quot;</span><span class="p">)</span>
+
+    <span class="nv">reviewDeadline : </span><span class="nf">(el) -&gt;</span>
+      <span class="nx">@$el</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s">&#39;input[name=reviewDeadline]&#39;</span><span class="p">).</span><span class="nx">datepicker</span><span class="p">(</span><span class="s">&quot;show&quot;</span><span class="p">)</span>
+
+    <span class="nv">attachDatepickers : </span><span class="o">-&gt;</span>
+
+      <span class="vi">@dateChanged   = </span><span class="nx">_</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">@dateChanged</span><span class="p">,</span> <span class="k">this</span><span class="p">)</span>
+      <span class="vi">@setDatepicker = </span><span class="nx">_</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="nx">@setDatepicker</span><span class="p">,</span> <span class="k">this</span><span class="p">)</span>
+
+      <span class="nv">options =</span>
+        <span class="nv">dateFormat : </span><span class="s">&#39;yy-mm-dd&#39;</span>
+        <span class="nv">onClose    : </span><span class="nx">@dateChanged</span>
+        <span class="nv">beforeShow : </span><span class="nx">@setDatepicker</span>
+
+      <span class="nx">@$el</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s">&#39;input[name=reviewPeriod]&#39;</span><span class="p">).</span><span class="nx">datepicker</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span>
+      <span class="nx">@$el</span><span class="p">.</span><span class="nx">find</span><span class="p">(</span><span class="s">&#39;input[name=reviewDeadline]&#39;</span><span class="p">).</span><span class="nx">datepicker</span><span class="p">(</span><span class="nx">options</span><span class="p">)</span></pre></div>             </td>           </tr>                               <tr id="section-10">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-10">&#182;</a>               </div>               <p>Get the field information from the HTML Element in DATEPICKER and pass
+to processChange to see if we need to save anything. <br />
+@param <code>field</code> <em>String</em> name of CHANGESET field </p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nv">dateChanged : </span><span class="nf">(date) -&gt;</span>
+      <span class="nv">field = </span><span class="s">&quot;renewal.</span><span class="si">#{</span><span class="nx">$</span><span class="p">(</span><span class="nx">@DATEPICKER</span><span class="p">).</span><span class="nx">attr</span><span class="p">(</span><span class="s">&#39;name&#39;</span><span class="p">)</span><span class="si">}</span><span class="s">&quot;</span>
+      <span class="k">if</span> <span class="nx">@processChange</span> <span class="nx">field</span><span class="p">,</span> <span class="nx">date</span>
+        <span class="nx">@Amplify</span><span class="p">.</span><span class="nx">publish</span><span class="p">(</span><span class="nx">@policy_view</span><span class="p">.</span><span class="nx">cid</span><span class="p">,</span> <span class="s">&#39;success&#39;</span><span class="p">,</span> <span class="s">&quot;Saved changes!&quot;</span><span class="p">,</span> <span class="mi">2000</span><span class="p">)</span></pre></div>             </td>           </tr>                               <tr id="section-11">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-11">&#182;</a>               </div>               <p><strong>Did a value change?</strong> <br />
+Check the CHANGESET to see if a value changed. For the field we check
+for the existence of a '.' and split on that to deal with deeper values
+in the CHANGESET.  </p>
+
+<p>@param <code>field</code> <em>String</em> name of CHANGESET field <br />
+@param <code>val</code> <em>String</em> value of field that changed <br />
+@return <em>Boolean</em></p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nv">processChange : </span><span class="nf">(field, val) -&gt;</span>
+      <span class="nv">old_val = </span><span class="s">&#39;&#39;</span>
+      <span class="nv">field = </span><span class="k">if</span> <span class="nx">field</span><span class="p">.</span><span class="nx">indexOf</span><span class="p">(</span><span class="s">&#39;.&#39;</span><span class="p">)</span> <span class="o">&gt;</span> <span class="o">-</span><span class="mi">1</span> <span class="k">then</span> <span class="nx">field</span><span class="p">.</span><span class="nx">split</span><span class="p">(</span><span class="s">&#39;.&#39;</span><span class="p">)</span> <span class="k">else</span> <span class="nx">field</span>
+      <span class="k">if</span> <span class="nx">_</span><span class="p">.</span><span class="nx">isArray</span><span class="p">(</span><span class="nx">field</span><span class="p">)</span>
+        <span class="nv">old_val = </span><span class="nx">@CHANGESET</span><span class="p">[</span><span class="nx">field</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="nx">field</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span>
+      <span class="k">else</span>
+        <span class="nv">old_val = </span><span class="nx">field</span>
+
+      <span class="k">if</span> <span class="nx">old_val</span> <span class="o">!=</span> <span class="nx">val</span></pre></div>             </td>           </tr>                               <tr id="section-12">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-12">&#182;</a>               </div>               <p>This is where we would save the value to the server</p>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="k">if</span> <span class="nx">_</span><span class="p">.</span><span class="nx">isArray</span><span class="p">(</span><span class="nx">field</span><span class="p">)</span></pre></div>             </td>           </tr>                               <tr id="section-13">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-13">&#182;</a>               </div>               <p>Update the changeset and set model</p>             </td>             <td class="code">               <div class="highlight"><pre>          <span class="nx">@CHANGESET</span><span class="p">[</span><span class="nx">field</span><span class="p">[</span><span class="mi">0</span><span class="p">]][</span><span class="nx">field</span><span class="p">[</span><span class="mi">1</span><span class="p">]]</span> <span class="o">=</span> <span class="nx">val</span>
+          <span class="nx">@renewal_model</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">field</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="nx">@CHANGESET</span><span class="p">[</span><span class="nx">field</span><span class="p">[</span><span class="mi">0</span><span class="p">]])</span>
+        <span class="k">else</span>
+          <span class="nx">@renewal_model</span><span class="p">.</span><span class="nx">set</span><span class="p">(</span><span class="nx">field</span><span class="p">,</span> <span class="nx">val</span><span class="p">)</span>
+
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span> <span class="nx">@renewal_model</span><span class="p">.</span><span class="nx">attributes</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s">&quot;CHANGED: </span><span class="si">#{</span><span class="nx">field</span><span class="si">}</span><span class="s"> to </span><span class="si">#{</span><span class="nx">val</span><span class="si">}</span><span class="s">&quot;</span><span class="p">)</span>
+        <span class="kc">true</span>
+      <span class="k">else</span>
+        <span class="nx">console</span><span class="p">.</span><span class="nx">log</span><span class="p">(</span><span class="s">&quot;NO CHANGE&quot;</span><span class="p">)</span>
+        <span class="kc">false</span></pre></div>             </td>           </tr>                               <tr id="section-14">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-14">&#182;</a>               </div>               <p>Set the value of DATEPICKER for use in determining changes. <br />
+@param <code>el</code> <em>HTML Element</em>  </p>             </td>             <td class="code">               <div class="highlight"><pre>    <span class="nv">setDatepicker : </span><span class="nf">(el) -&gt;</span>
+      <span class="vi">@DATEPICKER = </span><span class="nx">el</span>
+
+    <span class="nv">renewalSuccess : </span><span class="nf">(resp) -&gt;</span>
+      <span class="k">if</span> <span class="nx">resp</span><span class="o">?</span>
+        <span class="nv">resp.cid = </span><span class="nx">@cid</span></pre></div>             </td>           </tr>                               <tr id="section-15">             <td class="docs">               <div class="pilwrap">                 <a class="pilcrow" href="#section-15">&#182;</a>               </div>               <p>Store a changeset to send back to server</p>             </td>             <td class="code">               <div class="highlight"><pre>        <span class="vi">@CHANGESET =</span>
+          <span class="nv">renewal : </span><span class="nx">_</span><span class="p">.</span><span class="nx">omit</span><span class="p">(</span><span class="nx">resp</span><span class="p">.</span><span class="nx">renewal</span><span class="p">,</span> <span class="p">[</span><span class="s">&quot;inspectionOrdered&quot;</span><span class="p">,</span> <span class="s">&quot;renewalReviewRequired&quot;</span><span class="p">])</span>
+          <span class="nv">insuranceScore : </span><span class="nx">resp</span><span class="p">.</span><span class="nx">insuranceScore</span><span class="p">.</span><span class="nx">currentDisposition</span>
+
+        <span class="nx">@$el</span><span class="p">.</span><span class="nx">html</span> <span class="nx">@Mustache</span><span class="p">.</span><span class="nx">render</span> <span class="nx">tpl_ru_container</span><span class="p">,</span> <span class="nx">resp</span>
+        <span class="nx">@removeLoader</span><span class="p">()</span>
+        <span class="nx">@show</span><span class="p">()</span>
+        <span class="nx">@attachDatepickers</span><span class="p">()</span>
+
+    <span class="nv">renewalError : </span><span class="nf">(resp) -&gt;</span>
+      <span class="nx">@Amplify</span><span class="p">.</span><span class="nx">publish</span><span class="p">(</span><span class="nx">@policy_view</span><span class="p">.</span><span class="nx">cid</span><span class="p">,</span> <span class="s">&#39;warning&#39;</span><span class="p">,</span> <span class="s">&quot;Could not retrieve renewal underwriting information: </span><span class="si">#{</span><span class="nx">resp</span><span class="p">.</span><span class="nx">statusText</span><span class="si">}</span><span class="s"> (</span><span class="si">#{</span><span class="nx">resp</span><span class="p">.</span><span class="nx">status</span><span class="si">}</span><span class="s">)&quot;</span><span class="p">)</span>
+
+</pre></div>             </td>           </tr>                </tbody>     </table>   </div> </body> </html> 

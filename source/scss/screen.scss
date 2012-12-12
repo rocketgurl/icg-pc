@@ -16,11 +16,13 @@ body {
 
 // Now begin importing our partials
 @import "page";
+@import "modal";
 @import "header";
 @import "workspace";
 @import "module_search";
 @import "module_policy";
 @import "module_renewalunderwriting";
+@import "module_ipm";
 @import "module_zendesk";
 @import "module_referralqueue";
 // @import "formalize";

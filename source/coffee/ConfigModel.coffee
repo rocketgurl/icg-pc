@@ -50,7 +50,7 @@ define [
         doc = @get('document')
         url = doc.find("ConfigItem[name=#{workspace.app}] ConfigItem[name=businesses] ConfigItem[name=#{workspace.business}] ConfigItem[name=#{window.ICS360_ENV}] ConfigItem[name=popServer] ConfigItem[name=baseURL]").attr('value')
 
-        if url is undefined then false else url
+        if url == undefined then false else url
 
     # Retrieve baseURL of service from <universalServices> config
     get_universal_service :

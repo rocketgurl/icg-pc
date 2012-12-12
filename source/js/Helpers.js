@@ -78,6 +78,83 @@
         } else {
           return (new DOMParser()).parseFromString(sXML, "text/xml");
         }
+      },
+      stripTimeFromDate: function(date, format) {
+        var clean, t;
+        format = format != null ? format : null;
+        clean = date;
+        t = date.indexOf('T');
+        if (t > -1) {
+          clean = clean.substring(0, t);
+        }
+        return this.formatDate(clean, format);
+      },
+      formatDate: function(date, format) {
+        format = format || 'YYYY-MM-DD';
+        return moment(date).format(format);
+      },
+      makeTimestamp: function() {
+        return moment(new Date()).format('YYYY-MM-DDTHH:mm:ss.sssZ');
+      },
+      resize_element: function(el, offset) {
+        var el_height;
+        offset = offset || 0;
+        el_height = Math.floor((($(window).height() - (184 + offset)) / $(window).height()) * 100) + "%";
+        return el.css({
+          'min-height': el_height,
+          'height': $(window).height() - (184 + offset)
+        });
+      },
+      properName: function(name) {
+        name = this.parseNamePrefix(name.toLowerCase());
+        name = this.parseNameSuffix(name);
+        return name;
+      },
+      parseNamePrefix: function(name) {
+        var prefixes, result;
+        prefixes = ['mac', 'mc', 'van', "d'", "o'"];
+        result = _.find(prefixes, function(prefix) {
+          var re;
+          re = RegExp(prefix, "i");
+          return re.test(name);
+        });
+        if (result !== void 0) {
+          name = name.split(result);
+          name[0] = result;
+          name = _.map(name, function(fragment) {
+            return _.titleize(fragment);
+          });
+          name = name.join('');
+        } else {
+          name = _.titleize(name);
+        }
+        return name;
+      },
+      parseNameSuffix: function(name) {
+        var re, result, suffixes;
+        suffixes = ['jr', 'snr', 'phd', 'esq', 'cpa'];
+        result = _.find(suffixes, function(suffix) {
+          var re;
+          re = RegExp(suffix, "i");
+          return re.test(name);
+        });
+        if (result !== void 0) {
+          re = RegExp(result, "i");
+          name = name.replace(re, _.titleize(result));
+        }
+        return name;
+      },
+      concatStrings: function(a, b, separator) {
+        var out;
+        separator = separator != null ? separator : ', ';
+        out = " ";
+        if (a) {
+          out = _.trim("" + a);
+        }
+        if (b) {
+          out = _.trim("" + out + separator + b);
+        }
+        return out;
       }
     };
     return Helpers;

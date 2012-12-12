@@ -26,6 +26,7 @@
         xhr.setRequestHeader('X-Crippled-Client', 'yes');
         xhr.setRequestHeader('X-Rest-Method', type);
         xhr.setRequestHeader('X-Requested-With', 'XMLHTTPRequest');
+        xhr.setRequestHeader('Accept', 'application/xml');
         if (options.basic_auth_digest) {
           xhr.setRequestHeader('X-Authorization', "Basic " + options.basic_auth_digest);
           return xhr.setRequestHeader('Authorization', "Basic " + options.basic_auth_digest);

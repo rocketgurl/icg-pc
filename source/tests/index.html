@@ -6,8 +6,10 @@
 
   <link rel="shortcut icon" type="image/png" href="lib/jasmine-1.2.0/jasmine_favicon.png">
   <link rel="stylesheet" type="text/css" href="lib/jasmine-1.2.0/jasmine.css">
+  <script type="text/javascript" src="../js/lib/underscore.js"></script>
   <script type="text/javascript" src="lib/jasmine-1.2.0/jasmine.js"></script>
   <script type="text/javascript" src="lib/jasmine-1.2.0/jasmine-html.js"></script>
+  <script type="text/javascript" src="lib/equivalent-xml.js"></script>
 
   <!-- include source files here... -->
   <script src="../js/lib/require.js"></script>
@@ -34,7 +36,9 @@
           json       : 'lib/json2',
           loader     : 'lib/heartcode-canvasloader',
           swfobject  : 'lib/swfobject',
-          moment     : 'lib/moment'
+          moment     : 'lib/moment',
+          momentrange : 'lib/moment-range',
+          u_string: 'lib/underscore.string'
         },
         priority: ['jquery'],
         shim: {
@@ -54,7 +58,13 @@
             deps: ['jquery'],
             exports: 'CanvasLoader'
           },
-          'xml2json': ['jquery']
+          'u_string': {
+            deps: ['underscore']
+          },
+          'xml2json': ['jquery'],
+          'momentrange' : {
+            deps : ['moment']
+          }
         }
       });
 
@@ -62,10 +72,19 @@
         "jquery",
         "moment",
         "../tests/spec/WorkspaceControllerSpec",
+        "../tests/spec/PolicyModelSpec",
+        "../tests/spec/IPMSpec",
+        "../tests/spec/ReferralTaskSpec",
         "../tests/spec/ReferralQueueViewSpec",
-        "domReady"],
-        function($, moment, WorkspaceControllerSpec, ReferralQueueViewSpec, domReady) {
+        "u_string",
+        "domReady",
+        "momentrange",
+        "xml2json"],
+        function($, moment, WorkspaceControllerSpec, PolicyModelSpec, IPMSpec, ReferralTaskSpec, ReferralQueueViewSpec, u_string, domReady) {
         return domReady(function() {
+            _.mixin(_.str.exports());
+
+
             var jasmineEnv = jasmine.getEnv();
             jasmineEnv.updateInterval = 1000;
 
@@ -86,8 +105,11 @@
   </script>
 
 </head>
-
 <body>
+    <!-- TEMPLATE: Flash Message Container -->
+    <script type="text/template" id="tpl-flash-message">
+      <div id="flash-message-{{cid}}" class="flash-message"></div>
+    </script>
 </body>
     <!-- TEMPLATE: Flash Message Container -->
     <script type="text/template" id="tpl-flash-message">

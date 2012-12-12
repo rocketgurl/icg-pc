@@ -50,7 +50,6 @@ define [
 
     # Determine which module definitions to return
     get_modules : (app_name) ->
-      console.log ["APP_NAME", app_name]
       switch app_name
         when 'policies'
           [@policy_search, @referral_queue]

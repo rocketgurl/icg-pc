@@ -1,0 +1,413 @@
+<!-- Product: OFCC HO3 Alaska -->
+<form action="change_customer" method="get" accept-charset="utf-8" class="collapsedSections">
+	<div id="content">
+		<div id="content_header">
+			<h2>Change Customer for Policy {{policyId}}</h2>
+		</div>
+
+		<div class="content_body">
+			
+			{{#policyOverview}}
+			<section class="policyOverview">
+				<h1>Policy Overview</h1>
+				<ul>
+					<li>{{InsuredFirstName}} {{InsuredMiddleName}} {{InsuredLastName}}</li>
+					<li>{{InsuredMailingAddressLine1}}</li>
+					<li>{{InsuredMailingAddressLine2}}</li>
+					<li>{{InsuredMailingAddressCity}}, {{InsuredMailingAddressState}} {{InsuredMailingAddressZip}}</li>
+				</ul>
+			</section>
+			{{/policyOverview}}
+			
+			<fieldset>
+				<div>
+					<label for="id_reasonCode" class="labelRequired">Reason code</label>
+					<select id="id_reasonCode" name="reasonCode" required>
+						{{#EnumsChangeCustomerReason}}
+						<option value="{{value}}">{{label}}</option>
+						{{/EnumsChangeCustomerReason}}
+					</select>
+				</div>
+			</fieldset>
+			
+			<fieldset class="defaultOpen">
+				<h3>Property Address <a data-alt-text="close">change</a></h3>
+				<div class="collapsibleFieldContainer">
+					<fieldset>
+						<div>
+							<label for="id_PropertyStreetNumber" class="labelRequired">Street Number <i>PropertyStreetNumber</i></label>
+							<input type="text" id="id_PropertyStreetNumber" name="PropertyStreetNumber" value="{{PropertyStreetNumber}}" required>
+						</div>
+						<div>
+							<label for="id_PropertyStreetName" class="labelRequired">Street Name <i>PropertyStreetName</i></label>
+							<input type="text" id="id_PropertyStreetName" name="PropertyStreetName" value="{{PropertyStreetName}}" required>
+						</div>
+						<div>
+							<label for="id_PropertyAddressLine2">Address Line 2 <i>PropertyAddressLine2</i></label>
+							<input type="text" id="id_PropertyAddressLine2" name="PropertyAddressLine2" value="{{PropertyAddressLine2}}">
+						</div>
+						<div>
+							<label for="id_PropertyCity" class="labelRequired">City <i>PropertyCity</i></label>
+							<input type="text" id="id_PropertyCity" name="PropertyCity" value="{{PropertyCity}}" required>
+						</div>
+						<div>
+							<label for="id_PropertyState" class="labelRequired">State <i>PropertyState</i></label>
+							<select disabled="disabled" id="id_PropertyState" name="InsuredMailingAddressState" data-value="{{PropertyState}}{{^PropertyState}}0{{/PropertyState}}" required>
+								<option value="0">Select</option>
+								<option value="AL">Alabama</option>
+								<option value="AK">Alaska</option> 
+								<option value="AZ">Arizona</option> 
+								<option value="AR">Arkansas</option> 
+								<option value="CA">California</option> 
+								<option value="CO">Colorado</option> 
+								<option value="CT">Connecticut</option> 
+								<option value="DE">Delaware</option> 
+								<option value="DC">District Of Columbia</option> 
+								<option value="FL">Florida</option> 
+								<option value="GA">Georgia</option> 
+								<option value="HI">Hawaii</option> 
+								<option value="ID">Idaho</option> 
+								<option value="IL">Illinois</option> 
+								<option value="IN">Indiana</option> 
+								<option value="IA">Iowa</option> 
+								<option value="KS">Kansas</option> 
+								<option value="KY">Kentucky</option> 
+								<option value="LA">Louisiana</option> 
+								<option value="ME">Maine</option> 
+								<option value="MD">Maryland</option> 
+								<option value="MA">Massachusetts</option> 
+								<option value="MI">Michigan</option> 
+								<option value="MN">Minnesota</option> 
+								<option value="MS">Mississippi</option> 
+								<option value="MO">Missouri</option> 
+								<option value="MT">Montana</option> 
+								<option value="NE">Nebraska</option> 
+								<option value="NV">Nevada</option> 
+								<option value="NH">New Hampshire</option> 
+								<option value="NJ">New Jersey</option> 
+								<option value="NM">New Mexico</option> 
+								<option value="NY">New York</option> 
+								<option value="NC">North Carolina</option> 
+								<option value="ND">North Dakota</option> 
+								<option value="OH">Ohio</option> 
+								<option value="OK">Oklahoma</option> 
+								<option value="OR">Oregon</option> 
+								<option value="PA">Pennsylvania</option> 
+								<option value="RI">Rhode Island</option> 
+								<option value="SC">South Carolina</option> 
+								<option value="SD">South Dakota</option> 
+								<option value="TN">Tennessee</option> 
+								<option value="TX">Texas</option> 
+								<option value="UT">Utah</option> 
+								<option value="VT">Vermont</option> 
+								<option value="VA">Virginia</option> 
+								<option value="WA">Washington</option> 
+								<option value="WV">West Virginia</option> 
+								<option value="WI">Wisconsin</option> 
+								<option value="WY">Wyoming</option>
+							</select>
+						</div>
+						<div>
+							<label for="id_PropertyZipCode" class="labelRequired">Zip Code <i>PropertyZipCode</i></label>
+							<input type="text" id="id_PropertyZipCode" name="PropertyZipCode" value="{{PropertyZipCode}}" required>
+						</div>
+						<div>
+							<label for="id_PropertyZipCodePlusFour">Zip Code +4 <i>PropertyZipCodePlusFour</i></label>
+							<input type="text" id="id_PropertyZipCodePlusFour" name="PropertyZipCodePlusFour" value="{{PropertyZipCodePlusFour}}">
+						</div>
+						<div>
+							<label for="id_MailingEqualPropertyAddress" class="labelRequired">Mailing Address is the same as Property Address? <i>MailingEqualPropertyAddress</i></label>
+							<select id="id_MailingEqualPropertyAddress" name="MailingEqualPropertyAddress" data-value="{{MailingEqualPropertyAddress}}" required>
+								{{#EnumsMailingEqualPropertyAddress}}
+								<option value="{{value}}">{{label}}</option>
+								{{/EnumsMailingEqualPropertyAddress}}
+							</select>
+						</div>
+
+					</fieldset>
+				</div>
+			</fieldset>
+			
+			<fieldset>
+				<h3>Insured <a data-alt-text="close">change</a></h3>
+				<div class="collapsibleFieldContainer">
+					<fieldset>
+						<legend>Name</legend>
+						<div>
+							<label for="id_InsuredFirstName" class="labelRequired">First <i>InsuredFirstName</i></label>
+							<input type="text" id="id_InsuredFirstName" name="InsuredFirstName" value="{{InsuredFirstName}}" required>
+						</div>
+						<div>
+							<label for="id_InsuredMiddleName">Middle <i>InsuredMiddleName</i></label>
+							<input type="text" id="id_InsuredMiddleName" name="InsuredMiddleName" value="{{InsuredMiddleName}}">
+						</div>
+						<div>
+							<label for="id_InsuredLastName" class="labelRequired">Last <i>InsuredLastName</i></label>
+							<input type="text" id="id_InsuredLastName" name="InsuredLastName" value="{{InsuredLastName}}" required>
+						</div>
+					</fieldset>
+					
+					<fieldset {{#DisableMailingAddress}}style="display:none"{{/DisableMailingAddress}}>
+						<legend>Mailing address</legend>
+						
+						<div>
+							<label for="id_InsuredMailingAddressLine1" class="labelRequired">Address line 1 <i>InsuredMailingAddressLine1</i></label>
+							<input type="text" id="id_InsuredMailingAddressLine1" name="InsuredMailingAddressLine1" value="{{InsuredMailingAddressLine1}}" required>
+						</div>
+						<div>
+							<label for="id_InsuredMailingAddressLine2">Address line 2 <i>InsuredMailingAddressLine2</i></label>
+							<input type="text" id="id_InsuredMailingAddressLine2" name="InsuredMailingAddressLine2" value="{{InsuredMailingAddressLine2}}">
+						</div>
+						
+						<div>
+							<label for="id_InsuredMailingAddressCity" class="labelRequired">City <i>InsuredMailingAddressCity</i></label>
+							<input type="text" id="id_InsuredMailingAddressCity" name="InsuredMailingAddressCity" value="{{InsuredMailingAddressCity}}" required>
+						</div>
+						<div>
+							<label for="id_InsuredMailingAddressState" class="labelRequired">State <i>InsuredMailingAddressState</i></label>
+							<select id="id_InsuredMailingAddressState" name="InsuredMailingAddressState" data-value="{{InsuredMailingAddressState}}{{^InsuredMailingAddressState}}0{{/InsuredMailingAddressState}}" required>
+								<option value="0">Select</option>
+								<option value="AL">Alabama</option>
+								<option value="AK">Alaska</option> 
+								<option value="AZ">Arizona</option> 
+								<option value="AR">Arkansas</option> 
+								<option value="CA">California</option> 
+								<option value="CO">Colorado</option> 
+								<option value="CT">Connecticut</option> 
+								<option value="DE">Delaware</option> 
+								<option value="DC">District Of Columbia</option> 
+								<option value="FL">Florida</option> 
+								<option value="GA">Georgia</option> 
+								<option value="HI">Hawaii</option> 
+								<option value="ID">Idaho</option> 
+								<option value="IL">Illinois</option> 
+								<option value="IN">Indiana</option> 
+								<option value="IA">Iowa</option> 
+								<option value="KS">Kansas</option> 
+								<option value="KY">Kentucky</option> 
+								<option value="LA">Louisiana</option> 
+								<option value="ME">Maine</option> 
+								<option value="MD">Maryland</option> 
+								<option value="MA">Massachusetts</option> 
+								<option value="MI">Michigan</option> 
+								<option value="MN">Minnesota</option> 
+								<option value="MS">Mississippi</option> 
+								<option value="MO">Missouri</option> 
+								<option value="MT">Montana</option> 
+								<option value="NE">Nebraska</option> 
+								<option value="NV">Nevada</option> 
+								<option value="NH">New Hampshire</option> 
+								<option value="NJ">New Jersey</option> 
+								<option value="NM">New Mexico</option> 
+								<option value="NY">New York</option> 
+								<option value="NC">North Carolina</option> 
+								<option value="ND">North Dakota</option> 
+								<option value="OH">Ohio</option> 
+								<option value="OK">Oklahoma</option> 
+								<option value="OR">Oregon</option> 
+								<option value="PA">Pennsylvania</option> 
+								<option value="RI">Rhode Island</option> 
+								<option value="SC">South Carolina</option> 
+								<option value="SD">South Dakota</option> 
+								<option value="TN">Tennessee</option> 
+								<option value="TX">Texas</option> 
+								<option value="UT">Utah</option> 
+								<option value="VT">Vermont</option> 
+								<option value="VA">Virginia</option> 
+								<option value="WA">Washington</option> 
+								<option value="WV">West Virginia</option> 
+								<option value="WI">Wisconsin</option> 
+								<option value="WY">Wyoming</option>
+							</select>
+						</div>
+						<div>
+							<label for="id_InsuredMailingAddressZip" class="labelRequired">Zip <i>InsuredMailingAddressZip</i></label>
+							<input type="text" id="id_InsuredMailingAddressZip" name="InsuredMailingAddressZip" value="{{InsuredMailingAddressZip}}" size="5" required>
+						</div>
+						<div>
+							<label for="id_InsuredMailingAddressCountry">Country <i>InsuredMailingAddressCountry</i></label>
+							<input type="text" id="id_InsuredMailingAddressCountry" name="InsuredMailingAddressCountry" value="{{InsuredMailingAddressCountry}}" size="2">
+						</div>
+					</fieldset>
+					<fieldset>
+						<legend>Contact</legend>
+						<div>
+							<label for="id_InsuredEmailAddress">Email address <i>InsuredEmailAddress</i></label>
+							<input type="text" id="id_InsuredEmailAddress" name="InsuredEmailAddress" value="{{InsuredEmailAddress}}">
+						</div>
+						
+						<div>
+							<label for="id_InsuredPhoneNumber">Phone number <i>InsuredPhoneNumber</i></label>
+							<input type="text" id="id_InsuredPhoneNumber" name="InsuredPhoneNumber" value="{{InsuredPhoneNumber}}">
+						</div>
+					</fieldset>
+					<fieldset>
+						<legend>Personal info</legend>
+						<div>
+							<label for="id_Insured1BirthDate" class="labelRequired">Birth date <i>Insured1BirthDate</i></label>
+							<input type="text" id="id_Insured1BirthDate" name="Insured1BirthDate" value="{{Insured1BirthDate}}" class="datepicker" data-year-range="-100:+0" required>
+						</div>
+						
+						<div>
+							<label for="id_InsuredMaritalStatus">Marital status <i>InsuredMaritalStatus</i></label>
+							<select id="id_InsuredMaritalStatus" name="InsuredMaritalStatus" data-value="{{InsuredMaritalStatus}}">
+								{{#EnumsInsuredMaritalStatus}}
+								<option value="{{value}}">{{label}}</option>
+								{{/EnumsInsuredMaritalStatus}}
+							</select>
+						</div>
+					</fieldset>
+					<fieldset>
+						<legend>Insured 2</legend>
+						<div>
+							<label for="id_Insured2FirstName">First <i>Insured2FirstName</i></label>
+							<input type="text" id="id_Insured2FirstName" name="Insured2FirstName" value="{{Insured2FirstName}}">
+						</div>
+						<div>
+							<label for="id_Insured2MiddleName">Middle <i>Insured2MiddleName</i></label>
+							<input type="text" id="id_Insured2MiddleName" name="Insured2MiddleName" value="{{Insured2MiddleName}}">
+						</div>
+						<div>
+							<label for="id_Insured2LastName">Last <i>Insured2LastName</i></label>
+							<input type="text" id="id_Insured2LastName" name="Insured2LastName" value="{{Insured2LastName}}">
+						</div>
+					</fieldset>
+					<fieldset>
+					<legend>Insured 3</legend>
+					<div>
+						<label for="id_Insured3FirstName">First <i>Insured3FirstName</i></label>
+						<input type="text" id="id_Insured3FirstName" name="Insured3FirstName" value="{{Insured3FirstName}}">
+					</div>
+					<div>
+						<label for="id_Insured3MiddleName">Middle <i>Insured3MiddleName</i></label>
+						<input type="text" id="id_Insured3MiddleName" name="Insured3MiddleName" value="{{Insured3MiddleName}}">
+					</div>
+					<div>
+						<label for="id_Insured3LastName">Last <i>Insured3LastName</i></label>
+						<input type="text" id="id_Insured3LastName" name="Insured3LastName" value="{{Insured3LastName}}">
+					</div>
+				</fieldset>
+				</div>
+			</fieldset>
+			
+			{{#additionalInsured}}
+			<fieldset>
+				<h3>Additional Insured {{number}} <a data-alt-text="close">change</a></h3>
+				<div class="collapsibleFieldContainer">
+					<fieldset>
+						<legend>Name</legend>
+						<div>
+							<label for="id_{{itemPrefix}}FirstName">First <i>{{itemPrefix}}FirstName</i></label>
+							<input type="text" id="id_{{itemPrefix}}FirstName" name="{{itemPrefix}}FirstName" value="{{FirstName}}">
+						</div>
+						<div>
+							<label for="id_{{itemPrefix}}LastName">Last <i>{{itemPrefix}}LastName</i></label>
+							<input type="text" id="id_{{itemPrefix}}LastName" name="{{itemPrefix}}LastName" value="{{LastName}}">
+						</div>
+					</fieldset>
+					<fieldset>
+						<legend>Mailing address</legend>
+						
+						<div>
+							<label for="id_{{itemPrefix}}AddressLine1">Address line 1 <i>{{itemPrefix}}AddressLine1</i></label>
+							<input type="text" id="id_{{itemPrefix}}AddressLine1" name="{{itemPrefix}}AddressLine1" value="{{AddressLine1}}">
+						</div>
+						<div>
+							<label for="id_{{itemPrefix}}AddressLine2">Address line 2 <i>{{itemPrefix}}AddressLine2</i></label>
+							<input type="text" id="id_{{itemPrefix}}AddressLine2" name="{{itemPrefix}}AddressLine2" value="{{AddressLine2}}">
+						</div>
+						
+						<div>
+							<label for="id_{{itemPrefix}}AddressCity">City <i>{{itemPrefix}}AddressCity</i></label>
+							<input type="text" id="id_{{itemPrefix}}AddressCity" name="{{itemPrefix}}AddressCity" value="{{AddressCity}}">
+						</div>
+						<div>
+							<label for="id_{{itemPrefix}}AddressState">State <i>{{itemPrefix}}AddressState</i></label>
+							<select id="id_{{itemPrefix}}AddressState" name="{{itemPrefix}}AddressState" data-value="{{AddressState}}{{^AddressState}}0{{/AddressState}}"> 
+								<option value="0">Select</option>
+								<option value="AL">Alabama</option>
+								<option value="AK">Alaska</option> 
+								<option value="AZ">Arizona</option> 
+								<option value="AR">Arkansas</option> 
+								<option value="CA">California</option> 
+								<option value="CO">Colorado</option> 
+								<option value="CT">Connecticut</option> 
+								<option value="DE">Delaware</option> 
+								<option value="DC">District Of Columbia</option> 
+								<option value="FL">Florida</option> 
+								<option value="GA">Georgia</option> 
+								<option value="HI">Hawaii</option> 
+								<option value="ID">Idaho</option> 
+								<option value="IL">Illinois</option> 
+								<option value="IN">Indiana</option> 
+								<option value="IA">Iowa</option> 
+								<option value="KS">Kansas</option> 
+								<option value="KY">Kentucky</option> 
+								<option value="LA">Louisiana</option> 
+								<option value="ME">Maine</option> 
+								<option value="MD">Maryland</option> 
+								<option value="MA">Massachusetts</option> 
+								<option value="MI">Michigan</option> 
+								<option value="MN">Minnesota</option> 
+								<option value="MS">Mississippi</option> 
+								<option value="MO">Missouri</option> 
+								<option value="MT">Montana</option> 
+								<option value="NE">Nebraska</option> 
+								<option value="NV">Nevada</option> 
+								<option value="NH">New Hampshire</option> 
+								<option value="NJ">New Jersey</option> 
+								<option value="NM">New Mexico</option> 
+								<option value="NY">New York</option> 
+								<option value="NC">North Carolina</option> 
+								<option value="ND">North Dakota</option> 
+								<option value="OH">Ohio</option> 
+								<option value="OK">Oklahoma</option> 
+								<option value="OR">Oregon</option> 
+								<option value="PA">Pennsylvania</option> 
+								<option value="RI">Rhode Island</option> 
+								<option value="SC">South Carolina</option> 
+								<option value="SD">South Dakota</option> 
+								<option value="TN">Tennessee</option> 
+								<option value="TX">Texas</option> 
+								<option value="UT">Utah</option> 
+								<option value="VT">Vermont</option> 
+								<option value="VA">Virginia</option> 
+								<option value="WA">Washington</option> 
+								<option value="WV">West Virginia</option> 
+								<option value="WI">Wisconsin</option> 
+								<option value="WY">Wyoming</option>
+							</select>
+						</div>
+						<div>
+							<label for="id_{{itemPrefix}}AddressZip">Zip <i>{{itemPrefix}}AddressZip</i></label>
+							<input type="text" id="id_{{itemPrefix}}AddressZip" name="{{itemPrefix}}AddressZip" value="{{AddressZip}}" size="5">
+						</div>
+					</fieldset>
+					<fieldset>
+					<div>
+						<label for="id_{{itemPrefix}}ReferenceNumber">Reference Number <i>{{itemPrefix}}ReferenceNumber</i></label>
+						<input type="text" id="id_{{itemPrefix}}ReferenceNumber" name="{{itemPrefix}}ReferenceNumber" value="{{ReferenceNumber}}">
+					</div>
+					<div>
+						<label for="id_{{itemPrefix}}Type">Type <i>{{itemPrefix}}Type</i></label>
+						<select id="id_{{itemPrefix}}Type" name="{{itemPrefix}}Type" data-value="{{Type}}"> 
+							{{#EnumsAdditionalInsuredTypes}}
+							<option value="{{value}}">{{label}}</option>
+							{{/EnumsAdditionalInsuredTypes}}
+						</select>
+					</div>
+				</fieldset>
+				</div>
+			</fieldset>
+			{{/additionalInsured}}
+			
+			
+			
+			<fieldset class="form_actions">
+				<input type="submit" class="button" value="Confirm"> 
+				<a href="home">Nevermind, go back</a>
+			</fieldset>
+
+		</div>
+	</div>
+</form>
