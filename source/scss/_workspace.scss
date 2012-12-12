@@ -172,7 +172,8 @@
 	}
 }
 
-.flash-message-container {
+.flash-message-container,
+#flash-message-controller {
 	width: 100%;
 	position: absolute;
 	z-index: 5234;
@@ -181,6 +182,7 @@
 	text-align: center;
 	margin: 0;
 	padding: 0;
+	display: none;
 }
 
 .flash-message {

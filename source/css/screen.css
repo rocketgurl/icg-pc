@@ -389,10 +389,10 @@ body {
 #header-container {
   *zoom: 1;
   width: 97%;
-  padding-left: 1.5%;
-  padding-right: 1.5%;
   margin-left: auto;
   margin-right: auto;
+  padding-left: 1.5%;
+  padding-right: 1.5%;
   padding: 0;
 }
 #header-container:after {
@@ -617,10 +617,10 @@ body {
 #workspace nav {
   *zoom: 1;
   width: 97%;
-  padding-left: 1.5%;
-  padding-right: 1.5%;
   margin-left: auto;
   margin-right: auto;
+  padding-left: 1.5%;
+  padding-right: 1.5%;
   background: transparent;
   position: relative;
   top: -32px;
@@ -770,10 +770,10 @@ body {
 #workspace article {
   *zoom: 1;
   width: 97%;
-  padding-left: 1.5%;
-  padding-right: 1.5%;
   margin-left: auto;
   margin-right: auto;
+  padding-left: 1.5%;
+  padding-right: 1.5%;
   padding: 0 0 20px 0;
   margin-top: -12px;
 }
@@ -828,7 +828,8 @@ body {
   border: 0px;
 }
 
-.flash-message-container {
+.flash-message-container,
+#flash-message-controller {
   width: 100%;
   position: absolute;
   z-index: 5234;
@@ -837,6 +838,7 @@ body {
   text-align: center;
   margin: 0;
   padding: 0;
+  display: none;
 }
 
 .flash-message {
@@ -1425,10 +1427,10 @@ Module: Policy
 .ru-container, .zd-container {
   *zoom: 1;
   width: 96.4%;
-  padding-left: 1.8%;
-  padding-right: 1.8%;
   margin-left: auto;
   margin-right: auto;
+  padding-left: 1.8%;
+  padding-right: 1.8%;
   border: #ddd 1px solid;
   background-color: #f4f4f4;
   display: none;
@@ -1473,6 +1475,8 @@ Module: Policy
 .ru-block:nth-child(4n) {
   float: right;
   margin-right: 0;
+  #margin-left: -1em;
+  display: inline;
 }
 
 .ru-block-shim {
