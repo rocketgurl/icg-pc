@@ -183,6 +183,7 @@
 	margin: 0;
 	padding: 0;
 	display: none;
+	cursor: pointer;
 }
 
 .flash-message {
@@ -192,13 +193,17 @@
 	position: absolute;
 	box-shadow: 0 0 10px #333;
 	opacity: 0;
-	padding: 20px;	
 	font-weight: bold;
-	width: 95%;
+	width: 98%;
 	text-align: left;
 	margin: 0 10px;
 	cursor: pointer;
-	
+
+	span {
+		display: block;
+		padding: 20px;
+	}
+
 	i {
 		float: right;
 		cursor: pointer;
