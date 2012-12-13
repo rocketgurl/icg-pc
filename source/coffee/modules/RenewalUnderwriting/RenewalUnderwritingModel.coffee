@@ -18,7 +18,7 @@ define [
     # **Assemble urls for Policiy Renewal Underwriting**  
     # @return _String_  
     url : ->
-      "#{@get('urlRoot')}policies/#{@id}/underwriting"
+      "#{@get('urlRoot')}policies/#{@id}/renewalunderwriting"
 
     # We don't want to send the whole model back to pxCentral, just a
     # small JSON fragment, so we override Backbone a bit.
