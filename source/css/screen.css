@@ -839,6 +839,7 @@ body {
   margin: 0;
   padding: 0;
   display: none;
+  opacity: 0;
   cursor: pointer;
 }
 
@@ -850,10 +851,8 @@ body {
   -ms-border-radius: 6px;
   -o-border-radius: 6px;
   border-radius: 6px;
-  display: none;
   position: absolute;
   box-shadow: 0 0 10px #333;
-  opacity: 0;
   font-weight: bold;
   width: 98%;
   text-align: left;
@@ -1799,7 +1798,7 @@ Module: Policy
 }
 
 .ipm-flash {
-  margin: 100px 0 0 0;
+  margin: 0;
   -webkit-border-radius: 0px;
   -moz-border-radius: 0px;
   -ms-border-radius: 0px;
@@ -1809,10 +1808,17 @@ Module: Policy
   width: 100%;
   padding: 0;
   margin-left: -1px;
+  position: absolute;
 }
 .ipm-flash span {
   display: block;
   padding: 20px;
+}
+
+.policy-module .flash-message-container {
+  top: 0px;
+  width: 100%;
+  opacity: 1;
 }
 
 .policy-module .flash-shim {

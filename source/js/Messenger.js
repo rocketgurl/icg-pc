@@ -8,10 +8,10 @@
       Messenger.prototype.animation_options = {
         "default": {
           start: {
-            top: "+=115"
+            top: "15px"
           },
           end: {
-            top: "-=115"
+            top: "-15px"
           }
         },
         nomove: {
@@ -28,16 +28,26 @@
         } else {
           this.flash_message = this.view.find("#flash-message-" + this.id);
         }
-        this.container = $(".flash-message-container");
-        if (this.container.length === 0) {
-          this.container = $("#flash-message-controller");
-        }
+        this.container = this.findContainer(this.view);
         this.register(this.id);
       }
+
+      Messenger.prototype.findContainer = function(view) {
+        var container;
+        if (view.$el != null) {
+          view = view.$el;
+        }
+        container = view.find(".flash-message-container");
+        if (container.length === 0) {
+          container = view.find("#flash-message-controller");
+        }
+        return container;
+      };
 
       Messenger.prototype.register = function(id) {
         var _this = this;
         return amplify.subscribe(id, function(type, msg, delay, animation) {
+          var options;
           if (animation != null) {
             animation = _this.animation_options[animation];
           } else {
@@ -48,17 +58,18 @@
           }
           if (msg != null) {
             msg = "<span><i class=\"icon-remove-sign\"></i>" + msg + "</span>";
-            _this.container.show();
-            _this.flash_message.html(msg).show().animate({
+            _this.flash_message.html(msg);
+            options = _.extend(animation.start, {
               opacity: 1
-            }, 500);
-            _this.container.animate(animation.start, 500);
+            });
+            _this.container.show().animate(options, 500);
+            console.log(_this.container);
             if (delay != null) {
               _.delay(function() {
-                _this.flash_message.html(msg).animate({
+                options = _.extend(animation.end, {
                   opacity: 0
-                }, 500);
-                return _this.container.animate(animation.end, 500, function() {
+                });
+                return _this.container.animate(options, 500, function() {
                   return $(this).hide();
                 });
               }, delay);
@@ -66,11 +77,14 @@
           }
           _this.flash_message.on('click', function(e) {
             e.preventDefault();
-            _this.flash_message.animate({
+            options = {
               opacity: 0
-            }, 300);
-            return _this.container.animate(animation.end, 300, function() {
-              return $(this).hide();
+            };
+            return _this.container.animate(options, 200, function() {
+              $(this).hide();
+              if (_.has(animation.end, 'top')) {
+                return $(this).css('top', '-100px');
+              }
             });
           });
           return _this.flash_message.on('click', '.error_details a', function(e) {

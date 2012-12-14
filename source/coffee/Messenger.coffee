@@ -11,9 +11,9 @@ define [
     animation_options :
       default :
         start :
-          top : "+=115"
+          top : "15px"
         end :
-          top : "-=115"
+          top : "-15px"
       nomove :
         start : false
         end   : false
@@ -28,12 +28,22 @@ define [
         @flash_message = @view.$el.find("#flash-message-#{@id}")
       else
         @flash_message = @view.find("#flash-message-#{@id}")
-        
-      @container = $(".flash-message-container")
-      if @container.length == 0
-        @container = $("#flash-message-controller")
 
+      @container = @findContainer(@view)
       @register @id
+
+
+    # Look through the view and find our container with some checking for
+    # different types of containers
+    findContainer : (view) ->
+      if view.$el?
+        view = view.$el
+
+      container = view.find(".flash-message-container")
+      if container.length == 0
+        container = view.find("#flash-message-controller")
+
+      container
 
 
     # Register an Amplify sub. Also sets up listener
@@ -53,35 +63,31 @@ define [
           @flash_message.addClass type
         if msg?
           msg = """<span><i class="icon-remove-sign"></i>#{msg}</span>"""
-          @container.show()  
           @flash_message.html(msg)
-            .show()
-            .animate({
-                  opacity : 1
-                  }, 500)
-          @container.animate(animation.start, 500)
 
+          options = _.extend animation.start, { opacity : 1 }
+          @container.show().animate(options, 500)  
 
+          console.log @container
+    
           # After a short delay remove the flash message
           if delay?
             _.delay =>
-              @flash_message.html(msg)
-                .animate({
-                  opacity : 0
-                  }, 500)
-              @container.animate(animation.end, 500, ->
+              options = _.extend animation.end, { opacity : 0 }
+              @container.animate(options, 500, ->
                   $(this).hide()
-                )  
+                )   
             , delay
 
-    
+        # On click fade it out immediately without moving and then reset to
+        # default position
         @flash_message.on 'click', (e) =>
           e.preventDefault()
-          @flash_message.animate({
-                opacity : 0
-              }, 300)
-          @container.animate(animation.end, 300, ->
+          options = { opacity : 0 }
+          @container.animate(options, 200, ->
               $(this).hide()
+              if _.has animation.end, 'top'
+                $(this).css('top', '-100px')
             )
 
         # Attach click handler to error message options list
