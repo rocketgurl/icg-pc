@@ -131,14 +131,14 @@ define([
 
     });
 
-    describe('WorkspaceController can check cookies', function () {
+    // describe('WorkspaceController can check cookies', function () {
 
-      it ('has a cookie', function () {
-        var cookie = WorkspaceController.check_cookie_identity();
-        expect(cookie).toBe(true);
-      });     
+    //   it ('has a cookie', function () {
+    //     var cookie = WorkspaceController.check_cookie_identity();
+    //     expect(cookie).toBe(true);
+    //   });     
 
-    });
+    // });
 
     describe('WorkspaceController saves searches in localStorage', function () {
 
