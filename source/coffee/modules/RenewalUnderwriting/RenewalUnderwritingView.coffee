@@ -92,9 +92,10 @@ define [
 
     render : ->
       @show()
-      $("#ru-loader-#{@policy_view.cid}").show()
-      @loader = @Helpers.loader("ru-spinner-#{@policy_view.cid}", 80, '#696969')
-      @loader.setFPS(48)
+      if $("#ru-spinner-#{@policy_view.cid}").length > 0
+        $("#ru-loader-#{@policy_view.cid}").show()
+        @loader = @Helpers.loader("ru-spinner-#{@policy_view.cid}", 80, '#696969')
+        @loader.setFPS(48)
      
       # This is just for testing the loader, remove delay
       # load = _.bind(@RenewalModel.fetchRenewalMetadata, @policy)
@@ -110,8 +111,9 @@ define [
       this # so we can chain
 
     removeLoader : ->
-      @loader.kill()
-      $("#ru-loader-#{@cid}").hide()
+      if @loader?
+        @loader.kill()
+        $("#ru-loader-#{@cid}").hide()
 
     show : ->
       @$el.fadeIn('fast')
@@ -214,7 +216,7 @@ define [
     # @return _Boolean_
     processChange : (field, val) ->
       old_val = ''
-      field = if field.indexOf('.') > -1 then field.split('.') else fiel
+      field = if field.indexOf('.') > -1 then field.split('.') else field
       if _.isArray(field)
         old_val = @CHANGESET[field[0]][field[1]]
       else
@@ -274,8 +276,14 @@ define [
     setDatepicker : (el) ->
       @DATEPICKER = el
 
-    # On successful save we use the CHANGED_FIELD state to figure out
-    # which HTML element to update with a new value
+    # If the save is successfull then fetch the updated AssigneeList and
+    # return model
+    #
+    # @param `model` _Object_  
+    # @param `response` _Object_ XHR Object  
+    # @param `options` _Object_    
+    # @return _Object_ Model  
+    #
     putSuccess : (model, response, options) ->
       @updateElement 'complete'
       @Amplify.publish(@policy_view.cid, 'success', "Saved changes!", 2000)
@@ -285,13 +293,22 @@ define [
         success : @assigneesFetchSuccess
         error   : @assigneesFetchError
 
-    putError : () ->
+      model
+
+    putError : (model, xhr, options) ->
       @updateElement 'incomplete'
       @Amplify.publish(@policy_view.cid, 'warning', "Could not save!", 2000)
 
     renewalSuccess : (resp) ->
       if resp?
         resp.cid = @cid
+
+        # If the dataset comes back empty for some reason, then display
+        # an error message and bomb out.
+        test_empty = _.omit resp, 'cid'
+        if _.isEmpty test_empty
+          @renewalError({statusText : 'Dataset empty', status : 'pxCentral'})
+          return false
 
         # Store a changeset to send back to server
         @CHANGESET =
@@ -303,9 +320,8 @@ define [
         @removeLoader()
         @show()
         @attachDatepickers()
+      else
+        @renewalError({statusText : 'Dataset empty', status : 'Backbone'})
 
     renewalError : (resp) ->
       @Amplify.publish(@policy_view.cid, 'warning', "Could not retrieve renewal underwriting information: #{resp.statusText} (#{resp.status})")
-
-
-

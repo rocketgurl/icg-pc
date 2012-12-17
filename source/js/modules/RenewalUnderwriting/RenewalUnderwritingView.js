@@ -81,9 +81,11 @@
       },
       render: function() {
         this.show();
-        $("#ru-loader-" + this.policy_view.cid).show();
-        this.loader = this.Helpers.loader("ru-spinner-" + this.policy_view.cid, 80, '#696969');
-        this.loader.setFPS(48);
+        if ($("#ru-spinner-" + this.policy_view.cid).length > 0) {
+          $("#ru-loader-" + this.policy_view.cid).show();
+          this.loader = this.Helpers.loader("ru-spinner-" + this.policy_view.cid, 80, '#696969');
+          this.loader.setFPS(48);
+        }
         this.RenewalModel.fetch({
           success: function(model, resp) {
             return model.trigger('renewal:success', resp);
@@ -95,8 +97,10 @@
         return this;
       },
       removeLoader: function() {
-        this.loader.kill();
-        return $("#ru-loader-" + this.cid).hide();
+        if (this.loader != null) {
+          this.loader.kill();
+          return $("#ru-loader-" + this.cid).hide();
+        }
       },
       show: function() {
         return this.$el.fadeIn('fast');
@@ -198,7 +202,7 @@
       processChange: function(field, val) {
         var old_val;
         old_val = '';
-        field = field.indexOf('.') > -1 ? field.split('.') : fiel;
+        field = field.indexOf('.') > -1 ? field.split('.') : field;
         if (_.isArray(field)) {
           old_val = this.CHANGESET[field[0]][field[1]];
         } else {
@@ -251,18 +255,28 @@
       putSuccess: function(model, response, options) {
         this.updateElement('complete');
         this.Amplify.publish(this.policy_view.cid, 'success', "Saved changes!", 2000);
-        return this.AssigneeList.fetch({
+        this.AssigneeList.fetch({
           success: this.assigneesFetchSuccess,
           error: this.assigneesFetchError
         });
+        return model;
       },
-      putError: function() {
+      putError: function(model, xhr, options) {
         this.updateElement('incomplete');
         return this.Amplify.publish(this.policy_view.cid, 'warning', "Could not save!", 2000);
       },
       renewalSuccess: function(resp) {
+        var test_empty;
         if (resp != null) {
           resp.cid = this.cid;
+          test_empty = _.omit(resp, 'cid');
+          if (_.isEmpty(test_empty)) {
+            this.renewalError({
+              statusText: 'Dataset empty',
+              status: 'pxCentral'
+            });
+            return false;
+          }
           this.CHANGESET = {
             renewal: _.omit(resp.renewal, ["inspectionOrdered", "renewalReviewRequired"]),
             insuranceScore: {
@@ -273,6 +287,11 @@
           this.removeLoader();
           this.show();
           return this.attachDatepickers();
+        } else {
+          return this.renewalError({
+            statusText: 'Dataset empty',
+            status: 'Backbone'
+          });
         }
       },
       renewalError: function(resp) {
