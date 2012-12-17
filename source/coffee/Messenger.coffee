@@ -68,8 +68,6 @@ define [
           options = _.extend animation.start, { opacity : 1 }
           @container.show().animate(options, 500)  
 
-          console.log @container
-    
           # After a short delay remove the flash message
           if delay?
             _.delay =>

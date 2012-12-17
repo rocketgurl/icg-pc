@@ -63,7 +63,6 @@
               opacity: 1
             });
             _this.container.show().animate(options, 500);
-            console.log(_this.container);
             if (delay != null) {
               _.delay(function() {
                 options = _.extend(animation.end, {
