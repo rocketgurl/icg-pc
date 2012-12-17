@@ -24,21 +24,22 @@
       require({
         baseUrl: '../js',
         paths: {
-          jquery     : 'lib/jquery-1.8.2',
-          underscore : 'lib/underscore',
-          backbone   : 'lib/backbone-min',
-          amplify    : 'lib/amplify',
-          mustache   : 'lib/requirejs.mustache',
-          base64     : 'lib/base64',
-          xml2json   : 'lib/jquery.xml2json',
-          text       : 'lib/text',
-          domReady   : 'lib/domReady',
-          json       : 'lib/json2',
-          loader     : 'lib/heartcode-canvasloader',
-          swfobject  : 'lib/swfobject',
-          moment     : 'lib/moment',
+          jquery      : 'lib/jquery-1.8.2',
+          jqueryui    : 'lib/jquery-ui-1.9.0.custom.min',
+          underscore  : 'lib/underscore',
+          backbone    : 'lib/backbone-min',
+          amplify     : 'lib/amplify',
+          mustache    : 'lib/requirejs.mustache',
+          base64      : 'lib/base64',
+          xml2json    : 'lib/jquery.xml2json',
+          text        : 'lib/text',
+          domReady    : 'lib/domReady',
+          json        : 'lib/json2',
+          loader      : 'lib/heartcode-canvasloader',
+          swfobject   : 'lib/swfobject',
+          moment      : 'lib/moment',
           momentrange : 'lib/moment-range',
-          u_string: 'lib/underscore.string'
+          u_string    : 'lib/underscore.string'
         },
         priority: ['jquery'],
         shim: {
@@ -76,11 +77,12 @@
         "../tests/spec/IPMSpec",
         "../tests/spec/ReferralTaskSpec",
         "../tests/spec/ReferralQueueViewSpec",
+        "../tests/spec/RenewalUnderwritingSpec",
         "u_string",
         "domReady",
         "momentrange",
         "xml2json"],
-        function($, moment, WorkspaceControllerSpec, PolicyModelSpec, IPMSpec, ReferralTaskSpec, ReferralQueueViewSpec, u_string, domReady) {
+        function($, moment, WorkspaceControllerSpec, PolicyModelSpec, IPMSpec, ReferralTaskSpec, ReferralQueueViewSpec, RenewalUnderwritingSpec, u_string, domReady) {
         return domReady(function() {
             _.mixin(_.str.exports());
 
