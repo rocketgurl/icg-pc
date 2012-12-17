@@ -51,12 +51,7 @@ define [
         model  : @policy_model
         )
 
-      @policy_model.on 'policy_error', (e) =>
-        console.log ['Policy Error', e]
-        xhr = e.get('xhr')
-        if xhr?
-          msg = "Could not retrieve policy - #{xhr.statusText}"
-          @Amplify.publish(@policy_view.cid, 'warning', msg)
+      @policy_model.on 'policy_error', @throwLoadError, this    
 
       @messenger = new Messenger(@policy_view, @policy_view.cid)
       digest     = @view.options.controller.user.get('digest')
@@ -97,6 +92,15 @@ define [
       # When this tab is activated
       @on 'deactivate', () ->
         @policy_view.trigger 'deactivate'
+
+    # If the policy throws some crazy crippled client stuff then set off a 
+    # big error
+    throwLoadError : (model) ->
+      console.log ['Policy Error', e]
+      xhr = model.get('xhr')
+      if xhr?
+        msg = "Could not retrieve policy - #{xhr.statusText}"
+        @Amplify.publish(@policy_view.cid, 'warning', msg)
 
     # Do whatever rendering animation needs to happen here
     render : (options) ->
