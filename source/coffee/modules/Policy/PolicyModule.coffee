@@ -53,6 +53,10 @@ define [
 
       @policy_model.on 'policy_error', (e) ->
         console.log ['Policy Error', e]
+        xhr = e.get('xhr')
+        if xhr?
+          msg = "Could not retrieve policy - #{xhr.statusText}"
+          @Amplify.publish(@policy_view.cid, 'warning', msg)
 
       @messenger = new Messenger(@policy_view, @policy_view.cid)
       digest     = @view.options.controller.user.get('digest')

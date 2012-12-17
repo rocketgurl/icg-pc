@@ -39,7 +39,13 @@
           model: this.policy_model
         });
         this.policy_model.on('policy_error', function(e) {
-          return console.log(['Policy Error', e]);
+          var msg, xhr;
+          console.log(['Policy Error', e]);
+          xhr = e.get('xhr');
+          if (xhr != null) {
+            msg = "Could not retrieve policy - " + xhr.statusText;
+            return this.Amplify.publish(this.policy_view.cid, 'warning', msg);
+          }
         });
         this.messenger = new Messenger(this.policy_view, this.policy_view.cid);
         digest = this.view.options.controller.user.get('digest');
