@@ -20,7 +20,7 @@ define([
     // We need a Collection to test our View
     var settings = {
       pxcentral: '/pxcentral/api/rest/v1/tasks',
-      digest  : 'Y3J1NHRAY3J1MzYwLmNvbTphYmMxMjM='
+      digest  : 'ZGFycmVuLm5ld3RvbkBhcmM5MC5jb206ZG5ld3RvbjA4MTAxMg=='
     }
 
     var tasks3 = new ReferralTaskCollection();
@@ -40,7 +40,7 @@ define([
     }
 
     var view = new ReferralQueueView(options).render();
-    view.AssigneeList.set('digest', 'Y3J1NHRAY3J1MzYwLmNvbTphYmMxMjM=');
+    view.AssigneeList.set('digest', 'ZGFycmVuLm5ld3RvbkBhcmM5MC5jb206ZG5ld3RvbjA4MTAxMg==');
 
     beforeEach(function(){
       if (ajax_count < 1) {
@@ -107,7 +107,7 @@ define([
         }, "view.putAssigneeList", 10000);
         runs(function(){
           console.log(['putList', callbackz.mostRecentCall.args])
-          var success = callbackz.mostRecentCall.args[1];
+          var success = callbackz.mostRecentCall.args[0];
           expect(success).toEqual(jasmine.any(Object));
           expect(view.AssigneeList.get('json')).toEqual(assignee_json);
         });
@@ -129,7 +129,7 @@ define([
         }, "view.putAssigneeList", 10000);
         runs(function(){
           console.log(['putList', callbackz.mostRecentCall.args])
-          var success = callbackz.mostRecentCall.args[1];
+          var success = callbackz.mostRecentCall.args[0];
           expect(success).toEqual(jasmine.any(Object));
           expect(view.AssigneeList.get('json')).toEqual(new_json);
 
