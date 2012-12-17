@@ -44,7 +44,7 @@
           xhr = e.get('xhr');
           if (xhr != null) {
             msg = "Could not retrieve policy - " + xhr.statusText;
-            return this.Amplify.publish(this.policy_view.cid, 'warning', msg);
+            return _this.Amplify.publish(_this.policy_view.cid, 'warning', msg);
           }
         });
         this.messenger = new Messenger(this.policy_view, this.policy_view.cid);

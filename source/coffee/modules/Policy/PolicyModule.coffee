@@ -51,7 +51,7 @@ define [
         model  : @policy_model
         )
 
-      @policy_model.on 'policy_error', (e) ->
+      @policy_model.on 'policy_error', (e) =>
         console.log ['Policy Error', e]
         xhr = e.get('xhr')
         if xhr?
