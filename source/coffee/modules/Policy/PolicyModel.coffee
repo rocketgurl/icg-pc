@@ -20,7 +20,7 @@ define [
       NON_RENEWED_POLICY : 'NONRENEWEDPOLICY'
 
     initialize : ->
-      @use_cripple() # Use CrippledClient XMLSync
+      @use_xml() # Use CrippledClient XMLSync
 
       # When the model is loaded, make sure its state is current
       @on 'change', (e) ->

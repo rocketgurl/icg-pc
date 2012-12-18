@@ -13,7 +13,7 @@
         NON_RENEWED_POLICY: 'NONRENEWEDPOLICY'
       },
       initialize: function() {
-        this.use_cripple();
+        this.use_xml();
         return this.on('change', function(e) {
           return e.checkModelState();
         });
