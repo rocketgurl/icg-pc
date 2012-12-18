@@ -44,37 +44,26 @@
         window.pol = this.policy_model;
         this.policy_model.fetch({
           headers: {
-            'Authorization': "Basic " + digest,
-            'X-Authorization': "Basic " + digest
+            'Authorization': "Basic " + digest
           },
-          success: function(model, resp) {
+          success: function(model, response, options) {
             model.response_state();
-            switch (model.get('fetch_state').code) {
-              case "200":
-                model.setModelState();
-                model.get_pxServerIndex();
-                return _this.policy_view.trigger('loaded');
-              default:
-                _this.view.remove_loader();
-                _this.render({
-                  flash_only: true
-                });
-                _this.Amplify.publish(_this.policy_view.cid, 'warning', "" + (model.get('fetch_state').text) + " - " + ($(resp).find('p').text()) + " - Sorry.");
-                return _this.policy_view.trigger('loaded');
-            }
+            model.setModelState();
+            model.get_pxServerIndex();
+            return _this.policy_view.trigger('loaded');
           },
-          error: function(model, resp) {
+          error: function(model, xhr, options) {
             var response;
             _this.render({
               flash_only: true
             });
             _this.view.remove_loader();
-            if (resp.statusText === "error") {
+            if (xhr.statusText === "error") {
               response = "There was a problem retrieving this policy.";
             } else {
-              response = resp.responseText;
+              response = "Sorry, policy " + model.id + " could not be loaded - " + xhr.status + " : " + xhr.statusText;
             }
-            return _this.Amplify.publish(_this.policy_view.cid, 'warning', "" + response + " Sorry.");
+            return _this.policy_view.trigger('error', response);
           }
         });
         this.on('activate', function() {
@@ -91,7 +80,7 @@
         console.log(['Policy Error', model, xhr]);
         if (xhr.statusText != null) {
           msg = "Could not retrieve policy - " + xhr.statusText;
-          this.Amplify.publish(this.policy_view.cid, 'warning', msg);
+          this.policy_view.trigger('error', msg);
         }
         return false;
       };

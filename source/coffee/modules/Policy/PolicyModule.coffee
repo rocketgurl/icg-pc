@@ -59,30 +59,22 @@ define [
       @policy_model.fetch({
         headers :
           'Authorization'   : "Basic #{digest}"
-          'X-Authorization' : "Basic #{digest}"
-        success : (model, resp) =>
+        success : (model, response, options) =>
           model.response_state()
-          switch model.get('fetch_state').code
-            when "200"
-              model.setModelState()
-              model.get_pxServerIndex()
-              @policy_view.trigger 'loaded'
-            else
-              @view.remove_loader()
-              @render({ flash_only : true })
-              @Amplify.publish(@policy_view.cid, 'warning', "#{model.get('fetch_state').text} - #{$(resp).find('p').text()} - Sorry.")
-              @policy_view.trigger 'loaded'
-       error : (model, resp) =>
+          model.setModelState()
+          model.get_pxServerIndex()
+          @policy_view.trigger 'loaded'
+       error : (model, xhr, options) =>
           @render({ flash_only : true })
           @view.remove_loader()
 
           # Generate error message
-          if resp.statusText is "error"
+          if xhr.statusText == "error"
             response = "There was a problem retrieving this policy."
           else
-            response = resp.responseText
+            response = "Sorry, policy #{model.id} could not be loaded - #{xhr.status} : #{xhr.statusText}"
 
-          @Amplify.publish(@policy_view.cid, 'warning', "#{response} Sorry.")
+          @policy_view.trigger 'error', response
       })
 
       # When this tab is activated
@@ -100,7 +92,7 @@ define [
       console.log ['Policy Error', model, xhr]      
       if xhr.statusText?
         msg = "Could not retrieve policy - #{xhr.statusText}"
-        @Amplify.publish(@policy_view.cid, 'warning', msg)
+        @policy_view.trigger 'error', msg
       return false
 
     # Do whatever rendering animation needs to happen here
