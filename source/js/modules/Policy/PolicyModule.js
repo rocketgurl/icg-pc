@@ -87,12 +87,13 @@
 
       PolicyModule.prototype.throwLoadError = function(model) {
         var msg, xhr;
-        console.log(['Policy Error', e]);
         xhr = model.get('xhr');
-        if (xhr != null) {
+        console.log(['Policy Error', model, xhr]);
+        if (xhr.statusText != null) {
           msg = "Could not retrieve policy - " + xhr.statusText;
-          return this.Amplify.publish(this.policy_view.cid, 'warning', msg);
+          this.Amplify.publish(this.policy_view.cid, 'warning', msg);
         }
+        return false;
       };
 
       PolicyModule.prototype.render = function(options) {

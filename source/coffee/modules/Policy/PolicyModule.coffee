@@ -96,11 +96,12 @@ define [
     # If the policy throws some crazy crippled client stuff then set off a 
     # big error
     throwLoadError : (model) ->
-      console.log ['Policy Error', e]
       xhr = model.get('xhr')
-      if xhr?
+      console.log ['Policy Error', model, xhr]      
+      if xhr.statusText?
         msg = "Could not retrieve policy - #{xhr.statusText}"
         @Amplify.publish(@policy_view.cid, 'warning', msg)
+      return false
 
     # Do whatever rendering animation needs to happen here
     render : (options) ->
