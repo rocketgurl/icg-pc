@@ -5,20 +5,23 @@ define [
   'modules/RenewalUnderwriting/RenewalUnderwritingView',
   'swfobject',
   'text!modules/Policy/templates/tpl_policy_container.html',
+  'text!modules/Policy/templates/tpl_policy_error.html',
   'text!modules/Policy/templates/tpl_ipm_header.html',
   'text!modules/RenewalUnderwriting/templates/tpl_renewal_underwriting_wrapper.html',
   'modules/IPM/IPMModule',
   'modules/ZenDesk/ZenDeskView'
-], (BaseView, Messenger, Base64, RenewalUnderwritingView, swfobject, tpl_policy_container, tpl_ipm_header, tpl_ru_wrapper, IPMModule, ZenDeskView) ->
+], (BaseView, Messenger, Base64, RenewalUnderwritingView, swfobject, tpl_policy_container, tpl_policy_error, tpl_ipm_header, tpl_ru_wrapper, IPMModule, ZenDeskView) ->
 
   PolicyView = BaseView.extend
 
     events : 
-      "click .policy-nav a" : "dispatch"
+      "click .policy-nav a"        : "dispatch"
+      "click .policy-error button" : "close"
 
     # We need to brute force the View's container to the 
     # WorkspaceCanvasView's el
     initialize : (options) ->
+      @view         = options.view
       @el           = options.view.el
       @$el          = options.view.$el
       @controller   = options.view.options.controller
@@ -62,6 +65,18 @@ define [
         # Our default state is to show the SWF overview
         if @controller.active_view.cid == @options.view.cid
           @trigger 'activate'
+
+      # If a Policy 404s or otherwise dies we need a solid error message
+      # for the user.
+      @on 'error', (msg) ->
+        @loaded_state = true
+        @renderError msg
+        if @controller.active_view.cid == @options.view.cid
+          @trigger 'activate'
+
+    renderError : (msg) ->
+      html = @Mustache.render(tpl_policy_error, { cid : @cid, msg : msg })
+      @$el.html html
 
     render : (options) ->
       if @render_state == true
@@ -121,6 +136,11 @@ define [
       action = $e.attr('href')
 
       @route action, $e
+
+    close : (e) ->
+      e.preventDefault()
+      @view.destroy()
+      @controller.reassess_apps()
 
     # **Route**  
     # Call the `action` and teardown all other views
