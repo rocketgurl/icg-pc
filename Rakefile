@@ -22,6 +22,7 @@ BUILD_DIR = "build"
 # Directories to prune from build
 PRUNE = {
   :dirs => [
+    '.sass-cache',
     'coffee',
     'docs',
     # 'mocks',
