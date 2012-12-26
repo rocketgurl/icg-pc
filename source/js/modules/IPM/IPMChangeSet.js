@@ -133,7 +133,6 @@
           data: xml,
           headers: {
             'Authorization': "Basic " + (this.POLICY.get('digest')),
-            'X-Authorization': "Basic " + (this.POLICY.get('digest')),
             'Accept': 'application/vnd.ics360.insurancepolicy.2.6+xml',
             'X-Commit': true
           }
