@@ -544,7 +544,7 @@ define [
           """
 
       # Display the error message
-      @PARENT_VIEW.displayMessage(type, msg)
+      @PARENT_VIEW.displayMessage(type, msg).remove_loader()
 
       msg
 

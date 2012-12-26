@@ -366,7 +366,7 @@
         if (error.details != null) {
           msg = "" + msg + "\n<div class=\"error_details\">\n  <a href=\"#\"><i class=\"icon-plus-sign\"></i> Show error details</a>\n  " + error.details + "\n</div>";
         }
-        this.PARENT_VIEW.displayMessage(type, msg);
+        this.PARENT_VIEW.displayMessage(type, msg).remove_loader();
         return msg;
       };
 
