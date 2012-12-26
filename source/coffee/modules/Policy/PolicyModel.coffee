@@ -24,17 +24,7 @@ define [
 
       # When the model is loaded, make sure its state is current
       @on 'change', (e) ->
-        e.checkModelState()
-
-    # Guard code here because change event fires before response_state()
-    checkModelState : ->
-      if @get('fetch_state') == undefined
-        @response_state()
-        if @get('fetch_state').code == '200'
-          try
-            @setModelState()
-          catch e
-            @trigger 'policy_error', this    
+        e.setModelState()
 
     # **Assemble urls for Policies**  
     # @params _String_  

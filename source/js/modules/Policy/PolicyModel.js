@@ -15,20 +15,8 @@
       initialize: function() {
         this.use_xml();
         return this.on('change', function(e) {
-          return e.checkModelState();
+          return e.setModelState();
         });
-      },
-      checkModelState: function() {
-        if (this.get('fetch_state') === void 0) {
-          this.response_state();
-          if (this.get('fetch_state').code === '200') {
-            try {
-              return this.setModelState();
-            } catch (e) {
-              return this.trigger('policy_error', this);
-            }
-          }
-        }
       },
       url: function(route) {
         var url;
