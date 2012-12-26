@@ -191,9 +191,13 @@ define [
         contentType : "application/xml; #{payload_schema}"
         data        : xml
         headers     :
-          'Authorization'   : "Basic #{@POLICY.get('digest')}"
-          'Accept'          : 'application/vnd.ics360.insurancepolicy.2.6+xml'
-          'X-Commit'        : true
+          'Authorization' : "Basic #{@POLICY.get('digest')}"
+          'Accept'        : 'application/vnd.ics360.insurancepolicy.2.6+xml'
+          'X-Commit'      : true
+
+      if _.has(options, 'headers')
+        defaults.headers = _.extend(defaults.headers, options.headers)
+        delete options.headers
 
       options = _.extend defaults, options
 

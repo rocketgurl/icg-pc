@@ -143,6 +143,10 @@
             'X-Commit': true
           }
         };
+        if (_.has(options, 'headers')) {
+          defaults.headers = _.extend(defaults.headers, options.headers);
+          delete options.headers;
+        }
         options = _.extend(defaults, options);
         post = $.ajax(options);
         return $.when(post).then(success, error);
