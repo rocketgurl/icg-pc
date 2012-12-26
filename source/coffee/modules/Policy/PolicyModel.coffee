@@ -260,8 +260,15 @@ define [
     # **Derive the product name from policy information**  
     # @return _String_
     getProductName : ->
-      name  = null
-      terms = @getLastTerm().DataItem
+      terms = @getLastTerm()
+
+      # CRU4 return DataItem objs directly, in CRU6 we have to go
+      # searching through Intervals to find the correct DataItem obj
+      if _.has(terms, 'DataItem')
+        terms = terms.DataItem
+      else if _.has(terms, 'Intervals') && _.has(terms.Intervals, 'Interval')
+        terms = terms.Intervals.Interval.DataItem
+
       name  = "#{@getDataItem(terms, 'Program')}-#{@getDataItem(terms, 'PolicyType')}-#{@getDataItem(terms, 'PropertyState')}"
       name.toLowerCase()
 
