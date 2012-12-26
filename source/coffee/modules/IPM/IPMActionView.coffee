@@ -21,9 +21,9 @@ define [
       @ChangeSet      = new IPMChangeSet(@MODULE.POLICY, @PARENT_VIEW.VIEW_STATE, @MODULE.USER)
       @FormValidation = new IPMFormValidation()
       
-      @VALUES      = {} # Form values
-      @TPL_CACHE   = {} # Template Cache
-      @ERRORS      = {} # Manage error states from server
+      @VALUES    = {} # Form values
+      @TPL_CACHE = {} # Template Cache
+      @ERRORS    = {} # Manage error states from server
       
       @options = null
 
@@ -104,7 +104,7 @@ define [
 
       # Attach datepickers where appropriate
       date_options = 
-        dateFormat      : 'yy-mm-dd'
+        dateFormat : 'yy-mm-dd'
 
       if $.datepicker
         $('.datepicker').datepicker(date_options)

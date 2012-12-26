@@ -28,6 +28,11 @@ define [
       context = @getTransactionContext(@POLICY, @USER, values, vocabTerms)
       transaction_request_data = _.extend values.formValues, context
 
+      # Sweep object for removable fields
+      for key, val of transaction_request_data
+        if val == '__deleteEmptyProperty'
+          delete transaction_request_data[key]
+
       console.log ['transaction_request_data', transaction_request_data]
 
       # Fetch XML template for this action as a partial
@@ -50,7 +55,7 @@ define [
     #
     getTransactionContext : (policy, user, values, vocabTerms) ->
       # Process any date fields from the form
-      values.formValues = @processTransactionFields(values.formValues)
+      values.formValues = @processDateFields(values.formValues)
 
       context =
         id            : policy.get 'insight_id'
@@ -88,10 +93,10 @@ define [
     # @param `fields` _Object_ Form values  
     # @return _Object_  
     #
-    processTransactionFields : (fields) ->
+    processDateFields : (fields) ->
       for key, val of fields
         if key.indexOf('Date') != -1
-          if val != "" && val != "__deleteEmptyProperty"
+          if val && val != "false" && val != "" && val != "__deleteEmptyProperty"
             fields[key] = Helpers.formatDate(val)
       fields
 

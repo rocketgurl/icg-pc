@@ -12,9 +12,15 @@
       }
 
       IPMChangeSet.prototype.getTransactionRequest = function(values, vocabTerms) {
-        var context, partials, transaction_request_data, xml;
+        var context, key, partials, transaction_request_data, val, xml;
         context = this.getTransactionContext(this.POLICY, this.USER, values, vocabTerms);
         transaction_request_data = _.extend(values.formValues, context);
+        for (key in transaction_request_data) {
+          val = transaction_request_data[key];
+          if (val === '__deleteEmptyProperty') {
+            delete transaction_request_data[key];
+          }
+        }
         console.log(['transaction_request_data', transaction_request_data]);
         partials = {
           body: this[_.underscored(this.ACTION)] || '',
@@ -26,7 +32,7 @@
 
       IPMChangeSet.prototype.getTransactionContext = function(policy, user, values, vocabTerms) {
         var context, dataItems;
-        values.formValues = this.processTransactionFields(values.formValues);
+        values.formValues = this.processDateFields(values.formValues);
         context = {
           id: policy.get('insight_id'),
           user: user.get('email'),
@@ -59,12 +65,12 @@
         return out;
       };
 
-      IPMChangeSet.prototype.processTransactionFields = function(fields) {
+      IPMChangeSet.prototype.processDateFields = function(fields) {
         var key, val;
         for (key in fields) {
           val = fields[key];
           if (key.indexOf('Date') !== -1) {
-            if (val !== "" && val !== "__deleteEmptyProperty") {
+            if (val && val !== "false" && val !== "" && val !== "__deleteEmptyProperty") {
               fields[key] = Helpers.formatDate(val);
             }
           }
