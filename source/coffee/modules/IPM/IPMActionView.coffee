@@ -482,8 +482,15 @@ define [
       # into a meaningful message of some sort using jQuery.
       tmp            = $('<div />').html(jqXHR.responseText)
       @ERRORS.title   = tmp.find('h1:first').text()
-      @ERRORS.desc    = tmp.find('p:first').text()
+      @ERRORS.desc    = tmp.find('p')
       @ERRORS.details = tmp.find('ol:first')
+
+      # If there are multiple error descriptions then combine them into one
+      # string
+      if @ERRORS.desc.length > 1
+        @ERRORS.desc = _.map(@ERRORS.desc, (desc) -> $(desc).text()).join(' ')
+      else
+        @ERRORS.desc = @ERRORS.desc.eq(0).text()
 
       # We need to check the error message for lists (ol/ul). Some of the 
       # services incorrectly send back <ul>s so we need to check both, or

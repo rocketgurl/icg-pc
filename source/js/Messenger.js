@@ -80,7 +80,7 @@
               opacity: 0
             };
             return _this.container.animate(options, 200, function() {
-              $(this).hide();
+              $(this).hide().css('opacity', 1);
               if (_.has(animation.end, 'top')) {
                 return $(this).css('top', '-100px');
               }

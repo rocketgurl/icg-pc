@@ -83,7 +83,7 @@ define [
           e.preventDefault()
           options = { opacity : 0 }
           @container.animate(options, 200, ->
-              $(this).hide()
+              $(this).hide().css('opacity', 1)
               if _.has animation.end, 'top'
                 $(this).css('top', '-100px')
             )

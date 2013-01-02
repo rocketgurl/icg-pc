@@ -346,6 +346,7 @@ Module: Policy
 
 .ipm-flash { margin: 0; -webkit-border-radius: 0px; -moz-border-radius: 0px; -ms-border-radius: 0px; -o-border-radius: 0px; border-radius: 0px; box-shadow: none; width: 100%; padding: 0; margin-left: -1px; position: absolute; }
 .ipm-flash span { display: block; padding: 20px; }
+.ipm-flash p { line-height: 140%; margin: 5px 0; }
 
 .policy-module .flash-message-container { top: 0px; width: 100%; opacity: 1; }
 

@@ -329,8 +329,15 @@
         true_status_code = (_ref = jqXHR.getResponseHeader('X-True-Statuscode')) != null ? _ref : null;
         tmp = $('<div />').html(jqXHR.responseText);
         this.ERRORS.title = tmp.find('h1:first').text();
-        this.ERRORS.desc = tmp.find('p:first').text();
+        this.ERRORS.desc = tmp.find('p');
         this.ERRORS.details = tmp.find('ol:first');
+        if (this.ERRORS.desc.length > 1) {
+          this.ERRORS.desc = _.map(this.ERRORS.desc, function(desc) {
+            return $(desc).text();
+          }).join(' ');
+        } else {
+          this.ERRORS.desc = this.ERRORS.desc.eq(0).text();
+        }
         if (this.ERRORS.details.length === 0) {
           this.ERRORS.details = tmp.find('ul:first');
           if (this.ERRORS.details.length === 0) {
