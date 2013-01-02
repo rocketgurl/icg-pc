@@ -339,7 +339,7 @@
         }
         tmp = null;
         if (!(true_status_code != null)) {
-          this.ERRORS.title = "" + status_code + " " + this.ERRORS.tile;
+          this.ERRORS.title = "" + this.ERRORS.title + " (" + status_code + ")";
         }
         return this.ERRORS;
       };
