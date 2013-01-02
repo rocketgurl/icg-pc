@@ -498,7 +498,7 @@ define [
       # If we didn't receive an X-True-Statuscode header then we prepend the
       # HTTP status code to the title.
       if !true_status_code?
-        @ERRORS.title = "#{status_code} #{@ERRORS.tile}"
+        @ERRORS.title = "#{@ERRORS.title} (#{status_code})"
 
       @ERRORS
 
