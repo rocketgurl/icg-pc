@@ -192,7 +192,7 @@ define [
         data        : xml
         headers     :
           'Authorization' : "Basic #{@POLICY.get('digest')}"
-          'Accept'        : 'application/vnd.ics360.insurancepolicy.2.6+xml'
+          'Accept'        : 'application/vnd.ics360.insurancepolicy.2.8+xml'
           'X-Commit'      : true
 
       if _.has(options, 'headers')
