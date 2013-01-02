@@ -2,7 +2,7 @@
 require "susy"
 
 # Set this to the root of your project when deployed:
-project_path    = 'source'
+project_path    = "source"
 http_path       = "/"
 css_dir         = "css"
 sass_dir        = "scss"
