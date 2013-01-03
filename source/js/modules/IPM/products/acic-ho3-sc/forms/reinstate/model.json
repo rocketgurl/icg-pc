@@ -5,6 +5,10 @@
             "label": "Reason Code",
             "enumerations": [
                 {
+                    "value": "1",
+                    "label": "Insured Request"
+                },
+                {
                     "value": "29",
                     "label": "Underwriting reason for cancellation resolved"
                 },

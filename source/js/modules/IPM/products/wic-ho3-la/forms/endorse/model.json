@@ -25,6 +25,212 @@
             "label": "City"
         },
         {
+            "enumerations": [
+                {
+                    "label": "AK",
+                    "value": "AK"
+                },
+                {
+                    "label": "AL",
+                    "value": "AL"
+                },
+                {
+                    "label": "AR",
+                    "value": "AR"
+                },
+                {
+                    "label": "AZ",
+                    "value": "AZ"
+                },
+                {
+                    "label": "CA",
+                    "value": "CA"
+                },
+                {
+                    "label": "CO",
+                    "value": "CO"
+                },
+                {
+                    "label": "CT",
+                    "value": "CT"
+                },
+                {
+                    "label": "DC",
+                    "value": "DC"
+                },
+                {
+                    "label": "DE",
+                    "value": "DE"
+                },
+                {
+                    "label": "FL",
+                    "value": "FL"
+                },
+                {
+                    "label": "GA",
+                    "value": "GA"
+                },
+                {
+                    "label": "HI",
+                    "value": "HI"
+                },
+                {
+                    "label": "IA",
+                    "value": "IA"
+                },
+                {
+                    "label": "ID",
+                    "value": "ID"
+                },
+                {
+                    "label": "IL",
+                    "value": "IL"
+                },
+                {
+                    "label": "IN",
+                    "value": "IN"
+                },
+                {
+                    "label": "KS",
+                    "value": "KS"
+                },
+                {
+                    "label": "KY",
+                    "value": "KY"
+                },
+                {
+                    "label": "LA",
+                    "value": "LA"
+                },
+                {
+                    "label": "MA",
+                    "value": "MA"
+                },
+                {
+                    "label": "MD",
+                    "value": "MD"
+                },
+                {
+                    "label": "ME",
+                    "value": "ME"
+                },
+                {
+                    "label": "MI",
+                    "value": "MI"
+                },
+                {
+                    "label": "MN",
+                    "value": "MN"
+                },
+                {
+                    "label": "MO",
+                    "value": "MO"
+                },
+                {
+                    "label": "MS",
+                    "value": "MS"
+                },
+                {
+                    "label": "MT",
+                    "value": "MT"
+                },
+                {
+                    "label": "NC",
+                    "value": "NC"
+                },
+                {
+                    "label": "ND",
+                    "value": "ND"
+                },
+                {
+                    "label": "NE",
+                    "value": "NE"
+                },
+                {
+                    "label": "NH",
+                    "value": "NH"
+                },
+                {
+                    "label": "NJ",
+                    "value": "NJ"
+                },
+                {
+                    "label": "NM",
+                    "value": "NM"
+                },
+                {
+                    "label": "NV",
+                    "value": "NV"
+                },
+                {
+                    "label": "NY",
+                    "value": "NY"
+                },
+                {
+                    "label": "OH",
+                    "value": "OH"
+                },
+                {
+                    "label": "OK",
+                    "value": "OK"
+                },
+                {
+                    "label": "OR",
+                    "value": "OR"
+                },
+                {
+                    "label": "PA",
+                    "value": "PA"
+                },
+                {
+                    "label": "RI",
+                    "value": "RI"
+                },
+                {
+                    "label": "SC",
+                    "value": "SC"
+                },
+                {
+                    "label": "SD",
+                    "value": "SD"
+                },
+                {
+                    "label": "TN",
+                    "value": "TN"
+                },
+                {
+                    "label": "TX",
+                    "value": "TX"
+                },
+                {
+                    "label": "UT",
+                    "value": "UT"
+                },
+                {
+                    "label": "VA",
+                    "value": "VA"
+                },
+                {
+                    "label": "VT",
+                    "value": "VT"
+                },
+                {
+                    "label": "WA",
+                    "value": "WA"
+                },
+                {
+                    "label": "WI",
+                    "value": "WI"
+                },
+                {
+                    "label": "WV",
+                    "value": "WV"
+                },
+                {
+                    "label": "WY",
+                    "value": "WY"
+                }
+            ],
             "name": "PropertyState",
             "label": "State"
         },
@@ -4171,6 +4377,10 @@
                 {
                     "label": "Standard",
                     "value": "100"
+                },
+                {
+                    "label": "Agreed",
+                    "value": "200"
                 }
             ]
         },
@@ -4223,6 +4433,10 @@
                 {
                     "label": "Standard",
                     "value": "100"
+                },
+                {
+                    "label": "Agreed",
+                    "value": "200"
                 }
             ]
         },
@@ -4275,6 +4489,10 @@
                 {
                     "label": "Standard",
                     "value": "100"
+                },
+                {
+                    "label": "Agreed",
+                    "value": "200"
                 }
             ]
         },
@@ -4327,6 +4545,10 @@
                 {
                     "label": "Standard",
                     "value": "100"
+                },
+                {
+                    "label": "Agreed",
+                    "value": "200"
                 }
             ]
         },
@@ -4379,6 +4601,10 @@
                 {
                     "label": "Standard",
                     "value": "100"
+                },
+                {
+                    "label": "Agreed",
+                    "value": "200"
                 }
             ]
         },
@@ -4431,6 +4657,10 @@
                 {
                     "label": "Standard",
                     "value": "100"
+                },
+                {
+                    "label": "Agreed",
+                    "value": "200"
                 }
             ]
         },
@@ -4483,6 +4713,10 @@
                 {
                     "label": "Standard",
                     "value": "100"
+                },
+                {
+                    "label": "Agreed",
+                    "value": "200"
                 }
             ]
         },
@@ -4535,6 +4769,10 @@
                 {
                     "label": "Standard",
                     "value": "100"
+                },
+                {
+                    "label": "Agreed",
+                    "value": "200"
                 }
             ]
         },
@@ -4587,6 +4825,10 @@
                 {
                     "label": "Standard",
                     "value": "100"
+                },
+                {
+                    "label": "Agreed",
+                    "value": "200"
                 }
             ]
         },
@@ -4639,6 +4881,10 @@
                 {
                     "label": "Standard",
                     "value": "100"
+                },
+                {
+                    "label": "Agreed",
+                    "value": "200"
                 }
             ]
         },
@@ -5035,7 +5281,7 @@
             ]
         },
         {
-            "name": "Cancel/Reinstate/PendingCancel/RescindPendingCancelReason",
+            "name": "Reinstate",
             "label": "Reason Code",
             "enumerations": [
                 {
@@ -5045,7 +5291,27 @@
             ]
         },
         {
-            "name": "Cancel/PendingCancelReason",
+            "name": "PendingCancel",
+            "label": "Reason Code",
+            "enumerations": [
+                {
+                    "value": "1",
+                    "label": "Insured Request"
+                }
+            ]
+        },
+        {
+            "name": "RescindPendingCancelReason",
+            "label": "Reason Code",
+            "enumerations": [
+                {
+                    "value": "1",
+                    "label": "Insured Request"
+                }
+            ]
+        },
+        {
+            "name": "PendingCancelReason",
             "label": "Reason Code",
             "enumerations": [
                 {
@@ -5113,7 +5379,7 @@
             ]
         },
         {
-            "name": "RescindPendingCancel,ReinstateReason",
+            "name": "RescindPendingCancel",
             "label": "Reason Code",
             "enumerations": [
                 {
@@ -5249,6 +5515,10 @@
                     "label": "Change Hurricane Deductible"
                 },
                 {
+                    "value": "76",
+                    "label": "Add or Remove Residence Held In Trust"
+                },
+                {
                     "value": "78",
                     "label": "Change Loss Settlement For Contents"
                 },
@@ -5257,8 +5527,16 @@
                     "label": "Increase Loss Assessment"
                 },
                 {
+                    "value": "81",
+                    "label": "Add or Remove Wood Stove"
+                },
+                {
                     "value": "82",
                     "label": "Add Earthquake Coverage"
+                },
+                {
+                    "value": "83",
+                    "label": "Add or Change Business Property Limit"
                 },
                 {
                     "value": "84",
@@ -5275,6 +5553,10 @@
                 {
                     "value": "87",
                     "label": "Change Personal Property Special Limits"
+                },
+                {
+                    "value": "88",
+                    "label": "Add or Change Dog Liability"
                 },
                 {
                     "value": "93",

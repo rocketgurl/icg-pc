@@ -61,9 +61,9 @@
 					"label": "Missing required documentation"
 				},
 				{
-					"value": "15",
-					"label": "Insured Request (Short-Rate)"
-				},
+                    "value": "15",
+                    "label": "Insured Request - Short Rate"
+                },
 				{
                     "value": "16", 
                     "label": "Nonpayment of Premium - Flat"

@@ -12,12 +12,11 @@ define [
     
     tagName : 'div'
 
-    events :
-      "click fieldset h3"     : "toggleFieldset"
+    events : {}     
 
     initialize : (options) ->
-      @PARENT_VIEW    = options.PARENT_VIEW || {}
-      @MODULE         = options.MODULE || {}
+      @PARENT_VIEW    = options.PARENT_VIEW ? {}
+      @MODULE         = options.MODULE ? {}
       @ChangeSet      = new IPMChangeSet(@MODULE.POLICY, @PARENT_VIEW.VIEW_STATE, @MODULE.USER)
       @FormValidation = new IPMFormValidation()
       
@@ -64,7 +63,7 @@ define [
     #
     goHome : (e) ->
       e.preventDefault()
-      @PARENT_VIEW.route 'Home'        
+      @PARENT_VIEW.route 'Home'       
 
     # Open/close fieldsets 
     #
@@ -113,6 +112,7 @@ define [
       @$el.find('form input.button[type=submit]').on(
           'click',
           (e) =>
+            e.preventDefault()
             @submit e
         )
 
@@ -185,12 +185,14 @@ define [
     #
     # @param `vocabTerms` _Object_ model.json    
     # @param `view` _HTML Template_    
+    # @param `nocache` _Boolean_ on true do not store data in cache    
     # @return _Array_ [viewData, view]  
     #
-    processViewData : (vocabTerms, view) ->
-      @TPL_CACHE[@PARENT_VIEW.VIEW_STATE] =
-        model : vocabTerms
-        view  : view
+    processViewData : (vocabTerms, view, nocache) ->
+      if !nocache?
+        @TPL_CACHE[@PARENT_VIEW.VIEW_STATE] =
+          model : vocabTerms
+          view  : view
 
       viewData = {}
 
@@ -382,7 +384,9 @@ define [
     resetPolicyModel : (data, jqXHR) ->
       # Swap out Policy XML with new XML, saving the old one
       new_attributes = @MODULE.POLICY.parse(data, jqXHR)
-      new_attributes.prev_document = @MODULE.POLICY.get('document')
+      new_attributes.prev_document = 
+        document : @MODULE.POLICY.get('document')
+        json     : @MODULE.POLICY.get('json')
 
       # Model.set() chokes on something in the object, so we just
       # jam the values into attributes directly. So sorry Mr. Ashkenas.
@@ -404,7 +408,6 @@ define [
     # @param `view` _String_ HTML template    
     #
     render : (viewData, view) ->
-      super
       viewData = viewData || @viewData
       view     = view || @view
       @$el.html(@MODULE.VIEW.Mustache.render(view, viewData))

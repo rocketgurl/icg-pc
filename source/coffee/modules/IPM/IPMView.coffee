@@ -90,7 +90,6 @@ define [
       # re-route back to the home view
       if !_.has(@VIEW_CACHE, action)
         require ["#{@MODULE.CONFIG.ACTIONS_PATH}#{action}"], (Action) =>
-
           @VIEW_CACHE[action] = $("<div id=\"dom-container-#{@cid}-#{action}\" class=\"dom-container\"></div>")
 
           ActionView = new Action(

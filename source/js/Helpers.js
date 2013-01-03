@@ -101,7 +101,7 @@
         return this.formatDate(clean, format);
       },
       formatDate: function(date, format) {
-        format = format || 'YYYY-MM-DD';
+        format = format != null ? format : 'YYYY-MM-DD';
         return moment(date).format(format);
       },
       makeTimestamp: function() {

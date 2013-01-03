@@ -27,6 +27,20 @@
 			]
 		},
 		{
+			"name": "InsuredByCorporation",
+			"label": "Insured by Corporation, Partnership, etc.?",
+			"enumerations": [
+				{
+					"value": "100",
+					"label": "Yes"
+				},
+				{
+					"value": "200",
+					"label": "No"
+				}
+			]
+		},
+		{
 			"name": "InsuredFirstName",
 			"label": "First"
 		},

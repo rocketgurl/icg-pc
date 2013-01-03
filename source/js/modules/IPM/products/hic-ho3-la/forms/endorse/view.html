@@ -25,6 +25,10 @@
 			<h3>Summary <a data-alt-text="close">change</a></h3>
 			<div class="collapsibleFieldContainer">
 				
+		<div id="rate_validation_override">
+			<input type="checkbox" name="id_rv_override" id="id_rv_override" value="1"> <label for="id_rv_override">Check to Override Rate Validation</label>
+		</div>
+				
 		<div>
 			<label for="id_effectiveDate" class="labelRequired">Effective Date <i>effectiveDate</i></label>
 			<input type="text" id="id_effectiveDate" name="effectiveDate" value="{{effectiveDate}}" class="datepicker" required >
@@ -1000,8 +1004,8 @@
 		</div>
 
 		<div>
-			<label for="id_EarthquakeMasonryVeneerExclusion" class="labelRequired">Exclude Masonry Veneer Coverage? <i>EarthquakeMasonryVeneerExclusion</i></label>
-			<select id="id_EarthquakeMasonryVeneerExclusion" name="EarthquakeMasonryVeneerExclusion" data-value="{{EarthquakeMasonryVeneerExclusion}}" required >
+			<label for="id_EarthquakeMasonryVeneerExclusion">Exclude Masonry Veneer Coverage? <i>EarthquakeMasonryVeneerExclusion</i></label>
+			<select id="id_EarthquakeMasonryVeneerExclusion" name="EarthquakeMasonryVeneerExclusion" data-value="{{EarthquakeMasonryVeneerExclusion}}">
 				{{#EnumsEarthquakeMasonryVeneerExclusion}}
 				<option value="{{value}}">{{label}}</option>
 				{{/EnumsEarthquakeMasonryVeneerExclusion}}

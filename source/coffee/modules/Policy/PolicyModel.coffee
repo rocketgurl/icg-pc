@@ -434,6 +434,9 @@ define [
       else
         @get('document').find(path).text()
 
+    # Return the version number
+    getPolicyVersion : ->
+      @getValueByPath('Management Version')
 
     # Return Policy data for use in overviews
     getPolicyOverview : ->
@@ -469,5 +472,6 @@ define [
         @set('isIssued', @isIssued())
         @set('effectiveDate', @getEffectiveDate())
         @set('expirationDate', @getExpirationDate())
+        @set('version', @getPolicyVersion())
 
   PolicyModel

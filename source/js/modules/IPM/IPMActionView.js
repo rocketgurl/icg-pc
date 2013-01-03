@@ -23,14 +23,13 @@
 
       IPMActionView.prototype.tagName = 'div';
 
-      IPMActionView.prototype.events = {
-        "click fieldset h3": "toggleFieldset"
-      };
+      IPMActionView.prototype.events = {};
 
       IPMActionView.prototype.initialize = function(options) {
-        var _this = this;
-        this.PARENT_VIEW = options.PARENT_VIEW || {};
-        this.MODULE = options.MODULE || {};
+        var _ref, _ref1,
+          _this = this;
+        this.PARENT_VIEW = (_ref = options.PARENT_VIEW) != null ? _ref : {};
+        this.MODULE = (_ref1 = options.MODULE) != null ? _ref1 : {};
         this.ChangeSet = new IPMChangeSet(this.MODULE.POLICY, this.PARENT_VIEW.VIEW_STATE, this.MODULE.USER);
         this.FormValidation = new IPMFormValidation();
         this.VALUES = {};
@@ -104,6 +103,7 @@
           $('.datepicker').datepicker(date_options);
         }
         return this.$el.find('form input.button[type=submit]').on('click', function(e) {
+          e.preventDefault();
           return _this.submit(e);
         });
       };
@@ -159,12 +159,14 @@
         return changed;
       };
 
-      IPMActionView.prototype.processViewData = function(vocabTerms, view) {
+      IPMActionView.prototype.processViewData = function(vocabTerms, view, nocache) {
         var viewData;
-        this.TPL_CACHE[this.PARENT_VIEW.VIEW_STATE] = {
-          model: vocabTerms,
-          view: view
-        };
+        if (!(nocache != null)) {
+          this.TPL_CACHE[this.PARENT_VIEW.VIEW_STATE] = {
+            model: vocabTerms,
+            view: view
+          };
+        }
         viewData = {};
         if (vocabTerms != null) {
           viewData = this.MODULE.POLICY.getTermDataItemValues(vocabTerms);
@@ -271,7 +273,10 @@
       IPMActionView.prototype.resetPolicyModel = function(data, jqXHR) {
         var key, new_attributes, val;
         new_attributes = this.MODULE.POLICY.parse(data, jqXHR);
-        new_attributes.prev_document = this.MODULE.POLICY.get('document');
+        new_attributes.prev_document = {
+          document: this.MODULE.POLICY.get('document'),
+          json: this.MODULE.POLICY.get('json')
+        };
         for (key in new_attributes) {
           val = new_attributes[key];
           this.MODULE.POLICY.attributes[key] = val;
@@ -281,7 +286,6 @@
       };
 
       IPMActionView.prototype.render = function(viewData, view) {
-        IPMActionView.__super__.render.apply(this, arguments);
         viewData = viewData || this.viewData;
         view = view || this.view;
         return this.$el.html(this.MODULE.VIEW.Mustache.render(view, viewData));

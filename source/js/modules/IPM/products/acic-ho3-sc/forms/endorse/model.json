@@ -5073,12 +5073,70 @@
             ]
         },
         {
-            "name": "Cancel",
+            "name": "Cancel/Reinstate/PendingCancel/RescindPendingCancelReason",
             "label": "Reason Code",
             "enumerations": [
                 {
                     "value": "1",
                     "label": "Insured Request"
+                }
+            ]
+        },
+        {
+            "name": "Cancel/PendingCancelReason",
+            "label": "Reason Code",
+            "enumerations": [
+                {
+                    "value": "2",
+                    "label": "Nonpayment Of Premium"
+                },
+                {
+                    "value": "3",
+                    "label": "Insured Convicted Of Crime"
+                },
+                {
+                    "value": "4",
+                    "label": "Discovery Of Fraud Or Material Misrepresentation"
+                },
+                {
+                    "value": "5",
+                    "label": "Discovery Of Willful Or Reckless Acts Of Omissions"
+                },
+                {
+                    "value": "6",
+                    "label": "Physical Changes In The Property Insured"
+                },
+                {
+                    "value": "7",
+                    "label": "Increase In Liability Hazards Beyond What Is Normally Accepted"
+                },
+                {
+                    "value": "8",
+                    "label": "Increase In Property Hazards Beyond What Is Normally Accepted"
+                },
+                {
+                    "value": "9",
+                    "label": "Overexposed In Area Where Risk Is Located"
+                },
+                {
+                    "value": "10",
+                    "label": "Change In Occupancy Status"
+                },
+                {
+                    "value": "11",
+                    "label": "Other Underwriting Reasons"
+                },
+                {
+                    "value": "12",
+                    "label": "Cancel/Rewrite"
+                },
+                {
+                    "value": "13",
+                    "label": "Change In Ownership"
+                },
+                {
+                    "value": "14",
+                    "label": "Missing Required Documentation"
                 }
             ]
         },
@@ -5089,6 +5147,20 @@
                 {
                     "value": "27",
                     "label": "Payment Received After Effective Date Of Cancellation"
+                }
+            ]
+        },
+        {
+            "name": "RescindPendingCancel,ReinstateReason",
+            "label": "Reason Code",
+            "enumerations": [
+                {
+                    "value": "28",
+                    "label": "Due To Compliance Or Legal Reasons"
+                },
+                {
+                    "value": "29",
+                    "label": "Underwriting Reason For Cancellation Resolved"
                 }
             ]
         },
@@ -5215,6 +5287,10 @@
                     "label": "Change Hurricane Deductible"
                 },
                 {
+                    "value": "76",
+                    "label": "Add or Remove Residence Held In Trust"
+                },
+                {
                     "value": "78",
                     "label": "Change Loss Settlement For Contents"
                 },
@@ -5223,8 +5299,16 @@
                     "label": "Increase Loss Assessment"
                 },
                 {
+                    "value": "81",
+                    "label": "Add or Remove Wood Stove"
+                },
+                {
                     "value": "82",
                     "label": "Add Earthquake Coverage"
+                },
+                {
+                    "value": "83",
+                    "label": "Add or Change Business Property Limit"
                 },
                 {
                     "value": "84",
@@ -5241,6 +5325,10 @@
                 {
                     "value": "87",
                     "label": "Change Personal Property Special Limits"
+                },
+                {
+                    "value": "88",
+                    "label": "Add or Change Dog Liability"
                 },
                 {
                     "value": "93",

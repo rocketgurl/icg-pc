@@ -128,7 +128,7 @@ define [
     # @return _String_  
     #
     formatDate : (date, format) ->
-      format = format || 'YYYY-MM-DD'
+      format = format ? 'YYYY-MM-DD'
       moment(date).format(format)
 
     # Create an ISO timestamp

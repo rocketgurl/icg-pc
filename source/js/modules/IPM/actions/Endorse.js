@@ -25,7 +25,10 @@
         EndorseAction.__super__.initialize.apply(this, arguments);
         this.coverage_calculations = {};
         this.transaction_request_xml = null;
-        return this.override_validation_state = false;
+        this.override_validation_state = false;
+        return this.events = {
+          "click fieldset h3": "toggleFieldset"
+        };
       };
 
       EndorseAction.prototype.ready = function() {
@@ -74,18 +77,18 @@
       };
 
       EndorseAction.prototype.postProcessView = function() {
-        var coverage_a, data,
+        var data,
           _this = this;
         EndorseAction.__super__.postProcessView.apply(this, arguments);
         this.$el.find('input').bind('coverage:calculate', this.calculateCoverage);
         this.$el.find('select[data-affects]').bind('change', this.triggerCoverageCalculation);
-        this.$el.find('input[name=CoverageA]').bind('input', function(e) {
+        this.coverage_a = this.$el.find('input[name=CoverageA]');
+        this.coverage_a.bind('input', function(e) {
           _this.triggerAllCoverageCalculations();
           return _this.deriveCoverageACalculations();
         });
-        coverage_a = this.$el.find('input[name=CoverageA]');
-        if (coverage_a.length > 0) {
-          if (data = coverage_a.data('calculations')) {
+        if (this.coverage_a.length > 0) {
+          if (data = this.coverage_a.data('calculations')) {
             return this.coverage_calculations = eval("(" + data + ")");
           }
         }
@@ -173,7 +176,7 @@
 
       EndorseAction.prototype.calculateCoverage = function(e, val) {
         var coverage_a, new_value;
-        coverage_a = parseInt(this.$el.find('input[name=CoverageA]').val(), 10);
+        coverage_a = parseInt(this.coverage_a.val(), 10);
         new_value = Math.round((coverage_a * val) / 10000);
         return $(e.currentTarget).val(new_value);
       };
@@ -195,11 +198,10 @@
       };
 
       EndorseAction.prototype.deriveCoverageACalculations = function() {
-        var calc_val, coverage_a, key, val, value_a, _ref, _results;
+        var calc_val, key, val, value_a, _ref, _results;
         if (!_.isEmpty(this.coverage_calculations)) {
-          coverage_a = this.$el.find('input[name=CoverageA]');
-          if (coverage_a.length > 0 || (coverage_a.val() != null)) {
-            value_a = coverage_a.val();
+          if (this.coverage_a.length > 0 || (this.coverage_a.val() != null)) {
+            value_a = this.coverage_a.val();
             _ref = this.coverage_calculations;
             _results = [];
             for (key in _ref) {

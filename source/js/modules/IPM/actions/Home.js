@@ -13,13 +13,12 @@
         return HomeAction.__super__.constructor.apply(this, arguments);
       }
 
-      HomeAction.prototype.events = {
-        "click .ipm-home-action-view a": "dispatch"
-      };
-
       HomeAction.prototype.initialize = function() {
         HomeAction.__super__.initialize.apply(this, arguments);
-        return this.ACTION_NAME = "Home";
+        this.ACTION_NAME = "Home";
+        return this.events = {
+          "click .ipm-home-action-view a": "dispatch"
+        };
       };
 
       HomeAction.prototype.ready = function() {

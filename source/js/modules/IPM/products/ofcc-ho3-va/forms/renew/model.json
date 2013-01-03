@@ -133,6 +133,30 @@
 				{
 					"value": "7000",
 					"label": "70%"
+				},
+				{
+				  "label" : "75%",
+				  "value" : "7500"
+				},
+				{
+				  "label" : "80%",
+				  "value" : "8000"
+				},
+				{
+				  "label" : "85%",
+				  "value" : "8500"
+				},
+				{
+				  "label" : "90%",
+				  "value" : "9000"
+				},
+				{
+				  "label" : "95%",
+				  "value" : "9500"
+				},
+				{
+				  "label" : "100%",
+				  "value" : "10000"
 				}
 			]
 		},
@@ -208,8 +232,16 @@
 		},
 		{
 			"name": "HurricaneDeductible",
-			"label": "Named Storm Deductible",
+			"label": "Hurricane Deductible",
 			"enumerations": [
+				{
+					"value": "0",
+					"label": "None"
+				},
+				{
+					"value": "100",
+					"label": "1%"
+				},
 				{
 					"value": "200",
 					"label": "2%"
@@ -219,20 +251,12 @@
 					"label": "3%"
 				},
 				{
+					"value": "400",
+					"label": "4%"
+				},
+				{
 					"value": "500",
 					"label": "5%"
-				},
-				{
-					"value": "700",
-					"label": "7%"
-				},
-				{
-					"value": "800",
-					"label": "8%"
-				},
-				{
-					"value": "1000",
-					"label": "10%"
 				}
 			]
 		},

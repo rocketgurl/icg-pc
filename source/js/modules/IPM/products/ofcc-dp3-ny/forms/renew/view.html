@@ -1,5 +1,5 @@
 <!-- Product: OFCC DP3 New York -->
-<form action="renew" method="get" accept-charset="utf-8" class="collapsedSections">
+	<form action="renew" method="get" accept-charset="utf-8" class="collapsedSections">
 	<div id="content">
 		<div id="content_header">
 			<h2>{{#preview}}Previewing Renewal for {{/preview}} {{^preview}}Renew {{/preview}} policy {{ policyId }}</h2>
@@ -71,7 +71,7 @@
 						<i>(Expiring: {{CoverageC}})</i>
 					</div>
 					<div>
-						<label for="id_OptionCoverageD" class="labelRequired">Coverage D (% of Coverage A) <i>OptionCoverageD</i></label>
+						<label for="id_OptionCoverageD" class="labelRequired">Coverage D (Rents) / E (ALE) (% of Coverage A) <i>OptionCoverageD</i></label>
 						<select id="id_OptionCoverageD" name="OptionCoverageD" data-value="{{OptionCoverageD}}" data-affects="CoverageD" required>
 							{{#EnumsOptionCoverageD}}
 							<option value="{{value}}">{{label}}</option>
@@ -84,22 +84,30 @@
 						<i>(Expiring: {{CoverageD}})</i>
 					</div>
 					<div>
-						<label for="id_CoverageE">Coverage E <i>CoverageE</i></label>
-						<select id="id_CoverageE" name="CoverageE" data-value="{{CoverageE}}">
-							{{#EnumsCoverageE}}
+						<label for="id_OptionCoverageL" class="labelRequired">Coverage L (Personal Liability) <i>OptionCoverageL</i></label>
+						<select id="id_OptionCoverageL" name="OptionCoverageL" data-value="{{OptionCoverageL}}" data-affects="CoverageL" required>
+							{{#EnumsOptionCoverageL}}
 							<option value="{{value}}">{{label}}</option>
-							{{/EnumsCoverageE}}
+							{{/EnumsOptionCoverageL}}
 						</select>
-						<i>(Expiring: {{CoverageE}})</i>
 					</div>
 					<div>
-						<label for="id_CoverageF">Coverage F <i>CoverageF</i></label>
-						<select id="id_CoverageF" name="CoverageF" data-value="{{CoverageF}}">
-							{{#EnumsCoverageF}}
+						<label for="id_CoverageL">Coverage L <i>CoverageL</i></label>
+						<input type="text" id="id_CoverageL" name="CoverageL" value="{{CoverageL}}" readonly>
+						<i>(Expiring: {{CoverageL}})</i>
+					</div>
+					<div>
+						<label for="id_OptionCoverageM" class="labelRequired">Coverage M (Medical Payments) <i>OptionCoverageM</i></label>
+						<select id="id_OptionCoverageM" name="OptionCoverageM" data-value="{{OptionCoverageM}}" data-affects="CoverageM" required>
+							{{#EnumsOptionCoverageM}}
 							<option value="{{value}}">{{label}}</option>
-							{{/EnumsCoverageF}}
+							{{/EnumsOptionCoverageM}}
 						</select>
-						<i>(Expiring: {{CoverageF}})</i>
+					</div>
+					<div>
+						<label for="id_CoverageM">Coverage M <i>CoverageM</i></label>
+						<input type="text" id="id_CoverageM" name="CoverageM" value="{{CoverageM}}" readonly>
+						<i>(Expiring: {{CoverageM}})</i>
 					</div>
 				</div>
 			</fieldset>
@@ -108,7 +116,7 @@
 				<h3>Deductibles <a data-alt-text="close">change</a></h3>
 				<div class="collapsibleFieldContainer">
 					<div>
-						<label for="id_HurricaneDeductible" class="labelRequired">Named Storm Deductible <i>HurricaneDeductible</i></label>
+						<label for="id_HurricaneDeductible" class="labelRequired">Hurrican Deductible <i>HurricaneDeductible</i></label>
 						<select id="id_HurricaneDeductible" name="HurricaneDeductible" data-value="{{HurricaneDeductible}}" required>
 							{{#EnumsHurricaneDeductible}}
 							<option value="{{value}}">{{label}}</option>
@@ -458,32 +466,25 @@
 					<col span="1" class="col_labels"></col>
 					<col span="2"></col>
 					<col span="1" class="col_days"></col>
-				
 					<col span="1" class="col_non_hurricane"></col>
 					<col span="1" class="col_hurricane"></col>
-				
 					<col span="3" class="col_amounts"></col>
 					<thead>
-				
 					<tr>
 			   			<th>Term</th>
 			   			<th>Starts</th>
 			   			<th>Ends</th>
 			   			<th>#&nbsp;Days</th>
 			   			<th class="col_group_cap_open col_group_cap_close contains_var">Non-Hurricane Premium <i>OpGrandSubtotalNonCatUnadjusted</i></th>
-			   		
 			   			<th class="col_group_cap_open col_group_cap_close contains_var">Hurricane Premium <i>OpGrandSubtotalCatUnadjusted</i></th>
-			   		
 			   			<th class="contains_var">Premium Before Fees <i>OpGrandSubtotal</i></th>
 			   			<th class="contains_var">Total Fees and Taxes <i>OpTotalFees</i></th>
 			   			<th class="contains_var">Total Premium and Fees <i>OpTotalPremium</i></th>
 			   		</tr>
-				
 					</thead>
 					
 					<tbody>
 						{{#proposedTerm}}
-						
 						<tr class="calc_row">
 							<td><b>New</b></td>
 							<td>{{startDate}}</td>
@@ -495,7 +496,6 @@
 							<td class="fees">{{TotalFees}}</td>
 							<td class="total">{{TotalPremium}}</td>
 						</tr>
-						
 						{{/proposedTerm}}						
 						
 						{{#previousTerms}}
@@ -505,12 +505,8 @@
 							<td>{{endDate}}</td>
 							<td>{{days}}</td>
 							<td>{{GrandSubtotalNonCat}}</td>
-					
-						
 
 							<td>{{GrandSubtotalCat}}</td>
-
-						
 
 							<td>{{GrandSubtotal}}</td>
 							<td>{{TotalFees}}</td>

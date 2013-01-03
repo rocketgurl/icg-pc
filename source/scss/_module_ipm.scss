@@ -82,7 +82,8 @@
 	margin: 10px 0 5px 0;
 }
 
-.ipm-home-action-view ul > li > ul > li {
+// We re-use these in other places in IPM views
+%ipm-action-link-li {
 	font-weight: normal;
 	width: 100%;
 	border: 0;
@@ -90,7 +91,7 @@
 	padding: 0;
 }
 
-.ipm-home-action-view ul > li > ul > li a {
+%ipm-action-link-li-a {
 	text-decoration: none;
 	display: block;
 	padding: 8px;
@@ -102,7 +103,68 @@
 		background-color: $blue;
 		color: $white;
 		@include emboss(darken($blue, 20));
+	}	
+}
+
+.ipm-home-action-view ul > li > ul > li {
+	@extend %ipm-action-link-li;
+}
+
+.ipm-home-action-view ul > li > ul > li a {
+	@extend %ipm-action-link-li-a;
+}
+
+.ipm-action-links li {
+	@include font-size(16);
+	@extend %ipm-action-link-li;
+}
+
+.ipm-action-links li a {
+	@extend %ipm-action-link-li-a;
+}
+
+.ipm-action-links li a.disabled {
+	color: lighten($darkgray, 20);
+	&:hover {
+		background: darken(#f4f4f4, 5);
+		color: lighten($darkgray, 20);
+		@include emboss;
 	}
+}
+
+section.policyOverview {
+	display: none;
+}
+
+.content_msg {
+	@include font-size(16);
+	@include border-radius(6px);
+	box-shadow: 0 0 3px #999;
+	font-weight: bold;
+	text-align: left;
+	margin: 10px 0px;
+
+	h3 {
+		padding: 0 10px;
+		margin: 10px 0 5px 0;
+	}
+
+	p {
+		padding: 0 10px 10px 10px;
+		@include font-size(14);
+		font-weight: normal;
+
+		b, strong {
+			font-weight: bold;
+		}
+	}
+}
+
+h2.ipm-action-header {
+	@include font-size(16);
+	color: $darkgray;
+	margin: 0 0 10px 0;
+	@include emboss;
 }
 
 .ipm-loader {
@@ -349,8 +411,41 @@
 
 }
 
-// Preview Data Table
-.data_table {
+// Summary Data Table (Cancellation previews, etc)
+.form_actions {
+	p {
+		@include font-size(14);
+		padding: 10px 0;
+		font-weight: bold;
+		color: $darkgray;
+	}
+}
+
+.summary_table {
+	background: $white;
+	border: darken($lightgray, 10) 1px solid;
+	@include font-size(14);
+	tr:nth-child(even) {
+		background: lighten($lightgray, 3);
+	}
+	th {
+		font-weight: bold;
+		padding: 8px;
+	}
+	td {
+		padding: 8px;
+	}
+	caption {
+		padding: 10px;
+		@include font-size(14);
+		font-weight: bold;
+		color: $white;
+		background: darken($lightgray, 30);
+	}
+}	
+
+// Preview Data Table (Endorse)
+.data_table  {
 	width: 100%;
 	background: $white;
 	border: darken($lightgray, 10) 1px solid;

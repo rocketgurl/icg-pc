@@ -380,6 +380,9 @@
           return this.get('document').find(path).text();
         }
       },
+      getPolicyVersion: function() {
+        return this.getValueByPath('Management Version');
+      },
       getPolicyOverview: function() {
         var customerData, terms;
         terms = ['InsuredFirstName', 'InsuredMiddleName', 'InsuredLastName', 'InsuredMailingAddressLine1', 'InsuredMailingAddressLine2', 'InsuredMailingAddressCity', 'InsuredMailingAddressState', 'InsuredMailingAddressZip'];
@@ -402,7 +405,8 @@
           this.set('insight_id', this.getIdentifier('InsightPolicyId'));
           this.set('isIssued', this.isIssued());
           this.set('effectiveDate', this.getEffectiveDate());
-          return this.set('expirationDate', this.getExpirationDate());
+          this.set('expirationDate', this.getExpirationDate());
+          return this.set('version', this.getPolicyVersion());
         }
       }
     });

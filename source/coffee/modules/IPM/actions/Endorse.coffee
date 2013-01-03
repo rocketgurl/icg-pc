@@ -9,6 +9,8 @@ define [
       @coverage_calculations     = {} # Custom calculations objects
       @transaction_request_xml   = null
       @override_validation_state = false # used to override rate validation
+      @events =
+        "click fieldset h3" : "toggleFieldset"
 
     ready : ->
       super
@@ -109,16 +111,18 @@ define [
       # Bind listener to <select>s that alter other fields
       @$el.find('select[data-affects]').bind 'change', @triggerCoverageCalculation
 
+      # We do a lot of magic with CoverageA
+      @coverage_a = @$el.find('input[name=CoverageA]')
+
       # Bind listener specifically to CoverageA <input>
-      @$el.find('input[name=CoverageA]').bind 'input', (e) =>
+      @coverage_a.bind 'input', (e) =>
         @triggerAllCoverageCalculations()
         @deriveCoverageACalculations()
 
       # Find any custom calculations tucked away in data attrs for later
-      # use in calculations
-      coverage_a = @$el.find('input[name=CoverageA]')
-      if coverage_a.length > 0
-        if data = coverage_a.data 'calculations'
+      # use in calculations      
+      if @coverage_a.length > 0
+        if data = @coverage_a.data 'calculations'
           @coverage_calculations = (eval("(#{data})"))
 
     # **Build Intervals values for TransactionRequest & Previews**  
@@ -273,7 +277,7 @@ define [
     # @param `val` _Integer_  
     #
     calculateCoverage : (e, val) =>
-      coverage_a = parseInt(@$el.find('input[name=CoverageA]').val(), 10)
+      coverage_a = parseInt(@coverage_a.val(), 10)
       new_value  = Math.round((coverage_a * val) / 10000);
       $(e.currentTarget).val(new_value);
 
@@ -313,9 +317,8 @@ define [
     #
     deriveCoverageACalculations : ->
       if !_.isEmpty @coverage_calculations
-        coverage_a = @$el.find('input[name=CoverageA]')
-        if coverage_a.length > 0 || coverage_a.val()?
-          value_a = coverage_a.val()
+        if @coverage_a.length > 0 || @coverage_a.val()?
+          value_a = @coverage_a.val()
           for key, val of @coverage_calculations
             calc_val = value_a * parseFloat val
             @$el.find("input[name=#{key}]").val calc_val

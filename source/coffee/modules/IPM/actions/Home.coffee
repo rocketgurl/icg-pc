@@ -6,12 +6,11 @@ define [
   # Build the main list of action views for the default page
   class HomeAction extends IPMActionView
 
-    events :
-      "click .ipm-home-action-view a" : "dispatch"
-
     initialize : ->
       super
       @ACTION_NAME = "Home"
+      @events =
+        "click .ipm-home-action-view a" : "dispatch"
 
     ready : ->
       super

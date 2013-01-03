@@ -36,12 +36,13 @@
         context = {
           id: policy.get('insight_id'),
           user: user.get('email'),
-          version: policy.getValueByPath('Management Version'),
+          version: this.getPolicyVersion(),
           timestamp: values.formValues.timestamp || Helpers.makeTimestamp(),
           datestamp: Helpers.formatDate(new Date()),
           effectiveDate: values.formValues.effectiveDate || Helpers.makeTimestamp(),
           comment: values.formValues.comment || "posted by Policy Central IPM Module"
         };
+        context.effectiveDate = Helpers.stripTimeFromDate(context.effectiveDate);
         dataItems = this.getChangedDataItems(values, vocabTerms);
         if (!_.isEmpty(dataItems)) {
           context.intervalRequest = dataItems;
@@ -76,6 +77,19 @@
           }
         }
         return fields;
+      };
+
+      IPMChangeSet.prototype.getPolicyVersion = function() {
+        var prev;
+        prev = this.POLICY.get('prev_document');
+        if (prev != null) {
+          if (_.has(prev.json, 'Management') && _.has(prev.json.Management, 'Version')) {
+            return prev.json.Management.Version;
+          } else {
+            return this.POLICY.get('version');
+          }
+        }
+        return this.POLICY.get('version');
       };
 
       IPMChangeSet.prototype.getPolicyChangeSet = function(values) {
@@ -164,7 +178,7 @@
 
       IPMChangeSet.prototype.policyChangeSetSkeleton = "<PolicyChangeSet schemaVersion=\"3.1\">\n  <Initiation>\n    <Initiator type=\"user\">{{user}}</Initiator>\n  </Initiation>\n  <Target>\n    <Identifiers>\n      <Identifier name=\"InsightPolicyId\" value=\"{{id}}\" />\n    </Identifiers>\n    <SourceVersion>{{version}}</SourceVersion>\n  </Target>\n  <EffectiveDate>{{effectiveDate}}</EffectiveDate>\n  <AppliedDate>{{appliedDate}}</AppliedDate>\n  <Comment>{{comment}}</Comment>\n  {{>body}}\n</PolicyChangeSet>";
 
-      IPMChangeSet.prototype.transactionRequestSkeleton = "<TransactionRequest schemaVersion=\"1.4\" type=\"{{transactionType}}\">\n  <Initiation>\n    <Initiator type=\"user\">{{user}}</Initiator>\n  </Initiation>\n  <Target>\n    <Identifiers>\n      <Identifier name=\"InsightPolicyId\" value=\"{{id}}\"/>\n    </Identifiers>\n    <SourceVersion>{{version}}</SourceVersion>\n  </Target>\n  <EffectiveDate>{{effectiveDate}}</EffectiveDate>\n  {{>body}}\n</TransactionRequest>";
+      IPMChangeSet.prototype.transactionRequestSkeleton = "<TransactionRequest schemaVersion=\"1.4\" type=\"{{transactionType}}\">\n  <Initiation>\n    <Initiator type=\"user\">{{user}}</Initiator>\n  </Initiation>\n  <Target>\n    <Identifiers>\n      <Identifier name=\"InsightPolicyId\" value=\"{{id}}\"/>\n    </Identifiers>\n    <SourceVersion>{{version}}</SourceVersion>\n  </Target>\n  {{#effectiveDate}}\n  <EffectiveDate>{{effectiveDate}}</EffectiveDate>\n  {{/effectiveDate}}\n  {{>body}}\n</TransactionRequest>";
 
       IPMChangeSet.prototype.dataItemTemplate = "{{#intervalRequest}}\n<DataItem name=\"{{key}}\" value=\"{{value}}\" />\n{{/intervalRequest}}";
 
@@ -173,6 +187,8 @@
       IPMChangeSet.prototype.invoice = "<DocumentChanges>\n  <Set>\n    <DocumentRef href=\"{{documentHref}}\" id=\"{{documentId}}\" label=\"{{documentLabel}}\" type=\"{{documentType}}\"/>\n  </Set>\n</DocumentChanges>\n<Ledger>\n  <LineItem timestamp=\"{{timestamp}}\" type=\"INSTALLMENT_CHARGE\" value=\"{{installmentCharge}}\">\n    <Memo/>\n  </LineItem>\n</Ledger>\n<AccountingChanges>\n  <Set>\n    <DataItem name=\"InvoiceAmountCurrent\" value=\"{{InvoiceAmountCurrent}}\"/>\n    <DataItem name=\"InvoiceDateCurrent\" value=\"{{InvoiceDateCurrent}}\"/>\n    <DataItem name=\"InvoiceDateDueCurrent\" value=\"{{InvoiceDateDueCurrent}}\"/>\n  </Set>\n</AccountingChanges>\n<EventHistory>\n  <Event type=\"Invoice\">\n    <DataItem name=\"InvoiceAmountCurrent\" value=\"{{InvoiceAmountCurrent}}\"/>\n    <DataItem name=\"InvoiceDateCurrent\" value=\"{{InvoiceDateCurrent}}\"/>\n    <DataItem name=\"InvoiceDateDueCurrent\" value=\"{{InvoiceDateDueCurrent}}\"/>\n  </Event>\n</EventHistory>";
 
       IPMChangeSet.prototype.make_payment = "<Ledger>\n  <LineItem value=\"{{paymentAmount}}\" type=\"PAYMENT\" timestamp=\"{{timestamp}}\">\n    <Memo></Memo>\n    <DataItem name=\"Reference\" value=\"{{paymentReference}}\" />\n    <DataItem name=\"PaymentMethod\" value=\"{{paymentMethod}}\" />\n  </LineItem>\n</Ledger>\n<EventHistory>\n  <Event type=\"Payment\">\n    <DataItem name=\"PaymentAmount\" value=\"{{positivePaymentAmount}}\" />\n    <DataItem name=\"PaymentMethod\" value=\"{{paymentMethod}}\" />\n    <DataItem name=\"PaymentReference\" value=\"{{paymentReference}}\" />\n    <DataItem name=\"PaymentBatch\" value=\"{{paymentBatch}}\" />\n    <DataItem name=\"PostmarkDate\" value=\"{{postmarkDate}}\" />\n    <DataItem name=\"AppliedDate\" value=\"{{appliedDate}}\" />\n  </Event>\n</EventHistory>";
+
+      IPMChangeSet.prototype.cancel_reinstate = "<ReasonCode>{{reasonCode}}</ReasonCode>";
 
       return IPMChangeSet;
 

@@ -60,11 +60,13 @@ define [
       context =
         id            : policy.get 'insight_id'
         user          : user.get 'email'
-        version       : policy.getValueByPath('Management Version')
+        version       : @getPolicyVersion()
         timestamp     : values.formValues.timestamp || Helpers.makeTimestamp()
         datestamp     : Helpers.formatDate new Date()
         effectiveDate : values.formValues.effectiveDate || Helpers.makeTimestamp()
         comment       : values.formValues.comment || "posted by Policy Central IPM Module"
+
+      context.effectiveDate = Helpers.stripTimeFromDate(context.effectiveDate)
 
       # Get changed form values and assemble into array suitable for templates
       dataItems = @getChangedDataItems(values, vocabTerms)
@@ -99,6 +101,23 @@ define [
           if val && val != "false" && val != "" && val != "__deleteEmptyProperty"
             fields[key] = Helpers.formatDate(val)
       fields
+
+    # When we do a preview of a policy we get back a new version with an
+    # incremented Version number. When we send the final back for commit
+    # we need to send the original version number, so we check the previous
+    # version of the policy for a version number
+    #
+    # @param `version` _Number_    
+    # @return _Number_  
+    #    
+    getPolicyVersion : ->
+      prev = @POLICY.get('prev_document')
+      if prev?
+        if _.has(prev.json, 'Management') && _.has(prev.json.Management, 'Version')
+          return prev.json.Management.Version
+        else
+          return @POLICY.get 'version'
+      @POLICY.get 'version'
 
     # Build ChangeSet XML for use in PolicyChangeSet
     #
@@ -254,7 +273,9 @@ define [
           </Identifiers>
           <SourceVersion>{{version}}</SourceVersion>
         </Target>
+        {{#effectiveDate}}
         <EffectiveDate>{{effectiveDate}}</EffectiveDate>
+        {{/effectiveDate}}
         {{>body}}
       </TransactionRequest>
     """
@@ -322,4 +343,8 @@ define [
           <DataItem name="AppliedDate" value="{{appliedDate}}" />
         </Event>
       </EventHistory>
+    """
+
+    cancel_reinstate : """
+      <ReasonCode>{{reasonCode}}</ReasonCode>
     """
