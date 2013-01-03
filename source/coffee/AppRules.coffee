@@ -99,6 +99,7 @@ define [
       app :
         app       : 'referral_queue'
         app_label : 'Referrals'
+        tab       : '#tpl-workspace-tab-noclose'
 
     default :
       required : false

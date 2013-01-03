@@ -110,7 +110,8 @@
         module: 'ReferralQueue/ReferralQueueModule',
         app: {
           app: 'referral_queue',
-          app_label: 'Referrals'
+          app_label: 'Referrals',
+          tab: '#tpl-workspace-tab-noclose'
         }
       };
 
