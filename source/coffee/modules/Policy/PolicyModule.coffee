@@ -56,15 +56,13 @@ define [
       @messenger = new Messenger(@policy_view, @policy_view.cid)
       digest     = @view.options.controller.user.get('digest')
       window.pol = @policy_model
+
       @policy_model.fetch({
         headers :
           'Authorization'   : "Basic #{digest}"
         success : (model, response, options) =>
-          model.response_state()
-          model.setModelState()
-          model.get_pxServerIndex()
           @policy_view.trigger 'loaded'
-       error : (model, xhr, options) =>
+        error : (model, xhr, options) =>
           @render({ flash_only : true })
           @view.remove_loader()
 

@@ -24,6 +24,7 @@ define [
 
       # When the model is loaded, make sure its state is current
       @on 'change', (e) ->
+        e.get_pxServerIndex()
         e.setModelState()
 
     # **Assemble urls for Policies**  
@@ -119,13 +120,14 @@ define [
     # the text value + attributes    
     # @return _String_ | _Obj_
     getState : ->
-      policyState = @get('document').find('Management PolicyState')
-      text        = policyState.text()
-      attr        = @_getAttributes(policyState)
-      if attr == null
-        text
-      else
-        _.extend(attr, { 'text' : text })
+      if @get('document')?
+        policyState = @get('document').find('Management PolicyState')
+        text        = policyState.text()
+        attr        = @_getAttributes(policyState)
+        if attr == null
+          text
+        else
+          _.extend(attr, { 'text' : text })
 
     # **Determine if a policy is cancelled**  
     # @return _Boolean_ 

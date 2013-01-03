@@ -47,9 +47,6 @@
             'Authorization': "Basic " + digest
           },
           success: function(model, response, options) {
-            model.response_state();
-            model.setModelState();
-            model.get_pxServerIndex();
             return _this.policy_view.trigger('loaded');
           },
           error: function(model, xhr, options) {

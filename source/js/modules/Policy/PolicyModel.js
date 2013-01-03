@@ -15,6 +15,7 @@
       initialize: function() {
         this.use_xml();
         return this.on('change', function(e) {
+          e.get_pxServerIndex();
           return e.setModelState();
         });
       },
@@ -103,15 +104,17 @@
       },
       getState: function() {
         var attr, policyState, text;
-        policyState = this.get('document').find('Management PolicyState');
-        text = policyState.text();
-        attr = this._getAttributes(policyState);
-        if (attr === null) {
-          return text;
-        } else {
-          return _.extend(attr, {
-            'text': text
-          });
+        if (this.get('document') != null) {
+          policyState = this.get('document').find('Management PolicyState');
+          text = policyState.text();
+          attr = this._getAttributes(policyState);
+          if (attr === null) {
+            return text;
+          } else {
+            return _.extend(attr, {
+              'text': text
+            });
+          }
         }
       },
       isCancelled: function() {
