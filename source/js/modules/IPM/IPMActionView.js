@@ -331,12 +331,12 @@
         this.ERRORS.title = tmp.find('h1:first').text();
         this.ERRORS.desc = tmp.find('p');
         this.ERRORS.details = tmp.find('ol:first');
-        if (this.ERRORS.desc.length > 1) {
+        if (this.ERRORS.desc.length > 0) {
           this.ERRORS.desc = _.map(this.ERRORS.desc, function(desc) {
             return $(desc).text();
           }).join(' ');
         } else {
-          this.ERRORS.desc = this.ERRORS.desc.eq(0).text();
+          this.ERRORS.desc = '';
         }
         if (this.ERRORS.details.length === 0) {
           this.ERRORS.details = tmp.find('ul:first');
@@ -352,13 +352,18 @@
       };
 
       IPMActionView.prototype.errorParseJSON = function(jqXHR, json) {
-        var response, _ref, _ref1, _ref2;
+        var response, _ref, _ref1;
         if ((json != null) && (json[0] != null)) {
-          response = (_ref = JSON.parse(json[0])) != null ? _ref : null;
+          response = null;
+          try {
+            response = JSON.parse(json[0]);
+          } catch (e) {
+            return this.errorParseHTML(jqXHR);
+          }
         }
-        if (response[0] != null) {
-          this.ERRORS.title = (_ref1 = response[0].message) != null ? _ref1 : null;
-          this.ERRORS.desc = (_ref2 = response[0].detail) != null ? _ref2 : null;
+        if ((response != null) && (response[0] != null)) {
+          this.ERRORS.title = (_ref = response[0].message) != null ? _ref : null;
+          this.ERRORS.desc = (_ref1 = response[0].detail) != null ? _ref1 : null;
           this.ERRORS.details = null;
         }
         if (this.ERRORS.title === 'Rate Validation Failed') {

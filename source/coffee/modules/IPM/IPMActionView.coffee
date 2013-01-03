@@ -487,10 +487,10 @@ define [
 
       # If there are multiple error descriptions then combine them into one
       # string
-      if @ERRORS.desc.length > 1
+      if @ERRORS.desc.length > 0
         @ERRORS.desc = _.map(@ERRORS.desc, (desc) -> $(desc).text()).join(' ')
       else
-        @ERRORS.desc = @ERRORS.desc.eq(0).text()
+        @ERRORS.desc = ''
 
       # We need to check the error message for lists (ol/ul). Some of the 
       # services incorrectly send back <ul>s so we need to check both, or
@@ -519,9 +519,13 @@ define [
     #
     errorParseJSON : (jqXHR, json) ->
       if json? && json[0]?
-        response = JSON.parse(json[0]) ? null
+        response = null
+        try
+          response = JSON.parse(json[0])
+        catch e
+          return @errorParseHTML jqXHR        
 
-      if response[0]?
+      if response? && response[0]?
         @ERRORS.title   = response[0].message ? null
         @ERRORS.desc    = response[0].detail ? null
         @ERRORS.details = null
