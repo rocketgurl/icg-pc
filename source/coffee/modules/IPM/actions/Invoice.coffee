@@ -32,50 +32,27 @@ define [
       super e
 
       # @@ Action specific processing
+      timestamp   = @Helpers.makeTimestamp()
+      label_stamp = @Helpers.formatDate(new Date(),'ddd MMM DD YYYY HH:mm:ss Z')
+      id_stamp    = timestamp.replace(/:|\.\d{3}/g, '')
 
-      timestamp = @Helpers.makeTimestamp()
-      label_stamp = @Helpers.formatDate()
+      # Create additional fields needed to ChangeSet
+      formValues =
+        changeType         : 'INVOICE'
+        reasonCode         : 'INVOICE'
+        InvoiceDateCurrent : timestamp
+        documentType       : 'Invoice'
+        documentLabel      : "Invoice #{label_stamp}"
+        documentHref       : ''
+        documentId         : "Invoice-#{id_stamp}"
 
-      # @VALUES.formValues.positivePaymentAmount = \
-      #   Math.abs(@VALUES.formValues.paymentAmount || 0)
+      if _.has(@VALUES.formValues, 'InvoiceAmountCurrent')
+        formValues.InvoiceAmountCurrent = @Helpers.formatMoney @VALUES.formValues.InvoiceAmountCurrent 
 
-      # @VALUES.formValues.paymentAmount = \
-      #   -1 * @VALUES.formValues.positivePaymentAmount
-
-      # var id     = model.pxcentral.policy.id(CTX.policy),
-      # toSend = null,
-
-      # timestamp = new Date(),
-
-      # // This will be appended to a few document labels
-      # labelStamp = timestamp.toString('M/d/yy'),
-
-      # // This will be appended to the document type to create
-      # // the id attribute for the PCS
-      # idStamp = timestamp.toISOString().replace(/:|\.\d{3}/g, '');
-
-      #   if (params && !mxAdmin.helpers.isEmpty(params)) {
-      # params.InvoiceDateCurrent = timestamp.toString('M/d/yyyy');
-      # params.changeType = 'INVOICE';
-      #       params.reasonCode = 'INVOICE';
-
-      # // An invoice document needs to be generated, create the params needed
-      # // NOTE: This isn't the best way to do this.
-      # params.documentType  = 'Invoice';
-      # params.documentLabel = 'Invoice ' + labelStamp;
-      # params.documentHref  = '';
-      # params.documentId    = params.documentType + '-' + idStamp;
-
-      # if (!mxAdmin.helpers.isFloat(params.InvoiceAmountCurrent)) {
-      #   params.InvoiceAmountCurrent = mxAdmin.helpers.formatMoney(params.InvoiceAmountCurrent);
-      # }
-
-      # if (params.installmentCharge && !mxAdmin.helpers.isFloat(params.installmentCharge)) {
-      #   params.installmentCharge = mxAdmin.helpers.formatMoney(params.installmentCharge);
-      # }
-
-
-
+      if _.has(@VALUES.formValues, 'installmentCharge') && @Helpers.isInt(@VALUES.formValues.installmentCharge)
+        formValues.installmentCharge = @Helpers.formatMoney @VALUES.formValues.installmentCharge 
+      
+      @VALUES.formValues = _.extend @VALUES.formValues, formValues
 
       # Assemble the ChangeSet XML and send to server
       @ChangeSet.commitChange(

@@ -30,10 +30,27 @@
       };
 
       InvoiceAction.prototype.submit = function(e) {
-        var label_stamp, timestamp;
+        var formValues, id_stamp, label_stamp, timestamp;
         InvoiceAction.__super__.submit.call(this, e);
         timestamp = this.Helpers.makeTimestamp();
-        label_stamp = this.Helpers.formatDate();
+        label_stamp = this.Helpers.formatDate(new Date(), 'ddd MMM DD YYYY HH:mm:ss Z');
+        id_stamp = timestamp.replace(/:|\.\d{3}/g, '');
+        formValues = {
+          changeType: 'INVOICE',
+          reasonCode: 'INVOICE',
+          InvoiceDateCurrent: timestamp,
+          documentType: 'Invoice',
+          documentLabel: "Invoice " + label_stamp,
+          documentHref: '',
+          documentId: "Invoice-" + id_stamp
+        };
+        if (_.has(this.VALUES.formValues, 'InvoiceAmountCurrent')) {
+          formValues.InvoiceAmountCurrent = this.Helpers.formatMoney(this.VALUES.formValues.InvoiceAmountCurrent);
+        }
+        if (_.has(this.VALUES.formValues, 'installmentCharge') && this.Helpers.isInt(this.VALUES.formValues.installmentCharge)) {
+          formValues.installmentCharge = this.Helpers.formatMoney(this.VALUES.formValues.installmentCharge);
+        }
+        this.VALUES.formValues = _.extend(this.VALUES.formValues, formValues);
         return this.ChangeSet.commitChange(this.ChangeSet.getPolicyChangeSet(this.VALUES), this.callbackSuccess, this.callbackError);
       };
 
