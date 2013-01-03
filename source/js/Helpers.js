@@ -79,6 +79,17 @@
           return (new DOMParser()).parseFromString(sXML, "text/xml");
         }
       },
+      isInt: function(n) {
+        return typeof n === 'number' && n % 1 === 0;
+      },
+      formatMoney: function(n) {
+        n = parseFloat(n, 10);
+        if (_.isNaN(n)) {
+          return '0.00';
+        } else {
+          return n.toFixed(2);
+        }
+      },
       stripTimeFromDate: function(date, format) {
         var clean, t;
         format = format != null ? format : null;
