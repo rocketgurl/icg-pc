@@ -277,6 +277,33 @@ define [
       </IntervalRequest>
     """
 
+    invoice : """
+      <DocumentChanges>
+        <Set>
+          <DocumentRef href="{{documentHref}}" id="{{documentId}}" label="{{documentLabel}}" type="{{documentType}}"/>
+        </Set>
+      </DocumentChanges>
+      <Ledger>
+        <LineItem timestamp="{{timestamp}}" type="INSTALLMENT_CHARGE" value="{{installmentCharge}}">
+          <Memo/>
+        </LineItem>
+      </Ledger>
+      <AccountingChanges>
+        <Set>
+          <DataItem name="InvoiceAmountCurrent" value="{{InvoiceAmountCurrent}}"/>
+          <DataItem name="InvoiceDateCurrent" value="{{InvoiceDateCurrent}}"/>
+          <DataItem name="InvoiceDateDueCurrent" value="{{InvoiceDateDueCurrent}}"/>
+        </Set>
+      </AccountingChanges>
+      <EventHistory>
+        <Event type="Invoice">
+          <DataItem name="InvoiceAmountCurrent" value="{{InvoiceAmountCurrent}}"/>
+          <DataItem name="InvoiceDateCurrent" value="{{InvoiceDateCurrent}}"/>
+          <DataItem name="InvoiceDateDueCurrent" value="{{InvoiceDateDueCurrent}}"/>
+        </Event>
+      </EventHistory>
+    """
+
     make_payment : """
       <Ledger>
         <LineItem value="{{paymentAmount}}" type="PAYMENT" timestamp="{{timestamp}}">
