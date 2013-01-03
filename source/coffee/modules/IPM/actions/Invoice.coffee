@@ -24,7 +24,7 @@ define [
       @processViewData(vocabTerms, view)
       @trigger "loaded", this, @postProcessView      
 
-    # **Process Form**
+    # **Process Form**  
     # On submit we do some action specific processing and then send to the
     # TransactionRequest monster
     #
