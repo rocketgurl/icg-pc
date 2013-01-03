@@ -140,7 +140,7 @@
         };
       },
       updatePagination: function(collection, elements) {
-        var current_page, end_position, pages, per_page, start_position, values, _ref;
+        var current_page, end_position, pages, per_page, start_position, values, _i, _ref, _ref1, _results;
         per_page = elements.per_page.val();
         _ref = _.map([per_page, collection.totalItems, collection.page], function(num) {
           return parseInt(num, 10);
@@ -153,8 +153,15 @@
           start_position = end_position - per_page;
         }
         start_position = start_position === 0 ? 1 : start_position;
+        if (end_position > collection.totalItems) {
+          end_position = collection.totalItems;
+        }
         elements.items.find('span').html("Items " + start_position + " - " + end_position + " of " + collection.totalItems);
-        pages = _.range(1, Math.round(collection.totalItems / elements.per_page.val()));
+        pages = (function() {
+          _results = [];
+          for (var _i = 1, _ref1 = Math.ceil(+collection.totalItems / elements.per_page.val()); 1 <= _ref1 ? _i <= _ref1 : _i >= _ref1; 1 <= _ref1 ? _i++ : _i--){ _results.push(_i); }
+          return _results;
+        }).apply(this);
         current_page = parseInt(collection.page, 10);
         values = _.map(pages, function(page) {
           if (page === current_page) {

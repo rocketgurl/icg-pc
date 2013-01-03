@@ -190,10 +190,13 @@ define [
 
       start_position = if start_position == 0 then 1 else start_position
 
+      if end_position > collection.totalItems
+        end_position = collection.totalItems
+
       elements.items.find('span').html("Items #{start_position} - #{end_position} of #{collection.totalItems}")
 
       # Jump to pages
-      pages        = _.range(1, Math.round(collection.totalItems / elements.per_page.val()))
+      pages        = [1..Math.ceil(+collection.totalItems / elements.per_page.val())]
       current_page = parseInt(collection.page, 10)
       values       = _.map pages, (page) ->
         if page == current_page

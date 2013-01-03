@@ -46,7 +46,7 @@ define [
     # Calculate the page jump option tags
     calculate_pagejumps : ->
       per_page     = $('.search-pagination-perpage').val()
-      pages        = [1..Math.round(+@pagination.total_items / per_page)]
+      pages        = [1..Math.ceil(+@pagination.total_items / per_page)]
       current_page = parseInt(@pagination.page, 10)
       values       = _.map pages, (page) ->
         if page == current_page
@@ -68,6 +68,9 @@ define [
         start_position = end_position - per_page
 
       start_position = if start_position == 0 then 1 else start_position
+
+      if end_position > @pagination.total_items
+        end_position = @pagination.total_items
 
       @pagination.items = "##{start_position} - #{end_position} of #{@pagination.total_items}"
 

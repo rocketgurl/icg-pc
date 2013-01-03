@@ -40,7 +40,7 @@
         per_page = $('.search-pagination-perpage').val();
         pages = (function() {
           _results = [];
-          for (var _i = 1, _ref = Math.round(+this.pagination.total_items / per_page); 1 <= _ref ? _i <= _ref : _i >= _ref; 1 <= _ref ? _i++ : _i--){ _results.push(_i); }
+          for (var _i = 1, _ref = Math.ceil(+this.pagination.total_items / per_page); 1 <= _ref ? _i <= _ref : _i >= _ref; 1 <= _ref ? _i++ : _i--){ _results.push(_i); }
           return _results;
         }).apply(this);
         current_page = parseInt(this.pagination.page, 10);
@@ -64,6 +64,9 @@
           start_position = end_position - per_page;
         }
         start_position = start_position === 0 ? 1 : start_position;
+        if (end_position > this.pagination.total_items) {
+          end_position = this.pagination.total_items;
+        }
         return this.pagination.items = "#" + start_position + " - " + end_position + " of " + this.pagination.total_items;
       },
       force_stripes: function() {
