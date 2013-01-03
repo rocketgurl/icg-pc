@@ -55,7 +55,7 @@
         return this.$el.html(html);
       },
       render: function(options) {
-        var html;
+        var action, hide_actions, html, _i, _len, _ref;
         if (this.render_state === true) {
           return false;
         }
@@ -73,9 +73,15 @@
         if (this.render_state === false) {
           this.render_state = true;
         }
-        if (this.model.isIPM() === false) {
-          this.$el.find('.policy-nav a[href=ipmchanges]').parent('li').hide();
-        } else {
+        hide_actions = [];
+        if (this.model.isQuote()) {
+          _ref = ['ipmchanges', 'renewalunderwriting', 'servicerequests'];
+          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            action = _ref[_i];
+            this.$el.find(".policy-nav a[href=" + action + "]").parent('li').hide();
+          }
+        }
+        if (this.model.isIPM()) {
           this.IPM = new IPMModule(this.model, $("#policy-ipm-" + this.cid), this.controller.user);
         }
         this.cache_elements();

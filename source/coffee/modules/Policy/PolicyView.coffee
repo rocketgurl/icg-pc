@@ -96,12 +96,17 @@ define [
       if @render_state == false
         @render_state = true
 
-      # If this is a non-IPM policy then remove IPM changes from nav
-      # otherwise go ahead and create an IPMModule
-      if @model.isIPM() == false
-        @$el.find('.policy-nav a[href=ipmchanges]').parent('li').hide();
-      else
+      # We hide a few actions if this is a quote
+      hide_actions = []
+      if @model.isQuote()
+        for action in ['ipmchanges', 'renewalunderwriting', 'servicerequests']
+          @$el.find(".policy-nav a[href=#{action}]").parent('li').hide();
+
+      # If this is an IPM policies need an IPMModule instantiated
+      if @model.isIPM()
         @IPM = new IPMModule(@model, $("#policy-ipm-#{@cid}"), @controller.user)
+
+      # If this is a quote, then we need to hide 
 
       # Cache commonly used jQuery elements
       @cache_elements()
