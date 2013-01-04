@@ -15,8 +15,8 @@
       initialize: function() {
         this.use_xml();
         return this.on('change', function(e) {
-          e.get_pxServerIndex();
-          return e.setModelState();
+          e.setModelState();
+          return e.get_pxServerIndex();
         });
       },
       url: function(route) {
@@ -245,7 +245,11 @@
         if (_.has(terms, 'DataItem')) {
           terms = terms.DataItem;
         } else if (_.has(terms, 'Intervals') && _.has(terms.Intervals, 'Interval')) {
-          terms = terms.Intervals.Interval.DataItem;
+          if (_.isArray(terms.Intervals.Interval)) {
+            terms = terms.Intervals.Interval[0].DataItem;
+          } else {
+            terms = terms.Intervals.Interval.DataItem;
+          }
         }
         name = "" + (this.getDataItem(terms, 'Program')) + "-" + (this.getDataItem(terms, 'PolicyType')) + "-" + (this.getDataItem(terms, 'PropertyState'));
         return name.toLowerCase();
