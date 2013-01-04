@@ -83,6 +83,8 @@
         }
         if (this.model.isIPM()) {
           this.IPM = new IPMModule(this.model, $("#policy-ipm-" + this.cid), this.controller.user);
+        } else {
+          this.$el.find(".policy-nav a[href=ipmchanges]").parent('li').hide();
         }
         this.cache_elements();
         this.actions = this.policy_nav_links.map(function(idx, item) {
