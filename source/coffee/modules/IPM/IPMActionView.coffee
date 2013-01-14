@@ -417,8 +417,15 @@ define [
     # @return _Boolean_ 
     #
     validate : ->
-      required_fields = @$el.find('input[required], select[required]')
+      required_fields = @$el.find('input[required], select[required]').get()
+
+      for name, rule of @FormValidation.validators
+        el = @$el.find("#id_#{name}").get()
+        if el.length > 0
+          required_fields.push el
+
       errors = @FormValidation.validateFields(required_fields)
+
       if _.isEmpty errors
         true
       else
@@ -433,7 +440,8 @@ define [
     # otherwise we're probably in a preview state and need to hold onto the
     # original form values.
     #
-    # _Note:_ This method should be extended in child views
+    # _Note:_ This method should be extended in child views  
+    # _Note:_ This is wrapped by @validate() during initialize!  
     #
     # @param `e` _Event_ Submit event (Optional) 
     #

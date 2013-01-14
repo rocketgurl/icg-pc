@@ -292,8 +292,16 @@
       };
 
       IPMActionView.prototype.validate = function() {
-        var errors, required_fields;
-        required_fields = this.$el.find('input[required], select[required]');
+        var el, errors, name, required_fields, rule, _ref;
+        required_fields = this.$el.find('input[required], select[required]').get();
+        _ref = this.FormValidation.validators;
+        for (name in _ref) {
+          rule = _ref[name];
+          el = this.$el.find("#id_" + name).get();
+          if (el.length > 0) {
+            required_fields.push(el);
+          }
+        }
         errors = this.FormValidation.validateFields(required_fields);
         if (_.isEmpty(errors)) {
           return true;
