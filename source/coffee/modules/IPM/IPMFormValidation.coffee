@@ -5,29 +5,29 @@ define [
   'Helpers',
   'moment',
   'momentrange'
-], ($, _, Backbone, Mustache, Helpers, moment) ->
+], ($, _, Mustache, Helpers, moment) ->
 
   class IPMFormValidation
 
     # Validators take the form of { element.name : rule name }
-    #
-    # @param `validators` _Object_ rules hash per action 
-    #
-    constructor : (@validators) ->
+    validators : {}
 
-      # If a field does not validate (come back as true) then we
-      # send need to mark it in the UI - send back a Boolean!
+    constructor : ->
+      # Wrap validateField so if field validation responds false then we need 
+      # to change the UI to display error state. We also remove that UI change 
+      # when it does validate.
       @validateField = _.wrap @validateField, (func) =>
-        args = _.toArray arguments
-        if func(args[1])
+        args   = _.toArray arguments
+        result = func(args[1], args[2], args[3])
+        if result
           @showErrorState(args[1])
-          true # error!
         else
-          @removeErrorState(args[1])
-          false # passes
+          @removeErrorState(args)
+          
+        result
 
       # These functions need a jQuery wrapped element, so we
-      # ensure they get one (DRY)
+      # ensure they get one (DRY) by wrapping
       _.each ['showErrorState', 'removeErrorState'], (f) =>
         @[f] = _.wrap @[f], (func) =>
           args = _.toArray arguments
@@ -35,33 +35,36 @@ define [
             args[1] = $(args[1])
           func(args[1], this)
 
-    # Return an array of validated form fields
+    # Return an array of fields with errors
     #
-    # @param `arr` _Array_ Form elements to be validated
+    # @param `required_fields` _Array_ Form elements to be validated
     # @return _Array_ 
     #
-    validateFields : (arr) ->
-      _.filter arr, (el) =>
-        @validateField(el)
+    validateFields : (required_fields) ->
+      # Loop through array and test each field
+      # Object || false
+      fields = for el in required_fields
+                @validateField(el, @validators, this)
+      (field for field in fields when field)
 
     # Validate a single form field
     #
     # @param `el` _HTML Element_ Form element to be validated
     # @return _Boolean_ 
     #
-    validateField : (el) ->
+    validateField : (el, validators, FormValidation) ->
       if !(el instanceof jQuery)
         el = $(el)
 
       # _Note:_ true means it failed
       if el.val() == '' || el.val() == undefined
-        return true
+        return { element : el, msg : 'This is a required field' }
 
       el_name = el.attr('name')
 
       # Call the rule for this el if it has a definition
-      if @validators? && _.has(@validators, el_name)
-        return @[@validators[el_name]](el)
+      if validators? && _.has(validators, el_name)
+        return FormValidation[validators[el_name]](el)
       else
         return false
 
@@ -75,9 +78,7 @@ define [
     showErrorState : (el, scope) ->
       scope = scope ? this
       el.addClass('validation_error')
-        .on('change', (el) =>
-          scope.validateField $(el.currentTarget)
-        )
+        .on('change', (el) => scope.validateField($(el.currentTarget)))
         .parent()
         .find('label')
         .addClass('validation_error')
@@ -103,12 +104,12 @@ define [
     #  
     displayErrorMsg : (errors) ->
       details = _.map errors, (err) ->
-        $label = $(err).parent().find('label')
+        $label = $(err.element).parent().find('label')
         $label.find('i').remove()
-        "<li>#{$label.html()}</li>"
+        "<li>#{$label.html()} - #{err.msg}</li>"
 
       """
-        Please complete the required fields below
+        The fields below had errors that need correction:
         <div class="error_details">
           <ul>
             #{details.join('')}
@@ -116,21 +117,31 @@ define [
         </div>
       """
 
-
     # Rules
     # -----
     # TODO: Maybe wrap these in the jQuery checker up top
 
     dateRange : (el) ->
+      if el.val() == '' || !el.val()?
+        { element : el, msg : "Date missing" }
+
       start  = moment(el.data('minDate')).subtract('days', 1)
       end    = moment(el.data('maxDate')).add('days', 1)
       whence = moment(el.val())
       range  = moment().range(start, end)
 
-      whence.within(range);
+      # We need to send the opposite boolen to pass _.filter()
+      if whence.within(range)
+        false 
+      else
+        { element : el, msg : "Outside date range: #{el.data('minDate')} - #{el.data('maxDate')}" }
+
 
     money : (el) ->
-      parseFloat(el.val()) > 0
+      if parseFloat(el.val(), 10) > 0
+        true
+      else
+        { element : el, msg : "Needs to be greater than zero" }
 
     # Determine if a number falls within a range. Only one attr (min/max)
     # needs to be defined.
@@ -142,4 +153,4 @@ define [
         false
       if max && val > max
         false
-      true
+      { element : el, msg : "Outside range: #{el.data('min')} - #{el.data('max')}" }
