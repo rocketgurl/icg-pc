@@ -34,7 +34,7 @@
             title: 'The policy has been cancelled',
             submit: 'Cancel this policy immediately',
             validators: {
-              'effectiveDate': this.Helpers.dateRange
+              'effectiveDate': 'dateRange'
             }
           },
           'cancel_pending': {
@@ -42,7 +42,7 @@
             title: 'The policy has been set to pending cancel',
             submit: 'Set to pending cancel',
             validators: {
-              'effectiveDate': this.Helpers.dateRange
+              'effectiveDate': 'dateRange'
             }
           },
           'reinstate': {
@@ -74,6 +74,10 @@
       CancelReinstateAction.prototype.processSubView = function(vocabTerms, view) {
         var viewData, _ref;
         _ref = this.processViewData(vocabTerms, view, true), viewData = _ref[0], view = _ref[1];
+        this.processCancellationData(viewData);
+        if (_.has(this.TRANSACTION_TYPES[this.CURRENT_SUBVIEW], 'validators')) {
+          this.FormValidation.validators = this.TRANSACTION_TYPES[this.CURRENT_SUBVIEW].validators;
+        }
         return this.trigger("loaded", this, this.postProcessSubView);
       };
 

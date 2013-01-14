@@ -27,13 +27,13 @@ define [
           title  : 'The policy has been cancelled'
           submit : 'Cancel this policy immediately'
           validators :
-            'effectiveDate' : @Helpers.dateRange
+            'effectiveDate' : 'dateRange'
         'cancel_pending' :
           label  : 'PendingCancellation'
           title  : 'The policy has been set to pending cancel'
           submit : 'Set to pending cancel'
           validators :
-            'effectiveDate' : @Helpers.dateRange
+            'effectiveDate' : 'dateRange'
         'reinstate' :
           label  : 'Reinstatement'
           title  : 'The policy has been reinstated'
@@ -73,10 +73,15 @@ define [
     #
     processSubView : (vocabTerms, view) =>
       # **ALERT** - we must not cache subviews, or we will problems when we want
-      # to go back to the parent view, hence third param of **false** in 
+      # to go back to the parent view, hence third param of **true** in 
       # @processViewData
       [viewData, view] = @processViewData(vocabTerms, view, true)
       @processCancellationData(viewData)
+
+      # Load form validation rules into FormValidation
+      if _.has(@TRANSACTION_TYPES[@CURRENT_SUBVIEW], 'validators')
+        @FormValidation.validators = @TRANSACTION_TYPES[@CURRENT_SUBVIEW].validators
+
       @trigger "loaded", this, @postProcessSubView
 
     # Apply standard DOM behaviors to sub views after rendered then override
