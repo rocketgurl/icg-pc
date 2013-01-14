@@ -64,6 +64,10 @@ define [
 
     # **Build sub view template using existing data objects**  
     #
+    # We need to rebuild the @viewData object (processCancellationData) for 
+    # subviews, otherwise we will lose some data and get very subtle bugs 
+    # (missing dateRange, etc.)
+    #
     # @param `vocabTerms` _Object_ model.json  
     # @param `view` _String_ HTML template    
     #
@@ -72,6 +76,7 @@ define [
       # to go back to the parent view, hence third param of **false** in 
       # @processViewData
       [viewData, view] = @processViewData(vocabTerms, view, true)
+      @processCancellationData(viewData)
       @trigger "loaded", this, @postProcessSubView
 
     # Apply standard DOM behaviors to sub views after rendered then override
