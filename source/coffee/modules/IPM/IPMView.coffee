@@ -23,8 +23,9 @@ define [
     # DOM then kick off the default route
     initialize : (options) ->
       # Keep track of our current sub-view
-      @VIEW_STATE = ''
-      @VIEW_CACHE = {}
+      @VIEW_STATE   = ''
+      @VIEW_CACHE   = {}
+      @ACTION_CACHE = {}
       
       @FLASH_HTML = ''
       @LOADER     = {}
@@ -79,12 +80,20 @@ define [
     # We also trigger a "ready" event on the view letting it know to go ahead and
     # do whatever buildup it needs to.
     #
-    # @param `action` _String_ name of IPMActionView to loade w/ require()  
+    # @param `action` _String_ name of IPMActionView to loade w/ require()      
+    # @param `callbacks` _Object_ .success & .error callback methods    
     #
-    route : (action) ->
+    route : (action, callbacks) ->
       # Save our current location
       @VIEW_STATE = action
+
+      # Display loader image
       @insert_loader()
+
+      # Deal with callbacks. This is mostly to ease testing.
+      callbacks        = callbacks ? {}
+      callback_success = callbacks.success ? null
+      callback_error   = callbacks.error ? null
 
       # Cache or load. If we have a load error, then throw up a message and
       # re-route back to the home view
@@ -92,20 +101,26 @@ define [
         require ["#{@MODULE.CONFIG.ACTIONS_PATH}#{action}"], (Action) =>
           @VIEW_CACHE[action] = $("<div id=\"dom-container-#{@cid}-#{action}\" class=\"dom-container\"></div>")
 
-          ActionView = new Action(
+          @ACTION_CACHE[action] = new Action(
             MODULE      : @MODULE
             PARENT_VIEW : this
           )
 
           @hideOpenViews()
 
-          ActionView.on("loaded", @render, this)
-          ActionView.trigger "ready"
+          @ACTION_CACHE[action].on("loaded", @render, this)
+          @ACTION_CACHE[action].trigger "ready"
+
+          if callback_success?
+            callback_success.call(this, @ACTION_CACHE[action], action)
 
         , (err) =>
             failedId = err.requireModules && err.requireModules[0]
             @Amplify.publish(@cid, 'warning', "We could not load #{failedId}. Sorry.", null, 'nomove')
             @route 'Home'
+
+            if callback_error?
+              callback_error.call(this, err, action)
 
       else
         @remove_loader()

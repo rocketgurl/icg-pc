@@ -27,6 +27,7 @@
       IPMView.prototype.initialize = function(options) {
         this.VIEW_STATE = '';
         this.VIEW_CACHE = {};
+        this.ACTION_CACHE = {};
         this.FLASH_HTML = '';
         this.LOADER = {};
         this.DEBUG = options.DEBUG != null;
@@ -48,26 +49,35 @@
         return this.$el.append("<div id=\"ipm-container-" + this.cid + "\" class=\"ipm-container\"></div>");
       };
 
-      IPMView.prototype.route = function(action) {
-        var _this = this;
+      IPMView.prototype.route = function(action, callbacks) {
+        var callback_error, callback_success, _ref, _ref1,
+          _this = this;
         this.VIEW_STATE = action;
         this.insert_loader();
+        callbacks = callbacks != null ? callbacks : {};
+        callback_success = (_ref = callbacks.success) != null ? _ref : null;
+        callback_error = (_ref1 = callbacks.error) != null ? _ref1 : null;
         if (!_.has(this.VIEW_CACHE, action)) {
           require(["" + this.MODULE.CONFIG.ACTIONS_PATH + action], function(Action) {
-            var ActionView;
             _this.VIEW_CACHE[action] = $("<div id=\"dom-container-" + _this.cid + "-" + action + "\" class=\"dom-container\"></div>");
-            ActionView = new Action({
+            _this.ACTION_CACHE[action] = new Action({
               MODULE: _this.MODULE,
               PARENT_VIEW: _this
             });
             _this.hideOpenViews();
-            ActionView.on("loaded", _this.render, _this);
-            return ActionView.trigger("ready");
+            _this.ACTION_CACHE[action].on("loaded", _this.render, _this);
+            _this.ACTION_CACHE[action].trigger("ready");
+            if (callback_success != null) {
+              return callback_success.call(_this, _this.ACTION_CACHE[action], action);
+            }
           }, function(err) {
             var failedId;
             failedId = err.requireModules && err.requireModules[0];
             _this.Amplify.publish(_this.cid, 'warning', "We could not load " + failedId + ". Sorry.", null, 'nomove');
-            return _this.route('Home');
+            _this.route('Home');
+            if (callback_error != null) {
+              return callback_error.call(_this, err, action);
+            }
           });
         } else {
           this.remove_loader();
