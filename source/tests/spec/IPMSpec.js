@@ -8,6 +8,7 @@ define([
   "modules/Policy/PolicyModel",
   "modules/IPM/IPMChangeSet",
   "modules/IPM/actions/Endorse",
+  "modules/IPM/actions/CancelReinstate",
   "UserModel",
   "amplify",
   "loader",
@@ -22,6 +23,7 @@ define([
     PolicyModel,
     IPMChangeSet,
     Endorse,
+    CancelReinstate,
     UserModel,
     amplify, 
     CanvasLoader
@@ -5826,7 +5828,6 @@ describe('IPM Module', function (){
 
       var xml = '<TransactionRequest schemaVersion="1.4" type=""><Initiation><Initiator type="user">cru4t@cru360.com</Initiator></Initiation><Target><Identifiers><Identifier name="InsightPolicyId" value="d1716d6e86334c4db583278d5889deb4"/></Identifiers><SourceVersion>4</SourceVersion></Target><EffectiveDate>2012-11-19</EffectiveDate><ReasonCode>60</ReasonCode><Comment>asdasda</Comment><IntervalRequest><StartDate>2012-11-19</StartDate><DataItem name="effectiveDate" value="2012-11-19" /><DataItem name="comment" value="asdasda" /><DataItem name="ReplacementCostBuilding" value="582629" /><DataItem name="CoverageD" value="135000" /><DataItem name="FoundationBasementPercentage" value="100" /><DataItem name="OptionCoverageD" value="2500" /></IntervalRequest></TransactionRequest>';
 
-
       // Timestamps will never match so remove them
       var TR = ChangeSet.getTransactionRequest(VALUES, viewData).replace(/timestamp="([\w\d-:.]*)"/g, '');
 
@@ -5847,7 +5848,44 @@ describe('IPM Module', function (){
 
   });
 
+  describe('IPMChangeSet : Transaction Request : CancelReinstate', function() {
+
+    var ajax_count = 0
+    var actionView = null;
+
+    beforeEach(function(){
+      if (ajax_count < 1) {
+        var view     = ipm.VIEW;
+        var callback = jasmine.createSpy();
+        var _this    = this;
+        actionView = view.route('CancelReinstate',{
+          success : function(ActionView, action_name) {
+            ActionView.CURRENT_SUBVIEW = 'cancel-pending';
+            ActionView.fetchTemplates(policy, 'cancel-pending', callback);
+          },
+          error : function(err, action) {
+            console.log(['VIEW ROUTE ERROR', err]);
+          }
+        });
+
+        waitsFor(function() {
+          return callback.callCount > 0;
+        }, "Timeout BOOM!", 1000)
+      }
+      ajax_count++;
+    })
+
+
+    // IPM Module is an object
+    it ('is an object', function () {
+      expect(actionView).toEqual(jasmine.any(Object));
+    });
+
+  });
+
 });
+
+
 
 
 });
