@@ -5,6 +5,23 @@
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor(); child.__super__ = parent.prototype; return child; };
 
   define(['BaseView', 'Messenger', 'modules/IPM/IPMChangeSet', 'modules/IPM/IPMFormValidation'], function(BaseView, Messenger, IPMChangeSet, IPMFormValidation) {
+    /*
+        ACTIONVIEWS TODO:
+          Apply charges
+          Change payment plan
+          Premium disbursement
+          Reverse disbursement
+          Reverse payment
+          Write off charges
+          Issue (automatic)
+          Issue (manual)
+          Renew  
+          Change customer
+          Update mortgage
+          Change additional interest
+          Edit term data
+    */
+
     var IPMActionView;
     return IPMActionView = (function(_super) {
 

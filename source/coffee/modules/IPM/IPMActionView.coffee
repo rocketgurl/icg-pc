@@ -5,9 +5,27 @@ define [
   'modules/IPM/IPMFormValidation'
 ], (BaseView, Messenger, IPMChangeSet, IPMFormValidation) ->
 
+  ###
+    ACTIONVIEWS TODO:
+      Apply charges
+      Change payment plan
+      Premium disbursement
+      Reverse disbursement
+      Reverse payment
+      Write off charges
+      Issue (automatic)
+      Issue (manual)
+      Renew  
+      Change customer
+      Update mortgage
+      Change additional interest
+      Edit term data
+  ###
+
   # IPMActionView
   # ----  
   # IPM sub views (action views) inherit from this base view  
+  #
   class IPMActionView extends BaseView
     
     tagName : 'div'
