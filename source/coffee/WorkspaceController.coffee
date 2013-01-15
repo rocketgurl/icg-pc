@@ -737,7 +737,7 @@ define [
     # Kick off the show
     init : () ->
       @callback_delay 100, =>
-        @Router.controller = @
+        @Router.controller = this
         Backbone.history.start()
         @check_cookie_identity()
         @attach_tab_handlers()
