@@ -10,13 +10,13 @@
         this.app = app;
         this.params = params;
         _.extend(this, Backbone.Events);
-        this.view.options.controller.setup_search_storage();
       }
 
       SearchModule.prototype.load = function() {
         var _this = this;
         return this.callback_delay(200, function() {
-          return _this.view.remove_loader(true);
+          _this.view.remove_loader(true);
+          return _this.view.options.controller.setup_search_storage();
         });
       };
 
