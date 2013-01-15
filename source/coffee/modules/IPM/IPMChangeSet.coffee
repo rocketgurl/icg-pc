@@ -289,6 +289,25 @@ define [
 
     # Template bodies (partials) for specific actions
 
+    apply_charges : """
+      <Ledger>
+        <LineItem value="{{amount}}" type="{{lineItemType}}" timestamp="{{timestamp}}">
+          <Memo></Memo>
+        </LineItem>
+      </Ledger>
+      <EventHistory>
+        <Event type="ChargeApplied">
+          <DataItem name="Amount" value="{{amount}}" />
+          <DataItem name="ReasonCode" value="{{reasonCode}}" />
+          <DataItem name="ReasonCodeLabel" value="{{reasonCodeLabel}}" />
+        </Event>
+      </EventHistory>
+    """    
+
+    cancel_reinstate : """
+      <ReasonCode>{{reasonCode}}</ReasonCode>
+    """
+
     endorse : """
       <ReasonCode>{{reasonCode}}</ReasonCode>
       <Comment>{{comment}}</Comment>
@@ -351,8 +370,4 @@ define [
           <DataItem name="AppliedDate" value="{{appliedDate}}" />
         </Event>
       </EventHistory>
-    """
-
-    cancel_reinstate : """
-      <ReasonCode>{{reasonCode}}</ReasonCode>
     """

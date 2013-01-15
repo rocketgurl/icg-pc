@@ -182,6 +182,10 @@
 
       IPMChangeSet.prototype.dataItemTemplate = "{{#intervalRequest}}\n<DataItem name=\"{{key}}\" value=\"{{value}}\" />\n{{/intervalRequest}}";
 
+      IPMChangeSet.prototype.apply_charges = "<Ledger>\n  <LineItem value=\"{{amount}}\" type=\"{{lineItemType}}\" timestamp=\"{{timestamp}}\">\n    <Memo></Memo>\n  </LineItem>\n</Ledger>\n<EventHistory>\n  <Event type=\"ChargeApplied\">\n    <DataItem name=\"Amount\" value=\"{{amount}}\" />\n    <DataItem name=\"ReasonCode\" value=\"{{reasonCode}}\" />\n    <DataItem name=\"ReasonCodeLabel\" value=\"{{reasonCodeLabel}}\" />\n  </Event>\n</EventHistory>";
+
+      IPMChangeSet.prototype.cancel_reinstate = "<ReasonCode>{{reasonCode}}</ReasonCode>";
+
       IPMChangeSet.prototype.endorse = "<ReasonCode>{{reasonCode}}</ReasonCode>\n<Comment>{{comment}}</Comment>\n<IntervalRequest>\n  <StartDate>{{effectiveDate}}</StartDate>\n  {{>changes}}\n</IntervalRequest>";
 
       IPMChangeSet.prototype.generate_document = "<DocumentChanges>\n  <Set>\n    <DocumentRef href=\"{{documentHref}}\" id=\"{{documentId}}\" label=\"{{documentLabel}}\" type=\"{{documentType}}\"/>\n  </Set>\n</DocumentChanges>      ";
@@ -189,8 +193,6 @@
       IPMChangeSet.prototype.invoice = "<DocumentChanges>\n  <Set>\n    <DocumentRef href=\"{{documentHref}}\" id=\"{{documentId}}\" label=\"{{documentLabel}}\" type=\"{{documentType}}\"/>\n  </Set>\n</DocumentChanges>\n<Ledger>\n  <LineItem timestamp=\"{{timestamp}}\" type=\"INSTALLMENT_CHARGE\" value=\"{{installmentCharge}}\">\n    <Memo/>\n  </LineItem>\n</Ledger>\n<AccountingChanges>\n  <Set>\n    <DataItem name=\"InvoiceAmountCurrent\" value=\"{{InvoiceAmountCurrent}}\"/>\n    <DataItem name=\"InvoiceDateCurrent\" value=\"{{InvoiceDateCurrent}}\"/>\n    <DataItem name=\"InvoiceDateDueCurrent\" value=\"{{InvoiceDateDueCurrent}}\"/>\n  </Set>\n</AccountingChanges>\n<EventHistory>\n  <Event type=\"Invoice\">\n    <DataItem name=\"InvoiceAmountCurrent\" value=\"{{InvoiceAmountCurrent}}\"/>\n    <DataItem name=\"InvoiceDateCurrent\" value=\"{{InvoiceDateCurrent}}\"/>\n    <DataItem name=\"InvoiceDateDueCurrent\" value=\"{{InvoiceDateDueCurrent}}\"/>\n  </Event>\n</EventHistory>";
 
       IPMChangeSet.prototype.make_payment = "<Ledger>\n  <LineItem value=\"{{paymentAmount}}\" type=\"PAYMENT\" timestamp=\"{{timestamp}}\">\n    <Memo></Memo>\n    <DataItem name=\"Reference\" value=\"{{paymentReference}}\" />\n    <DataItem name=\"PaymentMethod\" value=\"{{paymentMethod}}\" />\n  </LineItem>\n</Ledger>\n<EventHistory>\n  <Event type=\"Payment\">\n    <DataItem name=\"PaymentAmount\" value=\"{{positivePaymentAmount}}\" />\n    <DataItem name=\"PaymentMethod\" value=\"{{paymentMethod}}\" />\n    <DataItem name=\"PaymentReference\" value=\"{{paymentReference}}\" />\n    <DataItem name=\"PaymentBatch\" value=\"{{paymentBatch}}\" />\n    <DataItem name=\"PostmarkDate\" value=\"{{postmarkDate}}\" />\n    <DataItem name=\"AppliedDate\" value=\"{{appliedDate}}\" />\n  </Event>\n</EventHistory>";
-
-      IPMChangeSet.prototype.cancel_reinstate = "<ReasonCode>{{reasonCode}}</ReasonCode>";
 
       return IPMChangeSet;
 
