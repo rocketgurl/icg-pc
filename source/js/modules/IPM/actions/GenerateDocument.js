@@ -19,6 +19,7 @@
 
       GenerateDocumentAction.prototype.initialize = function() {
         GenerateDocumentAction.__super__.initialize.apply(this, arguments);
+        this.CURRENT_ACTION = null;
         return this.events = {
           "click .ipm-action-links li a": "triggerDocumentAction"
         };
@@ -40,23 +41,38 @@
       };
 
       GenerateDocumentAction.prototype.triggerDocumentAction = function(e) {
-        var action, msg, _ref;
+        var msg, _ref, _ref1;
         e.preventDefault();
         if (e.currentTarget.className !== 'disabled') {
-          action = (_ref = $(e.currentTarget).attr('href')) != null ? _ref : false;
-          if (action != null) {
-            return console.log(['triggerDocumentAction', action]);
+          this.CURRENT_ACTION = {
+            type: (_ref = $(e.currentTarget).attr('href')) != null ? _ref : false,
+            label: (_ref1 = $(e.currentTarget).html()) != null ? _ref1 : false
+          };
+          if (this.CURRENT_ACTION.type != null) {
+            return this.submit();
           } else {
-            msg = "Could not load that action. Contact support.";
+            msg = "Could not load that document action. Contact support.";
             return this.PARENT_VIEW.displayMessage('error', msg, 12000);
           }
         }
       };
 
       GenerateDocumentAction.prototype.submit = function(e) {
+        var idStamp, labelStamp, specialDocs, templateName, timestamp;
         GenerateDocumentAction.__super__.submit.call(this, e);
-        this.VALUES.formValues.positivePaymentAmount = Math.abs(this.VALUES.formValues.paymentAmount || 0);
-        this.VALUES.formValues.paymentAmount = -1 * this.VALUES.formValues.positivePaymentAmount;
+        timestamp = this.Helpers.makeTimestamp();
+        idStamp = timestamp.replace(/:|\.\d{3}/g, '');
+        labelStamp = this.Helpers.formatDate(timestamp);
+        specialDocs = ['ReissueDeclarationPackage', 'Invoice'];
+        templateName = "generate_document-" + (this.MODULE.POLICY.get('productName'));
+        this.VALUES.formValues.generating = true;
+        this.VALUES.formValues.policyId = this.MODULE.POLICY.get('insight_id');
+        this.VALUES.formValues.documentId = "" + this.CURRENT_ACTION.type + "-" + idStamp;
+        this.VALUES.formValues.documentType = this.CURRENT_ACTION.type;
+        this.VALUES.formValues.documentLabel = this.CURRENT_ACTION.label;
+        if (_.indexOf(specialDocs, this.CURRENT_ACTION.label) !== -1) {
+          this.VALUES.formValues.documentLabel = "" + this.VALUES.formValues.documentLabel + " " + labelStamp;
+        }
         return this.ChangeSet.commitChange(this.ChangeSet.getPolicyChangeSet(this.VALUES), this.callbackSuccess, this.callbackError);
       };
 

@@ -298,6 +298,14 @@ define [
       </IntervalRequest>
     """
 
+    generate_document : """
+      <DocumentChanges>
+        <Set>
+          <DocumentRef href="{{documentHref}}" id="{{documentId}}" label="{{documentLabel}}" type="{{documentType}}"/>
+        </Set>
+      </DocumentChanges>      
+    """
+
     invoice : """
       <DocumentChanges>
         <Set>
