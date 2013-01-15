@@ -110,13 +110,8 @@ define [
       @viewData.preview        = @Endorse.parseIntervals(@VALUES)
       @viewData.current_policy = @current_policy_intervals
       
-      # Get preview values from Policy
       preview_values = @extractEventValues(@MODULE.POLICY, @viewData)
-
-      # Get preview labels from formValues
       preview_labels = @determinePreviewLabel(@VALUES.formValues, @viewData)
-
-      # Get correct EffectiveDate for display
       preview_effective_date = @determineCorrectPreviewDate(@MODULE.POLICY, @viewData)
 
       @viewData = _.extend(
