@@ -372,6 +372,8 @@ Module: Policy
 .ipm-action-links li a.disabled { color: #9c9c9c; }
 .ipm-action-links li a.disabled:hover, .ipm-action-links .policy-nav li a.disabled.select, .policy-nav .ipm-action-links li a.disabled.select { background: #e7e7e7; color: #9c9c9c; text-shadow: 0 1px white; }
 
+.columnActions .column { vertical-align: top; display: inline-block; width: 30%; margin: 20px 20px 20px 0; }
+
 section.policyOverview { display: none; }
 
 .content_msg { font-size: 16px; font-size: 1.6rem; -webkit-border-radius: 6px; -moz-border-radius: 6px; -ms-border-radius: 6px; -o-border-radius: 6px; border-radius: 6px; box-shadow: 0 0 3px #999; font-weight: bold; text-align: left; margin: 10px 0px; }

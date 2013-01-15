@@ -132,6 +132,13 @@
 	}
 }
 
+.columnActions .column {
+	vertical-align: top;
+	display: inline-block;
+	width: 30%;
+	margin: 20px 20px 20px 0;
+}
+
 section.policyOverview {
 	display: none;
 }
