@@ -237,7 +237,7 @@ define [
     # need to attach some flags to the form so the submit handler will know
     # what to do on a "re-submit".
     #
-    # @param `table` _HTML Element_ jQuery wrapped <table>  
+    # @param `table` _HTML Element_ jQuery wrapped table  
     #
     processPreviewForm : (table) ->
       # Disable button until something changes
