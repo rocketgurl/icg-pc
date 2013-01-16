@@ -25,23 +25,23 @@
 			</section>
 			{{/policyOverview}}
 			
-			<fieldset class="columnActions">
+			<div class="columnActions">
 				{{#documentGroups}}
 				<div class="column">
 					<section>
-						<h1>{{label}}</h1>
-						<ul>
+						<h2 class="ipm-action-header">{{label}}</h2>
+						<ul class="ipm-action-links">
 							{{#enumerations}}
-							<li><input name="{{name}}" value="{{label}}" type="submit" class="button"></li>
+							<li><a href="{{name}}">{{label}}</a></li>
 							{{/enumerations}}
 						</ul>
 					</section>
 				</div>
 				{{/documentGroups}}
-				
+
 				<input type="hidden" name="documentType" value="">
 				<input type="hidden" name="documentLabel" value="">
-			</fieldset>
+			</div>
 			
 			<div class="form_actions">				
 				<a href="home">Nevermind, go back</a>
