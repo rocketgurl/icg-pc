@@ -200,6 +200,14 @@
           return {};
         }
       },
+      getFirstTerm: function() {
+        var terms;
+        if (terms = this.getTerms()) {
+          return _.first(terms);
+        } else {
+          return {};
+        }
+      },
       getCustomerData: function(type) {
         var customer;
         if (type === null || type === void 0) {
@@ -397,6 +405,7 @@
           this.set('cancellationEffectiveDate', this.getCancellationEffectiveDate());
           this.set('cancelled', this.isCancelled());
           this.set('terms', this.getTerms());
+          this.set('firstTerm', this.getFirstTerm());
           this.set('lastInterval', this.getLastInterval());
           this.set('insuredData', this.getCustomerData('Insured'));
           this.set('mortgageeData', this.getCustomerData('Mortgagee'));

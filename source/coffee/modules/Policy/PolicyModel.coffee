@@ -207,10 +207,19 @@ define [
 
     # **Return the last Term of the policy**  
     # TODO: Check to make sure we're not just looking for <Intervals>  
-    # @return _Obj (XML)_
+    # @return _Obj (XML)_  
     getLastTerm : ->
       if terms = @getTerms()
         _.last terms
+      else
+        {}
+
+    # **Return the first Term of the policy**  
+    # TODO: Check to make sure we're not just looking for <Intervals>  
+    # @return _Obj (XML)_  
+    getFirstTerm : ->
+      if terms = @getTerms()
+        _.first terms
       else
         {}
 
@@ -463,6 +472,7 @@ define [
         @set('cancellationEffectiveDate', @getCancellationEffectiveDate())
         @set('cancelled', @isCancelled())
         @set('terms', @getTerms())
+        @set('firstTerm', @getFirstTerm())
         @set('lastInterval', @getLastInterval())
         @set('insuredData', @getCustomerData('Insured'))
         @set('mortgageeData', @getCustomerData('Mortgagee'))
