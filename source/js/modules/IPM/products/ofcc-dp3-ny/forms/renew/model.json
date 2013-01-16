@@ -108,10 +108,6 @@
         },
         {
             "name": "CoverageL",
-            "label": "Coverage L"
-        },
-        {
-            "name": "OptionCoverageL",
             "label": "Coverage L (Personal Liability)",
             "enumerations": [
                 {
@@ -138,12 +134,12 @@
         },
         {
             "name": "CoverageM",
-            "label": "Coverage M"
-        },
-        {
-            "name": "OptionCoverageM",
             "label": "Coverage M (Medical Payments)",
             "enumerations": [
+                {
+                    "value": "0",
+                    "label": "$0"
+                },
                 {
                     "value": "1000",
                     "label": "$1,000"

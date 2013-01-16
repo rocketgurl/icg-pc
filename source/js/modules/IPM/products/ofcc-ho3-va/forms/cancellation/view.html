@@ -30,14 +30,15 @@
       </section>
       {{/policyOverview}}
 
-      <fieldset>
-        <ul>
-          <li><input name="cancel" type="submit" value="Cancel" {{cancelDisabled}}></li>
-          <li><input name="cancel_pending" type="submit" value="Set pending cancel" {{pendingDisabled}}></li>
-          <li><input name="reinstate" type="submit" value="Reinstate" {{reinstateDisabled}}></li>
-          <li><input name="rescind" type="submit" value="Rescind pending cancel" {{rescindDisabled}}></li>
-        </ul>
-      </fieldset> 
+      <h2 class="ipm-action-header">Actions:</h2>
+
+      <ul class="ipm-action-links">
+        <li><a href="cancel" class="{{cancelDisabled}}">Cancel</a>
+        <li><a href="cancel_pending" class="{{pendingDisabled}}">Set pending cancel</a>
+        <li><a href="reinstate" class="{{reinstateDisabled}}">Reinstate</a>
+        <li><a href="rescind" class="{{rescindDisabled}}">Rescind pending cancel</a>
+      </ul>
+
       <div class="form_actions">
         <a href="home">Nevermind, go back</a>
       </div>

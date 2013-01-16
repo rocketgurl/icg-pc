@@ -84,30 +84,20 @@
 						<i>(Expiring: {{CoverageD}})</i>
 					</div>
 					<div>
-						<label for="id_OptionCoverageL" class="labelRequired">Coverage L (Personal Liability) <i>OptionCoverageL</i></label>
-						<select id="id_OptionCoverageL" name="OptionCoverageL" data-value="{{OptionCoverageL}}" data-affects="CoverageL" required>
-							{{#EnumsOptionCoverageL}}
+						<label for="id_CoverageL" class="labelRequired">Coverage L (Personal Liability) <i>CoverageL</i></label>
+						<select id="id_CoverageL" name="CoverageL" data-value="{{CoverageL}}" data-affects="CoverageL" required>
+							{{#EnumsCoverageL}}
 							<option value="{{value}}">{{label}}</option>
-							{{/EnumsOptionCoverageL}}
+							{{/EnumsCoverageL}}
 						</select>
 					</div>
 					<div>
-						<label for="id_CoverageL">Coverage L <i>CoverageL</i></label>
-						<input type="text" id="id_CoverageL" name="CoverageL" value="{{CoverageL}}" readonly>
-						<i>(Expiring: {{CoverageL}})</i>
-					</div>
-					<div>
-						<label for="id_OptionCoverageM" class="labelRequired">Coverage M (Medical Payments) <i>OptionCoverageM</i></label>
-						<select id="id_OptionCoverageM" name="OptionCoverageM" data-value="{{OptionCoverageM}}" data-affects="CoverageM" required>
-							{{#EnumsOptionCoverageM}}
+						<label for="id_CoverageM" class="labelRequired">Coverage M (Medical Payments) <i>CoverageM</i></label>
+						<select id="id_CoverageM" name="CoverageM" data-value="{{CoverageM}}" data-affects="CoverageM" required>
+							{{#EnumsCoverageM}}
 							<option value="{{value}}">{{label}}</option>
-							{{/EnumsOptionCoverageM}}
+							{{/EnumsCoverageM}}
 						</select>
-					</div>
-					<div>
-						<label for="id_CoverageM">Coverage M <i>CoverageM</i></label>
-						<input type="text" id="id_CoverageM" name="CoverageM" value="{{CoverageM}}" readonly>
-						<i>(Expiring: {{CoverageM}})</i>
 					</div>
 				</div>
 			</fieldset>

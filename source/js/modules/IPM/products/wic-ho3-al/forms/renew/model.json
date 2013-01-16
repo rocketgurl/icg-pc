@@ -447,6 +447,10 @@
 					"label": "Lightning"
 				},
 				{
+					"value": "400",
+					"label": "Theft/Mysterious Disappearance"
+				},
+				{
 					"value": "401",
 					"label": "Theft/Mysterious Disappearance - On Premises"
 				},
@@ -537,6 +541,10 @@
 				{
 					"value": "300",
 					"label": "Lightning"
+				},
+				{
+					"value": "400",
+					"label": "Theft/Mysterious Disappearance"
 				},
 				{
 					"value": "401",
@@ -631,6 +639,10 @@
 					"label": "Lightning"
 				},
 				{
+					"value": "400",
+					"label": "Theft/Mysterious Disappearance"
+				},
+				{
 					"value": "401",
 					"label": "Theft/Mysterious Disappearance - On Premises"
 				},
@@ -723,6 +735,10 @@
 					"label": "Lightning"
 				},
 				{
+					"value": "400",
+					"label": "Theft/Mysterious Disappearance"
+				},
+				{
 					"value": "401",
 					"label": "Theft/Mysterious Disappearance - On Premises"
 				},
@@ -813,6 +829,10 @@
 				{
 					"value": "300",
 					"label": "Lightning"
+				},
+				{
+					"value": "400",
+					"label": "Theft/Mysterious Disappearance"
 				},
 				{
 					"value": "401",
