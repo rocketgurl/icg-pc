@@ -7,8 +7,6 @@
   define(['BaseView', 'Messenger', 'modules/IPM/IPMChangeSet', 'modules/IPM/IPMFormValidation'], function(BaseView, Messenger, IPMChangeSet, IPMFormValidation) {
     /*
         ACTIONVIEWS TODO:
-          Apply charges
-          Change payment plan
           Premium disbursement
           Reverse disbursement
           Reverse payment

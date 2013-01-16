@@ -7,8 +7,6 @@ define [
 
   ###
     ACTIONVIEWS TODO:
-      Apply charges
-      Change payment plan
       Premium disbursement
       Reverse disbursement
       Reverse payment
