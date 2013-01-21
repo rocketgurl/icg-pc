@@ -8,6 +8,9 @@
         if (this.get('document') === null) {
           return false;
         }
+        if (workspace === null || workspace === void 0) {
+          return false;
+        }
         workspace = workspace.get('workspace');
         if (workspace === null || workspace === void 0) {
           return false;
@@ -41,6 +44,20 @@
           return false;
         } else {
           return url;
+        }
+      }),
+      get_ixLibrary: check_workspace(function(workspace) {
+        var config, doc, node;
+        doc = this.get('document');
+        node = doc.find("ConfigItem[name=" + workspace.app + "] ConfigItem[name=businesses] ConfigItem[name=" + workspace.business + "] ConfigItem[name=" + window.ICS360_ENV + "] ConfigItem[name=popServer] ConfigItem[name=library]");
+        config = {
+          baseURL: node.find("ConfigItem[name=baseURL]").attr('value'),
+          assigneeList: node.find("ConfigItem[name=assigneeListObjectKey]").attr('value')
+        };
+        if (config === void 0) {
+          return false;
+        } else {
+          return config;
         }
       }),
       get_universal_service: check_workspace(function(workspace, service) {

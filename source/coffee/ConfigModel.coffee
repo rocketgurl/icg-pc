@@ -10,7 +10,11 @@ define [
       # No document, no dice
       if @get('document') == null
         return false
+
       # Extract workspace config from model
+      if workspace == null || workspace == undefined
+        return false
+
       workspace = workspace.get('workspace')
       if workspace == null || workspace == undefined
         false
@@ -51,6 +55,19 @@ define [
         url = doc.find("ConfigItem[name=#{workspace.app}] ConfigItem[name=businesses] ConfigItem[name=#{workspace.business}] ConfigItem[name=#{window.ICS360_ENV}] ConfigItem[name=popServer] ConfigItem[name=baseURL]").attr('value')
 
         if url == undefined then false else url
+
+    # Create an object of configs for ixLibrary. FNIC seems to be missing some
+    get_ixLibrary :
+      check_workspace \
+      (workspace) ->
+        doc = @get('document')
+        node = doc.find("ConfigItem[name=#{workspace.app}] ConfigItem[name=businesses] ConfigItem[name=#{workspace.business}] ConfigItem[name=#{window.ICS360_ENV}] ConfigItem[name=popServer] ConfigItem[name=library]")
+
+        config =
+          baseURL      : node.find("ConfigItem[name=baseURL]").attr('value')
+          assigneeList : node.find("ConfigItem[name=assigneeListObjectKey]").attr('value')
+
+        if config == undefined then false else config
 
     # Retrieve baseURL of service from <universalServices> config
     get_universal_service :

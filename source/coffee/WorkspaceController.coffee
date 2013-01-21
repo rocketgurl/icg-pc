@@ -33,10 +33,10 @@ define [
     services :
       ixdirectory    : './ixdirectory/api/rest/v2/'
       pxcentral_base : 'pxcentral/api/rest/v1/'
-      ixlibrary_base : 'ixlibrary/api/sdo/rest/v1/'
+      ixlibrary_base : '/api/sdo/rest/v1/'
       ixdoc          : './ixdoc/api/rest/v2/'
-      ixadmin        : './config/ics/staging/ixadmin' # TESTING ONLY
-      zendesk        : 'https://staging-services.icg360.org/zendesk'
+      ixadmin        : './config/ics/staging/ixadmin'
+      zendesk        : './zendesk'
 
   # Method Combinator (Decorator) 
   # https://github.com/raganwald/method-combinators
@@ -493,11 +493,15 @@ define [
         $('#header').css('height', '95px')
 
       # Set the path to pxCentral & ixLibrary to the correct instance
+      ixlibrary = @config.get_ixLibrary(@workspace_state)
+      if ixlibrary.baseURL? || ixlibrary.baseURL != undefined
+        @services.ixlibrary = "#{ixlibrary.baseURL}#{@services.ixlibrary_base}"
+
       if url = @config.get_pxCentral(@workspace_state)
         @services.pxcentral = "#{url}#{@services.pxcentral_base}"
-        @services.ixlibrary = "#{url}#{@services.ixlibrary_base}"
-
-      for node in ['cxserver', 'ixdirectory', 'ixprofiler', 'ixrelay', 'ixvocab']
+  
+      # Loop through additional services & gather config
+      for node in ['cxserver', 'ixdirectory', 'ixprofiler', 'ixrelay', 'ixvocab', 'zendesk']
         @services[node] = @config.get_universal_service(@workspace_state, node)
 
       @launch_app app

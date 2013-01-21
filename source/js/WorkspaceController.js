@@ -11,10 +11,10 @@
       services: {
         ixdirectory: './ixdirectory/api/rest/v2/',
         pxcentral_base: 'pxcentral/api/rest/v1/',
-        ixlibrary_base: 'ixlibrary/api/sdo/rest/v1/',
+        ixlibrary_base: '/api/sdo/rest/v1/',
         ixdoc: './ixdoc/api/rest/v2/',
         ixadmin: './config/ics/staging/ixadmin',
-        zendesk: 'https://staging-services.icg360.org/zendesk'
+        zendesk: './zendesk'
       }
     };
     valid_workspace = function(methodBody) {
@@ -360,7 +360,7 @@
         return true;
       },
       launch_workspace: function() {
-        var app, apps, data, group_label, menu, node, url, _i, _len, _ref,
+        var app, apps, data, group_label, ixlibrary, menu, node, url, _i, _len, _ref,
           _this = this;
         if (this.is_loggedin === false) {
           return;
@@ -379,11 +379,14 @@
         if ($('#header').height() < 95) {
           $('#header').css('height', '95px');
         }
+        ixlibrary = this.config.get_ixLibrary(this.workspace_state);
+        if ((ixlibrary.baseURL != null) || ixlibrary.baseURL !== void 0) {
+          this.services.ixlibrary = "" + ixlibrary.baseURL + this.services.ixlibrary_base;
+        }
         if (url = this.config.get_pxCentral(this.workspace_state)) {
           this.services.pxcentral = "" + url + this.services.pxcentral_base;
-          this.services.ixlibrary = "" + url + this.services.ixlibrary_base;
         }
-        _ref = ['cxserver', 'ixdirectory', 'ixprofiler', 'ixrelay', 'ixvocab'];
+        _ref = ['cxserver', 'ixdirectory', 'ixprofiler', 'ixrelay', 'ixvocab', 'zendesk'];
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           node = _ref[_i];
           this.services[node] = this.config.get_universal_service(this.workspace_state, node);
