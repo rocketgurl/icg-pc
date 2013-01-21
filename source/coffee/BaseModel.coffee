@@ -37,15 +37,20 @@ define [
     # Setup XML parsing using CrippledClient
     xmlSync  : XMLSync
     xmlParse : (response, xhr) ->
-      tree   = response if response?
-      xmlstr = if response?.xml? then response.xml else (new XMLSerializer()).serializeToString(response)
-      tree   = $.parseXML(xmlstr)
-      out = { 'xhr' : xhr }
+      if response?
+        tree = response
+        if _.has(response, 'xml')
+          xmlstr = response.xml
+        else
+          xmlstr = (new XMLSerializer()).serializeToString(response)
+
+      tree = $.parseXML(xmlstr)
+      out  = { 'xhr' : xhr }
+
       if tree?
-          out.document   = $(tree)
-          out.raw_xml    = xhr.responseText
-          # out.string_xml = xmlstr
-          out.json       = $.fn.xml2json(out.raw_xml)
+        out.document   = $(tree)
+        out.raw_xml    = xhr.responseText
+        out.json       = $.fn.xml2json(out.raw_xml)
       out
 
     # Response state (Hackety hack hack)

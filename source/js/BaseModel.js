@@ -14,8 +14,12 @@
         var out, tree, xmlstr;
         if (response != null) {
           tree = response;
+          if (_.has(response, 'xml')) {
+            xmlstr = response.xml;
+          } else {
+            xmlstr = (new XMLSerializer()).serializeToString(response);
+          }
         }
-        xmlstr = (response != null ? response.xml : void 0) != null ? response.xml : (new XMLSerializer()).serializeToString(response);
         tree = $.parseXML(xmlstr);
         out = {
           'xhr': xhr
