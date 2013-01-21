@@ -20,7 +20,7 @@ define [
     # Bind some events to deal with peculiarities of handling
     # multiple methods.
     #
-    initialize : () ->
+    initialize : ->
       @bind 'add', @add_one, @
       @bind 'reset', @add_many, @
 
@@ -37,7 +37,7 @@ define [
     # We can take raw HTML here instead of a className (parent)
     #
     render : (model, parent) ->
-      @parent = parent || $('.search-menu-context')
+      @parent = parent ? $('.search-menu-context')
       data = model.attributes
 
       # Help out herp derp browsers

@@ -24,7 +24,7 @@
       },
       render: function(model, parent) {
         var data;
-        this.parent = parent || $('.search-menu-context');
+        this.parent = parent != null ? parent : $('.search-menu-context');
         data = model.attributes;
         if (_.isObject(data.params)) {
           data.params = Helpers.serialize(data.params);

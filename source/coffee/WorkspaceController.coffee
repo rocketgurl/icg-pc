@@ -234,7 +234,7 @@ define [
           controller   : @
           template     : $('#tpl-ics-login')
           template_tab : $('#tpl-workspace-tab').html()
-          tab_label : 'Login'
+          tab_label    : 'Login'
         })
       @login_view.render()
 
@@ -263,9 +263,16 @@ define [
             # The model has to figure out what the
             # response state was
             model.response_state()
-            switch @user.get('fetch_state').code
+
+            fetch_state = @user.get('fetch_state')
+
+            if fetch_state?
+              fetch_state = if _.has(fetch_state, 'code') then fetch_state.code else null            
+
+            switch fetch_state
               when "200" then @login_success(model, resp)
-              else @login_fail(model, resp, @user.get('fetch_state'))
+              else @login_fail(model, resp, fetch_state)
+
           error : (model, resp) =>
             @response_fail model, resp
         )
@@ -426,17 +433,19 @@ define [
     # that models are passed around to many instances of 
     # SearchModule. It's a hack, but it works for now.
     setup_search_storage : ->
-      if !@SEARCH?.saved_searches?
 
-        # if !_.isFunction(SearchContextCollection)
-        #   throw new Error('SearchContextCollection is not loaded properly')
+      if @SEARCH == null || @SEARCH == undefined
+        return
 
-        @SEARCH =
-          saved_searches : new SearchContextCollection()  
-              
-        @SEARCH.saved_searches.controller = @ # so we can phone home
-        @SEARCH.saved_searches.fetch()
-        @SEARCH.saved_searches
+      if !_.has(@SEARCH, 'saved_searches')
+        return
+
+      @SEARCH =
+        saved_searches : new SearchContextCollection()  
+            
+      @SEARCH.saved_searches.controller = @ # so we can phone home
+      @SEARCH.saved_searches.fetch()
+      @SEARCH.saved_searches
 
     #### Check logged in state
     is_loggedin : ->

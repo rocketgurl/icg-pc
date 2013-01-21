@@ -3,12 +3,11 @@
 
   define(['BaseModel'], function(BaseModel) {
     var SearchContextModel;
-    SearchContextModel = BaseModel.extend({
+    return SearchContextModel = BaseModel.extend({
       initialize: function() {
         return this.use_localStorage('ics_saved_searches');
       }
     });
-    return SearchContextModel;
   });
 
 }).call(this);

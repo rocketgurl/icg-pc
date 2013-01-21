@@ -8,5 +8,3 @@ define [
 
     initialize : ->
       @use_localStorage 'ics_saved_searches'
-
-  SearchContextModel

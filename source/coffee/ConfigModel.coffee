@@ -8,11 +8,11 @@ define [
   check_workspace = (methodBody) ->
     (workspace) ->
       # No document, no dice
-      if not @get('document')?
-        false
+      if @get('document') == null
+        return false
       # Extract workspace config from model
       workspace = workspace.get('workspace')
-      if !workspace?
+      if workspace == null || workspace == undefined
         false
       else
         methodBody.apply(this, arguments)

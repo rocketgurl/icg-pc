@@ -201,12 +201,17 @@
         });
         this.user.fetch({
           success: function(model, resp) {
+            var fetch_state;
             model.response_state();
-            switch (_this.user.get('fetch_state').code) {
+            fetch_state = _this.user.get('fetch_state');
+            if (fetch_state != null) {
+              fetch_state = _.has(fetch_state, 'code') ? fetch_state.code : null;
+            }
+            switch (fetch_state) {
               case "200":
                 return _this.login_success(model, resp);
               default:
-                return _this.login_fail(model, resp, _this.user.get('fetch_state'));
+                return _this.login_fail(model, resp, fetch_state);
             }
           },
           error: function(model, resp) {
@@ -328,15 +333,18 @@
         }
       },
       setup_search_storage: function() {
-        var _ref;
-        if (!(((_ref = this.SEARCH) != null ? _ref.saved_searches : void 0) != null)) {
-          this.SEARCH = {
-            saved_searches: new SearchContextCollection()
-          };
-          this.SEARCH.saved_searches.controller = this;
-          this.SEARCH.saved_searches.fetch();
-          return this.SEARCH.saved_searches;
+        if (this.SEARCH === null || this.SEARCH === void 0) {
+          return;
         }
+        if (!_.has(this.SEARCH, 'saved_searches')) {
+          return;
+        }
+        this.SEARCH = {
+          saved_searches: new SearchContextCollection()
+        };
+        this.SEARCH.saved_searches.controller = this;
+        this.SEARCH.saved_searches.fetch();
+        return this.SEARCH.saved_searches;
       },
       is_loggedin: function() {
         if (!(this.user != null)) {

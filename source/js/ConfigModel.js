@@ -5,11 +5,11 @@
     var ConfigModel, check_workspace;
     check_workspace = function(methodBody) {
       return function(workspace) {
-        if (!(this.get('document') != null)) {
-          false;
+        if (this.get('document') === null) {
+          return false;
         }
         workspace = workspace.get('workspace');
-        if (!(workspace != null)) {
+        if (workspace === null || workspace === void 0) {
           return false;
         } else {
           return methodBody.apply(this, arguments);
