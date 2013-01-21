@@ -43,9 +43,6 @@
       logger: function(msg) {
         return this.Amplify.publish('log', msg);
       },
-      flash: function(type, msg) {
-        return this.Amplify.publish(this.login_view.cid, type, msg);
-      },
       workspace_stack: [],
       stack_add: function(view) {
         var exists;
@@ -176,18 +173,13 @@
         });
       },
       build_login: function() {
-        var login_flash;
-        if (this.login_view != null) {
-          this.login_view.destroy();
+        if ($('#login-container').length === 0) {
+          $('#target').prepend('<div id="login-container" />');
         }
         this.login_view = new WorkspaceLoginView({
-          controller: this,
-          template: $('#tpl-ics-login'),
-          template_tab: $('#tpl-workspace-tab').html(),
-          tab_label: 'Login'
+          controller: this
         });
         this.login_view.render();
-        login_flash = new Messenger(this.login_view, this.login_view.cid);
         if (this.navigation_view != null) {
           this.navigation_view.destroy();
         }
@@ -195,7 +187,7 @@
         $('body').addClass('logo-background');
         return this.login_view;
       },
-      check_credentials: function(username, password, view) {
+      check_credentials: function(username, password) {
         var _this = this;
         this.user = new UserModel({
           urlRoot: this.services.ixdirectory + 'identities',
@@ -224,7 +216,10 @@
         return this.user;
       },
       response_fail: function(model, resp) {
-        this.Amplify.publish(this.login_view.cid, 'warning', "Sorry, your password or username was incorrect");
+        if (this.login_view != null) {
+          this.login_view.removeLoader();
+        }
+        this.login_view.displayMessage('warning', "Sorry, your password or username was incorrect");
         return this.logger("Response fail: " + resp.status + " : " + resp.statusText + " - " + resp.responseText);
       },
       login_success: function(model, resp) {
@@ -235,6 +230,8 @@
         this.show_workspace_button();
         if (this.login_view != null) {
           this.login_view.destroy();
+          this.login_view.remove();
+          delete this.login_view;
           return $('body').removeClass('logo-background');
         }
       },
@@ -243,14 +240,11 @@
         if (this.login_view != null) {
           this.login_view.removeLoader();
         }
-        this.Router.navigate('login', {
-          trigger: true
-        });
         msg = "There was an error parsing your identity record: " + state;
         if (state === "401") {
           msg = "Your username/password was incorrect. Please try again";
         }
-        return this.Amplify.publish(this.login_view.cid, 'warning', msg);
+        return this.login_view.displayMessage('warning', msg);
       },
       logout: function() {
         this.Cookie.remove(this.COOKIE_NAME);

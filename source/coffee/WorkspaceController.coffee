@@ -76,10 +76,6 @@ define [
     logger : (msg) ->
       @Amplify.publish 'log', msg
 
-    # Display a flash message in the browser
-    flash : (type, msg) ->
-      @Amplify.publish @login_view.cid, type, msg    
-
     # Keep tabs on what's in our Workspace.
     # This should contain WorkspaceCanvasView-enabled objects
     workspace_stack : []
@@ -230,19 +226,14 @@ define [
 
     # Render the login form
     build_login : ->
-      if @login_view?
-        @login_view.destroy()
+      # Shim in a container for the login form
+      if $('#login-container').length == 0
+        $('#target').prepend('<div id="login-container" />')
 
       @login_view = new WorkspaceLoginView({
-          controller   : @
-          template     : $('#tpl-ics-login')
-          template_tab : $('#tpl-workspace-tab').html()
-          tab_label    : 'Login'
+          controller   : this
         })
       @login_view.render()
-
-      # Set a flash message listener on the login form
-      login_flash = new Messenger(@login_view, @login_view.cid)
 
       if @navigation_view?
         @navigation_view.destroy()
@@ -254,7 +245,7 @@ define [
 
     # Instantiate a new user and check ixDirectory
     # for valid credentials
-    check_credentials : (username, password, view) ->
+    check_credentials : (username, password) ->
       @user = new UserModel
         urlRoot    : @services.ixdirectory + 'identities'
         'username' : username
@@ -284,7 +275,10 @@ define [
 
     # Need to throw a nice error message
     response_fail : (model, resp) ->
-      @Amplify.publish @login_view.cid, 'warning', "Sorry, your password or username was incorrect"
+      if @login_view?
+        @login_view.removeLoader()
+
+      @login_view.displayMessage 'warning', "Sorry, your password or username was incorrect"
       @logger "Response fail: #{resp.status} : #{resp.statusText} - #{resp.responseText}"
 
     # On a successfull login have @user set some variables
@@ -299,9 +293,13 @@ define [
       @set_cookie_identity(@user.get('digest')) # set cookie
       @set_admin_links() # Change admin links to name & logout
       @show_workspace_button()
+
       if @login_view?
         @login_view.destroy()
+        @login_view.remove()
+        delete @login_view
         $('body').removeClass('logo-background')
+        
 
     # On unsuccessful login render the login form again
     # along with a Flash message indicating issue
@@ -314,13 +312,13 @@ define [
       if @login_view?
         @login_view.removeLoader()
 
-      @Router.navigate('login', { trigger : true })
+      # @Router.navigate('login', { trigger : true })
 
       msg = "There was an error parsing your identity record: #{state}"
       if state == "401"
         msg = "Your username/password was incorrect. Please try again"
 
-      @Amplify.publish @login_view.cid, 'warning', msg
+      @login_view.displayMessage 'warning', msg
 
     # Delete the identity cookie and nullify User
     # TODO: Need to teardown the main nav
