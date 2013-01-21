@@ -11,6 +11,7 @@
       },
       render: function() {
         var html;
+        this.removeLoader();
         html = this.Mustache.render($('#tpl-flash-message').html(), {
           cid: this.cid
         });
@@ -21,15 +22,30 @@
         return this.messenger = new Messenger(this, this.cid);
       },
       destroy: function() {
+        this.removeLoader();
         this.$el.find('#form-login').remove();
         return this.off();
       },
       get_credentials: function(event) {
         var password, username;
         event.preventDefault();
+        this.displayLoader();
         username = this.$el.find('input:text').val();
         password = this.$el.find('input:password').val();
-        return this.options.controller.check_credentials(username, password);
+        return this.options.controller.check_credentials(username, password, this);
+      },
+      displayLoader: function() {
+        this.loader = this.Helpers.loader("search-spinner-" + this.cid, 100, '#ffffff');
+        this.loader.setDensity(70);
+        this.loader.setFPS(48);
+        return $("#search-loader-" + this.cid).show();
+      },
+      removeLoader: function() {
+        if (this.loader != null) {
+          this.loader.kill();
+          this.loader = null;
+          return $("#search-loader-" + this.cid).hide();
+        }
       }
     });
   });

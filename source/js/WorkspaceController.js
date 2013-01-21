@@ -177,6 +177,9 @@
       },
       build_login: function() {
         var login_flash;
+        if (this.login_view != null) {
+          this.login_view.destroy();
+        }
         this.login_view = new WorkspaceLoginView({
           controller: this,
           template: $('#tpl-ics-login'),
@@ -192,7 +195,7 @@
         $('body').addClass('logo-background');
         return this.login_view;
       },
-      check_credentials: function(username, password) {
+      check_credentials: function(username, password, view) {
         var _this = this;
         this.user = new UserModel({
           urlRoot: this.services.ixdirectory + 'identities',
@@ -236,10 +239,18 @@
         }
       },
       login_fail: function(model, resp, state) {
+        var msg;
+        if (this.login_view != null) {
+          this.login_view.removeLoader();
+        }
         this.Router.navigate('login', {
           trigger: true
         });
-        return this.Amplify.publish(this.login_view.cid, 'warning', "There was an error parsing your identity record " + state.text);
+        msg = "There was an error parsing your identity record: " + state;
+        if (state === "401") {
+          msg = "Your username/password was incorrect. Please try again";
+        }
+        return this.Amplify.publish(this.login_view.cid, 'warning', msg);
       },
       logout: function() {
         this.Cookie.remove(this.COOKIE_NAME);

@@ -230,6 +230,9 @@ define [
 
     # Render the login form
     build_login : ->
+      if @login_view?
+        @login_view.destroy()
+
       @login_view = new WorkspaceLoginView({
           controller   : @
           template     : $('#tpl-ics-login')
@@ -251,7 +254,7 @@ define [
 
     # Instantiate a new user and check ixDirectory
     # for valid credentials
-    check_credentials : (username, password) ->
+    check_credentials : (username, password, view) ->
       @user = new UserModel
         urlRoot    : @services.ixdirectory + 'identities'
         'username' : username
@@ -308,8 +311,16 @@ define [
     # @param `state` _Object_ Error code/text from server
     #
     login_fail : (model, resp, state) ->
+      if @login_view?
+        @login_view.removeLoader()
+
       @Router.navigate('login', { trigger : true })
-      @Amplify.publish @login_view.cid, 'warning', "There was an error parsing your identity record #{state.text}"
+
+      msg = "There was an error parsing your identity record: #{state}"
+      if state == "401"
+        msg = "Your username/password was incorrect. Please try again"
+
+      @Amplify.publish @login_view.cid, 'warning', msg
 
     # Delete the identity cookie and nullify User
     # TODO: Need to teardown the main nav
