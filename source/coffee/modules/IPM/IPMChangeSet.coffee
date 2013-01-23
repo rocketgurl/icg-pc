@@ -387,3 +387,19 @@ define [
         </Event>
       </EventHistory>
     """
+
+    reverse_disbursement : """
+      <Ledger>
+        <LineItem value="-{{amount}}" type="REVERSE_DISBURSE" timestamp="{{timestamp}}">
+          <Memo></Memo>
+          <DataItem name="Amount" value="{{amount}}" />
+          <DataItem name="Reference" value="{{reference}}" />
+        </LineItem>
+      </Ledger>
+      <EventHistory>
+        <Event type="VoidStopPay">
+          <DataItem name="Amount" value="{{amount}}" />
+          <DataItem name="Reference" value="{{reference}}" />
+        </Event>
+      </EventHistory>
+    """

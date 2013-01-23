@@ -196,6 +196,8 @@
 
       IPMChangeSet.prototype.premium_disbursement = "<Ledger>\n  <LineItem value=\"{{amount}}\" type=\"DISBURSE\" timestamp=\"{{timestamp}}\">\n    <Memo>Return Premium</Memo>\n    <DataItem name=\"Amount\" value=\"{{amount}}\" />\n    <DataItem name=\"Reference\" value=\"{{reference}}\" />\n  </LineItem>\n</Ledger>\n<EventHistory>\n  <Event type=\"Return Premium\">\n    <DataItem name=\"Amount\" value=\"{{amount}}\" />\n    <DataItem name=\"Reference\" value=\"{{reference}}\" />\n  </Event>\n</EventHistory>";
 
+      IPMChangeSet.prototype.reverse_disbursement = "<Ledger>\n  <LineItem value=\"-{{amount}}\" type=\"REVERSE_DISBURSE\" timestamp=\"{{timestamp}}\">\n    <Memo></Memo>\n    <DataItem name=\"Amount\" value=\"{{amount}}\" />\n    <DataItem name=\"Reference\" value=\"{{reference}}\" />\n  </LineItem>\n</Ledger>\n<EventHistory>\n  <Event type=\"VoidStopPay\">\n    <DataItem name=\"Amount\" value=\"{{amount}}\" />\n    <DataItem name=\"Reference\" value=\"{{reference}}\" />\n  </Event>\n</EventHistory>";
+
       return IPMChangeSet;
 
     })();
