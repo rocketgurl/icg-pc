@@ -7,7 +7,6 @@
   define(['BaseView', 'Messenger', 'modules/IPM/IPMChangeSet', 'modules/IPM/IPMFormValidation'], function(BaseView, Messenger, IPMChangeSet, IPMFormValidation) {
     /*
         ACTIONVIEWS TODO:
-          Premium disbursement
           Reverse disbursement
           Reverse payment
           Write off charges

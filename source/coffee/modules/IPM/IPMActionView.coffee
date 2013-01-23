@@ -7,7 +7,6 @@ define [
 
   ###
     ACTIONVIEWS TODO:
-      Premium disbursement
       Reverse disbursement
       Reverse payment
       Write off charges
