@@ -403,3 +403,20 @@ define [
         </Event>
       </EventHistory>
     """
+
+    reverse_payment : """
+      <Ledger>
+        <LineItem value="{{paymentAmount}}" type="REVERSE_PAYMENT" timestamp="{{timestamp}}">
+          <Memo></Memo>
+          <DataItem name="Reference" value="{{paymentReference}}" />
+          <DataItem name="PaymentMethod" value="{{paymentMethod}}" />          
+        </LineItem>
+      </Ledger>
+      <EventHistory>
+        <Event type="Chargeback">
+          <DataItem name="Amount" value="{{paymentAmount}}" />
+          <DataItem name="Reference" value="{{paymentReference}}" />
+          <DataItem name="PaymentMethod" value="{{paymentMethod}}" />
+        </Event>
+      </EventHistory>
+    """

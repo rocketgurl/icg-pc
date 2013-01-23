@@ -198,6 +198,8 @@
 
       IPMChangeSet.prototype.reverse_disbursement = "<Ledger>\n  <LineItem value=\"-{{amount}}\" type=\"REVERSE_DISBURSE\" timestamp=\"{{timestamp}}\">\n    <Memo></Memo>\n    <DataItem name=\"Amount\" value=\"{{amount}}\" />\n    <DataItem name=\"Reference\" value=\"{{reference}}\" />\n  </LineItem>\n</Ledger>\n<EventHistory>\n  <Event type=\"VoidStopPay\">\n    <DataItem name=\"Amount\" value=\"{{amount}}\" />\n    <DataItem name=\"Reference\" value=\"{{reference}}\" />\n  </Event>\n</EventHistory>";
 
+      IPMChangeSet.prototype.reverse_payment = "<Ledger>\n  <LineItem value=\"{{paymentAmount}}\" type=\"REVERSE_PAYMENT\" timestamp=\"{{timestamp}}\">\n    <Memo></Memo>\n    <DataItem name=\"Reference\" value=\"{{paymentReference}}\" />\n    <DataItem name=\"PaymentMethod\" value=\"{{paymentMethod}}\" />          \n  </LineItem>\n</Ledger>\n<EventHistory>\n  <Event type=\"Chargeback\">\n    <DataItem name=\"Amount\" value=\"{{paymentAmount}}\" />\n    <DataItem name=\"Reference\" value=\"{{paymentReference}}\" />\n    <DataItem name=\"PaymentMethod\" value=\"{{paymentMethod}}\" />\n  </Event>\n</EventHistory>";
+
       return IPMChangeSet;
 
     })();

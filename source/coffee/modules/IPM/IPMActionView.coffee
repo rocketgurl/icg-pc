@@ -7,8 +7,6 @@ define [
 
   ###
     ACTIONVIEWS TODO:
-      Reverse disbursement
-      Reverse payment
       Write off charges
       Issue (automatic)
       Issue (manual)
