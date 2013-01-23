@@ -371,3 +371,19 @@ define [
         </Event>
       </EventHistory>
     """
+
+    premium_disbursement : """
+      <Ledger>
+        <LineItem value="{{amount}}" type="DISBURSE" timestamp="{{timestamp}}">
+          <Memo>Return Premium</Memo>
+          <DataItem name="Amount" value="{{amount}}" />
+          <DataItem name="Reference" value="{{reference}}" />
+        </LineItem>
+      </Ledger>
+      <EventHistory>
+        <Event type="Return Premium">
+          <DataItem name="Amount" value="{{amount}}" />
+          <DataItem name="Reference" value="{{reference}}" />
+        </Event>
+      </EventHistory>
+    """

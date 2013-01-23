@@ -137,11 +137,12 @@ define [
         { element : el, msg : "Outside date range: #{el.data('minDate')} - #{el.data('maxDate')}" }
 
 
+    # We need to accept values of zero hence check against -1
     money : (el) ->
-      if parseFloat(el.val(), 10) > 0
+      if parseFloat(el.val(), 10) > -1
         true
       else
-        { element : el, msg : "Needs to be greater than zero" }
+        { element : el, msg : "Needs to be at least zero" }
 
     # Determine if a number falls within a range. Only one attr (min/max)
     # needs to be defined.

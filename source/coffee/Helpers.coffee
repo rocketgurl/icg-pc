@@ -80,7 +80,7 @@ define [
       else
         (new DOMParser()).parseFromString(sXML, "text/xml")
 
-    # Determine if a number is an integer. Will return false on floats,
+    # Determine if a number is an **integer**. Will return false on floats,
     # NaN, booleans, etc.
     # http://stackoverflow.com/questions/3885817/how-to-check-if-a-number-is-float-or-integer
     #
@@ -89,6 +89,18 @@ define [
     #
     isInt : (n) ->
       typeof n == 'number' && n % 1 == 0
+
+    # Coerce form input into a number, return zero on NaN
+    #
+    # @param `n` _Mixed_   
+    # @return _Number_  
+    #
+    toNum : (n) ->
+      n = Math.abs(n || 0)
+      if _.isNaN(n)
+        return 0
+      else
+        n
 
     # Format a number as float with 2 decimal places (ex: 5.25)
     # NaN and non-numbers will return 0.00 - NaN is technically a number so
