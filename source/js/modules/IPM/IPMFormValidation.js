@@ -32,13 +32,13 @@
         });
       }
 
-      IPMFormValidation.prototype.validateFields = function(required_fields) {
+      IPMFormValidation.prototype.validateFields = function(validate_fields) {
         var el, field, fields, _i, _len, _results;
         fields = (function() {
           var _i, _len, _results;
           _results = [];
-          for (_i = 0, _len = required_fields.length; _i < _len; _i++) {
-            el = required_fields[_i];
+          for (_i = 0, _len = validate_fields.length; _i < _len; _i++) {
+            el = validate_fields[_i];
             _results.push(this.validateField(el, this.validators, this));
           }
           return _results;
@@ -54,22 +54,51 @@
       };
 
       IPMFormValidation.prototype.validateField = function(el, validators, FormValidation) {
-        var el_name;
+        var el_name, res, rule, _i, _len, _ref;
         if (!(el instanceof jQuery)) {
           el = $(el);
         }
-        if (el.val() === '' || el.val() === void 0) {
-          return {
-            element: el,
-            msg: 'This is a required field'
-          };
-        }
         el_name = el.attr('name');
         if ((validators != null) && _.has(validators, el_name)) {
-          return FormValidation[validators[el_name]](el);
+          _ref = validators[el_name];
+          for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+            rule = _ref[_i];
+            if (res = FormValidation[rule](el)) {
+              return res;
+            }
+          }
+          return false;
         } else {
           return false;
         }
+      };
+
+      IPMFormValidation.prototype.processRequiredFields = function(inputs) {
+        var input, validators, _i, _len;
+        validators = {};
+        for (_i = 0, _len = inputs.length; _i < _len; _i++) {
+          input = inputs[_i];
+          input = $(input);
+          validators[input.attr('name')] = ['required'];
+        }
+        return validators;
+      };
+
+      IPMFormValidation.prototype.mergeValidators = function(required_fields, validators, form) {
+        var el, name, rule;
+        for (name in validators) {
+          rule = validators[name];
+          el = form.find("#id_" + name).get();
+          if (el.length > 0) {
+            if (_.has(required_fields, name)) {
+              required_fields[name].push(rule);
+              required_fields[name] = _.uniq(_.flatten(required_fields[name]));
+            } else {
+              required_fields[name] = [rule];
+            }
+          }
+        }
+        return required_fields;
       };
 
       IPMFormValidation.prototype.showErrorState = function(el, scope) {
@@ -99,13 +128,30 @@
         return "The fields below had errors that need correction:\n<div class=\"error_details\">\n  <ul>\n    " + (details.join('')) + "\n  </ul>\n</div>";
       };
 
+      IPMFormValidation.prototype.isEmpty = function(el) {
+        var val;
+        val = el.val();
+        return val === '' || val === null || val === void 0;
+      };
+
+      IPMFormValidation.prototype.required = function(el) {
+        if (this.isEmpty(el)) {
+          return {
+            element: el,
+            msg: 'This is a required field'
+          };
+        } else {
+          return false;
+        }
+      };
+
       IPMFormValidation.prototype.dateRange = function(el) {
         var end, range, start, whence;
-        if (el.val() === '' || !(el.val() != null)) {
-          ({
+        if (this.isEmpty(el)) {
+          return {
             element: el,
             msg: "Date missing"
-          });
+          };
         }
         start = moment(el.data('minDate')).subtract('days', 1);
         end = moment(el.data('maxDate')).add('days', 1);
@@ -122,31 +168,32 @@
       };
 
       IPMFormValidation.prototype.money = function(el) {
-        if (parseFloat(el.val(), 10) > 0) {
-          return true;
+        if (parseFloat(el.val(), 10) > -1) {
+          return false;
         } else {
           return {
             element: el,
-            msg: "Needs to be greater than zero"
+            msg: "Needs to be at least zero"
           };
         }
       };
 
       IPMFormValidation.prototype.number = function(el) {
-        var max, min, val;
+        var max, min, msg, val;
         val = parseInt(el.val(), 10);
         min = el.attr('min') ? parseInt(el.attr('min'), 10) : null;
         max = el.attr('max') ? parseInt(el.attr('max'), 10) : null;
-        if (min && val < min) {
-          false;
-        }
-        if (max && val > max) {
-          false;
-        }
-        return {
+        msg = {
           element: el,
           msg: "Outside range: " + (el.data('min')) + " - " + (el.data('max'))
         };
+        if (min && val < min) {
+          return msg;
+        }
+        if (max && val > max) {
+          return msg;
+        }
+        return false;
       };
 
       return IPMFormValidation;

@@ -194,6 +194,8 @@
 
       IPMChangeSet.prototype.make_payment = "<Ledger>\n  <LineItem value=\"{{paymentAmount}}\" type=\"PAYMENT\" timestamp=\"{{timestamp}}\">\n    <Memo></Memo>\n    <DataItem name=\"Reference\" value=\"{{paymentReference}}\" />\n    <DataItem name=\"PaymentMethod\" value=\"{{paymentMethod}}\" />\n  </LineItem>\n</Ledger>\n<EventHistory>\n  <Event type=\"Payment\">\n    <DataItem name=\"PaymentAmount\" value=\"{{positivePaymentAmount}}\" />\n    <DataItem name=\"PaymentMethod\" value=\"{{paymentMethod}}\" />\n    <DataItem name=\"PaymentReference\" value=\"{{paymentReference}}\" />\n    <DataItem name=\"PaymentBatch\" value=\"{{paymentBatch}}\" />\n    <DataItem name=\"PostmarkDate\" value=\"{{postmarkDate}}\" />\n    <DataItem name=\"AppliedDate\" value=\"{{appliedDate}}\" />\n  </Event>\n</EventHistory>";
 
+      IPMChangeSet.prototype.premium_disbursement = "<Ledger>\n  <LineItem value=\"{{amount}}\" type=\"DISBURSE\" timestamp=\"{{timestamp}}\">\n    <Memo>Return Premium</Memo>\n    <DataItem name=\"Amount\" value=\"{{amount}}\" />\n    <DataItem name=\"Reference\" value=\"{{reference}}\" />\n  </LineItem>\n</Ledger>\n<EventHistory>\n  <Event type=\"Return Premium\">\n    <DataItem name=\"Amount\" value=\"{{amount}}\" />\n    <DataItem name=\"Reference\" value=\"{{reference}}\" />\n  </Event>\n</EventHistory>";
+
       return IPMChangeSet;
 
     })();

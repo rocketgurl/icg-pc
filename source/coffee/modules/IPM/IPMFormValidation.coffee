@@ -40,33 +40,68 @@ define [
     # @param `required_fields` _Array_ Form elements to be validated
     # @return _Array_ 
     #
-    validateFields : (required_fields) ->
+    validateFields : (validate_fields) ->
       # Loop through array and test each field
       # Object || false
-      fields = for el in required_fields
+      fields = for el in validate_fields
                 @validateField(el, @validators, this)
+      # filters out false values
       (field for field in fields when field)
 
     # Validate a single form field
     #
     # @param `el` _HTML Element_ Form element to be validated
-    # @return _Boolean_ 
+    # @return _Boolean_ || _Object_ **Note:** true means it failed
     #
     validateField : (el, validators, FormValidation) ->
       if !(el instanceof jQuery)
         el = $(el)
 
-      # _Note:_ true means it failed
-      if el.val() == '' || el.val() == undefined
-        return { element : el, msg : 'This is a required field' }
-
       el_name = el.attr('name')
 
       # Call the rule for this el if it has a definition
       if validators? && _.has(validators, el_name)
-        return FormValidation[validators[el_name]](el)
+        for rule in validators[el_name]
+          if res = FormValidation[rule](el)
+            return res
+        return false
       else
         return false
+
+    # Build validator rule object of inputs with required rule 
+    #
+    # @param `inputs` _Array_ HTML Input Elements
+    # @return _Object_  
+    #
+    processRequiredFields : (inputs) ->
+      validators = {}
+      for input in inputs
+        input = $(input)
+        validators[input.attr('name')] = ['required']
+      validators
+
+    # Merge the required fields validators object with any existing validators
+    #
+    # @param `required_fields` _Object_ Validators  
+    # @param `validators` _Object_ Validators  
+    # @param `form` _jQuery_ Form object    
+    # @return _Object_  
+    #
+    mergeValidators : (required_fields, validators, form) ->
+      for name, rule of validators
+        el = form.find("#id_#{name}").get()
+        if el.length > 0
+          if _.has(required_fields, name)
+            required_fields[name].push rule
+            # _Hack_: because of the order we do this, another array may be
+            # pushed onto this one, so we flatten it and remove dupes.
+            # TODO: Refactor IPMActionView and FormValidation to only assemble
+            # validation fields one time
+            required_fields[name] = _.uniq(_.flatten(required_fields[name]))
+          else
+            required_fields[name] = [rule]
+      required_fields
+
 
     # Elements should show that they are required. We also attach an
     # event so that if the element is 'changed' it is re-validated on the fly
@@ -117,13 +152,27 @@ define [
         </div>
       """
 
+    # Check a jQuery form element for an empty or unset state
+    #
+    # @param `el` _Form Element_  
+    # @return _Boolean_  
+    #      
+    isEmpty : (el) ->
+      val = el.val()
+      val == '' || val == null || val == undefined
+
     # Rules
     # -----
     # TODO: Maybe wrap these in the jQuery checker up top
+    required : (el) ->
+      if @isEmpty el
+        { element : el, msg : 'This is a required field' }
+      else
+        false
 
     dateRange : (el) ->
-      if el.val() == '' || !el.val()?
-        { element : el, msg : "Date missing" }
+      if @isEmpty el
+        return { element : el, msg : "Date missing" }
 
       start  = moment(el.data('minDate')).subtract('days', 1)
       end    = moment(el.data('maxDate')).add('days', 1)
@@ -140,7 +189,7 @@ define [
     # We need to accept values of zero hence check against -1
     money : (el) ->
       if parseFloat(el.val(), 10) > -1
-        true
+        false
       else
         { element : el, msg : "Needs to be at least zero" }
 
@@ -150,8 +199,12 @@ define [
       val = parseInt(el.val(), 10)
       min = if el.attr('min') then parseInt(el.attr('min'), 10) else null
       max = if el.attr('max') then parseInt(el.attr('max'), 10) else null
+      msg = { element : el, msg : "Outside range: #{el.data('min')} - #{el.data('max')}" }
+
       if min && val < min
-        false
+        return msg
       if max && val > max
-        false
-      { element : el, msg : "Outside range: #{el.data('min')} - #{el.data('max')}" }
+        return msg
+
+      false
+      

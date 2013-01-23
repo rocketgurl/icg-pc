@@ -82,6 +82,14 @@
       isInt: function(n) {
         return typeof n === 'number' && n % 1 === 0;
       },
+      toNum: function(n) {
+        n = Math.abs(n || 0);
+        if (_.isNaN(n)) {
+          return 0;
+        } else {
+          return n;
+        }
+      },
       formatMoney: function(n) {
         n = parseFloat(n, 10);
         if (_.isNaN(n)) {

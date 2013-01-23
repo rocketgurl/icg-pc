@@ -307,17 +307,20 @@
       };
 
       IPMActionView.prototype.validate = function() {
-        var el, errors, name, required_fields, rule, _ref;
-        required_fields = this.$el.find('input[required], select[required]').get();
-        _ref = this.FormValidation.validators;
-        for (name in _ref) {
-          rule = _ref[name];
-          el = this.$el.find("#id_" + name).get();
-          if (el.length > 0) {
-            required_fields.push(el);
+        var errors, field, fields, required_fields, rules;
+        required_fields = this.FormValidation.processRequiredFields(this.$el.find('input[required], select[required]').get());
+        this.FormValidation.validators = this.FormValidation.mergeValidators(required_fields, this.FormValidation.validators, this.$el);
+        fields = (function() {
+          var _ref, _results;
+          _ref = this.FormValidation.validators;
+          _results = [];
+          for (field in _ref) {
+            rules = _ref[field];
+            _results.push($("#id_" + field));
           }
-        }
-        errors = this.FormValidation.validateFields(required_fields);
+          return _results;
+        }).call(this);
+        errors = this.FormValidation.validateFields(fields);
         if (_.isEmpty(errors)) {
           return true;
         } else {

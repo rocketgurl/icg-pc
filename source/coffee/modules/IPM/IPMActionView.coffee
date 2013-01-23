@@ -433,14 +433,24 @@ define [
     # @return _Boolean_ 
     #
     validate : ->
-      required_fields = @$el.find('input[required], select[required]').get()
+      # Convert all required fields into a validators object
+      required_fields = \
+        @FormValidation.processRequiredFields(
+          @$el.find('input[required], select[required]').get()
+        )
 
-      for name, rule of @FormValidation.validators
-        el = @$el.find("#id_#{name}").get()
-        if el.length > 0
-          required_fields.push el
+      # Mutate validators to contain the required_fields rules
+      @FormValidation.validators = \
+        @FormValidation.mergeValidators(
+          required_fields,
+          @FormValidation.validators,
+          @$el
+        )
 
-      errors = @FormValidation.validateFields(required_fields)
+      fields = for field, rules of @FormValidation.validators
+        $("#id_#{field}")
+
+      errors = @FormValidation.validateFields(fields)
 
       if _.isEmpty errors
         true
