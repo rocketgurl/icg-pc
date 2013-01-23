@@ -200,6 +200,8 @@
 
       IPMChangeSet.prototype.reverse_payment = "<Ledger>\n  <LineItem value=\"{{paymentAmount}}\" type=\"REVERSE_PAYMENT\" timestamp=\"{{timestamp}}\">\n    <Memo></Memo>\n    <DataItem name=\"Reference\" value=\"{{paymentReference}}\" />\n    <DataItem name=\"PaymentMethod\" value=\"{{paymentMethod}}\" />          \n  </LineItem>\n</Ledger>\n<EventHistory>\n  <Event type=\"Chargeback\">\n    <DataItem name=\"Amount\" value=\"{{paymentAmount}}\" />\n    <DataItem name=\"Reference\" value=\"{{paymentReference}}\" />\n    <DataItem name=\"PaymentMethod\" value=\"{{paymentMethod}}\" />\n  </Event>\n</EventHistory>";
 
+      IPMChangeSet.prototype.write_off_charges = "<Ledger>\n  <LineItem value=\"-{{amount}}\" type=\"WRITE_OFF_CHARGE\" timestamp=\"{{timestamp}}\">\n    <Memo>installment Charge</Memo>\n    <DataItem name=\"Reference\" value=\"{{paymentReference}}\" />\n    <DataItem name=\"PaymentMethod\" value=\"{{paymentMethod}}\" />          \n  </LineItem>\n</Ledger>\n<EventHistory>\n  <Event type=\"Chargeback\">\n    <DataItem name=\"Amount\" value=\"{{paymentAmount}}\" />\n    <DataItem name=\"Reference\" value=\"{{paymentReference}}\" />\n    <DataItem name=\"PaymentMethod\" value=\"{{paymentMethod}}\" />\n  </Event>\n</EventHistory>";
+
       return IPMChangeSet;
 
     })();

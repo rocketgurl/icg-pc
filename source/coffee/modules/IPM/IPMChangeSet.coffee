@@ -420,3 +420,20 @@ define [
         </Event>
       </EventHistory>
     """
+
+    write_off_charges : """
+      <Ledger>
+        <LineItem value="-{{amount}}" type="WRITE_OFF_CHARGE" timestamp="{{timestamp}}">
+          <Memo>installment Charge</Memo>
+          <DataItem name="Reference" value="{{paymentReference}}" />
+          <DataItem name="PaymentMethod" value="{{paymentMethod}}" />          
+        </LineItem>
+      </Ledger>
+      <EventHistory>
+        <Event type="Chargeback">
+          <DataItem name="Amount" value="{{paymentAmount}}" />
+          <DataItem name="Reference" value="{{paymentReference}}" />
+          <DataItem name="PaymentMethod" value="{{paymentMethod}}" />
+        </Event>
+      </EventHistory>
+    """
