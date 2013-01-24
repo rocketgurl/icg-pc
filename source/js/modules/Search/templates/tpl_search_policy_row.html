@@ -3,6 +3,6 @@
 <td>{{productLabel}}</td>
 <td>{{insured.InsuredLastName}}</td>
 <td>{{insured.Address}} {{insured.InsuredMailingAddressState}} {{insured.InsuredMailingAddressZip}}</td>
-<td>{{PolicyState}}</td>
+<td{{#policyStateClass}} class="{{policyStateClass}}"{{/policyStateClass}}>{{PolicyState}}</td>
 <td>{{EffectiveDate}}</td>
 <td>{{RenewalUnderwritingStatus}}</td>

@@ -27,6 +27,9 @@ define [
       # Chomp dates
       @data.EffectiveDate = @data.EffectiveDate.substr(0,10) if @data.EffectiveDate?
 
+      # Change UI on PolicyState label using className
+      @data.policyStateClass = @data.PolicyState.toLowerCase()
+
       # Deal with address concatenation
       @data.insured.Address = ""
       if @data.insured.InsuredMailingAddressLine1?

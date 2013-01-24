@@ -92,6 +92,7 @@ table.module-search {
 	color: darken($darkgray, 10);
 	@include font-size(13);
 	@include divider(top);
+	box-shadow: darken($lightgray, 30) 0 0 6px;
 	td,
 	th {
 		padding: 9px 5px;
@@ -107,8 +108,10 @@ table.module-search {
 		}
 	}
 	thead tr th {
-		border-bottom: darken($lightgray, 10) 1px solid;
-	}
+			border-bottom: darken($lightgray, 10) 1px solid;
+			background: darken($lightgray, 5);
+			@include background-image(linear-gradient(#fff, darken($lightgray, 5)));
+		}
 	tbody {
 		tr {
 			background: none;
@@ -134,13 +137,23 @@ table.module-search {
 		}
 		td {
 			a {
-				color: darken($darkgray, 10);
+				// color: darken($darkgray, 10);
+				color: $colblue;
 				text-decoration: none;
 				text-transform: uppercase;
 			}
 			a:hover {
 				text-decoration: underline;
 			}
+		}
+		td.activepolicy {
+			color: $darkblue;
+		}
+		td.cancelledpolicy {
+			color: lighten($red, 10);
+		}
+		td.activequote {
+			color: darken($orange, 5);
 		}
 	}
 }

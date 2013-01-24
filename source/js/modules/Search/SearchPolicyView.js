@@ -22,6 +22,7 @@
         if (this.data.EffectiveDate != null) {
           this.data.EffectiveDate = this.data.EffectiveDate.substr(0, 10);
         }
+        this.data.policyStateClass = this.data.PolicyState.toLowerCase();
         this.data.insured.Address = "";
         if (this.data.insured.InsuredMailingAddressLine1 != null) {
           this.data.insured.Address += "" + this.data.insured.InsuredMailingAddressLine1 + ", ";
