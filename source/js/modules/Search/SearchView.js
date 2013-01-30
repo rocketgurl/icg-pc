@@ -60,7 +60,7 @@
         this.controls = this.$el.find('.search-controls');
         this.messenger = new Messenger(this.options.view, this.cid);
         if (this.params != null) {
-          if (this.params.q != null) {
+          if ((this.params.q != null) || (this.params.renewalreviewrequired != null)) {
             this.set_search_options(this.params);
             return this.fetch(this.get_search_options(this.params));
           }
@@ -139,7 +139,6 @@
         return this.policies.fetch({
           data: query,
           headers: {
-            'X-Authorization': "Basic " + digest,
             'Authorization': "Basic " + digest
           },
           success: function(collection, resp) {
@@ -192,7 +191,7 @@
         cache_key = e.attr('class').split(' ')[1];
         if (this.menu_cache[this.cid][cache_key] !== void 0) {
           this.menu_cache[this.cid][cache_key].fadeIn(100);
-          return false;
+          return this.menu_cache[this.cid][cache_key];
         } else {
           el_width = e.css('width');
           e.append(this.Mustache.render(template, view_data));
@@ -206,7 +205,7 @@
         if (e.hasClass('active')) {
           menu = this.attach_menu(e, tpl_search_menu_views);
           if (menu) {
-            return this.controller.SEARCH.saved_searches.populate(menu);
+            return this.refreshContextMenu(menu);
           }
         }
       },
@@ -250,9 +249,16 @@
           params: this.params
         });
         if (saved) {
+          this.refreshContextMenu();
           $('#search_save_label').attr('disabled', 'disabled');
           return $('.search-menu-save input[type=submit]').attr('disabled', 'disabled').addClass('button-disabled').removeClass('button-green').val('Saved!');
         }
+      },
+      refreshContextMenu: function(menu) {
+        if (menu === null) {
+          menu = this.menu_cache[this.cid]['search-control-context'];
+        }
+        return this.controller.SEARCH.saved_searches.populate(menu, this);
       },
       loader_ui: function(bool) {
         if (bool && !(this.loader != null)) {

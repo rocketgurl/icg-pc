@@ -9,37 +9,27 @@
       localStorage: new Store('ics_saved_searches'),
       sync: LocalStorageSync,
       rendered: false,
-      initialize: function() {
-        this.bind('add', this.add_one, this);
-        return this.bind('reset', this.add_many, this);
-      },
-      add_one: function(model) {
-        return this.render(model);
-      },
-      add_many: function(collection) {
-        var _this = this;
-        return collection.each(function(model) {
-          return _this.render(model);
-        });
-      },
-      render: function(model, parent) {
+      initialize: function() {},
+      render: function(model, menu, search_view) {
         var data;
-        this.parent = parent != null ? parent : $('.search-menu-context');
+        menu = menu != null ? menu : $('.search-menu-context');
         data = model.attributes;
         if (_.isObject(data.params)) {
           data.params = Helpers.serialize(data.params);
         }
         return model.view = new SearchContextView({
-          parent: this.parent,
+          parent: menu,
           data: data,
           controller: this.controller,
-          collection: this
+          collection: this,
+          search_view: search_view
         });
       },
-      populate: function(html) {
+      populate: function(menu, search_view) {
         var _this = this;
+        $('.search-menu-context tbody tr').not('.renewalreviewrequired').remove();
         return this.each(function(model) {
-          return _this.render(model, html);
+          return _this.render(model, menu, search_view);
         });
       },
       destroy: function(id) {

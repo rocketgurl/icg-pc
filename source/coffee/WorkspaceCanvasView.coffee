@@ -94,6 +94,7 @@ define [
     destroy : () ->
       # Remove tab & nullify so GC can get it (?)
       if @$tab_el?
+        @tab.remove()
         @tab = null
         @$tab_el.find("li a[href=#{@app.app}]").parent().remove()
         @$tab_el = null

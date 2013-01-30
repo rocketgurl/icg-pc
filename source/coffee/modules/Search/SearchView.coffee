@@ -63,7 +63,7 @@ define [
 
       # If we have params we need to go ahead and do the search query
       if @params?
-        if @params.q?
+        if @params.q? || @params.renewalreviewrequired?
           @set_search_options @params
           @fetch(@get_search_options(@params))
 
@@ -142,7 +142,7 @@ define [
       @policies.fetch(
         data    : query
         headers :
-          'X-Authorization' : "Basic #{digest}"
+          # 'X-Authorization' : "Basic #{digest}"
           'Authorization'   : "Basic #{digest}"
         success : (collection, resp) =>
           #check for empty requests
@@ -202,7 +202,7 @@ define [
 
       if @menu_cache[@cid][cache_key] != undefined
         @menu_cache[@cid][cache_key].fadeIn(100)
-        return false
+        return @menu_cache[@cid][cache_key]
       else
         el_width = e.css('width')
         e.append(@Mustache.render template, view_data)
@@ -215,7 +215,7 @@ define [
       if e.hasClass 'active'
         menu = @attach_menu e, tpl_search_menu_views
         if menu
-          @controller.SEARCH.saved_searches.populate(menu)
+          @refreshContextMenu menu
 
     # Search save control
     control_save : (e) ->
@@ -263,6 +263,7 @@ define [
       }
 
       if saved
+        @refreshContextMenu()
         $('#search_save_label').attr('disabled', 'disabled')
         # disable button
         $('.search-menu-save input[type=submit]')
@@ -270,6 +271,11 @@ define [
           .addClass('button-disabled')
           .removeClass('button-green')
           .val('Saved!')
+
+    refreshContextMenu : (menu) ->
+      if menu == null
+        menu = @menu_cache[@cid]['search-control-context']
+      @controller.SEARCH.saved_searches.populate(menu, this)
 
     # Place a loading animation on top of the content
     loader_ui : (bool) ->

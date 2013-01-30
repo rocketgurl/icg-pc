@@ -8,7 +8,7 @@
         return this.use_backbone_auth();
       },
       url: function() {
-        return "/js/templates/renewal_underwriting_get.json";
+        return "" + (this.get('urlRoot')) + "policies/" + this.id + "/renewalunderwriting";
       },
       putFragment: function(success, error, fragment) {
         if (success == null) {

@@ -35,7 +35,7 @@ define [
       pxcentral_base : 'pxcentral/api/rest/v1/'
       ixlibrary_base : '/api/sdo/rest/v1/'
       ixdoc          : './ixdoc/api/rest/v2/'
-      ixadmin        : './config/ics/staging/ixadmin'
+      ixadmin        : "./config/ics/#{window.ICS360_ENV}/ixadmin"
       zendesk        : './zendesk'
 
   # Method Combinator (Decorator) 
@@ -443,11 +443,11 @@ define [
     # SearchModule. It's a hack, but it works for now.
     setup_search_storage : ->
 
-      if @SEARCH == null || @SEARCH == undefined
-        return
+      # if @SEARCH == null || @SEARCH == undefined
+      #   return
 
-      if !_.has(@SEARCH, 'saved_searches')
-        return
+      # if !_.has(@SEARCH, 'saved_searches')
+      #   return
 
       @SEARCH =
         saved_searches : new SearchContextCollection()  
@@ -579,6 +579,7 @@ define [
         url = params.url
 
       url = params.q if params.q?
+      url = 'Renewal Underwriting' if params.renewalreviewrequired?
 
       safe_app_name = "#{Helpers.id_safe(module)}"
       safe_app_name += "_#{Helpers.id_safe(url)}" if url?

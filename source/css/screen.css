@@ -334,6 +334,7 @@ Module: Policy
 .assigned-to em { font-weight: normal; font-style: none; color: dimgrey; }
 
 .ru-loss-history, .zd-loss-history { display: block; width: 100%; float: right; margin-right: 0; #margin-left: -1em; display: inline; }
+.ru-loss-history td, .zd-loss-history td { width: auto; }
 .ru-loss-history td a, .zd-loss-history td a { font-weight: bold; color: #007ac9 !important; }
 .ru-loss-history td:first-child, .zd-loss-history td:first-child { text-align: center; }
 

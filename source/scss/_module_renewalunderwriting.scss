@@ -185,6 +185,7 @@
 	@include span-columns(12 omega, 12);
 	@extend table.module-search;
 	td {
+		width: auto;
 		a {
 			font-weight: bold;
 			color: $colblue !important;

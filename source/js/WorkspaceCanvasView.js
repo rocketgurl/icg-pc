@@ -72,6 +72,7 @@
       },
       destroy: function() {
         if (this.$tab_el != null) {
+          this.tab.remove();
           this.tab = null;
           this.$tab_el.find("li a[href=" + this.app.app + "]").parent().remove();
           this.$tab_el = null;

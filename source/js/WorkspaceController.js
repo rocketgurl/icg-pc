@@ -13,7 +13,7 @@
         pxcentral_base: 'pxcentral/api/rest/v1/',
         ixlibrary_base: '/api/sdo/rest/v1/',
         ixdoc: './ixdoc/api/rest/v2/',
-        ixadmin: './config/ics/staging/ixadmin',
+        ixadmin: "./config/ics/" + window.ICS360_ENV + "/ixadmin",
         zendesk: './zendesk'
       }
     };
@@ -338,12 +338,6 @@
         }
       },
       setup_search_storage: function() {
-        if (this.SEARCH === null || this.SEARCH === void 0) {
-          return;
-        }
-        if (!_.has(this.SEARCH, 'saved_searches')) {
-          return;
-        }
         this.SEARCH = {
           saved_searches: new SearchContextCollection()
         };
@@ -439,6 +433,9 @@
         }
         if (params.q != null) {
           url = params.q;
+        }
+        if (params.renewalreviewrequired != null) {
+          url = 'Renewal Underwriting';
         }
         safe_app_name = "" + (Helpers.id_safe(module));
         if (url != null) {

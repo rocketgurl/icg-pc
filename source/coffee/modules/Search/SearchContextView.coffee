@@ -14,14 +14,19 @@ define [
       "click .admin-icon-trash" : "destroy"
 
     initialize : (options) ->
-      @parent = options.parent
-      @target = @parent.find('table tbody')
-      @data   = options.data
+      @parent      = options.parent      
+      @target      = @parent.find('table tbody')
+      @data        = options.data
+      @search_view = options.search_view
       @render()
 
     render : ->
-      @$el.append(@Mustache.render tpl_search_menu_views_row, @data)
+      @$el.html(@Mustache.render tpl_search_menu_views_row, @data)
       @target.append(@$el)
+      $('.search-filter-renewal').off('click')
+      $('.search-filter-renewal').on('click', (e) => 
+        @launch_search(e)
+      )
 
     launch_search : (e) ->
       e.preventDefault()
@@ -31,6 +36,12 @@ define [
       #   query : href.query
       @options.controller.launch_module 'search', params
       @options.controller.Router.append_module 'search', params
+
+      # We close the menu because this will force a refresh on opening it
+      # again, preventing extra stacking of menu items
+      if @search_view?
+        @search_view.clear_menus()
+        @search_view.controls.removeClass('active')
 
     #### Remove saved search. 
     #

@@ -13,18 +13,28 @@
         this.parent = options.parent;
         this.target = this.parent.find('table tbody');
         this.data = options.data;
+        this.search_view = options.search_view;
         return this.render();
       },
       render: function() {
-        this.$el.append(this.Mustache.render(tpl_search_menu_views_row, this.data));
-        return this.target.append(this.$el);
+        var _this = this;
+        this.$el.html(this.Mustache.render(tpl_search_menu_views_row, this.data));
+        this.target.append(this.$el);
+        $('.search-filter-renewal').off('click');
+        return $('.search-filter-renewal').on('click', function(e) {
+          return _this.launch_search(e);
+        });
       },
       launch_search: function(e) {
         var params;
         e.preventDefault();
         params = Helpers.unserialize($(e.currentTarget).attr('href'));
         this.options.controller.launch_module('search', params);
-        return this.options.controller.Router.append_module('search', params);
+        this.options.controller.Router.append_module('search', params);
+        if (this.search_view != null) {
+          this.search_view.clear_menus();
+          return this.search_view.controls.removeClass('active');
+        }
       },
       destroy: function(e) {
         var id;

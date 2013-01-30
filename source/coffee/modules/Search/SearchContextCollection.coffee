@@ -21,23 +21,23 @@ define [
     # multiple methods.
     #
     initialize : ->
-      @bind 'add', @add_one, @
-      @bind 'reset', @add_many, @
+    #   @bind 'add', @add_one, @
+    #   @bind 'reset', @add_many, @
 
-    add_one : (model) ->
-      @render model
+    # add_one : (model) ->
+    #   @render model
 
-    add_many : (collection) ->
-      collection.each (model) =>
-        @render model
+    # add_many : (collection) ->
+    #   collection.each (model) =>
+    #     @render model
 
     # Create a view for the model and slot into all of the
     # existing menus in the UI.
     #
     # We can take raw HTML here instead of a className (parent)
     #
-    render : (model, parent) ->
-      @parent = parent ? $('.search-menu-context')
+    render : (model, menu, search_view) ->
+      menu = menu ? $('.search-menu-context')
       data = model.attributes
 
       # Help out herp derp browsers
@@ -45,15 +45,17 @@ define [
         data.params = Helpers.serialize data.params
 
       model.view = new SearchContextView(
-          parent     : @parent
-          data       : data
-          controller : @controller
-          collection : @
+          parent      : menu
+          data        : data
+          controller  : @controller
+          collection  : this
+          search_view : search_view
         )
 
-    populate : (html) ->
+    populate : (menu, search_view) ->
+      $('.search-menu-context tbody tr').not('.renewalreviewrequired').remove()
       @each (model) =>
-        @render model, html
+        @render model, menu, search_view
 
     # Destroy the model and then remove from the collection.
     destroy : (id) ->
