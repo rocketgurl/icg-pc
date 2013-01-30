@@ -30,6 +30,11 @@ define [
       # Change UI on PolicyState label using className
       @data.policyStateClass = @data.PolicyState.toLowerCase()
 
+      if @data.RenewalReviewRequired?
+        @data.RenewalReviewRequired = if @data.RenewalReviewRequired == true then 'Yes' else 'No'
+      else
+        @data.RenewalReviewRequired = 'No'
+
       # Deal with address concatenation
       @data.insured.Address = ""
       if @data.insured.InsuredMailingAddressLine1?
