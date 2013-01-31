@@ -173,17 +173,20 @@
       },
       process_event: function(e) {
         var $el, id;
-        this.clear_menus();
         e.preventDefault();
+        this.clear_menus();
         $el = $(e.currentTarget).parent();
         id = $el.attr('class').split(' ');
         this.toggle_controls(id[1]);
         return $el;
       },
       clear_menus: function() {
-        return _.each(this.menu_cache[this.cid], function(menu, id) {
+        _.each(this.menu_cache[this.cid], function(menu, id) {
           return menu.fadeOut(100);
         });
+        if (this.search_context_menu != null) {
+          return this.search_context_menu.fadeOut(100);
+        }
       },
       attach_menu: function(e, template, view_data) {
         var cache_key, el_width;
@@ -201,12 +204,10 @@
         }
       },
       control_context: function(e) {
-        var menu;
         if (e.hasClass('active')) {
-          menu = this.attach_menu(e, tpl_search_menu_views);
-          if (menu) {
-            return this.refreshContextMenu(menu);
-          }
+          this.search_context_menu = this.controller.SEARCH.saved_searches.getMenu(this);
+          e.append(this.search_context_menu);
+          return e.find('div').fadeIn(100);
         }
       },
       control_save: function(e) {
@@ -249,16 +250,9 @@
           params: this.params
         });
         if (saved) {
-          this.refreshContextMenu();
           $('#search_save_label').attr('disabled', 'disabled');
           return $('.search-menu-save input[type=submit]').attr('disabled', 'disabled').addClass('button-disabled').removeClass('button-green').val('Saved!');
         }
-      },
-      refreshContextMenu: function(menu) {
-        if (menu === null) {
-          menu = this.menu_cache[this.cid]['search-control-context'];
-        }
-        return this.controller.SEARCH.saved_searches.populate(menu, this);
       },
       loader_ui: function(bool) {
         if (bool && !(this.loader != null)) {

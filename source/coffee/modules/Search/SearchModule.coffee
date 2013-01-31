@@ -19,19 +19,18 @@ define [
     #
     constructor : (@view, @app, @params) ->
       # Bind events
-      _.extend @, Backbone.Events
-
-      
-      
+      _.extend @, Backbone.Events    
      
     # Any bootstrapping should happen here. When done remove the loader image.
     # view.remove_loader will callback Module.render()
     #
     load: () ->
+      if @view.options.controller.SEARCH == undefined
+        @view.options.controller.setup_search_storage()
       @callback_delay 200, =>
         @view.remove_loader(true)
         # Make sure the controller can handle multiple search data
-        @view.options.controller.setup_search_storage()
+        
 
     # Do whatever rendering animation needs to happen here
     render : () ->

@@ -180,8 +180,8 @@ define [
     # Pre-process a control button event to squash
     # default behaviors and toggle active state
     process_event : (e) ->
-      @clear_menus()
       e.preventDefault()
+      @clear_menus()
       $el = $(e.currentTarget).parent()
       id = $el.attr('class').split ' '
       @toggle_controls id[1]
@@ -190,7 +190,10 @@ define [
     # Remove menus
     clear_menus : ->
       _.each @menu_cache[@cid], (menu, id) ->
-        menu.fadeOut(100)        
+        menu.fadeOut(100)
+
+      if @search_context_menu?
+        @search_context_menu.fadeOut(100)     
 
     # Attach menu to control item
     attach_menu : (e, template, view_data) ->
@@ -213,9 +216,9 @@ define [
     # Search context control
     control_context : (e) ->
       if e.hasClass 'active'
-        menu = @attach_menu e, tpl_search_menu_views
-        if menu
-          @refreshContextMenu menu
+        @search_context_menu = @controller.SEARCH.saved_searches.getMenu(this)
+        e.append(@search_context_menu)
+        e.find('div').fadeIn(100)
 
     # Search save control
     control_save : (e) ->
@@ -263,7 +266,6 @@ define [
       }
 
       if saved
-        @refreshContextMenu()
         $('#search_save_label').attr('disabled', 'disabled')
         # disable button
         $('.search-menu-save input[type=submit]')
@@ -271,11 +273,6 @@ define [
           .addClass('button-disabled')
           .removeClass('button-green')
           .val('Saved!')
-
-    refreshContextMenu : (menu) ->
-      if menu == null
-        menu = @menu_cache[@cid]['search-control-context']
-      @controller.SEARCH.saved_searches.populate(menu, this)
 
     # Place a loading animation on top of the content
     loader_ui : (bool) ->

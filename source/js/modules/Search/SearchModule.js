@@ -14,9 +14,11 @@
 
       SearchModule.prototype.load = function() {
         var _this = this;
+        if (this.view.options.controller.SEARCH === void 0) {
+          this.view.options.controller.setup_search_storage();
+        }
         return this.callback_delay(200, function() {
-          _this.view.remove_loader(true);
-          return _this.view.options.controller.setup_search_storage();
+          return _this.view.remove_loader(true);
         });
       };
 

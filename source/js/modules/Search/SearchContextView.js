@@ -6,14 +6,13 @@
     return SearchContextView = BaseView.extend({
       tagName: 'tr',
       events: {
-        "click .search-views-row > a": "launch_search",
+        "click .search-views-row a": "launch_search",
         "click .admin-icon-trash": "destroy"
       },
       initialize: function(options) {
         this.parent = options.parent;
         this.target = this.parent.find('table tbody');
         this.data = options.data;
-        this.search_view = options.search_view;
         return this.render();
       },
       render: function() {
@@ -21,7 +20,8 @@
         this.$el.html(this.Mustache.render(tpl_search_menu_views_row, this.data));
         this.target.append(this.$el);
         $('.search-filter-renewal').off('click');
-        return $('.search-filter-renewal').on('click', function(e) {
+        return this.target.on('click', '.search-filter-renewal', function(e) {
+          e.preventDefault();
           return _this.launch_search(e);
         });
       },
@@ -31,16 +31,13 @@
         params = Helpers.unserialize($(e.currentTarget).attr('href'));
         this.options.controller.launch_module('search', params);
         this.options.controller.Router.append_module('search', params);
-        if (this.search_view != null) {
-          this.search_view.clear_menus();
-          return this.search_view.controls.removeClass('active');
-        }
+        return this.model.collection.closeMenu();
       },
       destroy: function(e) {
         var id;
         e.preventDefault();
         id = $(e.currentTarget).attr('href').substr(7);
-        this.options.collection.destroy(id);
+        this.options.controller.SEARCH.saved_searches.destroy(id);
         return this.$el.fadeOut('fast', function(id) {
           return $('.row-' + id).html('').remove();
         });

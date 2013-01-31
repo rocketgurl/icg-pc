@@ -5,14 +5,17 @@ define [
   'base64',
   'Store',
   'LocalStorageSync',
-  'Helpers'
-], (BaseCollection, SearchContextModel, SearchContextView, Base64, Store, LocalStorageSync, Helpers) ->
+  'Helpers',
+  'mustache',
+  'text!modules/Search/templates/tpl_search_menu_views.html'
+], (BaseCollection, SearchContextModel, SearchContextView, Base64, Store, LocalStorageSync, Helpers, Mustache, tpl_search_menu_views) ->
 
   #### Use Local Storage to handle saved search views
   #
   SearchContextCollection = BaseCollection.extend
     model        : SearchContextModel
-    views        : [] # view stack
+    activeView   : null
+    menu         : null
     localStorage : new Store 'ics_saved_searches'
     sync         : LocalStorageSync
     rendered     : false
@@ -21,41 +24,16 @@ define [
     # multiple methods.
     #
     initialize : ->
-    #   @bind 'add', @add_one, @
-    #   @bind 'reset', @add_many, @
+      @menu = $(Mustache.render(tpl_search_menu_views, {}))
 
-    # add_one : (model) ->
-    #   @render model
+    getMenu : (view) ->
+      @activeView = view
+      @menu
 
-    # add_many : (collection) ->
-    #   collection.each (model) =>
-    #     @render model
-
-    # Create a view for the model and slot into all of the
-    # existing menus in the UI.
-    #
-    # We can take raw HTML here instead of a className (parent)
-    #
-    render : (model, menu, search_view) ->
-      menu = menu ? $('.search-menu-context')
-      data = model.attributes
-
-      # Help out herp derp browsers
-      if _.isObject data.params
-        data.params = Helpers.serialize data.params
-
-      model.view = new SearchContextView(
-          parent      : menu
-          data        : data
-          controller  : @controller
-          collection  : this
-          search_view : search_view
-        )
-
-    populate : (menu, search_view) ->
-      $('.search-menu-context tbody tr').not('.renewalreviewrequired').remove()
-      @each (model) =>
-        @render model, menu, search_view
+    closeMenu : ->
+      if @activeView?
+        @activeView.clear_menus()
+        @activeView.controls.removeClass('active')
 
     # Destroy the model and then remove from the collection.
     destroy : (id) ->

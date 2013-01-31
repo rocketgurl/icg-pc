@@ -10,21 +10,21 @@ define [
     tagName : 'tr'
 
     events : 
-      "click .search-views-row > a" : "launch_search"
+      "click .search-views-row a" : "launch_search"
       "click .admin-icon-trash" : "destroy"
 
     initialize : (options) ->
       @parent      = options.parent      
       @target      = @parent.find('table tbody')
       @data        = options.data
-      @search_view = options.search_view
       @render()
 
     render : ->
       @$el.html(@Mustache.render tpl_search_menu_views_row, @data)
       @target.append(@$el)
       $('.search-filter-renewal').off('click')
-      $('.search-filter-renewal').on('click', (e) => 
+      @target.on('click', '.search-filter-renewal', (e) => 
+        e.preventDefault()
         @launch_search(e)
       )
 
@@ -37,11 +37,9 @@ define [
       @options.controller.launch_module 'search', params
       @options.controller.Router.append_module 'search', params
 
-      # We close the menu because this will force a refresh on opening it
-      # again, preventing extra stacking of menu items
-      if @search_view?
-        @search_view.clear_menus()
-        @search_view.controls.removeClass('active')
+      # We want to close the menu in the active search view when something is
+      # clicked
+      @model.collection.closeMenu()
 
     #### Remove saved search. 
     #
@@ -52,7 +50,7 @@ define [
     destroy : (e) ->
       e.preventDefault()
       id = $(e.currentTarget).attr('href').substr(7)
-      @options.collection.destroy(id)
+      @options.controller.SEARCH.saved_searches.destroy(id)
       @$el.fadeOut('fast', (id) ->
           $('.row-' + id).html('').remove()
         )
