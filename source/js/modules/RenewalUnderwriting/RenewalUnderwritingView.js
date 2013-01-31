@@ -132,14 +132,20 @@
           cid: this.cid,
           dispositions: [
             {
-              id: 1,
+              id: 'pending',
               name: 'Pending'
             }, {
-              id: 2,
-              name: 'Dead'
+              id: 'renew no-action',
+              name: 'Renew with no action'
             }, {
-              id: 3,
-              name: 'Vaporized'
+              id: 'non-renew',
+              name: 'Non-renew'
+            }, {
+              id: 'withdrawn',
+              name: 'Withdrawn'
+            }, {
+              id: 'conditional renew',
+              name: 'Conditional renew'
             }
           ]
         };
@@ -276,6 +282,9 @@
               status: 'pxCentral'
             });
             return false;
+          }
+          if (resp.insuranceScore.currentDisposition === '') {
+            resp.insuranceScore.currentDisposition = 'New';
           }
           this.CHANGESET = {
             renewal: _.omit(resp.renewal, ["inspectionOrdered", "renewalReviewRequired"]),

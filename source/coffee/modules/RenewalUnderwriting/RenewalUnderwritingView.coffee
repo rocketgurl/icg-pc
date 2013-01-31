@@ -143,9 +143,11 @@ define [
       data = 
         cid : @cid
         dispositions : [
-          { id : 1, name : 'Pending' }
-          { id : 2, name : 'Dead' }
-          { id : 3, name : 'Vaporized' }
+          { id : 'pending', name : 'Pending' }
+          { id : 'renew no-action', name : 'Renew with no action' }
+          { id : 'non-renew', name : 'Non-renew' }
+          { id : 'withdrawn', name : 'Withdrawn' }
+          { id : 'conditional renew', name : 'Conditional renew' }
         ]
 
       @Modal.attach_menu el, '.ru-menus', tpl_ru_disposition, data
@@ -309,6 +311,9 @@ define [
         if _.isEmpty test_empty
           @renewalError({statusText : 'Dataset empty', status : 'pxCentral'})
           return false
+
+        if resp.insuranceScore.currentDisposition == ''
+          resp.insuranceScore.currentDisposition = 'New'
 
         # Store a changeset to send back to server
         @CHANGESET =

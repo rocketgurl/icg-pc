@@ -21,6 +21,7 @@
       }
       options.beforeSend = function(xhr) {
         xhr.setRequestHeader('X-Requested-With', 'XMLHTTPRequest');
+        xhr.setRequestHeader('Cache-Control', 'max-age=600');
         if (options.basic_auth_digest) {
           xhr.setRequestHeader('X-Authorization', "Basic " + options.basic_auth_digest);
           return xhr.setRequestHeader('Authorization', "Basic " + options.basic_auth_digest);
