@@ -45,7 +45,10 @@
         this.policies.container = this;
         this.fetch_count = 0;
         this.params = (_ref = this.module.app.params) != null ? _ref : {};
-        return this.menu_cache[this.cid] = {};
+        this.menu_cache[this.cid] = {};
+        if (this.params.renewalreviewrequired != null) {
+          return this.renewal_review = true;
+        }
       },
       render: function() {
         var html;
@@ -111,6 +114,9 @@
           page: page,
           policystate: policystate
         };
+        if (this.renewal_review != null) {
+          query.renewalreviewrequired = true;
+        }
         if (!_.isEmpty(this.sort_cache)) {
           _ref4 = this.sort_cache;
           for (key in _ref4) {

@@ -51,6 +51,9 @@ define [
 
       @menu_cache[@cid] = {} # We need to namespace the cache with CID
 
+      if @params.renewalreviewrequired?
+        @renewal_review = true;
+
     render : () ->
       # Setup flash module & search container
       html = @Mustache.render $('#tpl-flash-message').html(), { cid : @cid }
@@ -102,16 +105,19 @@ define [
     # passed values (options) to return as an object for @fetch
     #
     get_search_options : (options) ->
-      perpage     = @$el.find('.search-pagination-perpage').val() ? 15
-      page        = @$el.find('.search-pagination-page').val() ? 1
-      policystate = @$el.find('.query-type').val() ? ''
-      q           = @$el.find('input[type=search]').val() ? ''
+      perpage               = @$el.find('.search-pagination-perpage').val() ? 15
+      page                  = @$el.find('.search-pagination-page').val() ? 1
+      policystate           = @$el.find('.query-type').val() ? ''
+      q                     = @$el.find('input[type=search]').val() ? ''
 
       query =
-        q           : _.trim q
-        perpage     : perpage
-        page        : page
-        policystate : policystate
+        q                     : _.trim q
+        perpage               : perpage
+        page                  : page
+        policystate           : policystate
+
+      if @renewal_review?
+        query.renewalreviewrequired = true
 
       # Combine any sorting directives with the query
       if !_.isEmpty(@sort_cache)
