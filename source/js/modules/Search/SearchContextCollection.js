@@ -35,9 +35,8 @@
       destroy: function(id) {
         var model;
         model = this.get(id);
-        if (model.destroy()) {
-          return this.remove(model);
-        }
+        model.destroy();
+        return this.remove(model);
       }
     });
   });

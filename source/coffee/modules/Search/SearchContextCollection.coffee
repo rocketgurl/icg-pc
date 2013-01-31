@@ -47,5 +47,5 @@ define [
     # Destroy the model and then remove from the collection.
     destroy : (id) ->
       model = @get id
-      if model.destroy()
-        @remove model
+      model.destroy()
+      @remove model
