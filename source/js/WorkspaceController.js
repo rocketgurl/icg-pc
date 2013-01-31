@@ -338,8 +338,10 @@
         }
       },
       setup_search_storage: function() {
+        var collection;
+        collection = new SearchContextCollection();
         this.SEARCH = {
-          saved_searches: new SearchContextCollection()
+          saved_searches: collection
         };
         this.SEARCH.saved_searches.controller = this;
         this.SEARCH.saved_searches.fetch();

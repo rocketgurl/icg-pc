@@ -442,17 +442,12 @@ define [
     # that models are passed around to many instances of 
     # SearchModule. It's a hack, but it works for now.
     setup_search_storage : ->
-
-      # if @SEARCH == null || @SEARCH == undefined
-      #   return
-
-      # if !_.has(@SEARCH, 'saved_searches')
-      #   return
+      collection = new SearchContextCollection()
 
       @SEARCH =
-        saved_searches : new SearchContextCollection()  
+        saved_searches : collection  
             
-      @SEARCH.saved_searches.controller = @ # so we can phone home
+      @SEARCH.saved_searches.controller = this # so we can phone home
       @SEARCH.saved_searches.fetch()
       @SEARCH.saved_searches
 
