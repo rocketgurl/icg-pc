@@ -1,25 +1,27 @@
 <h1>Service requests</h1>
-<table class="zd-loss-history">
-	<thead>
-		<tr>
-			<th>Incident</th>
-			<th>Subject</th>
-			<th>Status</th>
-			<th>Agent</th>
-			<th>Created</th>
-			<th>Updated</th>
-		</tr>
-	</thead>
-	<tbody>
-		{{#results}}
-		<tr class="zd_row">
-			<td>{{id}}</td>
-			<td><a href="https://coastalriskunderwriters.zendesk.com/tickets/{{id}}" target="blank">{{subject}}</a></td>
-			<td>{{status}}</td>
-			<td><a href="mailto:{{via.source.from.address}}">{{via.source.from.name}}</a></td>
-			<td>{{created_at}}</td>
-			<td>{{updated_at}}</td>
-		</tr>
-		{{/results}}
-	</tbody>
-</table>
+<div class="zd-loss-history-container">
+	<table class="zd-loss-history">
+		<thead>
+			<tr>
+				<th>Incident</th>
+				<th>Subject</th>
+				<th>Status</th>
+				<th>Agent</th>
+				<th>Created</th>
+				<th>Updated</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{#results}}
+			<tr class="zd_row">
+				<td>{{id}}</td>
+				<td><a href="https://coastalriskunderwriters.zendesk.com/tickets/{{id}}" target="blank">{{subject}}</a></td>
+				<td>{{status}}</td>
+				<td><a href="mailto:{{via.source.from.address}}">{{via.source.from.name}}</a></td>
+				<td>{{created_at}}</td>
+				<td>{{updated_at}}</td>
+			</tr>
+			{{/results}}
+		</tbody>
+	</table>
+</div>

@@ -2,6 +2,11 @@
 	@extend .ru-container;
 }
 
+.zd-loss-history-container {
+	@include span-columns(12 omega, 12);
+}
+
+
 .zd-loss-history {
 	@extend .ru-loss-history;
 	width: 100%;

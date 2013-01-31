@@ -180,9 +180,11 @@
 	}
 }
 
-.ru-loss-history {
-	display: block;
+.ru-loss-history-container {
 	@include span-columns(12 omega, 12);
+}
+
+.ru-loss-history {
 	@extend table.module-search;
 	td {
 		width: auto;

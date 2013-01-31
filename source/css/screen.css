@@ -333,7 +333,8 @@ Module: Policy
 .assigned-to a[href=assigned_to]:hover, .assigned-to .policy-nav li a[href=assigned_to].select, .policy-nav li .assigned-to a[href=assigned_to].select { border: #ffb3ff 1px solid; background: #ffebff; }
 .assigned-to em { font-weight: normal; font-style: none; color: dimgrey; }
 
-.ru-loss-history, .zd-loss-history { display: block; width: 100%; float: right; margin-right: 0; #margin-left: -1em; display: inline; }
+.ru-loss-history-container { width: 100%; float: right; margin-right: 0; #margin-left: -1em; display: inline; }
+
 .ru-loss-history td, .zd-loss-history td { width: auto; }
 .ru-loss-history td a, .zd-loss-history td a { font-weight: bold; color: #007ac9 !important; }
 .ru-loss-history td:first-child, .zd-loss-history td:first-child { text-align: center; }
@@ -465,6 +466,8 @@ h2.ipm-action-header { font-size: 16px; font-size: 1.6rem; color: dimgrey; margi
 .data_table .col_group_heading { background: #d9d9d9; padding: 8px 5px; }
 .data_table colgroup { border: lightgrey 1px solid; border-width: 0 1px 0 1px; }
 .data_table h4 { font-weight: bold; margin-top: 4px; color: #000; }
+
+.zd-loss-history-container { width: 100%; float: right; margin-right: 0; #margin-left: -1em; display: inline; }
 
 .zd-loss-history { width: 100%; margin-top: 20px; margin-bottom: 20px; }
 .zd-loss-history td { padding-left: 10px; padding-right: 10px; }
