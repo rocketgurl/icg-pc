@@ -128,7 +128,7 @@ define [
       if @renewal_review?
         if query.q? && query.q != ''
           console.log 'yes q and renewalreviewrequired are here'
-          query.renewalreviewrequired = null
+          delete query.renewalreviewrequired
         else
           query.renewalreviewrequired = true
 
@@ -177,7 +177,7 @@ define [
 
           # Set the URL params
           @params = 
-            q   : query.q
+            q : query.q
 
           @params = _.extend @params, @get_search_options()
           @controller.set_active_url @module.app.app # Ensure the correct URL

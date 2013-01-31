@@ -22,16 +22,10 @@ define [
     render : ->
       @$el.html(@Mustache.render tpl_search_menu_views_row, @data)
       @target.append(@$el)
-      @target.on('click', '.search-filter-renewal', (e) => 
-        @launch_search(e)
-      )
 
     launch_search : (e) ->
       e.preventDefault()
       params = Helpers.unserialize $(e.currentTarget).attr('href')
-      # params = 
-      #   url   : href.url
-      #   query : href.query
       @options.controller.launch_module 'search', params
       @options.controller.Router.append_module 'search', params
 

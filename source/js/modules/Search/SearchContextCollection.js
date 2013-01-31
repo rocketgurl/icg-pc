@@ -11,7 +11,16 @@
       sync: LocalStorageSync,
       rendered: false,
       initialize: function() {
-        return this.menu = $(Mustache.render(tpl_search_menu_views, {}));
+        var _this = this;
+        this.menu = $(Mustache.render(tpl_search_menu_views, {}));
+        return this.menu.on('click', '.search-filter-renewal', function(e) {
+          var params;
+          e.preventDefault();
+          params = Helpers.unserialize($(e.currentTarget).attr('href'));
+          _this.controller.launch_module('search', params);
+          _this.controller.Router.append_module('search', params);
+          return _this.closeMenu();
+        });
       },
       getMenu: function(view) {
         this.activeView = view;

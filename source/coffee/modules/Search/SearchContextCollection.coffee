@@ -26,6 +26,15 @@ define [
     initialize : ->
       @menu = $(Mustache.render(tpl_search_menu_views, {}))
 
+      # We need to handle the default Renewal Underwriting view
+      @menu.on('click', '.search-filter-renewal', (e) => 
+        e.preventDefault()
+        params = Helpers.unserialize $(e.currentTarget).attr('href')
+        @controller.launch_module 'search', params
+        @controller.Router.append_module 'search', params
+        @closeMenu()
+      )
+
     getMenu : (view) ->
       @activeView = view
       @menu

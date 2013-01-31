@@ -16,12 +16,8 @@
         return this.render();
       },
       render: function() {
-        var _this = this;
         this.$el.html(this.Mustache.render(tpl_search_menu_views_row, this.data));
-        this.target.append(this.$el);
-        return this.target.on('click', '.search-filter-renewal', function(e) {
-          return _this.launch_search(e);
-        });
+        return this.target.append(this.$el);
       },
       launch_search: function(e) {
         var params;
