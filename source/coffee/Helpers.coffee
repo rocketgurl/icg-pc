@@ -48,7 +48,8 @@ define [
       cl.setShape 'oval'
       cl.setDiameter diameter
       cl.setDensity 60
-      cl.setFPS 24
+      cl.setFPS 30
+      cl.setRange 0.9
       cl.show()
       return cl
 
