@@ -19,9 +19,7 @@
         var _this = this;
         this.$el.html(this.Mustache.render(tpl_search_menu_views_row, this.data));
         this.target.append(this.$el);
-        $('.search-filter-renewal').off('click');
         return this.target.on('click', '.search-filter-renewal', function(e) {
-          e.preventDefault();
           return _this.launch_search(e);
         });
       },

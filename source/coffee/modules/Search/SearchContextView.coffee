@@ -22,9 +22,7 @@ define [
     render : ->
       @$el.html(@Mustache.render tpl_search_menu_views_row, @data)
       @target.append(@$el)
-      $('.search-filter-renewal').off('click')
       @target.on('click', '.search-filter-renewal', (e) => 
-        e.preventDefault()
         @launch_search(e)
       )
 
