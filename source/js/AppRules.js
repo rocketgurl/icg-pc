@@ -84,7 +84,9 @@
           app: 'search',
           app_label: 'search',
           tab: '#tpl-workspace-tab-search',
-          params: null
+          params: {
+            renewalreviewrequired: true
+          }
         }
       };
 

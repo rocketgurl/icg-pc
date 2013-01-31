@@ -77,12 +77,13 @@ define [
         app       : 'search'
         app_label : 'search'
         tab       : '#tpl-workspace-tab-search'
-        params    : null    
+        params    : 
+          renewalreviewrequired : true 
 
     policy_search_params :
       required : false
       module   : 'Search/SearchModule'
-      params   : null
+      params   : null 
     
     policy_view : 
       required : ['params']

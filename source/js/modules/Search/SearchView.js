@@ -64,10 +64,20 @@
         this.messenger = new Messenger(this.options.view, this.cid);
         if (this.params != null) {
           if ((this.params.q != null) || (this.params.renewalreviewrequired != null)) {
+            this.setContextLabel();
             this.set_search_options(this.params);
             return this.fetch(this.get_search_options(this.params));
           }
         }
+      },
+      setContextLabel: function() {
+        var label;
+        if ((this.params.q != null) && this.params.q !== '') {
+          label = this.params.q;
+        } else if ((this.params.renewalreviewrequired != null) && this.params.renewalreviewrequired !== '') {
+          label = 'Renewal Underwriting';
+        }
+        return this.$el.find('.search-control-context strong').html(label);
       },
       search: function(e) {
         if (e != null) {
@@ -115,7 +125,12 @@
           policystate: policystate
         };
         if (this.renewal_review != null) {
-          query.renewalreviewrequired = true;
+          if ((query.q != null) && query.q !== '') {
+            console.log('yes q and renewalreviewrequired are here');
+            query.renewalreviewrequired = null;
+          } else {
+            query.renewalreviewrequired = true;
+          }
         }
         if (!_.isEmpty(this.sort_cache)) {
           _ref4 = this.sort_cache;
@@ -159,7 +174,8 @@
               q: query.q
             };
             _this.params = _.extend(_this.params, _this.get_search_options());
-            return _this.controller.set_active_url(_this.module.app.app);
+            _this.controller.set_active_url(_this.module.app.app);
+            return _this.setContextLabel();
           },
           error: function(collection, resp) {
             _this.Amplify.publish(_this.cid, 'warning', "There was a problem with this request: " + resp.status + " - " + resp.statusText);

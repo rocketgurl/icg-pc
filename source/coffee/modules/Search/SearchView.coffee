@@ -67,8 +67,17 @@ define [
       # If we have params we need to go ahead and do the search query
       if @params?
         if @params.q? || @params.renewalreviewrequired?
+          @setContextLabel()
           @set_search_options @params
           @fetch(@get_search_options(@params))
+
+    setContextLabel : ->
+      if @params.q? && @params.q != ''
+        label = @params.q
+      else if @params.renewalreviewrequired? && @params.renewalreviewrequired != ''
+        label = 'Renewal Underwriting'
+
+      @$el.find('.search-control-context strong').html(label)
 
     # Assemble search params and hit pxCentral
     search : (e) ->
@@ -117,7 +126,11 @@ define [
         policystate           : policystate
 
       if @renewal_review?
-        query.renewalreviewrequired = true
+        if query.q? && query.q != ''
+          console.log 'yes q and renewalreviewrequired are here'
+          query.renewalreviewrequired = null
+        else
+          query.renewalreviewrequired = true
 
       # Combine any sorting directives with the query
       if !_.isEmpty(@sort_cache)
@@ -168,6 +181,7 @@ define [
 
           @params = _.extend @params, @get_search_options()
           @controller.set_active_url @module.app.app # Ensure the correct URL
+          @setContextLabel()
         error : (collection, resp) =>
           @Amplify.publish @cid, 'warning', "There was a problem with this request: #{resp.status} - #{resp.statusText}"
           @loader_ui(false)
