@@ -162,9 +162,10 @@
         this.policy_header.show();
         return this.POLICY_HEADER_OFFSET = this.policy_header.height();
       },
-      resize_view: function(element, offset) {
+      resize_view: function(element, offset, scroll) {
         offset = offset != null ? offset : this.POLICY_HEADER_OFFSET;
-        return this.Helpers.resize_element(element, offset);
+        element = element != null ? element : this.$el.find("#policy-workspace-" + this.cid);
+        return this.Helpers.resize_element(element, offset, scroll);
       },
       show_overview: function() {
         var flash_obj, resize, resizer,

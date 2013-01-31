@@ -96,6 +96,10 @@
         });
         return this;
       },
+      resize_view: function(element, offset) {
+        offset = offset != null ? offset : this.POLICY_HEADER_OFFSET;
+        return this.Helpers.resize_element(element, offset);
+      },
       removeLoader: function() {
         if (this.loader != null) {
           this.loader.kill();
@@ -295,6 +299,7 @@
           this.$el.html(this.Mustache.render(tpl_ru_container, resp));
           this.removeLoader();
           this.show();
+          this.policy_view.resize_view(null, null, true);
           return this.attachDatepickers();
         } else {
           return this.renewalError({

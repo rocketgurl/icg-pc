@@ -209,9 +209,10 @@ define [
       @policy_header.show()
       @POLICY_HEADER_OFFSET = @policy_header.height()
 
-    resize_view : (element, offset) ->
+    resize_view : (element, offset, scroll) ->
       offset = offset ? @POLICY_HEADER_OFFSET
-      @Helpers.resize_element(element, offset)
+      element = element ? @$el.find("#policy-workspace-#{@cid}")
+      @Helpers.resize_element(element, offset, scroll)
 
     # Load Flex Policy Summary
     show_overview : ->

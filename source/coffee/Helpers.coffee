@@ -153,13 +153,18 @@ define [
     # @param `el` _HTML Element_ element to resize  
     # @param `offset` _Integer_ additional padding  
     #
-    resize_element : (el, offset) ->
+    resize_element : (el, offset, scroll) ->
       offset = offset || 0
       el_height = Math.floor((($(window).height() - (184 + offset))/$(window).height())*100) + "%"
       el.css(
         'min-height' : el_height
         'height'     : $(window).height() - (184 + offset)
         )
+
+      if scroll
+        el.css('overflow', 'auto')
+      else
+        el.css('overflow', 'none')
 
     # Take a name and properly capitalize it
     #

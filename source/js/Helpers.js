@@ -116,14 +116,19 @@
       makeTimestamp: function() {
         return moment(new Date()).format('YYYY-MM-DDTHH:mm:ss.sssZ');
       },
-      resize_element: function(el, offset) {
+      resize_element: function(el, offset, scroll) {
         var el_height;
         offset = offset || 0;
         el_height = Math.floor((($(window).height() - (184 + offset)) / $(window).height()) * 100) + "%";
-        return el.css({
+        el.css({
           'min-height': el_height,
           'height': $(window).height() - (184 + offset)
         });
+        if (scroll) {
+          return el.css('overflow', 'auto');
+        } else {
+          return el.css('overflow', 'none');
+        }
       },
       properName: function(name) {
         name = this.parseNamePrefix(name.toLowerCase());

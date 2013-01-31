@@ -110,6 +110,10 @@ define [
 
       this # so we can chain
 
+    resize_view : (element, offset) ->
+      offset = offset ? @POLICY_HEADER_OFFSET
+      @Helpers.resize_element(element, offset)
+
     removeLoader : ->
       if @loader?
         @loader.kill()
@@ -324,6 +328,8 @@ define [
         @$el.html @Mustache.render tpl_ru_container, resp
         @removeLoader()
         @show()
+
+        @policy_view.resize_view(null, null, true)
         @attachDatepickers()
       else
         @renewalError({statusText : 'Dataset empty', status : 'Backbone'})
