@@ -148,7 +148,7 @@ define [
     makeTimestamp : ->
       moment(new Date()).format('YYYY-MM-DDTHH:mm:ss.sssZ')
 
-    # Resize and element to the approximate height of the workspace
+    # Resize an element to the approximate height of the workspace
     #
     # @param `el` _HTML Element_ element to resize  
     # @param `offset` _Integer_ additional padding  
@@ -165,6 +165,19 @@ define [
         el.css('overflow', 'auto')
       else
         el.css('overflow', 'none')
+
+    # Resize workspace to include the size of the element
+    #
+    # @param `el` _HTML Element_ element to compare workspace to  
+    # @param `workspace` _HTML Element_ element to resize  
+    #
+    resize_workspace : (el, workspace) ->
+      window_height    = Math.floor($(window).height())
+      el_height        = Math.floor(el.height())
+      workspace_height = Math.floor(workspace.height())
+      offset           = Math.abs(el_height - window_height) + 100
+      workspace.height(el_height + 100)
+
 
     # Take a name and properly capitalize it
     #

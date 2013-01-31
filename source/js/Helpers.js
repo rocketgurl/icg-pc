@@ -130,6 +130,14 @@
           return el.css('overflow', 'none');
         }
       },
+      resize_workspace: function(el, workspace) {
+        var el_height, offset, window_height, workspace_height;
+        window_height = Math.floor($(window).height());
+        el_height = Math.floor(el.height());
+        workspace_height = Math.floor(workspace.height());
+        offset = Math.abs(el_height - window_height) + 100;
+        return workspace.height(el_height + 100);
+      },
       properName: function(name) {
         name = this.parseNamePrefix(name.toLowerCase());
         name = this.parseNameSuffix(name);

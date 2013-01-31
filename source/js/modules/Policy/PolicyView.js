@@ -167,6 +167,10 @@
         element = element != null ? element : this.$el.find("#policy-workspace-" + this.cid);
         return this.Helpers.resize_element(element, offset, scroll);
       },
+      resize_workspace: function(element, workspace) {
+        workspace = workspace != null ? workspace : this.$el.find("#policy-workspace-" + this.cid);
+        return this.Helpers.resize_workspace(element, workspace);
+      },
       show_overview: function() {
         var flash_obj, resize, resizer,
           _this = this;
@@ -284,7 +288,6 @@
           $zd_el = $("#zendesk-" + this.cid);
           $zd_el.addClass('policy-module');
         }
-        this.resize_view(this.$el.find($zd_el));
         if (this.zd_container === null || this.zd_container === void 0) {
           return this.zd_container = new ZenDeskView({
             $el: $zd_el,

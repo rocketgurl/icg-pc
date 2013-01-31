@@ -214,6 +214,10 @@ define [
       element = element ? @$el.find("#policy-workspace-#{@cid}")
       @Helpers.resize_element(element, offset, scroll)
 
+    resize_workspace : (element, workspace) ->
+      workspace = workspace ? @$el.find("#policy-workspace-#{@cid}")
+      @Helpers.resize_workspace(element, workspace)
+
     # Load Flex Policy Summary
     show_overview : ->
       @$el.show()
@@ -351,8 +355,6 @@ define [
         $("#policy-workspace-#{@cid}").append("<div id=\"zendesk-#{@cid}\" class=\"zd-container\"></div>")
         $zd_el = $("#zendesk-#{@cid}")
         $zd_el.addClass 'policy-module'
-
-      @resize_view(@$el.find($zd_el))
 
       # If container not already loaded, then insert element into DOM
       if @zd_container == null || @zd_container == undefined

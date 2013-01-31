@@ -58,6 +58,7 @@ define [
           success : (data, textStatus, jqXHR) =>
             @tickets = data
             @render()
+            @policy_view.resize_workspace(@$el, null)
           error: (jqXHR, textStatus, errorThrown) =>
             @Amplify.publish(@policy_view.cid, 'warning', "This policy is unable to access the ZenDesk API at this time. Message: #{textStatus}")
             @remove_loader()

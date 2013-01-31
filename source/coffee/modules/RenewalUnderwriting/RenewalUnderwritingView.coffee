@@ -110,10 +110,6 @@ define [
 
       this # so we can chain
 
-    resize_view : (element, offset) ->
-      offset = offset ? @POLICY_HEADER_OFFSET
-      @Helpers.resize_element(element, offset)
-
     removeLoader : ->
       if @loader?
         @loader.kill()
@@ -329,7 +325,7 @@ define [
         @removeLoader()
         @show()
 
-        @policy_view.resize_view(null, null, true)
+        @policy_view.resize_workspace(@$el, null)
         @attachDatepickers()
       else
         @renewalError({statusText : 'Dataset empty', status : 'Backbone'})

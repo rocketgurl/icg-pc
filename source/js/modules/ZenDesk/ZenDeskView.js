@@ -59,7 +59,8 @@
             dataType: 'json',
             success: function(data, textStatus, jqXHR) {
               _this.tickets = data;
-              return _this.render();
+              _this.render();
+              return _this.policy_view.resize_workspace(_this.$el, null);
             },
             error: function(jqXHR, textStatus, errorThrown) {
               _this.Amplify.publish(_this.policy_view.cid, 'warning', "This policy is unable to access the ZenDesk API at this time. Message: " + textStatus);
