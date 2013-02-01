@@ -224,7 +224,7 @@ define [
 
       # SWFObject deletes the policy-summary container when it removes Flash
       # so we need to check if its there and drop it back in if its not
-      if @$el.find("#policy-summary-#{@cid}").length is 0
+      if @$el.find("#policy-summary-#{@cid}").length == 0
         @$el.find("#policy-header-#{@cid}").after("""<div id="policy-summary-#{@cid}" class="policy-iframe policy-swf"></div>""")
         @policy_summary = @$el.find("#policy-summary-#{@cid}")
 
