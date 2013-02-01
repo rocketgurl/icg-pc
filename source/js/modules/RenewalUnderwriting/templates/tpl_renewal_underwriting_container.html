@@ -3,7 +3,9 @@
 	<div class="ru-block-shim">
 		<table class="ru-list">
 			<tr><td>Renewal review required:</td><td>{{renewal.renewalReviewRequired}}</td></tr>
+			{{#reviewStatusFlag}}
 			<tr><td>Review status:</td><td>{{renewal.reviewStatus}}</td></tr>
+			{{/reviewStatusFlag}}
 			<tr><td>Inspection ordered:</td><td>{{renewal.inspectionOrdered}}</td></tr>
 			<tr>
 				<td>Review period:</td>
@@ -35,6 +37,7 @@
 		</table>
 	</div>
 </div>
+{{#reviewStatusFlag}}
 <div class="ru-block omega">
 	<div class="ru-block-shim">
 		<h3>Renewal review reasons</h3>
@@ -46,7 +49,8 @@
 		</div>
 	</div>
 </div>
-
+{{/reviewStatusFlag}}
+{{#lossHistoryFlag}}
 <h2>Loss history</h2>
 <div class="ru-loss-history-container">
 	<table class="ru-loss-history">
@@ -80,3 +84,7 @@
 		</tbody>
 	</table>
 </div>
+{{/lossHistoryFlag}}
+{{^lossHistoryFlag}}
+<h2>&nbsp;</h2>
+{{/lossHistoryFlag}}

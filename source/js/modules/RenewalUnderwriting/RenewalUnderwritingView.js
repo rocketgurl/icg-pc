@@ -205,6 +205,24 @@
         $parent.find('.buttons').hide();
         return $el.hide();
       },
+      processResponseFields: function(resp) {
+        var field, _i, _len, _ref;
+        resp.reviewStatusFlag = resp.renewal.renewalReviewRequired;
+        resp.lossHistoryFlag = true;
+        if (_.isEmpty(resp.lossHistory)) {
+          resp.lossHistoryFlag = false;
+        }
+        _ref = ['renewalReviewRequired', 'inspectionOrdered'];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          field = _ref[_i];
+          if (resp.renewal[field] === true) {
+            resp.renewal[field] = 'Yes';
+          } else {
+            resp.renewal[field] = 'No';
+          }
+        }
+        return resp;
+      },
       processChange: function(field, val) {
         var old_val;
         old_val = '';
@@ -272,20 +290,19 @@
         return this.Amplify.publish(this.policy_view.cid, 'warning', "Could not save!", 2000);
       },
       renewalSuccess: function(resp) {
-        var test_empty;
         if (resp != null) {
-          resp.cid = this.cid;
-          test_empty = _.omit(resp, 'cid');
-          if (_.isEmpty(test_empty)) {
+          if (_.isEmpty(resp)) {
             this.renewalError({
               statusText: 'Dataset empty',
               status: 'pxCentral'
             });
             return false;
           }
+          resp.cid = this.cid;
           if (resp.insuranceScore.currentDisposition === '') {
             resp.insuranceScore.currentDisposition = 'New';
           }
+          resp = this.processResponseFields(resp);
           this.CHANGESET = {
             renewal: _.omit(resp.renewal, ["inspectionOrdered", "renewalReviewRequired"]),
             insuranceScore: {
@@ -305,6 +322,7 @@
         }
       },
       renewalError: function(resp) {
+        this.removeLoader();
         return this.Amplify.publish(this.policy_view.cid, 'warning', "Could not retrieve renewal underwriting information: " + resp.statusText + " (" + resp.status + ")");
       }
     });

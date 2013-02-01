@@ -207,6 +207,23 @@ define [
       $parent.find('.buttons').hide()
       $el.hide()
 
+    # Alter responses based on boolean values from DB. This affects which
+    # portions of the UI will appear and how they will appear
+    #
+    # @param `resp` _Object_ DB response   
+    # @return _Object_
+    processResponseFields : (resp) ->
+      resp.reviewStatusFlag = resp.renewal.renewalReviewRequired
+      resp.lossHistoryFlag  = true
+
+      if _.isEmpty resp.lossHistory
+        resp.lossHistoryFlag = false
+
+      # Convert booleans to Yes/No
+      for field in ['renewalReviewRequired', 'inspectionOrdered']
+        if resp.renewal[field] == true then resp.renewal[field] = 'Yes' else resp.renewal[field] = 'No'
+
+      resp
 
     # **Did a value change?**  
     # Check the CHANGESET to see if a value changed. For the field we check
@@ -303,17 +320,19 @@ define [
 
     renewalSuccess : (resp) ->
       if resp?
-        resp.cid = @cid
-
         # If the dataset comes back empty for some reason, then display
         # an error message and bomb out.
-        test_empty = _.omit resp, 'cid'
-        if _.isEmpty test_empty
+        if _.isEmpty resp
           @renewalError({statusText : 'Dataset empty', status : 'pxCentral'})
           return false
 
+        resp.cid = @cid # so we can phone home to the correct view
+
         if resp.insuranceScore.currentDisposition == ''
           resp.insuranceScore.currentDisposition = 'New'
+
+        # Side effects!
+        resp = @processResponseFields(resp)
 
         # Store a changeset to send back to server
         @CHANGESET =
@@ -331,4 +350,5 @@ define [
         @renewalError({statusText : 'Dataset empty', status : 'Backbone'})
 
     renewalError : (resp) ->
+      @removeLoader()
       @Amplify.publish(@policy_view.cid, 'warning', "Could not retrieve renewal underwriting information: #{resp.statusText} (#{resp.status})")
