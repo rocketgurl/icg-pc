@@ -330,7 +330,7 @@ define [
     show_renewalunderwriting : ->
       $ru_el = $("#renewal-underwriting-#{@cid}")
       if $ru_el.length == 0
-        $("#policy-workspace-#{@cid}").append @Mustache.render tpl_ru_wrapper, { cid : @cid }
+        $("#policy-header-#{@cid}").after @Mustache.render tpl_ru_wrapper, { cid : @cid }
         $ru_el = $("#renewal-underwriting-#{@cid}")
         $ru_el.addClass 'policy-module'
 
@@ -342,6 +342,7 @@ define [
             policy_view : this
           }).render()
       else
+        @resize_workspace(@ru_container.$el, null)
         @ru_container.show()
 
     teardown_renewalunderwriting : ->
@@ -352,7 +353,7 @@ define [
     show_servicerequests : ->
       $zd_el = $("#zendesk-#{@cid}")
       if $zd_el.length == 0
-        $("#policy-workspace-#{@cid}").append("<div id=\"zendesk-#{@cid}\" class=\"zd-container\"></div>")
+        $("#policy-header-#{@cid}").after("<div id=\"zendesk-#{@cid}\" class=\"zd-container\"></div>")
         $zd_el = $("#zendesk-#{@cid}")
         $zd_el.addClass 'policy-module'
 

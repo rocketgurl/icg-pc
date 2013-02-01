@@ -257,7 +257,7 @@
         var $ru_el;
         $ru_el = $("#renewal-underwriting-" + this.cid);
         if ($ru_el.length === 0) {
-          $("#policy-workspace-" + this.cid).append(this.Mustache.render(tpl_ru_wrapper, {
+          $("#policy-header-" + this.cid).after(this.Mustache.render(tpl_ru_wrapper, {
             cid: this.cid
           }));
           $ru_el = $("#renewal-underwriting-" + this.cid);
@@ -270,6 +270,7 @@
             policy_view: this
           }).render();
         } else {
+          this.resize_workspace(this.ru_container.$el, null);
           return this.ru_container.show();
         }
       },
@@ -284,7 +285,7 @@
         var $zd_el;
         $zd_el = $("#zendesk-" + this.cid);
         if ($zd_el.length === 0) {
-          $("#policy-workspace-" + this.cid).append("<div id=\"zendesk-" + this.cid + "\" class=\"zd-container\"></div>");
+          $("#policy-header-" + this.cid).after("<div id=\"zendesk-" + this.cid + "\" class=\"zd-container\"></div>");
           $zd_el = $("#zendesk-" + this.cid);
           $zd_el.addClass('policy-module');
         }
