@@ -41,7 +41,11 @@ define [
     # Hit our proxy to get tickets from ZenDesk by searching on the policy id.
     # It basically simpler at this point to hit it directly instead of creating
     # Model/Controllers as we're not doing anything special with them.
-    fetch_tickets : (query) -> 
+    fetch_tickets : (query, onSuccess, onError) -> 
+
+      onSuccess = onSuccess ? @fetchSuccess
+      onError   = onError ? @fetchError
+
       if _.isEmpty query
         @Amplify.publish(@policy_view.cid, 'warning', "This policy is unable to search the ZenDesk API at this time. Sorry.")
         return false
@@ -55,12 +59,34 @@ define [
             sort_order : 'desc'
             sort_by    : 'created_at'
           dataType : 'json'
-          success : (data, textStatus, jqXHR) =>
-            @tickets = data
-            @render()
-            @policy_view.resize_workspace(@$el, null)
-          error: (jqXHR, textStatus, errorThrown) =>
-            @Amplify.publish(@policy_view.cid, 'warning', "This policy is unable to access the ZenDesk API at this time. Message: #{textStatus}")
-            @remove_loader()
-            false
+          success  : onSuccess
+          error    : onError
       this
+
+    fetchSuccess : (data, textStatus, jqXHR) =>
+      @tickets = @processResults data
+      @render()
+      @policy_view.resize_workspace(@$el, null)
+      @tickets
+
+    fetchError : (jqXHR, textStatus, errorThrown) =>
+      @Amplify.publish(@policy_view.cid, 'warning', "This policy is unable to access the ZenDesk API at this time. Message: #{textStatus}")
+      @remove_loader()
+      false
+
+    # Change the date from GMT to more humane format
+    #
+    # _Note:_ We are making a deep clone of tickets because
+    # we DO NOT want to mutate it here in this function, and in JS objects
+    # are passed by reference. This caused much hair-pulling in test suite.
+    #
+    processResults : (tickets) ->
+      if tickets? && _.has(tickets, 'results')
+        object = $.extend true, {}, tickets
+        object.results = _.map object.results, (result) ->
+          _.each ['created_at', 'updated_at'], (field) ->
+            result[field] = moment(result[field]).format('YYYY-MM-DD HH:mm')
+          result
+        object
+      else
+        tickets

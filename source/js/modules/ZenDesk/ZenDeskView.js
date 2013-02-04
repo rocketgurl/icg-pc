@@ -2,7 +2,8 @@
 (function() {
 
   define(['BaseView', 'Messenger', 'text!modules/ZenDesk/templates/tpl_zendesk_container.html'], function(BaseView, Messenger, tpl_zd_container) {
-    var ZenDeskView;
+    var ZenDeskView,
+      _this = this;
     return ZenDeskView = BaseView.extend({
       initialize: function(options) {
         var _ref;
@@ -41,8 +42,9 @@
           return $("#zd_loader_" + this.cid).hide();
         }
       },
-      fetch_tickets: function(query) {
-        var _this = this;
+      fetch_tickets: function(query, onSuccess, onError) {
+        onSuccess = onSuccess != null ? onSuccess : this.fetchSuccess;
+        onError = onError != null ? onError : this.fetchError;
         if (_.isEmpty(query)) {
           this.Amplify.publish(this.policy_view.cid, 'warning', "This policy is unable to search the ZenDesk API at this time. Sorry.");
           return false;
@@ -57,19 +59,37 @@
               sort_by: 'created_at'
             },
             dataType: 'json',
-            success: function(data, textStatus, jqXHR) {
-              _this.tickets = data;
-              _this.render();
-              return _this.policy_view.resize_workspace(_this.$el, null);
-            },
-            error: function(jqXHR, textStatus, errorThrown) {
-              _this.Amplify.publish(_this.policy_view.cid, 'warning', "This policy is unable to access the ZenDesk API at this time. Message: " + textStatus);
-              _this.remove_loader();
-              return false;
-            }
+            success: onSuccess,
+            error: onError
           });
         }
         return this;
+      },
+      fetchSuccess: function(data, textStatus, jqXHR) {
+        _this.tickets = _this.processResults(data);
+        _this.render();
+        _this.policy_view.resize_workspace(_this.$el, null);
+        return _this.tickets;
+      },
+      fetchError: function(jqXHR, textStatus, errorThrown) {
+        _this.Amplify.publish(_this.policy_view.cid, 'warning', "This policy is unable to access the ZenDesk API at this time. Message: " + textStatus);
+        _this.remove_loader();
+        return false;
+      },
+      processResults: function(tickets) {
+        var object;
+        if ((tickets != null) && _.has(tickets, 'results')) {
+          object = $.extend(true, {}, tickets);
+          object.results = _.map(object.results, function(result) {
+            _.each(['created_at', 'updated_at'], function(field) {
+              return result[field] = moment(result[field]).format('YYYY-MM-DD HH:mm');
+            });
+            return result;
+          });
+          return object;
+        } else {
+          return tickets;
+        }
       }
     });
   });
