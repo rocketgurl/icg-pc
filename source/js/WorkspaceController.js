@@ -598,6 +598,13 @@
           return false;
         }
       },
+      launchWindow: function(url) {
+        var new_window;
+        if (url != null) {
+          new_window = window.open('download.html', '_blank');
+          return new_window.setUrl = url;
+        }
+      },
       init: function() {
         var _this = this;
         return this.callback_delay(100, function() {

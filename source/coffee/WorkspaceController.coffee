@@ -753,6 +753,11 @@ define [
       else
         false
 
+    # Open a new window that then calls the url
+    launchWindow : (url) ->
+      if url?
+        new_window = window.open('download.html', '_blank')
+        new_window.setUrl = url
 
     # Kick off the show
     init : () ->
