@@ -496,7 +496,9 @@ define [
         @services.pxcentral = "#{url}#{@services.pxcentral_base}"
   
       # Loop through additional services & gather config
-      for node in ['cxserver', 'ixdirectory', 'ixprofiler', 'ixrelay', 'ixvocab', 'zendesk']
+      # ICS-1451: removed ixdirectory from list since it doesn't take
+      # non-auth OPTIONS requests currently
+      for node in ['cxserver', 'ixprofiler', 'ixrelay', 'ixvocab', 'zendesk']
         @services[node] = @config.get_universal_service(@workspace_state, node)
 
       @launch_app app

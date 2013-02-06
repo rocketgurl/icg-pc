@@ -382,7 +382,7 @@
         if (url = this.config.get_pxCentral(this.workspace_state)) {
           this.services.pxcentral = "" + url + this.services.pxcentral_base;
         }
-        _ref = ['cxserver', 'ixdirectory', 'ixprofiler', 'ixrelay', 'ixvocab', 'zendesk'];
+        _ref = ['cxserver', 'ixprofiler', 'ixrelay', 'ixvocab', 'zendesk'];
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           node = _ref[_i];
           this.services[node] = this.config.get_universal_service(this.workspace_state, node);
