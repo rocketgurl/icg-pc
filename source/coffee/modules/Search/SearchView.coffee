@@ -120,14 +120,13 @@ define [
       q                     = @$el.find('input[type=search]').val() ? ''
 
       query =
-        q                     : _.trim q
-        perpage               : perpage
-        page                  : page
-        policystate           : policystate
+        q           : _.trim q
+        perpage     : perpage
+        page        : page
+        policystate : policystate
 
       if @renewal_review?
         if query.q? && query.q != ''
-          console.log 'yes q and renewalreviewrequired are here'
           delete query.renewalreviewrequired
         else
           query.renewalreviewrequired = true

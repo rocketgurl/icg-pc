@@ -126,7 +126,6 @@
         };
         if (this.renewal_review != null) {
           if ((query.q != null) && query.q !== '') {
-            console.log('yes q and renewalreviewrequired are here');
             delete query.renewalreviewrequired;
           } else {
             query.renewalreviewrequired = true;

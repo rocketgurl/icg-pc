@@ -67,7 +67,6 @@ define [
       this
 
     fetchSuccess : (data, textStatus, jqXHR) ->
-      console.log ['fetchSuccess', this]
       @tickets = @processResults data
       @render()
       @policy_view.resize_workspace(@$el, null)

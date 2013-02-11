@@ -66,7 +66,6 @@
         return this;
       },
       fetchSuccess: function(data, textStatus, jqXHR) {
-        console.log(['fetchSuccess', this]);
         this.tickets = this.processResults(data);
         this.render();
         this.policy_view.resize_workspace(this.$el, null);
