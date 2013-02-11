@@ -81,8 +81,12 @@
             this.$el.find(".policy-nav a[href=" + action + "]").parent('li').hide();
           }
         }
-        if (this.model.isIPM()) {
-          this.IPM = new IPMModule(this.model, $("#policy-ipm-" + this.cid), this.controller.user);
+        if (window.IPM_CAPABLE) {
+          if (this.model.isIPM()) {
+            this.IPM = new IPMModule(this.model, $("#policy-ipm-" + this.cid), this.controller.user);
+          } else {
+            this.$el.find(".policy-nav a[href=ipmchanges]").parent('li').hide();
+          }
         } else {
           this.$el.find(".policy-nav a[href=ipmchanges]").parent('li').hide();
         }

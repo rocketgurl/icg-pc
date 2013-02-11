@@ -103,8 +103,11 @@ define [
           @$el.find(".policy-nav a[href=#{action}]").parent('li').hide();
 
       # If this is an IPM policies need an IPMModule instantiated
-      if @model.isIPM()
-        @IPM = new IPMModule(@model, $("#policy-ipm-#{@cid}"), @controller.user)
+      if window.IPM_CAPABLE
+        if @model.isIPM()
+          @IPM = new IPMModule(@model, $("#policy-ipm-#{@cid}"), @controller.user)
+        else
+          @$el.find(".policy-nav a[href=ipmchanges]").parent('li').hide();
       else
         @$el.find(".policy-nav a[href=ipmchanges]").parent('li').hide();
 
