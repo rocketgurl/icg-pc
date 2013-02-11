@@ -10,6 +10,9 @@ define [
     initialize : (options) ->
       [@$el, @policy, @policy_view] = [options.$el, options.policy, options.policy_view]
       @$el.append("<div id=\"zd_shim_#{@cid}\" class=\"zd-shim\"><div id=\"zd_loader_#{@cid}\" class=\"zd-loader\"></div></div>");
+      
+      @fetchSuccess = _.bind(@fetchSuccess, this) # resolve a scope issue
+
       this
 
     # Get tickets from the ZenDesk proxy
@@ -63,13 +66,14 @@ define [
           error    : onError
       this
 
-    fetchSuccess : (data, textStatus, jqXHR) =>
+    fetchSuccess : (data, textStatus, jqXHR) ->
+      console.log ['fetchSuccess', this]
       @tickets = @processResults data
       @render()
       @policy_view.resize_workspace(@$el, null)
       @tickets
 
-    fetchError : (jqXHR, textStatus, errorThrown) =>
+    fetchError : (jqXHR, textStatus, errorThrown) ->
       @Amplify.publish(@policy_view.cid, 'warning', "This policy is unable to access the ZenDesk API at this time. Message: #{textStatus}")
       @remove_loader()
       false

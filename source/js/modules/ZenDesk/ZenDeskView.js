@@ -2,13 +2,13 @@
 (function() {
 
   define(['BaseView', 'Messenger', 'text!modules/ZenDesk/templates/tpl_zendesk_container.html'], function(BaseView, Messenger, tpl_zd_container) {
-    var ZenDeskView,
-      _this = this;
+    var ZenDeskView;
     return ZenDeskView = BaseView.extend({
       initialize: function(options) {
         var _ref;
         _ref = [options.$el, options.policy, options.policy_view], this.$el = _ref[0], this.policy = _ref[1], this.policy_view = _ref[2];
         this.$el.append("<div id=\"zd_shim_" + this.cid + "\" class=\"zd-shim\"><div id=\"zd_loader_" + this.cid + "\" class=\"zd-loader\"></div></div>");
+        this.fetchSuccess = _.bind(this.fetchSuccess, this);
         return this;
       },
       fetch: function() {
@@ -66,14 +66,15 @@
         return this;
       },
       fetchSuccess: function(data, textStatus, jqXHR) {
-        _this.tickets = _this.processResults(data);
-        _this.render();
-        _this.policy_view.resize_workspace(_this.$el, null);
-        return _this.tickets;
+        console.log(['fetchSuccess', this]);
+        this.tickets = this.processResults(data);
+        this.render();
+        this.policy_view.resize_workspace(this.$el, null);
+        return this.tickets;
       },
       fetchError: function(jqXHR, textStatus, errorThrown) {
-        _this.Amplify.publish(_this.policy_view.cid, 'warning', "This policy is unable to access the ZenDesk API at this time. Message: " + textStatus);
-        _this.remove_loader();
+        this.Amplify.publish(this.policy_view.cid, 'warning', "This policy is unable to access the ZenDesk API at this time. Message: " + textStatus);
+        this.remove_loader();
         return false;
       },
       processResults: function(tickets) {
