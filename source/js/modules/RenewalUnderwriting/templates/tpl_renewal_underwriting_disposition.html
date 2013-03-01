@@ -1,20 +1,39 @@
 <!-- TEMPLATE: Renewal Underwriting Disposition -->
 <div class="ru-menus renewal-underwriting-change-disposition" id="ru-disposition-{{cid}}">
-	<table>
-		<thead>
-			<tr>
-				<th>Change Disposition</th>
-				<th class="menu-close"><i class="icon-remove-circle"></i></th>
-			</tr>
-		</thead>
-		<tbody>
-			{{#dispositions}}
-			<tr>
-				<td colspan="2" class="disposition-row-{{id}} ru-disposition-row">
-					<a href="{{id}}">{{name}}</a>
-				</td>
-			</tr>
-			{{/dispositions}}
-		</tbody>
-	</table>
+	<header>
+		<h1>Change Disposition <i class="icon-remove-circle menu-close"></i></h1>
+	</header>
+	<article>
+		<form action="change-disposition" id="ru-form-disposition">
+			<div class="select">
+				<label for="currentDisposition">Choose disposition:</label>
+				<select name="currentDisposition" id="currentDisposition">
+					{{#dispositions}}
+					<option value="{{id}}">{{name}}</option>
+					{{/dispositions}}
+				</select>
+			</div>
+			<div class="select nonrenewal-reasons-block">
+				<label for="nonRenewalCode">Non-renewal reason code:</label>
+				<select name="nonRenewalCode" id="nonRenewalCode">
+					<option>- Select one -</option>
+					{{#reasons}}
+					<option value="{{id}}">{{name}}</option>
+					{{/reasons}}
+				</select>
+			</div>
+			<div class="textarea nonrenewal-reasons-block">
+				<label for="nonRenewalReason">Non-renewal explanation <em>(appears on documents)</em></label>
+				<textarea name="nonRenewalReason" id="nonRenewalReason"></textarea>
+			</div>
+			<div class="textarea">
+				<label for="renewalReviewReason">Comments <em>(internal only)</em></label>
+				<textarea name="renewalReviewReason" id="renewalReviewReason"></textarea>
+			</div>
+			<div class="buttons">
+				<button class="confirm">Save</button>
+				<button class="cancel">Cancel</button>
+			</div>
+		</form>
+	</article>
 </div>

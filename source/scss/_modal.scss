@@ -43,7 +43,8 @@
 		}
 	}
 
-	.menu-header {
+	.menu-header,
+	header {
 		border-top-left-radius: 4px;
 		border-top-right-radius: 4px;
 		background-color: $blue;
@@ -51,10 +52,23 @@
 		@include font-size(14);
 		padding: 10px;
 
+		h1 {
+			color: $white !important;
+			@include font-size(14);
+			margin: 0;
+			padding: 0;
+			text-shadow: none;
+		}
+	
 		i {
 			float: right;
 			cursor: pointer;
 		}
+	}
+
+	header {
+		display: block;
+		padding-bottom: 25px;
 	}
 
 	h2 {
@@ -73,6 +87,12 @@
 	label {
 		display: block;
 		margin: 6px 0;
+
+		em {
+			font-style: normal;
+			font-weight: normal;
+			@include font-size(12);
+		}
 	}
 
 	input[type=text] {
@@ -81,6 +101,20 @@
 		padding: 3px;
 		@include sans;
 		@include font-size(14);
+	}
+
+	.select {
+		display: block;
+		padding: 5px 10px;
+
+		label {
+			display: inline-block;
+		}
+	}
+
+	.textarea {
+		display: block;
+		padding: 5px 20px 5px 10px;
 	}
 
 	.search_form_submit {

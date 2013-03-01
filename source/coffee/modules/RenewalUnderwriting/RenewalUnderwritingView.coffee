@@ -11,8 +11,8 @@ define [
 
   RenewalUnderwritingView = BaseView.extend
 
-    CHANGESET  : {}
-    DATEPICKER : ''
+    changeset  : {}
+    datepicker : ''
 
     events :
       'click a[href=assigned_to]' : (e) -> 
@@ -38,20 +38,24 @@ define [
         @selectDisposition(@process_event e)
         @$el.find('.menu-close').trigger('click')
 
-      'click .renewal_reason' : (e) ->
-        @editRenewalReason(@process_event e)
-
       'click .cancel' : (e) ->
-        @cancelRenewalReason(@process_event e)
+        e.preventDefault()
+        @$el.find('.menu-close').trigger('click')
 
       'click .confirm' : (e) ->
-        @persistRenewalReason(@process_event e)
+        @confirmDisposition(@process_event e)
+
+      'change #currentDisposition' : (e) ->
+        @inspectDispositionOption(@process_event e)
 
     initialize : (options) ->
       @$el         = options.$el
       @policy      = options.policy
       @policy_view = options.policy_view
 
+      # Need to maintain some state around Disposition as we need to
+      # do additional validation on changes
+      @non_renew_mode = false
 
       # Setup model for moving metadata around
       @RenewalModel = new RenewalUnderwritingModel(
@@ -82,9 +86,9 @@ define [
 
     # Callbacks for Assignee List fetch
     assigneesFetchSuccess : (model, response, options) ->
-      @ASSIGNEES_LIST = model.getRenewals()
-      if @ASSIGNEES_LIST.length > 0
-        @ASSIGNEES_LIST = _.map @ASSIGNEES_LIST, (assignee) ->
+      @assignees_list = model.getRenewals()
+      if @assignees_list.length > 0
+        @assignees_list = _.map @assignees_list, (assignee) ->
           _.extend assignee, { id : _.uniqueId() }
 
     assigneesFetchError : (model, xhr, options) ->
@@ -129,7 +133,7 @@ define [
     changeAssignment : (el) ->
       data = 
         cid : @cid
-        assignees : @ASSIGNEES_LIST
+        assignees : @assignees_list
 
       @Modal.attach_menu el, '.ru-menus', tpl_ru_assignees, data
 
@@ -149,8 +153,61 @@ define [
           { id : 'withdrawn', name : 'Withdrawn' }
           { id : 'conditional renew', name : 'Conditional renew' }
         ]
+        reasons : [
+          { id : 'reason', name : 'Reasons' }
+        ]
 
-      @Modal.attach_menu el, '.ru-menus', tpl_ru_disposition, data
+      @Modal.attach_menu(el, '.ru-menus', tpl_ru_disposition, data)
+
+      @$el.find('.nonrenewal-reasons-block').hide()
+
+    inspectDispositionOption : (el) ->
+      @$el.find('.nonrenewal-reasons-block').hide()
+      @non_renew_mode = false
+      if el.val() == 'non-renew'
+        @non_renew_mode = true
+        @$el.find('.nonrenewal-reasons-block').show()
+
+    confirmDisposition : (el) ->
+      error = false
+      field_map = 
+        'currentDisposition'  : 'insuranceScore'
+        'renewalReviewReason' : 'renewal'
+        'nonRenewalCode'      : 'renewal'
+        'nonRenewalReason'    : 'renewal'
+
+      fields = _.keys field_map
+
+      # Validate Non-renew fields if present
+      if @non_renew_mode
+        non_renew_fields = fields[2..]
+        send_fields      = fields
+        for field in non_renew_fields
+          $field = @$el.find("##{field}")
+          if $field.val() == '' || $field.val() == '- Select one -'
+            error = true
+            $field.parent().find('label').addClass('error')
+          else
+            $field.parent().find('label').removeClass('error')
+        if error
+          return null
+      else
+        send_fields = fields[0..1]
+
+      # Create changeset (which updates the model)
+      changes = false
+      for field in send_fields
+        if @updateChangeset("#{field_map[field]}.#{field}", @$el.find("##{field}").val())
+          changes = true
+
+      # If something actually changed, then persist it, or throw notice
+      if changes
+        console.log @changeset
+        @RenewalModel.putFragment(@putSuccess, @putError, @changeset)
+        true
+      else
+        @Amplify.publish(@policy_view.cid, 'notice', "No changes made", 2000)
+        false
 
     reviewPeriod : (el) ->
       @$el.find('input[name=reviewPeriod]').datepicker("show")
@@ -170,42 +227,12 @@ define [
       @$el.find('input[name=reviewPeriod]').datepicker(options)
       @$el.find('input[name=reviewDeadline]').datepicker(options)
 
-    # Get the field information from the HTML Element in DATEPICKER and pass
+    # Get the field information from the HTML Element in datepicker and pass
     # to processChange to see if we need to save anything.  
-    # @param `field` _String_ name of CHANGESET field 
+    # @param `field` _String_ name of changeset field 
     dateChanged : (date) ->
-      field = "renewal.#{$(@DATEPICKER).attr('name')}"
+      field = "renewal.#{$(@datepicker).attr('name')}"
       @processChange field, date
-
-    editRenewalReason : ($el) ->
-      content = $el.html()
-      $parent = $el.parent()
-      $el.hide()
-      $parent.find('textarea').show()
-      $parent.find('.buttons').show()
-
-    cancelRenewalReason : ($el) ->
-      $parent = $el.parent().parent()
-      $parent.find('.renewal_reason').show()
-      $parent.find('textarea').hide()
-      $parent.find('.buttons').hide()
-
-    persistRenewalReason : ($el) ->
-      $parent = $el.parent().parent()
-      $el.attr('disabled', true)
-      $parent.find('textarea').attr('disabled', true)
-
-      @processChange 'renewal.reason', $parent.find('textarea').val()
-
-    # On a successfull save the renewal.reason <textarea> needs to be rest
-    # to its initial state with the new content in place
-    resetRenewalReason : ($el) ->
-      $el.attr('disabled', false)
-      $parent = $el.parent()
-      $parent.find('.confirm').attr('disabled', false)
-      $parent.find('.renewal_reason').html($el.val()).show()
-      $parent.find('.buttons').hide()
-      $el.hide()
 
     # Alter responses based on boolean values from DB. This affects which
     # portions of the UI will appear and how they will appear
@@ -223,38 +250,52 @@ define [
       for field in ['renewalReviewRequired', 'inspectionOrdered']
         if resp.renewal[field] == true then resp.renewal[field] = 'Yes' else resp.renewal[field] = 'No'
 
+      # Remove quotes from scores (per Terry)
+      for field in ['newInsuranceScore', 'oldInsuranceScore']
+        resp.insuranceScore[field] = resp.insuranceScore[field].replace(/'|"/g,'')
+
       resp
 
-    # **Did a value change?**  
-    # Check the CHANGESET to see if a value changed. For the field we check
+    # **Did a value change?** Check the changeset to see if a value changed. 
+    # Pre-process form fields for use in changeset - For the field we check
     # for the existence of a '.' and split on that to deal with deeper values
-    # in the CHANGESET.  
+    # in the changeset.  
     #
-    # @param `field` _String_ name of CHANGESET field  
+    # @param `field` _String_ name of changeset field  
     # @param `val` _String_ value of field that changed  
-    # @return _Boolean_
-    processChange : (field, val) ->
+    # @return _Boolean_  
+    updateChangeset : (field, val) ->
       old_val = ''
       field = if field.indexOf('.') > -1 then field.split('.') else field
       if _.isArray(field)
-        old_val = @CHANGESET[field[0]][field[1]]
+        old_val = @changeset[field[0]][field[1]]
       else
         old_val = field
 
-      @CHANGED_FIELD = field # We need to maintain state for @updateElement
+      @changed_field = field # We need to maintain state for @updateElement
 
       if old_val != val
         # This is where we would save the value to the server
         if _.isArray(field)
           # Update the changeset and set model
-          @CHANGESET[field[0]][field[1]] = val
-          @RenewalModel.set(field[0], @CHANGESET[field[0]])
+          @changeset[field[0]][field[1]] = val
+          @RenewalModel.set(field[0], @changeset[field[0]])
         else
           @RenewalModel.set(field, val)
+        true
+      else
+        false
 
+    # **Did a value change?** If a value changed, then persist it to server  
+    #
+    # @param `field` _String_ name of changeset field  
+    # @param `val` _String_ value of field that changed  
+    # @return _Boolean_
+    processChange : (field, val) ->
+      if @updateChangeset(field, val)
         @updateElement 'loading'
-        @RenewalModel.putFragment(@putSuccess, @putError, @CHANGESET)
-
+        @RenewalModel.putFragment(@putSuccess, @putError, @changeset)
+        true
       else
         @Amplify.publish(@policy_view.cid, 'notice', "No changes made", 2000)
         false
@@ -272,9 +313,9 @@ define [
         reviewPeriod       : 'input[name=reviewPeriod]'
         reason             : 'textarea[name=reason]'
 
-      if @CHANGED_FIELD?
-        target_el = elements[@CHANGED_FIELD[1]]
-        new_value = @CHANGESET[@CHANGED_FIELD[0]][@CHANGED_FIELD[1]]
+      if @changed_field?
+        target_el = elements[@changed_field[1]]
+        new_value = @changeset[@changed_field[0]][@changed_field[1]]
 
       $el = @$el.find target_el 
       $el.removeClass().addClass(new_class)
@@ -290,10 +331,10 @@ define [
         $el.parent().find('.confirm').attr('disabled', false)
 
 
-    # Set the value of DATEPICKER for use in determining changes.  
+    # Set the value of datepicker for use in determining changes.  
     # @param `el` _HTML Element_  
     setDatepicker : (el) ->
-      @DATEPICKER = el
+      @datepicker = el
 
     # If the save is successfull then fetch the updated AssigneeList and
     # return model
@@ -335,7 +376,7 @@ define [
         resp = @processResponseFields(resp)
 
         # Store a changeset to send back to server
-        @CHANGESET =
+        @changeset =
           renewal : _.omit(resp.renewal, ["inspectionOrdered", "renewalReviewRequired"])
           insuranceScore : 
             currentDisposition : resp.insuranceScore.currentDisposition

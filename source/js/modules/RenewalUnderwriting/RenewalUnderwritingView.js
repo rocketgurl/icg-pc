@@ -4,8 +4,8 @@
   define(['BaseView', 'Messenger', 'modules/RenewalUnderwriting/RenewalUnderwritingModel', 'modules/ReferralQueue/ReferralAssigneesModel', 'text!modules/RenewalUnderwriting/templates/tpl_renewal_underwriting_container.html', 'text!modules/RenewalUnderwriting/templates/tpl_renewal_underwriting_assignee.html', 'text!modules/RenewalUnderwriting/templates/tpl_renewal_underwriting_disposition.html', 'jqueryui'], function(BaseView, Messenger, RenewalUnderwritingModel, ReferralAssigneesModel, tpl_ru_container, tpl_ru_assignees, tpl_ru_disposition) {
     var RenewalUnderwritingView;
     return RenewalUnderwritingView = BaseView.extend({
-      CHANGESET: {},
-      DATEPICKER: '',
+      changeset: {},
+      datepicker: '',
       events: {
         'click a[href=assigned_to]': function(e) {
           return this.changeAssignment(this.process_event(e));
@@ -30,14 +30,15 @@
           this.selectDisposition(this.process_event(e));
           return this.$el.find('.menu-close').trigger('click');
         },
-        'click .renewal_reason': function(e) {
-          return this.editRenewalReason(this.process_event(e));
-        },
         'click .cancel': function(e) {
-          return this.cancelRenewalReason(this.process_event(e));
+          e.preventDefault();
+          return this.$el.find('.menu-close').trigger('click');
         },
         'click .confirm': function(e) {
-          return this.persistRenewalReason(this.process_event(e));
+          return this.confirmDisposition(this.process_event(e));
+        },
+        'change #currentDisposition': function(e) {
+          return this.inspectDispositionOption(this.process_event(e));
         }
       },
       initialize: function(options) {
@@ -45,6 +46,7 @@
         this.$el = options.$el;
         this.policy = options.policy;
         this.policy_view = options.policy_view;
+        this.non_renew_mode = false;
         this.RenewalModel = new RenewalUnderwritingModel({
           id: this.policy.id,
           urlRoot: this.policy.get('urlRoot'),
@@ -67,9 +69,9 @@
         });
       },
       assigneesFetchSuccess: function(model, response, options) {
-        this.ASSIGNEES_LIST = model.getRenewals();
-        if (this.ASSIGNEES_LIST.length > 0) {
-          return this.ASSIGNEES_LIST = _.map(this.ASSIGNEES_LIST, function(assignee) {
+        this.assignees_list = model.getRenewals();
+        if (this.assignees_list.length > 0) {
+          return this.assignees_list = _.map(this.assignees_list, function(assignee) {
             return _.extend(assignee, {
               id: _.uniqueId()
             });
@@ -116,7 +118,7 @@
         var data;
         data = {
           cid: this.cid,
-          assignees: this.ASSIGNEES_LIST
+          assignees: this.assignees_list
         };
         return this.Modal.attach_menu(el, '.ru-menus', tpl_ru_assignees, data);
       },
@@ -147,9 +149,69 @@
               id: 'conditional renew',
               name: 'Conditional renew'
             }
+          ],
+          reasons: [
+            {
+              id: 'reason',
+              name: 'Reasons'
+            }
           ]
         };
-        return this.Modal.attach_menu(el, '.ru-menus', tpl_ru_disposition, data);
+        this.Modal.attach_menu(el, '.ru-menus', tpl_ru_disposition, data);
+        return this.$el.find('.nonrenewal-reasons-block').hide();
+      },
+      inspectDispositionOption: function(el) {
+        this.$el.find('.nonrenewal-reasons-block').hide();
+        this.non_renew_mode = false;
+        if (el.val() === 'non-renew') {
+          this.non_renew_mode = true;
+          return this.$el.find('.nonrenewal-reasons-block').show();
+        }
+      },
+      confirmDisposition: function(el) {
+        var $field, changes, error, field, field_map, fields, non_renew_fields, send_fields, _i, _j, _len, _len1;
+        error = false;
+        field_map = {
+          'currentDisposition': 'insuranceScore',
+          'renewalReviewReason': 'renewal',
+          'nonRenewalCode': 'renewal',
+          'nonRenewalReason': 'renewal'
+        };
+        fields = _.keys(field_map);
+        if (this.non_renew_mode) {
+          non_renew_fields = fields.slice(2);
+          send_fields = fields;
+          for (_i = 0, _len = non_renew_fields.length; _i < _len; _i++) {
+            field = non_renew_fields[_i];
+            $field = this.$el.find("#" + field);
+            if ($field.val() === '' || $field.val() === '- Select one -') {
+              error = true;
+              $field.parent().find('label').addClass('error');
+            } else {
+              $field.parent().find('label').removeClass('error');
+            }
+          }
+          if (error) {
+            return null;
+          }
+        } else {
+          send_fields = fields.slice(0, 2);
+        }
+        changes = false;
+        for (_j = 0, _len1 = send_fields.length; _j < _len1; _j++) {
+          field = send_fields[_j];
+          if (this.updateChangeset("" + field_map[field] + "." + field, this.$el.find("#" + field).val())) {
+            changes = true;
+          }
+        }
+        if (changes) {
+          console.log(this.changeset);
+          this.RenewalModel.putFragment(this.putSuccess, this.putError, this.changeset);
+          return true;
+        } else {
+          this.Amplify.publish(this.policy_view.cid, 'notice', "No changes made", 2000);
+          return false;
+        }
       },
       reviewPeriod: function(el) {
         return this.$el.find('input[name=reviewPeriod]').datepicker("show");
@@ -171,42 +233,11 @@
       },
       dateChanged: function(date) {
         var field;
-        field = "renewal." + ($(this.DATEPICKER).attr('name'));
+        field = "renewal." + ($(this.datepicker).attr('name'));
         return this.processChange(field, date);
       },
-      editRenewalReason: function($el) {
-        var $parent, content;
-        content = $el.html();
-        $parent = $el.parent();
-        $el.hide();
-        $parent.find('textarea').show();
-        return $parent.find('.buttons').show();
-      },
-      cancelRenewalReason: function($el) {
-        var $parent;
-        $parent = $el.parent().parent();
-        $parent.find('.renewal_reason').show();
-        $parent.find('textarea').hide();
-        return $parent.find('.buttons').hide();
-      },
-      persistRenewalReason: function($el) {
-        var $parent;
-        $parent = $el.parent().parent();
-        $el.attr('disabled', true);
-        $parent.find('textarea').attr('disabled', true);
-        return this.processChange('renewal.reason', $parent.find('textarea').val());
-      },
-      resetRenewalReason: function($el) {
-        var $parent;
-        $el.attr('disabled', false);
-        $parent = $el.parent();
-        $parent.find('.confirm').attr('disabled', false);
-        $parent.find('.renewal_reason').html($el.val()).show();
-        $parent.find('.buttons').hide();
-        return $el.hide();
-      },
       processResponseFields: function(resp) {
-        var field, _i, _len, _ref;
+        var field, _i, _j, _len, _len1, _ref, _ref1;
         resp.reviewStatusFlag = resp.renewal.renewalReviewRequired;
         resp.lossHistoryFlag = true;
         if (_.isEmpty(resp.lossHistory)) {
@@ -221,27 +252,40 @@
             resp.renewal[field] = 'No';
           }
         }
+        _ref1 = ['newInsuranceScore', 'oldInsuranceScore'];
+        for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
+          field = _ref1[_j];
+          resp.insuranceScore[field] = resp.insuranceScore[field].replace(/'|"/g, '');
+        }
         return resp;
       },
-      processChange: function(field, val) {
+      updateChangeset: function(field, val) {
         var old_val;
         old_val = '';
         field = field.indexOf('.') > -1 ? field.split('.') : field;
         if (_.isArray(field)) {
-          old_val = this.CHANGESET[field[0]][field[1]];
+          old_val = this.changeset[field[0]][field[1]];
         } else {
           old_val = field;
         }
-        this.CHANGED_FIELD = field;
+        this.changed_field = field;
         if (old_val !== val) {
           if (_.isArray(field)) {
-            this.CHANGESET[field[0]][field[1]] = val;
-            this.RenewalModel.set(field[0], this.CHANGESET[field[0]]);
+            this.changeset[field[0]][field[1]] = val;
+            this.RenewalModel.set(field[0], this.changeset[field[0]]);
           } else {
             this.RenewalModel.set(field, val);
           }
+          return true;
+        } else {
+          return false;
+        }
+      },
+      processChange: function(field, val) {
+        if (this.updateChangeset(field, val)) {
           this.updateElement('loading');
-          return this.RenewalModel.putFragment(this.putSuccess, this.putError, this.CHANGESET);
+          this.RenewalModel.putFragment(this.putSuccess, this.putError, this.changeset);
+          return true;
         } else {
           this.Amplify.publish(this.policy_view.cid, 'notice', "No changes made", 2000);
           return false;
@@ -256,9 +300,9 @@
           reviewPeriod: 'input[name=reviewPeriod]',
           reason: 'textarea[name=reason]'
         };
-        if (this.CHANGED_FIELD != null) {
-          target_el = elements[this.CHANGED_FIELD[1]];
-          new_value = this.CHANGESET[this.CHANGED_FIELD[0]][this.CHANGED_FIELD[1]];
+        if (this.changed_field != null) {
+          target_el = elements[this.changed_field[1]];
+          new_value = this.changeset[this.changed_field[0]][this.changed_field[1]];
         }
         $el = this.$el.find(target_el);
         $el.removeClass().addClass(new_class);
@@ -274,7 +318,7 @@
         }
       },
       setDatepicker: function(el) {
-        return this.DATEPICKER = el;
+        return this.datepicker = el;
       },
       putSuccess: function(model, response, options) {
         this.updateElement('complete');
@@ -303,7 +347,7 @@
             resp.insuranceScore.currentDisposition = 'New';
           }
           resp = this.processResponseFields(resp);
-          this.CHANGESET = {
+          this.changeset = {
             renewal: _.omit(resp.renewal, ["inspectionOrdered", "renewalReviewRequired"]),
             insuranceScore: {
               currentDisposition: resp.insuranceScore.currentDisposition

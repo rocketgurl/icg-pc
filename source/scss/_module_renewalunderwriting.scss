@@ -26,41 +26,46 @@
 	}
 }
 
-.ru-block {
-	margin-top: 20px;
-	min-height: 240px;
-	box-shadow: #ccc 0 0 1px 1px;
-	background: #fff;
-	@include span-columns(4, 12);
-	@include nth-omega(4n);
+%ru-status-link {
+	color: $colblue;
+	text-decoration: none;
+	i {
+		@include font-size(16);
+	}
+	&:hover {
+		color: $blue;
+	}
 }
 
-.ru-block-shim {
-	color: $darkgray;
-	padding: 10px 20px;
-	@include sans;
-	@include font-size(14);
+.ru-status-block {
+	margin-top: 20px;
+	box-shadow: #ccc 0 0 1px 1px;
+	background: #fff;
+	@include span-columns(12 omega);
 
 	h3 {
 		font-weight: bold;
 		margin: 10px 0 8px 0;
 	}
 
-	p {
-		padding: 0 0 15px 0;
-		margin: 0 0 10px 0;
-		border: 0;
-		line-height: 140%;
+	a {
+		@extend %ru-status-link;
 	}
 
-	strong {
-		font-weight: bold;
-		color: $darkblue;
+	p {
+		margin: 10px 0 0 0;
+		padding: 10px 0 0 0;
+		border-top: $lightgray 1px solid;
+		line-height: 140%;
+		@include font-size(14);
+		color: darken($darkgray, 10);
+		font-style: italic;
 	}
 
 	.buttons {
-		display: none;
 		text-align: right;
+		display: block;
+		padding-right: 10px;
 	}
 
 	button.confirm {
@@ -76,69 +81,6 @@
 		@include simple-color(hue($lightgray), saturation($lightgray), lightness($lightgray));
 	}
 
-	.renewal_reason {
-		color: $colblue;
-		padding: 10px;
-		border: $white 1px solid;
-		background: lighten($lightgray, 3);
-		border-radius: 4px;
-	}
-
-	.renewal_reason:hover {
-		cursor: pointer;
-		border: darken($rowselect, 5) 1px solid;
-		background: lighten($rowselect, 6);
-		color: $blue;
-	}
-
-	textarea {
-		display: none;
-		width: 92%;
-		min-height: 120px;
-		border: darken($lightgray, 10) 1px solid;
-		@include font-size(14);
-		@include sans;
-		color: $darkgray;
-		padding: 10px;
-		border-radius: 4px;
-	}
-
-	textarea[disabled=disabled] {
-		font-style: italic;
-		color: darken($lightgray, 10);
-	}
-}
-
-.ru-hybrid {
-	p { border-bottom: #ddd 1px solid; }
-}
-
-.ru-list {
-	width: 100%;
-	border: 0;
-	margin: 0;
-	td {
-		padding: 8px 2px 8px 0;
-		border-bottom: #eee 1px solid;
-		&:last-child {
-			font-weight: bold;
-			color: $darkblue;
-		}
-	}
-	tr:last-child {
-		td { margin: 0; border: 0; }
-	}
-	
-	a {
-		color: $colblue;
-		text-decoration: none;
-		i {
-			@include font-size(16);
-		}
-		&:hover {
-			color: $blue;
-		}
-	}
 	input {
 		color: $colblue;
 		@include sans;
@@ -156,7 +98,91 @@
 		color: $warning-bottom;
 		font-style: italic;
 	}
+
 }
+
+.ru-status {
+	@include span-columns(6, 12);
+	ul {
+		padding: 20px;
+		@include font-size(16);
+		li {
+			display: block;
+			color: lighten($darkgray, 5);
+			padding: 0 0 12px 0;
+			&:last-child {
+				padding: 0;
+			}
+			strong {
+				padding-left: 5px;
+				font-weight: bold;
+			}
+			div {
+				display: inline-block;
+			}
+		}
+	}
+}
+
+.ru-score {
+	display: inline-block;
+	@include font-size(12);
+	background: $rowselect;
+	margin-top: 4px;
+	padding: 4px 12px;
+	border-radius: 12px;
+	color: darken($rowselect, 50);
+	em {
+		color: darken($rowselect, 60);
+		font-weight: bold;
+	}
+}
+
+.ru-status-table {
+	@include span-columns(6 omega, 12);
+	table {
+		width: 100%;
+		tr {
+			width: 100%;
+		}
+		tr:last-child {
+			td { margin: 0; border: 0; }
+		}
+		tr:first-child {
+			td { padding-top: 0; }
+		}
+		td {
+			margin: 0;
+			padding: 8px 8px 8px 0;
+			border-bottom: #eee 1px solid;
+			color: lighten($darkgray, 5);
+			@include font-size(16);
+			&:last-child {
+				font-weight: bold;
+				color: $darkblue;
+				text-align: right;
+			}
+		}
+	}
+}
+
+.ru-table-shim {
+	padding: 20px;
+}
+
+.ru-block {
+	margin-top: 20px;
+	min-height: 240px;
+	box-shadow: #ccc 0 0 1px 1px;
+	background: #fff;
+	@include span-columns(4, 12);
+	@include nth-omega(4n);
+}
+
+.ru-hybrid {
+	p { border-bottom: #ddd 1px solid; }
+}
+
 
 // Assigned To field, editable
 .assigned-to {
@@ -197,10 +223,42 @@
 }
 
 .ru-menus {
-	@extend .search-menus;
+	@extend %menu-base;
+	margin: 5px 0 0 0;
 	.menu-close {
 		cursor: pointer;
 	}
+
+	article {
+		padding: 10px;
+	}
+
+	label {
+		&.error {
+			color: darken(red, 5);
+		}
+	}
+
+	textarea {
+		width: 300px;
+		height: 100px;
+		border: darken($lightgray, 10) 1px solid;
+		@include font-size(14);
+		@include sans;
+		color: $darkgray;
+		padding: 10px;
+		border-radius: 4px;
+	}
+
+	textarea[disabled=disabled] {
+		font-style: italic;
+		color: darken($lightgray, 10);
+	}
+
+	.nonrenewal-reasons-block {
+
+	}
+
 }
 
 // Loader image

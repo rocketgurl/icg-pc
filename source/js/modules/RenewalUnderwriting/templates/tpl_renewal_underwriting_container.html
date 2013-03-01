@@ -1,14 +1,24 @@
 <h1>Renewal underwriting</h1>
-<div class="ru-block">
-	<div class="ru-block-shim">
-		<table class="ru-list">
-			<tr><td>Renewal review required:</td><td>{{renewal.renewalReviewRequired}}</td></tr>
+<div class="ru-status-block">
+	<div class="ru-status">
+		<ul>
+			<li>Renewal review required: <strong>{{renewal.renewalReviewRequired}}</strong></li>
+			<li>Current disposition: <strong><a href="current_disposition">{{insuranceScore.currentDisposition}}&nbsp;<i class="icon-pencil"></i></a></strong></li>
+			<li>Assigned to: <strong><a href="assigned_to">{{renewal.assignedTo}}&nbsp;<i class="icon-pencil"></i></a></li></strong>
+			<li>Insurance score: <div><span class="ru-score">Old: <em>{{insuranceScore.oldInsuranceScore}}</em></span> <span class="ru-score">New: <em>{{insuranceScore.newInsuranceScore}}</em></span></div></li>
 			{{#reviewStatusFlag}}
-			<tr><td>Review status:</td><td>{{renewal.reviewStatus}}</td></tr>
+			<li>
+				Renewal review reasons:
+				<p class="renewal_reason">{{renewal.reason}}</p>
+			</li>
 			{{/reviewStatusFlag}}
-			<tr><td>Inspection ordered:</td><td>{{renewal.inspectionOrdered}}</td></tr>
+		</ul>
+	</div>
+	<div class="ru-status-table">
+		<div class="ru-table-shim">
+		<table>
 			<tr>
-				<td>Review period:</td>
+				<td>Review start:</td>
 				<td><input type="text" value="{{renewal.reviewPeriod}}" name="reviewPeriod" /> <a href="review_period"><i class="icon-calendar"></i></a></td>
 			</tr>
 			<tr>
@@ -16,40 +26,21 @@
 				<td><input type="text" value="{{renewal.reviewDeadline}}" name="reviewDeadline" /> <a href="review_deadline"><i class="icon-calendar"></i></a></td>
 			</tr>
 			<tr>
-				<td colspan="2" class="assigned-to">
-					<em>Assigned to:</em>
-					<a href="assigned_to">{{renewal.assignedTo}}&nbsp;<i class="icon-pencil"></i></a>
-				</td>
+				<td>Non-payment cancellations:</td>
+				<td>{{insuranceScore.nonPaymentCancellations}}</td>
+			</tr>
+			<tr>
+				<td>NSF / Chargebacks:</td>
+				<td>{{insuranceScore.nonSufficientFunds}}</td>
+			</tr>
+			<tr>
+				<td>Inspection ordered:</td>
+				<td><a href="inspection_ordered"><i class="icon-eye-open"></i> {{renewal.inspectionOrdered}}</a></td>
 			</tr>
 		</table>
-	</div>
-</div>
-<div class="ru-block">
-	<div class="ru-hybrid ru-block-shim">
-		<h3>Insurance score:</h3>
-		<p>
-			Old: <strong>{{insuranceScore.oldInsuranceScore}}</strong>  |  New: <strong>{{insuranceScore.newInsuranceScore}}</strong>
-		</p>	
-		<table class="ru-list">
-			<tr><td>Current disposition:</td><td><a href="current_disposition">{{insuranceScore.currentDisposition}}&nbsp;<i class="icon-pencil"></i></a></td></tr>
-			<tr><td>Non-payment cancellations:</td><td>{{insuranceScore.nonPaymentCancellations}}</td></tr>
-			<tr><td>NSFs:</td><td>{{insuranceScore.nonSufficientFunds}}</td></tr>
-		</table>
-	</div>
-</div>
-{{#reviewStatusFlag}}
-<div class="ru-block omega">
-	<div class="ru-block-shim">
-		<h3>Renewal review reasons</h3>
-		<p class="renewal_reason">{{renewal.reason}}</p>
-		<textarea name="reason">{{renewal.reason}}</textarea>
-		<div class="buttons">
-			<button class="confirm">Save</button>
-			<button class="cancel">Cancel</button>
 		</div>
 	</div>
 </div>
-{{/reviewStatusFlag}}
 {{#lossHistoryFlag}}
 <h2>Loss history</h2>
 <div class="ru-loss-history-container">
