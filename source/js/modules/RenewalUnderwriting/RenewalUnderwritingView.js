@@ -205,7 +205,6 @@
           }
         }
         if (changes) {
-          console.log(this.changeset);
           this.RenewalModel.putFragment(this.putSuccess, this.putError, this.changeset);
           return true;
         } else {

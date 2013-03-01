@@ -161,13 +161,19 @@ define [
 
       @$el.find('.nonrenewal-reasons-block').hide()
 
+    # Display some extra fields if this is a non-renew disposition
     inspectDispositionOption : (el) ->
       @$el.find('.nonrenewal-reasons-block').hide()
       @non_renew_mode = false
       if el.val() == 'non-renew'
-        @non_renew_mode = true
+        @non_renew_mode = true # confirmDisposition() needs this
         @$el.find('.nonrenewal-reasons-block').show()
 
+    # When we grab the form fields from disposition modal we need to:  
+    # * validate any non-renew fields
+    # * combine those field names into key.value forms for the right structure
+    # * create a changeset for use by the model
+    #
     confirmDisposition : (el) ->
       error = false
       field_map = 
@@ -202,7 +208,6 @@ define [
 
       # If something actually changed, then persist it, or throw notice
       if changes
-        console.log @changeset
         @RenewalModel.putFragment(@putSuccess, @putError, @changeset)
         true
       else
