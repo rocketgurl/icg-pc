@@ -181,6 +181,10 @@ define [
           @params = _.extend @params, @get_search_options()
           @controller.set_active_url @module.app.app # Ensure the correct URL
           @setContextLabel()
+
+          # Need to let the footer know that we changed height
+          @module.trigger 'workspace.rendered'
+        
         error : (collection, resp) =>
           @Amplify.publish @cid, 'warning', "There was a problem with this request: #{resp.status} - #{resp.statusText}"
           @loader_ui(false)

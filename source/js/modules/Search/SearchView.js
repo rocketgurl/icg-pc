@@ -174,7 +174,8 @@
             };
             _this.params = _.extend(_this.params, _this.get_search_options());
             _this.controller.set_active_url(_this.module.app.app);
-            return _this.setContextLabel();
+            _this.setContextLabel();
+            return _this.module.trigger('workspace.rendered');
           },
           error: function(collection, resp) {
             _this.Amplify.publish(_this.cid, 'warning', "There was a problem with this request: " + resp.status + " - " + resp.statusText);
