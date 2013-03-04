@@ -26,6 +26,7 @@ define [
       @$el          = options.view.$el
       @controller   = options.view.options.controller
       @services     = @controller.services
+      @module       = options.module
       @flash_loaded = false
 
       # We have not been rendered
@@ -51,6 +52,9 @@ define [
           else if @current_route == 'overview' || @current_route == null
             @show_overview()
             @teardown_ipmchanges()
+        
+        # Need to let the footer know that we changed height
+        @module.trigger 'workspace.rendered'
 
 
       # On deactivate we destroy the SWF compltely. We have to do this so we
@@ -58,7 +62,7 @@ define [
       # reloads anyway, but doesn't get any of the data from the server, and
       # is therefore useless
       @on 'deactivate', () ->
-        @destroy_overview_swf()
+        @teardown_overview()
 
       @on 'loaded', () ->
         @loaded_state = true
@@ -123,7 +127,9 @@ define [
       @policy_header.show()
 
       # Hide the view
-      @$el.hide()
+      @$el.css(
+          'visibility' : 'hidden'
+        )
 
       # Register flash message pubsub for this view
       @messenger = new Messenger(@options.view, @cid)
@@ -171,6 +177,9 @@ define [
       func = @["show_#{action}"]
       if _.isFunction(func)
         func.apply(this)
+
+      # Need to let the footer know that we changed height
+      @module.trigger 'workspace.rendered'
 
       true
 
@@ -221,9 +230,19 @@ define [
       workspace = workspace ? @$el.find("#policy-workspace-#{@cid}")
       @Helpers.resize_workspace(element, workspace)
 
+    show_element : ($elem) ->
+      $elem.show()
+      $elem
+
+    hide_element : ($elem) ->
+      $elem.hide()
+      $elem
+
     # Load Flex Policy Summary
     show_overview : ->
-      @$el.show()
+      @$el.css(
+          'visibility' : 'visible'
+        )
 
       # SWFObject deletes the policy-summary container when it removes Flash
       # so we need to check if its there and drop it back in if its not
@@ -251,7 +270,10 @@ define [
         if _.isEmpty flash_obj
           flash_obj = $("#policy-summary-#{@cid}")
 
-        flash_obj.css('visibility', 'visible').height('93%')
+        flash_obj.css(
+            'visibility' : 'visible'
+            'height'     : '93%'
+          )
 
       if @flash_loaded is false
         swfobject.embedSWF(
@@ -321,13 +343,13 @@ define [
     # Load mxAdmin into workarea and inject policy header
     show_ipmchanges : ->      
       ipm_container = @$el.find("#policy-ipm-#{@cid}")
-      ipm_container.show()
+      @show_element ipm_container
       @resize_view(ipm_container)
 
     # Hide IPM Changes
     teardown_ipmchanges : ->
       ipm_container = @$el.find("#policy-ipm-#{@cid}")
-      ipm_container.hide()
+      @hide_element ipm_container
 
     # Load Renewal Underwriting Views
     show_renewalunderwriting : ->
@@ -346,12 +368,12 @@ define [
           }).render()
       else
         @resize_workspace(@ru_container.$el, null)
-        @ru_container.show()
+        @show_element $ru_el
 
     teardown_renewalunderwriting : ->
       $ru_el = $("#renewal-underwriting-#{@cid}")
       if $ru_el.length > 0
-        @ru_container.hide()
+        @hide_element $ru_el
 
     show_servicerequests : ->
       $zd_el = $("#zendesk-#{@cid}")
@@ -367,12 +389,12 @@ define [
             policy      : @model
             policy_view : this
           }).fetch()
-      else
-        @zd_container.show()
+      
+      @show_element $zd_el
 
     teardown_servicerequests : ->
       $zd_el = $("#zendesk-#{@cid}")
       if $zd_el.length > 0
-        @zd_container.hide()
+        @hide_element $zd_el
 
   PolicyView

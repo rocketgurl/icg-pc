@@ -14,6 +14,7 @@
         this.$el = options.view.$el;
         this.controller = options.view.options.controller;
         this.services = this.controller.services;
+        this.module = options.module;
         this.flash_loaded = false;
         this.render_state = false;
         this.loaded_state = false;
@@ -22,15 +23,16 @@
           if (this.loaded_state) {
             if (this.render()) {
               this.show_overview();
-              return this.teardown_ipmchanges();
+              this.teardown_ipmchanges();
             } else if (this.current_route === 'overview' || this.current_route === null) {
               this.show_overview();
-              return this.teardown_ipmchanges();
+              this.teardown_ipmchanges();
             }
           }
+          return this.module.trigger('workspace.rendered');
         });
         this.on('deactivate', function() {
-          return this.destroy_overview_swf();
+          return this.teardown_overview();
         });
         this.on('loaded', function() {
           this.loaded_state = true;
@@ -96,7 +98,9 @@
         });
         this.build_policy_header();
         this.policy_header.show();
-        this.$el.hide();
+        this.$el.css({
+          'visibility': 'hidden'
+        });
         this.messenger = new Messenger(this.options.view, this.cid);
         return true;
       },
@@ -130,6 +134,7 @@
         if (_.isFunction(func)) {
           func.apply(this);
         }
+        this.module.trigger('workspace.rendered');
         return true;
       },
       teardown_actions: function(actions) {
@@ -175,10 +180,20 @@
         workspace = workspace != null ? workspace : this.$el.find("#policy-workspace-" + this.cid);
         return this.Helpers.resize_workspace(element, workspace);
       },
+      show_element: function($elem) {
+        $elem.show();
+        return $elem;
+      },
+      hide_element: function($elem) {
+        $elem.hide();
+        return $elem;
+      },
       show_overview: function() {
         var flash_obj, resize, resizer,
           _this = this;
-        this.$el.show();
+        this.$el.css({
+          'visibility': 'visible'
+        });
         if (this.$el.find("#policy-summary-" + this.cid).length === 0) {
           this.$el.find("#policy-header-" + this.cid).after("<div id=\"policy-summary-" + this.cid + "\" class=\"policy-iframe policy-swf\"></div>");
           this.policy_summary = this.$el.find("#policy-summary-" + this.cid);
@@ -194,7 +209,10 @@
           if (_.isEmpty(flash_obj)) {
             flash_obj = $("#policy-summary-" + this.cid);
           }
-          flash_obj.css('visibility', 'visible').height('93%');
+          flash_obj.css({
+            'visibility': 'visible',
+            'height': '93%'
+          });
         }
         if (this.flash_loaded === false) {
           return swfobject.embedSWF("../swf/PolicySummary.swf", "policy-summary-" + this.cid, "100%", "93%", "9.0.0", null, null, {
@@ -249,13 +267,13 @@
       show_ipmchanges: function() {
         var ipm_container;
         ipm_container = this.$el.find("#policy-ipm-" + this.cid);
-        ipm_container.show();
+        this.show_element(ipm_container);
         return this.resize_view(ipm_container);
       },
       teardown_ipmchanges: function() {
         var ipm_container;
         ipm_container = this.$el.find("#policy-ipm-" + this.cid);
-        return ipm_container.hide();
+        return this.hide_element(ipm_container);
       },
       show_renewalunderwriting: function() {
         var $ru_el;
@@ -275,14 +293,14 @@
           }).render();
         } else {
           this.resize_workspace(this.ru_container.$el, null);
-          return this.ru_container.show();
+          return this.show_element($ru_el);
         }
       },
       teardown_renewalunderwriting: function() {
         var $ru_el;
         $ru_el = $("#renewal-underwriting-" + this.cid);
         if ($ru_el.length > 0) {
-          return this.ru_container.hide();
+          return this.hide_element($ru_el);
         }
       },
       show_servicerequests: function() {
@@ -294,20 +312,19 @@
           $zd_el.addClass('policy-module');
         }
         if (this.zd_container === null || this.zd_container === void 0) {
-          return this.zd_container = new ZenDeskView({
+          this.zd_container = new ZenDeskView({
             $el: $zd_el,
             policy: this.model,
             policy_view: this
           }).fetch();
-        } else {
-          return this.zd_container.show();
         }
+        return this.show_element($zd_el);
       },
       teardown_servicerequests: function() {
         var $zd_el;
         $zd_el = $("#zendesk-" + this.cid);
         if ($zd_el.length > 0) {
-          return this.zd_container.hide();
+          return this.hide_element($zd_el);
         }
       }
     });

@@ -47,7 +47,7 @@ define [
 
       @policy_view = new PolicyView(
         view   : @view
-        module : @
+        module : this
         model  : @policy_model
         )
 
