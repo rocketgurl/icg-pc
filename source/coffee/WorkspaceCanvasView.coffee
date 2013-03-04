@@ -10,7 +10,7 @@ define [
     $target    : $('#target')
     $flash_tpl : $('#tpl-flash-message').html()
     tagName    : 'section'
-    className  : 'canvas'
+    className  : 'workspace-canvas'
     tab        : null
 
     initialize : (options) ->
@@ -33,11 +33,11 @@ define [
       # Initialize module
       require ["modules/#{@options.module_type}"], (Module) =>
         @module = new Module(@, @app)
+        @module.on('workspace.rendered', => @positionFooter())
         if _.has(Module.prototype, 'load')
           @module.load()
 
       @render()
-
 
     # Render Canvas
     #
@@ -48,11 +48,16 @@ define [
     # 5. Tell the controller we're here.
     #
     render : ->
-
       # Drop loader image into place until our Module is good and ready
       @$el.html Mustache.render tpl_module_loader, {module_name : @app.app_label, app : @app.app}
 
-      @$el.hide(); # We initially keep our contents hidden
+      @options.controller.workspace_zindex++
+
+      @$el.css(
+        'visibility' : 'hidden'
+        'zIndex'     : @options.controller.workspace_zindex
+      )
+
       @$target.append(@$el)
       @render_tab(@template_tab)
 
@@ -75,14 +80,15 @@ define [
     # Put tab into active state 
     activate : ->
       @tab.addClass('selected')
-      @$el.show()
+      @$el.css('visibility', 'visible')
+      @positionFooter()
       if @module
         @module.trigger 'activate'
 
     # Put tab into inactive state
     deactivate : ->
       @tab.removeClass('selected')
-      @$el.hide();
+      @$el.css('visibility', 'hidden')
       if @module
         @module.trigger 'deactivate'
 
@@ -120,3 +126,8 @@ define [
     launch_child_app : (module, app) ->
       @options.controller.Router.append_module module, app.params.url
       @options.controller.launch_module module, app
+
+    positionFooter : ->
+      $('#footer-main').css(
+          'marginTop' : @$el.height() + 20
+        )

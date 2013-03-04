@@ -338,6 +338,12 @@
 	background-size: 60%;
 }
 
+// WorkspaceCanvasView element
+.workspace-canvas {
+	position: absolute;
+	width: 97%;
+}
+
 #test_module {
 	h2 {
 		@include font-size(24);

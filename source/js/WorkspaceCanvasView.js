@@ -7,7 +7,7 @@
       $target: $('#target'),
       $flash_tpl: $('#tpl-flash-message').html(),
       tagName: 'section',
-      className: 'canvas',
+      className: 'workspace-canvas',
       tab: null,
       initialize: function(options) {
         var _ref,
@@ -27,6 +27,9 @@
         this.options.controller.trigger('stack_add', this);
         require(["modules/" + this.options.module_type], function(Module) {
           _this.module = new Module(_this, _this.app);
+          _this.module.on('workspace.rendered', function() {
+            return _this.positionFooter();
+          });
           if (_.has(Module.prototype, 'load')) {
             return _this.module.load();
           }
@@ -38,7 +41,11 @@
           module_name: this.app.app_label,
           app: this.app.app
         }));
-        this.$el.hide();
+        this.options.controller.workspace_zindex++;
+        this.$el.css({
+          'visibility': 'hidden',
+          'zIndex': this.options.controller.workspace_zindex
+        });
         this.$target.append(this.$el);
         this.render_tab(this.template_tab);
         this.loader = Helpers.loader("loader-" + this.app.app, 60, '#696969');
@@ -55,14 +62,15 @@
       },
       activate: function() {
         this.tab.addClass('selected');
-        this.$el.show();
+        this.$el.css('visibility', 'visible');
+        this.positionFooter();
         if (this.module) {
           return this.module.trigger('activate');
         }
       },
       deactivate: function() {
         this.tab.removeClass('selected');
-        this.$el.hide();
+        this.$el.css('visibility', 'hidden');
         if (this.module) {
           return this.module.trigger('deactivate');
         }
@@ -91,6 +99,11 @@
       launch_child_app: function(module, app) {
         this.options.controller.Router.append_module(module, app.params.url);
         return this.options.controller.launch_module(module, app);
+      },
+      positionFooter: function() {
+        return $('#footer-main').css({
+          'marginTop': this.$el.height() + 20
+        });
       }
     });
   });
