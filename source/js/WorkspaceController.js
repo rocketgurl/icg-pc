@@ -40,6 +40,7 @@
       services: ics360.services,
       global_flash: new Messenger($('#canvas'), 'controller'),
       Workspaces: new WorkspaceStateCollection(),
+      workspace_zindex: 30000,
       logger: function(msg) {
         return this.Amplify.publish('log', msg);
       },
