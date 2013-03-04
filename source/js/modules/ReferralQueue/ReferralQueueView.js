@@ -93,7 +93,8 @@
           this.CONTAINER.append(task.render());
         }
         this.toggleLoader();
-        return this.updatePagination(collection, this.PAGINATION_EL);
+        this.updatePagination(collection, this.PAGINATION_EL);
+        return this.MODULE.trigger('workspace.rendered');
       },
       tasksError: function(collection, response) {
         this.toggleLoader();

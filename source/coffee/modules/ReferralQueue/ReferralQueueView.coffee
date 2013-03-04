@@ -107,6 +107,9 @@ define [
       @toggleLoader()
       @updatePagination(collection, @PAGINATION_EL)
 
+      # Need to let the footer know that we changed height
+      @MODULE.trigger 'workspace.rendered'
+
     # Handle server errors from the Tasks Collection
     #
     # @param `collection` _Object_ ReferralTaskCollection  
