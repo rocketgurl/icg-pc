@@ -1,19 +1,20 @@
 <!doctype html>
-<html>
+<html style="min-height: 100%; height: 100%">
 	<head>
 		<title>Download Document</title>
-		<script src="/js/lib/jquery-1.8.2.js"></script>
 	</head>
-	<body style="padding: 0; margin: 0">
-		<iframe id="download-frame" style="border: 0; width: 100%; height: 100%"></iframe>
+	<body style="padding: 0; margin: 0; min-height: 100%; height: 100%;">
+		<iframe id="download-frame" style="border: 0; width: 100%; min-height: 100%"></iframe>
 		<script>
-			$(document).ready(function(){
-				$('#download-frame').height($(window).height());
-				var frame = document.getElementById('download-frame');
-				if (setUrl !== null || setUrl !== undefined) {
-					frame.src = setUrl;
-				}
-			});
+			var bodyHeight, frame, proxyUrl;
+
+			bodyHeight   = document.getElementsByTagName('body')[0].offsetHeight
+			frame        = document.getElementById('download-frame');
+			frame.height = bodyHeight;
+			if (setUrl !== null || setUrl !== undefined) {
+				proxyUrl = '/' + setUrl.split('/').slice(2).join('/');
+				frame.src = proxyUrl;
+			}
 		</script>
 	</body>
 </html>
