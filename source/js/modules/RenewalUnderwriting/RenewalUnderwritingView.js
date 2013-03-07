@@ -46,11 +46,16 @@
         this.$el = options.$el;
         this.policy = options.policy;
         this.policy_view = options.policy_view;
+        this.User = this.PolicyView.controller.user;
         this.non_renew_mode = false;
         this.RenewalModel = new RenewalUnderwritingModel({
           id: this.policy.id,
           urlRoot: this.policy.get('urlRoot'),
           digest: this.policy.get('digest')
+          id: this.Policy.id,
+          urlRoot: this.Policy.get('urlRoot'),
+          digest: this.Policy.get('digest'),
+          user: this.User.id
         });
         this.RenewalModel.on('renewal:success', this.renewalSuccess, this);
         this.RenewalModel.on('renewal:error', this.renewalError, this);

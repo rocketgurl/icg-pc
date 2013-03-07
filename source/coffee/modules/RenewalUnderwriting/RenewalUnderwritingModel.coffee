@@ -27,6 +27,9 @@ define [
       success ?= @putSuccess
       error  ?= @putError
 
+      # Ensure user.id is on all changeSets
+      fragment = _.extend fragment, { user : @get('user') }
+
       @save({},{ 
           data        : JSON.stringify fragment 
           contentType : 'application/json'

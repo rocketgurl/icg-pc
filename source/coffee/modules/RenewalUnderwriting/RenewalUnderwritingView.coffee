@@ -52,6 +52,7 @@ define [
       @$el         = options.$el
       @policy      = options.policy
       @policy_view = options.policy_view
+      @User       = @PolicyView.controller.user
 
       # Need to maintain some state around Disposition as we need to
       # do additional validation on changes
@@ -62,6 +63,10 @@ define [
           id      : @policy.id
           urlRoot : @policy.get 'urlRoot'
           digest  : @policy.get 'digest'
+          id      : @Policy.id
+          urlRoot : @Policy.get 'urlRoot'
+          digest  : @Policy.get 'digest'
+          user    : @User.id
         )
 
       # Attach events to model
