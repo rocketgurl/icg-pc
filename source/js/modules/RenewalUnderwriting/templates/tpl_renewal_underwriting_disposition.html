@@ -6,16 +6,17 @@
 	<article>
 		<form action="change-disposition" id="ru-form-disposition">
 			<div class="select">
-				<label for="currentDisposition">Choose disposition:</label>
-				<select name="currentDisposition" id="currentDisposition">
+				<label for="disposition">Choose disposition:</label>
+				<select name="disposition" id="disposition">
+					<option>- Select one -</option>
 					{{#dispositions}}
 					<option value="{{id}}">{{name}}</option>
 					{{/dispositions}}
 				</select>
 			</div>
 			<div class="select nonrenewal-reasons-block">
-				<label for="nonRenewalCode">Non-renewal reason code:</label>
-				<select name="nonRenewalCode" id="nonRenewalCode">
+				<label for="nonRenewalReasonCode">Non-renewal reason code:</label>
+				<select name="nonRenewalReasonCode" id="nonRenewalReasonCode">
 					<option>- Select one -</option>
 					{{#reasons}}
 					<option value="{{id}}">{{name}}</option>
@@ -24,11 +25,11 @@
 			</div>
 			<div class="textarea nonrenewal-reasons-block">
 				<label for="nonRenewalReason">Non-renewal explanation <em>(appears on documents)</em></label>
-				<textarea name="nonRenewalReason" id="nonRenewalReason"></textarea>
+				<textarea name="nonRenewalReason" id="nonRenewalReason">{{nonRenewalReason}}</textarea>
 			</div>
 			<div class="textarea">
-				<label for="renewalReviewReason">Comments <em>(internal only)</em></label>
-				<textarea name="renewalReviewReason" id="renewalReviewReason"></textarea>
+				<label for="comment">Comments <em>(internal only)</em></label>
+				<textarea name="comment" id="comment">{{comment}}</textarea>
 			</div>
 			<div class="buttons">
 				<button class="confirm">Save</button>

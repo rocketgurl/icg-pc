@@ -3,13 +3,13 @@
 	<div class="ru-status">
 		<ul>
 			<li>Renewal review required: <strong>{{renewal.renewalReviewRequired}}</strong></li>
-			<li>Current disposition: <strong><a href="current_disposition">{{insuranceScore.currentDisposition}}&nbsp;<i class="icon-pencil"></i></a></strong></li>
+			<li>Current disposition: <strong><a href="current_disposition">{{insuranceScore.disposition}}&nbsp;<i class="icon-pencil"></i></a></strong></li>
 			<li>Assigned to: <strong><a href="assigned_to">{{renewal.assignedTo}}&nbsp;<i class="icon-pencil"></i></a></li></strong>
 			<li>Insurance score: <div><span class="ru-score">Old: <em>{{insuranceScore.oldInsuranceScore}}</em></span> <span class="ru-score">New: <em>{{insuranceScore.newInsuranceScore}}</em></span></div></li>
 			{{#reviewStatusFlag}}
 			<li>
 				Renewal review reasons:
-				<p class="renewal_reason">{{renewal.reason}}</p>
+				<p class="renewal_reason">{{renewal.comment}}</p>
 			</li>
 			{{/reviewStatusFlag}}
 		</ul>
