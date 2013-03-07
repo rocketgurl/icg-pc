@@ -380,7 +380,11 @@
           this.services.ixlibrary = "" + ixlibrary.baseURL + this.services.ixlibrary_base;
         }
         if (url = this.config.get_pxCentral(this.workspace_state)) {
-          this.services.pxcentral = "" + url + this.services.pxcentral_base;
+          if (window.USE_PROXY) {
+            this.services.pxcentral = "/" + this.services.pxcentral_base;
+          } else {
+            this.services.pxcentral = "" + url + this.services.pxcentral_base;
+          }
         }
         _ref = ['cxserver', 'ixprofiler', 'ixrelay', 'ixvocab', 'zendesk'];
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {

@@ -493,7 +493,10 @@ define [
         @services.ixlibrary = "#{ixlibrary.baseURL}#{@services.ixlibrary_base}"
 
       if url = @config.get_pxCentral(@workspace_state)
-        @services.pxcentral = "#{url}#{@services.pxcentral_base}"
+        if window.USE_PROXY
+          @services.pxcentral = "/#{@services.pxcentral_base}"
+        else
+          @services.pxcentral = "#{url}#{@services.pxcentral_base}"
   
       # Loop through additional services & gather config
       # ICS-1451: removed ixdirectory from list since it doesn't take
