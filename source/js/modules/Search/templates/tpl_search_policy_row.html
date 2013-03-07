@@ -1,8 +1,8 @@
-<td><a href="{{href}}">{{identifiers.QuoteNumber}}</a></td>
-<td><a href="{{href}}">{{identifiers.PolicyID}}</a></td>
+<td><a href="{{href}}">{{identifiers.quoteNumber}}</a></td>
+<td><a href="{{href}}">{{identifiers.policyId}}</a></td>
 <td>{{productLabel}}</td>
-<td>{{insured.InsuredLastName}}</td>
-<td>{{insured.Address}} {{insured.InsuredMailingAddressState}} {{insured.InsuredMailingAddressZip}}</td>
-<td{{#policyStateClass}} class="{{policyStateClass}}"{{/policyStateClass}}>{{PolicyState}}</td>
-<td>{{EffectiveDate}}</td>
-<td>{{RenewalReviewRequired}}</td>
+<td>{{insured.lastName}}</td>
+<td>{{insured.Address}} {{insured.address.state}} {{insured.address.zip}}</td>
+<td{{#policyStateClass}} class="{{policyStateClass}}"{{/policyStateClass}}>{{policyState}}</td>
+<td>{{effectiveDate}}</td>
+<td>{{renewalReviewRequired}}</td>

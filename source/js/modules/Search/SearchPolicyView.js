@@ -19,21 +19,21 @@
         this.$el.attr({
           id: this.data.identifiers.InsightPolicyId
         });
-        if (this.data.EffectiveDate != null) {
-          this.data.EffectiveDate = this.data.EffectiveDate.substr(0, 10);
+        if (this.data.effectiveDate != null) {
+          this.data.effectiveDate = this.data.effectiveDate.substr(0, 10);
         }
-        this.data.policyStateClass = this.data.PolicyState.toLowerCase();
-        if (this.data.RenewalReviewRequired != null) {
-          this.data.RenewalReviewRequired = this.data.RenewalReviewRequired === true ? 'Yes' : 'No';
+        this.data.policyStateClass = this.data.policyState.toLowerCase();
+        if (this.data.renewalReviewRequired != null) {
+          this.data.renewalReviewRequired = this.data.renewalReviewRequired === true ? 'Yes' : 'No';
         } else {
-          this.data.RenewalReviewRequired = 'No';
+          this.data.renewalReviewRequired = 'No';
         }
         this.data.insured.Address = "";
-        if (this.data.insured.InsuredMailingAddressLine1 != null) {
-          this.data.insured.Address += "" + this.data.insured.InsuredMailingAddressLine1 + ", ";
+        if (this.data.insured.address.line1 != null) {
+          this.data.insured.Address += "" + this.data.insured.address.line1 + ", ";
         }
-        if (this.data.insured.InsuredMailingAddressCity != null) {
-          this.data.insured.Address += "" + this.data.insured.InsuredMailingAddressCity + ", ";
+        if (this.data.insured.address.city != null) {
+          this.data.insured.Address += "" + this.data.insured.address.city + ", ";
         }
         this.$el.html(this.Mustache.render(tpl_search_policy_row, this.data));
         return this.target.append(this.$el);
@@ -49,7 +49,7 @@
         $el = $(e.currentTarget);
         identifiers = this.model.get('identifiers');
         params = {
-          url: identifiers.QuoteNumber
+          url: identifiers.quoteNumber
         };
         this.module.view.options.controller.launch_module('policyview', params);
         return this.module.view.options.controller.Router.append_module('policyview', params);
