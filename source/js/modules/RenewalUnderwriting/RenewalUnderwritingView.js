@@ -37,33 +37,31 @@
         'click .confirm': function(e) {
           return this.confirmDisposition(this.process_event(e));
         },
-        'change #currentDisposition': function(e) {
+        'change #disposition': function(e) {
           return this.inspectDispositionOption(this.process_event(e));
         }
       },
       initialize: function(options) {
         var ixlibrary;
         this.$el = options.$el;
-        this.policy = options.policy;
-        this.policy_view = options.policy_view;
+        this.Policy = options.policy;
+        this.PolicyView = options.policy_view;
         this.User = this.PolicyView.controller.user;
         this.non_renew_mode = false;
         this.RenewalModel = new RenewalUnderwritingModel({
-          id: this.policy.id,
-          urlRoot: this.policy.get('urlRoot'),
-          digest: this.policy.get('digest')
           id: this.Policy.id,
           urlRoot: this.Policy.get('urlRoot'),
           digest: this.Policy.get('digest'),
           user: this.User.id
         });
         this.RenewalModel.on('renewal:success', this.renewalSuccess, this);
+        this.RenewalModel.on('renewal:update', this.renewalUpdate, this);
         this.RenewalModel.on('renewal:error', this.renewalError, this);
         this.putSuccess = _.bind(this.putSuccess, this);
         this.putError = _.bind(this.putError, this);
-        ixlibrary = "" + this.policy_view.controller.services.ixlibrary + "buckets/underwriting/objects/assignee_list.xml";
+        ixlibrary = "" + this.PolicyView.controller.services.ixlibrary + "buckets/underwriting/objects/assignee_list.xml";
         this.AssigneeList = new ReferralAssigneesModel({
-          digest: this.policy.get('digest')
+          digest: this.Policy.get('digest')
         });
         this.AssigneeList.url = ixlibrary;
         this.assigneesFetchError = _.bind(this.assigneesFetchError, this);
@@ -84,13 +82,13 @@
         }
       },
       assigneesFetchError: function(model, xhr, options) {
-        return this.Amplify.publish(this.policy_view.cid, 'warning', "Could not fetch assignees list from server : " + xhr.status + " - " + xhr.statusText, 2000);
+        return this.Amplify.publish(this.PolicyView.cid, 'warning', "Could not fetch assignees list from server : " + xhr.status + " - " + xhr.statusText, 2000);
       },
       render: function() {
         this.show();
-        if ($("#ru-spinner-" + this.policy_view.cid).length > 0) {
-          $("#ru-loader-" + this.policy_view.cid).show();
-          this.loader = this.Helpers.loader("ru-spinner-" + this.policy_view.cid, 80, '#696969');
+        if ($("#ru-spinner-" + this.PolicyView.cid).length > 0) {
+          $("#ru-loader-" + this.PolicyView.cid).show();
+          this.loader = this.Helpers.loader("ru-spinner-" + this.PolicyView.cid, 80, '#696969');
           this.loader.setFPS(48);
         }
         this.RenewalModel.fetch({
@@ -131,14 +129,18 @@
         return this.processChange('renewal.assignedTo', $(el).html());
       },
       selectDisposition: function(el) {
-        return this.processChange('insuranceScore.currentDisposition', $(el).html());
+        return this.processChange('insuranceScore.disposition', $(el).html());
       },
       changeDisposition: function(el) {
-        var data;
+        var data, input, r, _i, _len, _ref;
+        r = this.RenewalModel.attributes;
         data = {
           cid: this.cid,
           dispositions: [
             {
+              id: 'new',
+              name: 'New'
+            }, {
               id: 'pending',
               name: 'Pending'
             }, {
@@ -157,13 +159,70 @@
           ],
           reasons: [
             {
-              id: 'reason',
-              name: 'Reasons'
+              id: "1",
+              name: "Insured request"
+            }, {
+              id: "2",
+              name: "Nonpayment of premium"
+            }, {
+              id: "3",
+              name: "Insured convicted of crime"
+            }, {
+              id: "4",
+              name: "Discovery of fraud or material misrepresentation"
+            }, {
+              id: "5",
+              name: "Discovery of willful or reckless acts of omissions"
+            }, {
+              id: "6",
+              name: "Physical changes in the property "
+            }, {
+              id: "7",
+              name: "Increase in liability hazards beyond what is normally accepted"
+            }, {
+              id: "8",
+              name: "Increase in property hazards beyond what is normally accepted"
+            }, {
+              id: "9",
+              name: "Overexposed in area where risk is located"
+            }, {
+              id: "10",
+              name: "Change in occupancy status"
+            }, {
+              id: "11",
+              name: "Other underwriting reasons"
+            }, {
+              id: "12",
+              name: "Cancel/rewrite"
+            }, {
+              id: "13",
+              name: "Change in ownership"
+            }, {
+              id: "14",
+              name: "Missing required documentation"
+            }, {
+              id: "15",
+              name: "Insured Request - Short Rate"
+            }, {
+              id: "16",
+              name: "Nonpayment of Premium - Flat"
             }
-          ]
+          ],
+          disposition: r.insuranceScore.disposition,
+          nonRenewalReasonCode: r.renewal.nonRenewalReasonCode,
+          nonRenewalReason: r.renewal.nonRenewalReason,
+          comment: r.renewal.comment
         };
         this.Modal.attach_menu(el, '.ru-menus', tpl_ru_disposition, data);
-        return this.$el.find('.nonrenewal-reasons-block').hide();
+        _ref = ['nonRenewalReasonCode', 'disposition'];
+        for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+          input = _ref[_i];
+          if (data[input] != null) {
+            this.$el.find("#" + input).val(data[input]);
+          }
+        }
+        this.$el.find('.nonrenewal-reasons-block').hide();
+        return this.inspectDispositionOption(this.$el.find('#disposition'));
       },
       inspectDispositionOption: function(el) {
         this.$el.find('.nonrenewal-reasons-block').hide();
@@ -175,11 +234,12 @@
       },
       confirmDisposition: function(el) {
         var $field, changes, error, field, field_map, fields, non_renew_fields, send_fields, _i, _j, _len, _len1;
+        this.$el.find('.confirm').attr('disabled', true);
         error = false;
         field_map = {
-          'currentDisposition': 'insuranceScore',
-          'renewalReviewReason': 'renewal',
-          'nonRenewalCode': 'renewal',
+          'disposition': 'insuranceScore',
+          'comment': 'renewal',
+          'nonRenewalReasonCode': 'renewal',
           'nonRenewalReason': 'renewal'
         };
         fields = _.keys(field_map);
@@ -197,6 +257,7 @@
             }
           }
           if (error) {
+            this.$el.find('.confirm').attr('disabled', false);
             return null;
           }
         } else {
@@ -213,7 +274,8 @@
           this.RenewalModel.putFragment(this.putSuccess, this.putError, this.changeset);
           return true;
         } else {
-          this.Amplify.publish(this.policy_view.cid, 'notice', "No changes made", 2000);
+          this.$el.find('.confirm').attr('disabled', false);
+          this.Amplify.publish(this.PolicyView.cid, 'notice', "No changes made", 2000);
           return false;
         }
       },
@@ -291,7 +353,7 @@
           this.RenewalModel.putFragment(this.putSuccess, this.putError, this.changeset);
           return true;
         } else {
-          this.Amplify.publish(this.policy_view.cid, 'notice', "No changes made", 2000);
+          this.Amplify.publish(this.PolicyView.cid, 'notice', "No changes made", 2000);
           return false;
         }
       },
@@ -299,7 +361,7 @@
         var $el, elements, new_value, target_el;
         elements = {
           assignedTo: 'a[href=assigned_to]',
-          currentDisposition: 'a[href=current_disposition]',
+          disposition: 'a[href=current_disposition]',
           reviewDeadline: 'input[name=reviewDeadline]',
           reviewPeriod: 'input[name=reviewPeriod]',
           reason: 'textarea[name=reason]'
@@ -325,17 +387,39 @@
         return this.datepicker = el;
       },
       putSuccess: function(model, response, options) {
-        this.updateElement('complete');
-        this.Amplify.publish(this.policy_view.cid, 'success', "Saved changes!", 2000);
+        this.$el.find('.confirm').attr('disabled', false);
+        this.Amplify.publish(this.PolicyView.cid, 'success', "Saved changes!", 2000);
         this.AssigneeList.fetch({
           success: this.assigneesFetchSuccess,
           error: this.assigneesFetchError
         });
+        this.RenewalModel.fetch({
+          success: function(model, resp) {
+            return model.trigger('renewal:update', resp);
+          },
+          error: function(model, resp) {
+            return model.trigger('renewal:error', resp);
+          }
+        });
         return model;
       },
       putError: function(model, xhr, options) {
-        this.updateElement('incomplete');
-        return this.Amplify.publish(this.policy_view.cid, 'warning', "Could not save!", 2000);
+        this.$el.find('.confirm').attr('disabled', false);
+        return this.Amplify.publish(this.PolicyView.cid, 'warning', "Could not save!", 2000);
+      },
+      processRenewalResponse: function(resp) {
+        resp.cid = this.cid;
+        if (resp.insuranceScore.currentDisposition === '') {
+          resp.insuranceScore.currentDisposition = 'New';
+        }
+        resp = this.processResponseFields(resp);
+        this.changeset = {
+          renewal: _.omit(resp.renewal, ["inspectionOrdered", "renewalReviewRequired"]),
+          insuranceScore: {
+            currentDisposition: resp.insuranceScore.currentDisposition
+          }
+        };
+        return resp;
       },
       renewalSuccess: function(resp) {
         if (resp != null) {
@@ -346,21 +430,11 @@
             });
             return false;
           }
-          resp.cid = this.cid;
-          if (resp.insuranceScore.currentDisposition === '') {
-            resp.insuranceScore.currentDisposition = 'New';
-          }
-          resp = this.processResponseFields(resp);
-          this.changeset = {
-            renewal: _.omit(resp.renewal, ["inspectionOrdered", "renewalReviewRequired"]),
-            insuranceScore: {
-              currentDisposition: resp.insuranceScore.currentDisposition
-            }
-          };
+          resp = this.processRenewalResponse(resp);
           this.$el.html(this.Mustache.render(tpl_ru_container, resp));
           this.removeLoader();
           this.show();
-          this.policy_view.resize_workspace(this.$el, null);
+          this.PolicyView.resize_workspace(this.$el, null);
           return this.attachDatepickers();
         } else {
           return this.renewalError({
@@ -369,9 +443,25 @@
           });
         }
       },
+      renewalUpdate: function(resp) {
+        if (resp === null || _.isEmpty(resp)) {
+          this.renewalError({
+            statusText: 'Dataset empty',
+            status: 'pxCentral'
+          });
+          return false;
+        }
+        resp = this.processRenewalResponse(resp);
+        this.undelegateEvents();
+        this.$el.find('input[name=reviewPeriod]').datepicker("destroy");
+        this.$el.find('input[name=reviewDeadline]').datepicker("destroy");
+        this.$el.html(this.Mustache.render(tpl_ru_container, resp));
+        this.delegateEvents();
+        return this.attachDatepickers();
+      },
       renewalError: function(resp) {
         this.removeLoader();
-        return this.Amplify.publish(this.policy_view.cid, 'warning', "Could not retrieve renewal underwriting information: " + resp.statusText + " (" + resp.status + ")");
+        return this.Amplify.publish(this.PolicyView.cid, 'warning', "Could not retrieve renewal underwriting information: " + resp.statusText + " (" + resp.status + ")");
       }
     });
   });

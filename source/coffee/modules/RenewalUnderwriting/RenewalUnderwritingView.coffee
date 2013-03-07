@@ -45,13 +45,13 @@ define [
       'click .confirm' : (e) ->
         @confirmDisposition(@process_event e)
 
-      'change #currentDisposition' : (e) ->
+      'change #disposition' : (e) ->
         @inspectDispositionOption(@process_event e)
 
     initialize : (options) ->
-      @$el         = options.$el
-      @policy      = options.policy
-      @policy_view = options.policy_view
+      @$el        = options.$el
+      @Policy     = options.policy
+      @PolicyView = options.policy_view
       @User       = @PolicyView.controller.user
 
       # Need to maintain some state around Disposition as we need to
@@ -60,9 +60,6 @@ define [
 
       # Setup model for moving metadata around
       @RenewalModel = new RenewalUnderwritingModel(
-          id      : @policy.id
-          urlRoot : @policy.get 'urlRoot'
-          digest  : @policy.get 'digest'
           id      : @Policy.id
           urlRoot : @Policy.get 'urlRoot'
           digest  : @Policy.get 'digest'
@@ -71,15 +68,16 @@ define [
 
       # Attach events to model
       @RenewalModel.on 'renewal:success', @renewalSuccess, this
+      @RenewalModel.on 'renewal:update', @renewalUpdate, this
       @RenewalModel.on 'renewal:error', @renewalError, this
 
       @putSuccess = _.bind @putSuccess, this
       @putError   = _.bind @putError, this
 
-      ixlibrary = "#{@policy_view.controller.services.ixlibrary}buckets/underwriting/objects/assignee_list.xml"
+      ixlibrary = "#{@PolicyView.controller.services.ixlibrary}buckets/underwriting/objects/assignee_list.xml"
 
       # Get list of assignees
-      @AssigneeList     = new ReferralAssigneesModel({ digest : @policy.get 'digest' })
+      @AssigneeList     = new ReferralAssigneesModel({ digest : @Policy.get 'digest' })
       @AssigneeList.url = ixlibrary
       
       @assigneesFetchError   = _.bind @assigneesFetchError, this
@@ -97,25 +95,25 @@ define [
           _.extend assignee, { id : _.uniqueId() }
 
     assigneesFetchError : (model, xhr, options) ->
-      @Amplify.publish(@policy_view.cid, 'warning', "Could not fetch assignees list from server : #{xhr.status} - #{xhr.statusText}", 2000)
+      @Amplify.publish(@PolicyView.cid, 'warning', "Could not fetch assignees list from server : #{xhr.status} - #{xhr.statusText}", 2000)
 
     render : ->
       @show()
-      if $("#ru-spinner-#{@policy_view.cid}").length > 0
-        $("#ru-loader-#{@policy_view.cid}").show()
-        @loader = @Helpers.loader("ru-spinner-#{@policy_view.cid}", 80, '#696969')
+      if $("#ru-spinner-#{@PolicyView.cid}").length > 0
+        $("#ru-loader-#{@PolicyView.cid}").show()
+        @loader = @Helpers.loader("ru-spinner-#{@PolicyView.cid}", 80, '#696969')
         @loader.setFPS(48)
      
       # This is just for testing the loader, remove delay
-      # load = _.bind(@RenewalModel.fetchRenewalMetadata, @policy)
+      # load = _.bind(@RenewalModel.fetchRenewalMetadata, @Policy)
       # _.delay(load, 1000)
 
       @RenewalModel.fetch(
-          success : (model, resp) ->
-            model.trigger('renewal:success', resp)
-          error : (model, resp) ->
-            model.trigger('renewal:error', resp)
-        )
+        success : (model, resp) ->
+          model.trigger('renewal:success', resp)
+        error : (model, resp) ->
+          model.trigger('renewal:error', resp)
+      )
 
       this # so we can chain
 
@@ -146,12 +144,15 @@ define [
       @processChange 'renewal.assignedTo', $(el).html()
 
     selectDisposition : (el) ->
-      @processChange 'insuranceScore.currentDisposition', $(el).html()
+      @processChange 'insuranceScore.disposition', $(el).html()
 
     changeDisposition : (el) ->
+      r = @RenewalModel.attributes
+
       data = 
         cid : @cid
         dispositions : [
+          { id : 'new', name : 'New' }
           { id : 'pending', name : 'Pending' }
           { id : 'renew no-action', name : 'Renew with no action' }
           { id : 'non-renew', name : 'Non-renew' }
@@ -159,12 +160,38 @@ define [
           { id : 'conditional renew', name : 'Conditional renew' }
         ]
         reasons : [
-          { id : 'reason', name : 'Reasons' }
+          { id: "1", name : "Insured request" },
+          { id: "2", name : "Nonpayment of premium" },
+          { id: "3", name : "Insured convicted of crime" },
+          { id: "4", name : "Discovery of fraud or material misrepresentation" },
+          { id: "5", name : "Discovery of willful or reckless acts of omissions" },
+          { id: "6", name : "Physical changes in the property " },
+          { id: "7", name : "Increase in liability hazards beyond what is normally accepted" },
+          { id: "8", name : "Increase in property hazards beyond what is normally accepted" },
+          { id: "9", name : "Overexposed in area where risk is located" },
+          { id: "10", name : "Change in occupancy status" },
+          { id: "11", name : "Other underwriting reasons" },
+          { id: "12", name : "Cancel/rewrite" },
+          { id: "13", name : "Change in ownership" },
+          { id: "14", name : "Missing required documentation" },
+          { id: "15", name : "Insured Request - Short Rate" },
+          { id: "16", name : "Nonpayment of Premium - Flat" }
         ]
+        disposition          : r.insuranceScore.disposition
+        nonRenewalReasonCode : r.renewal.nonRenewalReasonCode
+        nonRenewalReason     : r.renewal.nonRenewalReason
+        comment              : r.renewal.comment
 
       @Modal.attach_menu(el, '.ru-menus', tpl_ru_disposition, data)
 
+      # Set default val of selects
+      for input in ['nonRenewalReasonCode', 'disposition']
+        if data[input]?
+          @$el.find("##{input}").val(data[input])
+
       @$el.find('.nonrenewal-reasons-block').hide()
+
+      @inspectDispositionOption(@$el.find('#disposition'))
 
     # Display some extra fields if this is a non-renew disposition
     inspectDispositionOption : (el) ->
@@ -180,12 +207,14 @@ define [
     # * create a changeset for use by the model
     #
     confirmDisposition : (el) ->
+      @$el.find('.confirm').attr('disabled', true)
+
       error = false
       field_map = 
-        'currentDisposition'  : 'insuranceScore'
-        'renewalReviewReason' : 'renewal'
-        'nonRenewalCode'      : 'renewal'
-        'nonRenewalReason'    : 'renewal'
+        'disposition'          : 'insuranceScore'
+        'comment'              : 'renewal'
+        'nonRenewalReasonCode' : 'renewal'
+        'nonRenewalReason'     : 'renewal'
 
       fields = _.keys field_map
 
@@ -201,6 +230,7 @@ define [
           else
             $field.parent().find('label').removeClass('error')
         if error
+          @$el.find('.confirm').attr('disabled', false)
           return null
       else
         send_fields = fields[0..1]
@@ -216,7 +246,8 @@ define [
         @RenewalModel.putFragment(@putSuccess, @putError, @changeset)
         true
       else
-        @Amplify.publish(@policy_view.cid, 'notice', "No changes made", 2000)
+        @$el.find('.confirm').attr('disabled', false)
+        @Amplify.publish(@PolicyView.cid, 'notice', "No changes made", 2000)
         false
 
     reviewPeriod : (el) ->
@@ -307,7 +338,7 @@ define [
         @RenewalModel.putFragment(@putSuccess, @putError, @changeset)
         true
       else
-        @Amplify.publish(@policy_view.cid, 'notice', "No changes made", 2000)
+        @Amplify.publish(@PolicyView.cid, 'notice', "No changes made", 2000)
         false
 
     # Apply styles to elements to indicate loading/complete status. <a>'s
@@ -317,11 +348,11 @@ define [
     #
     updateElement : (new_class) ->
       elements = 
-        assignedTo         : 'a[href=assigned_to]'
-        currentDisposition : 'a[href=current_disposition]'
-        reviewDeadline     : 'input[name=reviewDeadline]'
-        reviewPeriod       : 'input[name=reviewPeriod]'
-        reason             : 'textarea[name=reason]'
+        assignedTo     : 'a[href=assigned_to]'
+        disposition    : 'a[href=current_disposition]'
+        reviewDeadline : 'input[name=reviewDeadline]'
+        reviewPeriod   : 'input[name=reviewPeriod]'
+        reason         : 'textarea[name=reason]'
 
       if @changed_field?
         target_el = elements[@changed_field[1]]
@@ -355,19 +386,43 @@ define [
     # @return _Object_ Model  
     #
     putSuccess : (model, response, options) ->
-      @updateElement 'complete'
-      @Amplify.publish(@policy_view.cid, 'success', "Saved changes!", 2000)
+      @$el.find('.confirm').attr('disabled', false)
+      @Amplify.publish(@PolicyView.cid, 'success', "Saved changes!", 2000)
 
       # Refresh the Assignee List
       @AssigneeList.fetch
         success : @assigneesFetchSuccess
         error   : @assigneesFetchError
 
+      @RenewalModel.fetch(
+        success : (model, resp) ->
+          model.trigger('renewal:update', resp)
+        error : (model, resp) ->
+          model.trigger('renewal:error', resp)
+      )
+
       model
 
     putError : (model, xhr, options) ->
-      @updateElement 'incomplete'
-      @Amplify.publish(@policy_view.cid, 'warning', "Could not save!", 2000)
+      @$el.find('.confirm').attr('disabled', false)
+      @Amplify.publish(@PolicyView.cid, 'warning', "Could not save!", 2000)
+
+    processRenewalResponse : (resp) ->
+      resp.cid = @cid # so we can phone home to the correct view
+
+      if resp.insuranceScore.currentDisposition == ''
+        resp.insuranceScore.currentDisposition = 'New'
+
+      # Side effects!
+      resp = @processResponseFields(resp)
+
+      # Store a changeset to send back to server
+      @changeset =
+        renewal : _.omit(resp.renewal, ["inspectionOrdered", "renewalReviewRequired"])
+        insuranceScore : 
+          currentDisposition : resp.insuranceScore.currentDisposition
+
+      resp
 
     renewalSuccess : (resp) ->
       if resp?
@@ -377,29 +432,35 @@ define [
           @renewalError({statusText : 'Dataset empty', status : 'pxCentral'})
           return false
 
-        resp.cid = @cid # so we can phone home to the correct view
+        # walk the response and adjust information to match the view
+        resp = @processRenewalResponse(resp)
 
-        if resp.insuranceScore.currentDisposition == ''
-          resp.insuranceScore.currentDisposition = 'New'
+        @$el.html(@Mustache.render tpl_ru_container, resp)
 
-        # Side effects!
-        resp = @processResponseFields(resp)
-
-        # Store a changeset to send back to server
-        @changeset =
-          renewal : _.omit(resp.renewal, ["inspectionOrdered", "renewalReviewRequired"])
-          insuranceScore : 
-            currentDisposition : resp.insuranceScore.currentDisposition
-
-        @$el.html @Mustache.render tpl_ru_container, resp
         @removeLoader()
         @show()
-
-        @policy_view.resize_workspace(@$el, null)
+        @PolicyView.resize_workspace(@$el, null)
         @attachDatepickers()
       else
         @renewalError({statusText : 'Dataset empty', status : 'Backbone'})
 
+    renewalUpdate : (resp) ->
+      if resp == null || _.isEmpty(resp)
+        @renewalError({statusText : 'Dataset empty', status : 'pxCentral'})
+        return false
+
+      # walk the response and adjust information to match the view
+      resp = @processRenewalResponse(resp)
+
+      @undelegateEvents()
+      @$el.find('input[name=reviewPeriod]').datepicker("destroy")
+      @$el.find('input[name=reviewDeadline]').datepicker("destroy")
+
+      @$el.html @Mustache.render(tpl_ru_container, resp)
+
+      @delegateEvents()
+      @attachDatepickers()
+
     renewalError : (resp) ->
       @removeLoader()
-      @Amplify.publish(@policy_view.cid, 'warning', "Could not retrieve renewal underwriting information: #{resp.statusText} (#{resp.status})")
+      @Amplify.publish(@PolicyView.cid, 'warning', "Could not retrieve renewal underwriting information: #{resp.statusText} (#{resp.status})")
