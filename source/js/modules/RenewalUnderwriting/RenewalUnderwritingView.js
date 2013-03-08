@@ -309,7 +309,7 @@
         if (_.isEmpty(resp.lossHistory)) {
           resp.lossHistoryFlag = false;
         }
-        _ref = ['renewalReviewRequired', 'inspectionOrdered'];
+        _ref = ['renewalReviewRequired'];
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           field = _ref[_i];
           if (resp.renewal[field] === true) {
@@ -317,6 +317,9 @@
           } else {
             resp.renewal[field] = 'No';
           }
+        }
+        if (resp.renewal.inspectionOrdered === false) {
+          delete resp.renewal.inspectionOrdered;
         }
         _ref1 = ['newInsuranceScore', 'oldInsuranceScore'];
         for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {

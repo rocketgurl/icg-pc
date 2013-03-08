@@ -33,10 +33,12 @@
 				<td>NSF / Chargebacks:</td>
 				<td>{{insuranceScore.nonSufficientFunds}}</td>
 			</tr>
+			{{#renewal.inspectionOrdered}}
 			<tr>
 				<td>Inspection ordered:</td>
-				<td><a href="inspection_ordered"><i class="icon-eye-open"></i> {{renewal.inspectionOrdered}}</a></td>
+				<td><a href="{{renewal.inspectionUrl}}" target="_blank"><i class="icon-eye-open"></i> View</a></td>
 			</tr>
+			{{/renewal.inspectionOrdered}}
 		</table>
 		</div>
 	</div>

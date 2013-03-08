@@ -288,8 +288,11 @@ define [
         resp.lossHistoryFlag = false
 
       # Convert booleans to Yes/No
-      for field in ['renewalReviewRequired', 'inspectionOrdered']
+      for field in ['renewalReviewRequired']
         if resp.renewal[field] == true then resp.renewal[field] = 'Yes' else resp.renewal[field] = 'No'
+
+      if resp.renewal.inspectionOrdered == false
+        delete resp.renewal.inspectionOrdered
 
       # Remove quotes from scores (per Terry)
       for field in ['newInsuranceScore', 'oldInsuranceScore']
