@@ -1,22 +1,22 @@
 define([
-  "jquery", 
-  "underscore", 
-  "WorkspaceController", 
+  "jquery",
+  "underscore",
+  "WorkspaceController",
   "modules/Search/SearchContextCollection",
   "modules/Policy/PolicyModel",
   "modules/RenewalUnderwriting/RenewalUnderwritingModel",
   "modules/RenewalUnderwriting/RenewalUnderwritingView",
   "amplify",
-  "loader"], 
+  "loader"],
   function(
-    $, 
-    _, 
-    WorkspaceController, 
+    $,
+    _,
+    WorkspaceController,
     SearchContextCollection,
     PolicyModel,
     RenewalUnderwritingModel,
     RenewalUnderwritingView,
-    amplify, 
+    amplify,
     CanvasLoader
 ) {
 
@@ -50,11 +50,15 @@ define([
         $el         : $('<div />'),
         policy      : policy_A,
         policy_view : {
+          resize_workspace : function() { return null },
           controller : {
-            services : {
-              pxcentral : 'https://test.policycentral.dev/pxcentral/api/rest/v1/',
-              ixlibrary : 'https://test.policycentral.dev/ixlibrary/api/sdo/rest/v1/'
-            }
+              services : {
+                pxcentral : 'https://test.policycentral.dev/pxcentral/api/rest/v1/',
+                ixlibrary : 'https://test.policycentral.dev/ixlibrary/api/sdo/rest/v1/'
+              },
+              user : {
+                id : 'thurston.howell@arc90.com'
+              }
           }
         }
       }
@@ -122,11 +126,12 @@ define([
     it ('RenewalUnderwritingViews can select assignee and put a fragment to the server', function() {
       var _success, _error, _changeset;
       waitsFor(function() {
-        if (!_.isEmpty(view.CHANGESET)) {
+        if (_.isEmpty(view.changeset) === false) {
           _success = function(model, response, options) {
+            console.log(model, response)
             if (response.status === 'OK') {
               _changeset = model;
-            }            
+            }
           }
           _error = function(model, xhr, options) {
             console.log(['ERROR', xhr]);
@@ -136,16 +141,16 @@ define([
           view.putSuccess = _success
           view.putError   = _error
 
-          view.processChange('renewal.assignedTo', 'art.greitzer@cru360.com');
+          console.log(view.processChange('renewal.assignedTo', 'art.greitzer@cru360.com'));
 
           if (_changeset) {
             return true;
-          } 
+          }
         }
       }, "view should have a changeset", 1000);
 
       runs(function(){
-        expect(view.CHANGESET.renewal.assignedTo).toBe('art.greitzer@cru360.com');
+        expect(view.changeset.renewal.assignedTo).toBe('art.greitzer@cru360.com');
         expect(_changeset.get('renewal').assignedTo).toBe('art.greitzer@cru360.com');
       });
     });
@@ -153,11 +158,11 @@ define([
     it ('RenewalUnderwritingViews can select change reviewPeriod and put a fragment to the server', function() {
       var _success, _error, _changeset;
       waitsFor(function() {
-        if (!_.isEmpty(view.CHANGESET)) {
+        if (!_.isEmpty(view.changeset)) {
           _success = function(model, response, options) {
             if (response.status === 'OK') {
               _changeset = model;
-            }            
+            }
           }
           _error = function(model, xhr, options) {
             console.log(['ERROR', xhr]);
@@ -171,24 +176,24 @@ define([
 
           if (_changeset) {
             return true;
-          } 
+          }
         }
       }, "view should have a changeset", 1000);
 
       runs(function(){
-        expect(view.CHANGESET.renewal.reviewPeriod).toBe('10-15-2013');
+        expect(view.changeset.renewal.reviewPeriod).toBe('10-15-2013');
         expect(_changeset.get('renewal').reviewPeriod).toBe('10-15-2013');
       });
-    }); 
+    });
 
     it ('RenewalUnderwritingViews can select change reviewDeadline and put a fragment to the server', function() {
       var _success, _error, _changeset;
       waitsFor(function() {
-        if (!_.isEmpty(view.CHANGESET)) {
+        if (!_.isEmpty(view.changeset)) {
           _success = function(model, response, options) {
             if (response.status === 'OK') {
               _changeset = model;
-            }            
+            }
           }
           _error = function(model, xhr, options) {
             console.log(['ERROR', xhr]);
@@ -202,12 +207,12 @@ define([
 
           if (_changeset) {
             return true;
-          } 
+          }
         }
       }, "view should have a changeset", 1000);
 
       runs(function(){
-        expect(view.CHANGESET.renewal.reviewDeadline).toBe('10-15-2013');
+        expect(view.changeset.renewal.reviewDeadline).toBe('10-15-2013');
         expect(_changeset.get('renewal').reviewDeadline).toBe('10-15-2013');
       });
     });
@@ -215,11 +220,11 @@ define([
     it ('RenewalUnderwritingViews can change renewal.reason and put a fragment to the server', function() {
       var _success, _error, _changeset;
       waitsFor(function() {
-        if (!_.isEmpty(view.CHANGESET)) {
+        if (!_.isEmpty(view.changeset)) {
           _success = function(model, response, options) {
             if (response.status === 'OK') {
               _changeset = model;
-            }            
+            }
           }
           _error = function(model, xhr, options) {
             console.log(['ERROR', xhr]);
@@ -233,12 +238,12 @@ define([
 
           if (_changeset) {
             return true;
-          } 
+          }
         }
       }, "view should have a changeset", 1000);
 
       runs(function(){
-        expect(view.CHANGESET.renewal.reason).toBe('I got a letter from the government the other day, opened and read it, said they were suckers');
+        expect(view.changeset.renewal.reason).toBe('I got a letter from the government the other day, opened and read it, said they were suckers');
         expect(_changeset.get('renewal').reason).toBe('I got a letter from the government the other day, opened and read it, said they were suckers');
       });
     });
