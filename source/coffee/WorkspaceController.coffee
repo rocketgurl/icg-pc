@@ -498,11 +498,12 @@ define [
           @services.pxcentral = "/#{@services.pxcentral_base}"
         else
           @services.pxcentral = "#{url}#{@services.pxcentral_base}"
+          @services.ixvocab = @config.get_universal_service(@workspace_state, 'ixvocab')
   
       # Loop through additional services & gather config
       # ICS-1451: removed ixdirectory from list since it doesn't take
       # non-auth OPTIONS requests currently
-      for node in ['cxserver', 'ixprofiler', 'ixrelay', 'ixvocab', 'zendesk']
+      for node in ['cxserver', 'ixprofiler', 'ixrelay', 'zendesk']
         @services[node] = @config.get_universal_service(@workspace_state, node)
 
       @launch_app app

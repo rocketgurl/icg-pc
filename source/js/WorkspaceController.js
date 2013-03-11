@@ -385,9 +385,10 @@
             this.services.pxcentral = "/" + this.services.pxcentral_base;
           } else {
             this.services.pxcentral = "" + url + this.services.pxcentral_base;
+            this.services.ixvocab = this.config.get_universal_service(this.workspace_state, 'ixvocab');
           }
         }
-        _ref = ['cxserver', 'ixprofiler', 'ixrelay', 'ixvocab', 'zendesk'];
+        _ref = ['cxserver', 'ixprofiler', 'ixrelay', 'zendesk'];
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           node = _ref[_i];
           this.services[node] = this.config.get_universal_service(this.workspace_state, node);
