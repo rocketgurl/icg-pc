@@ -13,7 +13,7 @@ define [
     url : ->
       if @get('url_root') == undefined
         return false
-      "#{@get('url_root')}Term/#{@id}"
+      "#{@get('url_root')}terms/#{@id}"
 
     # If we already have data in LocalStorage then move along,
     # otherwise hitup the server to load it in

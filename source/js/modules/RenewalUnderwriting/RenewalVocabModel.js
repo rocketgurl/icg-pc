@@ -25,7 +25,7 @@
         if (this.get('url_root') === void 0) {
           return false;
         }
-        return "" + (this.get('url_root')) + "Term/" + this.id;
+        return "" + (this.get('url_root')) + "terms/" + this.id;
       };
 
       RenewalVocabModel.prototype.checkCache = function() {
