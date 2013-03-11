@@ -9,16 +9,17 @@ define [
 	#
 	# @param **name** _String_ name for your localStorage DB
 	# 
-	Store = (name) ->
-		@name = name
-		store = amplify.store(@name); # use Amplify to interface w/ storage
-		@data = (store) || {}
-		@
+	Store = (name, options) ->
+		@options = (options) || {}
+		@name    = name
+		store    = amplify.store(@name); # use Amplify to interface w/ storage
+		@data    = (store) || {}
+		this
 
 	_.extend Store.prototype, {
 
 		# Generate primitive for GUID
-		s4 : () ->
+		s4 : ->
 			(((1+Math.random())*0x10000)|0).toString(16).substring(1)
 
 		# Generate GUID, used as a key in localstorage
@@ -26,8 +27,8 @@ define [
 			(@s4()+@s4()+"-"+@s4()+"-"+@s4()+"-"+@s4()+"-"+@s4()+@s4()+@s4())
 
 		# Save the current state of the **Store** to *localStorage*.
-		save : () ->
-		  amplify.store(@name, @data)
+		save : ->
+		 	amplify.store(@name, @data, @options)
 
 		# Add a model, giving it a (hopefully)-unique GUID, if it doesn't already
 		# have an id of it's own.

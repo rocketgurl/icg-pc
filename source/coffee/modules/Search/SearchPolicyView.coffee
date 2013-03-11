@@ -25,22 +25,22 @@ define [
         id : @data.identifiers.InsightPolicyId
 
       # Chomp dates
-      @data.EffectiveDate = @data.EffectiveDate.substr(0,10) if @data.EffectiveDate?
+      @data.effectiveDate = @data.effectiveDate.substr(0,10) if @data.effectiveDate?
 
       # Change UI on PolicyState label using className
-      @data.policyStateClass = @data.PolicyState.toLowerCase()
+      @data.policyStateClass = @data.policyState.toLowerCase()
 
-      if @data.RenewalReviewRequired?
-        @data.RenewalReviewRequired = if @data.RenewalReviewRequired == true then 'Yes' else 'No'
+      if @data.renewalReviewRequired?
+        @data.renewalReviewRequired = if @data.renewalReviewRequired == true then 'Yes' else 'No'
       else
-        @data.RenewalReviewRequired = 'No'
+        @data.renewalReviewRequired = 'No'
 
       # Deal with address concatenation
       @data.insured.Address = ""
-      if @data.insured.InsuredMailingAddressLine1?
-        @data.insured.Address += "#{@data.insured.InsuredMailingAddressLine1}, "
-      if @data.insured.InsuredMailingAddressCity?
-        @data.insured.Address += "#{@data.insured.InsuredMailingAddressCity}, "
+      if @data.insured.address.line1?
+        @data.insured.Address += "#{@data.insured.address.line1}, "
+      if @data.insured.address.city?
+        @data.insured.Address += "#{@data.insured.address.city}, "
 
       @$el.html @Mustache.render tpl_search_policy_row, @data
       @target.append @$el
@@ -60,7 +60,7 @@ define [
 
       # Setup the params object to launch policy view with
       params =
-        url     : identifiers.QuoteNumber
+        url     : identifiers.quoteNumber
 
       @module.view.options.controller.launch_module 'policyview', params
       @module.view.options.controller.Router.append_module 'policyview', params

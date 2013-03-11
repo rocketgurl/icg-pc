@@ -3,8 +3,9 @@
 
   define(['jquery', 'underscore'], function($, _) {
     var Store;
-    Store = function(name) {
+    Store = function(name, options) {
       var store;
+      this.options = options || {};
       this.name = name;
       store = amplify.store(this.name);
       this.data = store || {};
@@ -18,7 +19,7 @@
         return this.s4() + this.s4() + "-" + this.s4() + "-" + this.s4() + "-" + this.s4() + "-" + this.s4() + this.s4() + this.s4();
       },
       save: function() {
-        return amplify.store(this.name, this.data);
+        return amplify.store(this.name, this.data, this.options);
       },
       create: function(model) {
         if (!model.id) {

@@ -17,6 +17,9 @@
         if (error == null) {
           error = this.putError;
         }
+        fragment = _.extend(fragment, {
+          user: this.get('user')
+        });
         return this.save({}, {
           data: JSON.stringify(fragment),
           contentType: 'application/json',

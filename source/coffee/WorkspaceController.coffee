@@ -36,6 +36,7 @@ define [
       ixlibrary_base : '/api/sdo/rest/v1/'
       ixdoc          : './ixdoc/api/rest/v2/'
       ixadmin        : "./config/ics/#{window.ICS360_ENV}/ixadmin"
+      ixvocab        : './ixvocab/api/rest/v1/'
       zendesk        : './zendesk'
 
   # Method Combinator (Decorator) 
@@ -494,12 +495,16 @@ define [
         @services.ixlibrary = "#{ixlibrary.baseURL}#{@services.ixlibrary_base}"
 
       if url = @config.get_pxCentral(@workspace_state)
-        @services.pxcentral = "#{url}#{@services.pxcentral_base}"
+        if window.USE_PROXY
+          @services.pxcentral = "/#{@services.pxcentral_base}"
+        else
+          @services.pxcentral = "#{url}#{@services.pxcentral_base}"
+          @services.ixvocab = @config.get_universal_service(@workspace_state, 'ixvocab')
   
       # Loop through additional services & gather config
       # ICS-1451: removed ixdirectory from list since it doesn't take
       # non-auth OPTIONS requests currently
-      for node in ['cxserver', 'ixprofiler', 'ixrelay', 'ixvocab', 'zendesk']
+      for node in ['cxserver', 'ixprofiler', 'ixrelay', 'zendesk']
         @services[node] = @config.get_universal_service(@workspace_state, node)
 
       @launch_app app

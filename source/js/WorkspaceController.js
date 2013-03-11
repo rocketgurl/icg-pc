@@ -14,6 +14,7 @@
         ixlibrary_base: '/api/sdo/rest/v1/',
         ixdoc: './ixdoc/api/rest/v2/',
         ixadmin: "./config/ics/" + window.ICS360_ENV + "/ixadmin",
+        ixvocab: './ixvocab/api/rest/v1/',
         zendesk: './zendesk'
       }
     };
@@ -381,9 +382,14 @@
           this.services.ixlibrary = "" + ixlibrary.baseURL + this.services.ixlibrary_base;
         }
         if (url = this.config.get_pxCentral(this.workspace_state)) {
-          this.services.pxcentral = "" + url + this.services.pxcentral_base;
+          if (window.USE_PROXY) {
+            this.services.pxcentral = "/" + this.services.pxcentral_base;
+          } else {
+            this.services.pxcentral = "" + url + this.services.pxcentral_base;
+            this.services.ixvocab = this.config.get_universal_service(this.workspace_state, 'ixvocab');
+          }
         }
-        _ref = ['cxserver', 'ixprofiler', 'ixrelay', 'ixvocab', 'zendesk'];
+        _ref = ['cxserver', 'ixprofiler', 'ixrelay', 'zendesk'];
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
           node = _ref[_i];
           this.services[node] = this.config.get_universal_service(this.workspace_state, node);

@@ -17,7 +17,7 @@ define [
   # adapters for localStorage and XML handling, in addition to standard
   # Backbone JSON handling. 
   # 
-  BaseModel = Backbone.Model.extend
+  class BaseModel extends Backbone.Model
 
     # make Helpers functions available to all models
     Helpers : Helpers
@@ -95,10 +95,12 @@ define [
       @parse = @xmlParse
 
     # Tell model to use localStorage
-    use_localStorage : (storage_key) ->
+    use_localStorage : (storage_key, expire) ->
+
+      options = if expire? then { expires : expire } else null
 
       # Setup localStorage DB in browswer
-      @localStorage = new Store storage_key
+      @localStorage = new Store(storage_key, options)
       @localSync    = LocalStorageSync
 
       @sync  = @localSync
