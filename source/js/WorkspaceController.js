@@ -14,6 +14,7 @@
         ixlibrary_base: '/api/sdo/rest/v1/',
         ixdoc: './ixdoc/api/rest/v2/',
         ixadmin: "./config/ics/" + window.ICS360_ENV + "/ixadmin",
+        ixvocab: './ixvocab/api/rest/v1/',
         zendesk: './zendesk'
       }
     };
