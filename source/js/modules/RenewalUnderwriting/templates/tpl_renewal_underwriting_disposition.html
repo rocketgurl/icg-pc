@@ -10,7 +10,7 @@
 				<select name="disposition" id="disposition">
 					<option>- Select one -</option>
 					{{#dispositions}}
-					<option value="{{id}}">{{name}}</option>
+					<option value="{{value}}">{{label}}</option>
 					{{/dispositions}}
 				</select>
 			</div>
@@ -19,7 +19,7 @@
 				<select name="nonRenewalReasonCode" id="nonRenewalReasonCode">
 					<option>- Select one -</option>
 					{{#reasons}}
-					<option value="{{id}}">{{name}}</option>
+					<option value="{{value}}">{{label}}</option>
 					{{/reasons}}
 				</select>
 			</div>
