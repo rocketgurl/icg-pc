@@ -71,7 +71,7 @@
           error: this.assigneesFetchError
         });
         vocabs = {
-          RenewalVocabDispositions: 'Disposition',
+          RenewalVocabDispositions: 'UnderwritingDisposition',
           RenewalVocabReasons: 'NonRenewalReasonCode'
         };
         _results = [];
@@ -150,78 +150,8 @@
         r = this.RenewalModel.attributes;
         data = {
           cid: this.cid,
-          dispositions: [
-            {
-              id: 'new',
-              name: 'New'
-            }, {
-              id: 'pending',
-              name: 'Pending'
-            }, {
-              id: 'renew no-action',
-              name: 'Renew with no action'
-            }, {
-              id: 'non-renew',
-              name: 'Non-renew'
-            }, {
-              id: 'withdrawn',
-              name: 'Withdrawn'
-            }, {
-              id: 'conditional renew',
-              name: 'Conditional renew'
-            }
-          ],
-          reasons: [
-            {
-              id: "1",
-              name: "Insured request"
-            }, {
-              id: "2",
-              name: "Nonpayment of premium"
-            }, {
-              id: "3",
-              name: "Insured convicted of crime"
-            }, {
-              id: "4",
-              name: "Discovery of fraud or material misrepresentation"
-            }, {
-              id: "5",
-              name: "Discovery of willful or reckless acts of omissions"
-            }, {
-              id: "6",
-              name: "Physical changes in the property "
-            }, {
-              id: "7",
-              name: "Increase in liability hazards beyond what is normally accepted"
-            }, {
-              id: "8",
-              name: "Increase in property hazards beyond what is normally accepted"
-            }, {
-              id: "9",
-              name: "Overexposed in area where risk is located"
-            }, {
-              id: "10",
-              name: "Change in occupancy status"
-            }, {
-              id: "11",
-              name: "Other underwriting reasons"
-            }, {
-              id: "12",
-              name: "Cancel/rewrite"
-            }, {
-              id: "13",
-              name: "Change in ownership"
-            }, {
-              id: "14",
-              name: "Missing required documentation"
-            }, {
-              id: "15",
-              name: "Insured Request - Short Rate"
-            }, {
-              id: "16",
-              name: "Nonpayment of Premium - Flat"
-            }
-          ],
+          dispositions: this.RenewalVocabDispositions.get('data'),
+          reasons: this.RenewalVocabReasons.get('data'),
           disposition: r.insuranceScore.disposition,
           nonRenewalReasonCode: r.renewal.nonRenewalReasonCode,
           nonRenewalReason: r.renewal.nonRenewalReason,
