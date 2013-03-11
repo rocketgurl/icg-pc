@@ -2,12 +2,13 @@ define [
   'BaseView',
   'Messenger',
   'modules/RenewalUnderwriting/RenewalUnderwritingModel',
+  'modules/RenewalUnderwriting/RenewalVocabModel',
   'modules/ReferralQueue/ReferralAssigneesModel',
   'text!modules/RenewalUnderwriting/templates/tpl_renewal_underwriting_container.html',
   'text!modules/RenewalUnderwriting/templates/tpl_renewal_underwriting_assignee.html',
   'text!modules/RenewalUnderwriting/templates/tpl_renewal_underwriting_disposition.html',
   'jqueryui'
-], (BaseView, Messenger, RenewalUnderwritingModel, ReferralAssigneesModel, tpl_ru_container, tpl_ru_assignees, tpl_ru_disposition) ->
+], (BaseView, Messenger, RenewalUnderwritingModel, RenewalVocabModel, ReferralAssigneesModel, tpl_ru_container, tpl_ru_assignees, tpl_ru_disposition) ->
 
   RenewalUnderwritingView = BaseView.extend
 
@@ -86,6 +87,18 @@ define [
       @AssigneeList.fetch
         success : @assigneesFetchSuccess
         error   : @assigneesFetchError
+
+      # Setup ixVocab terms for disposition modal window
+      vocabs =
+        RenewalVocabDispositions : 'Disposition'
+        RenewalVocabReasons      : 'NonRenewalReasonCode'
+
+      for key, val of vocabs
+        @[key] = new RenewalVocabModel({
+          id       : val
+          url_root : @PolicyView.controller.services.ixvocab
+        })
+        @[key].checkCache()
 
     # Callbacks for Assignee List fetch
     assigneesFetchSuccess : (model, response, options) ->
