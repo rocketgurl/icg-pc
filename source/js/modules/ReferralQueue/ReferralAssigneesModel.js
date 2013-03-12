@@ -7,6 +7,9 @@
       initialize: function() {
         return this.use_cripple();
       },
+      getAll: function() {
+        return this.parseBooleans(this.get('json').Assignee);
+      },
       getRenewals: function() {
         var json;
         json = this.parseBooleans(this.get('json').Assignee);

@@ -87,7 +87,7 @@
         return _results;
       },
       assigneesFetchSuccess: function(model, response, options) {
-        this.assignees_list = model.getRenewals();
+        this.assignees_list = model.getAll();
         if (this.assignees_list.length > 0) {
           return this.assignees_list = _.map(this.assignees_list, function(assignee) {
             return _.extend(assignee, {

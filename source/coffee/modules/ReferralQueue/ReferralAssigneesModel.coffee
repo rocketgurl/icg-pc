@@ -7,6 +7,9 @@ define [
     initialize : ->
       @use_cripple()
 
+    getAll : ->
+      @parseBooleans @get('json').Assignee 
+
     getRenewals : ->
       json = @parseBooleans @get('json').Assignee
       _.where json, { renewals : true }

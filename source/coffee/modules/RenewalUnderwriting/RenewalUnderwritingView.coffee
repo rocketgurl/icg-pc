@@ -103,7 +103,7 @@ define [
 
     # Callbacks for Assignee List fetch
     assigneesFetchSuccess : (model, response, options) ->
-      @assignees_list = model.getRenewals()
+      @assignees_list = model.getAll()
       if @assignees_list.length > 0
         @assignees_list = _.map @assignees_list, (assignee) ->
           _.extend assignee, { id : _.uniqueId() }
