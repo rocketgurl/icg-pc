@@ -5,12 +5,19 @@
     var XMLSync, originalSync;
     originalSync = Backbone.sync;
     return XMLSync = function(method, model, options) {
-      options = _.extend(options, {
+      var sync_options;
+      sync_options = {
         dataType: 'xml',
         contentType: 'application/xml',
         processData: false,
         withCredentials: true
-      });
+      };
+      if (model.get('digest') !== void 0 || model.get('digest') !== null) {
+        sync_options.headers = {
+          'Authorization': "Basic " + (model.get('digest'))
+        };
+      }
+      options = _.extend(options, sync_options);
       return originalSync.apply(Backbone, [method, model, options]);
     };
   });
