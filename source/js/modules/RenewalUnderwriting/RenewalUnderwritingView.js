@@ -79,7 +79,8 @@
           val = vocabs[key];
           this[key] = new RenewalVocabModel({
             id: val,
-            url_root: this.PolicyView.controller.services.ixvocab
+            url_root: this.PolicyView.controller.services.ixvocab,
+            digest: this.User.get('digest')
           });
           _results.push(this[key].checkCache());
         }

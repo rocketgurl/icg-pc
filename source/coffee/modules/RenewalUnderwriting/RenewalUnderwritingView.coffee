@@ -97,6 +97,7 @@ define [
         @[key] = new RenewalVocabModel({
           id       : val
           url_root : @PolicyView.controller.services.ixvocab
+          digest   : @User.get 'digest'
         })
         @[key].checkCache()
 
