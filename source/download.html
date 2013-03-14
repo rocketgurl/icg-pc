@@ -12,7 +12,8 @@
 			frame        = document.getElementById('download-frame');
 			frame.height = bodyHeight;
 			if (setUrl !== null || setUrl !== undefined) {
-				proxyUrl = '/' + setUrl.split('/').slice(2).join('/');
+				url = setUrl.split('/')
+				proxyUrl = '/' + url.slice(url.indexOf('pxcentral')).join('/');
 				frame.src = proxyUrl;
 			}
 		</script>

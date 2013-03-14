@@ -495,12 +495,12 @@ define [
         @services.ixlibrary = "#{ixlibrary.baseURL}#{@services.ixlibrary_base}"
 
       if url = @config.get_pxCentral(@workspace_state)
-        if window.USE_PROXY
-          @services.pxcentral = "/#{@services.pxcentral_base}"
-        else
-          @services.pxcentral = "#{url}#{@services.pxcentral_base}"
-          @services.ixvocab = @config.get_universal_service(@workspace_state, 'ixvocab')
+        @services.pxcentral = "#{url}#{@services.pxcentral_base}"
   
+      # Some ixVocab actions need to happen through the services router
+      if !window.USE_PROXY
+        @services.ixvocab = @config.get_universal_service(@workspace_state, 'ixvocab')
+
       # Loop through additional services & gather config
       # ICS-1451: removed ixdirectory from list since it doesn't take
       # non-auth OPTIONS requests currently
@@ -762,6 +762,7 @@ define [
     # Open a new window that then calls the url
     launchWindow : (url) ->
       if url?
+        console.log url
         new_window = window.open('download.html', '_blank')
         new_window.setUrl = url
 

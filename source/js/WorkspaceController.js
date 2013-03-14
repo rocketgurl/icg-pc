@@ -382,12 +382,10 @@
           this.services.ixlibrary = "" + ixlibrary.baseURL + this.services.ixlibrary_base;
         }
         if (url = this.config.get_pxCentral(this.workspace_state)) {
-          if (window.USE_PROXY) {
-            this.services.pxcentral = "/" + this.services.pxcentral_base;
-          } else {
-            this.services.pxcentral = "" + url + this.services.pxcentral_base;
-            this.services.ixvocab = this.config.get_universal_service(this.workspace_state, 'ixvocab');
-          }
+          this.services.pxcentral = "" + url + this.services.pxcentral_base;
+        }
+        if (!window.USE_PROXY) {
+          this.services.ixvocab = this.config.get_universal_service(this.workspace_state, 'ixvocab');
         }
         _ref = ['cxserver', 'ixprofiler', 'ixrelay', 'zendesk'];
         for (_i = 0, _len = _ref.length; _i < _len; _i++) {
@@ -608,6 +606,7 @@
       launchWindow: function(url) {
         var new_window;
         if (url != null) {
+          console.log(url);
           new_window = window.open('download.html', '_blank');
           return new_window.setUrl = url;
         }
