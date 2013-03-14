@@ -100,5 +100,6 @@
             ]
         }
     ],
-    preserveLicenseComments: false
+    preserveLicenseComments: false,
+    removeCombined: true
 })
