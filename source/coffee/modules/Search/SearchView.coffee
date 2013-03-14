@@ -179,6 +179,7 @@ define [
             q : query.q
 
           @params = _.extend @params, @get_search_options()
+          @module.app.params = @params
           @controller.set_active_url @module.app.app # Ensure the correct URL
           @setContextLabel()
 
