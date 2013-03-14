@@ -31,7 +31,7 @@
 				
 		<div>
 			<label for="id_effectiveDate" class="labelRequired">Effective Date <i>effectiveDate</i></label>
-			<input type="text" id="id_effectiveDate" name="effectiveDate" value="{{effectiveDate}}" class="datepicker" required >
+			<input type="text" id="id_effectiveDate" name="effectiveDate" value="{{EffectiveDate}}" class="datepicker" required >
 		</div>
 
 		<div>
@@ -867,6 +867,15 @@
 			<h3>Optional Coverage <a data-alt-text="close">change</a></h3>
 			<div class="collapsibleFieldContainer">
 				
+		<div>
+			<label for="id_AdditionalAmountsOfInsurance" class="labelRequired">Additional Amounts of Insurance <i>AdditionalAmountsOfInsurance</i></label>
+			<select id="id_AdditionalAmountsOfInsurance" name="AdditionalAmountsOfInsurance" data-value="{{AdditionalAmountsOfInsurance}}">
+				{{#EnumsAdditionalAmountsOfInsurance}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsAdditionalAmountsOfInsurance}}
+			</select>
+		</div>
+
 		<div>
 			<label for="id_FunctionalReplacementCost" class="labelRequired">Functional Replacement Cost For Dwelling <i>FunctionalReplacementCost</i></label>
 			<select id="id_FunctionalReplacementCost" name="FunctionalReplacementCost" data-value="{{FunctionalReplacementCost}}" required >

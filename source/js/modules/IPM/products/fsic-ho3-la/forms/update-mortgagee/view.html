@@ -1,0 +1,330 @@
+<!-- Product: FSIC HO3 Louisiana -->
+<form action="update_mortgagee" method="get" accept-charset="utf-8" class="collapsedSections">
+	<div id="content">
+		<div id="content_header">
+			<h2>Update Mortgagee for {{policyId}}</h2>
+		</div>
+
+		<div class="content_body">
+			{{#policyOverview}}
+			<section class="policyOverview">
+				<h1>Policy Overview</h1>
+				<ul>
+					<li>{{InsuredFirstName}} {{InsuredMiddleName}} {{InsuredLastName}}</li>
+					<li>{{InsuredMailingAddressLine1}}</li>
+					<li>{{InsuredMailingAddressLine2}}</li>
+					<li>{{InsuredMailingAddressCity}}, {{InsuredMailingAddressState}} {{InsuredMailingAddressZip}}</li>
+				</ul>
+			</section>
+			{{/policyOverview}}
+			
+			<fieldset class="horizontalFields defaultOpen">
+				<h3>Mortgagee 1 <a data-alt-text="close">change</a></h3>
+				<div class="collapsibleFieldContainer">
+					<div>
+						<label for="id_MortgageeNumber1">Mortgagee <i>MortgageeNumber1</i></label>
+						<input type="text" id="id_MortgageeNumber1" name="MortgageeNumber1" value="{{MortgageeNumber1}}">
+					</div>
+					<div>
+						<label for="id_LoanNumber1">Loan Number <i>LoanNumber1</i></label>
+						<input type="text" id="id_LoanNumber1" name="LoanNumber1" value="{{LoanNumber1}}">
+					</div>
+					<div>
+						<label for="id_Mortgagee1Clause1">Clause 1 <i>Mortgagee1Clause1</i></label>
+						<input type="text" id="id_Mortgagee1Clause1" name="Mortgagee1Clause1" value="{{Mortgagee1Clause1}}">
+					</div>
+					<div>
+						<label for="id_Mortgagee1Clause2">Clause 2 <i>Mortgagee1Clause2</i></label>
+						<input type="text" id="id_Mortgagee1Clause2" name="Mortgagee1Clause2" value="{{Mortgagee1Clause2}}">
+					</div>
+
+					<fieldset>
+						<legend>Mailing address</legend>
+						
+						<div>
+							<label for="id_Mortgagee1AddressLine1">Address line 1 <i>Mortgagee1AddressLine1</i></label>
+							<input type="text" id="id_Mortgagee1AddressLine1" name="Mortgagee1AddressLine1" value="{{Mortgagee1AddressLine1}}">
+						</div>
+						<div>
+							<label for="id_Mortgagee1AddressLine2">Address line 2 <i>Mortgagee1AddressLine2</i></label>
+							<input type="text" id="id_Mortgagee1AddressLine2" name="Mortgagee1AddressLine2" value="{{Mortgagee1AddressLine2}}">
+						</div>
+						
+						<div>
+							<label for="id_Mortgagee1AddressCity">City <i>Mortgagee1AddressCity</i></label>
+							<input type="text" id="id_Mortgagee1AddressCity" name="Mortgagee1AddressCity" value="{{Mortgagee1AddressCity}}">
+						</div>
+						<div>
+							<label for="id_Mortgagee1AddressState">State <i>Mortgagee1AddressState</i></label>
+							<select id="id_Mortgagee1AddressState" name="Mortgagee1AddressState" data-value="{{Mortgagee1AddressState}}{{^Mortgagee1AddressState}}0{{/Mortgagee1AddressState}}"> 
+								<option value="0">Select</option>
+								<option value="AL">Alabama</option>
+								<option value="AK">Alaska</option> 
+								<option value="AZ">Arizona</option> 
+								<option value="AR">Arkansas</option> 
+								<option value="CA">California</option> 
+								<option value="CO">Colorado</option> 
+								<option value="CT">Connecticut</option> 
+								<option value="DE">Delaware</option> 
+								<option value="DC">District Of Columbia</option> 
+								<option value="FL">Florida</option> 
+								<option value="GA">Georgia</option> 
+								<option value="HI">Hawaii</option> 
+								<option value="ID">Idaho</option> 
+								<option value="IL">Illinois</option> 
+								<option value="IN">Indiana</option> 
+								<option value="IA">Iowa</option> 
+								<option value="KS">Kansas</option> 
+								<option value="KY">Kentucky</option> 
+								<option value="LA">Louisiana</option> 
+								<option value="ME">Maine</option> 
+								<option value="MD">Maryland</option> 
+								<option value="MA">Massachusetts</option> 
+								<option value="MI">Michigan</option> 
+								<option value="MN">Minnesota</option> 
+								<option value="MS">Mississippi</option> 
+								<option value="MO">Missouri</option> 
+								<option value="MT">Montana</option> 
+								<option value="NE">Nebraska</option> 
+								<option value="NV">Nevada</option> 
+								<option value="NH">New Hampshire</option> 
+								<option value="NJ">New Jersey</option> 
+								<option value="NM">New Mexico</option> 
+								<option value="NY">New York</option> 
+								<option value="NC">North Carolina</option> 
+								<option value="ND">North Dakota</option> 
+								<option value="OH">Ohio</option> 
+								<option value="OK">Oklahoma</option> 
+								<option value="OR">Oregon</option> 
+								<option value="PA">Pennsylvania</option> 
+								<option value="RI">Rhode Island</option> 
+								<option value="SC">South Carolina</option> 
+								<option value="SD">South Dakota</option> 
+								<option value="TN">Tennessee</option> 
+								<option value="TX">Texas</option> 
+								<option value="UT">Utah</option> 
+								<option value="VT">Vermont</option> 
+								<option value="VA">Virginia</option> 
+								<option value="WA">Washington</option> 
+								<option value="WV">West Virginia</option> 
+								<option value="WI">Wisconsin</option> 
+								<option value="WY">Wyoming</option>
+							</select>
+						</div>
+						<div>
+							<label for="id_Mortgagee1AddressZip">Zip <i>Mortgagee1AddressZip</i></label>
+							<input type="text" id="id_Mortgagee1AddressZip" name="Mortgagee1AddressZip" value="{{Mortgagee1AddressZip}}" size="5">
+						</div>
+					</fieldset>
+				</div>
+			</fieldset>
+			
+			<fieldset class="horizontalFields">
+				<h3>Mortgagee 2 <a data-alt-text="close">change</a></h3>
+				<div class="collapsibleFieldContainer">
+					<div>
+						<label for="id_MortgageeNumber2">Mortgagee <i>MortgageeNumber2</i></label>
+						<input type="text" id="id_MortgageeNumber2" name="MortgageeNumber2" value="{{MortgageeNumber2}}">
+					</div>
+					<div>
+						<label for="id_LoanNumber2">Loan Number <i>LoanNumber2</i></label>
+						<input type="text" id="id_LoanNumber2" name="LoanNumber2" value="{{LoanNumber2}}">
+					</div>
+					<div>
+						<label for="id_Mortgagee2Clause1">Clause 1 <i>Mortgagee2Clause1</i></label>
+						<input type="text" id="id_Mortgagee2Clause1" name="Mortgagee2Clause1" value="{{Mortgagee2Clause1}}">
+					</div>
+					<div>
+						<label for="id_Mortgagee2Clause2">Clause 2 <i>Mortgagee2Clause2</i></label>
+						<input type="text" id="id_Mortgagee2Clause2" name="Mortgagee2Clause2" value="{{Mortgagee2Clause2}}">
+					</div>
+
+					<fieldset>
+						<legend>Mailing address</legend>
+
+						<div>
+							<label for="id_Mortgagee2AddressLine1">Address line 1 <i>Mortgagee2AddressLine1</i></label>
+							<input type="text" id="id_Mortgagee2AddressLine1" name="Mortgagee2AddressLine1" value="{{Mortgagee2AddressLine1}}">
+						</div>
+						<div>
+							<label for="id_Mortgagee2AddressLine2">Address line 2 <i>Mortgagee2AddressLine2</i></label>
+							<input type="text" id="id_Mortgagee2AddressLine2" name="Mortgagee2AddressLine2" value="{{Mortgagee2AddressLine2}}">
+						</div>
+
+						<div>
+							<label for="id_Mortgagee2AddressCity">City <i>Mortgagee2AddressCity</i></label>
+							<input type="text" id="id_Mortgagee2AddressCity" name="Mortgagee2AddressCity" value="{{Mortgagee2AddressCity}}">
+						</div>
+						<div>
+							<label for="id_Mortgagee2AddressState">State <i>Mortgagee2AddressState</i></label>
+							<select id="id_Mortgagee2AddressState" name="Mortgagee2AddressState" data-value="{{Mortgagee2AddressState}}{{^Mortgagee2AddressState}}0{{/Mortgagee2AddressState}}"> 
+								<option value="0">Select</option>
+								<option value="AL">Alabama</option>
+								<option value="AK">Alaska</option> 
+								<option value="AZ">Arizona</option> 
+								<option value="AR">Arkansas</option> 
+								<option value="CA">California</option> 
+								<option value="CO">Colorado</option> 
+								<option value="CT">Connecticut</option> 
+								<option value="DE">Delaware</option> 
+								<option value="DC">District Of Columbia</option> 
+								<option value="FL">Florida</option> 
+								<option value="GA">Georgia</option> 
+								<option value="HI">Hawaii</option> 
+								<option value="ID">Idaho</option> 
+								<option value="IL">Illinois</option> 
+								<option value="IN">Indiana</option> 
+								<option value="IA">Iowa</option> 
+								<option value="KS">Kansas</option> 
+								<option value="KY">Kentucky</option> 
+								<option value="LA">Louisiana</option> 
+								<option value="ME">Maine</option> 
+								<option value="MD">Maryland</option> 
+								<option value="MA">Massachusetts</option> 
+								<option value="MI">Michigan</option> 
+								<option value="MN">Minnesota</option> 
+								<option value="MS">Mississippi</option> 
+								<option value="MO">Missouri</option> 
+								<option value="MT">Montana</option> 
+								<option value="NE">Nebraska</option> 
+								<option value="NV">Nevada</option> 
+								<option value="NH">New Hampshire</option> 
+								<option value="NJ">New Jersey</option> 
+								<option value="NM">New Mexico</option> 
+								<option value="NY">New York</option> 
+								<option value="NC">North Carolina</option> 
+								<option value="ND">North Dakota</option> 
+								<option value="OH">Ohio</option> 
+								<option value="OK">Oklahoma</option> 
+								<option value="OR">Oregon</option> 
+								<option value="PA">Pennsylvania</option> 
+								<option value="RI">Rhode Island</option> 
+								<option value="SC">South Carolina</option> 
+								<option value="SD">South Dakota</option> 
+								<option value="TN">Tennessee</option> 
+								<option value="TX">Texas</option> 
+								<option value="UT">Utah</option> 
+								<option value="VT">Vermont</option> 
+								<option value="VA">Virginia</option> 
+								<option value="WA">Washington</option> 
+								<option value="WV">West Virginia</option> 
+								<option value="WI">Wisconsin</option> 
+								<option value="WY">Wyoming</option>
+							</select>
+						</div>
+						<div>
+							<label for="id_Mortgagee2AddressZip">Zip <i>Mortgagee2AddressZip</i></label>
+							<input type="text" id="id_Mortgagee2AddressZip" name="Mortgagee2AddressZip" value="{{Mortgagee2AddressZip}}" size="5">
+						</div>
+					</fieldset>
+				</div>
+			</fieldset>
+			
+			<fieldset class="horizontalFields">
+				<h3>Mortgagee 3 <a data-alt-text="close">change</a></h3>
+				<div class="collapsibleFieldContainer">
+					<div>
+						<label for="id_MortgageeNumber3">Mortgagee <i>MortgageeNumber3</i></label>
+						<input type="text" id="id_MortgageeNumber3" name="MortgageeNumber3" value="{{MortgageeNumber3}}">
+					</div>
+					<div>
+						<label for="id_LoanNumber3">Loan Number <i>LoanNumber3</i></label>
+						<input type="text" id="id_LoanNumber3" name="LoanNumber3" value="{{LoanNumber3}}">
+					</div>
+					<div>
+						<label for="id_Mortgagee3Clause1">Clause 1 <i>Mortgagee3Clause1</i></label>
+						<input type="text" id="id_Mortgagee3Clause1" name="Mortgagee3Clause1" value="{{Mortgagee3Clause1}}">
+					</div>
+					<div>
+						<label for="id_Mortgagee3Clause2">Clause 2 <i>Mortgagee3Clause2</i></label>
+						<input type="text" id="id_Mortgagee3Clause2" name="Mortgagee3Clause2" value="{{Mortgagee3Clause2}}">
+					</div>
+
+					<fieldset>
+						<legend>Mailing address</legend>
+
+						<div>
+							<label for="id_Mortgagee3AddressLine1">Address line 1 <i>Mortgagee3AddressLine1</i></label>
+							<input type="text" id="id_Mortgagee3AddressLine1" name="Mortgagee3AddressLine1" value="{{Mortgagee3AddressLine1}}">
+						</div>
+						<div>
+							<label for="id_Mortgagee3AddressLine2">Address line 2 <i>Mortgagee3AddressLine2</i></label>
+							<input type="text" id="id_Mortgagee3AddressLine2" name="Mortgagee3AddressLine2" value="{{Mortgagee3AddressLine2}}">
+						</div>
+
+						<div>
+							<label for="id_Mortgagee3AddressCity">City <i>Mortgagee3AddressCity</i></label>
+							<input type="text" id="id_Mortgagee3AddressCity" name="Mortgagee3AddressCity" value="{{Mortgagee3AddressCity}}">
+						</div>
+						<div>
+							<label for="id_Mortgagee3AddressState">State <i>Mortgagee3AddressState</i></label>
+							<select id="id_Mortgagee3AddressState" name="Mortgagee3AddressState" data-value="{{Mortgagee3AddressState}}{{^Mortgagee3AddressState}}0{{/Mortgagee3AddressState}}"> 
+								<option value="0">Select</option>
+								<option value="AL">Alabama</option>
+								<option value="AK">Alaska</option> 
+								<option value="AZ">Arizona</option> 
+								<option value="AR">Arkansas</option> 
+								<option value="CA">California</option> 
+								<option value="CO">Colorado</option> 
+								<option value="CT">Connecticut</option> 
+								<option value="DE">Delaware</option> 
+								<option value="DC">District Of Columbia</option> 
+								<option value="FL">Florida</option> 
+								<option value="GA">Georgia</option> 
+								<option value="HI">Hawaii</option> 
+								<option value="ID">Idaho</option> 
+								<option value="IL">Illinois</option> 
+								<option value="IN">Indiana</option> 
+								<option value="IA">Iowa</option> 
+								<option value="KS">Kansas</option> 
+								<option value="KY">Kentucky</option> 
+								<option value="LA">Louisiana</option> 
+								<option value="ME">Maine</option> 
+								<option value="MD">Maryland</option> 
+								<option value="MA">Massachusetts</option> 
+								<option value="MI">Michigan</option> 
+								<option value="MN">Minnesota</option> 
+								<option value="MS">Mississippi</option> 
+								<option value="MO">Missouri</option> 
+								<option value="MT">Montana</option> 
+								<option value="NE">Nebraska</option> 
+								<option value="NV">Nevada</option> 
+								<option value="NH">New Hampshire</option> 
+								<option value="NJ">New Jersey</option> 
+								<option value="NM">New Mexico</option> 
+								<option value="NY">New York</option> 
+								<option value="NC">North Carolina</option> 
+								<option value="ND">North Dakota</option> 
+								<option value="OH">Ohio</option> 
+								<option value="OK">Oklahoma</option> 
+								<option value="OR">Oregon</option> 
+								<option value="PA">Pennsylvania</option> 
+								<option value="RI">Rhode Island</option> 
+								<option value="SC">South Carolina</option> 
+								<option value="SD">South Dakota</option> 
+								<option value="TN">Tennessee</option> 
+								<option value="TX">Texas</option> 
+								<option value="UT">Utah</option> 
+								<option value="VT">Vermont</option> 
+								<option value="VA">Virginia</option> 
+								<option value="WA">Washington</option> 
+								<option value="WV">West Virginia</option> 
+								<option value="WI">Wisconsin</option> 
+								<option value="WY">Wyoming</option>
+							</select>
+						</div>
+						<div>
+							<label for="id_Mortgagee3AddressZip">Zip <i>Mortgagee3AddressZip</i></label>
+							<input type="text" id="id_Mortgagee3AddressZip" name="Mortgagee3AddressZip" value="{{Mortgagee3AddressZip}}" size="5">
+						</div>
+					</fieldset>
+				</div>
+			</fieldset>
+			
+			<div class="form_actions">
+				<input type="submit" class="button" value="Update mortgagee">
+				<a href="home">Nevermind, go back</a>
+			</div>
+		</div>
+	</div>
+</form>

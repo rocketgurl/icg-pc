@@ -21,25 +21,25 @@
 		</section>
 		{{/policyOverview}}
 		
-		<fieldset class="defaultOpen horizontalFields extraWide">
+		<fieldset class="horizontalFields defaultOpen extraWide">
 			<h3>Summary <a data-alt-text="close">change</a></h3>
 			<div class="collapsibleFieldContainer">
 				
 		<div id="rate_validation_override">
 			<input type="checkbox" name="id_rv_override" id="id_rv_override" value="1"> <label for="id_rv_override">Check to Override Rate Validation</label>
 		</div>
-				
+
 		<div>
 			<label for="id_effectiveDate" class="labelRequired">Effective Date <i>effectiveDate</i></label>
-			<input type="text" id="id_effectiveDate" name="effectiveDate" value="{{effectiveDate}}" class="datepicker" required >
+			<input type="text" id="id_effectiveDate" name="effectiveDate" value="{{EffectiveDate}}" class="datepicker" required >
 		</div>
 
 		<div>
 			<label for="id_reasonCode" class="labelRequired">Reason Code <i>reasonCode</i></label>
-			<select id="id_reasonCode" name="reasonCode" data-value="{{EndorseReason}}" required >
+			<select id="id_reasonCode" name="reasonCode" data-value="{{reasonCode}}" required >
 				{{#EnumsEndorseReason}}
-                <option value="{{value}}">{{label}}</option>
-                {{/EnumsEndorseReason}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsEndorseReason}}
 			</select>
 		</div>
 
@@ -77,13 +77,10 @@
 		</div>
 
 <!-- State is LA Only -->
+
 		<div>
-			<label for="id_PropertyState" class="labelRequired">State <i>PropertyState</i></label>
-			<select id="id_PropertyState" name="PropertyState" data-value="{{PropertyState}}" required >
-				{{#EnumsPropertyState}}
-				<option value="{{value}}">{{label}}</option>
-				{{/EnumsPropertyState}}
-			</select>
+			<label for="id_PropertyState" >State <i>PropertyState</i></label>
+			<input type="text" id="id_PropertyState" name="PropertyState" value="{{PropertyState}}"  readonly>
 		</div>
 
 		<div>
@@ -188,7 +185,7 @@
 
 		<div>
 			<label for="id_OptionCoverageB" class="labelRequired">Coverage B (% Of Coverage A) <i>OptionCoverageB</i></label>
-			<select id="id_OptionCoverageB" name="OptionCoverageB" data-value="{{OptionCoverageB}}" required >
+			<select id="id_OptionCoverageB" name="OptionCoverageB" data-value="{{OptionCoverageB}}"  data-affects="CoverageB" required >
 				{{#EnumsOptionCoverageB}}
 				<option value="{{value}}">{{label}}</option>
 				{{/EnumsOptionCoverageB}}
@@ -202,7 +199,7 @@
 
 		<div>
 			<label for="id_OptionCoverageC" class="labelRequired">Coverage C (% Of Coverage A) <i>OptionCoverageC</i></label>
-			<select id="id_OptionCoverageC" name="OptionCoverageC" data-value="{{OptionCoverageC}}" required >
+			<select id="id_OptionCoverageC" name="OptionCoverageC" data-value="{{OptionCoverageC}}"  data-affects="CoverageC" required >
 				{{#EnumsOptionCoverageC}}
 				<option value="{{value}}">{{label}}</option>
 				{{/EnumsOptionCoverageC}}
@@ -216,7 +213,7 @@
 
 		<div>
 			<label for="id_OptionCoverageD" class="labelRequired">Coverage D (% of Coverage A) <i>OptionCoverageD</i></label>
-			<select id="id_OptionCoverageD" name="OptionCoverageD" data-value="{{OptionCoverageD}}" required disabled="yes">
+			<select id="id_OptionCoverageD" name="OptionCoverageD" data-value="{{OptionCoverageD}}" required  data-affects="CoverageD" disabled="yes">
 				{{#EnumsOptionCoverageD}}
 				<option value="{{value}}">{{label}}</option>
 				{{/EnumsOptionCoverageD}}
@@ -247,11 +244,11 @@
 		</div>
 
 		<div>
-			<label for="id_HurricaneDeductible" class="labelRequired">Hurricane Deductible <i>HurricaneDeductible</i></label>
-			<select id="id_HurricaneDeductible" name="HurricaneDeductible" data-value="{{HurricaneDeductible}}" required >
-				{{#EnumsHurricaneDeductible}}
+			<label for="id_WindHailDeductible" class="labelRequired">Wind/Hail Deductible <i>WindHailDeductible</i></label>
+			<select id="id_WindHailDeductible" name="WindHailDeductible" data-value="{{WindHailDeductible}}" required >
+				{{#EnumsWindHailDeductible}}
 				<option value="{{value}}">{{label}}</option>
-				{{/EnumsHurricaneDeductible}}
+				{{/EnumsWindHailDeductible}}
 			</select>
 		</div>
 
@@ -507,6 +504,128 @@
 		</fieldset>
 
 		<fieldset>
+				<legend>Other Structures</legend>
+				
+		<div>
+			<label for="id_PoolType" class="labelRequired">Swimming Pool On Property? <i>PoolType</i></label>
+			<select id="id_PoolType" name="PoolType" data-value="{{PoolType}}" required >
+				{{#EnumsPoolType}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsPoolType}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_DivingBoardSlide" >Is there a Diving Board or Slide? <i>DivingBoardSlide</i></label>
+			<select id="id_DivingBoardSlide" name="DivingBoardSlide" data-value="{{DivingBoardSlide}}"  >
+				{{#EnumsDivingBoardSlide}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsDivingBoardSlide}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_PoolFence" >Is The Property Around Pool Fenced Or Screened? <i>PoolFence</i></label>
+			<select id="id_PoolFence" name="PoolFence" data-value="{{PoolFence}}"  >
+				{{#EnumsPoolFence}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsPoolFence}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_ImmovablePoolLadder" >Is There An Immovable Ladder Present? <i>ImmovablePoolLadder</i></label>
+			<select id="id_ImmovablePoolLadder" name="ImmovablePoolLadder" data-value="{{ImmovablePoolLadder}}"  >
+				{{#EnumsImmovablePoolLadder}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsImmovablePoolLadder}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_UnlockedPoolGate" >Is pool attached to decking without a locking gate? <i>UnlockedPoolGate</i></label>
+			<select id="id_UnlockedPoolGate" name="UnlockedPoolGate" data-value="{{UnlockedPoolGate}}"  >
+				{{#EnumsUnlockedPoolGate}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsUnlockedPoolGate}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_PoolLiabilityCoverage" >Pool Liability Coverage <i>PoolLiabilityCoverage</i></label>
+			<select id="id_PoolLiabilityCoverage" name="PoolLiabilityCoverage" data-value="{{PoolLiabilityCoverage}}"  >
+				{{#EnumsPoolLiabilityCoverage}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsPoolLiabilityCoverage}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_PoolWellMaintained" >Pool properly installed and well maintained? <i>PoolWellMaintained</i></label>
+			<select id="id_PoolWellMaintained" name="PoolWellMaintained" data-value="{{PoolWellMaintained}}"  >
+				{{#EnumsPoolWellMaintained}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsPoolWellMaintained}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_DivingBoardSlideLiabilityCoverage" >Diving Board or Slide Coverage <i>DivingBoardSlideLiabilityCoverage</i></label>
+			<select id="id_DivingBoardSlideLiabilityCoverage" name="DivingBoardSlideLiabilityCoverage" data-value="{{DivingBoardSlideLiabilityCoverage}}"  >
+				{{#EnumsDivingBoardSlideLiabilityCoverage}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsDivingBoardSlideLiabilityCoverage}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_DivingBoardSlideWellMaintained" >Diving board or slide properly installed and well maintained? <i>DivingBoardSlideWellMaintained</i></label>
+			<select id="id_DivingBoardSlideWellMaintained" name="DivingBoardSlideWellMaintained" data-value="{{DivingBoardSlideWellMaintained}}"  >
+				{{#EnumsDivingBoardSlideWellMaintained}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsDivingBoardSlideWellMaintained}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_SkateboardRamp" class="labelRequired">Skateboard ramp, bicycle jump or other attractive nuisance? <i>SkateboardRamp</i></label>
+			<select id="id_SkateboardRamp" name="SkateboardRamp" data-value="{{SkateboardRamp}}" required >
+				{{#EnumsSkateboardRamp}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsSkateboardRamp}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_AttractiveNuisanceLiabilityCoverage" class="labelRequired">Attractive Nuisances Coverage <i>AttractiveNuisanceLiabilityCoverage</i></label>
+			<select id="id_AttractiveNuisanceLiabilityCoverage" name="AttractiveNuisanceLiabilityCoverage" data-value="{{AttractiveNuisanceLiabilityCoverage}}" required >
+				{{#EnumsAttractiveNuisanceLiabilityCoverage}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsAttractiveNuisanceLiabilityCoverage}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_NumberOfAttractiveNuisances" >Number of Attractive Nuisances <i>NumberOfAttractiveNuisances</i></label>
+			<select id="id_NumberOfAttractiveNuisances" name="NumberOfAttractiveNuisances" data-value="{{NumberOfAttractiveNuisances}}"  >
+				{{#EnumsNumberOfAttractiveNuisances}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsNumberOfAttractiveNuisances}}
+			</select>
+		</div>
+
+		<div>
+			<label for="id_AttractiveNuisanceWellMaintained" >Attractive nuisances properly installed and well maintained? <i>AttractiveNuisanceWellMaintained</i></label>
+			<select id="id_AttractiveNuisanceWellMaintained" name="AttractiveNuisanceWellMaintained" data-value="{{AttractiveNuisanceWellMaintained}}"  >
+				{{#EnumsAttractiveNuisanceWellMaintained}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsAttractiveNuisanceWellMaintained}}
+			</select>
+		</div>
+
+		</fieldset>
+
+		<fieldset>
 				<legend>Dwelling Interior</legend>
 				
 		<div>
@@ -650,56 +769,6 @@
 				{{#EnumsKeroseneHeaterAge}}
 				<option value="{{value}}">{{label}}</option>
 				{{/EnumsKeroseneHeaterAge}}
-			</select>
-		</div>
-
-		</fieldset>
-
-		<fieldset>
-				<legend>Other Structures</legend>
-				
-		<div>
-			<label for="id_PoolType" class="labelRequired">Swimming Pool On Property? <i>PoolType</i></label>
-			<select id="id_PoolType" name="PoolType" data-value="{{PoolType}}" required >
-				{{#EnumsPoolType}}
-				<option value="{{value}}">{{label}}</option>
-				{{/EnumsPoolType}}
-			</select>
-		</div>
-
-		<div>
-			<label for="id_DivingBoardSlide" >Is there a Diving Board or Slide? <i>DivingBoardSlide</i></label>
-			<select id="id_DivingBoardSlide" name="DivingBoardSlide" data-value="{{DivingBoardSlide}}"  >
-				{{#EnumsDivingBoardSlide}}
-				<option value="{{value}}">{{label}}</option>
-				{{/EnumsDivingBoardSlide}}
-			</select>
-		</div>
-
-		<div>
-			<label for="id_PoolFence" >Is The Property Around Pool Fenced Or Screened? <i>PoolFence</i></label>
-			<select id="id_PoolFence" name="PoolFence" data-value="{{PoolFence}}"  >
-				{{#EnumsPoolFence}}
-				<option value="{{value}}">{{label}}</option>
-				{{/EnumsPoolFence}}
-			</select>
-		</div>
-
-		<div>
-			<label for="id_ImmovablePoolLadder" >Is There An Immovable Ladder Present? <i>ImmovablePoolLadder</i></label>
-			<select id="id_ImmovablePoolLadder" name="ImmovablePoolLadder" data-value="{{ImmovablePoolLadder}}"  >
-				{{#EnumsImmovablePoolLadder}}
-				<option value="{{value}}">{{label}}</option>
-				{{/EnumsImmovablePoolLadder}}
-			</select>
-		</div>
-
-		<div>
-			<label for="id_UnlockedPoolGate" >Is pool attached to decking without a locking gate? <i>UnlockedPoolGate</i></label>
-			<select id="id_UnlockedPoolGate" name="UnlockedPoolGate" data-value="{{UnlockedPoolGate}}"  >
-				{{#EnumsUnlockedPoolGate}}
-				<option value="{{value}}">{{label}}</option>
-				{{/EnumsUnlockedPoolGate}}
 			</select>
 		</div>
 
@@ -923,6 +992,15 @@
 		</div>
 
 		<div>
+			<label for="id_Dogs" class="labelRequired">Prohibited Dog Breed <i>Dogs</i></label>
+			<select id="id_Dogs" name="Dogs" data-value="{{Dogs}}" required >
+				{{#EnumsDogs}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsDogs}}
+			</select>
+		</div>
+
+		<div>
 			<label for="id_GoldSpecialLimits" class="labelRequired">Gold, Silver, Pewter For Loss Of Theft <i>GoldSpecialLimits</i></label>
 			<select id="id_GoldSpecialLimits" name="GoldSpecialLimits" data-value="{{GoldSpecialLimits}}" required >
 				{{#EnumsGoldSpecialLimits}}
@@ -982,42 +1060,6 @@
 				{{#EnumsElectronicsSpecialLimitsLocation}}
 				<option value="{{value}}">{{label}}</option>
 				{{/EnumsElectronicsSpecialLimitsLocation}}
-			</select>
-		</div>
-
-		<div>
-			<label for="id_EarthquakeCoverage" class="labelRequired">Earthquake Coverage <i>EarthquakeCoverage</i></label>
-			<select id="id_EarthquakeCoverage" name="EarthquakeCoverage" data-value="{{EarthquakeCoverage}}" required >
-				{{#EnumsEarthquakeCoverage}}
-				<option value="{{value}}">{{label}}</option>
-				{{/EnumsEarthquakeCoverage}}
-			</select>
-		</div>
-
-		<div>
-			<label for="id_EarthquakeDeductible" >Earthquake Deductible % <i>EarthquakeDeductible</i></label>
-			<select id="id_EarthquakeDeductible" name="EarthquakeDeductible" data-value="{{EarthquakeDeductible}}"  >
-				{{#EnumsEarthquakeDeductible}}
-				<option value="{{value}}">{{label}}</option>
-				{{/EnumsEarthquakeDeductible}}
-			</select>
-		</div>
-
-		<div>
-			<label for="id_EarthquakeMasonryVeneerExclusion">Exclude Masonry Veneer Coverage? <i>EarthquakeMasonryVeneerExclusion</i></label>
-			<select id="id_EarthquakeMasonryVeneerExclusion" name="EarthquakeMasonryVeneerExclusion" data-value="{{EarthquakeMasonryVeneerExclusion}}">
-				{{#EnumsEarthquakeMasonryVeneerExclusion}}
-				<option value="{{value}}">{{label}}</option>
-				{{/EnumsEarthquakeMasonryVeneerExclusion}}
-			</select>
-		</div>
-
-		<div>
-			<label for="id_EarthquakeLossAssessmentCoverage" >Earthquake Loss Assessment <i>EarthquakeLossAssessmentCoverage</i></label>
-			<select id="id_EarthquakeLossAssessmentCoverage" name="EarthquakeLossAssessmentCoverage" data-value="{{EarthquakeLossAssessmentCoverage}}"  >
-				{{#EnumsEarthquakeLossAssessmentCoverage}}
-				<option value="{{value}}">{{label}}</option>
-				{{/EnumsEarthquakeLossAssessmentCoverage}}
 			</select>
 		</div>
 
@@ -1773,4 +1815,3 @@
 	{{/preview}}
 	</div>
 </form>
-

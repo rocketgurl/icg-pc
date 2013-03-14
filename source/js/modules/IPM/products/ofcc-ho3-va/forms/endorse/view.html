@@ -28,7 +28,7 @@
 				
 				<div>
 					<label for="id_effectiveDate" class="labelRequired">Effective Date</label>
-					<input type="text" id="id_effectiveDate" name="effectiveDate" value="" class="datepicker" required>
+					<input type="text" id="id_effectiveDate" name="effectiveDate" value="{{EffectiveDate}}" class="datepicker" required>
 				</div>
 				
 				<div>
@@ -1097,6 +1097,207 @@
 					</div>
 				</div>
 			</fieldset>
+
+			<fieldset class="horizontalFields extraWide">
+				<h3>Loss History <a data-alt-text="close">change</a></h3>
+				<div class="collapsibleFieldContainer">
+					
+					<div>
+						<label for="id_NumberOfClaims" class="labelRequired">Number Of Claims In Last 6 Years <i>NumberOfClaims</i></label>
+						<select id="id_NumberOfClaims" name="NumberOfClaims" data-value="{{NumberOfClaims}}" required>
+							{{#EnumsNumberOfClaims}}
+							<option value="{{value}}">{{label}}</option>
+							{{/EnumsNumberOfClaims}}
+						</select>
+					</div>
+					
+					<fieldset>
+						<legend>Loss 1</legend>
+						
+						<div>
+							<label for="id_LossAmount1">Amount <i>LossAmount1</i></label>
+							<input id="id_LossAmount1" name="LossAmount1" value="{{LossAmount1}}" type="text">
+						</div>
+						
+						<div>
+  						<label for="id_LossDate1">Date <i>LossDate1</i></label>
+  						<input type="text" id="id_LossDate1" name="LossDate1" value="{{LossDate1}}" class="datepicker" data-year-range="-100:+0">
+  					</div>
+						
+						<div>
+							<label for="id_LossType1">Type <i>LossType1</i></label>
+							<select id="id_LossType1" name="LossType1" data-value="{{LossType1}}">
+								{{#EnumsLossType1}}
+								<option value="{{value}}">{{label}}</option>
+								{{/EnumsLossType1}}
+							</select>
+						</div>
+						
+						<div>
+							<label for="id_LossCatIndicator1">Cat Indicator <i>LossCatIndicator1</i></label>
+							<select id="id_LossCatIndicator1" name="LossCatIndicator1" data-value="{{LossCatIndicator1}}">
+								{{#EnumsLossCatIndicator1}}
+								<option value="{{value}}">{{label}}</option>
+								{{/EnumsLossCatIndicator1}}
+							</select>
+						</div>
+						
+						<div>
+							<label for="id_LossDescription1">Description <i>LossDescription1</i></label>
+							<input id="id_LossDescription1" name="LossDescription1" value="{{LossDescription1}}" type="text">
+						</div>
+					</fieldset>
+					
+					<fieldset>
+						<legend>Loss 2</legend>
+						
+						<div>
+							<label for="id_LossAmount2">Amount <i>LossAmount2</i></label>
+							<input id="id_LossAmount2" name="LossAmount2" value="{{LossAmount2}}" type="text">
+						</div>
+						
+						<div>
+  						<label for="id_LossDate2">Date <i>LossDate2</i></label>
+  						<input type="text" id="id_LossDate2" name="LossDate2" value="{{LossDate2}}" class="datepicker" data-year-range="-100:+0">
+  					</div>
+						
+						<div>
+							<label for="id_LossType2">Type <i>LossType2</i></label>
+							<select id="id_LossType2" name="LossType2" data-value="{{LossType2}}">
+								{{#EnumsLossType2}}
+								<option value="{{value}}">{{label}}</option>
+								{{/EnumsLossType2}}
+							</select>
+						</div>
+						
+						<div>
+							<label for="id_LossCatIndicator2">Cat Indicator <i>LossCatIndicator2</i></label>
+							<select id="id_LossCatIndicator2" name="LossCatIndicator2" data-value="{{LossCatIndicator2}}">
+								{{#EnumsLossCatIndicator2}}
+								<option value="{{value}}">{{label}}</option>
+								{{/EnumsLossCatIndicator2}}
+							</select>
+						</div>
+						
+						<div>
+							<label for="id_LossDescription2">Description <i>LossDescription2</i></label>
+							<input id="id_LossDescription2" name="LossDescription2" value="{{LossDescription2}}" type="text">
+						</div>
+					</fieldset>
+					
+					<fieldset>
+						<legend>Loss 3</legend>
+						
+						<div>
+							<label for="id_LossAmount3">Amount <i>LossAmount3</i></label>
+							<input id="id_LossAmount3" name="LossAmount3" value="{{LossAmount3}}" type="text">
+						</div>
+						
+						<div>
+  						<label for="id_LossDate3">Date <i>LossDate3</i></label>
+  						<input type="text" id="id_LossDate3" name="LossDate3" value="{{LossDate3}}" class="datepicker" data-year-range="-100:+0">
+  					</div>
+						
+						<div>
+							<label for="id_LossType3">Type <i>LossType3</i></label>
+							<select id="id_LossType3" name="LossType3" data-value="{{LossType3}}">
+								{{#EnumsLossType3}}
+								<option value="{{value}}">{{label}}</option>
+								{{/EnumsLossType3}}
+							</select>
+						</div>
+						
+						<div>
+							<label for="id_LossCatIndicator3">Cat Indicator <i>LossCatIndicator3</i></label>
+							<select id="id_LossCatIndicator3" name="LossCatIndicator3" data-value="{{LossCatIndicator3}}">
+								{{#EnumsLossCatIndicator3}}
+								<option value="{{value}}">{{label}}</option>
+								{{/EnumsLossCatIndicator3}}
+							</select>
+						</div>
+						
+						<div>
+							<label for="id_LossDescription3">Description <i>LossDescription3</i></label>
+							<input id="id_LossDescription3" name="LossDescription3" value="{{LossDescription3}}" type="text">
+						</div>
+					</fieldset>
+					
+					<fieldset>
+						<legend>Loss 4</legend>
+						
+						<div>
+							<label for="id_LossAmount4">Amount <i>LossAmount4</i></label>
+							<input id="id_LossAmount4" name="LossAmount4" value="{{LossAmount4}}" type="text">
+						</div>
+						
+						<div>
+  						<label for="id_LossDate4">Date <i>LossDate4</i></label>
+  						<input type="text" id="id_LossDate4" name="LossDate4" value="{{LossDate4}}" class="datepicker" data-year-range="-100:+0">
+  					</div>
+						
+						<div>
+							<label for="id_LossType4">Type <i>LossType4</i></label>
+							<select id="id_LossType4" name="LossType4" data-value="{{LossType4}}">
+								{{#EnumsLossType4}}
+								<option value="{{value}}">{{label}}</option>
+								{{/EnumsLossType4}}
+							</select>
+						</div>
+						
+						<div>
+							<label for="id_LossCatIndicator4">Cat Indicator <i>LossCatIndicator4</i></label>
+							<select id="id_LossCatIndicator4" name="LossCatIndicator4" data-value="{{LossCatIndicator4}}">
+								{{#EnumsLossCatIndicator4}}
+								<option value="{{value}}">{{label}}</option>
+								{{/EnumsLossCatIndicator4}}
+							</select>
+						</div>
+						
+						<div>
+							<label for="id_LossDescription4">Description <i>LossDescription4</i></label>
+							<input id="id_LossDescription4" name="LossDescription4" value="{{LossDescription4}}" type="text">
+						</div>
+					</fieldset>
+					
+					<fieldset>
+						<legend>Loss 5</legend>
+						
+						<div>
+							<label for="id_LossAmount5">Amount <i>LossAmount5</i></label>
+							<input id="id_LossAmount5" name="LossAmount5" value="{{LossAmount5}}" type="text">
+						</div>
+						
+						<div>
+  						<label for="id_LossDate5">Date <i>LossDate5</i></label>
+  						<input type="text" id="id_LossDate5" name="LossDate5" value="{{LossDate5}}" class="datepicker" data-year-range="-100:+0">
+  					</div>
+						
+						<div>
+							<label for="id_LossType5">Type <i>LossType5</i></label>
+							<select id="id_LossType5" name="LossType5" data-value="{{LossType5}}">
+								{{#EnumsLossType5}}
+								<option value="{{value}}">{{label}}</option>
+								{{/EnumsLossType5}}
+							</select>
+						</div>
+						
+						<div>
+							<label for="id_LossCatIndicator5">Cat Indicator <i>LossCatIndicator5</i></label>
+							<select id="id_LossCatIndicator5" name="LossCatIndicator5" data-value="{{LossCatIndicator5}}">
+								{{#EnumsLossCatIndicator5}}
+								<option value="{{value}}">{{label}}</option>
+								{{/EnumsLossCatIndicator5}}
+							</select>
+						</div>
+						
+						<div>
+							<label for="id_LossDescription5">Description <i>LossDescription5</i></label>
+							<input id="id_LossDescription5" name="LossDescription5" value="{{LossDescription5}}" type="text">
+						</div>
+					</fieldset>
+				</div>
+			</fieldset>
+
 			<div class="form_actions">
 				<input type="submit" class="button" value="Preview"> <a href="home">Nevermind, go back</a>
 			</div>

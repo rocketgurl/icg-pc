@@ -1,0 +1,41 @@
+<!-- Product: WIC HO3 New Jersey -->
+<form action="issue" method="get" accept-charset="utf-8">
+	<div id="content">
+		<div id="content_header">
+			<h2>Issue Policy {{ policyId }}</h2>
+		</div>
+		
+		{{#msg}}
+		<div class="content_msg {{msgType}}">
+			{{#msgHeading}}
+			<h3>{{msgHeading}}</h3>
+			{{/msgHeading}}
+			
+			{{#msgText}}
+			<p>{{{msgText}}}</p>
+			{{/msgText}}
+		</div>
+		{{/msg}}
+		
+		<div class="content_body">
+			
+			{{#policyOverview}}
+			<section class="policyOverview">
+				<h1>Policy Overview</h1>
+				<ul>
+					<li>{{InsuredFirstName}} {{InsuredMiddleName}} {{InsuredLastName}}</li>
+					<li>{{InsuredMailingAddressLine1}}</li>
+					<li>{{InsuredMailingAddressLine2}}</li>
+					<li>{{InsuredMailingAddressCity}}, {{InsuredMailingAddressState}} {{InsuredMailingAddressZip}}</li>
+				</ul>
+			</section>
+			{{/policyOverview}}
+			
+			<fieldset>
+				<div class="form_actions">
+					<input type="submit" class="button" value="Issue policy"> <a href="home">Nevermind, go back</a>
+				</div>
+			</fieldset>
+		</div>
+	</div>
+</form>
