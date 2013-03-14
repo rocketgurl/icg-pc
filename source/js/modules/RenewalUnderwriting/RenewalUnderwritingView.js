@@ -248,7 +248,7 @@
         return this.processChange(field, date);
       },
       processResponseFields: function(resp) {
-        var field, _i, _j, _len, _len1, _ref, _ref1;
+        var field, _i, _j, _k, _len, _len1, _len2, _ref, _ref1, _ref2;
         resp.reviewStatusFlag = resp.renewal.renewalReviewRequired;
         resp.lossHistoryFlag = true;
         if (_.isEmpty(resp.lossHistory)) {
@@ -266,9 +266,14 @@
         if (resp.renewal.inspectionOrdered === false) {
           delete resp.renewal.inspectionOrdered;
         }
-        _ref1 = ['newInsuranceScore', 'oldInsuranceScore'];
+        _ref1 = ['reviewPeriod', 'reviewDeadline'];
         for (_j = 0, _len1 = _ref1.length; _j < _len1; _j++) {
           field = _ref1[_j];
+          resp.renewal[field] = _.trim(resp.renewal[field].replace(/00:00:00.0/g, ''));
+        }
+        _ref2 = ['newInsuranceScore', 'oldInsuranceScore'];
+        for (_k = 0, _len2 = _ref2.length; _k < _len2; _k++) {
+          field = _ref2[_k];
           resp.insuranceScore[field] = resp.insuranceScore[field].replace(/'|"/g, '');
         }
         return resp;
@@ -357,14 +362,14 @@
       },
       processRenewalResponse: function(resp) {
         resp.cid = this.cid;
-        if (resp.insuranceScore.currentDisposition === '') {
-          resp.insuranceScore.currentDisposition = 'New';
+        if (resp.insuranceScore.disposition === '') {
+          resp.insuranceScore.disposition = 'New';
         }
         resp = this.processResponseFields(resp);
         this.changeset = {
           renewal: _.omit(resp.renewal, ["inspectionOrdered", "renewalReviewRequired"]),
           insuranceScore: {
-            currentDisposition: resp.insuranceScore.currentDisposition
+            disposition: resp.insuranceScore.disposition
           }
         };
         return resp;

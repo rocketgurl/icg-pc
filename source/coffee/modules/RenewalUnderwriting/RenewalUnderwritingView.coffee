@@ -19,7 +19,7 @@ define [
       'click a[href=assigned_to]' : (e) -> 
         @changeAssignment(@process_event e)
 
-      'click a[href=current_disposition]' : (e) -> 
+      'click a[href=current_disposition]' : (e) ->
         @changeDisposition(@process_event e)
 
       'click a[href=review_period]' : (e) -> 
@@ -284,6 +284,10 @@ define [
       if resp.renewal.inspectionOrdered == false
         delete resp.renewal.inspectionOrdered
 
+      # Normalize dates
+      for field in ['reviewPeriod', 'reviewDeadline']
+        resp.renewal[field] = _.trim resp.renewal[field].replace(/00:00:00.0/g,'')
+
       # Remove quotes from scores (per Terry)
       for field in ['newInsuranceScore', 'oldInsuranceScore']
         resp.insuranceScore[field] = resp.insuranceScore[field].replace(/'|"/g,'')
@@ -403,8 +407,8 @@ define [
     processRenewalResponse : (resp) ->
       resp.cid = @cid # so we can phone home to the correct view
 
-      if resp.insuranceScore.currentDisposition == ''
-        resp.insuranceScore.currentDisposition = 'New'
+      if resp.insuranceScore.disposition == ''
+        resp.insuranceScore.disposition = 'New'
 
       # Side effects!
       resp = @processResponseFields(resp)
@@ -413,7 +417,7 @@ define [
       @changeset =
         renewal : _.omit(resp.renewal, ["inspectionOrdered", "renewalReviewRequired"])
         insuranceScore : 
-          currentDisposition : resp.insuranceScore.currentDisposition
+          disposition : resp.insuranceScore.disposition
 
       resp
 
