@@ -36,7 +36,8 @@ PRUNE = {
   :files => [
     'build.txt',
     'config.rb',
-    'index.bak.html'
+    'index.bak.html',
+    'app.build'
   ]
 }
 
@@ -59,6 +60,12 @@ end
 
 # Compile and build project with RequireJS
 task :compile do
+  # Move app.build into js folder
+  app_build = file_join_safe(File.dirname(__FILE__),'source','app.build')
+  app_js = file_join_safe(File.dirname(__FILE__),'source','js','app.build.js')
+  FileUtils.cp app_build, app_js
+
+  # Optimize with r.js
   puts yellow "-> Compiling and moving to build directory..."
   unless system "#{RJS_BUILD}"
     puts red "  !!! Compile and move failed! Run manually with verbose mode on. !!!"
