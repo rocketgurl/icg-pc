@@ -1,4 +1,5 @@
 require
+  urlArgs: ''
   baseUrl: 'js'
   paths: 
     jquery      : 'lib/jquery-1.8.2'
