@@ -90,6 +90,7 @@ task :cleanup do
   index_clean = file_join_safe(prefix, 'source/index.bak.html')
   FileUtils.rm index_munge
   FileUtils.mv index_clean, index_munge
+  set_urlargs '', "source/js/main.js"
 end
 
 # Return File.join() in a manner safe for Windows
