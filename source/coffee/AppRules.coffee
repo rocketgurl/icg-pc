@@ -89,11 +89,6 @@ define [
       required : ['params']
       module   : 'Policy/PolicyModule'
 
-    rulesets :
-      required : false
-      module   : 'TestModule'
-      params   : null
-
     referral_queue :
       required : false
       module : 'ReferralQueue/ReferralQueueModule'
@@ -104,8 +99,8 @@ define [
 
     default :
       required : false
-      module   : 'TestModule'
-      params   : null
+      module   : 'Search/SearchModule'
+      params   : null 
 
 
 
