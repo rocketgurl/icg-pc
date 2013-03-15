@@ -38,7 +38,7 @@ PRUNE = {
 task :default => [:build]
 
 # Build task
-task :build => [:compile, :prune_build, :version]
+task :build => [:version, :compile, :prune_build]
 
 # Compile and build project with RequireJS
 task :compile do
@@ -80,6 +80,7 @@ end
 task :version do
   version = `git describe --tags --always HEAD`
   append_version_number version.chomp!, "index.html"
+  set_urlargs version.chomp!, "js/main.js"
 end
 
 # Return File.join() in a manner safe for Windows
@@ -106,6 +107,10 @@ def append_version_number(version, file)
     f.puts doc.to_html
   }
   puts ">> VERSION #{version} APPENDED"
+end
+
+def set_urlargs(version, file)
+  
 end
 
 # Return File.join() in a manner safe for Windows
