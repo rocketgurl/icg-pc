@@ -102,23 +102,23 @@ end
 
 task :cleanup do
   prefix      = File.dirname(__FILE__)
-  index_munge = file_join_safe(prefix, 'source/index.html')
-  index_clean = file_join_safe(prefix, 'source/index.bak.html')
+  index_munge = file_join_safe(prefix, 'source', 'index.html')
+  index_clean = file_join_safe(prefix, 'source', 'index.bak.html')
   FileUtils.rm index_munge
   FileUtils.mv index_clean, index_munge
   set_urlargs '', "source/js/main.js"
 end
 
 # Return File.join() in a manner safe for Windows
-def file_join_safe(path_a, path_b)
-  File.join(path_a, path_b).gsub(File::SEPARATOR, File::ALT_SEPARATOR || File::SEPARATOR)
+def file_join_safe(*paths)
+  File.join(paths).gsub(File::SEPARATOR, File::ALT_SEPARATOR || File::SEPARATOR)
 end
 
 # Update the version number in index.html
 def append_version_number(version, file)
   prefix      = File.dirname(__FILE__)
   target_file = file_join_safe(prefix, file)
-  tmp_file    = file_join_safe(prefix, 'source/index.bak.html')
+  tmp_file    = file_join_safe(prefix, 'source', 'index.bak.html')
 
   # make copy of original index.html (which is nice and clean)
   FileUtils.cp target_file, tmp_file
@@ -141,8 +141,7 @@ end
 # Set the urlArgs param in main.js before compilation. We set it to the current commit
 # so we can have build specific caching
 def set_urlargs(version, file)
-  prefix      = File.dirname(__FILE__)
-  target_file = file_join_safe(prefix, file)
+  target_file = file_join_safe(File.dirname(__FILE__), file)
   new = []
   f = File.open(target_file, 'r')
   f.each do |l|
