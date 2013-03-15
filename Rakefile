@@ -10,15 +10,20 @@ require "bundler"
 require "fileutils"
 require "nokogiri"
 
+# Return File.join() in a manner safe for Windows
+def file_join_safe(*paths)
+  File.join(paths).gsub(File::SEPARATOR, File::ALT_SEPARATOR || File::SEPARATOR)
+end
+
 # Path to RquireJS build config
-RJS_CONFIG = File.join('source', 'js', 'app.build.js').gsub(File::SEPARATOR, File::ALT_SEPARATOR || File::SEPARATOR)
+RJS_CONFIG = file_join_safe('source', 'js', 'app.build.js')
 
 # Build command for RequireJS / Uglify.js
 RJS_BUILD = "#{ENV['REQUIRE_JS_PATH']} -o #{RJS_CONFIG}"
 
 # CoffeeScript Compilation commands
-COFFEE_SOURCE = File.join('source', 'coffee').gsub(File::SEPARATOR, File::ALT_SEPARATOR || File::SEPARATOR)
-COFFEE_OUTPUT = File.join('source', 'js').gsub(File::SEPARATOR, File::ALT_SEPARATOR || File::SEPARATOR)
+COFFEE_SOURCE = file_join_safe('source', 'coffee')
+COFFEE_OUTPUT = file_join_safe('source', 'js')
 COFFEE_BUILD = "#{ENV['COFFEE_SCRIPT_PATH']} -o #{COFFEE_OUTPUT} -c #{COFFEE_SOURCE}"
 
 # Build location
@@ -40,6 +45,69 @@ PRUNE = {
     'app.build'
   ]
 }
+
+
+# Update the version number in index.html
+def append_version_number(version, file)
+  prefix      = File.dirname(__FILE__)
+  target_file = file_join_safe(prefix, file)
+  tmp_file    = file_join_safe(prefix, 'source', 'index.bak.html')
+
+  # make copy of original index.html (which is nice and clean)
+  FileUtils.cp target_file, tmp_file
+
+  f = File.open(target_file)
+  doc = Nokogiri::HTML(f)
+  f.close
+
+  span = doc.css "#version-number"
+  span.each do |s|
+    s.content = "#{version}"
+  end
+
+  File.open(target_file, 'w') { |f| 
+    f.puts doc.to_html
+  }
+  puts ">> VERSION #{version} APPENDED"
+end
+
+# Set the urlArgs param in main.js before compilation. We set it to the current commit
+# so we can have build specific caching
+def set_urlargs(version, file)
+  target_file = file_join_safe(File.dirname(__FILE__), file)
+  new = []
+  f = File.open(target_file, 'r')
+  f.each do |l|
+    if l.match /urlArgs: '.*?',/
+      new << "    urlArgs: '#{version}',"
+    else
+      new << l
+    end
+  end
+  File.open(target_file, 'w') { |f| 
+    f.puts new
+  }
+  puts ">> URLARGS SET TO #{version}"
+end
+
+# Return File.join() in a manner safe for Windows
+# @params [String] filepath
+def safe_path(path)
+  path.gsub(File::SEPARATOR, File::ALT_SEPARATOR || File::SEPARATOR)
+end
+
+# Color output functions - for legibility
+#
+# @param text [String]
+# @param color_code [Integer]
+def colorize(text, color_code)
+"\e[#{color_code}m#{text}\e[0m"
+end
+
+# Define colors for STDOUT
+def red(text); colorize(text, 31); end
+def green(text); colorize(text, 32); end
+def yellow(text); colorize(text, 33); end
 
 # Default task runs :build
 task :default => [:build]
@@ -115,70 +183,3 @@ task :cleanup do
   FileUtils.mv index_clean, index_munge
   set_urlargs '', "source/js/main.js"
 end
-
-# Return File.join() in a manner safe for Windows
-def file_join_safe(*paths)
-  File.join(paths).gsub(File::SEPARATOR, File::ALT_SEPARATOR || File::SEPARATOR)
-end
-
-# Update the version number in index.html
-def append_version_number(version, file)
-  prefix      = File.dirname(__FILE__)
-  target_file = file_join_safe(prefix, file)
-  tmp_file    = file_join_safe(prefix, 'source', 'index.bak.html')
-
-  # make copy of original index.html (which is nice and clean)
-  FileUtils.cp target_file, tmp_file
-
-  f = File.open(target_file)
-  doc = Nokogiri::HTML(f)
-  f.close
-
-  span = doc.css "#version-number"
-  span.each do |s|
-    s.content = "#{version}"
-  end
-
-  File.open(target_file, 'w') { |f| 
-    f.puts doc.to_html
-  }
-  puts ">> VERSION #{version} APPENDED"
-end
-
-# Set the urlArgs param in main.js before compilation. We set it to the current commit
-# so we can have build specific caching
-def set_urlargs(version, file)
-  target_file = file_join_safe(File.dirname(__FILE__), file)
-  new = []
-  f = File.open(target_file, 'r')
-  f.each do |l|
-    if l.match /urlArgs: '.*?',/
-      new << "    urlArgs: '#{version}',"
-    else
-      new << l
-    end
-  end
-  File.open(target_file, 'w') { |f| 
-    f.puts new
-  }
-  puts ">> URLARGS SET TO #{version}"
-end
-
-# Return File.join() in a manner safe for Windows
-# @params [String] filepath
-def safe_path(path)
-  path.gsub(File::SEPARATOR, File::ALT_SEPARATOR || File::SEPARATOR)
-end
-
-# Color output functions - for legibility
-#
-# @param text [String]
-# @param color_code [Integer]
-def colorize(text, color_code)
-"\e[#{color_code}m#{text}\e[0m"
-end
-
-# Define colors for STDOUT
-def red(text); colorize(text, 31); end
-def green(text); colorize(text, 32); end
-def yellow(text); colorize(text, 33); end
