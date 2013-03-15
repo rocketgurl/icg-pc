@@ -1,3 +1,7 @@
 Gemfile.lock
 .sass-cache
 build/*
+source/js/*.js
+source/js/modules/*.js
+source/js/modules/*/*.js
+source/js/modules/*/*/*.js
