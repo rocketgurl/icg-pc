@@ -30,7 +30,8 @@ PRUNE = {
   ],
   :files => [
     'build.txt',
-    'config.rb'
+    'config.rb',
+    'index.bak.html'
   ]
 }
 
@@ -38,7 +39,7 @@ PRUNE = {
 task :default => [:build]
 
 # Build task
-task :build => [:version, :compile, :prune_build]
+task :build => [:version, :compile, :prune_build, :cleanup]
 
 # Compile and build project with RequireJS
 task :compile do
@@ -83,6 +84,14 @@ task :version do
   set_urlargs version, "source/js/main.js"
 end
 
+task :cleanup do
+  prefix      = File.dirname(__FILE__)
+  index_munge = file_join_safe(prefix, 'source/index.html')
+  index_clean = file_join_safe(prefix, 'source/index.bak.html')
+  FileUtils.rm index_munge
+  FileUtils.mv index_clean, index_munge
+end
+
 # Return File.join() in a manner safe for Windows
 def file_join_safe(path_a, path_b)
   File.join(path_a, path_b).gsub(File::SEPARATOR, File::ALT_SEPARATOR || File::SEPARATOR)
@@ -91,8 +100,11 @@ end
 # Update the version number in index.html
 def append_version_number(version, file)
   prefix      = File.dirname(__FILE__)
-  # target_file = file_join_safe(prefix, BUILD_DIR)
   target_file = file_join_safe(prefix, file)
+  tmp_file    = file_join_safe(prefix, 'source/index.bak.html')
+
+  # make copy of original index.html (which is nice and clean)
+  FileUtils.cp target_file, tmp_file
 
   f = File.open(target_file)
   doc = Nokogiri::HTML(f)
@@ -117,7 +129,7 @@ def set_urlargs(version, file)
   new = []
   f = File.open(target_file, 'r')
   f.each do |l|
-    if l.match /urlArgs: '*',/
+    if l.match /urlArgs: '.*?',/
       new << "    urlArgs: '#{version}',"
     else
       new << l
