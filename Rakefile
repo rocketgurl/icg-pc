@@ -79,8 +79,8 @@ end
 # Append the latest commit hash to the footer of index.html
 task :version do
   version = `git describe --tags --always HEAD`
-  append_version_number version.chomp!, "index.html"
-  set_urlargs version.chomp!, "js/main.js"
+  append_version_number version.chomp!, "source/index.html"
+  set_urlargs version, "source/js/main.js"
 end
 
 # Return File.join() in a manner safe for Windows
@@ -91,8 +91,8 @@ end
 # Update the version number in index.html
 def append_version_number(version, file)
   prefix      = File.dirname(__FILE__)
-  target_file = file_join_safe(prefix, BUILD_DIR)
-  target_file = file_join_safe(target_file, file)
+  # target_file = file_join_safe(prefix, BUILD_DIR)
+  target_file = file_join_safe(prefix, file)
 
   f = File.open(target_file)
   doc = Nokogiri::HTML(f)
@@ -109,8 +109,24 @@ def append_version_number(version, file)
   puts ">> VERSION #{version} APPENDED"
 end
 
+# Set the urlArgs param in main.js before compilation. We set it to the current commit
+# so we can have build specific caching
 def set_urlargs(version, file)
-  
+  prefix      = File.dirname(__FILE__)
+  target_file = file_join_safe(prefix, file)
+  new = []
+  f = File.open(target_file, 'r')
+  f.each do |l|
+    if l.match /urlArgs: '*',/
+      new << "    urlArgs: '#{version}',"
+    else
+      new << l
+    end
+  end
+  File.open(target_file, 'w') { |f| 
+    f.puts new
+  }
+  puts ">> URLARGS SET TO #{version}"
 end
 
 # Return File.join() in a manner safe for Windows
