@@ -16,6 +16,11 @@ RJS_CONFIG = File.join('source', 'js', 'app.build.js').gsub(File::SEPARATOR, Fil
 # Build command for RequireJS / Uglify.js
 RJS_BUILD = "#{ENV['REQUIRE_JS_PATH']} -o #{RJS_CONFIG}"
 
+# CoffeeScript Compilation commands
+COFFEE_SOURCE = File.join('source', 'coffee').gsub(File::SEPARATOR, File::ALT_SEPARATOR || File::SEPARATOR)
+COFFEE_OUTPUT = File.join('source', 'js').gsub(File::SEPARATOR, File::ALT_SEPARATOR || File::SEPARATOR)
+COFFEE_BUILD = "#{ENV['COFFEE_SCRIPT_PATH']} -o #{COFFEE_OUTPUT} -c #{COFFEE_SOURCE}"
+
 # Build location
 BUILD_DIR = "build"
 
@@ -39,7 +44,18 @@ PRUNE = {
 task :default => [:build]
 
 # Build task
-task :build => [:version, :compile, :prune_build, :cleanup]
+task :build => [:coffee, :version, :compile, :prune_build, :cleanup]
+
+# If CoffeeScript is present in the ENV then compile .coffee to .js
+task :coffee do
+  unless ENV['COFFEE_SCRIPT_PATH'].nil?
+    unless system "#{COFFEE_BUILD}"
+      puts red "!!! CoffeeScript compile FAILED!"
+    else
+      puts green "  >> CoffeeScript compile a success"
+    end
+  end
+end
 
 # Compile and build project with RequireJS
 task :compile do
