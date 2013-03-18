@@ -178,9 +178,6 @@ define [
       if _.isFunction(func)
         func.apply(this)
 
-      # Need to let the footer know that we changed height
-      @module.trigger 'workspace.rendered'
-
       true
 
 
@@ -232,6 +229,8 @@ define [
 
     show_element : ($elem) ->
       $elem.show()
+      # Need to let the footer know that we changed height
+      @module.trigger 'workspace.rendered'
       $elem
 
     hide_element : ($elem) ->
