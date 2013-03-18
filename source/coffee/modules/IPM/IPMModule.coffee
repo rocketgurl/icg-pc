@@ -30,10 +30,7 @@ define [
 
       # Fetch config in a deferred and then load the module
       config = $.getJSON('/js/modules/IPM/config/ipm.json')
-                .pipe (resp) ->
-                  return resp
-
-      $.when(config).done((resp) => @load(resp))
+                .success((resp) => @load resp)
 
       # Add Events power
       _.extend @, Backbone.Events
