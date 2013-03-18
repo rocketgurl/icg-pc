@@ -97,6 +97,7 @@ define [
     # **Is this an IPM policy?**  
     # @return _Boolean_
     isIPM : ->
+      console.log @getSystemOfRecord()
       if @getSystemOfRecord() == 'mxServer' then true else false
 
     # **Get attributes of an element**  

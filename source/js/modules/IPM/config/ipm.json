@@ -1,101 +1,101 @@
 {
-    "PRODUCTS_PATH": "modules/IPM/products/",
-    "PRODUCTS": [
-        "ofcc-dp3-ny",
-        "ofcc-ho3-ak",
-        "wic-ho3-al",
-        "wic-hwo-al",
-        "wic-ho3-la",
-        "acic-ho3-sc"
-    ],
-    "ACTIONS_PATH": "modules/IPM/actions/",
-    "ACTIONS": [
+  "PRODUCTS_PATH": "modules/IPM/products/",
+  "PRODUCTS": [
+    "ofcc-dp3-ny",
+    "ofcc-ho3-ak",
+    "wic-ho3-al",
+    "wic-hwo-al",
+    "wic-ho3-la",
+    "acic-ho3-sc"
+  ],
+  "ACTIONS_PATH": "modules/IPM/actions/",
+  "ACTIONS": [
+    {
+      "label": "Billing & Accounting",
+      "actions": [
         {
-            "label": "Billing & Accounting",
-            "actions": [
-                {
-                    "label": "Make Payment",
-                    "view": "MakePayment"
-                },
-                {
-                    "label": "Invoice",
-                    "view": "Invoice"
-                },
-                {
-                    "label": "Apply charges",
-                    "view": "ApplyCharges"
-                },
-                {
-                    "label": "Change payment plan",
-                    "view": "ChangePaymentPlan"
-                },
-                {
-                    "label": "Premium disbursement",
-                    "view": "PremiumDisbursement"
-                },
-                {
-                    "label": "Reverse disbursement",
-                    "view": "ReverseDisbursement"
-                },
-                {
-                    "label": "Reverse payment",
-                    "view": "ReversePayment"
-                },
-                {
-                    "label": "Write off charges",
-                    "view": "WriteOffCharges"
-                }
-            ]
+          "label": "Make Payment",
+          "view": "MakePayment"
         },
         {
-            "label": "Policy Administration",
-            "actions": [
-                {
-                    "label": "Issue (automatic)",
-                    "view": "IssueAutomatic"
-                },
-                {
-                    "label": "Issue (manual)",
-                    "view": "IssueManual"
-                },
-                {
-                    "label": "Renew",
-                    "view": "Renew"
-                },
-                {
-                    "label": "Cancel/Reinstate",
-                    "view": "CancelReinstate"
-                },
-                {
-                    "label": "Endorse",
-                    "view": "Endorse"
-                },
-                {
-                    "label": "Change customer",
-                    "view": "ChangeCustomer"
-                },
-                {
-                    "label": "Update mortgage",
-                    "view": "UpdateMortgage"
-                },
-                {
-                    "label": "Change additional interest",
-                    "view": "ChangeAdditionalInterest"
-                }
-            ]
+          "label": "Invoice",
+          "view": "Invoice"
         },
         {
-            "label": "Tools",
-            "actions": [
-                {
-                    "label": "Generate document",
-                    "view": "GenerateDocument"
-                },
-                {
-                    "label": "Edit term data",
-                    "view": "EditTermData"
-                }
-            ]
+          "label": "Apply charges",
+          "view": "ApplyCharges"
+        },
+        {
+          "label": "Change payment plan",
+          "view": "ChangePaymentPlan"
+        },
+        {
+          "label": "Premium disbursement",
+          "view": "PremiumDisbursement"
+        },
+        {
+          "label": "Reverse disbursement",
+          "view": "ReverseDisbursement"
+        },
+        {
+          "label": "Reverse payment",
+          "view": "ReversePayment"
+        },
+        {
+          "label": "Write off charges",
+          "view": "WriteOffCharges"
         }
-    ]
+      ]
+    },
+    {
+      "label": "Policy Administration",
+      "actions": [
+        {
+          "label": "Issue (automatic)",
+          "view": "IssueAutomatic"
+        },
+        {
+          "label": "Issue (manual)",
+          "view": "IssueManual"
+        },
+        {
+          "label": "Renew",
+          "view": "Renew"
+        },
+        {
+          "label": "Cancel/Reinstate",
+          "view": "CancelReinstate"
+        },
+        {
+          "label": "Endorse",
+          "view": "Endorse"
+        },
+        {
+          "label": "Change customer",
+          "view": "ChangeCustomer"
+        },
+        {
+          "label": "Update mortgage",
+          "view": "UpdateMortgage"
+        },
+        {
+          "label": "Change additional interest",
+          "view": "ChangeAdditionalInterest"
+        }
+      ]
+    },
+    {
+      "label": "Tools",
+      "actions": [
+        {
+          "label": "Generate document",
+          "view": "GenerateDocument"
+        },
+        {
+          "label": "Edit term data",
+          "view": "EditTermData"
+        }
+      ]
+    }
+  ]
 }
