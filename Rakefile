@@ -113,7 +113,7 @@ def yellow(text); colorize(text, 33); end
 task :default => [:build]
 
 # Build task
-task :build => [:coffee, :version, :compile, :prune_build, :cleanup]
+task :build => [:compile, :prune_build, :cleanup]
 
 # If CoffeeScript is present in the ENV then compile .coffee to .js
 task :coffee do
@@ -127,7 +127,7 @@ task :coffee do
 end
 
 # Compile and build project with RequireJS
-task :compile do
+task :compile => [:coffee, :version] do
   # Move app.build into js folder
   app_build = file_join_safe(File.dirname(__FILE__),'source','app.build')
   app_js = file_join_safe(File.dirname(__FILE__),'source','js','app.build.js')
