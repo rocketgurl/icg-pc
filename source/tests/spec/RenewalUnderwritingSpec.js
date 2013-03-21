@@ -2,6 +2,7 @@ define([
   "jquery",
   "underscore",
   "WorkspaceController",
+  "UserModel",
   "modules/Search/SearchContextCollection",
   "modules/Policy/PolicyModel",
   "modules/RenewalUnderwriting/RenewalUnderwritingModel",
@@ -13,6 +14,7 @@ define([
     $,
     _,
     WorkspaceController,
+    UserModel,
     SearchContextCollection,
     PolicyModel,
     RenewalUnderwritingModel,
@@ -59,9 +61,10 @@ define([
                 ixlibrary : '/ixlibrary/api/sdo/rest/v1/',
                 ixvocab   : '/ixvocab/api/rest/v1/'
               },
-              user : {
+              user : new UserModel({
+                digest  : 'Y3J1NHRAY3J1MzYwLmNvbTphYmMxMjM=',
                 id : 'thurston.howell@arc90.com'
-              }
+              })
           }
         }
       }
@@ -359,8 +362,8 @@ define([
     it ('RenewalVocabModels have URLs', function() {
       var disposition_url = VocabDispositions.url()
       var reason_url = VocabReasons.url()
-      expect(disposition_url).toEqual('/ixvocab/api/rest/v1/Term/Disposition');
-      expect(reason_url).toEqual('/ixvocab/api/rest/v1/Term/NonRenewalReasonCode');
+      expect(disposition_url).toEqual('/ixvocab/api/rest/v1/terms/Disposition');
+      expect(reason_url).toEqual('/ixvocab/api/rest/v1/terms/NonRenewalReasonCode');
     });
 
     it ('RenewalVocabModels can fetch XML from ixVocab', function() {

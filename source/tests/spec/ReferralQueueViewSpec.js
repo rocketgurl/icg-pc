@@ -19,7 +19,7 @@ define([
 
     // We need a Collection to test our View
     var settings = {
-      pxcentral: '/pxcentral/api/rest/v1/tasks',
+      pxcentral: '/pxcentral/api/rest/v1/tasks/',
       digest  : 'ZGFycmVuLm5ld3RvbkBhcmM5MC5jb206ZG5ld3RvbjA4MTAxMg=='
     }
 
