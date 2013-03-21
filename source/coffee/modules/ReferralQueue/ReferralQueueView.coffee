@@ -108,7 +108,8 @@ define [
       @updatePagination(collection, @PAGINATION_EL)
 
       # Need to let the footer know that we changed height
-      @MODULE.trigger 'workspace.rendered'
+      if _.has(@MODULE, 'trigger')
+        @MODULE.trigger 'workspace.rendered'
 
     # Handle server errors from the Tasks Collection
     #
