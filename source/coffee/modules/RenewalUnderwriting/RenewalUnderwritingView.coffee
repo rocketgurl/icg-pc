@@ -50,10 +50,11 @@ define [
         @inspectDispositionOption(@process_event e)
 
     initialize : (options) ->
-      @$el        = options.$el
-      @Policy     = options.policy
-      @PolicyView = options.policy_view
-      @User       = @PolicyView.controller.user
+      @$el         = options.$el
+      @Policy      = options.policy
+      @PolicyView  = options.policy_view
+      @User        = @PolicyView.controller.user
+      @ixVocabAuth = @PolicyView.controller.IXVOCAB_AUTH
 
       # Need to maintain some state around Disposition as we need to
       # do additional validation on changes
@@ -97,7 +98,7 @@ define [
         @[key] = new RenewalVocabModel({
           id       : val
           url_root : @PolicyView.controller.services.ixvocab
-          digest   : @User.get 'digest'
+          digest   : @ixVocabAuth
         })
         @[key].checkCache()
 

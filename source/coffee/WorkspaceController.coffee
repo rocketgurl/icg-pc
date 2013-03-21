@@ -73,6 +73,7 @@ define [
     global_flash          : new Messenger($('#canvas'), 'controller')
     Workspaces            : new WorkspaceStateCollection()
     workspace_zindex      : 30000
+    IXVOCAB_AUTH          : 'Y29tLmljcy5hcHBzLmluc2lnaHRjZW50cmFsOjVhNWE3NGNjODBjMzUyZWVkZDVmODA4MjkzZWFjMTNk'
 
     # Simple logger
     logger : (msg) ->
