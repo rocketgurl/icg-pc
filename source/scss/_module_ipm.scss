@@ -402,6 +402,7 @@ h2.ipm-action-header {
 	}
 
 	#rate_validation_override {
+		display: none;
 		margin: 20px 0;
 		padding: 10px;
 		background: adjust_hue(lighten($orange, 35), 11);
