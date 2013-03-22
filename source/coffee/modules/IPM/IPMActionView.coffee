@@ -21,6 +21,38 @@ define [
   # ----  
   # IPM sub views (action views) inherit from this base view  
   #
+  # * The IPMView loads IPMActionView (this) and attaches a 'loaded' listener
+  #   to it. The 'ready' event is then triggered. This usually tells the
+  #   inherited ActionView to go and get its templates (fetchTemplates()) 
+  #
+  # * fetchTemplates() GETs model.json and view.html and then calls callback,
+  #   which in many cases is processView()
+  #
+  # * processView() handles the loading of data into the template, any 
+  #   transforms on the data, etc. When it's done, the 'loaded' event is 
+  #   triggered, which tells IPMActionView's listener to fire render(). 
+  #   When loaded is triggered, a callback is passed along which tells
+  #   render() what to do when it's done slotting the view into the DOM.
+  #   We do this because we need to change the post-render callback depending
+  #   on what we just rendered. Sometimes we are rendering a preview, which
+  #   has different post-rendering needs.
+  #
+  # * postProcessView() / postProcessPreview() is called after the 'loaded'
+  #   event. We need to do this after the DOM has been updated. These functions
+  #   operate on the form's DOM to attach listeners
+  #
+  # * Submit - the submit function is wrapped in validate() - which checks
+  #   the form to ensure all required fields are filled. See IPMFormValidation
+  #   for more information on how validation goes down. If the form validates, 
+  #   submit() preps the values for sending, keeping
+  #   versions and preview data up to date. 
+  #
+  #   Each action which inherits from IPMActionView adds its own custom submit 
+  #   processing into the mix. Finally a ChangeSet or Transaction Request is
+  #   sent to server. Callbacks are passed into ChangeSet.commitChange()
+  #   to handle success/fail
+  #   
+  #
   class IPMActionView extends BaseView
     
     tagName : 'div'
@@ -353,6 +385,11 @@ define [
 
         return false
 
+      # Rate validation errors get special treatment
+      if @PARENT_VIEW.VIEW_STATE == 'Endorse' && \
+        jqXHR.getResponseHeader('Rate-Validation-Failed')
+          return @displayRateValidationError()       
+
       if jqXHR.responseText?
         regex = /\[(.*?)\]/g
         json  = regex.exec(jqXHR.responseText)
@@ -411,13 +448,11 @@ define [
 
       @MODULE.POLICY
 
-    # **Build view data objects and trigger loaded event**  
+    # **Render ActionView into DOM**  
     #
-    # Takes the model.json and creates a custom data object for this view. We
-    # then trigger the `loaded` event passing @postProcessView as the callback. 
-    # This will attach any necessary behaviors to the rendered form.  
+    # Render template with Mustache.js
     #
-    # @param `vocabTerms` _Object_ model.json  
+    # @param `viewData` _Object_ model.json  
     # @param `view` _String_ HTML template    
     #
     render : (viewData, view) ->
@@ -593,7 +628,13 @@ define [
 
       msg
 
-    # Your Action View should define the following methods:
+    # We need to display the override checkbox for rate validation errors
+    displayRateValidationError : ->
+      $('#rate_validation_override').fadeIn('fast')
+      msg = "Rate validation error - please explicitly override"
+      @PARENT_VIEW.displayMessage('warning', msg, 3000).remove_loader()
+
+    # !!! Your Action View should define the following methods:
 
     ready : ->
 
