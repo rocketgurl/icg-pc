@@ -64,7 +64,8 @@ define [
         @VALUES.formValues.comment = '__deleteEmptyProperty'
 
       # Options for ChangeSet
-      options = {}
+      options = 
+        headers : {}
 
       # Success callback
       callbackFunc = @callbackSuccess
@@ -75,8 +76,10 @@ define [
       if _.has(@VALUES.formValues, 'preview')
         if @VALUES.formValues.preview != 'confirm'
           callbackFunc = @callbackPreview
-          options.headers =
-            'X-Commit' : false
+          options.headers = _.extend(
+            options.headers,
+            { 'X-Commit' : false }
+          )
 
       # **ICS-1042 / ICS-429**  
       # If the user ticks the override input then we need to add custom header
@@ -84,10 +87,11 @@ define [
       # different requests.
       #
       if @VALUES.formValues.id_rv_override? && @VALUES.formValues.id_rv_override == '1'
-        options.headers = _.extend(
-          options.headers,
-          { 'Override-Validation-Block' : true }
-        )
+        if _.has(options, 'headers')
+          options.headers = _.extend(
+            options.headers,
+            { 'Override-Validation-Block' : true }
+          )
         override_validation_state = true
 
       # Assemble the Transaction Request XML and send to server
