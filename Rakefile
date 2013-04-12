@@ -35,8 +35,10 @@ PRUNE = {
     '.sass-cache',
     'coffee',
     'docs',
-    # 'mocks',
-    'tests'
+    'mocks',
+    'tests',
+    'scss',
+    'mxadmin'
   ],
   :files => [
     'build.txt',
