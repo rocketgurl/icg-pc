@@ -46,17 +46,17 @@ define [
         documentHref       : ''
         documentId         : "Invoice-#{id_stamp}"
 
-      if _.has(@VALUES.formValues, 'InvoiceAmountCurrent')
-        formValues.InvoiceAmountCurrent = @Helpers.formatMoney @VALUES.formValues.InvoiceAmountCurrent 
+      if _.has(@values.formValues, 'InvoiceAmountCurrent')
+        formValues.InvoiceAmountCurrent = @Helpers.formatMoney @values.formValues.InvoiceAmountCurrent 
 
-      if _.has(@VALUES.formValues, 'installmentCharge') && @Helpers.isInt(@VALUES.formValues.installmentCharge)
-        formValues.installmentCharge = @Helpers.formatMoney @VALUES.formValues.installmentCharge 
+      if _.has(@values.formValues, 'installmentCharge') && @Helpers.isInt(@values.formValues.installmentCharge)
+        formValues.installmentCharge = @Helpers.formatMoney @values.formValues.installmentCharge 
       
-      @VALUES.formValues = _.extend @VALUES.formValues, formValues
+      @values.formValues = _.extend @values.formValues, formValues
 
       # Assemble the ChangeSet XML and send to server
       @ChangeSet.commitChange(
-          @ChangeSet.getPolicyChangeSet(@VALUES)
+          @ChangeSet.getPolicyChangeSet(@values)
           @callbackSuccess,
           @callbackError
         )

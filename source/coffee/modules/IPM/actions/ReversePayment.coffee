@@ -47,12 +47,12 @@ define [
     submit : (e) ->
       super e
 
-      @VALUES.formValues.paymentAmount = \
-        @Helpers.formatMoney(@VALUES.formValues.paymentAmount) ? null
+      @values.formValues.paymentAmount = \
+        @Helpers.formatMoney(@values.formValues.paymentAmount) ? null
 
       # Assemble the ChangeSet XML and send to server
       @ChangeSet.commitChange(
-          @ChangeSet.getPolicyChangeSet(@VALUES)
+          @ChangeSet.getPolicyChangeSet(@values)
           @callbackSuccess,
           @callbackError
         )

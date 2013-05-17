@@ -44,15 +44,15 @@ define [
       super e
 
       # @@ Action specific processing
-      @VALUES.formValues.positivePaymentAmount = \
-        Math.abs(@VALUES.formValues.paymentAmount || 0)
+      @values.formValues.positivePaymentAmount = \
+        Math.abs(@values.formValues.paymentAmount || 0)
 
-      @VALUES.formValues.paymentAmount = \
-        -1 * @VALUES.formValues.positivePaymentAmount
+      @values.formValues.paymentAmount = \
+        -1 * @values.formValues.positivePaymentAmount
 
       # Assemble the ChangeSet XML and send to server
       @ChangeSet.commitChange(
-          @ChangeSet.getPolicyChangeSet(@VALUES)
+          @ChangeSet.getPolicyChangeSet(@values)
           @callbackSuccess,
           @callbackError
         )

@@ -38,7 +38,7 @@ define [
     #
     processPreview : (vocabTerms, view) =>
       @processViewData(vocabTerms, view)
-      @viewData.preview        = @parseIntervals(@VALUES)
+      @viewData.preview        = @parseIntervals(@values)
       @viewData.current_policy = @current_policy_intervals
 
       @trigger("loaded", this, @postProcessPreview)
@@ -50,18 +50,18 @@ define [
     submit : (e) ->
       super e
 
-      console.log ['submit', @VALUES]
+      console.log ['submit', @values]
 
-      @VALUES.formValues.transactionType = 'Endorsement'
+      @values.formValues.transactionType = 'Endorsement'
 
       # Derive intervals from the form values and policy, we use
       # this in the Preview, comparing it against what comes back
       # from the server
-      @current_policy_intervals = @parseIntervals(@VALUES)
+      @current_policy_intervals = @parseIntervals(@values)
 
       # We selectively delete certain empty values later
-      if @VALUES.formValues.comment == ''
-        @VALUES.formValues.comment = '__deleteEmptyProperty'
+      if @values.formValues.comment == ''
+        @values.formValues.comment = '__deleteEmptyProperty'
 
       # Options for ChangeSet
       options = 
@@ -73,8 +73,8 @@ define [
       # Previews require a different callback and an extra header.
       # The header prevents the changes from committing to the DB.
       # If preview is set to 'confirm', then ignore & commit to the DB.
-      if _.has(@VALUES.formValues, 'preview')
-        if @VALUES.formValues.preview != 'confirm'
+      if _.has(@values.formValues, 'preview')
+        if @values.formValues.preview != 'confirm'
           callbackFunc = @callbackPreview
           options.headers = _.extend(
             options.headers,
@@ -86,7 +86,7 @@ define [
       # to the request. We also set state so we can remember this across 
       # different requests.
       #
-      if @VALUES.formValues.id_rv_override? && @VALUES.formValues.id_rv_override == '1'
+      if @values.formValues.id_rv_override? && @values.formValues.id_rv_override == '1'
         if _.has(options, 'headers')
           options.headers = _.extend(
             options.headers,
@@ -96,7 +96,7 @@ define [
 
       # Assemble the Transaction Request XML and send to server
       @ChangeSet.commitChange(
-        @ChangeSet.getTransactionRequest(@VALUES, @viewData),
+        @ChangeSet.getTransactionRequest(@values, @viewData),
         callbackFunc,
         @callbackError,
         options
@@ -134,7 +134,7 @@ define [
     # and preview. It's an almost direct port from mxAdmin and could use some
     # refactoring.
     #
-    # @param `values` _Object_ @VALUES object  
+    # @param `values` _Object_ @values object  
     # @return _Object_  
     #
     parseIntervals : (values) ->

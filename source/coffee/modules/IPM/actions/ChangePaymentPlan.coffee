@@ -49,11 +49,11 @@ define [
         termEffectiveDate  : @MODULE.POLICY.get('firstTerm').EffectiveDate ? null
         termExpirationDate : @MODULE.POLICY.get('firstTerm').ExpirationDate ? null
 
-      @VALUES.formValues = _.extend(@VALUES.formValues, values)
+      @values.formValues = _.extend(@values.formValues, values)
 
       # Assemble the ChangeSet XML and send to server
       @ChangeSet.commitChange(
-          @ChangeSet.getPolicyChangeSet(@VALUES)
+          @ChangeSet.getPolicyChangeSet(@values)
           @callbackSuccess,
           @callbackError
         )

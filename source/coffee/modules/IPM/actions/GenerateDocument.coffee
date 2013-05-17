@@ -66,20 +66,20 @@ define [
       specialDocs  = ['ReissueDeclarationPackage', 'Invoice']
       templateName = "generate_document-#{@MODULE.POLICY.get('productName')}"
 
-      @VALUES.formValues.generating    = true
-      @VALUES.formValues.policyId      = @MODULE.POLICY.get 'insight_id'
-      @VALUES.formValues.documentId    = "#{@CURRENT_ACTION.type}-#{idStamp}"
-      @VALUES.formValues.documentType  = @CURRENT_ACTION.type
-      @VALUES.formValues.documentLabel = @CURRENT_ACTION.label
+      @values.formValues.generating    = true
+      @values.formValues.policyId      = @MODULE.POLICY.get 'insight_id'
+      @values.formValues.documentId    = "#{@CURRENT_ACTION.type}-#{idStamp}"
+      @values.formValues.documentType  = @CURRENT_ACTION.type
+      @values.formValues.documentLabel = @CURRENT_ACTION.label
 
       # If the documentLabel is NOT in specialDocs then append labelStamp
       if _.indexOf(specialDocs, @CURRENT_ACTION.label) != -1
-        @VALUES.formValues.documentLabel = \
-          "#{@VALUES.formValues.documentLabel} #{labelStamp}"
+        @values.formValues.documentLabel = \
+          "#{@values.formValues.documentLabel} #{labelStamp}"
 
       # Assemble the ChangeSet XML and send to server
       @ChangeSet.commitChange(
-          @ChangeSet.getPolicyChangeSet(@VALUES)
+          @ChangeSet.getPolicyChangeSet(@values)
           @callbackSuccess,
           @callbackError
         )

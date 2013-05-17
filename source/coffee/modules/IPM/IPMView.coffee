@@ -23,18 +23,18 @@ define [
     # DOM then kick off the default route
     initialize : (options) ->
       # Keep track of our current sub-view
-      @VIEW_STATE   = ''
-      @VIEW_CACHE   = {}
-      @ACTION_CACHE = {}
+      @view_state   = ''
+      @view_cache   = {}
+      @action_cache = {}
       
-      @FLASH_HTML = ''
-      @LOADER     = {}
+      @flash_html = ''
+      @loader     = {}
 
       @DEBUG  = options.DEBUG?
       @MODULE = options.MODULE || false
 
       # Setup a Flash Msg. Container
-      @FLASH_HTML = @Mustache.render(
+      @flash_html = @Mustache.render(
         $('#tpl-flash-message').html(),
         { cid : @cid }
       )
@@ -44,13 +44,13 @@ define [
       @buildHtmlElements()
   
       # If we're in a default state then launch home
-      if _.isEmpty @VIEW_STATE
+      if _.isEmpty @view_state
         @route 'Home'
     
     # **Build and render needed HTML elements within the view**
     buildHtmlElements : ->
       # Drop flash message template and add class just for ipm layout
-      @$el.html(@FLASH_HTML)
+      @$el.html(@flash_html)
       @$el.find("#flash-message-#{@cid}").addClass('ipm-flash')
 
       # Drop loader shim into place
@@ -67,7 +67,7 @@ define [
 
 
     # **Router**  
-    # @VIEW_CACHE stores rendered IPMActionView instances. When route is fired
+    # @view_cache stores rendered IPMActionView instances. When route is fired
     # we check the cache to see if it exists, if not we create a new DOM
     # element and then load the IPMActionView with Require.js, then kick off
     # some events on the ActionView that should lead to it getting rendered.
@@ -85,7 +85,7 @@ define [
     #
     route : (action, callbacks) ->
       # Save our current location
-      @VIEW_STATE = action
+      @view_state = action
 
       # Display loader image
       @insert_loader()
@@ -97,22 +97,22 @@ define [
 
       # Cache or load. If we have a load error, then throw up a message and
       # re-route back to the home view
-      if !_.has(@VIEW_CACHE, action)
+      if !_.has(@view_cache, action)
         require ["#{@MODULE.CONFIG.ACTIONS_PATH}#{action}"], (Action) =>
-          @VIEW_CACHE[action] = $("<div id=\"dom-container-#{@cid}-#{action}\" class=\"dom-container\"></div>")
+          @view_cache[action] = $("<div id=\"dom-container-#{@cid}-#{action}\" class=\"dom-container\"></div>")
 
-          @ACTION_CACHE[action] = new Action(
+          @action_cache[action] = new Action(
             MODULE      : @MODULE
             PARENT_VIEW : this
           )
 
           @hideOpenViews()
 
-          @ACTION_CACHE[action].on("loaded", @render, this)
-          @ACTION_CACHE[action].trigger "ready"
+          @action_cache[action].on("loaded", @render, this)
+          @action_cache[action].trigger "ready"
 
           if callback_success?
-            callback_success.call(this, @ACTION_CACHE[action], action)
+            callback_success.call(this, @action_cache[action], action)
 
         , (err) =>
             failedId = err.requireModules && err.requireModules[0]
@@ -125,18 +125,18 @@ define [
       else
         @remove_loader()
         @hideOpenViews =>
-          @VIEW_CACHE[action].fadeIn('fast')
+          @view_cache[action].fadeIn('fast')
 
       this
 
     # **Hide all open ActionViews**  
-    # Loop through @VIEW_CACHE and any view with display:block are hidden. An
+    # Loop through @view_cache and any view with display:block are hidden. An
     # optional callback can be passed in as well, fired when fade is complete.
     #
     # @param `callback` _Function_  
     #
     hideOpenViews : (callback) ->
-      for action, view of @VIEW_CACHE
+      for action, view of @view_cache
         if view.css('display') == 'block'
           view.fadeOut('fast', -> 
               if callback?
@@ -161,8 +161,8 @@ define [
         # Drop in HTML with a fadeOut/In transition
         container = @$el.find("#ipm-container-#{@cid}")
         container.fadeOut 'fast', =>
-          action_view.setElement(@VIEW_CACHE[@VIEW_STATE]).render()
-          container.append(@VIEW_CACHE[@VIEW_STATE]).fadeIn('fast')
+          action_view.setElement(@view_cache[@view_state]).render()
+          container.append(@view_cache[@view_state]).fadeIn('fast')
           
           # call callback if present
           if callback
@@ -180,9 +180,9 @@ define [
         if msg?
           $("#ipm-spinner-#{@cid} span").html(msg)
 
-        @LOADER = @Helpers.loader("ipm-spinner-#{@cid}", 100, '#ffffff')
-        @LOADER.setDensity(70)
-        @LOADER.setFPS(48)
+        @loader = @Helpers.loader("ipm-spinner-#{@cid}", 100, '#ffffff')
+        @loader.setDensity(70)
+        @loader.setFPS(48)
       catch e
         @$el.find("#ipm-loader-#{@cid}").hide()
       this
@@ -190,9 +190,9 @@ define [
         
     remove_loader : ->
       try
-        if @LOADER? && @LOADER != undefined
-          @LOADER.kill()
-          @LOADER = null
+        if @loader? && @loader != undefined
+          @loader.kill()
+          @loader = null
           @$el.find("#ipm-loader-#{@cid}").hide()
           @$el.find("#ipm-spinner-#{@cid} div").remove()
       catch e
@@ -203,7 +203,7 @@ define [
 
     # Display an error from the action, usually not being able to load a file
     actionError : (jqXHR) =>
-      name = @VIEW_STATE || ""
+      name = @view_state || ""
       error_msg = "Could not load view/model for #{@MODULE.POLICY.get('productName')} #{name} : #{jqXHR.status}"
       @Amplify.publish(@cid, 'warning', "#{error_msg}", null, 'nomove')
       @remove_loader()

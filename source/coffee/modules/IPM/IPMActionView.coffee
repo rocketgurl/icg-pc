@@ -65,9 +65,9 @@ define [
       @ChangeSet      = new IPMChangeSet(@MODULE.POLICY, @PARENT_VIEW.VIEW_STATE, @MODULE.USER)
       @FormValidation = new IPMFormValidation()
       
-      @VALUES    = {} # Form values
-      @TPL_CACHE = {} # Template Cache
-      @ERRORS    = {} # Manage error states from server
+      @values    = {} # Form values
+      @tpl_cache = {} # Template Cache
+      @errors    = {} # Manage error states from server
       
       @options = null
 
@@ -93,14 +93,14 @@ define [
       path  = "/js/#{@MODULE.CONFIG.PRODUCTS_PATH}#{policy.get('productName')}/forms/#{_.slugify(action)}"
 
       # Stash the files in the cache on first load
-      if !_.has(@TPL_CACHE, action)          
+      if !_.has(@tpl_cache, action)          
         model = $.getJSON("#{path}/model.json")
-                  .pipe (resp) -> return resp        
+                 .pipe (resp) -> return resp        
         view  = $.get("#{path}/view.html", null, null, "text")
-                  .pipe (resp) -> return resp
+                 .pipe (resp) -> return resp
         $.when(model, view).then(callback, @PARENT_VIEW.actionError)
       else
-        callback(@TPL_CACHE[action].model, @TPL_CACHE[action].view)
+        callback(@tpl_cache[action].model, @tpl_cache[action].view)
 
     # **Return to home page of IPM**  
     #
@@ -169,8 +169,8 @@ define [
       @$el.find('.form_actions a').on 'click', (e) =>
         e.preventDefault()
         @processView(
-          @TPL_CACHE[@PARENT_VIEW.VIEW_STATE].model,
-          @TPL_CACHE[@PARENT_VIEW.VIEW_STATE].view
+          @tpl_cache[@PARENT_VIEW.VIEW_STATE].model,
+          @tpl_cache[@PARENT_VIEW.VIEW_STATE].view
         )
 
       # .data_tables in the preview require additional hooks and processing
@@ -235,7 +235,7 @@ define [
     #
     processViewData : (vocabTerms, view, nocache) ->
       if !nocache?
-        @TPL_CACHE[@PARENT_VIEW.VIEW_STATE] =
+        @tpl_cache[@PARENT_VIEW.VIEW_STATE] =
           model : vocabTerms
           view  : view
 
@@ -364,8 +364,8 @@ define [
 
       # Re-render the form
       # @processView(
-      #   @TPL_CACHE[@PARENT_VIEW.VIEW_STATE].model,
-      #   @TPL_CACHE[@PARENT_VIEW.VIEW_STATE].view
+      #   @tpl_cache[@PARENT_VIEW.VIEW_STATE].model,
+      #   @tpl_cache[@PARENT_VIEW.VIEW_STATE].view
       # )
 
     # **Error handling from ChangeSet**
@@ -397,11 +397,11 @@ define [
         # If this is an endorse action and the response is JSON then there is
         # a high chance this could be a rate validation error.
         if json? && @PARENT_VIEW.VIEW_STATE == 'Endorse'
-          @ERRORS = @errorParseJSON(jqXHR, json)
+          @errors = @errorParseJSON(jqXHR, json)
         else
-          @ERRORS = @errorParseHTML(jqXHR)
+          @errors = @errorParseHTML(jqXHR)
 
-      @displayError 'warning', @ERRORS
+      @displayError 'warning', @errors
 
     # **Preview Callback**  
     # If a policy comes back to for Preview we need to do a little processing
@@ -418,8 +418,8 @@ define [
     callbackPreview : (data, status, jqXHR) =>
       @resetPolicyModel(data, jqXHR)
       @processPreview(
-        @TPL_CACHE[@PARENT_VIEW.VIEW_STATE].model,
-        @TPL_CACHE[@PARENT_VIEW.VIEW_STATE].view
+        @tpl_cache[@PARENT_VIEW.VIEW_STATE].model,
+        @tpl_cache[@PARENT_VIEW.VIEW_STATE].view
       )
       @PARENT_VIEW.remove_loader()
 
@@ -512,17 +512,17 @@ define [
       form = @$el.find('form')
       if form.length > 0 
 
-        @VALUES.formValues    = @getFormValues form
-        @VALUES.changedValues = @getChangedValues form
+        @values.formValues    = @getFormValues form
+        @values.changedValues = @getChangedValues form
 
         # If we have previous values then cons them onto the new values
-        if _.has(@VALUES, 'previousValues')
-          @VALUES.formValues = _.extend(
-            @VALUES.previousValues.formValues,
-            @VALUES.formValues            
+        if _.has(@values, 'previousValues')
+          @values.formValues = _.extend(
+            @values.previousValues.formValues,
+            @values.formValues            
           )
-          @VALUES.changedValues = \
-            _.uniq @VALUES.changedValues.concat(@VALUES.previousValues.changedValues)
+          @values.changedValues = \
+            _.uniq @values.changedValues.concat(@values.previousValues.changedValues)
 
         # In previews we need to keep the previous form states as we re-calc
         # and re-submit the TransactionRequests multiple times, making changes.
@@ -530,11 +530,11 @@ define [
         # want it overriding the combined value later (we use it to trigger
         # things.) We use _.clone because we want the data, not a ref to the obj
         #
-        if _.has(@VALUES.formValues, 'preview') && @VALUES.formValues.preview != 'confirm'
-          @VALUES.previousValues = 
-            formValues    : _.clone @VALUES.formValues
-            changedValues : _.clone @VALUES.changedValues
-          delete @VALUES.previousValues.formValues.preview # we don't want this
+        if _.has(@values.formValues, 'preview') && @values.formValues.preview != 'confirm'
+          @values.previousValues = 
+            formValues    : _.clone @values.formValues
+            changedValues : _.clone @values.changedValues
+          delete @values.previousValues.formValues.preview # we don't want this
 
 
     # **Parse error message from HTML response**
@@ -550,33 +550,33 @@ define [
       # The error response comes back as HTML, which we need to pull apart
       # into a meaningful message of some sort using jQuery.
       tmp            = $('<div />').html(jqXHR.responseText)
-      @ERRORS.title   = tmp.find('h1:first').text()
-      @ERRORS.desc    = tmp.find('p')
-      @ERRORS.details = tmp.find('ol:first')
+      @errors.title   = tmp.find('h1:first').text()
+      @errors.desc    = tmp.find('p')
+      @errors.details = tmp.find('ol:first')
 
       # If there are multiple error descriptions then combine them into one
       # string
-      if @ERRORS.desc.length > 0
-        @ERRORS.desc = _.map(@ERRORS.desc, (desc) -> $(desc).text()).join(' ')
+      if @errors.desc.length > 0
+        @errors.desc = _.map(@errors.desc, (desc) -> $(desc).text()).join(' ')
       else
-        @ERRORS.desc = ''
+        @errors.desc = ''
 
       # We need to check the error message for lists (ol/ul). Some of the 
       # services incorrectly send back <ul>s so we need to check both, or
       # set details to null if neither are present.
-      if @ERRORS.details.length == 0
-        @ERRORS.details = tmp.find('ul:first')
-        if @ERRORS.details.length == 0
-          @ERRORS.details = null
+      if @errors.details.length == 0
+        @errors.details = tmp.find('ul:first')
+        if @errors.details.length == 0
+          @errors.details = null
 
       tmp = null # reset the container
 
       # If we didn't receive an X-True-Statuscode header then we prepend the
       # HTTP status code to the title.
       if !true_status_code?
-        @ERRORS.title = "#{@ERRORS.title} (#{status_code})"
+        @errors.title = "#{@errors.title} (#{status_code})"
 
-      @ERRORS
+      @errors
 
     # **Parse error message from JSON embedded in HTML response**
     # Make the rate validation override form available if this is a rate
@@ -595,14 +595,14 @@ define [
           return @errorParseHTML jqXHR        
 
       if response? && response[0]?
-        @ERRORS.title   = response[0].message ? null
-        @ERRORS.desc    = response[0].detail ? null
-        @ERRORS.details = null
+        @errors.title   = response[0].message ? null
+        @errors.desc    = response[0].detail ? null
+        @errors.details = null
 
-      if @ERRORS.title == 'Rate Validation Failed'
+      if @errors.title == 'Rate Validation Failed'
         @$el.find('#rate_validation_override').fadeIn('fast')
 
-      @ERRORS
+      @errors
 
     # **Display error message**   
     # Build an error message from the error object provided by callbackError

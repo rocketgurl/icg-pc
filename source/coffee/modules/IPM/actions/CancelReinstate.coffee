@@ -107,11 +107,11 @@ define [
     #
     processPreview : (vocabTerms, view) =>
       @processViewData(vocabTerms, view, true)
-      @viewData.preview        = @Endorse.parseIntervals(@VALUES)
+      @viewData.preview        = @Endorse.parseIntervals(@values)
       @viewData.current_policy = @current_policy_intervals
       
       preview_values = @extractEventValues(@MODULE.POLICY, @viewData)
-      preview_labels = @determinePreviewLabel(@VALUES.formValues, @viewData)
+      preview_labels = @determinePreviewLabel(@values.formValues, @viewData)
       preview_effective_date = @determineCorrectPreviewDate(@MODULE.POLICY, @viewData)
 
       @viewData = _.extend(
@@ -274,8 +274,8 @@ define [
       super e
 
       # We selectively delete certain empty values later
-      if @VALUES.formValues.comment == ''
-        @VALUES.formValues.comment = '__deleteEmptyProperty'
+      if @values.formValues.comment == ''
+        @values.formValues.comment = '__deleteEmptyProperty'
 
       transaction_types =
         'cancel'         : 'Cancellation'
@@ -283,9 +283,9 @@ define [
         'reinstate'      : 'Reinstatement'
         'rescind'        : 'PendingCancellationRescission'
 
-      @VALUES.formValues.transactionType = @TRANSACTION_TYPES[@CURRENT_SUBVIEW].label ? false
+      @values.formValues.transactionType = @TRANSACTION_TYPES[@CURRENT_SUBVIEW].label ? false
 
-      if !@VALUES.formValues.transactionType
+      if !@values.formValues.transactionType
         msg = "There was an error determining which Transaction Type this request is."
         @PARENT_VIEW.displayMessage('error', msg, 12000)
         return false
@@ -293,11 +293,11 @@ define [
       # Derive intervals from the form values and policy, we use
       # this in the Preview, comparing it against what comes back
       # from the server
-      @current_policy_intervals = @Endorse.parseIntervals(@VALUES)
+      @current_policy_intervals = @Endorse.parseIntervals(@values)
 
       # Format the date to match the TR 1.4 spec
-      if _.has(@VALUES.formValues, 'effectiveDate')
-        @VALUES.formValues.effectiveDate = @Helpers.stripTimeFromDate(@VALUES.formValues.effectiveDate)
+      if _.has(@values.formValues, 'effectiveDate')
+        @values.formValues.effectiveDate = @Helpers.stripTimeFromDate(@values.formValues.effectiveDate)
 
       # Success callback
       callbackFunc = @callbackSuccess
@@ -308,15 +308,15 @@ define [
       # Previews require a different callback and an extra header.
       # The header prevents the changes from committing to the DB.
       # If preview is set to 'confirm', then ignore & commit to the DB.
-      if _.has(@VALUES.formValues, 'preview')
-        if @VALUES.formValues.preview != 'confirm'
+      if _.has(@values.formValues, 'preview')
+        if @values.formValues.preview != 'confirm'
           callbackFunc = @callbackPreview
           options.headers =
             'X-Commit' : false
 
       # Assemble the TransactionRequest XML and send to server
       @ChangeSet.commitChange(
-          @ChangeSet.getTransactionRequest(@VALUES, @viewData),
+          @ChangeSet.getTransactionRequest(@values, @viewData),
           callbackFunc,
           @callbackError,
           options
@@ -376,7 +376,7 @@ define [
     # Parse most recent Event object from Policy and use it to build
     # values for the Cancellation preview
     #
-    # @param `formValues` _Object_ @VALUES.formValues    
+    # @param `formValues` _Object_ @values.formValues    
     # @param `viewData` _object_ model.json values  
     # @return _Object_ updated viewData  
     #
@@ -409,7 +409,7 @@ define [
     determineCorrectPreviewDate : (policy, viewData) ->
       management = policy.get('json').Management
 
-      if @VALUES.formValues.transactionType == "PendingCancellation"
+      if @values.formValues.transactionType == "PendingCancellation"
         viewData.preview.EffectiveDate = \
           management.PendingCancellation.cancellationEffectiveDate
       else if _.has(management, 'policyState') && _.has(management.policyState, 'effectiveDate')

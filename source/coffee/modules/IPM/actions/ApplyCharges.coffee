@@ -43,16 +43,16 @@ define [
     submit : (e) ->
       super e
 
-      @VALUES.formValues.id              = @MODULE.POLICY.get 'policyId'
-      @VALUES.formValues.amount          = Math.abs(@VALUES.formValues.amount || 0)
-      @VALUES.formValues.reasonCodeLabel = \
-        $("#id_reasonCode option[value=#{@VALUES.formValues.reasonCode}]").html()
-      @VALUES.formValues.lineItemType    = \
-        @VALUES.formValues.reasonCodeLabel.toUpperCase().replace(/\s/g, '_')
+      @values.formValues.id              = @MODULE.POLICY.get 'policyId'
+      @values.formValues.amount          = Math.abs(@values.formValues.amount || 0)
+      @values.formValues.reasonCodeLabel = \
+        $("#id_reasonCode option[value=#{@values.formValues.reasonCode}]").html()
+      @values.formValues.lineItemType    = \
+        @values.formValues.reasonCodeLabel.toUpperCase().replace(/\s/g, '_')
 
       # Assemble the ChangeSet XML and send to server
       @ChangeSet.commitChange(
-          @ChangeSet.getPolicyChangeSet(@VALUES)
+          @ChangeSet.getPolicyChangeSet(@values)
           @callbackSuccess,
           @callbackError
         )
