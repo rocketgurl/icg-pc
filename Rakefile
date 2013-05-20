@@ -15,6 +15,10 @@ def file_join_safe(*paths)
   File.join(paths).gsub(File::SEPARATOR, File::ALT_SEPARATOR || File::SEPARATOR)
 end
 
+# Version Number information
+VERSION = `git describe --tags \`git rev-list --tags --max-count=1\``
+VERSION.chomp! # remove line breaks 
+
 # Path to RquireJS build config
 RJS_CONFIG = file_join_safe('source', 'js', 'app.build.js')
 
@@ -172,9 +176,8 @@ end
 
 # Append the latest commit hash to the footer of index.html
 task :version do
-  version = `git describe --tags --always HEAD`
-  append_version_number version.chomp!, "source/index.html"
-  set_urlargs version, "source/js/main.js"
+  append_version_number VERSION, "source/index.html"
+  set_urlargs VERSION, "source/js/main.js"
 end
 
 task :cleanup do
