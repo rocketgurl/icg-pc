@@ -59,6 +59,12 @@ define [
 
     events : {}     
 
+    # !!! Your Action View should define the following methods:
+    ready : ->
+    preview : ->
+    processView : ->
+    processPreview : ->
+
     initialize : (options) ->
       @PARENT_VIEW    = options.PARENT_VIEW ? {}
       @MODULE         = options.MODULE ? {}
@@ -633,9 +639,3 @@ define [
       $('#rate_validation_override').fadeIn('fast')
       msg = "Rate validation error - please explicitly override"
       @PARENT_VIEW.displayMessage('warning', msg, 3000).remove_loader()
-
-    # !!! Your Action View should define the following methods:
-
-    ready : ->
-
-    preview : ->
