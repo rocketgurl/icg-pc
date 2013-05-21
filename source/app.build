@@ -65,5 +65,10 @@
     }
   ],
   preserveLicenseComments: false,
-  removeCombined: true
+  removeCombined: true,
+  optimize: "uglify2",
+  uglify2: {
+      warnings: true,
+      mangle: true
+  }
 })
