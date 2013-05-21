@@ -2,7 +2,7 @@
 #
 # Policy Central 2.0 Build Scripts
 # ================================
-# 
+#
 # @author Alec Munro
 # @author Darren Newton
 #
@@ -18,7 +18,7 @@ end
 # Version Number information
 hash = `git rev-list --tags --max-count=1`
 VERSION = `git describe --tags #{hash.chomp!}`
-VERSION.chomp! # remove line breaks 
+VERSION.chomp! # remove line breaks
 
 # Path to RquireJS build config
 RJS_CONFIG = file_join_safe('source', 'js', 'app.build.js')
@@ -72,7 +72,7 @@ def append_version_number(version, file)
     s.content = "#{version}"
   end
 
-  File.open(target_file, 'w') { |f| 
+  File.open(target_file, 'w') { |f|
     f.puts doc.to_html
   }
   puts ">> VERSION #{version} APPENDED"
@@ -91,7 +91,7 @@ def set_urlargs(version, file)
       new << l
     end
   end
-  File.open(target_file, 'w') { |f| 
+  File.open(target_file, 'w') { |f|
     f.puts new
   }
   puts ">> URLARGS SET TO #{version}"
