@@ -16,7 +16,8 @@ def file_join_safe(*paths)
 end
 
 # Version Number information
-VERSION = `git describe --tags \`git rev-list --tags --max-count=1\``
+hash = `git rev-list --tags --max-count=1`
+VERSION = `git describe --tags #{hash.chomp!}`
 VERSION.chomp! # remove line breaks 
 
 # Path to RquireJS build config
