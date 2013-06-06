@@ -10,7 +10,7 @@ define [
       Write off charges
       Issue (automatic)
       Issue (manual)
-      Renew  
+      Renew
       Change customer
       Update mortgage
       Change additional interest
@@ -18,19 +18,19 @@ define [
   ###
 
   # IPMActionView
-  # ----  
-  # IPM sub views (action views) inherit from this base view  
+  # ----
+  # IPM sub views (action views) inherit from this base view
   #
   # * The IPMView loads IPMActionView (this) and attaches a 'loaded' listener
   #   to it. The 'ready' event is then triggered. This usually tells the
-  #   inherited ActionView to go and get its templates (fetchTemplates()) 
+  #   inherited ActionView to go and get its templates (fetchTemplates())
   #
   # * fetchTemplates() GETs model.json and view.html and then calls callback,
   #   which in many cases is processView()
   #
-  # * processView() handles the loading of data into the template, any 
-  #   transforms on the data, etc. When it's done, the 'loaded' event is 
-  #   triggered, which tells IPMActionView's listener to fire render(). 
+  # * processView() handles the loading of data into the template, any
+  #   transforms on the data, etc. When it's done, the 'loaded' event is
+  #   triggered, which tells IPMActionView's listener to fire render().
   #   When loaded is triggered, a callback is passed along which tells
   #   render() what to do when it's done slotting the view into the DOM.
   #   We do this because we need to change the post-render callback depending
@@ -43,21 +43,21 @@ define [
   #
   # * Submit - the submit function is wrapped in validate() - which checks
   #   the form to ensure all required fields are filled. See IPMFormValidation
-  #   for more information on how validation goes down. If the form validates, 
+  #   for more information on how validation goes down. If the form validates,
   #   submit() preps the values for sending, keeping
-  #   versions and preview data up to date. 
+  #   versions and preview data up to date.
   #
-  #   Each action which inherits from IPMActionView adds its own custom submit 
+  #   Each action which inherits from IPMActionView adds its own custom submit
   #   processing into the mix. Finally a ChangeSet or Transaction Request is
   #   sent to server. Callbacks are passed into ChangeSet.commitChange()
   #   to handle success/fail
-  #   
+  #
   #
   class IPMActionView extends BaseView
-    
+
     tagName : 'div'
 
-    events : {}     
+    events : {}
 
     # !!! Your Action View should define the following methods:
     ready : ->
@@ -68,13 +68,13 @@ define [
     initialize : (options) ->
       @PARENT_VIEW    = options.PARENT_VIEW ? {}
       @MODULE         = options.MODULE ? {}
-      @ChangeSet      = new IPMChangeSet(@MODULE.POLICY, @PARENT_VIEW.VIEW_STATE, @MODULE.USER)
+      @ChangeSet      = new IPMChangeSet(@MODULE.POLICY, @PARENT_VIEW.view_state, @MODULE.USER)
       @FormValidation = new IPMFormValidation()
-      
+
       @values    = {} # Form values
       @tpl_cache = {} # Template Cache
       @errors    = {} # Manage error states from server
-      
+
       @options = null
 
       @on('ready', @ready, this)
@@ -86,11 +86,11 @@ define [
           if @validate()
             submit(args[1])
 
-    # **fetchTemplates** grab the model.json and view.html for processing  
+    # **fetchTemplates** grab the model.json and view.html for processing
     #
-    # @param `policy` _Object_ PolicyModel  
-    # @param `action` _String_ Name of this action  
-    # @param `callback` _Function_ function to call on AJAX success  
+    # @param `policy` _Object_ PolicyModel
+    # @param `action` _String_ Name of this action
+    # @param `callback` _Function_ function to call on AJAX success
     #
     fetchTemplates : (policy, action, callback) ->
       if !policy? || !action?
@@ -99,26 +99,26 @@ define [
       path  = "/js/#{@MODULE.CONFIG.PRODUCTS_PATH}#{policy.get('productName')}/forms/#{_.slugify(action)}"
 
       # Stash the files in the cache on first load
-      if !_.has(@tpl_cache, action)          
+      if !_.has(@tpl_cache, action)
         model = $.getJSON("#{path}/model.json")
-                 .pipe (resp) -> return resp        
+                 .pipe (resp) -> return resp
         view  = $.get("#{path}/view.html", null, null, "text")
                  .pipe (resp) -> return resp
         $.when(model, view).then(callback, @PARENT_VIEW.actionError)
       else
         callback(@tpl_cache[action].model, @tpl_cache[action].view)
 
-    # **Return to home page of IPM**  
+    # **Return to home page of IPM**
     #
-    # @param `e` _Event_  
+    # @param `e` _Event_
     #
     goHome : (e) ->
       e.preventDefault()
-      @PARENT_VIEW.route 'Home'       
+      @PARENT_VIEW.route 'Home'
 
-    # Open/close fieldsets 
+    # Open/close fieldsets
     #
-    # @param `e` _Event_  
+    # @param `e` _Event_
     #
     toggleFieldset : (e) ->
       e.preventDefault()
@@ -137,7 +137,7 @@ define [
       a.html(a.data('altText')).data('altText', a_html)
 
 
-    # **Post process the rendered view**  
+    # **Post process the rendered view**
     #
     # This is where we add things like required labels and such after the
     # ActionView has been rendered. You can add to this through inheritance
@@ -153,7 +153,7 @@ define [
         $(this).attr('data-value')
 
       # Attach datepickers where appropriate
-      date_options = 
+      date_options =
         dateFormat : 'yy-mm-dd'
 
       if $.datepicker
@@ -167,7 +167,7 @@ define [
             @submit e
         )
 
-    # **Post process the preview of the form**  
+    # **Post process the preview of the form**
     postProcessPreview : ->
       delete @viewData.preview
 
@@ -175,18 +175,18 @@ define [
       @$el.find('.form_actions a').on 'click', (e) =>
         e.preventDefault()
         @processView(
-          @tpl_cache[@PARENT_VIEW.VIEW_STATE].model,
-          @tpl_cache[@PARENT_VIEW.VIEW_STATE].view
+          @tpl_cache[@PARENT_VIEW.view_state].model,
+          @tpl_cache[@PARENT_VIEW.view_state].view
         )
 
       # .data_tables in the preview require additional hooks and processing
       if @$el.find('.data_table').length > 0
         @processPreviewForm(@$el.find('.data_table'))
 
-    # **Get the form values**  
+    # **Get the form values**
     #
-    # @param `form` _HTML Form Element_  
-    # @return _Object_ key:val object of form values  
+    # @param `form` _HTML Form Element_
+    # @return _Object_ key:val object of form values
     #
     getFormValues : (form) ->
       formValues = {}
@@ -194,10 +194,10 @@ define [
         formValues[item.name] = item.value
       formValues
 
-    # **Which form values changed?**  
+    # **Which form values changed?**
     #
-    # @param `form` _HTML Form Element_  
-    # @return _Object_ key:val object of changed form values  
+    # @param `form` _HTML Form Element_
+    # @return _Object_ key:val object of changed form values
     #
     getChangedValues : (form) ->
       changed = []
@@ -206,12 +206,12 @@ define [
         val  = el.val()
         name = el.attr 'name'
 
-        # Check on data-value of <select> element  
-        # 
-        # _Note:_ We are explicity using '!=' instead of CoffeeScript's 
+        # Check on data-value of <select> element
+        #
+        # _Note:_ We are explicity using '!=' instead of CoffeeScript's
         # automatic conversion to '!==' because the values from the form
-        # are all different types and we need loose comparisons to prevent 
-        # writing a shit ton of explicit detections & coercion code. 
+        # are all different types and we need loose comparisons to prevent
+        # writing a shit ton of explicit detections & coercion code.
         # This could cause an issue going forward, hence the note. - DN
         #
         if el.is 'select'
@@ -231,17 +231,17 @@ define [
 
       changed
 
-    # Use the vocabTerms (model.json) to derive the policy data the form needs 
+    # Use the vocabTerms (model.json) to derive the policy data the form needs
     # specific to this ActionView and cache it.
     #
-    # @param `vocabTerms` _Object_ model.json    
-    # @param `view` _HTML Template_    
-    # @param `nocache` _Boolean_ on true do not store data in cache    
-    # @return _Array_ [viewData, view]  
+    # @param `vocabTerms` _Object_ model.json
+    # @param `view` _HTML Template_
+    # @param `nocache` _Boolean_ on true do not store data in cache
+    # @return _Array_ [viewData, view]
     #
     processViewData : (vocabTerms, view, nocache) ->
       if !nocache?
-        @tpl_cache[@PARENT_VIEW.VIEW_STATE] =
+        @tpl_cache[@PARENT_VIEW.view_state] =
           model : vocabTerms
           view  : view
 
@@ -254,7 +254,7 @@ define [
       viewData = _.extend(
         viewData,
         @MODULE.POLICY.getPolicyOverview(),
-        { 
+        {
           policyOverview : true
           policyId : @MODULE.POLICY.get_pxServerIndex()
         }
@@ -264,13 +264,13 @@ define [
 
       [viewData, view]
 
-    # **Handle calculations in preview fields**  
+    # **Handle calculations in preview fields**
     # Some products can manipulate fields in the preview phase. We need to
     # attach some behaviors to those fields and then run the numbers. We also
     # need to attach some flags to the form so the submit handler will know
     # what to do on a "re-submit".
     #
-    # @param `table` _HTML Element_ jQuery wrapped table  
+    # @param `table` _HTML Element_ jQuery wrapped table
     #
     processPreviewForm : (table) ->
       # Disable button until something changes
@@ -354,12 +354,12 @@ define [
 
     # **Success handling from ChangeSet**
     #
-    # @param `data` _XML_ Policy XML  
-    # @param `status` _String_ Status of callback  
-    # @param `jqXHR` _Object_ XHR object  
+    # @param `data` _XML_ Policy XML
+    # @param `status` _String_ Status of callback
+    # @param `jqXHR` _Object_ XHR object
     #
     callbackSuccess : (data, status, jqXHR) =>
-      msg = "#{@PARENT_VIEW.VIEW_STATE} completed successfully"
+      msg = "#{@PARENT_VIEW.view_state} completed successfully"
 
       @PARENT_VIEW.displayMessage('success', msg, 12000).remove_loader()
 
@@ -370,15 +370,15 @@ define [
 
       # Re-render the form
       # @processView(
-      #   @tpl_cache[@PARENT_VIEW.VIEW_STATE].model,
-      #   @tpl_cache[@PARENT_VIEW.VIEW_STATE].view
+      #   @tpl_cache[@PARENT_VIEW.view_state].model,
+      #   @tpl_cache[@PARENT_VIEW.view_state].view
       # )
 
     # **Error handling from ChangeSet**
     #
-    # @param `jqXHR` _Object_ XHR object  
-    # @param `status` _String_ Status of callback  
-    # @param `error` _String_ Error  
+    # @param `jqXHR` _Object_ XHR object
+    # @param `status` _String_ Status of callback
+    # @param `error` _String_ Error
     #
     callbackError : (jqXHR, status, error) =>
       # If we don't get an XHR response, then something very bad has
@@ -392,9 +392,9 @@ define [
         return false
 
       # Rate validation errors get special treatment
-      if @PARENT_VIEW.VIEW_STATE == 'Endorse' && \
+      if @PARENT_VIEW.view_state == 'Endorse' && \
         jqXHR.getResponseHeader('Rate-Validation-Failed')
-          return @displayRateValidationError()       
+          return @displayRateValidationError()
 
       if jqXHR.responseText?
         regex = /\[(.*?)\]/g
@@ -402,14 +402,14 @@ define [
 
         # If this is an endorse action and the response is JSON then there is
         # a high chance this could be a rate validation error.
-        if json? && @PARENT_VIEW.VIEW_STATE == 'Endorse'
+        if json? && @PARENT_VIEW.view_state == 'Endorse'
           @errors = @errorParseJSON(jqXHR, json)
         else
           @errors = @errorParseHTML(jqXHR)
 
       @displayError 'warning', @errors
 
-    # **Preview Callback**  
+    # **Preview Callback**
     # If a policy comes back to for Preview we need to do a little processing
     # before we display it to the user. This is called by ActionView as part
     # of the IPMChangeSet.commitChange() callback.
@@ -418,29 +418,29 @@ define [
     # * Second, pass the view and model.js to ActionView.processPreview()
     #
     # @param `data` _XML_ PolicyModel
-    # @param `status` _String_ Status of callback 
-    # @param `jqXHR` _Object_ XHR object  
+    # @param `status` _String_ Status of callback
+    # @param `jqXHR` _Object_ XHR object
     #
     callbackPreview : (data, status, jqXHR) =>
       @resetPolicyModel(data, jqXHR)
       @processPreview(
-        @tpl_cache[@PARENT_VIEW.VIEW_STATE].model,
-        @tpl_cache[@PARENT_VIEW.VIEW_STATE].view
+        @tpl_cache[@PARENT_VIEW.view_state].model,
+        @tpl_cache[@PARENT_VIEW.view_state].view
       )
       @PARENT_VIEW.remove_loader()
 
-    # **Load new XML into PolicyModel**  
+    # **Load new XML into PolicyModel**
     #
     # Inject the new policy XML into the model and setModelState()
     #
     # @param `data` _XML_ PolicyModel
-    # @param `jqXHR` _Object_ XHR object  
+    # @param `jqXHR` _Object_ XHR object
     # @return _Object_ PolicyModel
     #
     resetPolicyModel : (data, jqXHR) ->
       # Swap out Policy XML with new XML, saving the old one
       new_attributes = @MODULE.POLICY.parse(data, jqXHR)
-      new_attributes.prev_document = 
+      new_attributes.prev_document =
         document : @MODULE.POLICY.get('document')
         json     : @MODULE.POLICY.get('json')
 
@@ -454,12 +454,12 @@ define [
 
       @MODULE.POLICY
 
-    # **Render ActionView into DOM**  
+    # **Render ActionView into DOM**
     #
     # Render template with Mustache.js
     #
-    # @param `viewData` _Object_ model.json  
-    # @param `view` _String_ HTML template    
+    # @param `viewData` _Object_ model.json
+    # @param `view` _String_ HTML template
     #
     render : (viewData, view) ->
       viewData = viewData || @viewData
@@ -468,7 +468,7 @@ define [
 
     # Validate form with IPMFormValidation and display any errors
     #
-    # @return _Boolean_ 
+    # @return _Boolean_
     #
     validate : ->
       # Convert all required fields into a validators object
@@ -499,15 +499,15 @@ define [
         )
         false
 
-    # **Submit form** - set the form values on the ActionView for 
+    # **Submit form** - set the form values on the ActionView for
     # use in inherited ActionViews. Only do this if there is an actual form,
     # otherwise we're probably in a preview state and need to hold onto the
     # original form values.
     #
-    # _Note:_ This method should be extended in child views  
-    # _Note:_ This is wrapped by @validate() during initialize!  
+    # _Note:_ This method should be extended in child views
+    # _Note:_ This is wrapped by @validate() during initialize!
     #
-    # @param `e` _Event_ Submit event (Optional) 
+    # @param `e` _Event_ Submit event (Optional)
     #
     submit : (e) =>
       if e?
@@ -516,7 +516,7 @@ define [
       @PARENT_VIEW.insert_loader('Processing policy') # Add loader
 
       form = @$el.find('form')
-      if form.length > 0 
+      if form.length > 0
 
         @values.formValues    = @getFormValues form
         @values.changedValues = @getChangedValues form
@@ -525,7 +525,7 @@ define [
         if _.has(@values, 'previousValues')
           @values.formValues = _.extend(
             @values.previousValues.formValues,
-            @values.formValues            
+            @values.formValues
           )
           @values.changedValues = \
             _.uniq @values.changedValues.concat(@values.previousValues.changedValues)
@@ -537,7 +537,7 @@ define [
         # things.) We use _.clone because we want the data, not a ref to the obj
         #
         if _.has(@values.formValues, 'preview') && @values.formValues.preview != 'confirm'
-          @values.previousValues = 
+          @values.previousValues =
             formValues    : _.clone @values.formValues
             changedValues : _.clone @values.changedValues
           delete @values.previousValues.formValues.preview # we don't want this
@@ -545,8 +545,8 @@ define [
 
     # **Parse error message from HTML response**
     #
-    # @param `jqXHR` _Object_ XHR object  
-    # @return _Object_ Error object  
+    # @param `jqXHR` _Object_ XHR object
+    # @return _Object_ Error object
     #
     errorParseHTML : (jqXHR) ->
       # Assemble error message
@@ -567,7 +567,7 @@ define [
       else
         @errors.desc = ''
 
-      # We need to check the error message for lists (ol/ul). Some of the 
+      # We need to check the error message for lists (ol/ul). Some of the
       # services incorrectly send back <ul>s so we need to check both, or
       # set details to null if neither are present.
       if @errors.details.length == 0
@@ -588,9 +588,9 @@ define [
     # Make the rate validation override form available if this is a rate
     # validation issue.
     #
-    # @param `jqXHR` _Object_ XHR object  
-    # @param `json` _String_ JSON encoded text  
-    # @return _Object_ Error object  
+    # @param `jqXHR` _Object_ XHR object
+    # @param `json` _String_ JSON encoded text
+    # @return _Object_ Error object
     #
     errorParseJSON : (jqXHR, json) ->
       if json? && json[0]?
@@ -598,7 +598,7 @@ define [
         try
           response = JSON.parse(json[0])
         catch e
-          return @errorParseHTML jqXHR        
+          return @errorParseHTML jqXHR
 
       if response? && response[0]?
         @errors.title   = response[0].message ? null
@@ -610,11 +610,11 @@ define [
 
       @errors
 
-    # **Display error message**   
+    # **Display error message**
     # Build an error message from the error object provided by callbackError
     #
-    # @param `type` _String_ warning|notice  
-    # @param `error` _Object_ Collection of error fragments for assembly 
+    # @param `type` _String_ warning|notice
+    # @param `error` _Object_ Collection of error fragments for assembly
     #
     displayError : (type, error) ->
       msg = "<h3>#{error.title}</h3><p>#{error.desc}</p>"

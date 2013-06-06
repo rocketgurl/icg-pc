@@ -3,7 +3,7 @@ define [
   'Messenger'
 ], (BaseView, Messenger) ->
 
-  # **Logger decorator**  
+  # **Logger decorator**
   # Do some basic console logging if debugging is switched on
   dlogger = (methodBody) ->
     ->
@@ -14,19 +14,19 @@ define [
       methodBody.apply(this, arguments)
 
   # IPMView
-  # ====  
+  # ====
   # Build container view for IPM functions and do dispatching for
-  # actions views. 
+  # actions views.
   class IPMView extends BaseView
 
-    # Set up our working area but injecting various HTML containers into the 
+    # Set up our working area but injecting various HTML containers into the
     # DOM then kick off the default route
     initialize : (options) ->
       # Keep track of our current sub-view
       @view_state   = ''
       @view_cache   = {}
       @action_cache = {}
-      
+
       @flash_html = ''
       @loader     = {}
 
@@ -42,11 +42,11 @@ define [
       # Setup elements
       @$el = @MODULE.CONTAINER
       @buildHtmlElements()
-  
+
       # If we're in a default state then launch home
       if _.isEmpty @view_state
         @route 'Home'
-    
+
     # **Build and render needed HTML elements within the view**
     buildHtmlElements : ->
       # Drop flash message template and add class just for ipm layout
@@ -66,7 +66,7 @@ define [
       """)
 
 
-    # **Router**  
+    # **Router**
     # @view_cache stores rendered IPMActionView instances. When route is fired
     # we check the cache to see if it exists, if not we create a new DOM
     # element and then load the IPMActionView with Require.js, then kick off
@@ -76,12 +76,12 @@ define [
     # show itself (fadeIn) and all the existing ones to switch off.
     #
     # _Callback Village_ - when we initialize an ActionView we set a "loaded"
-    # event listener on it which should pass the ActionView itseld to @render(). 
+    # event listener on it which should pass the ActionView itseld to @render().
     # We also trigger a "ready" event on the view letting it know to go ahead and
     # do whatever buildup it needs to.
     #
-    # @param `action` _String_ name of IPMActionView to loade w/ require()      
-    # @param `callbacks` _Object_ .success & .error callback methods    
+    # @param `action` _String_ name of IPMActionView to loade w/ require()
+    # @param `callbacks` _Object_ .success & .error callback methods
     #
     route : (action, callbacks) ->
       # Save our current location
@@ -129,29 +129,29 @@ define [
 
       this
 
-    # **Hide all open ActionViews**  
+    # **Hide all open ActionViews**
     # Loop through @view_cache and any view with display:block are hidden. An
     # optional callback can be passed in as well, fired when fade is complete.
     #
-    # @param `callback` _Function_  
+    # @param `callback` _Function_
     #
     hideOpenViews : (callback) ->
       for action, view of @view_cache
         if view.css('display') == 'block'
-          view.fadeOut('fast', -> 
+          view.fadeOut('fast', ->
               if callback?
                 callback()
             )
 
-    # **Render**  
+    # **Render**
     # Expects an ActionView object (returned from IPMActionView with the
     # loader event). The ActionViews's element is set to the VIEW_CACHE
     # element created earlier, and then ActionView renders(). The VIEW_CACHE
     # element is appended to the IPMView container (@$el) and any callbacks
     # are fired.
     #
-    # @param `action_view` _Object_ IPMActionView  
-    # @param `callback` _Function_  
+    # @param `action_view` _Object_ IPMActionView
+    # @param `callback` _Function_
     #
     render :
       dlogger \
@@ -163,14 +163,14 @@ define [
         container.fadeOut 'fast', =>
           action_view.setElement(@view_cache[@view_state]).render()
           container.append(@view_cache[@view_state]).fadeIn('fast')
-          
+
           # call callback if present
           if callback
             func = _.bind callback, action_view # bind context to callback
             func()
 
         # Register flash message pubsub for this view
-        @messenger = new Messenger(this, @cid) 
+        @messenger = new Messenger(this, @cid)
 
     # Drop a loader graphic into the view
     insert_loader : (msg) ->
@@ -186,20 +186,20 @@ define [
       catch e
         @$el.find("#ipm-loader-#{@cid}").hide()
       this
-    
-        
+
+
     remove_loader : ->
       try
         if @loader? && @loader != undefined
           @loader.kill()
-          @loader = null
+          # @loader = null
           @$el.find("#ipm-loader-#{@cid}").hide()
           @$el.find("#ipm-spinner-#{@cid} div").remove()
       catch e
         @$el.find("#ipm-spinner-#{@cid} div").remove()
-        console.log [e, @$el.find("#ipm-spinner-#{@cid}").html()]
+        console.log e, @$el.find("#ipm-spinner-#{@cid}").html()
       this
-    
+
 
     # Display an error from the action, usually not being able to load a file
     actionError : (jqXHR) =>
