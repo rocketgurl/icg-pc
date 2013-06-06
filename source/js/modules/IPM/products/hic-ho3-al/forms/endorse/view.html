@@ -1,4 +1,4 @@
-<!-- Product: HIC HO3 Alabama -->
+<!-- Endorse HIC HO3 Alabama -->
 	<form action="endorse" method="get" accept-charset="utf-8" class="collapsedSections">
 	<div id="content">
 
@@ -23,6 +23,10 @@
 		<fieldset class="horizontalFields extraWide defaultOpen">
 			<h3>Summary <a data-alt-text="close">change</a></h3>
 			<div class="collapsibleFieldContainer">
+
+		<div id="rate_validation_override">
+	      <input type="checkbox" name="id_rv_override" id="id_rv_override" value="1"> <label for="id_rv_override">Check to Override Rate Validation</label>
+	    </div>
 				
 		<div>
 			<label for="id_effectiveDate" class="labelRequired">Effective Date <i>effectiveDate</i></label>
@@ -823,6 +827,15 @@
 			<h3>Optional Coverage <a data-alt-text="close">change</a></h3>
 			<div class="collapsibleFieldContainer">
 				
+		<div>
+			<label for="id_PersonalPropertyReplacementCost" class="labelRequired">Personal Property Replacement Cost <i>PersonalPropertyReplacementCost</i></label>
+			<select id="id_PersonalPropertyReplacementCost" name="PersonalPropertyReplacementCost" data-value="{{PersonalPropertyReplacementCost}}" required >
+				{{#EnumsPersonalPropertyReplacementCost}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsPersonalPropertyReplacementCost}}
+			</select>
+		</div>
+
 		<div>
 			<label for="id_FunctionalReplacementCost" class="labelRequired">Functional Replacement Cost For Dwelling <i>FunctionalReplacementCost</i></label>
 			<select id="id_FunctionalReplacementCost" name="FunctionalReplacementCost" data-value="{{FunctionalReplacementCost}}" required >

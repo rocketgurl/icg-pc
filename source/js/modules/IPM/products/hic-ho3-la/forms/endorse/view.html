@@ -1,5 +1,4 @@
-<!-- Product: HIC HO3 Louisiana -->
- 
+<!-- Endorse HIC HO3 Louisiana -->
 	<form action="endorse" method="get" accept-charset="utf-8" class="collapsedSections">
 	<div id="content">
 
@@ -171,7 +170,7 @@
 			<h3>Section I &amp; II Limits of Liability <a data-alt-text="close">change</a></h3>
 			<div class="collapsibleFieldContainer">
 						<fieldset>
-				<legend>Basic Coverage & Deductible Options</legend>
+				<legend>Basic Coverage &amp; Deductible Options</legend>
 				
 		<div>
 			<label for="id_ReplacementCostBuilding" class="labelRequired">Replacement Cost Of Dwelling <i>ReplacementCostBuilding</i></label>
@@ -185,7 +184,7 @@
 
 		<div>
 			<label for="id_OptionCoverageB" class="labelRequired">Coverage B (% Of Coverage A) <i>OptionCoverageB</i></label>
-			<select id="id_OptionCoverageB" name="OptionCoverageB" data-value="{{OptionCoverageB}}"  data-affects="CoverageB" required >
+			<select id="id_OptionCoverageB" name="OptionCoverageB" data-value="{{OptionCoverageB}}" data-affects="CoverageB" required >
 				{{#EnumsOptionCoverageB}}
 				<option value="{{value}}">{{label}}</option>
 				{{/EnumsOptionCoverageB}}
@@ -919,6 +918,15 @@
 			<h3>Optional Coverage <a data-alt-text="close">change</a></h3>
 			<div class="collapsibleFieldContainer">
 				
+		<div>
+			<label for="id_PersonalPropertyReplacementCost" class="labelRequired">Personal Property Replacement Cost <i>PersonalPropertyReplacementCost</i></label>
+			<select id="id_PersonalPropertyReplacementCost" name="PersonalPropertyReplacementCost" data-value="{{PersonalPropertyReplacementCost}}" required >
+				{{#EnumsPersonalPropertyReplacementCost}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsPersonalPropertyReplacementCost}}
+			</select>
+		</div>
+
 		<div>
 			<label for="id_FunctionalReplacementCost" class="labelRequired">Functional Replacement Cost For Dwelling <i>FunctionalReplacementCost</i></label>
 			<select id="id_FunctionalReplacementCost" name="FunctionalReplacementCost" data-value="{{FunctionalReplacementCost}}" required >

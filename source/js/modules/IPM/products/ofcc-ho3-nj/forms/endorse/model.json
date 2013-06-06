@@ -2343,12 +2343,24 @@
       "label": "Ordinance Or Law",
       "enumerations": [
         {
-          "label": "10% - Included",
+          "label": "0% - Excluded",
+          "value": "0"
+        },
+        {
+          "label": "10%",
           "value": "1000"
         },
         {
           "label": "25%",
           "value": "2500"
+        },
+        {
+          "label": "50%",
+          "value": "5000"
+        },
+        {
+          "label": "100%",
+          "value": "10000"
         }
       ]
     },

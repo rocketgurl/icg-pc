@@ -5185,6 +5185,10 @@
           "label": "Change Hurricane Deductible"
         },
         {
+          "value": "76",
+          "label": "Add Or Change Residence Held In Trust"
+        },
+        {
           "value": "78",
           "label": "Change Loss Settlement For Contents"
         },
@@ -5255,6 +5259,20 @@
         {
           "value": "125",
           "label": "Conditional liability surcharge"
+        }
+      ]
+    },
+    {
+      "name": "PersonalPropertyReplacementCost",
+      "label": "Personal Property Replacement Cost",
+      "enumerations": [
+        {
+          "value": "100",
+          "label": "Yes"
+        },
+        {
+          "value": "200",
+          "label": "No"
         }
       ]
     }

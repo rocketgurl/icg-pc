@@ -1,0 +1,32 @@
+<!-- Broker of Record - Product: WIC HO3 Louisiana -->
+<form action="endorse" method="get" accept-charset="utf-8" class="collapsedSections">
+<div id="content">
+	<div id="content_header">
+		<h2>{{#preview}}Previewing {{/preview}}Change Broker of Record for {{ policyId }}</h2>
+	</div>
+
+	<div class="bor-notification">&nbsp;</div>
+
+	{{^preview}}
+	<div class="content_body">
+		<div class="bor_input">
+			<label>Current Agency Location Code:</label>
+			<span class="bor_input_alc"></span>
+		</div>
+		<div class="bor_input">
+			<label for="id_NewLocationCode">Find new Agency Location Code:</label>
+			<select id="id_NewLocationCode" name="NewLocationCode" data-value="{{NewLocationCode}}" required>
+				{{#EnumsNewLocationCode}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsNewLocationCode}}
+			</select>
+		</div>
+		<div class="form_actions">
+			<input type="submit" class="button" value="Preview"> &nbsp;
+			<a href="cancellation">Nevermind, go back</a>
+		</div>
+	</div>
+	<input type="hidden" id="id_preview" name="preview" value="true">
+	{{/preview}}
+</div>
+</form>

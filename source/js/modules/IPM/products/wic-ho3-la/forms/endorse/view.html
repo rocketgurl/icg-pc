@@ -1,5 +1,4 @@
-<!-- Product: WIC HO3 Louisiana -->
- 
+<!-- Endorse WIC HO3 Louisiana -->
 	<form action="endorse" method="get" accept-charset="utf-8" class="collapsedSections">
 	<div id="content">
 
@@ -188,7 +187,7 @@
 
 		<div>
 			<label for="id_OptionCoverageB" class="labelRequired">Coverage B (% Of Coverage A) <i>OptionCoverageB</i></label>
-			<select id="id_OptionCoverageB" name="OptionCoverageB" data-value="{{OptionCoverageB}}" required >
+			<select id="id_OptionCoverageB" name="OptionCoverageB" data-value="{{OptionCoverageB}}" data-affects="CoverageB" required >
 				{{#EnumsOptionCoverageB}}
 				<option value="{{value}}">{{label}}</option>
 				{{/EnumsOptionCoverageB}}
@@ -202,7 +201,7 @@
 
 		<div>
 			<label for="id_OptionCoverageC" class="labelRequired">Coverage C (% Of Coverage A) <i>OptionCoverageC</i></label>
-			<select id="id_OptionCoverageC" name="OptionCoverageC" data-value="{{OptionCoverageC}}" required >
+			<select id="id_OptionCoverageC" name="OptionCoverageC" data-value="{{OptionCoverageC}}" data-affects="CoverageC" required >
 				{{#EnumsOptionCoverageC}}
 				<option value="{{value}}">{{label}}</option>
 				{{/EnumsOptionCoverageC}}
@@ -216,7 +215,7 @@
 
 		<div>
 			<label for="id_OptionCoverageD" class="labelRequired">Coverage D (% of Coverage A) <i>OptionCoverageD</i></label>
-			<select id="id_OptionCoverageD" name="OptionCoverageD" data-value="{{OptionCoverageD}}" required disabled="yes">
+			<select id="id_OptionCoverageD" name="OptionCoverageD" data-value="{{OptionCoverageD}}" data-affects="CoverageD" required disabled="yes">
 				{{#EnumsOptionCoverageD}}
 				<option value="{{value}}">{{label}}</option>
 				{{/EnumsOptionCoverageD}}

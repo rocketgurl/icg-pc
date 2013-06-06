@@ -1,5 +1,5 @@
 <!-- Product: WIC HO3 Louisiana -->
-<form action="renew" method="get" accept-charset="utf-8" class="collapsedSections">
+	<form action="renew" method="get" accept-charset="utf-8" class="collapsedSections">
 	<div id="content">
 		<div id="content_header">
 			<h2>{{#preview}}Previewing Renewal for {{/preview}} {{^preview}}Renew {{/preview}} policy {{ policyId }}</h2>
@@ -113,6 +113,15 @@
 							{{#EnumsHurricaneDeductible}}
 							<option value="{{value}}">{{label}}</option>
 							{{/EnumsHurricaneDeductible}}
+						</select>
+					</div>
+
+					<div>
+						<label for="id_AllOtherPerilsDeductible" class="labelRequired">All Other Perils Deductible $ <i>AllOtherPerilsDeductible</i></label>
+						<select id="id_AllOtherPerilsDeductible" name="AllOtherPerilsDeductible" data-value="{{AllOtherPerilsDeductible}}" required >
+							{{#EnumsAllOtherPerilsDeductible}}
+							<option value="{{value}}">{{label}}</option>
+							{{/EnumsAllOtherPerilsDeductible}}
 						</select>
 					</div>
 				</div>

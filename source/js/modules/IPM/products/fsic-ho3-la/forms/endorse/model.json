@@ -37,16 +37,8 @@
       "label": "Zip Plus Four"
     },
     {
-      "name": "PropertyHazardLocationLastUpdated",
-      "label": "Property Hazard Location Last Updated"
-    },
-    {
       "name": "DistanceToCoast",
       "label": "Distance To Primary Coastline"
-    },
-    {
-      "name": "DistanceToCoastSecondary",
-      "label": "Distance To Secondary Coastline"
     },
     {
       "name": "DistanceToFireDepartment",
@@ -83,6 +75,18 @@
     {
       "name": "ConstructionYearRoof",
       "label": "Construction Year - Roof"
+    },
+    {
+      "name": "RenovationYearWiring",
+      "label": "Replacement year of the wiring"
+    },
+    {
+      "name": "RenovationYearFurnace",
+      "label": "Replacement year of the heat/ac"
+    },
+    {
+      "name": "RenovationYearPlumbing",
+      "label": "Replacement year of the plumbing"
     },
     {
       "name": "TrustName",
@@ -147,6 +151,22 @@
     {
       "name": "IncidentalBusinessOccupancyDescription",
       "label": "Business Description"
+    },
+    {
+      "name": "InsuredOtherMember1Name",
+      "label": "1st Insured Other Member Name"
+    },
+    {
+      "name": "InsuredOtherMember2Name",
+      "label": "2nd Insured Other Member Name"
+    },
+    {
+      "name": "InsuredOtherMember3Name",
+      "label": "3rd Insured Other Member Name"
+    },
+    {
+      "name": "InsuredOtherMember4Name",
+      "label": "5th Insured Other Member Name"
     },
     {
       "name": "AffinityDiscountType",
@@ -307,44 +327,6 @@
     {
       "name": "LossDescription5",
       "label": "Description"
-    },
-    {
-      "label": "Hurricane Deductible",
-      "name": "HurricaneDeductible",
-      "enumerations": [
-        {
-          "label": "1%",
-          "value": "100"
-        },
-        {
-          "label": "2%",
-          "value": "200"
-        },
-        {
-          "label": "3%",
-          "value": "300"
-        },
-        {
-          "label": "5%",
-          "value": "500"
-        },
-        {
-          "label": "$1,000",
-          "value": "10"
-        },
-        {
-          "label": "$2,500",
-          "value": "25"
-        },
-        {
-          "label": "$5,000",
-          "value": "50"
-        },
-        {
-          "label": "$10,000",
-          "value": "101"
-        }
-      ]
     },
     {
       "name": "AdditionalAmountsOfInsurance",
@@ -1119,48 +1101,78 @@
           "value": "0"
         },
         {
-          "label": "10000",
+          "label": "$10,000",
           "value": "10000"
         },
         {
-          "label": "11000",
+          "label": "$11,000",
           "value": "11000"
         },
         {
-          "label": "12000",
+          "label": "$12,000",
           "value": "12000"
         },
         {
-          "label": "13000",
+          "label": "$13,000",
           "value": "13000"
         },
         {
-          "label": "14000",
+          "label": "$14,000",
           "value": "14000"
         },
         {
-          "label": "15000",
+          "label": "$15,000",
           "value": "15000"
         },
         {
-          "label": "16000",
+          "label": "$16,000",
           "value": "16000"
         },
         {
-          "label": "17000",
+          "label": "$17,000",
           "value": "17000"
         },
         {
-          "label": "18000",
+          "label": "$18,000",
           "value": "18000"
         },
         {
-          "label": "19000",
+          "label": "$19,000",
           "value": "19000"
         },
         {
-          "label": "20000",
+          "label": "$20,000",
           "value": "20000"
+        }
+      ]
+    },
+    {
+      "name": "AttachedAluminumStructures",
+      "label": "Attached Aluminum Structures",
+      "enumerations": [
+        {
+          "label": "None",
+          "value": "0"
+        },
+        {
+          "label": "Porch",
+          "value": "100"
+        },
+        {
+          "label": "Carport",
+          "value": "10100"
+        },
+        {
+          "label": "Shed",
+          "value": "800"
+        },
+        {
+          "label": "Pool Enclosure",
+          "value": "900"
+        },
+        {
+          "label": "Other",
+          "value": "999"
         }
       ]
     },
@@ -1245,14 +1257,6 @@
           "value": "0"
         },
         {
-          "label": "Masonry",
-          "value": "200"
-        },
-        {
-          "label": "Masonry Veneer",
-          "value": "301"
-        },
-        {
           "label": "Wood or Wood Shake",
           "value": "500"
         },
@@ -1295,6 +1299,14 @@
         {
           "label": "Masonry",
           "value": "200"
+        },
+        {
+          "label": "Superior Fire-Resistive",
+          "value": "202"
+        },
+        {
+          "label": "Manufactured or Mobile Home",
+          "value": "500"
         }
       ]
     },
@@ -1381,6 +1393,20 @@
       ]
     },
     {
+      "name": "EPolicyOption",
+      "label": "E-Policy Option",
+      "enumerations": [
+        {
+          "label": "Yes",
+          "value": "100"
+        },
+        {
+          "label": "No",
+          "value": "200"
+        }
+      ]
+    },
+    {
       "name": "FireAlarm",
       "label": "Fire Alarm",
       "enumerations": [
@@ -1441,6 +1467,20 @@
       ]
     },
     {
+      "name": "FortifiedForSaferLiving",
+      "label": "Fortified for Safer Living Certified?",
+      "enumerations": [
+        {
+          "label": "Yes",
+          "value": "100"
+        },
+        {
+          "label": "No",
+          "value": "200"
+        }
+      ]
+    },
+    {
       "name": "FoundationType",
       "label": "Foundation Type",
       "enumerations": [
@@ -1449,19 +1489,11 @@
           "value": "100"
         },
         {
-          "label": "Slab / Basement",
-          "value": "150"
-        },
-        {
-          "label": "Basement",
-          "value": "300"
-        },
-        {
           "label": "Open - pilings/stilts/piers",
           "value": "400"
         },
         {
-          "label": "Open - craw space",
+          "label": "Open - crawl space",
           "value": "200"
         },
         {
@@ -1541,6 +1573,44 @@
       ]
     },
     {
+      "name": "HurricaneDeductible",
+      "label": "Named Storm Deductible",
+      "enumerations": [
+        {
+          "label": "1%",
+          "value": "100"
+        },
+        {
+          "label": "2%",
+          "value": "200"
+        },
+        {
+          "label": "3%",
+          "value": "300"
+        },
+        {
+          "label": "5%",
+          "value": "500"
+        },
+        {
+          "label": "$1,000",
+          "value": "10"
+        },
+        {
+          "label": "$2,500",
+          "value": "25"
+        },
+        {
+          "label": "$5,000",
+          "value": "50"
+        },
+        {
+          "label": "$10,000",
+          "value": "101"
+        }
+      ]
+    },
+    {
       "name": "IdentityFraudCoverage",
       "label": "Identity Fraud Expense Coverage",
       "enumerations": [
@@ -1551,10 +1621,6 @@
         {
           "label": "$15,000",
           "value": "15000"
-        },
-        {
-          "label": "$25,000",
-          "value": "25000"
         }
       ]
     },
@@ -1797,6 +1863,28 @@
       ]
     },
     {
+      "name": "InsuredMaritalStatus",
+      "label": "Personal Status",
+      "enumerations": [
+        {
+          "label": "Single",
+          "value": "100"
+        },
+        {
+          "label": "Married",
+          "value": "200"
+        },
+        {
+          "label": "Divorced",
+          "value": "210"
+        },
+        {
+          "label": "Widowed",
+          "value": "220"
+        }
+      ]
+    },
+    {
       "name": "JewelrySpecialLimits",
       "label": "Special Limits - Jewelry",
       "enumerations": [
@@ -1849,10 +1937,6 @@
         {
           "label": "$1,000 - Excluded",
           "value": "1000"
-        },
-        {
-          "label": "$2,000",
-          "value": "2000"
         },
         {
           "label": "$5,000",
@@ -2305,6 +2389,20 @@
       ]
     },
     {
+      "name": "MechanicalBreakdownCoverage",
+      "label": "Equipment Breakdown Coverage",
+      "enumerations": [
+        {
+          "label": "Yes",
+          "value": "100"
+        },
+        {
+          "label": "No",
+          "value": "200"
+        }
+      ]
+    },
+    {
       "name": "MonthsUnoccupied",
       "label": "Number Of Months Unoccupied?",
       "enumerations": [
@@ -2335,6 +2433,20 @@
     {
       "name": "MultiPolicy",
       "label": "Companion Policy written through Family Security?",
+      "enumerations": [
+        {
+          "label": "Yes",
+          "value": "100"
+        },
+        {
+          "label": "No",
+          "value": "200"
+        }
+      ]
+    },
+    {
+      "name": "NonStructuralHailLossLimitation",
+      "label": "Non-Structural Hail Loss Limitation",
       "enumerations": [
         {
           "label": "Yes",
@@ -2403,6 +2515,36 @@
       ]
     },
     {
+      "name": "NumberOfInsuredOtherMembers",
+      "label": "Insured Other Members of Your Household",
+      "enumerations": [
+        {
+          "label": "None",
+          "value": "0"
+        },
+        {
+          "label": "1",
+          "value": "1"
+        },
+        {
+          "label": "2",
+          "value": "2"
+        },
+        {
+          "label": "3",
+          "value": "3"
+        },
+        {
+          "label": "4",
+          "value": "4"
+        },
+        {
+          "label": "5",
+          "value": "5"
+        }
+      ]
+    },
+    {
       "name": "NumberOfStories",
       "label": "Number Of Stories",
       "enumerations": [
@@ -2411,16 +2553,8 @@
           "value": "100"
         },
         {
-          "label": "1 1/2",
-          "value": "150"
-        },
-        {
           "label": "2",
           "value": "200"
-        },
-        {
-          "label": "2.5",
-          "value": "250"
         },
         {
           "label": "3",
@@ -2429,26 +2563,6 @@
         {
           "label": "4",
           "value": "400"
-        },
-        {
-          "label": "5",
-          "value": "500"
-        },
-        {
-          "label": "6",
-          "value": "600"
-        },
-        {
-          "label": "7",
-          "value": "700"
-        },
-        {
-          "label": "8 to 14",
-          "value": "800"
-        },
-        {
-          "label": "15 or more",
-          "value": "1500"
         }
       ]
     },
@@ -2465,12 +2579,12 @@
           "value": "1"
         },
         {
-          "label": "Engineered shutters",
-          "value": "211"
+          "label": "Basic Protection",
+          "value": "311"
         },
         {
-          "label": "Hurricane resistant laminated glass",
-          "value": "702"
+          "label": "Hurricane Protection",
+          "value": "211"
         }
       ]
     },
@@ -2603,8 +2717,108 @@
       ]
     },
     {
+      "name": "PersonalPropertyOtherResidences",
+      "label": "Personal Property Other Residences",
+      "enumerations": [
+        {
+          "label": "Yes",
+          "value": "100"
+        },
+        {
+          "label": "No",
+          "value": "200"
+        }
+      ]
+    },
+    {
+      "name": "PersonalPropertyOtherResidencesIncreasedLimit",
+      "label": "Personal Property Other Residences Increased Limit",
+      "enumerations": [
+        {
+          "label": "$1,000",
+          "value": "1000"
+        },
+        {
+          "label": "$2,000",
+          "value": "2000"
+        },
+        {
+          "label": "$3,000",
+          "value": "3000"
+        },
+        {
+          "label": "$4,000",
+          "value": "4000"
+        },
+        {
+          "label": "$5,000",
+          "value": "5000"
+        },
+        {
+          "label": "$6,000",
+          "value": "6000"
+        },
+        {
+          "label": "$7,000",
+          "value": "7000"
+        },
+        {
+          "label": "$8,000",
+          "value": "8000"
+        },
+        {
+          "label": "$9,000",
+          "value": "9000"
+        },
+        {
+          "label": "$10,000",
+          "value": "10000"
+        },
+        {
+          "label": "$11,000",
+          "value": "11000"
+        },
+        {
+          "label": "$12,000",
+          "value": "12000"
+        },
+        {
+          "label": "$13,000",
+          "value": "13000"
+        },
+        {
+          "label": "$14,000",
+          "value": "14000"
+        },
+        {
+          "label": "$15,000",
+          "value": "15000"
+        },
+        {
+          "label": "$16,000",
+          "value": "16000"
+        },
+        {
+          "label": "$17,000",
+          "value": "17000"
+        },
+        {
+          "label": "$18,000",
+          "value": "18000"
+        },
+        {
+          "label": "$19,000",
+          "value": "19000"
+        },
+        {
+          "label": "$20,000",
+          "value": "20000"
+        }
+      ]
+    },
+    {
       "name": "PersonalPropertyReplacementCost",
-      "label": "Personal Property Replacement Cost",
+      "label": "Personal Property Other Residences Increased Limit",
       "enumerations": [
         {
           "label": "Yes",
@@ -2807,26 +3021,6 @@
           "value": "600"
         },
         {
-          "label": "Built Up Roof",
-          "value": "400"
-        },
-        {
-          "label": "Reinforced Concrete",
-          "value": "100"
-        },
-        {
-          "label": "Rubber/Bituminous",
-          "value": "800"
-        },
-        {
-          "label": "Single Ply Membrane",
-          "value": "300"
-        },
-        {
-          "label": "Wood Shingles",
-          "value": "700"
-        },
-        {
           "label": "Wood Shake",
           "value": "701"
         },
@@ -2837,6 +3031,10 @@
         {
           "label": "Metal - Steel",
           "value": "200"
+        },
+        {
+          "label": "Built-up Roof",
+          "value": "400"
         }
       ]
     },
@@ -2881,6 +3079,10 @@
         {
           "label": "Flat",
           "value": "100"
+        },
+        {
+          "label": "Gable - Braced",
+          "value": "206"
         },
         {
           "label": "Gable",
@@ -3741,6 +3943,84 @@
       ]
     },
     {
+      "name": "SpecialComputerCoverage",
+      "label": "Home Computer Coverage",
+      "enumerations": [
+        {
+          "label": "$2,500",
+          "value": "2500"
+        },
+        {
+          "label": "$3,500",
+          "value": "3500"
+        },
+        {
+          "label": "$4,500",
+          "value": "4500"
+        },
+        {
+          "label": "$5,500",
+          "value": "5500"
+        },
+        {
+          "label": "$6,500",
+          "value": "6500"
+        },
+        {
+          "label": "$7,500",
+          "value": "7500"
+        },
+        {
+          "label": "$8,500",
+          "value": "8500"
+        },
+        {
+          "label": "$9,500",
+          "value": "9500"
+        },
+        {
+          "label": "$10,500",
+          "value": "10500"
+        },
+        {
+          "label": "$11,500",
+          "value": "11500"
+        },
+        {
+          "label": "$12,500",
+          "value": "12500"
+        },
+        {
+          "label": "$14,500",
+          "value": "14500"
+        },
+        {
+          "label": "$15,500",
+          "value": "15500"
+        },
+        {
+          "label": "$16,500",
+          "value": "16500"
+        },
+        {
+          "label": "$17,500",
+          "value": "17500"
+        },
+        {
+          "label": "$18,500",
+          "value": "18500"
+        },
+        {
+          "label": "$19,500",
+          "value": "19500"
+        },
+        {
+          "label": "$20,500",
+          "value": "20500"
+        }
+      ]
+    },
+    {
       "name": "Sprinklers",
       "label": "Sprinkler System",
       "enumerations": [
@@ -3765,18 +4045,6 @@
         {
           "label": "Single family dwelling",
           "value": "100"
-        },
-        {
-          "label": "Two family dwelling",
-          "value": "101"
-        },
-        {
-          "label": "Three family dwelling",
-          "value": "102"
-        },
-        {
-          "label": "Four family dwelling",
-          "value": "103"
         },
         {
           "label": "Row or Townhouse",
@@ -4125,6 +4393,10 @@
       "label": "Reason Code",
       "enumerations": [
         {
+          "value": "6",
+          "label": "Change Construction/Protection"
+        },
+        {
           "value": "57",
           "label": "Add Or Change Additional Amounts Of Insurance "
         },
@@ -4170,7 +4442,7 @@
         },
         {
           "value": "69",
-          "label": "Add Permitted Incidental Occupancy"
+          "label": "Add/Change Permitted Incidental Occupancy"
         },
         {
           "value": "70",
@@ -4205,6 +4477,10 @@
           "label": "Add Earthquake Coverage"
         },
         {
+          "value": "83",
+          "label": "Change Limits on Business Property"
+        },
+        {
           "value": "84",
           "label": "Increase Coverage Based On Physical Inspection"
         },
@@ -4219,6 +4495,10 @@
         {
           "value": "87",
           "label": "Change Personal Property Special Limits"
+        },
+        {
+          "value": "88",
+          "label": "Add/Remove Limited Animal Liability"
         },
         {
           "value": "93",
@@ -4245,6 +4525,26 @@
           "label": "Update property location address"
         },
         {
+          "value": "116",
+          "label": "Update Gated Community"
+        },
+        {
+          "value": "117",
+          "label": "Update Building Code Equivalency"
+        },
+        {
+          "value": "118",
+          "label": "Update Attached Aluminum Structures"
+        },
+        {
+          "value": "119",
+          "label": "Update Foundation Type"
+        },
+        {
+          "value": "120",
+          "label": "Affinity Discount"
+        },
+        {
           "value": "121",
           "label": "Protective device credit"
         },
@@ -4269,12 +4569,36 @@
           "label": "Fortified For Safer Living Discount"
         },
         {
+          "value": "127",
+          "label": "E-Policy Discount"
+        },
+        {
           "value": "100",
           "label": "Add/Remove Advantage Package Endorsement"
         },
         {
           "value": "101",
           "label": "Add/Remove Assisted Living Care Coverage"
+        },
+        {
+          "value": "102",
+          "label": "Add/Remove Inflation Guard Coverage"
+        },
+        {
+          "value": "103",
+          "label": "Add/Remove Non-Structural Hail Loss Limitation"
+        },
+        {
+          "value": "104",
+          "label": "Add/Remove Insured Other Members of Your Household"
+        },
+        {
+          "value": "105",
+          "label": "Add/Remove Home Computer Coverage"
+        },
+        {
+          "value": "106",
+          "label": "Add/Remove Personal Property Other Residences"
         }
       ]
     },

@@ -1,6 +1,48 @@
 {
 	"terms": [
 		{
+	      "name": "AllOtherPerilsDeductible",
+	      "label": "All Other Perils Deductible $",
+	      "enumerations": [
+	        {
+	          "label": "$250",
+	          "value": "2.5"
+	        },
+	        {
+	          "label": "$500",
+	          "value": "5"
+	        },
+	        {
+	          "label": "$1,000",
+	          "value": "10"
+	        },
+	        {
+	          "label": "$1,500",
+	          "value": "15"
+	        },
+	        {
+	          "label": "$2,000",
+	          "value": "20"
+	        },
+	        {
+	          "label": "$2,500",
+	          "value": "25"
+	        },
+	        {
+	          "label": "$3,000",
+	          "value": "30"
+	        },
+	        {
+	          "label": "$4,000",
+	          "value": "40"
+	        },
+	        {
+	          "label": "$5,000",
+	          "value": "50"
+	        }
+	      ]
+	    },
+		{
 			"name": "GrandSubtotalOverride",
 			"label": "Premium Before Fees"
 		},
@@ -75,26 +117,6 @@
 			"label": "Coverage C (% of Coverage A)",
 			"enumerations": [
 				{
-					"value": "0",
-					"label": "0%"
-				},
-				{
-					"value": "500",
-					"label": "5%"
-				},
-				{
-					"value": "1000",
-					"label": "10%"
-				},
-				{
-					"value": "1500",
-					"label": "15%"
-				},
-				{
-					"value": "2000",
-					"label": "20%"
-				},
-				{
 					"value": "2500",
 					"label": "25%"
 				},
@@ -142,29 +164,7 @@
 		},
 		{
 			"name": "OptionCoverageD",
-			"label": "Coverage D (% of Coverage A)",
-			"enumerations": [
-				{
-					"value": "0",
-					"label": "0%"
-				},
-				{
-					"value": "500",
-					"label": "5%"
-				},
-				{
-					"value": "1000",
-					"label": "10%"
-				},
-				{
-					"value": "1500",
-					"label": "15%"
-				},
-				{
-					"value": "2000",
-					"label": "20%"
-				}
-			]
+			"label": "Coverage D (30% of Coverage A)"
 		},
 		{
 			"name": "CoverageE",
@@ -210,30 +210,30 @@
 			"name": "HurricaneDeductible",
 			"label": "Named Storm Deductible",
 			"enumerations": [
-				{
-					"value": "200",
-					"label": "2%"
-				},
-				{
-					"value": "300",
-					"label": "3%"
-				},
-				{
-					"value": "500",
-					"label": "5%"
-				},
-				{
-					"value": "700",
-					"label": "7%"
-				},
-				{
-					"value": "800",
-					"label": "8%"
-				},
-				{
-					"value": "1000",
-					"label": "10%"
-				}
+		        {
+		          "label": "None",
+		          "value": "0"
+		        },
+		        {
+		          "label": "1%",
+		          "value": "100"
+		        },
+		        {
+		          "label": "2%",
+		          "value": "200"
+		        },
+		        {
+		          "label": "3%",
+		          "value": "300"
+		        },
+		        {
+		          "label": "4%",
+		          "value": "400"
+		        },
+		        {
+		          "label": "5%",
+		          "value": "500"
+		        }
 			]
 		},
 		{
@@ -957,12 +957,8 @@
 					"label": "Masonry"
 				},
 				{
-					"value": "202",
-					"label": "Superior-Fire Resistive"
-				},
-				{
-					"value": "303",
-					"label": "Reinforced Concrete"
+					"value": "402",
+					"label": "Metal"
 				}
 			]
 		},
@@ -1053,6 +1049,14 @@
 					"label": "Raised Ranch"
 				},
 				{
+					"label": "Townhouse - End Unit",
+					"value": "601"
+				},
+				{
+					"label": "Townhouse - Interior Unit",
+					"value": "602"
+				},
+				{
 					"value": "700",
 					"label": "Victorian"
 				}
@@ -1073,6 +1077,10 @@
 				{
 					"value": "200",
 					"label": "Above Ground Pool"
+				},
+				{
+					"value": "300",
+					"label": "Screened Pool Enclosure"
 				}
 			]
 		},

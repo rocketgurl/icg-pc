@@ -3343,20 +3343,24 @@
       "label": "Opening Protection",
       "enumerations": [
         {
-          "label": "Unknown",
-          "value": "0"
+          "value": "0",
+          "label": "Unknown"
         },
         {
-          "label": "No shutters",
-          "value": "1"
+          "value": "1",
+          "label": "None"
         },
         {
-          "label": "Engineered shutters",
-          "value": "211"
+          "value": "211",
+          "label": "Hurricane Protection"
         },
         {
-          "label": "Hurricane resistant laminated glass",
-          "value": "702"
+          "value": "311",
+          "label": "Non Engineered Shutters"
+        },
+        {
+          "value": "702",
+          "label": "Hurricane Resistant Laminated Glass"
         }
       ]
     },
@@ -3493,6 +3497,10 @@
         {
           "label": "10%",
           "value": "1000"
+        },
+        {
+          "label": "15%",
+          "value": "1500"
         },
         {
           "label": "20%",
@@ -4060,7 +4068,7 @@
         },
         {
           "label": "Metal - Steel",
-          "value": "200"
+          "value": "201"
         }
       ]
     },
@@ -4731,6 +4739,10 @@
           "label": "Change Hurricane Deductible"
         },
         {
+          "value": "76",
+          "label": "Add Or Change Residence Held In Trust"
+        },
+        {
           "value": "78",
           "label": "Change Loss Settlement For Contents"
         },
@@ -4833,6 +4845,20 @@
         {
           "value": "903",
           "label": "Service Charge"
+        }
+      ]
+    },
+    {
+      "name": "PersonalPropertyReplacementCost",
+      "label": "Personal Property Replacement Cost",
+      "enumerations": [
+        {
+          "value": "100",
+          "label": "Yes"
+        },
+        {
+          "value": "200",
+          "label": "No"
         }
       ]
     }
