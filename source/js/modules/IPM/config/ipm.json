@@ -48,28 +48,6 @@
                     "view": "ReversePayment"
                 }
             ]
-        },
-        {
-            "label": "Policy Administration",
-            "actions": [
-                {
-                    "label": "Cancel/Reinstate",
-                    "view": "CancelReinstate"
-                },
-                {
-                    "label": "Endorse",
-                    "view": "Endorse"
-                }
-            ]
-        },
-        {
-            "label": "Tools",
-            "actions": [
-                {
-                    "label": "Generate document",
-                    "view": "GenerateDocument"
-                }
-            ]
         }
     ]
 }
