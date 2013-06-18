@@ -1,53 +1,75 @@
 {
-    "PRODUCTS_PATH": "modules/IPM/products/",
-    "PRODUCTS": [
-        "acic-ho3-sc",
-        "fsic-ho3-la",
-        "hic-ho3-al",
-        "hic-ho3-la",
-        "ofcc-dp3-ny",
-        "ofcc-ho3-ak",
-        "ofcc-ho3-nj",
-        "ofcc-ho3-va",
-        "wic-ho3-al",
-        "wic-ho3-la",
-        "wic-ho3-nj",
-        "wic-hwo-al"
-    ],
-    "ACTIONS_PATH": "modules/IPM/actions/",
-    "ACTIONS": [
+  "PRODUCTS_PATH": "modules/IPM/products/",
+  "PRODUCTS": [
+    "acic-ho3-sc",
+    "fsic-ho3-la",
+    "hic-ho3-al",
+    "hic-ho3-la",
+    "ofcc-dp3-ny",
+    "ofcc-ho3-ak",
+    "ofcc-ho3-nj",
+    "ofcc-ho3-va",
+    "wic-ho3-al",
+    "wic-ho3-la",
+    "wic-ho3-nj",
+    "wic-hwo-al"
+  ],
+  "ACTIONS_PATH": "modules/IPM/actions/",
+  "ACTIONS": [
+    {
+      "label": "Billing & Accounting",
+      "actions": [
         {
-            "label": "Billing & Accounting",
-            "actions": [
-                {
-                    "label": "Make Payment",
-                    "view": "MakePayment"
-                },
-                {
-                    "label": "Invoice",
-                    "view": "Invoice"
-                },
-                {
-                    "label": "Apply charges",
-                    "view": "ApplyCharges"
-                },
-                {
-                    "label": "Change payment plan",
-                    "view": "ChangePaymentPlan"
-                },
-                {
-                    "label": "Premium disbursement",
-                    "view": "PremiumDisbursement"
-                },
-                {
-                    "label": "Reverse disbursement",
-                    "view": "ReverseDisbursement"
-                },
-                {
-                    "label": "Reverse payment",
-                    "view": "ReversePayment"
-                }
-            ]
+          "label": "Make Payment",
+          "view": "MakePayment"
+        },
+        {
+          "label": "Invoice",
+          "view": "Invoice"
+        },
+        {
+          "label": "Apply charges",
+          "view": "ApplyCharges"
+        },
+        {
+          "label": "Change payment plan",
+          "view": "ChangePaymentPlan"
+        },
+        {
+          "label": "Premium disbursement",
+          "view": "PremiumDisbursement"
+        },
+        {
+          "label": "Reverse disbursement",
+          "view": "ReverseDisbursement"
+        },
+        {
+          "label": "Reverse payment",
+          "view": "ReversePayment"
         }
-    ]
+      ]
+    },
+    {
+      "label": "Policy Administration",
+      "actions": [
+        {
+          "label": "Cancel/Reinstate",
+          "view": "CancelReinstate"
+        },
+        {
+          "label": "Endorse",
+          "view": "Endorse"
+        }
+      ]
+    },
+    {
+      "label": "Tools",
+      "actions": [
+        {
+          "label": "Generate document",
+          "view": "GenerateDocument"
+        }
+      ]
+    }
+  ]
 }
