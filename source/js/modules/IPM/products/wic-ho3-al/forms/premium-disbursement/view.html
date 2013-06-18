@@ -6,7 +6,7 @@
 		</div>
 
 		<div class="content_body">
-			
+
 			{{#policyOverview}}
 			<section class="policyOverview">
 				<h1>Policy Overview</h1>
@@ -18,19 +18,19 @@
 				</ul>
 			</section>
 			{{/policyOverview}}
-			
+
 			<fieldset>
 				<div>
-					<label for="id_appliedDate" class="labelRequired">Applied Date</label>
-					<input type="text" id="id_appliedDate" name="appliedDate" value="" class="datepicker" required>
+					<label for="{{guid}}_appliedDate" class="labelRequired">Applied Date</label>
+					<input type="text" id="{{guid}}_appliedDate" name="appliedDate" value="" class="datepicker" required>
 				</div>
 				<div>
-					<label for="id_amount" class="labelRequired">Amount</label>
-					<span class="moneyLabel">$</span> <input type="text" id="id_amount" class="moneyInput" name="amount" value="" required>
+					<label for="{{guid}}_amount" class="labelRequired">Amount</label>
+					<span class="moneyLabel">$</span> <input type="text" id="{{guid}}_amount" class="moneyInput" name="amount" value="" required>
 				</div>
 				<div>
-					<label for="id_reference">Reference</label>
-					<input type="text" id="id_reference" name="reference" value="">
+					<label for="{{guid}}_reference">Reference</label>
+					<input type="text" id="{{guid}}_reference" name="reference" value="">
 				</div>
 				<div class="form_actions">
 					<input type="submit" class="button" value="Confirm"> <a href="home">Nevermind, go back</a>

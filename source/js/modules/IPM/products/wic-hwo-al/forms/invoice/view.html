@@ -4,9 +4,9 @@
 		<div id="content_header">
 			<h2>Invoice Policy {{policyId}}</h2>
 		</div>
-	
+
 		<div class="content_body">
-			
+
 			{{#policyOverview}}
 			<section class="policyOverview">
 				<h1>Policy Overview</h1>
@@ -18,24 +18,24 @@
 				</ul>
 			</section>
 			{{/policyOverview}}
-			
+
 			<fieldset>
 
 				<div>
-					<label for="id_InvoiceDateDueCurrent" class="labelRequired">Invoice Due Date</label>
-					<input type="text" id="id_InvoiceDateDueCurrent" name="InvoiceDateDueCurrent" class="datepicker" required>
+					<label for="{{guid}}_InvoiceDateDueCurrent" class="labelRequired">Invoice Due Date</label>
+					<input type="text" id="{{guid}}_InvoiceDateDueCurrent" name="InvoiceDateDueCurrent" class="datepicker" required>
 				</div>
-				
+
 				<div>
-					<label for="id_InvoiceAmountCurrent" class="labelRequired">Invoice Amount</label>
-					<span class="moneyLabel">$</span> <input type="text" id="id_InvoiceAmountCurrent" class="moneyInput" name="InvoiceAmountCurrent" value="" required>
+					<label for="{{guid}}_InvoiceAmountCurrent" class="labelRequired">Invoice Amount</label>
+					<span class="moneyLabel">$</span> <input type="text" id="{{guid}}_InvoiceAmountCurrent" class="moneyInput" name="InvoiceAmountCurrent" value="" required>
 				</div>
-	        	
+
 				<div>
-					<label for="id_installmentCharge">Installment Charge Amount</label>
-					<span class="moneyLabel">$</span> <input type="text" id="id_installmentCharge" class="moneyInput" name="installmentCharge" value="">
+					<label for="{{guid}}_installmentCharge">Installment Charge Amount</label>
+					<span class="moneyLabel">$</span> <input type="text" id="{{guid}}_installmentCharge" class="moneyInput" name="installmentCharge" value="">
 				</div>
-	        	
+
 				<div class="form_actions">
 					<input type="submit" class="button" value="Confirm">
 					<a href="home">Nevermind, go back</a>

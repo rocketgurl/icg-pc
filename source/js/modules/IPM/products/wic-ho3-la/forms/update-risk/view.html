@@ -6,7 +6,7 @@
 		</div>
 
 		<div class="content_body">
-			
+
 			{{#policyOverview}}
 			<section class="policyOverview">
 				<h1>Policy Overview</h1>
@@ -18,19 +18,19 @@
 				</ul>
 			</section>
 			{{/policyOverview}}
-			
+
 			<fieldset>
 				<div>
-					<label for="id_appliedDate" class="labelRequired">Applied Date</label>
-					<input type="text" id="id_appliedDate" name="appliedDate" value="" class="datepicker" required>
+					<label for="{{guid}}_appliedDate" class="labelRequired">Applied Date</label>
+					<input type="text" id="{{guid}}_appliedDate" name="appliedDate" value="" class="datepicker" required>
 				</div>
 				<div>
-					<label for="id_squareFootUnderRoof" class="labelRequired">Square Foot Under Roof</label>
-					<input type="text" id="id_squareFootUnderRoof" name="squareFootUnderRoof" value="" required>
+					<label for="{{guid}}_squareFootUnderRoof" class="labelRequired">Square Foot Under Roof</label>
+					<input type="text" id="{{guid}}_squareFootUnderRoof" name="squareFootUnderRoof" value="" required>
 				</div>
 				<div>
-					<label for="id_replacementCostBuilding" class="labelRequired">Replacement Cost Building</label>
-					<input type="text" id="id_replacementCostBuilding" name="replacementCostBuilding" value="" required>
+					<label for="{{guid}}_replacementCostBuilding" class="labelRequired">Replacement Cost Building</label>
+					<input type="text" id="{{guid}}_replacementCostBuilding" name="replacementCostBuilding" value="" required>
 				</div>
 				<div class="form_actions">
 					<input type="submit" class="button" value="Confirm"> <a href="home">Nevermind, go back</a>

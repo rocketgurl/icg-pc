@@ -6,7 +6,7 @@
 		</div>
 
 		<div class="content_body">
-			
+
 			{{#policyOverview}}
 			<section class="policyOverview">
 				<h1>Policy Overview</h1>
@@ -18,11 +18,11 @@
 				</ul>
 			</section>
 			{{/policyOverview}}
-			
+
 			<fieldset>
 				<div>
-					<label for="id_reasonCode" class="labelRequired">Reason Code</label>
-					<select id="id_reasonCode" name="reasonCode" required>
+					<label for="{{guid}}_reasonCode" class="labelRequired">Reason Code</label>
+					<select id="{{guid}}_reasonCode" name="reasonCode" required>
 						{{#EnumsChargesReason}}
 						<option value="{{value}}">{{label}}</option>
 						{{/EnumsChargesReason}}
@@ -30,10 +30,10 @@
 				</div>
 
 				<div>
-					<label for="id_amount" class="labelRequired">Amount</label>
-					<span class="moneyLabel">$</span> <input type="text" id="id_amount" class="moneyInput" name="amount" value="" required>
+					<label for="{{guid}}_amount" class="labelRequired">Amount</label>
+					<span class="moneyLabel">$</span> <input type="text" id="{{guid}}_amount" class="moneyInput" name="amount" value="" required>
 				</div>
-            	
+
 				<div class="form_actions">
 					<input type="submit" class="button" value="Confirm"> <a href="home">Nevermind, go back</a>
 				</div>

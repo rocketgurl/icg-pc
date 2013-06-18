@@ -14,8 +14,8 @@
 			<span class="bor_input_alc"></span>
 		</div>
 		<div class="bor_input">
-			<label for="id_NewLocationCode">Find new Agency Location Code:</label>
-			<select id="id_NewLocationCode" name="NewLocationCode" data-value="{{NewLocationCode}}" required>
+			<label for="{{guid}}_NewLocationCode">Find new Agency Location Code:</label>
+			<select id="{{guid}}_NewLocationCode" name="NewLocationCode" data-value="{{NewLocationCode}}" required>
 				{{#EnumsNewLocationCode}}
 				<option value="{{value}}">{{label}}</option>
 				{{/EnumsNewLocationCode}}
@@ -26,7 +26,7 @@
 			<a href="cancellation">Nevermind, go back</a>
 		</div>
 	</div>
-	<input type="hidden" id="id_preview" name="preview" value="true">
+	<input type="hidden" id="{{guid}}_preview" name="preview" value="true">
 	{{/preview}}
 </div>
 </form>

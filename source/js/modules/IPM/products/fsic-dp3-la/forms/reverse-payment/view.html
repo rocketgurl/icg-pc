@@ -6,7 +6,7 @@
 		</div>
 
 		<div class="content_body">
-			
+
 			{{#policyOverview}}
 			<section class="policyOverview">
 				<h1>Policy Overview</h1>
@@ -18,24 +18,24 @@
 				</ul>
 			</section>
 			{{/policyOverview}}
-			
+
 			<fieldset>
 				<div>
-					<label for="id_appliedDate" class="labelRequired">Applied Date</label>
-					<input type="text" id="id_appliedDate" name="appliedDate" value="" class="datepicker" required>
+					<label for="{{guid}}_appliedDate" class="labelRequired">Applied Date</label>
+					<input type="text" id="{{guid}}_appliedDate" name="appliedDate" value="" class="datepicker" required>
 				</div>
-            	
+
 				<div>
-					<label for="id_paymentAmount" class="labelRequired">Amount</label>
-					<span class="moneyLabel">$</span> <input type="text" id="id_paymentAmount" class="moneyInput" name="paymentAmount" value="" required>
-				</div>
-				<div>
-					<label for="id_paymentReference">Reference</label>
-					<input type="text" id="id_paymentReference" name="paymentReference" value="">
+					<label for="{{guid}}_paymentAmount" class="labelRequired">Amount</label>
+					<span class="moneyLabel">$</span> <input type="text" id="{{guid}}_paymentAmount" class="moneyInput" name="paymentAmount" value="" required>
 				</div>
 				<div>
-					<label for="id_paymentMethod" class="labelRequired">Payment Method</label>
-					<select id="id_paymentMethod" name="paymentMethod" required>
+					<label for="{{guid}}_paymentReference">Reference</label>
+					<input type="text" id="{{guid}}_paymentReference" name="paymentReference" value="">
+				</div>
+				<div>
+					<label for="{{guid}}_paymentMethod" class="labelRequired">Payment Method</label>
+					<select id="{{guid}}_paymentMethod" name="paymentMethod" required>
 						{{#EnumsPaymentMethod}}
 						<option value="{{value}}">{{label}}</option>
 						{{/EnumsPaymentMethod}}

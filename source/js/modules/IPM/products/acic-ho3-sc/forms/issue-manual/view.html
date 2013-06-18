@@ -4,9 +4,9 @@
 		<div id="content_header">
 			<h2>Issue Policy {{ policyId }}</h2>
 		</div>
-	
+
 		<div class="content_body">
-			
+
 			{{#policyOverview}}
 			<section class="policyOverview">
 				<h1>Policy Overview</h1>
@@ -18,28 +18,28 @@
 				</ul>
 			</section>
 			{{/policyOverview}}
-			
+
 			<fieldset>
 				<div>
-					<label for="id_package" class="labelRequired">New business policy package</label>
-					<input type="file" id="id_package" name="package" required>
+					<label for="{{guid}}_package" class="labelRequired">New business policy package</label>
+					<input type="file" id="{{guid}}_package" name="package" required>
 				</div>
-	        	
+
 				<div>
-					<label for="id_declaration">Declaration of Coverage</label>
-					<input type="file" id="id_declaration" name="declaration">
+					<label for="{{guid}}_declaration">Declaration of Coverage</label>
+					<input type="file" id="{{guid}}_declaration" name="declaration">
 				</div>
-	        	
+
 				<div>
-					<label for="id_appliedDate" class="labelRequired">Applied Date</label>
-					<input type="text" id="id_appliedDate" name="appliedDate" value="" class="datepicker" required>
+					<label for="{{guid}}_appliedDate" class="labelRequired">Applied Date</label>
+					<input type="text" id="{{guid}}_appliedDate" name="appliedDate" value="" class="datepicker" required>
 				</div>
-	        	
+
 				<div>
-					<label for="id_effectiveDate" class="labelRequired">Effective Date</label>
-					<input type="text" id="id_effectiveDate" name="effectiveDate" value="" class="datepicker" required>
+					<label for="{{guid}}_effectiveDate" class="labelRequired">Effective Date</label>
+					<input type="text" id="{{guid}}_effectiveDate" name="effectiveDate" value="" class="datepicker" required>
 				</div>
-	        	
+
 				<div class="form_actions">
 					<input type="submit" class="button" value="Confirm"> <a href="home">Nevermind, go back</a>
 				</div>
