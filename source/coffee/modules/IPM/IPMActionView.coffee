@@ -60,9 +60,9 @@ define [
     events : {}
 
     # !!! Your Action View should define the following methods:
-    ready : ->
-    preview : ->
-    processView : ->
+    ready          : ->
+    preview        : ->
+    processView    : ->
     processPreview : ->
 
     initialize : (options) ->
@@ -157,7 +157,7 @@ define [
         dateFormat : 'yy-mm-dd'
 
       if $.datepicker
-        $('.datepicker').datepicker(date_options)
+        @$el.find('.datepicker').datepicker(date_options)
 
       # Attach event listener to preview button
       @$el.find('form input.button[type=submit]').on(
@@ -259,6 +259,11 @@ define [
           policyId : @MODULE.POLICY.get_pxServerIndex()
         }
       )
+
+      # We need to add the CID to the view data to namespace all the
+      # form ids or everything explodes and sinks into the ocean.
+      viewData.guid = @cid
+
       @viewData = viewData
       @view     = view
 

@@ -14,11 +14,11 @@ define [
 
   PolicyView = BaseView.extend
 
-    events : 
+    events :
       "click .policy-nav a"        : "dispatch"
       "click .policy-error button" : "close"
 
-    # We need to brute force the View's container to the 
+    # We need to brute force the View's container to the
     # WorkspaceCanvasView's el
     initialize : (options) ->
       @view         = options.view
@@ -48,17 +48,17 @@ define [
           if @render()
             @show_overview()
             @teardown_ipmchanges()
-          # Only show it again if this is the overview route 
+          # Only show it again if this is the overview route
           else if @current_route == 'overview' || @current_route == null
             @show_overview()
             @teardown_ipmchanges()
-        
+
         # Need to let the footer know that we changed height
         @module.trigger 'workspace.rendered'
 
 
-      # On deactivate we destroy the SWF compltely. We have to do this so we
-      # can fine window.reload() when you switch back to this tab, otherwise it
+      # On deactivate we destroy the SWF completely. We have to do this so we
+      # can find window.reload() when you switch back to this tab, otherwise it
       # reloads anyway, but doesn't get any of the data from the server, and
       # is therefore useless
       @on 'deactivate', () ->
@@ -88,14 +88,14 @@ define [
 
       # Setup flash module & search container
       html = @Mustache.render $('#tpl-flash-message').html(), { cid : @cid }
-      
+
       if !options?
         html += @Mustache.render tpl_policy_container, { auth_digest : @model.get('digest'), policy_id : @model.get('pxServerIndex'), cid : @cid }
-      
+
       @$el.html html
 
       # This is to make sure we only render the one time
-      # as we have some weird issues where render is call 
+      # as we have some weird issues where render is call
       # multiple times (still tracking down.)
       if @render_state == false
         @render_state = true
@@ -115,7 +115,7 @@ define [
       else
         @$el.find(".policy-nav a[href=ipmchanges]").parent('li').hide();
 
-      # If this is a quote, then we need to hide 
+      # If this is a quote, then we need to hide
 
       # Cache commonly used jQuery elements
       @cache_elements()
@@ -134,7 +134,7 @@ define [
       # Register flash message pubsub for this view
       @messenger = new Messenger(@options.view, @cid)
 
-      true   
+      true
 
 
     # Switch nav items on/off
@@ -158,18 +158,18 @@ define [
       @view.destroy()
       @controller.reassess_apps()
 
-    # **Route**  
+    # **Route**
     # Call the `action` and teardown all other views
     #
-    # @param `action` _String_ action name  
-    # @param `el` _HTML Element_    
-    # @return _Boolean_  
+    # @param `action` _String_ action name
+    # @param `el` _HTML Element_
+    # @return _Boolean_
     #
     route : (action, el) ->
       if !action?
         false
       @current_route = action
-      @teardown_actions _.filter(@actions, (item) -> 
+      @teardown_actions _.filter(@actions, (item) ->
         return item != action
       )
       @toggle_nav_state el # turn select state on/off
@@ -214,7 +214,7 @@ define [
     build_policy_header : ->
       if @policy_header.html() == ""
         @policy_header.html @Mustache.render tpl_ipm_header, @model.getIpmHeader()
-      
+
       @policy_header.show()
       @POLICY_HEADER_OFFSET = @policy_header.height()
 
@@ -255,7 +255,7 @@ define [
         # Now attach a resize event to the window to help Flash
         resizer = _.bind(
           ->
-            @resize_view(@$el.find("#policy-workspace-#{@cid}"), 0)         
+            @resize_view(@$el.find("#policy-workspace-#{@cid}"), 0)
           , this)
         resize = _.debounce(resizer, 300);
         $(window).resize(resize);
@@ -340,7 +340,7 @@ define [
       @flash_loaded = true # set state
 
     # Load mxAdmin into workarea and inject policy header
-    show_ipmchanges : ->      
+    show_ipmchanges : ->
       ipm_container = @$el.find("#policy-ipm-#{@cid}")
       @show_element ipm_container
       @resize_view(ipm_container)
@@ -388,7 +388,7 @@ define [
             policy      : @model
             policy_view : this
           }).fetch()
-      
+
       @show_element $zd_el
 
     teardown_servicerequests : ->
