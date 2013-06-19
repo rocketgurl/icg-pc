@@ -296,6 +296,7 @@ h2.ipm-action-header {
 			display: inline-block;
 			width: 250px !important;
 			padding: 0 0 0 5px;
+			vertical-align: top;
 			i {
 				@include font-size(14);
 				color: darken($rowselect, 40);
@@ -547,4 +548,14 @@ h2.ipm-action-header {
 	background: white url('/img/icon_calendar.png') left no-repeat;
 	background-position: 5px 5px;
 	padding-left: 25px !important;
+}
+
+.moneyLabel {
+	display: none;
+}
+
+.moneyInput {
+	background: white url('/img/icon_usd.png') left no-repeat;
+	background-position: 0px 3px;
+	padding-left: 15px !important;
 }
