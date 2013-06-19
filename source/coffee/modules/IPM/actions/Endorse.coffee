@@ -129,6 +129,76 @@ define [
         if data = @coverage_a.data 'calculations'
           @coverage_calculations = (eval("(#{data})"))
 
+      # Policy specific form adjustments
+      @recalculateImmediately()
+      @adjustDP3NYForms()
+      @adjustHO3VAWaterBackupCoverage()
+
+    # ICS-458
+    # if this is a DP3 NY form and has a Coverage L & Coverage M field we
+    # need to set M to 0 when L is 0, as per Andy Levens instructions.
+    adjustDP3NYForms : ->
+      if (@MODULE.POLICY.getProductName() != 'ofcc-dp3-ny')
+        return false
+
+      coverage_l = @$el.find('select[name=CoverageL]');
+      coverage_m = @$el.find('select[name=CoverageM]');
+
+      if coverage_m == null || coverage_l == null
+        return false
+
+      coverage_l.change ->
+        if $(this).val() == '0'
+          coverage_m.val '0'
+
+        # If L > 0 && M == 0 set M to null (select..)
+        if parseInt($(this).val(), 10) > 0 && coverage_m.val() == '0'
+          coverage_m.val('')
+
+      # Ensure that M stays at 0 is L is at 0
+      coverage_m.change ->
+        if $(this).val() != '0' && coverage_l.val() == '0'
+          $(this).val '0'
+
+    # ICS-1363 & ICS-1564
+    # 
+    # Re-calc CoverageD immediately for CRU4-AK / SC Renewals
+    # 
+    recalculateImmediately : ->
+      policy_product = @MODULE.POLICY.getProductName()
+      if policy_product == 'ofcc-ho3-ak' || policy_product == 'acic-ho3-sc'
+        @triggerAllCoverageCalculations()
+        @deriveCoverageACalculations()
+
+    # ICS-1010 : Add Policy Limits option to HO3 VA form for Water Backup
+    # 
+    # In HO3 VA policies, when "Policy Limits" is selected for the
+    # WaterBackupCoverage field the value of that field should reflect
+    # whatever is in Coverage A. Additionally, on form load, if Coverage A
+    # is the same as whatever the value of WaterBackupCoverage is, then
+    # WBC should be set to "Policy Limits" with the value of Coverage A.
+    # 
+    adjustHO3VAWaterBackupCoverage : ->
+      if @MODULE.POLICY.getProductName() != 'ofcc-ho3-va'
+        return false
+
+      $wb_coverage = @$el.find("##{@cid}_WaterBackupCoverage")
+
+      # if Coverage_A value == WaterBackupCoverage value then set WBC value
+      # to Coverage A and 'select' it.
+      if parseInt($wb_coverage.val(), 10) == parseInt(@coverage_a.val(), 10)
+        $wb_coverage.find('option[value="33"]').attr('value', @coverage_a.val())
+        $wb_coverage.val @coverage_a.val()
+
+      # Anytime WaterBackupCoverage changes check it against Coverage A
+      # If WaterBackupCoverage is set to Policy Limits then it's val must
+      # always be that of Coverage A. So when Coverage A changes, change the
+      # val of WaterBackupCoverage.
+      $wb_coverage.on 'change', =>
+        $wb_selected = $wb_coverage.find('option:selected')
+        if $wb_selected.text() == 'Policy Limits'
+          $wb_selected.attr 'value', @coverage_a.val() 
+
     # **Build Intervals values for TransactionRequest & Previews**  
     # This takes the form fields and builds up a big data set to use in the TR
     # and preview. It's an almost direct port from mxAdmin and could use some
