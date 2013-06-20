@@ -129,11 +129,13 @@ define [
         if data = @coverage_a.data 'calculations'
           @coverage_calculations = (eval("(#{data})"))
 
-      # Policy specific form adjustments
+      # Product specific form adjustments
       @recalculateImmediately()
       @adjustDP3NYForms()
       @adjustHO3VAWaterBackupCoverage()
       @adjustAlabamaLossTypeFields()
+      @adjustAlabamaPropertyUsage()
+
 
     # ICS-458
     # if this is a DP3 NY form and has a Coverage L & Coverage M field we
@@ -217,21 +219,47 @@ define [
       _.each loss_inputs, (input, index) =>
           $input  = $(input)
           $select = $("##{@cid}_LossType#{index+1}")
-          $label  = $select.parent().find('label')
 
-          @setLabelToRequired $select, $label, $input.val() 
+          @setLabelToRequired $select, $input.val() 
 
           $input.on 'change', =>
-            @setLabelToRequired $select, $label, $input.val() 
+            @setLabelToRequired $select, $input.val() 
 
     # Toggle labels and required attributes for adjustAlabamaLossTypeFields
-    setLabelToRequired : ($select, $label, value) ->
-      if value != ''   
-        $select.attr 'required', true
-        $label.addClass 'labelRequired'
+    setLabelToRequired : ($select, value) ->
+      if value != ''
+        @toggleRequiredStatus $select, true
       else
-        $select.attr 'required', false
-        $label.removeClass 'labelRequired'
+        @toggleRequiredStatus $select, false
+
+    # ICS-1414 : Dynamically toggle required state of Months Unoccupied
+    # based on val of Property Usage. Trying to keep this encapsulated 
+    # as much as possible.
+    adjustAlabamaPropertyUsage : ->
+      if (@MODULE.POLICY.getProductName() != 'hic-ho3-al')
+        return false
+
+      $property_usage    = @$el.find("##{@cid}_PropertyUsage");
+      $months_unoccupied = @$el.find("##{@cid}_MonthsUnoccupied");
+
+      if $property_usage.length > 0 && $months_unoccupied.length > 0
+        $property_usage.on 'change', =>
+          if $property_usage.val() == '100'
+            @toggleRequiredStatus $months_unoccupied, false
+          else
+            @toggleRequiredStatus $months_unoccupied, true
+
+        $property_usage.trigger 'change'
+
+    # Adjust an input's required status and apply/remove class to its label
+    # Used in multiple product specific adjustments
+    toggleRequiredStatus : ($el, bool) ->
+      $el.attr 'required', bool
+      if bool
+        $el.parent().find('label').addClass 'labelRequired'
+      else
+        $el.parent().find('label').removeClass 'labelRequired' 
+
 
     # **Build Intervals values for TransactionRequest & Previews**  
     # This takes the form fields and builds up a big data set to use in the TR
