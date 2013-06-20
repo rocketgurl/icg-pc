@@ -338,6 +338,7 @@ h2.ipm-action-header {
 		textarea.validation_error, 
 		{
 		    box-shadow: 0 0 5px rgba(160, 0, 0, 1);
+		    background-color: lighten($red, 50);
 		}
 		select.validation_error
 		{

@@ -450,7 +450,7 @@ h2.ipm-action-header { font-size: 16px; font-size: 1.6rem; color: dimgrey; margi
 .ipm-container fieldset label.labelRequired { color: #444; font-weight: bold; }
 .ipm-container fieldset label.labelRequired:after { color: #752E2E; content: ' *'; }
 .ipm-container fieldset label.validation_error { color: #a00; }
-.ipm-container fieldset input.validation_error, .ipm-container fieldset textarea.validation_error { box-shadow: 0 0 5px #a00000; }
+.ipm-container fieldset input.validation_error, .ipm-container fieldset textarea.validation_error { box-shadow: 0 0 5px #a00000; background-color: #f3c2ca; }
 .ipm-container fieldset select.validation_error { background: #fcc; }
 .ipm-container fieldset input { vertical-align: top; }
 .ipm-container fieldset input[type=text] { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; font-size: 1.4rem; min-width: 2em; padding: 4px; }

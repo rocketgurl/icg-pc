@@ -491,13 +491,16 @@ define [
         )
 
       fields = for field, rules of @FormValidation.validators
-        $("#id_#{field}")
+        $("##{@cid}_#{field}")
 
       errors = @FormValidation.validateFields(fields)
 
       if _.isEmpty errors
         true
       else
+        # Pop open fieldsets with invalid inputs
+        @displayInvalidFields(errors)
+
         @PARENT_VIEW.displayMessage(
           'warning',
           @FormValidation.displayErrorMsg(errors)
@@ -547,6 +550,17 @@ define [
             changedValues : _.clone @values.changedValues
           delete @values.previousValues.formValues.preview # we don't want this
 
+    # **Pop open the fieldset for any invalid input**
+    #
+    # @param `errors` _Object_ collection of invalid inputs
+    # @return _void_  
+    #
+    displayInvalidFields : (errors) ->
+      for error in errors
+        $container = error.element.parents('.collapsibleFieldContainer')
+        $fieldset = $container.parent()
+        if $container.css('display') == 'none'
+          $fieldset.find('h3').trigger 'click'
 
     # **Parse error message from HTML response**
     #
