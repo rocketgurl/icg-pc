@@ -133,6 +133,7 @@ define [
       @recalculateImmediately()
       @adjustDP3NYForms()
       @adjustHO3VAWaterBackupCoverage()
+      @adjustAlabamaLossTypeFields()
 
     # ICS-458
     # if this is a DP3 NY form and has a Coverage L & Coverage M field we
@@ -198,6 +199,39 @@ define [
         $wb_selected = $wb_coverage.find('option:selected')
         if $wb_selected.text() == 'Policy Limits'
           $wb_selected.attr 'value', @coverage_a.val() 
+
+    # ICS-1400 - AL Forms Passing Blank Loss Type Data
+    # In AL Renew forms we need to ensure that any Loss History fields that
+    # have data have their LossType selects set to required.
+    adjustAlabamaLossTypeFields : ->
+      if (/-al/.test(@MODULE.POLICY.getProductName()) && $("##{@cid}_LossAmount1").length > 0) == false
+        return false
+
+      # Get all the LossAmount inputs
+      re = RegExp "#{@cid}_LossAmount", "i"
+      loss_inputs = $('input').filter (index) -> re.test($(this).attr('id'))
+
+      # Loop through all Loss Types and if anything is entered for Amount then
+      # make the LossType select required. Also attach an event listener so we
+      # can remove the required attributes if the Amount is cleared back out.
+      _.each loss_inputs, (input, index) =>
+          $input  = $(input)
+          $select = $("##{@cid}_LossType#{index+1}")
+          $label  = $select.parent().find('label')
+
+          @setLabelToRequired $select, $label, $input.val() 
+
+          $input.on 'change', =>
+            @setLabelToRequired $select, $label, $input.val() 
+
+    # Toggle labels and required attributes for adjustAlabamaLossTypeFields
+    setLabelToRequired : ($select, $label, value) ->
+      if value != ''   
+        $select.attr 'required', true
+        $label.addClass 'labelRequired'
+      else
+        $select.attr 'required', false
+        $label.removeClass 'labelRequired'
 
     # **Build Intervals values for TransactionRequest & Previews**  
     # This takes the form fields and builds up a big data set to use in the TR
