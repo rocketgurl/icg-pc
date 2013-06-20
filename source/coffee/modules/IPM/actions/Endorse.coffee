@@ -122,6 +122,7 @@ define [
       @coverage_a.bind 'input', (e) =>
         @triggerAllCoverageCalculations()
         @deriveCoverageACalculations()
+        @adjustHO3VAWaterBackupCoverage()
 
       # Find any custom calculations tucked away in data attrs for later
       # use in calculations      
@@ -135,7 +136,6 @@ define [
       @adjustHO3VAWaterBackupCoverage()
       @adjustAlabamaLossTypeFields()
       @adjustAlabamaPropertyUsage()
-
 
     # ICS-458
     # if this is a DP3 NY form and has a Coverage L & Coverage M field we
@@ -173,7 +173,7 @@ define [
         @triggerAllCoverageCalculations()
         @deriveCoverageACalculations()
 
-    # ICS-1010 : Add Policy Limits option to HO3 VA form for Water Backup
+    # ICS-1010 - Add Policy Limits option to HO3 VA form for Water Backup
     # 
     # In HO3 VA policies, when "Policy Limits" is selected for the
     # WaterBackupCoverage field the value of that field should reflect
@@ -232,7 +232,7 @@ define [
       else
         @toggleRequiredStatus $select, false
 
-    # ICS-1414 : Dynamically toggle required state of Months Unoccupied
+    # ICS-1414 - Dynamically toggle required state of Months Unoccupied
     # based on val of Property Usage. Trying to keep this encapsulated 
     # as much as possible.
     adjustAlabamaPropertyUsage : ->
