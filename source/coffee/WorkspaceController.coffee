@@ -17,8 +17,9 @@ define [
   'AppRules',
   'Helpers',
   'Cookie',
-  'herald'
-], ($, _, Backbone, UserModel, ConfigModel, WorkspaceStateModel, WorkspaceStateCollection, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter, SearchContextCollection, Messenger, Base64, MenuHelper, AppRules, Helpers, Cookie, Herald, xml2json) ->
+  'herald',
+  'marked'
+], ($, _, Backbone, UserModel, ConfigModel, WorkspaceStateModel, WorkspaceStateCollection, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter, SearchContextCollection, Messenger, Base64, MenuHelper, AppRules, Helpers, Cookie, Herald, marked, xml2json) ->
 
   # Global log object for debugging
   #
@@ -305,7 +306,6 @@ define [
         $('body').removeClass('logo-background')
 
       Herald.execute()
-      console.log Herald
 
 
     # On unsuccessful login render the login form again
@@ -777,9 +777,10 @@ define [
       herald_config =
         h_path       : '/js/lib/herald/'
         change_path  : '/'
-        change_file  : 'CHANGES.html'
+        change_file  : 'CHANGES.md'
         version      : $('#version-number').text()
         inject_point : 'body'
+        textProcessor : marked
 
       Herald.init herald_config
 
