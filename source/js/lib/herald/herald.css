@@ -13,28 +13,25 @@
   margin: 0px auto;
 }
 
-#herald-content {
-}
-
 #herald-alert button {
   float: right;
 }
 
-/*
-  User definable styles
-  ---------------------
-  Users can override these selectors in the app css
-*/
+/*---------------------------------------------------------------------------*\
+ * USER DEFINABLE STYLES: Can be overriden in the client application's CSS
+\*---------------------------------------------------------------------------*/
+
 .herald-modal {
-  background-color: black;
-  color: gray;
+  background-color: #2A2A2A;
+  color: #D7D6D7;
+  font-family: Calibri, sans-serif;
   -webkit-border-radius: 5px;
   -moz-border-radius: 5px;
   border-radius: 5px;
 }
 
-.herald-modal-content {
+.herald-modal-button {
 }
 
-.herald-close-button {
+.herald-modal-content {
 }

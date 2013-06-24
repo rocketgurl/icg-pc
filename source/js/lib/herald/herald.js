@@ -10,6 +10,16 @@
   // Local copy
   var Herald = {};
 
+  // Default property values
+  Herald.h_path        = "/js/herald/";
+  Herald.change_path   = "";
+  Herald.version       = "0.0";
+  Herald.change_file   = "changes.md";
+  Herald.inject_point  = "body";
+  Herald.textProcessor = function ( str ) {
+    return str.replace( /\n/g, "<br>" );
+  }
+
   /*------------------------------------------------------------------------*\
     THE PUBLIC API
   \*------------------------------------------------------------------------*/
@@ -18,26 +28,31 @@
    * Configure the instance of the herald module by passing in a config object
    *
    * @param {Object} config The config object. Consists of:
-   *    {String} h_path       The path to the herald module folder
-   *    {String} change_path  The path to the changes file
-   *    {String} change_file  The changes file filename
-   *    {String} version      The current version number of the client app
-   *    {String} inject_point The id/class selector of the DOM element into
-   *                          which the alert modal will be injected
+   *    {String} h_path             The path to the herald module folder
+   *    {String} change_path        The path to the changes file
+   *    {String} change_file        The changes file filename
+   *    {String} version            The current version number of the client app
+   *    {String} inject_point       The id/class selector of the DOM element into
+   *                                which the alert modal will be injected
+   *    {function} textProcessor    The function to convert the contents of the
+   *                                changes file into HTML
    * @this {Herald}
    */
   Herald.init = function ( config ) {
     // Load config values
-    this.h_path       = config.h_path;
-    this.change_path  = config.change_path;
-    this.change_file  = config.change_file;
-    this.version      = config.version;
-    this.inject_point = config.inject_point;
+    for( var key in config ) {
+      if ( key === "textProcessor" && typeof config[key] !== "function" ) {
+        // Keep the default textProcessor
+        throw new Error( "The textProcessor config property must be a function" );
+      } else {
+        this[ key ] = config[ key ];
+      }
+    }
 
     this.injectCSSLink();
 
     this.change_str = null;
-    this.getChanges();
+
   }
 
   /**
@@ -49,7 +64,8 @@
   Herald.execute = function () {
     // If cookie is out of date or doesnt exist, display modal alert
     if( this.checkCookie() === false ) {
-      this.renderModal();
+      // this.renderModal();
+      this.getChanges();
     }
 
     // Set cookie with current version
@@ -67,8 +83,10 @@
       context: Herald
     });
     jqxhr.done( function( data ) {
-      this.change_str = data;
-      // this.change_str = this.change_str.replace( /\n/g, "<br>" );
+      $.when( this.textProcessor(data) ).done( $.proxy(function (result) {
+        this.change_str = result;
+        this.renderModal();
+      }, this));
     });
     jqxhr.fail( function( jqXHR, textStatus, errorThrown ) {
       throw new Error( "Herald couldn't get data from the changes file: " + errorThrown );
@@ -143,9 +161,9 @@
       $alert.remove();
     });
 
-    $alert_modal.click( function( e ) {
+    $alert_modal.click( function (e) {
       e.stopPropagation();
-    })
+    });
 
     // Set up close on button click
     $alert.find( "button" ).click( function() {
