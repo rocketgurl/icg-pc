@@ -1,7 +1,7 @@
 require
   urlArgs: ''
   baseUrl: 'js'
-  paths: 
+  paths:
     jquery      : 'lib/jquery-1.8.2'
     jqueryui    : 'lib/jquery-ui-1.9.0.custom.min'
     underscore  : 'lib/underscore'
@@ -18,14 +18,15 @@ require
     loader      : 'lib/heartcode-canvasloader'
     swfobject   : 'lib/swfobject'
     u_string    : 'lib/underscore.string'
+    herald      : 'lib/herald/herald'
   priority: ['jquery','xml2json','json']
   shim:
-      'jquery' : 
+      'jquery' :
         deps    : ['require']
         exports : '$'
-      'xml2json' : 
+      'xml2json' :
         deps : ['jquery']
-      'json' : 
+      'json' :
         deps    : ['jquery']
         exports : 'JSON'
       'amplify' :
@@ -36,8 +37,8 @@ require
         exports : 'CanvasLoader'
       'swfobject' :
         deps    : ['require']
-        exports : 'swfobject' 
-      'u_string' : 
+        exports : 'swfobject'
+      'u_string' :
         deps : ['underscore']
       'momentrange' :
         deps : ['moment']
@@ -66,4 +67,3 @@ require [
     # because it makes debugging a helluva lot easier.
     window.workspace = WorkspaceController
     window.workspace.init()
-    
