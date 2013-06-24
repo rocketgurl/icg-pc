@@ -16,8 +16,9 @@ define [
   'MenuHelper',
   'AppRules',
   'Helpers',
-  'Cookie'
-], ($, _, Backbone, UserModel, ConfigModel, WorkspaceStateModel, WorkspaceStateCollection, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter, SearchContextCollection, Messenger, Base64, MenuHelper, AppRules, Helpers, Cookie, xml2json) ->
+  'Cookie',
+  'herald'
+], ($, _, Backbone, UserModel, ConfigModel, WorkspaceStateModel, WorkspaceStateCollection, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter, SearchContextCollection, Messenger, Base64, MenuHelper, AppRules, Helpers, Cookie, Herald, xml2json) ->
 
   # Global log object for debugging
   #
@@ -39,7 +40,7 @@ define [
       ixvocab        : './ixvocab/api/rest/v1/'
       zendesk        : './zendesk'
 
-  # Method Combinator (Decorator) 
+  # Method Combinator (Decorator)
   # https://github.com/raganwald/method-combinators
   #
   # Ensure that workspace_state is valid
@@ -52,7 +53,7 @@ define [
       else
         false
 
-  #### Orchestrate the Workspace 
+  #### Orchestrate the Workspace
   #
   # This controller wires together different views/models
   # to handle Workspace events and in general act like
@@ -112,7 +113,7 @@ define [
         if app == obj.app.app
           return obj
 
-    # If app is not saved in @workspace_state and is not the 
+    # If app is not saved in @workspace_state and is not the
     # workspace defined app then we need to add it to our
     # stack of saved apps
     #
@@ -145,7 +146,7 @@ define [
 
     # Remove app from saved workspace state
     #
-    # @param `app` _Object_ application config object  
+    # @param `app` _Object_ application config object
     #
     state_remove :
       valid_workspace \
@@ -156,7 +157,7 @@ define [
             saved_apps.splice index, 1
         @workspace_state.set 'apps', saved_apps
         @workspace_state.save()
-    
+
     # Check to see if an app already exists in saved state
     #
     # @param `app` _Object_ application config object
@@ -167,7 +168,7 @@ define [
         saved_apps = @workspace_state.get 'apps'
         _.find saved_apps, (saved) =>
           saved.app is app.app
- 
+
 
     # Try and keep the localStorage version of app state
     # persisted across requests
@@ -204,7 +205,7 @@ define [
 
     # Check for an identity cookie and check server for
     # validity. If no cookie present then just build the
-    # login form as usual. 
+    # login form as usual.
     #
     check_cookie_identity : ->
       cookie = @Cookie.get(@COOKIE_NAME)
@@ -264,7 +265,7 @@ define [
             fetch_state = @user.get('fetch_state')
 
             if fetch_state?
-              fetch_state = if _.has(fetch_state, 'code') then fetch_state.code else null            
+              fetch_state = if _.has(fetch_state, 'code') then fetch_state.code else null
 
             switch fetch_state
               when "200" then @login_success(model, resp)
@@ -287,8 +288,8 @@ define [
     # On a successfull login have @user set some variables
     # and set an identity cookie to smooth logging in later.
     #
-    # @param `model` _Object_ User model  
-    # @param `resp` _Object_ Response from server  
+    # @param `model` _Object_ User model
+    # @param `resp` _Object_ Response from server
     #
     login_success : (model, resp) ->
       @get_configs()
@@ -302,7 +303,10 @@ define [
         @login_view.remove()
         delete @login_view
         $('body').removeClass('logo-background')
-        
+
+      Herald.execute()
+      console.log Herald
+
 
     # On unsuccessful login render the login form again
     # along with a Flash message indicating issue
@@ -341,7 +345,7 @@ define [
     destroy_workspace_model :
       valid_workspace \
       ->
-        @workspace_state.destroy() 
+        @workspace_state.destroy()
         @workspace_state = null
         @Amplify.store('ics_policy_central', null)
 
@@ -377,7 +381,7 @@ define [
                 sub_nav    : @config.get('menu_html').sub_nav
               })
             @navigation_view.render()
-            
+
             # If our current_state is set then we should go ahead and launch.
             # We do this here to ensure we have @config set before attempting to
             # launch, which would be... bad.
@@ -386,7 +390,7 @@ define [
             # there was a previous state saved, and try to use that one.
             #
             if @check_workspace_state() is false # Check for localStorage state
-              @navigation_view.toggle_nav_slide() # open main nav        
+              @navigation_view.toggle_nav_slide() # open main nav
               @navigation_view.$el.find('li a span').first().trigger('click') # select first item
 
             if @current_state?
@@ -416,7 +420,7 @@ define [
         raw_id = _.keys(raw_storage)[0]
         if raw_id?
           workspaces = @Workspaces.add(
-              id : raw_id 
+              id : raw_id
             )
           @workspace_state = workspaces.get(raw_id)
           @workspace_state.fetch(
@@ -431,7 +435,7 @@ define [
                 @workspace_state = @Workspaces.create()
                 true
             )
-          true          
+          true
       else
         # If no localStorage data then make a stub object
         @workspace_state = {}
@@ -442,14 +446,14 @@ define [
     #
     # Setup collection to save search views in local storage. We
     # need to attach this to the controller to ensure
-    # that models are passed around to many instances of 
+    # that models are passed around to many instances of
     # SearchModule. It's a hack, but it works for now.
     setup_search_storage : ->
       collection = new SearchContextCollection()
 
       @SEARCH =
-        saved_searches : collection  
-            
+        saved_searches : collection
+
       @SEARCH.saved_searches.controller = this # so we can phone home
       @SEARCH.saved_searches.fetch()
       @SEARCH.saved_searches
@@ -486,7 +490,7 @@ define [
       # before loading a new one. We do this recursively to prevent
       # race conditions (new tabs pushing onto the stack as old ones pop off)
       @teardown_workspace()
-      
+
       if $('#header').height() < 95
         $('#header').css('height', '95px')
 
@@ -497,7 +501,7 @@ define [
 
       if url = @config.get_pxCentral(@workspace_state)
         @services.pxcentral = "#{url}#{@services.pxcentral_base}"
-  
+
       # Some ixVocab actions need to happen through the services router
       if !window.USE_PROXY
         @services.ixvocab = @config.get_universal_service(@workspace_state, 'ixvocab')
@@ -544,7 +548,7 @@ define [
 
     #### Launch App
     #
-    # Attempt to setup and launch app. Apps are added               
+    # Attempt to setup and launch app. Apps are added
     # to the stack from the `WorkspaceCanvasView` itself
     # using events so that if for some reason the view
     # doesn't load, we don't have to add it to the stack.
@@ -552,7 +556,7 @@ define [
     # @param `app` _Object_ application config object
     #
     launch_app : (app) ->
-      # If app is not saved in @workspace_state and is not the 
+      # If app is not saved in @workspace_state and is not the
       # workspace defined app then we need to add it to our
       # stack of saved apps
       if @state_exists(app)?
@@ -605,8 +609,8 @@ define [
 
     # Instantiate a new WorkspaceCanvasView
     #
-    # @param `module` _String_ name of module to load  
-    # @param `app` _Object_ application config object  
+    # @param `module` _String_ name of module to load
+    # @param `app` _Object_ application config object
     #
     create_workspace : (module, app) ->
       options =
@@ -767,8 +771,21 @@ define [
         new_window = window.open('download.html', '_blank')
         new_window.setUrl = url
 
+    # Configure Herald to display updates and notifications to users
+    # after login
+    setupHerald : ->
+      herald_config =
+        h_path       : '/js/lib/herald/'
+        change_path  : '/'
+        change_file  : 'CHANGES.html'
+        version      : $('#version-number').text()
+        inject_point : 'body'
+
+      Herald.init herald_config
+
     # Kick off the show
     init : () ->
+      @setupHerald()
       @callback_delay 100, =>
         @Router.controller = this
         Backbone.history.start()
@@ -807,4 +824,3 @@ define [
     @toggle_apps app_name
 
 
-  

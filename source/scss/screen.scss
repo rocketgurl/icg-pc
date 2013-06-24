@@ -8,7 +8,7 @@ html {
 
 // Default Body Font Size - needed for rem support
 // http://snook.ca/archives/html_and_css/font-size-with-rem
-body { 
+body {
 	@include sans;
 	min-width: 1000px;
 	text-rendering: optimizeLegibility;
@@ -25,4 +25,5 @@ body {
 @import "module_ipm";
 @import "module_zendesk";
 @import "module_referralqueue";
+@import "_herald";
 // @import "formalize";

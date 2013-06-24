@@ -537,3 +537,12 @@ header.module-referrals .button-manage-assignees[disabled=disabled]:active { -we
 .rq-manage-assignees li label { display: inline; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; font-size: 1.4rem; color: dimgrey; cursor: pointer; }
 .rq-manage-assignees li label:hover { color: #cc00cc; }
 .rq-manage-assignees li:hover { background: #ffe5ff; border-bottom: #ffb3ff 1px solid; }
+
+.herald-modal { background-color: #fff !important; color: #333 !important; border: #ccc 1px solid; box-shadow: #666 0 0 10px; }
+
+.herald-modal-content { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; font-size: 1.4rem; }
+.herald-modal-content h2 { font-weight: bold; font-size: 20px; font-size: 2rem; color: #165788; padding: 0; margin: 0; }
+.herald-modal-content h3 { font-weight: bold; font-size: 16px; font-size: 1.6rem; color: #165788; margin: 0 0 10px 0; padding: 0 0 10px 0; border-bottom: #ccc 1px solid; }
+.herald-modal-content p { margin: 0 0 10px 0; }
+.herald-modal-content ul { margin: 0; padding: 0; }
+.herald-modal-content li { list-style-type: disc; margin: 2px 2px 2px 15px; }

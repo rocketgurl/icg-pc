@@ -1,6 +1,6 @@
 // Policy Central 2.0 - SCSS Globals
 @import "susy";
-@import "compass"; 
+@import "compass";
 
 // SVG Backgrounds
 $experimental-support-for-svg: true;
@@ -10,7 +10,7 @@ $experimental-support-for-svg: true;
 // Using a 12-col very fluid layout
 //
 $total-columns  : 12;
-$gutter-width   : 1em;           
+$gutter-width   : 1em;
 $grid-padding   : 1.5%;
 $container-style: fluid;
 $container-width: 100%;
