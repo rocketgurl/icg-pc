@@ -18,7 +18,8 @@ require
     loader      : 'lib/heartcode-canvasloader'
     swfobject   : 'lib/swfobject'
     u_string    : 'lib/underscore.string'
-    herald      : 'lib/herald/herald'
+    herald      : 'lib/herald/herald',
+    marked      : 'lib/marked'
   priority: ['jquery','xml2json','json']
   shim:
       'jquery' :
