@@ -775,11 +775,11 @@ define [
     # after login
     setupHerald : ->
       herald_config =
-        h_path       : '/js/lib/herald/'
-        change_path  : '/'
-        change_file  : 'CHANGES.md'
-        version      : $('#version-number').text()
-        inject_point : 'body'
+        h_path        : '/js/lib/herald/'
+        change_path   : '/'
+        change_file   : 'CHANGES.md'
+        version       : $('#version-number').text()
+        inject_point  : 'body'
         textProcessor : marked
 
       Herald.init herald_config
