@@ -52,7 +52,6 @@
     this.injectCSSLink();
 
     this.change_str = null;
-
   }
 
   /**
@@ -64,7 +63,6 @@
   Herald.execute = function () {
     // If cookie is out of date or doesnt exist, display modal alert
     if( this.checkCookie() === false ) {
-      // this.renderModal();
       this.getChanges();
     }
 
@@ -73,7 +71,8 @@
   }
 
   /**
-   * Set this.change_str to the contents of the change_file
+   * Set this.change_str to the contents of the change_file and call
+   * renderModal().
    *
    * @this {Herald}
    */
@@ -83,6 +82,7 @@
       context: Herald
     });
     jqxhr.done( function( data ) {
+      // Use proxy to refer to Herald as 'this'
       $.when( this.textProcessor(data) ).done( $.proxy(function (result) {
         this.change_str = result;
         this.renderModal();
