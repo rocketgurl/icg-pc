@@ -8,7 +8,7 @@ define [
   #
   UserModel = BaseModel.extend
 
-    initialize : () ->
+    initialize : ->
       @use_cripple() # Use CrippledClient XMLSync
 
       @urlRoot = @get 'urlRoot'
@@ -25,12 +25,24 @@ define [
     # Additional document parsing to load up User with more accessible
     # information (pulling attrs out of parsed XML and into model.attributes)
     #
-    parse_identity : () ->
+    parse_identity : ->
       doc = @get 'document'
       if doc?
         @set 'passwordHash', doc.find('Identity').attr('passwordHash')
         @set 'name', doc.find('Identity Name').text()
         @set 'email', doc.find('Identity Email').text()
+
+    # Return array of <Right> elements from <PoliciesModule>
+    getPoliciesModuleRights : ->
+      doc = @get 'document'
+      doc.find("ApplicationSettings[environmentName=#{ICS360_ENV}] PoliciesModule Rights")
+
+    # Return true if User has PoliciesModule > Rights > Right VIEW_ADVANCED
+    canViewAdvanced : ->
+      rights = @getPoliciesModuleRights().children().filter ->
+        $(this).text() == 'VIEW_ADVANCED'
+      rights.length == 1
+
       
   UserModel
 
