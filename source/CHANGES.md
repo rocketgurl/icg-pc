@@ -1,24 +1,15 @@
 Updates
 -------
 
-### 2.1.0.1
+### 2.1.0.2
 
-**Welcome to Version 2.1.0.1**
+Updates:
 
-New things:
+-	Added [Herald](https://github.com/icg360/Herald)
+-	Brought IPM Endorse up to parity with mxAdmin Endorse
+-	IPM Datefields now have calendar icon
+-	IPM currency inputs now have icon
 
--   [Lorem ipsum](http://google.com) dolor sit amet, consectetur adipisicing elit.
-    Laudantium, dolorem eveniet quia a ducimus placeat
--   quisquam ad possimus nisi sequi quis cumque quidem debitis nulla
-    voluptate
--   Laudantium, dolorem eveniet quia a ducimus placeat
--   Illo repudiandae rem quisquam
+Bugfixes:
 
-### 2.1.0
-
--   Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-    Laudantium, dolorem eveniet quia a ducimus placeat
--   quisquam ad possimus nisi sequi quis cumque quidem debitis nulla
-    voluptate
--   Laudantium, dolorem eveniet quia a ducimus placeat
--   Illo repudiandae rem quisquam
+-	Corrected ID collisions in IPM forms which prevented correct use of datepicker
