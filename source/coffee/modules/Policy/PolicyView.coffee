@@ -407,8 +407,8 @@ define [
 
     show_policyrepresentations : ->
       $pr_el = @createViewContainer('policyrep', 'policyrep-container')
-      # If container not already loaded, then insert element into DOM
       
+      # If container not already loaded, then insert element into DOM      
       if @pr_container == null || @pr_container == undefined
         @pr_container = new PolicyRepresentationView({
             $el         : $pr_el
