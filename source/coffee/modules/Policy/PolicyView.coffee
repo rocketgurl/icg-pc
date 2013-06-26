@@ -9,8 +9,9 @@ define [
   'text!modules/Policy/templates/tpl_ipm_header.html',
   'text!modules/RenewalUnderwriting/templates/tpl_renewal_underwriting_wrapper.html',
   'modules/IPM/IPMModule',
-  'modules/ZenDesk/ZenDeskView'
-], (BaseView, Messenger, Base64, RenewalUnderwritingView, swfobject, tpl_policy_container, tpl_policy_error, tpl_ipm_header, tpl_ru_wrapper, IPMModule, ZenDeskView) ->
+  'modules/ZenDesk/ZenDeskView',
+  'modules/PolicyRepresentation/PolicyRepresentationView'
+], (BaseView, Messenger, Base64, RenewalUnderwritingView, swfobject, tpl_policy_container, tpl_policy_error, tpl_ipm_header, tpl_ru_wrapper, IPMModule, ZenDeskView, PolicyRepresentationView) ->
 
   PolicyView = BaseView.extend
 
@@ -406,7 +407,14 @@ define [
 
     show_policyrepresentations : ->
       $pr_el = @createViewContainer('policyrep', 'policyrep-container')
-
+      # If container not already loaded, then insert element into DOM
+      
+      if @pr_container == null || @pr_container == undefined
+        @pr_container = new PolicyRepresentationView({
+            $el         : $pr_el
+            policy      : @model
+            policy_view : this
+          }).render()
 
     teardown_policyrepresentations : ->
       @hideViewContainer 'policyrep'
