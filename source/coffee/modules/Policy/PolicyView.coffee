@@ -104,18 +104,20 @@ define [
       hide_actions = []
       if @model.isQuote()
         for action in ['ipmchanges', 'renewalunderwriting', 'servicerequests']
-          @$el.find(".policy-nav a[href=#{action}]").parent('li').hide();
+          @$el.find(".policy-nav a[href=#{action}]").parent('li').hide()
 
       # If this is an IPM policies need an IPMModule instantiated
       if window.IPM_CAPABLE
         if @model.isIPM()
           @IPM = new IPMModule(@model, $("#policy-ipm-#{@cid}"), @controller.user)
         else
-          @$el.find(".policy-nav a[href=ipmchanges]").parent('li').hide();
+          @$el.find(".policy-nav a[href=ipmchanges]").parent('li').hide()
       else
-        @$el.find(".policy-nav a[href=ipmchanges]").parent('li').hide();
+        @$el.find(".policy-nav a[href=ipmchanges]").parent('li').hide()
 
-      # If this is a quote, then we need to hide
+      # Hide Policy representations if user doesn't have VIEW_ADVANCED <Right>
+      if @controller.user.canViewAdvanced() == false
+        @$el.find(".policy-nav a[href=policyrepresentations]").parent('li').hide()
 
       # Cache commonly used jQuery elements
       @cache_elements()
@@ -237,6 +239,23 @@ define [
       $elem.hide()
       $elem
 
+    # Check to see if policy-module div exists, otherwise insert into DOM
+    createViewContainer : (id, classname, content = null) ->
+      id = "#{id}-#{@cid}"
+      $div = $("##{id}")
+      content = if content? then content else "<div id=\"#{id}\" class=\"#{classname}\"></div>"
+      if $div.length == 0
+        $("#policy-header-#{@cid}").after content
+        $div = $("##{id}")
+        $div.addClass 'policy-module'
+      $div
+
+    # Hide policy-module container by id
+    hideViewContainer : (id) ->
+      $div = $("##{id}-#{@cid}")
+      if $div.length > 0
+        @hide_element $div    
+
     # Load Flex Policy Summary
     show_overview : ->
       @$el.css(
@@ -343,7 +362,7 @@ define [
     show_ipmchanges : ->
       ipm_container = @$el.find("#policy-ipm-#{@cid}")
       @show_element ipm_container
-      @resize_view(ipm_container)
+      @resize_view ipm_container
 
     # Hide IPM Changes
     teardown_ipmchanges : ->
@@ -352,11 +371,8 @@ define [
 
     # Load Renewal Underwriting Views
     show_renewalunderwriting : ->
-      $ru_el = $("#renewal-underwriting-#{@cid}")
-      if $ru_el.length == 0
-        $("#policy-header-#{@cid}").after @Mustache.render tpl_ru_wrapper, { cid : @cid }
-        $ru_el = $("#renewal-underwriting-#{@cid}")
-        $ru_el.addClass 'policy-module'
+      content = @Mustache.render tpl_ru_wrapper, { cid : @cid }
+      $ru_el = @createViewContainer('renewal-underwriting', null, content)
 
       # If container not already loaded, then insert element into DOM
       if @ru_container == null || @ru_container == undefined
@@ -370,17 +386,11 @@ define [
         @show_element $ru_el
 
     teardown_renewalunderwriting : ->
-      $ru_el = $("#renewal-underwriting-#{@cid}")
-      if $ru_el.length > 0
-        @hide_element $ru_el
+      @hideViewContainer 'renewal-underwriting'
 
     show_servicerequests : ->
-      $zd_el = $("#zendesk-#{@cid}")
-      if $zd_el.length == 0
-        $("#policy-header-#{@cid}").after("<div id=\"zendesk-#{@cid}\" class=\"zd-container\"></div>")
-        $zd_el = $("#zendesk-#{@cid}")
-        $zd_el.addClass 'policy-module'
-
+      $zd_el = @createViewContainer('zendesk', 'zd-container')
+ 
       # If container not already loaded, then insert element into DOM
       if @zd_container == null || @zd_container == undefined
         @zd_container = new ZenDeskView({
@@ -392,8 +402,13 @@ define [
       @show_element $zd_el
 
     teardown_servicerequests : ->
-      $zd_el = $("#zendesk-#{@cid}")
-      if $zd_el.length > 0
-        @hide_element $zd_el
+      @hideViewContainer 'zendesk'
+
+    show_policyrepresentations : ->
+      $pr_el = @createViewContainer('policyrep', 'policyrep-container')
+
+
+    teardown_policyrepresentations : ->
+      @hideViewContainer 'policyrep'
 
   PolicyView
