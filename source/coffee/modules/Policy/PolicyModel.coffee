@@ -12,7 +12,7 @@ define [
 
     # Policy states
     # -------------
-    states : 
+    states :
       ACTIVE_POLICY      : 'ACTIVEPOLICY',
       ACTIVE_QUOTE       : 'ACTIVEQUOTE',
       CANCELLED_POLICY   : 'CANCELLEDPOLICY',
@@ -27,16 +27,16 @@ define [
         e.setModelState()
         e.get_pxServerIndex()
 
-    # **Assemble urls for Policies**  
-    # @params _String_  
-    # @return _String_  
+    # **Assemble urls for Policies**
+    # @params _String_
+    # @return _String_
     url : (route) ->
       url = @get('urlRoot') + 'policies/' + @id
       if route?
         url = "#{url}#{route}"
       url
 
-    # **Get the numeric portion of policy id used in pxServer**  
+    # **Get the numeric portion of policy id used in pxServer**
     # @return _String_
     get_pxServerIndex : ->
       doc = @get 'document'
@@ -44,7 +44,7 @@ define [
         @set 'pxServerIndex', doc.find('Identifiers Identifier[name=pxServerIndex]').attr('value')
       @get 'pxServerIndex'
 
-    # **Build a last, first policy holder name**  
+    # **Build a last, first policy holder name**
     # @return _String_
     getPolicyHolder : ->
       doc          = @get 'document'
@@ -59,7 +59,7 @@ define [
 
       @Helpers.concatStrings(last, first, ', ')
 
-    # **Build a policy period date range for use in IPM header**  
+    # **Build a policy period date range for use in IPM header**
     # @return _String_
     getPolicyPeriod : ->
       doc   = @get 'document'
@@ -67,12 +67,12 @@ define [
       end   = doc.find('Terms Term ExpirationDate').text().substr(0,10)
       @Helpers.concatStrings(start, end, ' - ')
 
-    # **Return the full policy id taken from the XML**  
+    # **Return the full policy id taken from the XML**
     # @return _String_
     get_policy_id : ->
       @get('document').find('Identifiers Identifier[name=PolicyID]').attr('value')
 
-    # **Build an object containing information for the IPM header**  
+    # **Build an object containing information for the IPM header**
     # @return _Object_
     getIpmHeader : ->
       doc = @get 'document'
@@ -87,21 +87,21 @@ define [
           carrier : doc.find('Management Carrier').text()
       ipm_header
 
-    # **Get <SystemOfRecord>** - used to determine IPM eligibility.  
+    # **Get <SystemOfRecord>** - used to determine IPM eligibility.
     # @return _String_
     getSystemOfRecord : ->
       doc = @get('document')
       if doc?
         doc.find('Management SystemOfRecord').text()
 
-    # **Is this an IPM policy?**  
+    # **Is this an IPM policy?**
     # @return _Boolean_
     isIPM : ->
       console.log @getSystemOfRecord()
       if @getSystemOfRecord() == 'mxServer' then true else false
 
-    # **Get attributes of an element**  
-    # Check a node for attribures and return as an obj, else null  
+    # **Get attributes of an element**
+    # Check a node for attribures and return as an obj, else null
     # @param `elem` _jQuery Element_
     # @return _Obj_ | _Null_
     _getAttributes : (elem) ->
@@ -111,14 +111,14 @@ define [
         out = {}
         attribs = elem[0].attributes
         for attr in attribs
-          out[attr.name] = attr.value 
+          out[attr.name] = attr.value
 
       out
 
-    # **Determine the state of a policy**  
-    # If a node has no attributes, the node's text value is returned. 
+    # **Determine the state of a policy**
+    # If a node has no attributes, the node's text value is returned.
     # When the node has attributes, an Object is returned containing
-    # the text value + attributes    
+    # the text value + attributes
     # @return _String_ | _Obj_
     getState : ->
       if @get('document')?
@@ -130,8 +130,8 @@ define [
         else
           _.extend(attr, { 'text' : text })
 
-    # **Determine if a policy is cancelled**  
-    # @return _Boolean_ 
+    # **Determine if a policy is cancelled**
+    # @return _Boolean_
     isCancelled : ->
       state     = @getState()
       if typeof state == 'object' && state.text == 'CANCELLEDPOLICY'
@@ -139,26 +139,26 @@ define [
       else
         false
 
-    # **Is this policy actually a quote?**  
-    # @return _Boolean_ 
+    # **Is this policy actually a quote?**
+    # @return _Boolean_
     isQuote : ->
       state = @getState()
       text = if typeof state == 'object' then state.text else state
       return text == @states.ACTIVE_QUOTE or text == @states.EXPIRED_QUOTE
 
-    # **Is this policy pending cancellation?** 
+    # **Is this policy pending cancellation?**
     # User can specify a boolean return (bool = true) or
     # will get back the pending cancel object
     #
-    # @param `bool` _Boolean_ return boolean or object  
+    # @param `bool` _Boolean_ return boolean or object
     # @return _Boolean_ | _Obj_
     isPendingCancel : (bool) ->
       pending = @get('json').Management.PendingCancellation || false
-      return true if (bool && pending) 
+      return true if (bool && pending)
       pending
 
-    # **Determine the cancellation effective date if there is one**  
-    # @return _String_ | _Null_ 
+    # **Determine the cancellation effective date if there is one**
+    # @return _String_ | _Null_
     getCancellationEffectiveDate : ->
       state          = @getState()
       effective_date = null
@@ -168,11 +168,11 @@ define [
             effective_date = @isPendingCancel().cancellationEffectiveDate
         when "CANCELLEDPOLICY"
           effective_date = @get('json').Management.PolicyState.effectiveDate
-        else 
+        else
           effective_date = null
       effective_date
 
-    # **Return the cancellation reason code if present, else null**    
+    # **Return the cancellation reason code if present, else null**
     # @return _Integer_ | _Null_
     getCancellationReasonCode : ->
       state       = @getState()
@@ -192,7 +192,7 @@ define [
 
       reason_code
 
-    # **Return the Terms of the policy as an array of XML nodes** 
+    # **Return the Terms of the policy as an array of XML nodes**
     # @return _Array_
     getTerms : ->
       terms = false
@@ -206,18 +206,18 @@ define [
       if _.isObject(terms)
         return [terms]
 
-    # **Return the last Term of the policy**  
-    # TODO: Check to make sure we're not just looking for <Intervals>  
-    # @return _Obj (XML)_  
+    # **Return the last Term of the policy**
+    # TODO: Check to make sure we're not just looking for <Intervals>
+    # @return _Obj (XML)_
     getLastTerm : ->
       if terms = @getTerms()
         _.last terms
       else
         {}
 
-    # **Return the first Term of the policy**  
-    # TODO: Check to make sure we're not just looking for <Intervals>  
-    # @return _Obj (XML)_  
+    # **Return the first Term of the policy**
+    # TODO: Check to make sure we're not just looking for <Intervals>
+    # @return _Obj (XML)_
     getFirstTerm : ->
       if terms = @getTerms()
         _.first terms
@@ -225,8 +225,8 @@ define [
         {}
 
 
-    # **Return array of Customer <DataItem> objects by customer type**  
-    # @param `type` _String_ 
+    # **Return array of Customer <DataItem> objects by customer type**
+    # @param `type` _String_
     # @return _Array_ | _False_
     getCustomerData : (type) ->
       if type == null || type == undefined
@@ -241,7 +241,7 @@ define [
       else
         return false
 
-    # **Retrieve intervals of given Term obj**  
+    # **Retrieve intervals of given Term obj**
     # @param `term` _Object_ Term obj
     # @return _Array_ Interval objs
     getIntervalsOfTerm : (term) ->
@@ -259,7 +259,7 @@ define [
       out
 
     # **Get the last interval of the last term of the policy**
-    # !!! Unclear if this is what should be returned 
+    # !!! Unclear if this is what should be returned
     # @return _Object_
     getLastInterval : ->
       term = @getIntervalsOfTerm(@getLastTerm())
@@ -269,7 +269,7 @@ define [
         out = {}
       out
 
-    # **Derive the product name from policy information**  
+    # **Derive the product name from policy information**
     # @return _String_
     getProductName : ->
       terms = @getLastTerm()
@@ -283,11 +283,11 @@ define [
           terms = terms.Intervals.Interval[0].DataItem
         else
           terms = terms.Intervals.Interval.DataItem
-          
+
       name  = "#{@getDataItem(terms, 'Program')}-#{@getDataItem(terms, 'PolicyType')}-#{@getDataItem(terms, 'PropertyState')}"
       name.toLowerCase()
 
-    # **Find <Identifier> by name and return value or false**  
+    # **Find <Identifier> by name and return value or false**
     # @param `name` _String_ name attr of element
     # @return _String_ | _False_
     getIdentifier : (name) ->
@@ -295,8 +295,8 @@ define [
         return false
       @get('document').find("Identifiers Identifier[name=#{name}]").attr('value')
 
-    # **Find <Event> with type=Issue**  
-    # @return _Boolean_ 
+    # **Find <Event> with type=Issue**
+    # @return _Boolean_
     isIssued : ->
       history = @get('document').find('EventHistory Event[type=Issue]')
       if history.length > 0
@@ -304,13 +304,13 @@ define [
       else
         false
 
-    # **TODO: MOVE INTO HELPER MIXIN**  
+    # **TODO: MOVE INTO HELPER MIXIN**
     # Some date strings we'll be dealing with are formatted with a full
     # timestamp like: "2011-01-15T23:00:00-04:00". The time, after the "T"
     # can sometimes cause weird rounding issues with the day. To safegaurd
     # against it, we'll just remove the "T" and everything after it.
     #
-    # @param `date` _String_ A date string  
+    # @param `date` _String_ A date string
     # @return _String_ An ISO formatted date string
     _stripTimeFromDate : (date) ->
       clean  = date
@@ -321,17 +321,17 @@ define [
 
     # Format a date, defaulting to ISO format
     #
-    # @param `date` _String_ A date string  
-    # @param `format` _String_ A date format string  
-    # @return _String_ 
+    # @param `date` _String_ A date string
+    # @param `format` _String_ A date format string
+    # @return _String_
     _formatDate : (date, format) ->
       format = format ? 'YYYY-MM-DD'
       if moment(date)?
         moment(date).format(format)
 
     # **Determine policy effective date** from XML and convert to
-    # standardized format  
-    # @return _String_ 
+    # standardized format
+    # @return _String_
     getEffectiveDate : ->
       date = @get('document').find('Terms Term EffectiveDate').text()
       if date != undefined || date != ''
@@ -340,8 +340,8 @@ define [
         false
 
     # **Determine policy effective date** from XML and convert to
-    # standardized format  
-    # @return _String_ 
+    # standardized format
+    # @return _String_
     getExpirationDate : ->
       date = @get('document').find('Terms Term ExpirationDate').text()
       if date != undefined || date != ''
@@ -352,8 +352,8 @@ define [
     # For each vocabTerms look for a Term DataItem and get its value. We favor
     # the Op{name} version of the DataItem
     #
-    # @param `vocabTerms` _Object_ list of terms from ixVocab / model.json    
-    # @return _Object_  
+    # @param `vocabTerms` _Object_ list of terms from ixVocab / model.json
+    # @return _Object_
     #
     getTermDataItemValues : (vocabTerms) ->
       out = {}
@@ -365,8 +365,8 @@ define [
 
     # We favor the Op{name} version of the DataItem
     #
-    # @param `name` _String_    
-    # @return _String_  
+    # @param `name` _String_
+    # @return _String_
     #
     getTermDataItemValue : (name) ->
       doc = @get('document')
@@ -374,12 +374,12 @@ define [
         value = doc.find("Terms Term DataItem[name=Op#{name}]").attr('value') ||         doc.find("Terms Term DataItem[name=#{name}]").attr('value')
       value
 
-    # **Extract the value of a named <DataItem> from a JSON collection**  
+    # **Extract the value of a named <DataItem> from a JSON collection**
     # _Alert_: Policies contain multiple versions of some fields, and we favor
-    # the Op{name} version of the DataItem  
+    # the Op{name} version of the DataItem
     #
-    # @param `items` _Object_ list of terms   
-    # @param `name` _String_ name of term value to find   
+    # @param `items` _Object_ list of terms
+    # @param `name` _String_ name of term value to find
     # @return _String_ | _False_
     #
     getDataItem : (items, name) ->
@@ -401,10 +401,10 @@ define [
 
     # For each terms look for a JSON list DataItem and get its value.
     #
-    # @param `list` _Object_ JSON DataItems list    
-    # @param `terms` _Array_ list of terms to search for      
-    # @return _Object_  
-    #    
+    # @param `list` _Object_ JSON DataItems list
+    # @param `terms` _Array_ list of terms to search for
+    # @return _Object_
+    #
     getDataItemValues : (list, terms) ->
       out = {}
       for term in terms
@@ -414,9 +414,9 @@ define [
     # Check vocabTerms for enumerations fields and append to the viewData
     # object with a default field added.
     #
-    # @param `viewData` _Object_ An object of Data Items to append enums to  
-    # @param `vocabTerms` _Object_ list of terms from ixVocab / model.json 
-    # @return _Object_  
+    # @param `viewData` _Object_ An object of Data Items to append enums to
+    # @param `vocabTerms` _Object_ list of terms from ixVocab / model.json
+    # @return _Object_
     #
     getEnumerations : (viewData, vocabTerms) ->
       viewData ?= {}
@@ -433,9 +433,9 @@ define [
     # Convenience method to find a value in the Policy XML. Can handle DataItem
     # fields by setting the dataItem bool to true
     #
-    # @param `path` _String_ jQuery path to use in search  
-    # @param `dataItem` _Boolean_ search for DataItem instead of text node 
-    # @return _String_  
+    # @param `path` _String_ jQuery path to use in search
+    # @param `dataItem` _Boolean_ search for DataItem instead of text node
+    # @return _String_
     #
     getValueByPath : (path, dataItem) ->
       path ?= ''
@@ -447,6 +447,9 @@ define [
     # Return the version number
     getPolicyVersion : ->
       @getValueByPath('Management Version')
+
+    getAgencyLocationId : ->
+      @get('document').find('Management AgencyLocationId').text()
 
     # Return Policy data for use in overviews
     getPolicyOverview : ->
@@ -464,7 +467,7 @@ define [
       @getDataItemValues(customerData, terms)
 
 
-    # **Set a variety of properties on the model based on XML policy data**  
+    # **Set a variety of properties on the model based on XML policy data**
     setModelState : ->
       if @get('document')? || @get('document') != undefined
         @set('state', @getState())
