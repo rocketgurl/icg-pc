@@ -1,6 +1,13 @@
 Updates
 -------
 
+### 2.1.1
+
+Updates:
+
+-	Added Policy Representations view to Policy Module [ICS-1870](https://arc90dev.atlassian.net/browse/ICS-1870)
+-	Updated Herald to 1.0
+
 ### 2.1.0.2
 
 Updates:
