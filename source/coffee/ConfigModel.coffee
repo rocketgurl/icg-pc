@@ -33,14 +33,14 @@ define [
 
     # Get SWF information from config file based on
     # workspace configuration
-    get_config : 
+    get_config :
       check_workspace \
       (workspace) ->
         doc    = @get('document')
         config = doc.find("ConfigItem[name=#{workspace.app}] ConfigItem[name=businesses] ConfigItem[name=#{workspace.business}] ConfigItem[name=#{window.ICS360_ENV}]")
         serializer = new XMLSerializer()
-        
-        if config[0]? 
+
+        if config[0]?
           @set 'swf_config', serializer.serializeToString(config[0])
           return @get('swf_config')
         else
@@ -48,7 +48,7 @@ define [
 
     # Try to find the popServer with the config XML file
     # we use this to set which pxCentral we're going to hit
-    get_pxCentral : 
+    get_pxCentral :
       check_workspace \
       (workspace) ->
         doc = @get('document')
@@ -78,5 +78,5 @@ define [
 
         if url == undefined then false else url
 
-    
+
   ConfigModel
