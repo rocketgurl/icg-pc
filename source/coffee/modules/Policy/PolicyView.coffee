@@ -255,7 +255,7 @@ define [
     hideViewContainer : (id) ->
       $div = $("##{id}-#{@cid}")
       if $div.length > 0
-        @hide_element $div    
+        @hide_element $div
 
     # Load Flex Policy Summary
     show_overview : ->
@@ -391,7 +391,7 @@ define [
 
     show_servicerequests : ->
       $zd_el = @createViewContainer('zendesk', 'zd-container')
- 
+
       # If container not already loaded, then insert element into DOM
       if @zd_container == null || @zd_container == undefined
         @zd_container = new ZenDeskView({
@@ -407,13 +407,14 @@ define [
 
     show_policyrepresentations : ->
       $pr_el = @createViewContainer('policyrep', 'policyrep-container')
-      
-      # If container not already loaded, then insert element into DOM      
+
+      # If container not already loaded, then insert element into DOM
       if @pr_container == null || @pr_container == undefined
         @pr_container = new PolicyRepresentationView({
             $el         : $pr_el
             policy      : @model
-            policy_view : this
+            policy_view : this,
+            services    : @services
           }).render()
 
     teardown_policyrepresentations : ->
