@@ -6,7 +6,7 @@
 // JSHint Directives
 /* global $, module, exports, define */
 
-( function ( root ) {
+(function( root ) {
   // Local copy
   var Herald = {};
 
@@ -16,7 +16,7 @@
   Herald.version       = "0.0";
   Herald.change_file   = "changes.md";
   Herald.inject_point  = "body";
-  Herald.textProcessor = function ( str ) {
+  Herald.textProcessor = function( str ) {
     return str.replace( /\n/g, "<br>" );
   }
 
@@ -38,9 +38,9 @@
    *                                changes file into HTML
    * @this {Herald}
    */
-  Herald.init = function ( config ) {
+  Herald.init = function( config ) {
     // Load config values
-    for( var key in config ) {
+    for ( var key in config ) {
       if ( key === "textProcessor" && typeof config[key] !== "function" ) {
         // Keep the default textProcessor
         throw new Error( "The textProcessor config property must be a function" );
@@ -60,10 +60,10 @@
    *
    * @this {Herald}
    */
-  Herald.execute = function () {
+  Herald.execute = function() {
     // If cookie is out of date or doesnt exist, display modal alert
-    if( this.checkCookie() === false ) {
-      this.getChanges();
+    if ( this.checkCookie() === false ) {
+      this.getAndDisplayChanges();
     }
 
     // Set cookie with current version
@@ -71,45 +71,44 @@
   }
 
   /**
-   * Set this.change_str to the contents of the change_file and call
+   * Set this.change_str to the contents of the changes file and call
    * renderModal().
    *
    * @this {Herald}
    */
-  Herald.getChanges = function () {
+  Herald.getAndDisplayChanges = function() {
+    // Get the contents of the changes file
     var jqxhr = $.ajax({
       url: this.change_path + this.change_file,
       context: Herald
     });
-    jqxhr.done( function( data ) {
+
+    // Render it
+    jqxhr.done(function( data ) {
       // Use proxy to refer to Herald as 'this'
-      $.when( this.textProcessor(data) ).done( $.proxy(function (result) {
+      $.when( this.textProcessor(data) ).done( $.proxy(function(result) {
         this.change_str = result;
         this.renderModal();
       }, this));
     });
-    jqxhr.fail( function( jqXHR, textStatus, errorThrown ) {
+    jqxhr.fail(function( jqXHR, textStatus, errorThrown ) {
       throw new Error( "Herald couldn't get data from the changes file: " + errorThrown );
     });
   }
 
   /**
-   * Inject the css link for the herald modal popup as the last css link in the
-   * DOM's head
+   * Inject the css link for the herald modal popup as the first css link in the
+   * DOM's head. It's important that we put the Herald css link before any others
+   * so that it can be overwritten.
    *
    * @this {Herald}
    */
   Herald.injectCSSLink = function () {
-    // Append herald.css link to head. As the last link.
-    var $head = $( "head" ),
-      $last_link = $head.find( "link[rel='stylesheet']:last" ),
-      herald_link = "<link rel='stylesheet' href='" + this.h_path + "herald.css'>";
-
-    if( $last_link.length ) {
-      $last_link.after( herald_link );
-    } else {
-      $head.append( herald_link );
-    }
+    // Append herald.css link to head. As the first link so it can be
+    // easily overriden.
+    var $head = $( "head" )
+    var herald_link = "<link rel='stylesheet' href='" + this.h_path + "herald.css'>";
+    $head.prepend( herald_link );
   }
 
   /**
@@ -117,14 +116,14 @@
    *
    * @this {Herald}
    */
-  Herald.renderModal = function () {
+  Herald.renderModal = function() {
     // Assemble and prepend alert modal in insert_point DOM element
     var jqxhr = $.ajax({
       url: this.h_path + "alert.html",
       context: Herald
     });
     jqxhr.done( Herald.prependHtml );
-    jqxhr.fail( function( jqXHR, textStatus, errorThrown ) {
+    jqxhr.fail(function( jqXHR, textStatus, errorThrown ) {
       throw new Error( "Herald alert modal failed: " + errorThrown );
     });
   }
@@ -137,7 +136,7 @@
    * @this {Herald}
    * @param {string} alert_html An HTML string (should be ajax'd from alert.html)
    */
-  Herald.prependHtml = function ( alert_html ) {
+  Herald.prependHtml = function( alert_html ) {
     var $alert, $alert_modal, $alert_modal_content;
 
     $alert = $( alert_html );
@@ -156,17 +155,17 @@
     });
 
     // Set up close on click anywhere outside modal
-    $alert.click( function() {
+    $alert.click(function() {
       $alert.hide();
       $alert.remove();
     });
 
-    $alert_modal.click( function (e) {
+    $alert_modal.click(function(e) {
       e.stopPropagation();
     });
 
     // Set up close on button click
-    $alert.find( "button" ).click( function() {
+    $alert.find( "button" ).click(function() {
       $alert.hide();
       $alert.remove();
     });
@@ -180,7 +179,7 @@
    *
    * @this {Herald}
    */
-  Herald.setCookie = function () {
+  Herald.setCookie = function() {
     this.Cookie.set( "herald", this.version, 3650 );
   }
 
@@ -190,7 +189,7 @@
    * @this {Herald}
    * @return The current value of the herald cookie
    */
-  Herald.getCookie = function () {
+  Herald.getCookie = function() {
     return this.Cookie.get( "herald" );
   }
 
@@ -203,12 +202,12 @@
    * @this {Herald}
    * @return {boolean} Cookie exists and is current OR not
    */
-  Herald.checkCookie = function () {
+  Herald.checkCookie = function() {
     var ck_value, ck_valid;
 
     ck_value = this.getCookie();
 
-    if( ck_value !== null && ck_value === this.version ) {
+    if ( ck_value !== null && ck_value === this.version ) {
       ck_valid = true;
     } else {
       ck_valid = false;
@@ -247,7 +246,7 @@
   Cookie.set = function( key, value, days ) {
     var expires, date;
 
-    if( days ) {
+    if ( days ) {
       date = new Date();
       date.setTime( date.getTime() + (days * 24 * 60 * 60 * 1000) );
       expires = "expires=" + date.toGMTString();
@@ -274,8 +273,8 @@
     cookies = document.cookie.split( '; ' );
 
     for ( _i = 0, _len = cookies.length; _i < _len; _i++ ) {
-      cookie = cookies[_i];
-      if( parts = cookie.split( '=' ) ) {
+      cookie = cookies[ _i ];
+      if ( parts = cookie.split( '=' ) ) {
         if ( parts.shift() === key ) {
           return this.decoded( parts.join( '=' ) );
         }
@@ -307,16 +306,16 @@
     EXPORT
   \*------------------------------------------------------------------------*/
   // Node
-  if( typeof module === "object" && module && typeof module.exports === "object" ) {
+  if ( typeof module === "object" && module && typeof module.exports === "object" ) {
     module.exports = Herald;
   }
   // CommonJS
-  else if( typeof exports === "object" && exports ) {
+  else if ( typeof exports === "object" && exports ) {
     exports.Herald = Herald;
   }
   // AMD
-  else if( typeof define === "function" && define.amd ) {
-    define( "herald", [], function () { return Herald; } );
+  else if ( typeof define === "function" && define.amd ) {
+    define( "herald", [], function() { return Herald; } );
   }
   // <script>
   else {
