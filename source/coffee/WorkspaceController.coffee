@@ -36,6 +36,7 @@ define [
       ixdirectory    : './ixdirectory/api/rest/v2/'
       pxcentral_base : 'pxcentral/api/rest/v1/'
       mxserver_base  : 'mxserver/api/rest/v1/'
+      pxserver_base  : 'pxserver/policies'
       ixlibrary_base : '/api/sdo/rest/v1/'
       ixdoc          : './ixdoc/api/rest/v2/'
       ixadmin        : "./config/ics/#{window.ICS360_ENV}/ixadmin"
@@ -503,6 +504,7 @@ define [
       if url = @config.get_pxCentral(@workspace_state)
         @services.pxcentral = "#{url}#{@services.pxcentral_base}"
         @services.mxserver  = "#{url}#{@services.mxserver_base}"
+        @services.pxserver  = "#{url}#{@services.pxserver_base}"
 
       # Some ixVocab actions need to happen through the services router
       if !window.USE_PROXY
