@@ -15,10 +15,15 @@ define [
       view = @getRepresentationLinks()
       @$el.html @Mustache.render tpl_policyrep_container, view
 
+    # Assemble HREFs for links. Use different IDs for quotes/policies
     getRepresentationLinks : ->
+      id = if @policy.isQuote() then @policy.getIdentifier 'QuoteNumber' else \
+              @policy.get_policy_id()
+
       view =
-        link_pxcentral   : "#{@services.pxcentral}policies/#{@policy.get_policy_id()}"
+        link_pxcentral   : "#{@services.pxcentral}policies/#{id}"
         link_ixdirectory : "#{window.location.origin}/#{@services.ixdirectory}organizations/#{@policy.getAgencyLocationId()}?mode=extended"
-        link_mxserver    : "#{@services.mxserver}policies/#{@policy.get_policy_id()}?media=application/xml"
+        link_mxserver    : "#{@services.mxserver}policies/#{id}?media=application/xml"
+        link_pxserver    : "#{@services.pxserver}/#{@policy.get('pxServerIndex')}"
 
       view
