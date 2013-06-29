@@ -547,6 +547,9 @@ header.module-referrals .button-manage-assignees[disabled=disabled]:active { -we
 .policyrep-list li { margin: 0 0 30px 0; }
 .policyrep-list li a { font-size: 18px; font-size: 1.8rem; color: #165788; text-decoration: none; }
 .policyrep-list li p { font-size: 14px; font-size: 1.4rem; color: dimgrey; margin: 5px 0; }
+.policyrep-list h3 { font-size: 18px; font-size: 1.8rem; color: dimgrey; margin: 0 0 20px 0; }
+.policyrep-list li > ul { margin: 0 0 0 20px; }
+.policyrep-list li > ul li { margin: 0 0 20px 20px; list-style-type: disc; font-size: 18px; font-size: 1.8rem; color: #a1a1a1; }
 
 #herald-container { background-color: rgba(0, 0, 0, 0.25); }
 
