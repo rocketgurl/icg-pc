@@ -19,6 +19,12 @@ define [
       EXPIRED_QUOTE      : 'EXPIREDQUOTE',
       NON_RENEWED_POLICY : 'NONRENEWEDPOLICY'
 
+    # Setup model
+    # -----------
+    # Notice the forced binding in initialize() - this aids
+    # function composition later. Functions prefixed with _
+    # are 'private' and used in compositions.
+    #
     initialize : ->
       @use_xml() # Use CrippledClient XMLSync
 
@@ -26,6 +32,36 @@ define [
       @on 'change', (e) ->
         e.setModelState()
         e.get_pxServerIndex()
+
+      # Explicitly bind 'private' composable functions to this object
+      # scope. These functions are _.composed() into other functions and
+      # need their scope forced
+      for f in ['_getFirstValue', '_getIdentifier', '_checkNull', '_getIntervalsOfTerm', '_getCustomerData']
+        @[f] = _.bind @[f], this
+
+    # Is the argument null or undefined?
+    #
+    # @param  `arg` any kind of argument
+    # @return false || prop
+    _checkNull : (arg) ->
+      if arg == null || arg == undefined
+        return false
+
+      arg
+
+    # Take a collection (array) and pop-off the first element. If it has
+    # a 'value' property then return it.
+    #
+    # @param  `collection` _Array_ objs: { name : 'foo', value : 1 }
+    # @return _String_ || false
+    _getFirstValue : (collection) ->
+      unless collection?
+        return false
+
+      if collection.length > 0 && _.has(collection[0], 'value')
+        return collection[0].value
+
+      false
 
     # **Assemble urls for Policies**
     # @params _String_
@@ -97,8 +133,7 @@ define [
     # **Is this an IPM policy?**
     # @return _Boolean_
     isIPM : ->
-      console.log @getSystemOfRecord()
-      if @getSystemOfRecord() == 'mxServer' then true else false
+      @getSystemOfRecord() == 'mxServer'
 
     # **Get attributes of an element**
     # Check a node for attribures and return as an obj, else null
@@ -133,18 +168,15 @@ define [
     # **Determine if a policy is cancelled**
     # @return _Boolean_
     isCancelled : ->
-      state     = @getState()
-      if typeof state == 'object' && state.text == 'CANCELLEDPOLICY'
-        true
-      else
-        false
+      state = @getState()
+      state == 'object' && state.text == 'CANCELLEDPOLICY'
 
     # **Is this policy actually a quote?**
     # @return _Boolean_
     isQuote : ->
       state = @getState()
       text = if typeof state == 'object' then state.text else state
-      return text == @states.ACTIVE_QUOTE or text == @states.EXPIRED_QUOTE
+      text == @states.ACTIVE_QUOTE or text == @states.EXPIRED_QUOTE
 
     # **Is this policy pending cancellation?**
     # User can specify a boolean return (bool = true) or
@@ -224,14 +256,10 @@ define [
       else
         {}
 
-
     # **Return array of Customer <DataItem> objects by customer type**
     # @param `type` _String_
     # @return _Array_ | _False_
-    getCustomerData : (type) ->
-      if type == null || type == undefined
-        return false
-
+    _getCustomerData : (type) ->
       customer = _.filter(@get('json').Customers.Customer, (c) ->
           return c.type == type
         )
@@ -241,13 +269,14 @@ define [
       else
         return false
 
+
+    getCustomerData : (type) ->
+      _.compose(@_getCustomerData, @_checkNull) type
+
     # **Retrieve intervals of given Term obj**
     # @param `term` _Object_ Term obj
     # @return _Array_ Interval objs
-    getIntervalsOfTerm : (term) ->
-      if term == null || term == undefined
-        return false
-
+    _getIntervalsOfTerm : (term) ->
       out = []
 
       if _.has(term, 'Intervals') && _.has(term.Intervals, 'Interval')
@@ -257,6 +286,9 @@ define [
           out = [term.Intervals.Interval]
 
       out
+
+    getIntervalsOfTerm : (term) ->
+      _.compose(@_getIntervalsOfTerm, @_checkNull) term
 
     # **Get the last interval of the last term of the policy**
     # !!! Unclear if this is what should be returned
@@ -289,20 +321,22 @@ define [
 
     # **Find <Identifier> by name and return value or false**
     # @param `name` _String_ name attr of element
-    # @return _String_ | _False_
+    # @return _Array_
+    _getIdentifier : (name) ->
+      _.where(@get('json').Identifiers.Identifier, { name : name })
+
+    # Returns first value of _getIdentifier after null checks
+    # @return _String_ | false
     getIdentifier : (name) ->
-      if name == null || name == undefined
-        return false
-      @get('document').find("Identifiers Identifier[name=#{name}]").attr('value')
+      _.compose(@_getFirstValue, @_getIdentifier, @_checkNull) name
 
     # **Find <Event> with type=Issue**
     # @return _Boolean_
     isIssued : ->
-      history = @get('document').find('EventHistory Event[type=Issue]')
-      if history.length > 0
-        true
-      else
-        false
+      if _.has(@get('json'), 'EventHistory') && _.has(@get('json').EventHistory, 'Event')
+        issued = _.findWhere(@get('json').EventHistory.Event, { type : 'Issue' })
+        return _.isObject issued
+      false
 
     # **TODO: MOVE INTO HELPER MIXIN**
     # Some date strings we'll be dealing with are formatted with a full
