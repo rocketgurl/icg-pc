@@ -244,7 +244,12 @@ define [
     createViewContainer : (id, classname, content = null) ->
       id = "#{id}-#{@cid}"
       $div = $("##{id}")
+
+      if $div.length > 0
+        @show_element $div
+
       content = if content? then content else "<div id=\"#{id}\" class=\"#{classname}\"></div>"
+
       if $div.length == 0
         $("#policy-header-#{@cid}").after content
         $div = $("##{id}")
