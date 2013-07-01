@@ -18,7 +18,7 @@ define [
     # Assemble HREFs for links. Use different IDs for quotes/policies
     getRepresentationLinks : ->
       id = if @policy.isQuote() then @policy.getIdentifier 'QuoteNumber' else \
-              @policy.get_policy_id()
+              @policy.getPolicyId()
 
       view =
         link_pxcentral   : "#{@services.pxcentral}policies/#{id}"

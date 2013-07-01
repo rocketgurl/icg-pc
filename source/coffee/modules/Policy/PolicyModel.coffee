@@ -105,8 +105,9 @@ define [
 
     # **Return the full policy id taken from the XML**
     # @return _String_
-    get_policy_id : ->
-      @getIdentifier('PolicyID')
+    getPolicyId: ->
+      id = @getIdentifier('PolicyID')
+      if id then id else ''
 
     # **Build an object containing information for the IPM header**
     # @return _Object_
@@ -115,7 +116,7 @@ define [
       imp_header = {}
       if doc?
         ipm_header =
-          id      : if @getIdentifier('PolicyID') then @getIdentifier('PolicyID') else ''
+          id      : @getPolicyId()
           product : @getTermDataItemValue 'ProductLabel'
           holder  : @getPolicyHolder()
           state   : @get('state').text || @get('state')

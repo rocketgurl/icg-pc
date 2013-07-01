@@ -10,7 +10,7 @@ define [
     initialize : (options) ->
       [@$el, @policy, @policy_view] = [options.$el, options.policy, options.policy_view]
       @$el.append("<div id=\"zd_shim_#{@cid}\" class=\"zd-shim\"><div id=\"zd_loader_#{@cid}\" class=\"zd-loader\"></div></div>");
-      
+
       @fetchSuccess = _.bind(@fetchSuccess, this) # resolve a scope issue
 
       this
@@ -18,7 +18,7 @@ define [
     # Get tickets from the ZenDesk proxy
     fetch : ->
       @show()
-      @fetch_tickets(@policy.get_policy_id())
+      @fetch_tickets(@policy.getPolicyId())
 
     render : ->
       @remove_loader()
@@ -44,7 +44,7 @@ define [
     # Hit our proxy to get tickets from ZenDesk by searching on the policy id.
     # It basically simpler at this point to hit it directly instead of creating
     # Model/Controllers as we're not doing anything special with them.
-    fetch_tickets : (query, onSuccess, onError) -> 
+    fetch_tickets : (query, onSuccess, onError) ->
 
       onSuccess = onSuccess ? @fetchSuccess
       onError   = onError ? @fetchError

@@ -14,7 +14,7 @@
       },
       fetch: function() {
         this.show();
-        return this.fetch_tickets(this.policy.get_policy_id());
+        return this.fetch_tickets(this.policy.getPolicyId());
       },
       render: function() {
         this.remove_loader();
