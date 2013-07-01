@@ -115,7 +115,7 @@ define [
       imp_header = {}
       if doc?
         ipm_header =
-          id      : @getIdentifier 'PolicyID'
+          id      : if @getIdentifier('PolicyID') then @getIdentifier('PolicyID') else ''
           product : @getTermDataItemValue 'ProductLabel'
           holder  : @getPolicyHolder()
           state   : @get('state').text || @get('state')
