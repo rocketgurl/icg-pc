@@ -77,13 +77,12 @@ define [
     get_pxServerIndex : ->
       doc = @get 'document'
       if doc?
-        @set 'pxServerIndex', doc.find('Identifiers Identifier[name=pxServerIndex]').attr('value')
+        @set 'pxServerIndex', @getIdentifier('pxServerIndex')
       @get 'pxServerIndex'
 
     # **Build a last, first policy holder name**
     # @return _String_
     getPolicyHolder : ->
-      doc          = @get 'document'
       insured_data = @getCustomerData 'Insured'
       last         = @getDataItem(insured_data, 'InsuredLastName')
       first        = @getDataItem(insured_data, 'InsuredFirstName')
@@ -98,9 +97,8 @@ define [
     # **Build a policy period date range for use in IPM header**
     # @return _String_
     getPolicyPeriod : ->
-      doc   = @get 'document'
-      start = doc.find('Terms Term EffectiveDate').text().substr(0,10)
-      end   = doc.find('Terms Term ExpirationDate').text().substr(0,10)
+      start = @getTermItem('EffectiveDate').substr(0,10)
+      end   = @getTermItem('ExpirationDate').substr(0,10)
       @Helpers.concatStrings(start, end, ' - ')
 
     # **Return the full policy id taken from the XML**
@@ -121,15 +119,13 @@ define [
           holder  : @getPolicyHolder()
           state   : @get('state').text || @get('state')
           period  : @getPolicyPeriod()
-          carrier : doc.find('Management Carrier').text()
+          carrier : @getModelProperty('Management Carrier')
       ipm_header
 
     # **Get <SystemOfRecord>** - used to determine IPM eligibility.
     # @return _String_
     getSystemOfRecord : ->
-      doc = @get('document')
-      if doc?
-        doc.find('Management SystemOfRecord').text()
+      @getModelProperty('Management SystemOfRecord')
 
     # **Is this an IPM policy?**
     # @return _Boolean_
@@ -137,7 +133,7 @@ define [
       @getSystemOfRecord() == 'mxServer'
 
     # **Get attributes of an element**
-    # Check a node for attribures and return as an obj, else null
+    # Check a node for attributes and return as an obj, else null
     # @param `elem` _jQuery Element_
     # @return _Obj_ | _Null_
     _getAttributes : (elem) ->
@@ -200,7 +196,7 @@ define [
           if @isPendingCancel(true)
             effective_date = @isPendingCancel().cancellationEffectiveDate
         when "CANCELLEDPOLICY"
-          effective_date = @get('json').Management.PolicyState.effectiveDate
+          effective_date = @getModelProperty('Management PolicyState effectiveDate')
         else
           effective_date = null
       effective_date
@@ -218,18 +214,18 @@ define [
         when 'ACTIVEPOLICY'
           if pending then reason_code = parseInt pending.reasonCode, 10
         when 'CANCELLEDPOLICY'
-          reason_code = @get('json').Management.PolicyState.reasonCode
+          reason_code = @getModelProperty('Management PolicyState reasonCode')
           reason_code = parseInt reason_code, 10
         else
           reason_code = null
 
       reason_code
 
-    # **Return the Terms of the policy as an array of XML nodes**
+    # **Return the Terms of the policy**
     # @return _Array_
     getTerms : ->
       terms = false
-      if @get('json').Terms.Term?
+      if @get('json').Terms?.Term?
         terms = @get('json').Terms.Term
 
       # If there are multiple terms then return the array, otherwise
@@ -257,11 +253,16 @@ define [
       else
         {}
 
+    # Retrieve a single value from Last Term or send empty string
+    getTermItem : (item) ->
+      last_term = @getLastTerm()
+      if last_term[item]? then last_term[item] else ''
+
     # **Return array of Customer <DataItem> objects by customer type**
     # @param `type` _String_
     # @return _Array_ | _False_
     baseGetCustomerData : (type) ->
-      customer = _.filter(@get('json').Customers.Customer, (c) ->
+      customer = _.filter(@getModelProperty('Customers Customer'), (c) ->
           return c.type == type
         )
 
@@ -280,7 +281,7 @@ define [
     baseGetIntervalsOfTerm : (term) ->
       out = []
 
-      if _.has(term, 'Intervals') && _.has(term.Intervals, 'Interval')
+      if term.Intervals?.Interval?
         if _.isArray(term.Intervals.Interval)
           out = term.Intervals.Interval
         else
@@ -310,9 +311,9 @@ define [
 
       # CRU4 return DataItem objs directly, in CRU6 we have to go
       # searching through Intervals to find the correct DataItem obj
-      if _.has(terms, 'DataItem')
+      if terms.DataItem?
         terms = terms.DataItem
-      else if _.has(terms, 'Intervals') && _.has(terms.Intervals, 'Interval')
+      else if terms.Intervals?.Interval?
         if _.isArray(terms.Intervals.Interval)
           terms = terms.Intervals.Interval[0].DataItem
         else
@@ -325,10 +326,9 @@ define [
     # @param `name` _String_ name attr of element
     # @return _Array_
     getIdentifierArray : (name) ->
-      if _.has(@get('json'), 'Identifiers')
-        _.where(@get('json').Identifiers.Identifier, { name : name })
-      else
-        return false
+      if @get('json').Identifiers?.Identifier?
+        return _.where(@get('json').Identifiers.Identifier, { name : name })
+      false
 
     # Returns first value of _getIdentifier after null checks
     # @return _String_ | false
@@ -338,7 +338,7 @@ define [
     # **Find <Event> with type=Issue**
     # @return _Boolean_
     isIssued : ->
-      if _.has(@get('json'), 'EventHistory') && _.has(@get('json').EventHistory, 'Event')
+      if @get('json').EventHistory?.Event?
         issued = _.findWhere(@get('json').EventHistory.Event, { type : 'Issue' })
         return _.isObject issued
       false
@@ -372,7 +372,7 @@ define [
     # standardized format
     # @return _String_
     getEffectiveDate : ->
-      date = @get('document').find('Terms Term EffectiveDate').text()
+      date = @getTermItem('EffectiveDate')
       if date != undefined || date != ''
         @_stripTimeFromDate date
       else
@@ -382,7 +382,7 @@ define [
     # standardized format
     # @return _String_
     getExpirationDate : ->
-      date = @get('document').find('Terms Term ExpirationDate').text()
+      date = @getTermItem('ExpirationDate')
       if date != undefined || date != ''
         @_stripTimeFromDate date
       else
@@ -485,10 +485,10 @@ define [
 
     # Return the version number
     getPolicyVersion : ->
-      @getValueByPath('Management Version')
+      @getModelProperty('Management Version')
 
     getAgencyLocationId : ->
-      @get('document').find('Management AgencyLocationId').text()
+      @getModelProperty('Management AgencyLocationId')
 
     # Return Policy data for use in overviews
     getPolicyOverview : ->
@@ -505,6 +505,23 @@ define [
       customerData = @get 'insuredData'
       @getDataItemValues(customerData, terms)
 
+    # Recursively search the model JSON for properties based
+    # on a space separated path: 'Management Flags Flag'
+    getModelProperty : (path, obj) ->
+      # If no object then get the top level JSON model
+      if obj == null || obj == undefined then obj = @get 'json'
+
+      # If path is empty array then we're done recurring
+      if _.isArray(path) && path.length == 0 then return obj
+
+      # Make path into array if we need to
+      path = if _.isString(path) then path.split(' ') else path
+
+      # walk the obj if properties exist else return the obj
+      if obj[_.first(path)]?
+        return @getModelProperty _.rest(path), obj[_.first(path)]
+      else
+        return obj
 
     # **Set a variety of properties on the model based on XML policy data**
     setModelState : ->
