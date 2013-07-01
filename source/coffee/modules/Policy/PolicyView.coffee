@@ -39,24 +39,8 @@ define [
       # Save current route state for this view
       @current_route = null
 
-      # If flash is not loaded, then on an activate event
-      # we need to load the flash up. This prevents us
-      # from loading always switching to the overview
-      # on tab activation
-      @on 'activate', () ->
-        if @loaded_state
-          # This is our first load, so show the SWF
-          if @render()
-            @show_overview()
-            @teardown_ipmchanges()
-          # Only show it again if this is the overview route
-          else if @current_route == 'overview' || @current_route == null
-            @show_overview()
-            @teardown_ipmchanges()
-
-        # Need to let the footer know that we changed height
-        @module.trigger 'workspace.rendered'
-
+      # Setup overview SWF when view is made visible
+      @on 'activate', @onViewActivate
 
       # On deactivate we destroy the SWF completely. We have to do this so we
       # can find window.reload() when you switch back to this tab, otherwise it
@@ -65,19 +49,44 @@ define [
       @on 'deactivate', () ->
         @teardown_overview()
 
-      @on 'loaded', () ->
-        @loaded_state = true
-        # Our default state is to show the SWF overview
-        if @controller.active_view.cid == @options.view.cid
-          @trigger 'activate'
+      # Sets loaded state and triggers activate
+      @on 'loaded', @onViewLoaded
 
       # If a Policy 404s or otherwise dies we need a solid error message
       # for the user.
-      @on 'error', (msg) ->
-        @loaded_state = true
-        @renderError msg
-        if @controller.active_view.cid == @options.view.cid
-          @trigger 'activate'
+      @on 'error', @onViewError
+
+    # If flash is not loaded, then on an activate event
+    # we need to load the flash up. This prevents us
+    # from loading always switching to the overview
+    # on tab activation
+    onViewActivate : ->
+      if @loaded_state
+        # This is our first load, so show the SWF
+        if @render()
+          @show_overview()
+          @teardown_ipmchanges()
+        # Only show it again if this is the overview route
+        else if @current_route == 'overview' || @current_route == null
+          @show_overview()
+          @teardown_ipmchanges()
+
+      # Need to let the footer know that we changed height
+      @module.trigger 'workspace.rendered'
+
+    # Set loaded state and trigger activate
+    onViewLoaded : ->
+      @loaded_state = true
+      # Our default state is to show the SWF overview
+      if @controller.active_view.cid == @options.view.cid
+        @trigger 'activate'
+
+    # Throw large error message for user
+    onViewError : (msg) ->
+      @loaded_state = true
+      @renderError msg
+      if @controller.active_view.cid == @options.view.cid
+        @trigger 'activate'
 
     renderError : (msg) ->
       html = @Mustache.render(tpl_policy_error, { cid : @cid, msg : msg })
@@ -101,24 +110,8 @@ define [
       if @render_state == false
         @render_state = true
 
-      # We hide a few actions if this is a quote
-      hide_actions = []
-      if @model.isQuote()
-        for action in ['ipmchanges', 'renewalunderwriting', 'servicerequests']
-          @$el.find(".policy-nav a[href=#{action}]").parent('li').hide()
-
-      # If this is an IPM policies need an IPMModule instantiated
-      if window.IPM_CAPABLE
-        if @model.isIPM()
-          @IPM = new IPMModule(@model, $("#policy-ipm-#{@cid}"), @controller.user)
-        else
-          @$el.find(".policy-nav a[href=ipmchanges]").parent('li').hide()
-      else
-        @$el.find(".policy-nav a[href=ipmchanges]").parent('li').hide()
-
-      # Hide Policy representations if user doesn't have VIEW_ADVANCED <Right>
-      if @controller.user.canViewAdvanced() == false
-        @$el.find(".policy-nav a[href=policyrepresentations]").parent('li').hide()
+      # Control actions visibility
+      @adjustActionVisibility()
 
       # Cache commonly used jQuery elements
       @cache_elements()
@@ -139,6 +132,28 @@ define [
 
       true
 
+    # Certain actions are not visible if this is a quote, or a Dovetail policy
+    # or the user doesn't have certain permissions
+    #
+    adjustActionVisibility : ->
+      # We hide a few actions if this is a quote
+      hide_actions = []
+      if @model.isQuote()
+        for action in ['ipmchanges', 'renewalunderwriting', 'servicerequests']
+          @$el.find(".policy-nav a[href=#{action}]").parent('li').hide()
+
+      # If this is an IPM policies need an IPMModule instantiated
+      if window.IPM_CAPABLE
+        if @model.isIPM()
+          @IPM = new IPMModule(@model, $("#policy-ipm-#{@cid}"), @controller.user)
+        else
+          @$el.find(".policy-nav a[href=ipmchanges]").parent('li').hide()
+      else
+        @$el.find(".policy-nav a[href=ipmchanges]").parent('li').hide()
+
+      # Hide Policy representations if user doesn't have VIEW_ADVANCED <Right>
+      if @controller.user.canViewAdvanced() == false
+        @$el.find(".policy-nav a[href=policyrepresentations]").parent('li').hide()
 
     # Switch nav items on/off
     toggle_nav_state : (el) ->
