@@ -106,7 +106,7 @@ define [
     # **Return the full policy id taken from the XML**
     # @return _String_
     get_policy_id : ->
-      @get('document').find('Identifiers Identifier[name=PolicyID]').attr('value')
+      @getIdentifier('PolicyID')
 
     # **Build an object containing information for the IPM header**
     # @return _Object_
@@ -324,7 +324,10 @@ define [
     # @param `name` _String_ name attr of element
     # @return _Array_
     getIdentifierArray : (name) ->
-      _.where(@get('json').Identifiers.Identifier, { name : name })
+      if _.has(@get('json'), 'Identifiers')
+        _.where(@get('json').Identifiers.Identifier, { name : name })
+      else
+        return false
 
     # Returns first value of _getIdentifier after null checks
     # @return _String_ | false
