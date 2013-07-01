@@ -36,14 +36,14 @@ define [
       # Explicitly bind 'private' composable functions to this object
       # scope. These functions are _.composed() into other functions and
       # need their scope forced
-      for f in ['_getFirstValue', '_getIdentifier', '_checkNull', '_getIntervalsOfTerm', '_getCustomerData']
+      for f in ['getFirstValue', 'getIdentifierArray', 'checkNull', 'baseGetIntervalsOfTerm', 'baseGetCustomerData']
         @[f] = _.bind @[f], this
 
     # Is the argument null or undefined?
     #
     # @param  `arg` any kind of argument
     # @return false || prop
-    _checkNull : (arg) ->
+    checkNull : (arg) ->
       if arg == null || arg == undefined
         return false
 
@@ -54,7 +54,7 @@ define [
     #
     # @param  `collection` _Array_ objs: { name : 'foo', value : 1 }
     # @return _String_ || false
-    _getFirstValue : (collection) ->
+    getFirstValue : (collection) ->
       unless collection?
         return false
 
@@ -259,7 +259,7 @@ define [
     # **Return array of Customer <DataItem> objects by customer type**
     # @param `type` _String_
     # @return _Array_ | _False_
-    _getCustomerData : (type) ->
+    baseGetCustomerData : (type) ->
       customer = _.filter(@get('json').Customers.Customer, (c) ->
           return c.type == type
         )
@@ -269,14 +269,14 @@ define [
       else
         return false
 
-
+    # getCustomerData wrapped in null check
     getCustomerData : (type) ->
-      _.compose(@_getCustomerData, @_checkNull) type
+      _.compose(@baseGetCustomerData, @checkNull) type
 
     # **Retrieve intervals of given Term obj**
     # @param `term` _Object_ Term obj
     # @return _Array_ Interval objs
-    _getIntervalsOfTerm : (term) ->
+    baseGetIntervalsOfTerm : (term) ->
       out = []
 
       if _.has(term, 'Intervals') && _.has(term.Intervals, 'Interval')
@@ -287,8 +287,9 @@ define [
 
       out
 
+    # getIntervalsOfTerm wrapped in null check
     getIntervalsOfTerm : (term) ->
-      _.compose(@_getIntervalsOfTerm, @_checkNull) term
+      _.compose(@baseGetIntervalsOfTerm, @checkNull) term
 
     # **Get the last interval of the last term of the policy**
     # !!! Unclear if this is what should be returned
@@ -322,13 +323,13 @@ define [
     # **Find <Identifier> by name and return value or false**
     # @param `name` _String_ name attr of element
     # @return _Array_
-    _getIdentifier : (name) ->
+    getIdentifierArray : (name) ->
       _.where(@get('json').Identifiers.Identifier, { name : name })
 
     # Returns first value of _getIdentifier after null checks
     # @return _String_ | false
     getIdentifier : (name) ->
-      _.compose(@_getFirstValue, @_getIdentifier, @_checkNull) name
+      _.compose(@getFirstValue, @getIdentifierArray, @checkNull) name
 
     # **Find <Event> with type=Issue**
     # @return _Boolean_
