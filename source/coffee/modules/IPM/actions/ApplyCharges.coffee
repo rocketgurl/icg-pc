@@ -43,14 +43,12 @@ define [
     submit : (e) ->
       super e
 
-      @values.formValues.id              = @MODULE.POLICY.get 'policyId'
       @values.formValues.id              = @MODULE.POLICY.getPolicyId()
       @values.formValues.amount          = Math.abs(@values.formValues.amount || 0)
       @values.formValues.reasonCodeLabel = \
         $("#{@makeId('reasonCode')} option[value=#{@values.formValues.reasonCode}]").html()
       @values.formValues.lineItemType    = \
         @values.formValues.reasonCodeLabel.toUpperCase().replace(/\s/g, '_')
-
       # Assemble the ChangeSet XML and send to server
       @ChangeSet.commitChange(
           @ChangeSet.getPolicyChangeSet(@values)
