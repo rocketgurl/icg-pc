@@ -560,3 +560,23 @@ h2.ipm-action-header {
 	background-position: 0px 3px;
 	padding-left: 15px !important;
 }
+
+#cancellation fieldset li input {
+	@include simple-color(hue(#2b90d2), saturation(#2b90d2), lightness(#2b90d2));
+}
+
+#cancellation fieldset li input:disabled {
+	@include simple-color(hue($lightgray), saturation($lightgray), lightness($lightgray));
+	color: $darkgray;
+	font-style: italic;
+}
+
+#cancellation .table_wrapping p {
+	@include font-size(14);
+	color: $darkgray;
+	margin: 0 0 10px 0;
+}
+
+#cancellation .preview caption {
+	display: none;
+}
