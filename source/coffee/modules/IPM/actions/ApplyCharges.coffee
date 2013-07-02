@@ -47,7 +47,7 @@ define [
       @values.formValues.id              = @MODULE.POLICY.getPolicyId()
       @values.formValues.amount          = Math.abs(@values.formValues.amount || 0)
       @values.formValues.reasonCodeLabel = \
-        $("#id_reasonCode option[value=#{@values.formValues.reasonCode}]").html()
+        $("#{@makeId('reasonCode')} option[value=#{@values.formValues.reasonCode}]").html()
       @values.formValues.lineItemType    = \
         @values.formValues.reasonCodeLabel.toUpperCase().replace(/\s/g, '_')
 
