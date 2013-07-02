@@ -374,6 +374,44 @@ define [
       </EventHistory>
     """
 
+    change_payment_plan : """
+    <Terms>
+      <Term>
+        <EffectiveDate>{{termEffectiveDate}}</EffectiveDate>
+        <ExpirationDate>{{termExpirationDate}}</ExpirationDate>
+        <Changes>
+          <Set>
+            <DataItem name="OpPaymentPlanType" value="{{paymentPlanType}}"/>
+          </Set>
+        </Changes>
+      </Term>
+    </Terms>
+    <Intervals>
+      <Interval>
+        <StartDate>{{startDate}}</StartDate>
+        <EndDate>{{endDate}}</EndDate>
+        <Changes>
+          <Set>
+            <DataItem name="OpPaymentPlanType" value="{{paymentPlanType}}"/>
+            <DataItem name="PaymentPlanType" value="{{paymentPlanType}}"/>
+          </Set>
+        </Changes>
+      </Interval>
+    </Intervals>
+    <PaymentPlan type="{{paymentPlanType}}">
+      <Installments/>
+    </PaymentPlan>
+    <EventHistory>
+      <Event type="Endorse">
+        <DataItem name="reasonCode" value="155"/>
+        <DataItem name="reasonCodeLabel" value="Change Payment Plan"/>
+        <DataItem name="AppliedDate" value="{{appliedDate}}"/>
+        <DataItem name="OpPaymentPlanType" value="{{paymentPlanType}}"/>
+        <DataItem name="PaymentPlanType" value="{{paymentPlanType}}"/>
+      </Event>
+    </EventHistory>
+    """
+
     premium_disbursement : """
       <Ledger>
         <LineItem value="{{amount}}" type="DISBURSE" timestamp="{{timestamp}}">
