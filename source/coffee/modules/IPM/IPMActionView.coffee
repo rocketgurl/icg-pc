@@ -658,3 +658,11 @@ define [
       $('#rate_validation_override').fadeIn('fast')
       msg = "Rate validation error - please explicitly override"
       @PARENT_VIEW.displayMessage('warning', msg, 3000).remove_loader()
+
+    # Return a jQuery ready ID namespaced to this CID
+    # ex: #view45_reasonCode
+    # 
+    # @param _String_ id name
+    # @return _String_
+    makeId : (id) ->
+      "##{@cid}_#{id}"
