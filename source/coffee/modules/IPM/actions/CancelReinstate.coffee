@@ -11,14 +11,17 @@ define [
     initialize : ->
       super
 
-      # We need Endorsr to parseIntervals
+      # We need Endorse to parseIntervals
       @Endorse = new Endorse({
         PARENT_VIEW : @PARENT_VIEW
         MODULE      : @MODULE
         })
 
       @events =
-        "click .ipm-action-links li a" : "loadSubAction"
+        "click input[name=cancel]" : "loadSubAction"
+        "click input[name=cancel_pending]" : "loadSubAction"
+        "click input[name=reinstate]" : "loadSubAction"
+        "click input[name=rescind]" : "loadSubAction"
 
       # Metadata about Cancellation types, used in views
       @TRANSACTION_TYPES =
@@ -94,8 +97,8 @@ define [
         e.preventDefault()
         $(this).off 'click'
         @processView(
-          @TPL_CACHE['CancelReinstate'].model,
-          @TPL_CACHE['CancelReinstate'].view
+          @tpl_cache['CancelReinstate'].model,
+          @tpl_cache['CancelReinstate'].view
         )
 
     # **Process Preview**  
@@ -177,7 +180,7 @@ define [
     #
     processPendingCancellation : (cancel_data, viewData) ->
       reasonLabel = _.where(viewData.EnumsReasonCodesAndLabels, { value : cancel_data.pendingCancel.reasonCode })
-      if _.isArray(reasonLabel)
+      if _.isArray(reasonLabel) && reasonLabel.length > 0
         reasonLabel = reasonLabel[0]['label']
 
       cancel_data.pendingCancelReasonCode = \
@@ -224,6 +227,9 @@ define [
           msgHeading                : null
           msgText                   : null
 
+      if @CURRENT_SUBVIEW != false
+        active_data.msg = false
+
       _.extend(cancel_data, active_data)
 
     # Assemble message fields and other values for Cancelled Policies
@@ -234,16 +240,17 @@ define [
     #
     processCancelledPolicy : (cancel_data, viewData) ->
       reasonLabel = _.where(viewData.EnumsReasonCodesAndLabels, { value : cancel_data.policyState.reasonCode })
-      if _.isArray(reasonLabel)
+      
+      if _.isArray(reasonLabel) && reasonLabel.length > 0
         reasonLabel = reasonLabel[0]['label']
 
-      effectiveDate = 'not avaialabe'
+      effectiveDate = 'not available'
       if _.has(cancel_data.policyState, 'effectiveDate')
         effectiveDate = @Helpers.stripTimeFromDate(cancel_data.policyState.effectiveDate)
 
       active_data =
         cancelDisabled    : 'disabled'
-        pendingDisdabled  : 'disabled'
+        pendingDisabled   : 'disabled'
         rescindDisabled   : 'disabled'
         reinstateDisabled : ''
         msg               : true
@@ -253,18 +260,30 @@ define [
             Cancellation took effect <b>#{effectiveDate}</b> due to <b>#{reasonLabel}</b>
           """
 
+      if @CURRENT_SUBVIEW != false
+        active_data.msg = false
+
       _.extend(cancel_data, active_data)
 
     loadSubAction : (e) ->
       e.preventDefault()
       if e.currentTarget.className != 'disabled'
-        action = $(e.currentTarget).attr('href') ? false
+        action = $(e.currentTarget).attr('name') ? false
         if action?
           @CURRENT_SUBVIEW = action
           @fetchTemplates(@MODULE.POLICY, action, @processSubView)
         else
           msg = "Could not load that action. Contact support."
           @PARENT_VIEW.displayMessage('error', msg, 12000)
+
+    # On sucess we need to get out of the sub-view
+    callbackSuccess : (data, status, jqXHR) =>
+      @processView(
+        @tpl_cache['CancelReinstate'].model,
+        @tpl_cache['CancelReinstate'].view
+      )
+
+      super data, status, jqXHR
 
     # **Process Form**  
     # On submit we do some action specific processing and then send to the
