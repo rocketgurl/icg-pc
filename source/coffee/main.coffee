@@ -56,6 +56,10 @@ require [
 
   # Setup underscore.string
   _.mixin(_.str.exports())
+  _.mixin({
+    deepClone: (p_object) ->
+        JSON.parse(JSON.stringify(p_object))
+    })
 
   # Initialize application when dom is ready
   domReady ->
