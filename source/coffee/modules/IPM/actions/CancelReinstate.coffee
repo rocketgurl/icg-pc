@@ -25,7 +25,7 @@ define [
 
       # Metadata about Cancellation types, used in views
       @TRANSACTION_TYPES =
-        'cancel' : 
+        'cancel' :
           label  : 'Cancellation'
           title  : 'The policy has been cancelled'
           submit : 'Cancel this policy immediately'
@@ -50,33 +50,34 @@ define [
       super
       @fetchTemplates(@MODULE.POLICY, 'cancellation', @processView)
 
-    # **Build view data objects and trigger loaded event**  
+    # **Build view data objects and trigger loaded event**
     #
     # Takes the model.json and creates a custom data object for this view. We
-    # then trigger the `loaded` event passing @postProcessView as the callback. 
-    # This will attach any necessary behaviors to the rendered form.  
+    # then trigger the `loaded` event passing @postProcessView as the callback.
+    # This will attach any necessary behaviors to the rendered form.
     #
-    # @param `vocabTerms` _Object_ model.json  
-    # @param `view` _String_ HTML template    
+    # @param `vocabTerms` _Object_ model.json
+    # @param `view` _String_ HTML template
     #
     processView : (vocabTerms, view) =>
       @CURRENT_SUBVIEW = false
       [viewData, view] = @processViewData(vocabTerms, view)
+
       @processCancellationData(viewData)
       @trigger "loaded", this, @postProcessView
 
-    # **Build sub view template using existing data objects**  
+    # **Build sub view template using existing data objects**
     #
-    # We need to rebuild the @viewData object (processCancellationData) for 
-    # subviews, otherwise we will lose some data and get very subtle bugs 
+    # We need to rebuild the @viewData object (processCancellationData) for
+    # subviews, otherwise we will lose some data and get very subtle bugs
     # (missing dateRange, etc.)
     #
-    # @param `vocabTerms` _Object_ model.json  
-    # @param `view` _String_ HTML template    
+    # @param `vocabTerms` _Object_ model.json
+    # @param `view` _String_ HTML template
     #
     processSubView : (vocabTerms, view) =>
       # **ALERT** - we must not cache subviews, or we will problems when we want
-      # to go back to the parent view, hence third param of **true** in 
+      # to go back to the parent view, hence third param of **true** in
       # @processViewData
       [viewData, view] = @processViewData(vocabTerms, view, true)
       @processCancellationData(viewData)
@@ -96,12 +97,9 @@ define [
       cancel.on 'click', (e) =>
         e.preventDefault()
         $(this).off 'click'
-        @processView(
-          @tpl_cache['CancelReinstate'].model,
-          @tpl_cache['CancelReinstate'].view
-        )
+        @fetchTemplates(@MODULE.POLICY, 'cancellation', @processView)
 
-    # **Process Preview**  
+    # **Process Preview**
     #
     # Same as processView() but we add an interval obj to viewData to tell the
     # Mustache template to render a different part for the user. This is
@@ -110,9 +108,10 @@ define [
     #
     processPreview : (vocabTerms, view) =>
       @processViewData(vocabTerms, view, true)
+
       @viewData.preview        = @Endorse.parseIntervals(@values)
       @viewData.current_policy = @current_policy_intervals
-      
+
       preview_values = @extractEventValues(@MODULE.POLICY, @viewData)
       preview_labels = @determinePreviewLabel(@values.formValues, @viewData)
       preview_effective_date = @determineCorrectPreviewDate(@MODULE.POLICY, @viewData)
@@ -126,8 +125,8 @@ define [
 
       # Get submitLabel
       @viewData.preview.submitLabel = @TRANSACTION_TYPES[@CURRENT_SUBVIEW].submit ? ''
-      
-      # What's the RateType? 
+
+      # What's the RateType?
       @viewData.preview.RateType = if @viewData.preview.ReasonCode == "15" then \
         "Short-Rate" else "Pro Rata"
 
@@ -135,8 +134,8 @@ define [
 
     # Assemble additional fields needed for the cancellation views
     #
-    # @param `viewData` _object_ model.json values   
-    # @return _Object_ updated @viewData  
+    # @param `viewData` _object_ model.json values
+    # @return _Object_ updated @viewData
     #
     processCancellationData : (viewData) ->
       policy = @MODULE.POLICY
@@ -163,7 +162,7 @@ define [
 
       # Process more data based on policyState
       cancel_data = switch cancel_data.policyStateVal
-        when 'ACTIVEPOLICY' 
+        when 'ACTIVEPOLICY'
           @processActivePolicy(cancel_data)
         when 'CANCELLEDPOLICY'
           @processCancelledPolicy(cancel_data, viewData)
@@ -171,12 +170,12 @@ define [
 
       @viewData = _.extend(viewData, cancel_data)
 
-    # Pending Cancellations need some extra data extrapolated from the 
+    # Pending Cancellations need some extra data extrapolated from the
     # viewData object
     #
-    # @param `cancel_data` _Object_ values for cancellation  
-    # @param `viewData` _object_ model.json values   
-    # @return _Object_ updated cancel_data  
+    # @param `cancel_data` _Object_ values for cancellation
+    # @param `viewData` _object_ model.json values
+    # @return _Object_ updated cancel_data
     #
     processPendingCancellation : (cancel_data, viewData) ->
       reasonLabel = _.where(viewData.EnumsReasonCodesAndLabels, { value : cancel_data.pendingCancel.reasonCode })
@@ -190,7 +189,7 @@ define [
 
       cancel_data.cancellationEffectiveDate    = \
         @Helpers.stripTimeFromDate(cancel_data.pendingCancel.cancellationEffectiveDate)
-      
+
       # I find this to be dubious, erasing the object with a boolean - DN
       cancel_data.pendingCancel = true
 
@@ -198,12 +197,12 @@ define [
 
     # Assemble message fields and other values for Active Policies
     #
-    # @param `cancel_data` _Object_ values for cancellation    
-    # @return _Object_ updated cancel_data  
+    # @param `cancel_data` _Object_ values for cancellation
+    # @return _Object_ updated cancel_data
     #
     processActivePolicy : (cancel_data) ->
       if cancel_data.pendingCancel
-        active_data = 
+        active_data =
           cancelDisabled    : ''
           reinstateDisabled : 'disabled'
           pendingDisabled   : 'disabled'
@@ -234,13 +233,13 @@ define [
 
     # Assemble message fields and other values for Cancelled Policies
     #
-    # @param `cancel_data` _Object_ values for cancellation    
-    # @param `viewData` _object_ model.json values  
-    # @return _Object_ updated cancel_data  
+    # @param `cancel_data` _Object_ values for cancellation
+    # @param `viewData` _object_ model.json values
+    # @return _Object_ updated cancel_data
     #
     processCancelledPolicy : (cancel_data, viewData) ->
       reasonLabel = _.where(viewData.EnumsReasonCodesAndLabels, { value : cancel_data.policyState.reasonCode })
-      
+
       if _.isArray(reasonLabel) && reasonLabel.length > 0
         reasonLabel = reasonLabel[0]['label']
 
@@ -271,7 +270,7 @@ define [
         action = $(e.currentTarget).attr('name') ? false
         if action?
           @CURRENT_SUBVIEW = action
-          @fetchTemplates(@MODULE.POLICY, action, @processSubView)
+          @fetchTemplates(@MODULE.POLICY, action, @processSubView, true)
         else
           msg = "Could not load that action. Contact support."
           @PARENT_VIEW.displayMessage('error', msg, 12000)
@@ -285,7 +284,7 @@ define [
 
       super data, status, jqXHR
 
-    # **Process Form**  
+    # **Process Form**
     # On submit we do some action specific processing and then send to the
     # TransactionRequest monster
     #
@@ -344,9 +343,9 @@ define [
     # Parse most recent Event object from Policy and use it to build
     # values for the Cancellation preview
     #
-    # @param `policy` _Object_ Policy    
-    # @param `viewData` _object_ model.json values  
-    # @return _Object_ updated viewData  
+    # @param `policy` _Object_ Policy
+    # @param `viewData` _object_ model.json values
+    # @return _Object_ updated viewData
     #
     extractEventValues : (policy, viewData) ->
       # Find the most recent Cancellation/PendingCancellation in the Policy.
@@ -358,8 +357,8 @@ define [
 
       viewData.preview.Action = \
         if cancellation.type == "Cancel"
-          "Cancellation" 
-        else 
+          "Cancellation"
+        else
           "Pending Cancellation"
 
       data_whitelist = [
@@ -395,13 +394,13 @@ define [
     # Parse most recent Event object from Policy and use it to build
     # values for the Cancellation preview
     #
-    # @param `formValues` _Object_ @values.formValues    
-    # @param `viewData` _object_ model.json values  
-    # @return _Object_ updated viewData  
+    # @param `formValues` _Object_ @values.formValues
+    # @param `viewData` _object_ model.json values
+    # @return _Object_ updated viewData
     #
     determinePreviewLabel : (formValues, viewData) ->
       # Labels for buttons
-      preview_labels = 
+      preview_labels =
         "PendingCancellationRescission" : "rescission of pending cancellation"
         "Reinstatement"                 : "reinstatement"
         "PendingCancellation"           : "pending cancellation"
@@ -414,16 +413,16 @@ define [
 
       viewData
 
-    # ICS-1000 : For Pending Cancellations we want to show CancellationEffectiveDate 
-    # from the preview XML doc. For immediate cancellations we want to show 
+    # ICS-1000 : For Pending Cancellations we want to show CancellationEffectiveDate
+    # from the preview XML doc. For immediate cancellations we want to show
     # EffectiveDate from the preview XML doc. This is partially to
-    # future proof things so that if the server does calculations on the 
-    # preview XML doc in the future we will show them to the user here 
+    # future proof things so that if the server does calculations on the
+    # preview XML doc in the future we will show them to the user here
     # instead of their raw input.
     #
-    # @param `policy` _Object_ Policy    
-    # @param `viewData` _object_ model.json values  
-    # @return _Object_ updated viewData  
+    # @param `policy` _Object_ Policy
+    # @param `viewData` _object_ model.json values
+    # @return _Object_ updated viewData
     #
     determineCorrectPreviewDate : (policy, viewData) ->
       management = policy.get('json').Management
@@ -437,9 +436,9 @@ define [
       viewData
 
     # Date math to get AdvanceNotceDays
-    #  
-    # @param `viewData` _object_ model.json values  
-    # @return _Object_ updated viewData  
+    #
+    # @param `viewData` _object_ model.json values
+    # @return _Object_ updated viewData
     #
     calculateAdvanceNoticeDays : (viewData) ->
       MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
@@ -452,4 +451,3 @@ define [
 
       viewData
 
-    

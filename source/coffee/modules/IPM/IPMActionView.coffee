@@ -92,14 +92,14 @@ define [
     # @param `action` _String_ Name of this action
     # @param `callback` _Function_ function to call on AJAX success
     #
-    fetchTemplates : (policy, action, callback) ->
+    fetchTemplates : (policy, action, callback, nocache = false) ->
       if !policy? || !action?
         return false
 
       path  = "/js/#{@MODULE.CONFIG.PRODUCTS_PATH}#{policy.get('productName')}/forms/#{_.slugify(action)}"
 
       # Stash the files in the cache on first load
-      if !_.has(@tpl_cache, action)
+      if !_.has(@tpl_cache, action) || nocache
         model = $.getJSON("#{path}/model.json")
                  .pipe (resp) -> return resp
         view  = $.get("#{path}/view.html", null, null, "text")
@@ -553,7 +553,7 @@ define [
     # **Pop open the fieldset for any invalid input**
     #
     # @param `errors` _Object_ collection of invalid inputs
-    # @return _void_  
+    # @return _void_
     #
     displayInvalidFields : (errors) ->
       for error in errors
@@ -661,7 +661,7 @@ define [
 
     # Return a jQuery ready ID namespaced to this CID
     # ex: #view45_reasonCode
-    # 
+    #
     # @param _String_ id name
     # @return _String_
     makeId : (id) ->
