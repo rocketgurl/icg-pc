@@ -109,6 +109,8 @@ define [
     processPreview : (vocabTerms, view) =>
       @processViewData(vocabTerms, view, true)
 
+      @viewDataPrevious = _.deepClone @viewData
+
       @viewData.preview        = @Endorse.parseIntervals(@values)
       @viewData.current_policy = @current_policy_intervals
 
@@ -275,14 +277,24 @@ define [
           msg = "Could not load that action. Contact support."
           @PARENT_VIEW.displayMessage('error', msg, 12000)
 
-    # On sucess we need to get out of the sub-view
+    # On success we need to get out of the sub-view.
     callbackSuccess : (data, status, jqXHR) =>
-      @processView(
-        @tpl_cache['CancelReinstate'].model,
-        @tpl_cache['CancelReinstate'].view
-      )
+      @PARENT_VIEW.success_msg = """
+      #{_.classify(@CURRENT_SUBVIEW)} of Policy #{@MODULE.POLICY.getPolicyId()}
+      """
 
+      # Extend callback in  IPMActionView
       super data, status, jqXHR
+
+    # On error we need to get out of the sub-view.
+    callbackError : (jqXHR, status, error) =>
+
+      if _.has this, 'viewDataPrevious'
+        @viewData = _.deepClone @viewDataPrevious
+
+      @PARENT_VIEW.route 'Home'
+
+      super jqXHR, status, error
 
     # **Process Form**
     # On submit we do some action specific processing and then send to the

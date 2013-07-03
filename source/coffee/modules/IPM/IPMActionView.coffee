@@ -99,7 +99,7 @@ define [
       path  = "/js/#{@MODULE.CONFIG.PRODUCTS_PATH}#{policy.get('productName')}/forms/#{_.slugify(action)}"
 
       # Stash the files in the cache on first load
-      if !_.has(@tpl_cache, action) || nocache
+      if _.isNull(@tpl_cache) || !_.has(@tpl_cache, action) || nocache
         model = $.getJSON("#{path}/model.json")
                  .pipe (resp) -> return resp
         view  = $.get("#{path}/view.html", null, null, "text")
@@ -364,7 +364,8 @@ define [
     # @param `jqXHR` _Object_ XHR object
     #
     callbackSuccess : (data, status, jqXHR) =>
-      msg = "#{@PARENT_VIEW.view_state} completed successfully"
+      msg_text = if @PARENT_VIEW.success_msg then @PARENT_VIEW.success_msg else @PARENT_VIEW.view_state
+      msg = "#{msg_text} completed successfully"
 
       @PARENT_VIEW.displayMessage('success', msg, 12000).remove_loader()
 
@@ -372,12 +373,6 @@ define [
       @resetPolicyModel(data, jqXHR)
 
       @PARENT_VIEW.route 'Home'
-
-      # Re-render the form
-      # @processView(
-      #   @tpl_cache[@PARENT_VIEW.view_state].model,
-      #   @tpl_cache[@PARENT_VIEW.view_state].view
-      # )
 
     # **Error handling from ChangeSet**
     #
@@ -428,6 +423,12 @@ define [
     #
     callbackPreview : (data, status, jqXHR) =>
       @resetPolicyModel(data, jqXHR)
+
+      if !_.has(@tpl_cache, @PARENT_VIEW.view_state) || !_.has(@tpl_cache[@PARENT_VIEW.view_state], 'model')
+        @PARENT_VIEW.route 'Home'
+        @displayError 'warning', 'Lost track of sub-view, try again.'
+        return
+
       @processPreview(
         @tpl_cache[@PARENT_VIEW.view_state].model,
         @tpl_cache[@PARENT_VIEW.view_state].view

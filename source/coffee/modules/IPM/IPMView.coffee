@@ -90,6 +90,9 @@ define [
       # Display loader image
       @insert_loader()
 
+      # Reset any success messages set on this view
+      @success_msg = false
+
       # Deal with callbacks. This is mostly to ease testing.
       callbacks        = callbacks ? {}
       callback_success = callbacks.success ? null
