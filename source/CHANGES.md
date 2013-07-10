@@ -1,6 +1,13 @@
 Updates
 -------
 
+### 2.1.2
+
+Bug fixes:
+
+-	Fixed issue with IPM Apply Charges not completing [ICS-1894](https://arc90dev.atlassian.net/browse/ICS-1894)
+-	IPM Cancellations now working [ICS-1897](https://arc90dev.atlassian.net/browse/ICS-1897)
+
 ### 2.1.1
 
 Updates:
@@ -17,6 +24,6 @@ Updates:
 -	IPM Datefields now have calendar icon
 -	IPM currency inputs now have icon
 
-Bugfixes:
+Bug fixes:
 
 -	Corrected ID collisions in IPM forms which prevented correct use of datepicker
