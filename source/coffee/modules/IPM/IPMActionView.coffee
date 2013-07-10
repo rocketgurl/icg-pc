@@ -369,8 +369,11 @@ define [
 
       @PARENT_VIEW.displayMessage('success', msg, 12000).remove_loader()
 
+      # Force reset values to prevent caching of Policy versions
+      @values = {}
+
       # Load returned policy into PolicyModel
-      @resetPolicyModel(data, jqXHR)
+      @resetPolicyModel(data, jqXHR, true)
 
       @PARENT_VIEW.route 'Home'
 
@@ -441,14 +444,21 @@ define [
     #
     # @param `data` _XML_ PolicyModel
     # @param `jqXHR` _Object_ XHR object
+    # @param `hard` _Bool_ true will remove any previous model attrs
     # @return _Object_ PolicyModel
     #
-    resetPolicyModel : (data, jqXHR) ->
-      # Swap out Policy XML with new XML, saving the old one
+    resetPolicyModel : (data, jqXHR, hard = false) ->
+      # Parse XML into something useful
       new_attributes = @MODULE.POLICY.parse(data, jqXHR)
-      new_attributes.prev_document =
-        document : @MODULE.POLICY.get('document')
-        json     : @MODULE.POLICY.get('json')
+
+      if hard
+        # Swap out Policy XML with new XML, Do not save previous versions
+        @MODULE.POLICY.unset('prev_document')
+      else
+        # Swap out Policy XML with new XML, saving the old one
+        new_attributes.prev_document =
+          document : @MODULE.POLICY.get('document')
+          json     : @MODULE.POLICY.get('json')
 
       # Model.set() chokes on something in the object, so we just
       # jam the values into attributes directly. So sorry Mr. Ashkenas.
