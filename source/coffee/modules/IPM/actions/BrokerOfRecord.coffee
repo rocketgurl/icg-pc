@@ -7,7 +7,7 @@ define [
     initialize : ->
       super
 
-      @searchAgencies = _.debounce @searchAgencies, 500
+      @searchAgencies = _.debounce @searchAgencies, 1000
 
     ready : ->
       super
