@@ -59,6 +59,10 @@
         {
           "label": "Endorse",
           "view": "Endorse"
+        },
+        {
+          "label": "Change Broker of Record",
+          "view": "BrokerOfRecord"
         }
       ]
     },

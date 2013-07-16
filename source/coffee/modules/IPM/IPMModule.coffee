@@ -20,9 +20,10 @@ define [
     # @params `USER` _Object_ UserModel  
     # @return _this_  
     #
-    constructor : (@POLICY, @CONTAINER, @USER) ->
+    constructor : (@POLICY, @CONTAINER, @CONTROLLER) ->
       # Current action state
       @ACTION = null
+      @USER   = @CONTROLLER.user
 
         # No Policy, No Container, No Dice!
       if !@POLICY || !@CONTAINER || !@USER

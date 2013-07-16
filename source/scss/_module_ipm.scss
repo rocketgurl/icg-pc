@@ -580,3 +580,31 @@ h2.ipm-action-header {
 #cancellation .preview caption {
 	display: none;
 }
+
+// Broker of Record
+.bor_input {
+	margin: 0 0 10px 0;
+
+	label {
+		margin: 0 10px 0 0;
+		@include font-size(16);
+		display: inline-block;
+		width: 250px;
+		text-align: right;
+		color: $darkgray;
+	}
+
+	input[type=search] {
+		@include font-size(16);
+	}
+
+	select {
+		width: 350px;
+	}
+}
+
+.bor_input_alc {
+	@include font-size(16);
+	font-weight: bold;
+	color: $darkgray;
+}

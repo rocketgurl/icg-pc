@@ -509,6 +509,13 @@ h2.ipm-action-header { font-size: 16px; font-size: 1.6rem; color: dimgrey; margi
 
 #cancellation .preview caption { display: none; }
 
+.bor_input { margin: 0 0 10px 0; }
+.bor_input label { margin: 0 10px 0 0; font-size: 16px; font-size: 1.6rem; display: inline-block; width: 250px; text-align: right; color: dimgrey; }
+.bor_input input[type=search] { font-size: 16px; font-size: 1.6rem; }
+.bor_input select { width: 350px; }
+
+.bor_input_alc { font-size: 16px; font-size: 1.6rem; font-weight: bold; color: dimgrey; }
+
 .zd-loss-history-container { width: 100%; float: right; margin-right: 0; #margin-left: -1em; display: inline; }
 
 .zd-loss-history { width: 100%; margin-top: 20px; margin-bottom: 20px; }

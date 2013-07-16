@@ -18,8 +18,9 @@ require
     loader      : 'lib/heartcode-canvasloader'
     swfobject   : 'lib/swfobject'
     u_string    : 'lib/underscore.string'
-    herald      : 'lib/herald/herald',
+    herald      : 'lib/herald/herald'
     marked      : 'lib/marked'
+    chosen      : 'lib/chosen.jquery.min'
   priority: ['jquery','xml2json','json']
   shim:
       'jquery' :
@@ -43,6 +44,19 @@ require
         deps : ['underscore']
       'momentrange' :
         deps : ['moment']
+      'chosen' :
+        deps : ['jquery']
+        exports : 'Chosen'
+        init : ($) ->
+          # creates a global Chosen
+          # https://github.com/harvesthq/chosen/pull/922
+          'use strict'
+
+          ChosenConstructor = (element, options) ->
+            Chosen.call this, element, options
+
+          ChosenConstructor.prototype = Chosen.prototype
+          ChosenConstructor
 
 require [
   'jquery',
@@ -51,7 +65,8 @@ require [
   'WorkspaceController',
   'u_string',
   'domReady',
-  'xml2json'
+  'xml2json',
+  'chosen'
 ], ($, _, Backbone, WorkspaceController, u_string, domReady) ->
 
   # Setup underscore.string

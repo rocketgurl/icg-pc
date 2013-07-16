@@ -145,7 +145,7 @@ define [
       # If this is an IPM policies need an IPMModule instantiated
       if window.IPM_CAPABLE
         if @model.isIPM()
-          @IPM = new IPMModule(@model, $("#policy-ipm-#{@cid}"), @controller.user)
+          @IPM = new IPMModule(@model, $("#policy-ipm-#{@cid}"), @controller)
         else
           @$el.find(".policy-nav a[href=ipmchanges]").parent('li').hide()
       else
