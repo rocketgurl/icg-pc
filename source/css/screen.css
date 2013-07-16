@@ -516,6 +516,8 @@ h2.ipm-action-header { font-size: 16px; font-size: 1.6rem; color: dimgrey; margi
 
 .bor_input_alc { font-size: 16px; font-size: 1.6rem; font-weight: bold; color: dimgrey; }
 
+img.bor-spinner { margin-right: 5px; }
+
 .zd-loss-history-container { width: 100%; float: right; margin-right: 0; #margin-left: -1em; display: inline; }
 
 .zd-loss-history { width: 100%; margin-top: 20px; margin-bottom: 20px; }
