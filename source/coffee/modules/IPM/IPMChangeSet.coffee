@@ -477,3 +477,11 @@ define [
         </Event>
       </EventHistory>
     """
+
+    broker_of_record : """
+      <BrokerOfRecordChanges>
+        <AgencyLocationCode>{{agencyLocationCode}}</AgencyLocationCode>
+        <AgencyLocationId>{{agencyLocationId}}</AgencyLocationId>
+      </BrokerOfRecordChanges>
+    """
+
