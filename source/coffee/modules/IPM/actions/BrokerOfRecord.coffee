@@ -142,6 +142,7 @@ define [
 
       $no_results = $('.no-results')
       $no_results.html($no_results.html()?.replace(/No results match/g, 'Searching for -'))
+      $no_results.prepend('<img src="/img/wpspin_light.gif" class="bor-spinner" />');
 
       $list_element = $(@makeId('NewLocationCode'))
 
@@ -153,6 +154,10 @@ define [
             $list_element.html(list)
             $list_element.trigger("liszt:updated")
             $el.val(val)
+          else
+            $no_results.html($no_results.html()?.replace(/Searching for -/g, 'No results match'))
+
+          $no_results.find('img').remove()
       )
 
     # **Send AJAX search request to ixDirectory**
