@@ -95,6 +95,8 @@ define [
       @values.formValues.transactionType = 'BrokerOfRecordChange'
       @values.formValues.agencyLocationCode = \
         $(data).find('Organization Role[type=agency_location] DataItem[name=agencyLocationCode]').attr('value')
+      @values.formValues.agencyLocationId = \
+        $(data).find('Organization').attr('id')
 
       # Options for ChangeSet
       options =
