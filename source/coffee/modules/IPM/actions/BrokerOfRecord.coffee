@@ -105,8 +105,8 @@ define [
     agencyLocationError : (jqXHR, status, error) =>
       @PARENT_VIEW.displayMessage(
         'warning',
-        "Could not retrieve Agency Location Code: #{status}"
-      )
+        "Could not retrieve Agency Location Code: #{error}"
+      ).remove_loader()
 
     # Assemble the TR
     #
