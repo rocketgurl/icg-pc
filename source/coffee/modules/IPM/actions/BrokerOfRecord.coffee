@@ -12,6 +12,7 @@ define [
     ready : ->
       super
       @fetchTemplates(@MODULE.POLICY, 'broker-of-record', @processView)
+      console.log this
 
     # **Build view data objects and trigger loaded event**
     #
@@ -102,7 +103,7 @@ define [
 
     # Throw an error if we can't get the ALC
     agencyLocationError : (jqXHR, status, error) =>
-      @PARENT_VIEW.displayError(
+      @PARENT_VIEW.displayMessage(
         'warning',
         "Could not retrieve Agency Location Code: #{status}"
       )
