@@ -1,6 +1,6 @@
 <!-- Broker of Record - Product: FSIC HO3 Louisiana -->
 <form action="endorse" method="get" accept-charset="utf-8" class="collapsedSections">
-<div id="content">
+<div id="content" class="bor">
 	<div id="content_header">
 		<h2>{{#preview}}Previewing {{/preview}}Change Broker of Record for {{ policyId }}</h2>
 	</div>
@@ -27,6 +27,106 @@
 		</div>
 	</div>
 	<input type="hidden" id="{{guid}}_preview" name="preview" value="true">
+	{{/preview}}
+	{{#preview}}
+	<div class="content_body">
+		<section class="bor-mailing-address">
+			<h2>Mailing address for new Broker of Record</h2>
+			<p>{{{address}}}</p>
+		</section>
+		<section class="bor-comparison">
+			<div class="first">
+				<h2>Old Broker of Record information</h2>
+				<table class="bor-table">
+					<thead>
+						<th>
+							Field
+						</th>
+						<th>
+							Value
+						</th>
+					</thead>
+					<tbody>
+						{{#old_bor}}
+						<tr>
+							<td>Agency Affiliation</td>
+							<td>{{agency_affiliation}}</td>
+						</tr>
+						<tr>
+							<td>Agency Location Code</td>
+							<td>{{agency_location_code}}</td>
+						</tr>
+						<tr>
+							<td>Agency Location Name</td>
+							<td>{{agency_location_name}}</td>
+						</tr>
+						<tr>
+							<td>Agency Name</td>
+							<td>{{agency_name}}</td>
+						</tr>
+						{{/old_bor}}
+					</tbody>
+				</table>
+			</div>
+			<div class="second">
+				<h2>New Broker of Record information</h2>
+				<table class="bor-table">
+					<thead>
+						<th>
+							Field
+						</th>
+						<th>
+							Value
+						</th>
+					</thead>
+					<tbody>
+						{{#new_bor}}
+						<tr>
+							<td>Agency Affiliation</td>
+							<td>{{agency_affiliation}}</td>
+						</tr>
+						<tr>
+							<td>Agency Location Code</td>
+							<td>{{agency_location_code}}</td>
+						</tr>
+						<tr>
+							<td>Agency Location Name</td>
+							<td>{{agency_location_name}}</td>
+						</tr>
+						<tr>
+							<td>Agency Name</td>
+							<td>{{agency_name}}</td>
+						</tr>
+						{{/new_bor}}
+					</tbody>
+				</table>
+			</div>
+		</section>
+		<section class="bor-history">
+			<h2>Broker of Record history <span>(applies to commisions)</span></h2>
+			<table class="bor-table">
+				<thead>
+					<th>Policy term</th>
+					<th>Policy term data</th>
+					<th>Current agency location</th>
+					<th>Proposed agency location code</th>
+				</thead>
+				<tbody>
+					{{#history}}
+					<tr>
+						<td>{{policy_term}}</td>
+						<td>{{policy_term_dates}}</td>
+						<td>{{current_alc}}</td>
+						<td>{{proposed_alc}}</td>
+					</tr>
+					{{/history}}
+				</tbody>
+			</table>
+		</section>
+		<div class="form_actions">
+			<input type="submit" class="button" value="Confirm"> <a href="home">Cancel</a>
+		</div>
+	</div>
 	{{/preview}}
 </div>
 </form>
