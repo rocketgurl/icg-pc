@@ -124,6 +124,9 @@ define [
       @new_agency_data =
         document : data
         address  : @getMailingAddress data
+        agency_location_code : @values.formValues.agencyLocationCode
+
+      @current_alc = @MODULE.POLICY.getDataItem(@MODULE.POLICY.getLastTerm().DataItem, 'AgencyLocationCode')
 
       # Save a current set of BoR data from existing Policy
       @current_bor = @getBrokerOfRecord @MODULE.POLICY
@@ -220,18 +223,24 @@ define [
     # Ask Andy how to get the Term data for this part of the view
     getBrokerOfRecordHistory : (policy) ->
       count = 0
-      _.map(policy.getTerms(), (term) ->
+      history = _.map(policy.getTerms(), (term) ->
         count++
         effectiveDate  = if term.EffectiveDate? then term.EffectiveDate else ''
         expirationDate = if term.ExpirationDate? then term.ExpirationDate else ''
         date = "#{moment(effectiveDate).format('YYYY-MM-DD')} - #{moment(expirationDate).format('YYYY-MM-DD')}"
+
         {
           policy_term       : count
           policy_term_dates : date
           current_alc       : policy.getDataItem(term.DataItem, 'AgencyLocationCode')
-          proposed_alc      : ''
+          proposed_alc      : policy.getDataItem(term.DataItem, 'AgencyLocationCode')
         }
       )
+      last = _.last history
+      last.proposed_alc = @new_agency_data.agency_location_code
+      last.current_alc  = @current_alc
+      history[history.length - 1] = last
+      history
 
     # Return an array of Mailing Address fragments from Organization XML
     getMailingAddress : (organization) ->
