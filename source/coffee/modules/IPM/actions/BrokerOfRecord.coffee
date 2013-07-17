@@ -175,7 +175,7 @@ define [
         (data, textStatus, jqxhr) =>
           organizations = $(data).find('Organization')
           if organizations.length > 0
-            list = ("<option value=\"#{o.attributes.id.nodeValue}\">#{o.attributes.id.nodeValue} : #{o.firstChild.childNodes[0].nodeValue}</option>" for o in organizations)
+            list = ("<option value=\"#{o.attributes.id.nodeValue}\">#{o.firstChild.childNodes[0].nodeValue}</option>" for o in organizations)
             $list_element.html(list)
             $list_element.trigger("liszt:updated")
             $el.val(val)
@@ -193,7 +193,7 @@ define [
     # @return _jqXHR_ Deferred object
     #
     sendAgencyQuery : (baseUrl, query, user) ->
-      url = "#{baseUrl}organizations/?query=agencyLocationCode:#{query}"
+      url = "#{baseUrl}organizations/?query=name:#{query}"
       $.ajax
           url      : url
           dataType : 'xml'
