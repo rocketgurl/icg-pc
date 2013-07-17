@@ -53,7 +53,6 @@ define [
     processViewData : (vocabTerms, view) =>
       super vocabTerms, view
 
-
     postProcessView : ->
       super
 
@@ -108,7 +107,13 @@ define [
         "Could not retrieve Agency Location Code: #{status}"
       )
 
+    # Assemble the TR
+    #
+    # - effectiveDate should be for the latest Term
+    # - ALC & ALID are taken from the ALC XML (data)
+    #
     submitTransaction : (data, textStatus, jqxhr) =>
+      @values.formValues.effectiveDate = @MODULE.POLICY.getEffectiveDate()
       @values.formValues.transactionType = 'BrokerOfRecordChange'
       @values.formValues.agencyLocationCode = \
         $(data).find('Organization Role[type=agency_location] DataItem[name=agencyLocationCode]').attr('value')
@@ -149,6 +154,8 @@ define [
         options
       )
 
+    # Get Agency record from ixDirectory
+    #
     getAgencyLocation : (baseUrl, id) ->
       url = "#{baseUrl}organizations/#{id}"
       $.ajax
