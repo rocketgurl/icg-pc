@@ -38,7 +38,6 @@ define [
           ]
         }
       vocabTerms.terms.push location_default
-      console.log vocabTerms
       @processViewData(vocabTerms, view)
       @trigger "loaded", this, @postProcessView
 
@@ -70,7 +69,11 @@ define [
       $(@makeId('NewLocationCode')).chosen({ width: '250px' })
 
 
-    processPreView : (vocabTerms, view) =>
+    processPreview : (vocabTerms, view) =>
+      # @processViewData(vocabTerms, view)
+
+      @viewData.preview = @getPreviewData(@values)
+
       @trigger("loaded", this, @postProcessPreview)
 
 
@@ -91,12 +94,19 @@ define [
 
 
     submitTransaction : (data, textStatus, jqxhr) =>
-
       @values.formValues.transactionType = 'BrokerOfRecordChange'
       @values.formValues.agencyLocationCode = \
         $(data).find('Organization Role[type=agency_location] DataItem[name=agencyLocationCode]').attr('value')
       @values.formValues.agencyLocationId = \
         $(data).find('Organization').attr('id')
+
+      # Maintain state so we don't have to get again
+      @new_agency_data = 
+        document : data
+        address  : @getMailingAddress data
+
+      # Save a current set of BoR data from existing Policy
+      @current_bor = @getBrokerOfRecord @MODULE.POLICY
 
       # Options for ChangeSet
       options =
@@ -174,3 +184,41 @@ define [
           dataType : 'xml'
           headers  :
             'Authorization' : "Basic #{user.get('digest')}"
+
+    # Assemble an object of data for the Preview
+    getPreviewData : (values) ->
+      {
+        old_bor : @current_bor
+        new_bor : @getBrokerOfRecord @MODULE.POLICY
+        address : @new_agency_data.address
+        history : @getBrokerOfRecordHistory @MODULE.POLICY
+        values  : values
+      }
+
+    # Ask Andy how to get the Term data for this part of the view
+    getBrokerOfRecordHistory : (policy) ->
+      {}
+
+    # Return an array of Mailing Address fragments from Organization XML
+    getMailingAddress : (organization) ->
+      $organization = $(organization).find('Organization')
+      $mailing      = $organization.find('Addresses Address[type=mailing]')
+      
+      m = (s) -> $mailing.find(s).text() # Round up mailing text
+
+      _.map([
+        $organization.find('Name').text(),
+        "#{m('Street1')} #{m('Street2')} #{m('Street3')}",
+        "#{m('City')}, #{m('Province')} #{m('PostalCode')}"
+      ], (s) -> s.trim())      
+
+    # Return BoR information from Policy
+    getBrokerOfRecord : (policy) ->
+      findItem = _.partial policy.getDataItem, policy.getLastTerm().DataItem
+      {
+        'Agency Name'          : findItem('AgencyName'),
+        'Agency Location Code' : findItem('AgencyLocationCode'),
+        'Agency Location Name' : findItem('AgencyLocationName'),
+        'Agency Affiliation'   : findItem('AgencyAffiliation')     
+      }
+
