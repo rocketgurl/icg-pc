@@ -182,7 +182,10 @@ define [
     # @param `bool` _Boolean_ return boolean or object
     # @return _Boolean_ | _Obj_
     isPendingCancel : (bool) ->
-      pending = @get('json').Management.PendingCancellation || false
+      pending = if @get('json').Management?.PendingCancellation?
+                  @get('json').Management.PendingCancellation
+                else
+                  false
       return true if (bool && pending)
       pending
 
