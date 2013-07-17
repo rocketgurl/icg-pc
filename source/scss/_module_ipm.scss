@@ -103,7 +103,7 @@
 		background-color: $blue;
 		color: $white;
 		@include emboss(darken($blue, 20));
-	}	
+	}
 }
 
 .ipm-home-action-view ul > li > ul > li {
@@ -330,12 +330,12 @@ h2.ipm-action-header {
 				content: ' *';
 			}
 		}
-		label.validation_error 
+		label.validation_error
 		{
 		    color: #a00;
 		}
 		input.validation_error,
-		textarea.validation_error, 
+		textarea.validation_error,
 		{
 		    box-shadow: 0 0 5px rgba(160, 0, 0, 1);
 		    background-color: lighten($red, 50);
@@ -452,7 +452,7 @@ h2.ipm-action-header {
 		color: $white;
 		background: darken($lightgray, 30);
 	}
-}	
+}
 
 // Preview Data Table (Endorse)
 .data_table  {
@@ -514,7 +514,7 @@ h2.ipm-action-header {
 		td {
 			padding-bottom: 8px;
 		}
-	}	
+	}
 
 	tr.dividing_row {
 		border-top: darken($lightgray, 10) 1px solid;
@@ -611,4 +611,45 @@ h2.ipm-action-header {
 
 img.bor-spinner {
 	margin-right: 5px;
+}
+
+// Broker of Record Preview
+.bor-mailing-address,
+.bor-comparison,
+.bor-history {
+	margin: 0 0 40px 0;
+
+	h2 {
+		@include font-size(16);
+		font-weight: bold;
+		color: $darkgray;
+		margin: 0 0 10px;
+
+		span {
+			font-weight: normal;
+		}
+	}
+}
+
+.bor-mailing-address {
+	p {
+		@include font-size(14);
+		margin: 10px 0;
+		color: $darkgray !important;
+		line-height: 140%;
+	}
+}
+
+.bor-comparison {
+	min-height: 1%;
+	.first {
+		@include span-columns(6, 12);
+	}
+	.second {
+		@include span-columns(6 omega, 12);
+	}
+}
+
+.bor-table {
+	@extend table.module-search;
 }

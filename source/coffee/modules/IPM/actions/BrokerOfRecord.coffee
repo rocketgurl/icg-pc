@@ -68,14 +68,23 @@ define [
       # Turn our select into a Chosen select widget
       $(@makeId('NewLocationCode')).chosen({ width: '250px' })
 
+    # Not fully clear why I had to do this, but I did, the click event
+    # was not getting attached to the confirm button
+    postProcessPreview : ->
+      super
 
+      # Attach event listener to preview button
+      @$el.find('form input.button[type=submit]').on(
+          'click',
+          (e) =>
+            e.preventDefault()
+            @submit e
+        )
+
+    # Assemble data for preview
     processPreview : (vocabTerms, view) =>
-      # @processViewData(vocabTerms, view)
-
       @viewData.preview = @getPreviewData(@values)
-
       @trigger("loaded", this, @postProcessPreview)
-
 
     submit : (e) ->
       super e
@@ -90,8 +99,14 @@ define [
       xhr_agency_location.done(@submitTransaction)
 
       # We don't
-      # xhr_agency_location.fail( - display error msg - )
+      xhr_agency_location.fail(@agencyLocationError)
 
+    # Throw an error if we can't get the ALC
+    agencyLocationError : (jqXHR, status, error) =>
+      @PARENT_VIEW.displayError(
+        'warning',
+        "Could not retrieve Agency Location Code: #{status}"
+      )
 
     submitTransaction : (data, textStatus, jqxhr) =>
       @values.formValues.transactionType = 'BrokerOfRecordChange'
@@ -101,7 +116,7 @@ define [
         $(data).find('Organization').attr('id')
 
       # Maintain state so we don't have to get again
-      @new_agency_data = 
+      @new_agency_data =
         document : data
         address  : @getMailingAddress data
 
@@ -197,28 +212,42 @@ define [
 
     # Ask Andy how to get the Term data for this part of the view
     getBrokerOfRecordHistory : (policy) ->
-      {}
+      count = 0
+      _.map(policy.getTerms(), (term) ->
+        count++
+        effectiveDate  = if term.EffectiveDate? then term.EffectiveDate else ''
+        expirationDate = if term.ExpirationDate? then term.ExpirationDate else ''
+        date = "#{moment(effectiveDate).format('YYYY-MM-DD')} - #{moment(expirationDate).format('YYYY-MM-DD')}"
+        {
+          policy_term       : count
+          policy_term_dates : date
+          current_alc       : policy.getDataItem(term.DataItem, 'AgencyLocationCode')
+          proposed_alc      : ''
+        }
+      )
 
     # Return an array of Mailing Address fragments from Organization XML
     getMailingAddress : (organization) ->
       $organization = $(organization).find('Organization')
       $mailing      = $organization.find('Addresses Address[type=mailing]')
-      
+
       m = (s) -> $mailing.find(s).text() # Round up mailing text
 
-      _.map([
+      address = _.map([
         $organization.find('Name').text(),
         "#{m('Street1')} #{m('Street2')} #{m('Street3')}",
         "#{m('City')}, #{m('Province')} #{m('PostalCode')}"
-      ], (s) -> s.trim())      
+      ], (s) -> s.trim())
+
+      address.join('<br />')
 
     # Return BoR information from Policy
     getBrokerOfRecord : (policy) ->
       findItem = _.partial policy.getDataItem, policy.getLastTerm().DataItem
       {
-        'Agency Name'          : findItem('AgencyName'),
-        'Agency Location Code' : findItem('AgencyLocationCode'),
-        'Agency Location Name' : findItem('AgencyLocationName'),
-        'Agency Affiliation'   : findItem('AgencyAffiliation')     
+        'agency_name'          : findItem('AgencyName'),
+        'agency_location_code' : findItem('AgencyLocationCode'),
+        'agency_location_name' : findItem('AgencyLocationName'),
+        'agency_affiliation'   : findItem('AgencyAffiliation')
       }
 
