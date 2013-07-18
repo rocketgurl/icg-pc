@@ -229,7 +229,7 @@ define [
     # Ask Andy how to get the Term data for this part of the view
     getBrokerOfRecordHistory : (policy) ->
       count = 0
-      history = _.map(policy.getTerms(), (term) ->
+      history = _.map(policy.get('terms'), (term) ->
         count++
         effectiveDate  = if term.EffectiveDate? then term.EffectiveDate else ''
         expirationDate = if term.ExpirationDate? then term.ExpirationDate else ''
