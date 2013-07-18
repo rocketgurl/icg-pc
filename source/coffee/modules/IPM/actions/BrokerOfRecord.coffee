@@ -12,7 +12,6 @@ define [
     ready : ->
       super
       @fetchTemplates(@MODULE.POLICY, 'broker-of-record', @processView)
-      console.log this
 
     # **Build view data objects and trigger loaded event**
     #
@@ -138,6 +137,9 @@ define [
 
       # Success callback
       callbackFunc = @callbackSuccess
+
+      # Success message
+      @PARENT_VIEW.success_msg = "Broker of Record change to #{@values.formValues.agencyLocationCode}"
 
       # Previews require a different callback and an extra header.
       # The header prevents the changes from committing to the DB.
