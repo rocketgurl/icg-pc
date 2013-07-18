@@ -100,35 +100,35 @@ define [
 
       # Cache or load. If we have a load error, then throw up a message and
       # re-route back to the home view
-      if !_.has(@view_cache, action)
-        require ["#{@MODULE.CONFIG.ACTIONS_PATH}#{action}"], (Action) =>
-          @view_cache[action] = $("<div id=\"dom-container-#{@cid}-#{action}\" class=\"dom-container\"></div>")
+      # if !_.has(@view_cache, action)
+      require ["#{@MODULE.CONFIG.ACTIONS_PATH}#{action}"], (Action) =>
+        @view_cache[action] = $("<div id=\"dom-container-#{@cid}-#{action}\" class=\"dom-container\"></div>")
 
-          @action_cache[action] = new Action(
-            MODULE      : @MODULE
-            PARENT_VIEW : this
-          )
+        action_view = new Action(
+          MODULE      : @MODULE
+          PARENT_VIEW : this
+        )
 
-          @hideOpenViews()
+        @hideOpenViews()
 
-          @action_cache[action].on("loaded", @render, this)
-          @action_cache[action].trigger "ready"
+        action_view.on("loaded", @render, this)
+        action_view.trigger "ready"
 
-          if callback_success?
-            callback_success.call(this, @action_cache[action], action)
+        if callback_success?
+          callback_success.call(this, action_view, action)
 
-        , (err) =>
-            failedId = err.requireModules && err.requireModules[0]
-            @Amplify.publish(@cid, 'warning', "We could not load #{failedId}. Sorry.", null, 'nomove')
-            @route 'Home'
+      , (err) =>
+          failedId = err.requireModules && err.requireModules[0]
+          @Amplify.publish(@cid, 'warning', "We could not load #{failedId}. Sorry.", null, 'nomove')
+          @route 'Home'
 
-            if callback_error?
-              callback_error.call(this, err, action)
+          if callback_error?
+            callback_error.call(this, err, action)
 
-      else
-        @remove_loader()
-        @hideOpenViews =>
-          @view_cache[action].fadeIn('fast')
+      # else
+      #   @remove_loader()
+      #   @hideOpenViews =>
+      #     @view_cache[action].fadeIn('fast')
 
       this
 
