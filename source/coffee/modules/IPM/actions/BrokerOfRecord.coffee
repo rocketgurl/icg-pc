@@ -182,11 +182,14 @@ define [
 
       $list_element = $(@makeId('NewLocationCode'))
 
+      # When the response comes back we parse it looking for Organization nodes
+      # with an Affiliation childNode of side=location - these are turned into
+      # <option> elements and jammed into Chosen
       xhr.done(
         (data, textStatus, jqxhr) =>
           organizations = $(data).find('Organization')
           if organizations.length > 0
-            list = ("<option value=\"#{o.attributes.id.nodeValue}\">#{o.firstChild.childNodes[0].nodeValue}</option>" for o in organizations)
+            list = ("<option value=\"#{o.attributes.id.nodeValue}\">#{o.firstChild.childNodes[0].nodeValue}</option>" for o in organizations when $(o).find('Affiliation[side=location]').length > 0)
             $list_element.html(list)
             $list_element.trigger("liszt:updated")
             $el.val(val)
