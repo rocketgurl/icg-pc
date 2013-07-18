@@ -191,7 +191,7 @@ define [
       this
 
 
-    remove_loader : ->
+    remove_loader : =>
       try
         if @loader? && @loader != undefined
           @loader.kill()
@@ -200,7 +200,6 @@ define [
           @$el.find("#ipm-spinner-#{@cid} div").remove()
       catch e
         @$el.find("#ipm-spinner-#{@cid} div").remove()
-        console.log e, @$el.find("#ipm-spinner-#{@cid}").html()
       this
 
 
