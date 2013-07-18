@@ -180,7 +180,8 @@ define [
 
       $no_results = $('.no-results')
       $no_results.html($no_results.html()?.replace(/No results match/g, 'Searching for -'))
-      $no_results.prepend('<img src="/img/wpspin_light.gif" class="bor-spinner" />');
+      $no_results.find('.bor-spinner').remove()
+      $no_results.prepend('<img src="/img/wpspin_light.gif" class="bor-spinner" />')
 
       $list_element = $(@makeId('NewLocationCode'))
 
