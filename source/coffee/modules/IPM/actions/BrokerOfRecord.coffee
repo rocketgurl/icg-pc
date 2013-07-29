@@ -65,7 +65,7 @@ define [
       );
 
       # Turn our select into a Chosen select widget
-      $(@makeId('NewLocationCode')).chosen({ width: '250px' })
+      $(@makeId('NewLocationCode')).chosen({ width: '350px' })
 
     # Not fully clear why I had to do this, but I did, the click event
     # was not getting attached to the confirm button
@@ -192,7 +192,7 @@ define [
         (data, textStatus, jqxhr) =>
           organizations = $(data).find('Organization')
           if organizations.length > 0
-            list = ("<option value=\"#{o.attributes.id.nodeValue}\">#{o.firstChild.childNodes[0].nodeValue}</option>" for o in organizations when $(o).find('Affiliation[side=location]').length > 0)
+            list = (@renderSearchList o for o in organizations when $(o).find('Affiliation[side=location]').length > 0)
             $list_element.html(list)
             $list_element.trigger("liszt:updated")
             $el.val(val)
@@ -201,6 +201,11 @@ define [
 
           $no_results.find('.bor-spinner').remove()
       )
+
+    # Assemble the string for <select> list
+    renderSearchList : (o) ->
+      affiliation = $(o).find('Affiliation[side=location]')
+      "<option value=\"#{o.attributes.id.nodeValue}\">#{o.firstChild.childNodes[0].nodeValue} (#{affiliation.attr('targetName')})</option>"
 
     # **Send AJAX search request to ixDirectory**
     #
