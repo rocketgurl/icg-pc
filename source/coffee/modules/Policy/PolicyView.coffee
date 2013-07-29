@@ -145,6 +145,10 @@ define [
         for action in ['renewalunderwriting', 'servicerequests']
           @$el.find(".policy-nav a[href=#{action}]").parent('li').hide()
 
+      # If we're not IPM or Dovetail then no IPM for you!
+      if @model.isIPM() == false && @model.isDovetail() == false
+        @$el.find(".policy-nav a[href=ipmchanges]").parent('li').hide()
+
       # Hide Policy representations if user doesn't have VIEW_ADVANCED <Right>
       if @controller.user.canViewAdvanced() == false
         @$el.find(".policy-nav a[href=policyrepresentations]").parent('li').hide()
