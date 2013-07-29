@@ -130,6 +130,9 @@ define [
       # Register flash message pubsub for this view
       @messenger = new Messenger(@options.view, @cid)
 
+      # Setup IPM Module
+      @IPM = new IPMModule(@model, $("#policy-ipm-#{@cid}"), @controller)
+
       true
 
     # Certain actions are not visible if this is a quote, or a Dovetail policy
@@ -139,17 +142,8 @@ define [
       # We hide a few actions if this is a quote
       hide_actions = []
       if @model.isQuote()
-        for action in ['ipmchanges', 'renewalunderwriting', 'servicerequests']
+        for action in ['renewalunderwriting', 'servicerequests']
           @$el.find(".policy-nav a[href=#{action}]").parent('li').hide()
-
-      # If this is an IPM policies need an IPMModule instantiated
-      if window.IPM_CAPABLE
-        if @model.isIPM()
-          @IPM = new IPMModule(@model, $("#policy-ipm-#{@cid}"), @controller)
-        else
-          @$el.find(".policy-nav a[href=ipmchanges]").parent('li').hide()
-      else
-        @$el.find(".policy-nav a[href=ipmchanges]").parent('li').hide()
 
       # Hide Policy representations if user doesn't have VIEW_ADVANCED <Right>
       if @controller.user.canViewAdvanced() == false
