@@ -1,5 +1,5 @@
 define [
-  'jquery', 
+  'jquery',
   'underscore',
   'base64',
   'loader'
@@ -14,7 +14,7 @@ define [
 
       reg = new RegExp '/\s*\W/gi'
       out = string.replace /\s*\W/gi, '_'
-      
+
       if out is 'undefined' or out is undefined
         return null
       out
@@ -85,16 +85,16 @@ define [
     # NaN, booleans, etc.
     # http://stackoverflow.com/questions/3885817/how-to-check-if-a-number-is-float-or-integer
     #
-    # @param `n` _Mixed_   
-    # @return _Boolean_  
+    # @param `n` _Mixed_
+    # @return _Boolean_
     #
     isInt : (n) ->
       typeof n == 'number' && n % 1 == 0
 
     # Coerce form input into a number, return zero on NaN
     #
-    # @param `n` _Mixed_   
-    # @return _Number_  
+    # @param `n` _Mixed_
+    # @return _Number_
     #
     toNum : (n) ->
       n = Math.abs(n || 0)
@@ -107,8 +107,8 @@ define [
     # NaN and non-numbers will return 0.00 - NaN is technically a number so
     # we need to check for it upfront
     #
-    # @param `n` _Number_   
-    # @return _String_ (Float)  
+    # @param `n` _Number_
+    # @return _String_ (Float)
     #
     formatMoney : (n) ->
       n = parseFloat(n, 10) # convert a string val from form into a Number
@@ -122,9 +122,9 @@ define [
     # can sometimes cause weird rounding issues with the day. To safegaurd
     # against it, we'll just remove the "T" and everything after it.
     #
-    # @param `date` _String_ A date string  
-    # @param `format` _String_ (optional) A date format string   
-    # @return _String_ An ISO formatted date string  
+    # @param `date` _String_ A date string
+    # @param `format` _String_ (optional) A date format string
+    # @return _String_ An ISO formatted date string
     #
     stripTimeFromDate : (date, format) ->
       format = format ? null
@@ -136,9 +136,9 @@ define [
 
     # Format a date, defaulting to ISO format
     #
-    # @param `date` _String_ A date string  
-    # @param `format` _String_ A date format string  
-    # @return _String_  
+    # @param `date` _String_ A date string
+    # @param `format` _String_ A date format string
+    # @return _String_
     #
     formatDate : (date, format) ->
       format = format ? 'YYYY-MM-DD'
@@ -150,8 +150,8 @@ define [
 
     # Resize an element to the approximate height of the workspace
     #
-    # @param `el` _HTML Element_ element to resize  
-    # @param `offset` _Integer_ additional padding  
+    # @param `el` _HTML Element_ element to resize
+    # @param `offset` _Integer_ additional padding
     #
     resize_element : (el, offset, scroll) ->
       offset = offset || 0
@@ -168,8 +168,8 @@ define [
 
     # Resize workspace to include the size of the element
     #
-    # @param `el` _HTML Element_ element to compare workspace to  
-    # @param `workspace` _HTML Element_ element to resize  
+    # @param `el` _HTML Element_ element to compare workspace to
+    # @param `workspace` _HTML Element_ element to resize
     #
     resize_workspace : (el, workspace) ->
       window_height    = Math.floor($(window).height())
@@ -181,8 +181,8 @@ define [
 
     # Take a name and properly capitalize it
     #
-    # @param `name` _String_    
-    # @returns _String_    
+    # @param `name` _String_
+    # @returns _String_
     #
     properName : (name) ->
       name = @parseNamePrefix(name.toLowerCase())
@@ -191,8 +191,8 @@ define [
 
     # Properly capitalize complex names (ex: MacGuffin, O'Shea)
     #
-    # @param `name` _String_    
-    # @returns _String_    
+    # @param `name` _String_
+    # @returns _String_
     #
     parseNamePrefix : (name) ->
       prefixes = ['mac', 'mc', 'van', "d'", "o'"]
@@ -203,7 +203,7 @@ define [
       if result != undefined
         name    = name.split(result)
         name[0] = result
-        name = _.map(name, (fragment) -> 
+        name = _.map(name, (fragment) ->
             _.titleize(fragment)
           )
         name = name.join('')
@@ -214,8 +214,8 @@ define [
 
     # Capitalize the suffixes
     #
-    # @param `name` _String_    
-    # @returns _String_    
+    # @param `name` _String_
+    # @returns _String_
     #
     parseNameSuffix : (name) ->
       suffixes = ['jr', 'snr', 'phd', 'esq', 'cpa']
@@ -231,10 +231,10 @@ define [
 
     # Super simple function to concat two strings with a seperator.
     #
-    # @param `a` _String_    
-    # @param `b` _String_    
-    # @param `separator` _String_    
-    # @returns _String_    
+    # @param `a` _String_
+    # @param `b` _String_
+    # @param `separator` _String_
+    # @returns _String_
     #
     concatStrings : (a, b, separator) ->
       separator = separator ? ', '

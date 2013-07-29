@@ -1,5 +1,5 @@
 define [
-  'jquery', 
+  'jquery',
   'underscore',
   'backbone',
   'mustache',
@@ -30,13 +30,13 @@ define [
 
       # Kick off application
       # @load()
-      
+
     # Any bootstrapping should happen here. When done remove the loader image.
     # view.remove_loader will callback Module.render()
     #
     load: ->
       # We need to either use the policy # or the quote #
-      id = @params.id if @params.id? 
+      id = @params.id if @params.id?
       id ?= @params.url if @params.url?
 
       @policy_model = new PolicyModel(
@@ -51,7 +51,7 @@ define [
         model  : @policy_model
         )
 
-      @policy_model.on 'policy_error', @throwLoadError, this    
+      @policy_model.on 'policy_error', @throwLoadError, this
 
       @messenger = new Messenger(@policy_view, @policy_view.cid)
       digest     = @view.options.controller.user.get('digest')
@@ -83,11 +83,11 @@ define [
       @on 'deactivate', () ->
         @policy_view.trigger 'deactivate'
 
-    # If the policy throws some crazy crippled client stuff then set off a 
+    # If the policy throws some crazy crippled client stuff then set off a
     # big error
     throwLoadError : (model) ->
       xhr = model.get('xhr')
-      console.log ['Policy Error', model, xhr]      
+      console.log ['Policy Error', model, xhr]
       if xhr.statusText?
         msg = "Could not retrieve policy - #{xhr.statusText}"
         @policy_view.trigger 'error', msg

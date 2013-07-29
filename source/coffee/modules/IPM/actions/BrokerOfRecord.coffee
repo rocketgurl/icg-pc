@@ -199,7 +199,7 @@ define [
           else
             $no_results.html($no_results.html()?.replace(/Searching for -/g, 'No results match'))
 
-          $no_results.find('img').remove()
+          $no_results.find('.bor-spinner').remove()
       )
 
     # **Send AJAX search request to ixDirectory**
