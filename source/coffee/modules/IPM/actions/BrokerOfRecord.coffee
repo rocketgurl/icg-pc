@@ -59,19 +59,15 @@ define [
       # AgencyLocationCode plopped into view
       @$el.find('.bor_input_alc').html @MODULE.POLICY.getTermDataItemValue('AgencyLocationCode')
 
-      # Typing in the Chosen search field triggers an Ajax search
-      @$el.on('keypress.search', '.chzn-search input', (e) =>
-        @searchAgencies $(e.currentTarget)
-      );
-
-      # Turn our select into a Chosen select widget
+      # # Turn our select into a Chosen select widget
       @$el.find(@makeId('NewLocationCode')).chosen({ width: '350px' })
 
-      # Style query_type select w/ Chosen
-      @$el.find(@makeId('SearchQuery')).chosen(
-        disable_search_threshold: 10
-        width :'200px'
-      );
+      # Typing in the Chosen search field triggers an Ajax search
+      @$el.on(
+        'keypress.search',
+        ".chzn-search input",
+        (e) => @searchAgencies $(e.currentTarget)
+      )
 
     # Not fully clear why I had to do this, but I did, the click event
     # was not getting attached to the confirm button
