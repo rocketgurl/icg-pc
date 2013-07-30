@@ -91,7 +91,8 @@ define [
 
     # Assemble data for preview
     processPreview : (vocabTerms, view) =>
-      @viewData.preview = @getPreviewData(@values)
+      @viewData.preview  = @getPreviewData(@values)
+      @viewData.dovetail = @MODULE.POLICY.isDovetail()
       @trigger("loaded", this, @postProcessPreview)
 
     submit : (e) ->

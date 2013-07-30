@@ -41,6 +41,7 @@
 			<h2>Mailing address for new Broker of Record</h2>
 			<p>{{{address}}}</p>
 		</section>
+		{{^dovetail}}
 		<section class="bor-comparison">
 			<div class="first">
 				<h2>Old Broker of Record information</h2>
@@ -109,8 +110,12 @@
 				</table>
 			</div>
 		</section>
+		{{/dovetail}}
 		<section class="bor-history">
 			<h2>Broker of Record history <span>(applies to commisions)</span></h2>
+			{{#dovetail}}
+			<h3 class="disclaimer">The following changes will be requested upon submission. The policy will not reflect the change if it is externally managed. Please allow up to 48 hours for the change to be processed.</h3>
+			{{/dovetail}}
 			<table class="bor-table">
 				<thead>
 					<th>Policy term</th>

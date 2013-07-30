@@ -521,6 +521,7 @@ img.bor-spinner { margin-right: 5px; }
 .bor-mailing-address, .bor-comparison, .bor-history { margin: 0 0 40px 0; }
 .bor-mailing-address h2, .bor-comparison h2, .bor-history h2 { font-size: 16px; font-size: 1.6rem; font-weight: bold; color: dimgrey; margin: 0 0 10px; }
 .bor-mailing-address h2 span, .bor-comparison h2 span, .bor-history h2 span { font-weight: normal; }
+.bor-mailing-address h3.disclaimer, .bor-comparison h3.disclaimer, .bor-history h3.disclaimer { font-size: 14px; font-size: 1.4rem; color: #6f5502; line-height: 140%; display: block; margin: 10px 0; border: #b08803; border-radius: 4px; padding: 10px 20px; background: #fcd450; }
 
 .bor-mailing-address p { font-size: 14px; font-size: 1.4rem; margin: 10px 0; color: dimgrey !important; line-height: 140%; }
 
