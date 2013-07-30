@@ -57,15 +57,15 @@ define [
       super
 
       # AgencyLocationCode plopped into view
-      $('.bor_input_alc').html @MODULE.POLICY.getTermDataItemValue('AgencyLocationCode')
+      @$el.find('.bor_input_alc').html @MODULE.POLICY.getTermDataItemValue('AgencyLocationCode')
 
       # Typing in the Chosen search field triggers an Ajax search
-      $(document).on('keypress.search', '.chzn-search input', (e) =>
+      @$el.on('keypress.search', '.chzn-search input', (e) =>
         @searchAgencies $(e.currentTarget)
       );
 
       # Turn our select into a Chosen select widget
-      $(@makeId('NewLocationCode')).chosen({ width: '350px' })
+      @$el.find(@makeId('NewLocationCode')).chosen({ width: '350px' })
 
     # Not fully clear why I had to do this, but I did, the click event
     # was not getting attached to the confirm button
@@ -184,6 +184,7 @@ define [
       $no_results.prepend('<img src="/img/wpspin_light.gif" class="bor-spinner" />')
 
       $list_element = $(@makeId('NewLocationCode'))
+      console.log $list_element
 
       # When the response comes back we parse it looking for Organization nodes
       # with an Affiliation childNode of side=location - these are turned into
