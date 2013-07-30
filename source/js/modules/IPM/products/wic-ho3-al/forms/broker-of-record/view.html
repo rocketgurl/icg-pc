@@ -14,7 +14,14 @@
 			<span class="bor_input_alc"></span>
 		</div>
 		<div class="bor_input">
-			<label for="{{guid}}_NewLocationCode">Search for new Agency Location Code by name:</label>
+			<label for="{{guid}}_SearchQuery">Search for new Agency Location Code by: </label>
+			<select name="SearchQuery" id="{{guid}}_SearchQuery">
+				<option value="name">Name</option>
+				<option value="agencyLocationCode">Agency Location Code</option>
+			</select>
+		</div>
+		<div class="bor_input">
+			<label for="{{guid}}_NewLocationCode">Search:</label>
 			<select id="{{guid}}_NewLocationCode" name="NewLocationCode" data-value="{{NewLocationCode}}" required>
 				{{#EnumsNewLocationCode}}
 				<option value="{{value}}">{{label}}</option>

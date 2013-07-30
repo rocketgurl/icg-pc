@@ -67,6 +67,12 @@ define [
       # Turn our select into a Chosen select widget
       @$el.find(@makeId('NewLocationCode')).chosen({ width: '350px' })
 
+      # Style query_type select w/ Chosen
+      @$el.find(@makeId('SearchQuery')).chosen(
+        disable_search_threshold: 10
+        width :'200px'
+      );
+
     # Not fully clear why I had to do this, but I did, the click event
     # was not getting attached to the confirm button
     postProcessPreview : ->
@@ -176,7 +182,13 @@ define [
     #
     searchAgencies : ($el) ->
       val = $el.val()
-      xhr = @sendAgencyQuery @MODULE.CONTROLLER.services.ixdirectory, val, @MODULE.USER
+      query_type = @$el.find(@makeId('SearchQuery')).val()
+      xhr = @sendAgencyQuery(
+          @MODULE.CONTROLLER.services.ixdirectory,
+          val,
+          @MODULE.USER,
+          query_type
+        )
 
       $no_results = $('.no-results')
       $no_results.html($no_results.html()?.replace(/No results match/g, 'Searching for -'))
@@ -184,7 +196,6 @@ define [
       $no_results.prepend('<img src="/img/wpspin_light.gif" class="bor-spinner" />')
 
       $list_element = $(@makeId('NewLocationCode'))
-      console.log $list_element
 
       # When the response comes back we parse it looking for Organization nodes
       # with an Affiliation childNode of side=location - these are turned into
@@ -215,8 +226,8 @@ define [
     # @param `user` _Object_ User
     # @return _jqXHR_ Deferred object
     #
-    sendAgencyQuery : (baseUrl, query, user) ->
-      url = "#{baseUrl}organizations/?query=name:#{query}"
+    sendAgencyQuery : (baseUrl, query, user, query_type = 'name') ->
+      url = "#{baseUrl}organizations/?query=#{query_type}:#{query}"
       $.ajax
           url      : url
           dataType : 'xml'

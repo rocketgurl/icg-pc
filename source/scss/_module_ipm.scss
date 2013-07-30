@@ -589,7 +589,7 @@ h2.ipm-action-header {
 		margin: 0 10px 0 0;
 		@include font-size(16);
 		display: inline-block;
-		width: 350px;
+		width: 320px;
 		text-align: right;
 		color: $darkgray;
 	}
@@ -599,7 +599,7 @@ h2.ipm-action-header {
 	}
 
 	select {
-		width: 350px;
+		width: 120px;
 	}
 }
 

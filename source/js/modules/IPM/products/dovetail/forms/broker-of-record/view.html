@@ -1,4 +1,4 @@
-<!-- Broker of Record - Product: Dovetail -->
+<!-- Broker of Record - Product: ACIC HO3 South Carolina -->
 <form action="endorse" method="get" accept-charset="utf-8" class="collapsedSections">
 <div id="content" class="bor">
 	<div id="content_header">
@@ -14,7 +14,14 @@
 			<span class="bor_input_alc"></span>
 		</div>
 		<div class="bor_input">
-			<label for="{{guid}}_NewLocationCode">Search for new Agency Location Code by name:</label>
+			<label for="{{guid}}_SearchQuery">Search for new Agency Location Code by: </label>
+			<select name="SearchQuery" id="{{guid}}_SearchQuery">
+				<option value="name">Name</option>
+				<option value="agencyLocationCode">Agency Location Code</option>
+			</select>
+		</div>
+		<div class="bor_input">
+			<label for="{{guid}}_NewLocationCode">Search:</label>
 			<select id="{{guid}}_NewLocationCode" name="NewLocationCode" data-value="{{NewLocationCode}}" required>
 				{{#EnumsNewLocationCode}}
 				<option value="{{value}}">{{label}}</option>
