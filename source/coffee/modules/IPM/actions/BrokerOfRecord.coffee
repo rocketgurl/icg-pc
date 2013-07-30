@@ -64,10 +64,17 @@ define [
 
       # Typing in the Chosen search field triggers an Ajax search
       @$el.on(
-        'keypress.search',
-        ".chzn-search input",
-        (e) => @searchAgencies $(e.currentTarget)
+          'keypress.search',
+          "#{@makeId('NewLocationCode')}_chosen .chosen-search input",
+          (e) => @searchAgencies $(e.currentTarget)
+        )
+
+      # Style query_type select w/ Chosen
+      @$el.find(@makeId('SearchQuery')).chosen(
+        disable_search: true
+        width :'200px'
       )
+      # @$el.off('keypress.search', "#{@makeId('SearchQuery')}_chosen .chzn-search input")
 
     # Not fully clear why I had to do this, but I did, the click event
     # was not getting attached to the confirm button
@@ -202,7 +209,7 @@ define [
           if organizations.length > 0
             list = (@renderSearchList o for o in organizations when $(o).find('Affiliation[side=location]').length > 0)
             $list_element.html(list)
-            $list_element.trigger("liszt:updated")
+            $list_element.trigger("chosen:updated")
             $el.val(val)
           else
             $no_results.html($no_results.html()?.replace(/Searching for -/g, 'No results match'))
