@@ -614,6 +614,22 @@ img.bor-spinner {
 }
 
 // Broker of Record Preview
+%bor-notice {
+	@include font-size(14);
+	color: $notice-text;
+	line-height: 140%;
+	display: block;
+	margin: 10px 0;
+	border: darken($notice-base, 30);
+	border-radius: 4px;
+	padding: 10px 20px;
+	background: $notice-base;
+	strong  {
+		font-weight: bold;
+	}
+}
+
+
 .bor-mailing-address,
 .bor-comparison,
 .bor-history {
@@ -631,16 +647,13 @@ img.bor-spinner {
 	}
 
 	h3.disclaimer {
-		@include font-size(14);
-		color: $notice-text;
-		line-height: 140%;
-		display: block;
-		margin: 10px 0;
-		border: darken($notice-base, 30);
-		border-radius: 4px;
-		padding: 10px 20px;
-		background: $notice-base;
+		@extend %bor-notice;
 	}
+}
+
+.bor-notification {
+	@extend %bor-notice;
+	margin-bottom: 20px;
 }
 
 .bor-mailing-address {

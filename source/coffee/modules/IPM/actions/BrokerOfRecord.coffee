@@ -39,6 +39,7 @@ define [
         }
       vocabTerms.terms.push location_default
       @processViewData(vocabTerms, view)
+      @viewData.warning = @getRenewal(@MODULE.POLICY)
       @trigger "loaded", this, @postProcessView
 
     # **Build a viewData object to populate the template form with**
@@ -295,3 +296,18 @@ define [
         'agency_affiliation'   : findItem('AgencyAffiliation')
       }
 
+    # If todays date is greater than lastTerm.EffectiveDate then
+    # return an object for the view, otherwise false
+    getRenewal : (policy) ->
+      if !_.has(policy.getLastTerm(), 'EffectiveDate') then return false
+
+      today          = moment()
+      effective_date = moment policy.getLastTerm().EffectiveDate
+
+      if today.valueOf() > effective_date.valueOf()
+        {
+          days           : today.diff(effective_date, 'days')
+          effective_date : effective_date.format('YYYY-MM-DD')
+        }
+      else
+        return false
