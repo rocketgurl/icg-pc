@@ -518,7 +518,7 @@ h2.ipm-action-header { font-size: 16px; font-size: 1.6rem; color: dimgrey; margi
 
 img.bor-spinner { margin-right: 5px; }
 
-.bor-mailing-address h3.disclaimer, .bor-comparison h3.disclaimer, .bor-history h3.disclaimer, .bor-notification { font-size: 14px; font-size: 1.4rem; color: #6f5502; line-height: 140%; display: block; margin: 10px 0; border: #b08803; border-radius: 4px; padding: 10px 20px; background: #fcd450; }
+.bor-mailing-address h3.disclaimer, .bor-comparison h3.disclaimer, .bor-history h3.disclaimer, .bor-notification { font-size: 14px; font-size: 1.4rem; color: #6f5502; line-height: 140%; display: block; margin: 10px 0; border: #e2ae04 1px solid; border-radius: 4px; padding: 10px 20px; background: #fcd450; }
 .bor-mailing-address h3.disclaimer strong, .bor-comparison h3.disclaimer strong, .bor-history h3.disclaimer strong, .bor-notification strong { font-weight: bold; }
 
 .bor-mailing-address, .bor-comparison, .bor-history { margin: 0 0 40px 0; }

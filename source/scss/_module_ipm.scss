@@ -620,7 +620,7 @@ img.bor-spinner {
 	line-height: 140%;
 	display: block;
 	margin: 10px 0;
-	border: darken($notice-base, 30);
+	border: darken($notice-base, 20) 1px solid;
 	border-radius: 4px;
 	padding: 10px 20px;
 	background: $notice-base;
