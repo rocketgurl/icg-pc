@@ -59,8 +59,6 @@ require [
   'chosen'
 ], ($, _, Backbone, WorkspaceController, u_string, domReady) ->
 
-  console.log $.chosen
-
   # Setup underscore.string
   _.mixin(_.str.exports())
   _.mixin({
