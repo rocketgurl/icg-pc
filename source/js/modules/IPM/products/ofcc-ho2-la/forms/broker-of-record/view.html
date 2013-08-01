@@ -5,7 +5,11 @@
 		<h2>{{#preview}}Previewing {{/preview}}Change Broker of Record for {{ policyId }}</h2>
 	</div>
 
-	<div class="bor-notification">&nbsp;</div>
+	{{#warning}}
+	<div class="bor-notification">
+		It has been <strong>{{warning.days}} days</strong> since the Effective Date of the Policy Term ({{warning.effective_date}}). Please wait until the policy renews before changing the Broker of Record unless the request was received within 90 days of the latest policy term OR the insured explicitly requested a policy term change.
+	</div>
+	{{/warning}}
 
 	{{^preview}}
 	<div class="content_body">
@@ -14,7 +18,14 @@
 			<span class="bor_input_alc"></span>
 		</div>
 		<div class="bor_input">
-			<label for="{{guid}}_NewLocationCode">Search for new Agency Location Code by name:</label>
+			<label for="{{guid}}_SearchQuery">Search for new Agency Location Code by: </label>
+			<select name="SearchQuery" id="{{guid}}_SearchQuery">
+				<option value="agencyLocationCode">Agency Location Code</option>
+				<option value="name">Name</option>
+			</select>
+		</div>
+		<div class="bor_input">
+			<label for="{{guid}}_NewLocationCode">Search:</label>
 			<select id="{{guid}}_NewLocationCode" name="NewLocationCode" data-value="{{NewLocationCode}}" required>
 				{{#EnumsNewLocationCode}}
 				<option value="{{value}}">{{label}}</option>
@@ -34,6 +45,7 @@
 			<h2>Mailing address for new Broker of Record</h2>
 			<p>{{{address}}}</p>
 		</section>
+		{{^dovetail}}
 		<section class="bor-comparison">
 			<div class="first">
 				<h2>Old Broker of Record information</h2>
@@ -102,6 +114,7 @@
 				</table>
 			</div>
 		</section>
+		{{/dovetail}}
 		<section class="bor-history">
 			<h2>Broker of Record history <span>(applies to commisions)</span></h2>
 			<table class="bor-table">

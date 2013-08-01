@@ -413,7 +413,7 @@ define [
     getTermDataItemValue : (name) ->
       doc = @get('document')
       if doc?
-        value = doc.find("Terms Term DataItem[name=Op#{name}]").attr('value') ||         doc.find("Terms Term DataItem[name=#{name}]").attr('value')
+        value = doc.find("Terms Term DataItem[name=Op#{name}]").attr('value') || doc.find("Terms Term DataItem[name=#{name}]").attr('value')
       value
 
     # **Extract the value of a named <DataItem> from a JSON collection**
