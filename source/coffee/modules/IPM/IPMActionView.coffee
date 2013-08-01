@@ -177,6 +177,7 @@ define [
       # Swap out click event on cancel button to just reset to beginning state
       @$el.find('.form_actions a').on 'click', (e) =>
         e.preventDefault()
+        @rollbackPolicyModel()
         @processView(
           @tpl_cache[@PARENT_VIEW.view_state].model,
           @tpl_cache[@PARENT_VIEW.view_state].view
@@ -472,6 +473,22 @@ define [
       @MODULE.POLICY.trigger 'change', @MODULE.POLICY
 
       @MODULE.POLICY
+
+    # Return PolicyModel to its previous state if it has one
+    # 
+    # @return _Object_ PolicyModel
+    # 
+    rollbackPolicyModel : ->
+      prev = @MODULE.POLICY.get('prev_document')
+      if prev?
+        for key, val of prev
+          @MODULE.POLICY.attributes[key] = val
+
+          # Tell the model to set its state based on the new XML values
+          @MODULE.POLICY.trigger 'change', @MODULE.POLICY
+
+      @MODULE.POLICY
+
 
     # **Render ActionView into DOM**
     #
