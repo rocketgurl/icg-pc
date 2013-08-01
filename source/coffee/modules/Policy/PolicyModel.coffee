@@ -124,13 +124,15 @@ define [
 
     # **Get <SystemOfRecord>** - used to determine IPM eligibility.
     # @return _String_
-    getSystemOfRecord : ->
-      @getModelProperty('Management SystemOfRecord')
+    getSystemOfRecord : -> @getModelProperty('Management SystemOfRecord')
 
     # **Is this an IPM policy?**
     # @return _Boolean_
-    isIPM : ->
-      @getSystemOfRecord() == 'mxServer'
+    isIPM : -> @getSystemOfRecord() == 'mxServer'
+
+    # **Is this an IPM policy?**
+    # @return _Boolean_
+    isDovetail : -> @getSystemOfRecord() == 'Dovetail'
 
     # **Get attributes of an element**
     # Check a node for attributes and return as an obj, else null

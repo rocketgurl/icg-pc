@@ -20,7 +20,7 @@ require
     u_string    : 'lib/underscore.string'
     herald      : 'lib/herald/herald'
     marked      : 'lib/marked'
-    chosen      : 'lib/chosen.jquery.min'
+    chosen      : 'lib/chosen.jquery'
   priority: ['jquery','xml2json','json']
   shim:
       'jquery' :
@@ -47,16 +47,6 @@ require
       'chosen' :
         deps : ['jquery']
         exports : 'Chosen'
-        init : ($) ->
-          # creates a global Chosen
-          # https://github.com/harvesthq/chosen/pull/922
-          'use strict'
-
-          ChosenConstructor = (element, options) ->
-            Chosen.call this, element, options
-
-          ChosenConstructor.prototype = Chosen.prototype
-          ChosenConstructor
 
 require [
   'jquery',

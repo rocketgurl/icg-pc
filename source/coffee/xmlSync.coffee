@@ -1,5 +1,5 @@
 define [
-  'jquery', 
+  'jquery',
   'underscore',
   'backbone'
 ], ($, _, Backbone) ->

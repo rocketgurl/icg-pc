@@ -12,7 +12,6 @@ define [
     ready : ->
       super
       @fetchTemplates(@MODULE.POLICY, 'broker-of-record', @processView)
-      console.log this
 
     # **Build view data objects and trigger loaded event**
     #
@@ -40,6 +39,7 @@ define [
         }
       vocabTerms.terms.push location_default
       @processViewData(vocabTerms, view)
+      @viewData.warning = @getRenewal(@MODULE.POLICY)
       @trigger "loaded", this, @postProcessView
 
     # **Build a viewData object to populate the template form with**
@@ -58,15 +58,24 @@ define [
       super
 
       # AgencyLocationCode plopped into view
-      $('.bor_input_alc').html @MODULE.POLICY.getTermDataItemValue('AgencyLocationCode')
+      @$el.find('.bor_input_alc').html @MODULE.POLICY.getTermDataItemValue('AgencyLocationCode')
+
+      # # Turn our select into a Chosen select widget
+      @$el.find(@makeId('NewLocationCode')).chosen({ width: '350px' })
 
       # Typing in the Chosen search field triggers an Ajax search
-      $(document).on('keypress.search', '.chzn-search input', (e) =>
-        @searchAgencies $(e.currentTarget)
-      );
+      @$el.on(
+          'keypress.search',
+          "#{@makeId('NewLocationCode')}_chosen .chosen-search input",
+          (e) => @searchAgencies $(e.currentTarget)
+        )
 
-      # Turn our select into a Chosen select widget
-      $(@makeId('NewLocationCode')).chosen({ width: '250px' })
+      # Style query_type select w/ Chosen
+      @$el.find(@makeId('SearchQuery')).chosen(
+        disable_search: true
+        width :'200px'
+      )
+      # @$el.off('keypress.search', "#{@makeId('SearchQuery')}_chosen .chzn-search input")
 
     # Not fully clear why I had to do this, but I did, the click event
     # was not getting attached to the confirm button
@@ -83,7 +92,8 @@ define [
 
     # Assemble data for preview
     processPreview : (vocabTerms, view) =>
-      @viewData.preview = @getPreviewData(@values)
+      @viewData.preview  = @getPreviewData(@values)
+      @viewData.dovetail = @MODULE.POLICY.isDovetail()
       @trigger("loaded", this, @postProcessPreview)
 
     submit : (e) ->
@@ -139,6 +149,9 @@ define [
       # Success callback
       callbackFunc = @callbackSuccess
 
+      # Success message
+      @PARENT_VIEW.success_msg = "Broker of Record change to #{@values.formValues.agencyLocationCode}"
+
       # Previews require a different callback and an extra header.
       # The header prevents the changes from committing to the DB.
       # If preview is set to 'confirm', then ignore & commit to the DB.
@@ -174,11 +187,18 @@ define [
     #
     searchAgencies : ($el) ->
       val = $el.val()
-      xhr = @sendAgencyQuery @MODULE.CONTROLLER.services.ixdirectory, val, @MODULE.USER
+      query_type = @$el.find(@makeId('SearchQuery')).val()
+      xhr = @sendAgencyQuery(
+          @MODULE.CONTROLLER.services.ixdirectory,
+          val,
+          @MODULE.USER,
+          query_type
+        )
 
       $no_results = $('.no-results')
       $no_results.html($no_results.html()?.replace(/No results match/g, 'Searching for -'))
-      $no_results.prepend('<img src="/img/wpspin_light.gif" class="bor-spinner" />');
+      $no_results.find('.bor-spinner').remove()
+      $no_results.prepend('<img src="/img/wpspin_light.gif" class="bor-spinner" />')
 
       $list_element = $(@makeId('NewLocationCode'))
 
@@ -189,15 +209,20 @@ define [
         (data, textStatus, jqxhr) =>
           organizations = $(data).find('Organization')
           if organizations.length > 0
-            list = ("<option value=\"#{o.attributes.id.nodeValue}\">#{o.firstChild.childNodes[0].nodeValue}</option>" for o in organizations when $(o).find('Affiliation[side=location]').length > 0)
+            list = (@renderSearchList o for o in organizations when $(o).find('Affiliation[side=location]').length > 0)
             $list_element.html(list)
-            $list_element.trigger("liszt:updated")
+            $list_element.trigger("chosen:updated")
             $el.val(val)
           else
             $no_results.html($no_results.html()?.replace(/Searching for -/g, 'No results match'))
 
-          $no_results.find('img').remove()
+          $no_results.find('.bor-spinner').remove()
       )
+
+    # Assemble the string for <select> list
+    renderSearchList : (o) ->
+      affiliation = $(o).find('Affiliation[side=location]')
+      "<option value=\"#{o.attributes.id.nodeValue}\">#{o.firstChild.childNodes[0].nodeValue} (#{affiliation.attr('targetName')})</option>"
 
     # **Send AJAX search request to ixDirectory**
     #
@@ -206,8 +231,8 @@ define [
     # @param `user` _Object_ User
     # @return _jqXHR_ Deferred object
     #
-    sendAgencyQuery : (baseUrl, query, user) ->
-      url = "#{baseUrl}organizations/?query=name:#{query}"
+    sendAgencyQuery : (baseUrl, query, user, query_type = 'name') ->
+      url = "#{baseUrl}organizations/?query=#{query_type}:#{query}"
       $.ajax
           url      : url
           dataType : 'xml'
@@ -227,7 +252,7 @@ define [
     # Ask Andy how to get the Term data for this part of the view
     getBrokerOfRecordHistory : (policy) ->
       count = 0
-      history = _.map(policy.getTerms(), (term) ->
+      history = _.map(policy.get('terms'), (term) ->
         count++
         effectiveDate  = if term.EffectiveDate? then term.EffectiveDate else ''
         expirationDate = if term.ExpirationDate? then term.ExpirationDate else ''
@@ -271,3 +296,18 @@ define [
         'agency_affiliation'   : findItem('AgencyAffiliation')
       }
 
+    # If todays date is greater than lastTerm.EffectiveDate then
+    # return an object for the view, otherwise false
+    getRenewal : (policy) ->
+      if !_.has(policy.getLastTerm(), 'EffectiveDate') then return false
+
+      today          = moment()
+      effective_date = moment policy.getLastTerm().EffectiveDate
+
+      if today.valueOf() > effective_date.valueOf()
+        {
+          days           : today.diff(effective_date, 'days')
+          effective_date : effective_date.format('YYYY-MM-DD')
+        }
+      else
+        return false

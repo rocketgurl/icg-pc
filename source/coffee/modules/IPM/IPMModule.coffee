@@ -1,5 +1,5 @@
 define [
-  'jquery', 
+  'jquery',
   'underscore',
   'backbone',
   'mustache',
@@ -14,11 +14,11 @@ define [
     # pubsub interface
     Amplify : amplify
 
-    # **Constructor**  
-    # @params `POLICY` _Object_ PolicyModel  
-    # @params `CONTAINER` _HTML Element_ element to render inside of   
-    # @params `USER` _Object_ UserModel  
-    # @return _this_  
+    # **Constructor**
+    # @params `POLICY` _Object_ PolicyModel
+    # @params `CONTAINER` _HTML Element_ element to render inside of
+    # @params `USER` _Object_ UserModel
+    # @return _this_
     #
     constructor : (@POLICY, @CONTAINER, @CONTROLLER) ->
       # Current action state
@@ -38,9 +38,9 @@ define [
 
       this
 
-    # TODO:  
+    # TODO:
     # * Remove any loader graphics
-    # * Instantiate IPMView  
+    # * Instantiate IPMView
     load : (@CONFIG) ->
       if @CONFIG?
         @VIEW = new IPMView(

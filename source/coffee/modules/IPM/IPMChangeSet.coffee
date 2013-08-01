@@ -33,8 +33,6 @@ define [
         if val == '__deleteEmptyProperty'
           delete transaction_request_data[key]
 
-      console.log ['transaction_request_data', transaction_request_data]
-
       # Fetch XML template for this action as a partial
       partials =
         body    : @[_.underscored(@ACTION)] || ''

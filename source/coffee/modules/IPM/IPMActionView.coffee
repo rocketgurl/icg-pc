@@ -96,7 +96,10 @@ define [
       if !policy? || !action?
         return false
 
-      path  = "/js/#{@MODULE.CONFIG.PRODUCTS_PATH}#{policy.get('productName')}/forms/#{_.slugify(action)}"
+      # Dovetail policies are scoped only to BoR and don't have most forms
+      product_name = if policy.isDovetail() then 'dovetail' else policy.get('productName')
+
+      path  = "/js/#{@MODULE.CONFIG.PRODUCTS_PATH}#{product_name}/forms/#{_.slugify(action)}"
 
       # Stash the files in the cache on first load
       if _.isNull(@tpl_cache) || !_.has(@tpl_cache, action) || nocache

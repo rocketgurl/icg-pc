@@ -3,7 +3,7 @@ define [
 ], (IPMActionView) ->
 
   class EndorseAction extends IPMActionView
-    
+
     initialize : ->
       super
       @coverage_calculations     = {} # Custom calculations objects
@@ -16,20 +16,20 @@ define [
       super
       @fetchTemplates(@MODULE.POLICY, 'endorse', @processView)
 
-    # **Build view data objects and trigger loaded event**  
+    # **Build view data objects and trigger loaded event**
     #
     # Takes the model.json and creates a custom data object for this view. We
-    # then trigger the `loaded` event passing @postProcessView as the callback. 
-    # This will attach any necessary behaviors to the rendered form.  
+    # then trigger the `loaded` event passing @postProcessView as the callback.
+    # This will attach any necessary behaviors to the rendered form.
     #
-    # @param `vocabTerms` _Object_ model.json  
-    # @param `view` _String_ HTML template    
+    # @param `vocabTerms` _Object_ model.json
+    # @param `view` _String_ HTML template
     #
     processView : (vocabTerms, view) =>
       @processViewData(vocabTerms, view)
       @trigger "loaded", this, @postProcessView
 
-    # **Process Preview**  
+    # **Process Preview**
     #
     # Same as processView() but we add an interval obj to viewData to tell the
     # Mustache template to render a different part for the user. This is
@@ -64,7 +64,7 @@ define [
         @values.formValues.comment = '__deleteEmptyProperty'
 
       # Options for ChangeSet
-      options = 
+      options =
         headers : {}
 
       # Success callback
@@ -81,9 +81,9 @@ define [
             { 'X-Commit' : false }
           )
 
-      # **ICS-1042 / ICS-429**  
+      # **ICS-1042 / ICS-429**
       # If the user ticks the override input then we need to add custom header
-      # to the request. We also set state so we can remember this across 
+      # to the request. We also set state so we can remember this across
       # different requests.
       #
       if @values.formValues.id_rv_override? && @values.formValues.id_rv_override == '1'
@@ -102,7 +102,7 @@ define [
         options
       )
 
-    # **Apply behaviors to default form after rendering**  
+    # **Apply behaviors to default form after rendering**
     #
     # * Add Coverage Calulation behaviors
     #
@@ -125,7 +125,7 @@ define [
         @adjustHO3VAWaterBackupCoverage()
 
       # Find any custom calculations tucked away in data attrs for later
-      # use in calculations      
+      # use in calculations
       if @coverage_a.length > 0
         if data = @coverage_a.data 'calculations'
           @coverage_calculations = (eval("(#{data})"))
@@ -164,9 +164,9 @@ define [
           $(this).val '0'
 
     # ICS-1363 & ICS-1564
-    # 
+    #
     # Re-calc CoverageD immediately for CRU4-AK / SC Renewals
-    # 
+    #
     recalculateImmediately : ->
       policy_product = @MODULE.POLICY.getProductName()
       if policy_product == 'ofcc-ho3-ak' || policy_product == 'acic-ho3-sc'
@@ -174,13 +174,13 @@ define [
         @deriveCoverageACalculations()
 
     # ICS-1010 - Add Policy Limits option to HO3 VA form for Water Backup
-    # 
+    #
     # In HO3 VA policies, when "Policy Limits" is selected for the
     # WaterBackupCoverage field the value of that field should reflect
     # whatever is in Coverage A. Additionally, on form load, if Coverage A
     # is the same as whatever the value of WaterBackupCoverage is, then
     # WBC should be set to "Policy Limits" with the value of Coverage A.
-    # 
+    #
     adjustHO3VAWaterBackupCoverage : ->
       if @MODULE.POLICY.getProductName() != 'ofcc-ho3-va'
         return false
@@ -200,7 +200,7 @@ define [
       $wb_coverage.on 'change', =>
         $wb_selected = $wb_coverage.find('option:selected')
         if $wb_selected.text() == 'Policy Limits'
-          $wb_selected.attr 'value', @coverage_a.val() 
+          $wb_selected.attr 'value', @coverage_a.val()
 
     # ICS-1400 - AL Forms Passing Blank Loss Type Data
     # In AL Renew forms we need to ensure that any Loss History fields that
@@ -220,10 +220,10 @@ define [
           $input  = $(input)
           $select = $("##{@cid}_LossType#{index+1}")
 
-          @setLabelToRequired $select, $input.val() 
+          @setLabelToRequired $select, $input.val()
 
           $input.on 'change', =>
-            @setLabelToRequired $select, $input.val() 
+            @setLabelToRequired $select, $input.val()
 
     # Toggle labels and required attributes for adjustAlabamaLossTypeFields
     setLabelToRequired : ($select, value) ->
@@ -233,7 +233,7 @@ define [
         @toggleRequiredStatus $select, false
 
     # ICS-1414 - Dynamically toggle required state of Months Unoccupied
-    # based on val of Property Usage. Trying to keep this encapsulated 
+    # based on val of Property Usage. Trying to keep this encapsulated
     # as much as possible.
     adjustAlabamaPropertyUsage : ->
       if (@MODULE.POLICY.getProductName() != 'hic-ho3-al')
@@ -258,16 +258,16 @@ define [
       if bool
         $el.parent().find('label').addClass 'labelRequired'
       else
-        $el.parent().find('label').removeClass 'labelRequired' 
+        $el.parent().find('label').removeClass 'labelRequired'
 
 
-    # **Build Intervals values for TransactionRequest & Previews**  
+    # **Build Intervals values for TransactionRequest & Previews**
     # This takes the form fields and builds up a big data set to use in the TR
     # and preview. It's an almost direct port from mxAdmin and could use some
     # refactoring.
     #
-    # @param `values` _Object_ @values object  
-    # @return _Object_  
+    # @param `values` _Object_ @values object
+    # @return _Object_
     #
     parseIntervals : (values) ->
       form   = values.formValues
@@ -313,7 +313,7 @@ define [
         grandTotal                    : 'TotalPremium'
 
       # Process term_fields to get clean numbers
-      parsed.term = _.extend(parsed.term, @roundTermFields(term.DataItem, term_fields)) 
+      parsed.term = _.extend(parsed.term, @roundTermFields(term.DataItem, term_fields))
 
       # Create a fields obj for intervals by fitering out unneeded keys
       interval_field_names = [
@@ -339,7 +339,7 @@ define [
         startDate  = Date.parse interval.StartDate
         endDate    = Date.parse interval.EndDate
 
-        interval_o = 
+        interval_o =
           startDate    : startDate
           endDate      : endDate
           fmtStartDate : @Helpers.stripTimeFromDate(interval.StartDate, 'MMM D YY')
@@ -360,9 +360,9 @@ define [
       parsed.intervals = _.sortBy(parsed.intervals, 'startDate')
       parsed.intervals[parsed.intervals.length - 1].isNew = true
 
-      # If there is no term.grandSubTotal then copy fields from the 
+      # If there is no term.grandSubTotal then copy fields from the
       # last sorted interval into the top level of parsed. I have no
-      # idea why we do this as of yet. 11/09/2012 - DN  
+      # idea why we do this as of yet. 11/09/2012 - DN
       # if !_.has(parsed.term, 'grandSubTotal')
       #   interval = parsed.intervals[parsed.intervals.length - 1]
       #   for field, value of interval
@@ -375,10 +375,10 @@ define [
 
     # process interval fields, rounding them and then doing various calcs
     #
-    # @param `terms` _Object_ Interval DataItems  
-    # @param `fields` _Object_ interval fields key:val  
-    # @param `adj` _Object_ adjustment values 
-    # @return _Object_  combined processed values  
+    # @param `terms` _Object_ Interval DataItems
+    # @param `fields` _Object_ interval fields key:val
+    # @param `adj` _Object_ adjustment values
+    # @return _Object_  combined processed values
     #
     processIntervalFields : (terms, fields, adj) ->
       fields = @roundTermFields(terms, fields)
@@ -395,9 +395,9 @@ define [
 
     # Find a set of term fields and return their rounded values
     #
-    # @param `terms` _Object_ DataItems 
-    # @param `term_fields` _Object_ term fields key:val  
-    # @return _Object_  
+    # @param `terms` _Object_ DataItems
+    # @param `term_fields` _Object_ term fields key:val
+    # @return _Object_
     #
     roundTermFields : (terms, term_fields) ->
       out = {}
@@ -405,12 +405,12 @@ define [
         out[key] = Math.round(@MODULE.POLICY.getDataItem(terms, field))
       out
 
-    # Recalculate the value of the element relative to CoverageA.  
+    # Recalculate the value of the element relative to CoverageA.
     # _Note_: The value is not the percentage in the label but the
-    # enumeration value which is percentage * 100 
+    # enumeration value which is percentage * 100
     #
-    # @param `e` _Event_  
-    # @param `val` _Integer_  
+    # @param `e` _Event_
+    # @param `val` _Integer_
     #
     calculateCoverage : (e, val) =>
       coverage_a = parseInt(@coverage_a.val(), 10)
@@ -418,10 +418,10 @@ define [
       $(e.currentTarget).val(new_value);
 
     # When a <select> with a data-affects attr is changed we need to find the
-    # input that it affects (data-affects) and trigger a coverage:calculate 
-    # event passing in the value of this <select> 
+    # input that it affects (data-affects) and trigger a coverage:calculate
+    # event passing in the value of this <select>
     #
-    # @param `e` _Event_  
+    # @param `e` _Event_
     #
     triggerCoverageCalculation : (e) =>
       el = $(e.currentTarget)
@@ -431,7 +431,7 @@ define [
         )
 
     # Loop through all <select>s with data-affects and trigger
-    # coverage:calculate  
+    # coverage:calculate
     #
     triggerAllCoverageCalculations : ->
       @$el.find('select[data-affects]').each (index, el) =>
@@ -446,8 +446,8 @@ define [
     # loop through the cached calcs and do the math on CoverageA's
     # value, setting the new value back to the element that needs is.
     #
-    # _Example:_      
-    # CoverageCalc is { CoverageD : '.2' } so get the value of 
+    # _Example:_
+    # CoverageCalc is { CoverageD : '.2' } so get the value of
     # CoverageA and multiply it by .2, then apply that value to
     # the <input> for CoverageD.
     #

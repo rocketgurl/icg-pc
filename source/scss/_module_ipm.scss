@@ -589,7 +589,7 @@ h2.ipm-action-header {
 		margin: 0 10px 0 0;
 		@include font-size(16);
 		display: inline-block;
-		width: 350px;
+		width: 320px;
 		text-align: right;
 		color: $darkgray;
 	}
@@ -599,7 +599,7 @@ h2.ipm-action-header {
 	}
 
 	select {
-		width: 350px;
+		width: 120px;
 	}
 }
 
@@ -614,6 +614,22 @@ img.bor-spinner {
 }
 
 // Broker of Record Preview
+%bor-notice {
+	@include font-size(14);
+	color: $notice-text;
+	line-height: 140%;
+	display: block;
+	margin: 10px 0;
+	border: darken($notice-base, 20) 1px solid;
+	border-radius: 4px;
+	padding: 10px 20px;
+	background: $notice-base;
+	strong  {
+		font-weight: bold;
+	}
+}
+
+
 .bor-mailing-address,
 .bor-comparison,
 .bor-history {
@@ -629,6 +645,15 @@ img.bor-spinner {
 			font-weight: normal;
 		}
 	}
+
+	h3.disclaimer {
+		@extend %bor-notice;
+	}
+}
+
+.bor-notification {
+	@extend %bor-notice;
+	margin-bottom: 20px;
 }
 
 .bor-mailing-address {
