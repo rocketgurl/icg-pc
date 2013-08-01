@@ -1,6 +1,10 @@
 Updates
 -------
 
+### 2.2.0
+
+- Broker of Record Change now available for all policies
+
 ### 2.1.5
 
 - Now with Broker of Record action for Dovetail policies
