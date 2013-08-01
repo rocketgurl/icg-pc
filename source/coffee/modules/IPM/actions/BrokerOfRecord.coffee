@@ -40,6 +40,7 @@ define [
       vocabTerms.terms.push location_default
       @processViewData(vocabTerms, view)
       @viewData.warning = @getRenewal(@MODULE.POLICY)
+
       @trigger "loaded", this, @postProcessView
 
     # **Build a viewData object to populate the template form with**
@@ -58,7 +59,8 @@ define [
       super
 
       # AgencyLocationCode plopped into view
-      @$el.find('.bor_input_alc').html @MODULE.POLICY.getTermDataItemValue('AgencyLocationCode')
+      @current_alc =  @MODULE.POLICY.getTermDataItemValue('AgencyLocationCode')
+      @$el.find('.bor_input_alc').html @current_alc
 
       # # Turn our select into a Chosen select widget
       @$el.find(@makeId('NewLocationCode')).chosen({ width: '350px' })
@@ -208,6 +210,7 @@ define [
       xhr.done(
         (data, textStatus, jqxhr) =>
           organizations = $(data).find('Organization')
+
           if organizations.length > 0
             list = (@renderSearchList o for o in organizations when $(o).find('Affiliation[side=location]').length > 0)
             $list_element.html(list)
@@ -222,7 +225,10 @@ define [
     # Assemble the string for <select> list
     renderSearchList : (o) ->
       affiliation = $(o).find('Affiliation[side=location]')
-      "<option value=\"#{o.attributes.id.nodeValue}\">#{o.firstChild.childNodes[0].nodeValue} (#{affiliation.attr('targetName')})</option>"
+      if _.isString(@current_alc) && o.attributes.id.nodeValue == @current_alc.toLowerCase()
+        return ''
+      else
+        "<option value=\"#{o.attributes.id.nodeValue}\">#{o.firstChild.childNodes[0].nodeValue} (#{affiliation.attr('targetName')})</option>"
 
     # **Send AJAX search request to ixDirectory**
     #
@@ -237,7 +243,7 @@ define [
           url      : url
           dataType : 'xml'
           headers  :
-            'Authorization' : "Basic #{user.get('digest')}"
+            'Authorization' : "Basic #{@MODULE.CONTROLLER.IXVOCAB_AUTH}"
 
     # Assemble an object of data for the Preview
     getPreviewData : (values) ->
