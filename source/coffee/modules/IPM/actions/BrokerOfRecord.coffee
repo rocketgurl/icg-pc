@@ -281,10 +281,10 @@ define [
       address = _.map([
         $organization.find('Name').text(),
         "#{m('Street1')} #{m('Street2')} #{m('Street3')}",
-        "#{m('City')}, #{m('Province')} #{m('PostalCode')}"
+        "#{m('City')} #{m('Province')} #{m('PostalCode')}"
       ], (s) -> s.trim())
 
-      address.join('<br />')
+      _.filter(address, (item) -> !_.isEmpty(item)).join('<br />')
 
     # Return BoR information from Policy
     getBrokerOfRecord : (policy) ->
