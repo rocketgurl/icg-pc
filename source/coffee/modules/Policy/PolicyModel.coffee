@@ -531,7 +531,7 @@ define [
       path = if _.isString(path) then path.split(' ') else path
 
       # walk the obj if properties exist else return the obj
-      if obj[_.first(path)]? && !_.isUndefined(obj[_.first(path)])
+      if obj? && _.has(obj, _.first(path)) && !_.isUndefined(obj[_.first(path)])
         return @getModelProperty _.rest(path), obj[_.first(path)]
       else
         return obj
