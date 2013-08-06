@@ -134,6 +134,14 @@ define [
     # @return _Boolean_
     isDovetail : -> @getSystemOfRecord() == 'Dovetail'
 
+    # Checks for <Flag name="Moved" value="true"/> in <Management>
+    # @return _Boolean_
+    isMoved : ->
+      moved = _.filter @getModelProperty('Management Flags Flag'), (item) ->
+        if _.has(item, 'name') && !_.isUndefined(item.name) && item.name.toLowerCase() == 'moved'
+          _.has(item, 'value') && item.value == 'true'
+      moved.length > 0
+
     # **Get attributes of an element**
     # Check a node for attributes and return as an obj, else null
     # @param `elem` _jQuery Element_
