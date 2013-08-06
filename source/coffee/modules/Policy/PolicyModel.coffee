@@ -401,18 +401,18 @@ define [
       else
         false
 
-    # For each vocabTerms look for a Term DataItem and get its value. We favor
-    # the Op{name} version of the DataItem
+    # For each vocabTerms look for a DataItem in LastTerm and get its value.
+    # We favor the Op{name} version of the DataItem
     #
     # @param `vocabTerms` _Object_ list of terms from ixVocab / model.json
+    # @param `term` _Object_ Term object from Policy
     # @return _Object_
     #
-    getTermDataItemValues : (vocabTerms) ->
-      out = {}
-      for term in vocabTerms.terms
-        out[term.name] = @getTermDataItemValue(term.name)
-        if out[term.name] == undefined
-          out[term.name] = false
+    getTermDataItemValues : (vocabTerms, term = null) ->
+      term = @getLastTerm().DataItem if _.isNull(term)
+      out  = {}
+      for vocab in vocabTerms.terms
+        out[vocab.name] = @getDataItem term, vocab.name
       out
 
     # We favor the Op{name} version of the DataItem
@@ -423,7 +423,7 @@ define [
     getTermDataItemValue : (name) ->
       doc = @get('document')
       if doc?
-        value = doc.find("Terms Term DataItem[name=Op#{name}]").attr('value') ||         doc.find("Terms Term DataItem[name=#{name}]").attr('value')
+        value = doc.find("Terms Term DataItem[name=Op#{name}]").attr('value') || doc.find("Terms Term DataItem[name=#{name}]").attr('value')
       value
 
     # **Extract the value of a named <DataItem> from a JSON collection**
