@@ -1,6 +1,13 @@
 Updates
 -------
 
+### 2.2.1
+
+Bug fixes:
+
+-	Fixed incorrect links in Policy Representation
+-	Fixed issue in IPM Endorse where incorrect Term was used to populate form
+
 ### 2.2.0
 
 - Broker of Record Change now available for all policies
