@@ -134,6 +134,14 @@ define [
     # @return _Boolean_
     isDovetail : -> @getSystemOfRecord() == 'Dovetail'
 
+    # Checks for <Flag name="Moved" value="true"/> in <Management>
+    # @return _Boolean_
+    isMoved : ->
+      moved = _.filter @getModelProperty('Management Flags Flag'), (item) ->
+        if _.has(item, 'name') && !_.isUndefined(item.name) && item.name.toLowerCase() == 'moved'
+          _.has(item, 'value') && item.value == 'true'
+      moved.length > 0
+
     # **Get attributes of an element**
     # Check a node for attributes and return as an obj, else null
     # @param `elem` _jQuery Element_
@@ -393,18 +401,18 @@ define [
       else
         false
 
-    # For each vocabTerms look for a Term DataItem and get its value. We favor
-    # the Op{name} version of the DataItem
+    # For each vocabTerms look for a DataItem in LastTerm and get its value.
+    # We favor the Op{name} version of the DataItem
     #
     # @param `vocabTerms` _Object_ list of terms from ixVocab / model.json
+    # @param `term` _Object_ Term object from Policy
     # @return _Object_
     #
-    getTermDataItemValues : (vocabTerms) ->
-      out = {}
-      for term in vocabTerms.terms
-        out[term.name] = @getTermDataItemValue(term.name)
-        if out[term.name] == undefined
-          out[term.name] = false
+    getTermDataItemValues : (vocabTerms, term = null) ->
+      term = @getLastTerm().DataItem if _.isNull(term)
+      out  = {}
+      for vocab in vocabTerms.terms
+        out[vocab.name] = @getDataItem term, vocab.name
       out
 
     # We favor the Op{name} version of the DataItem
@@ -523,7 +531,7 @@ define [
       path = if _.isString(path) then path.split(' ') else path
 
       # walk the obj if properties exist else return the obj
-      if obj[_.first(path)]? && !_.isUndefined(obj[_.first(path)])
+      if obj? && _.has(obj, _.first(path)) && !_.isUndefined(obj[_.first(path)])
         return @getModelProperty _.rest(path), obj[_.first(path)]
       else
         return obj
