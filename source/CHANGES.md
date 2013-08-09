@@ -4,6 +4,7 @@ Updates
 ### 2.2.2
 
 - 	Carrier users no longer have access to IPM, Zendesk or Renewal Underwriting [ICS-2019](https://arc90dev.atlassian.net/browse/ICS-2019)
+-	IPM Invoice Action now uses a Transaction Request and no longer requires any form fields.
 
 ### 2.2.1
 
