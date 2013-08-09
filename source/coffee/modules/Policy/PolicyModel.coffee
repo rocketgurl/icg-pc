@@ -32,12 +32,19 @@ define [
       @on 'change', (e) ->
         e.setModelState()
         e.get_pxServerIndex()
+        e.applyFunctions()
 
       # Explicitly bind 'private' composable functions to this object
       # scope. These functions are _.composed() into other functions and
       # need their scope forced
       for f in ['getFirstValue', 'getIdentifierArray', 'checkNull', 'baseGetIntervalsOfTerm', 'baseGetCustomerData']
         @[f] = _.bind @[f], this
+
+
+    # Does the actual partial application
+    applyFunctions : (model, options) ->
+      @find = _.partial @findProperty, @get('json_document')
+      @findInLastTerm = _.partial @findProperty, @getLastTerm()
 
     # Is the argument null or undefined?
     #
@@ -522,19 +529,9 @@ define [
     # on a space separated path: 'Management Flags Flag'
     getModelProperty : (path, obj) ->
       # If no object then get the top level JSON model
-      if obj == null || obj == undefined then obj = @get 'json'
+      if _.nully(obj) then obj = @get('json')
+      @findProperty obj, path
 
-      # If path is empty array then we're done recurring
-      if _.isArray(path) && path.length == 0 then return obj
-
-      # Make path into array if we need to
-      path = if _.isString(path) then path.split(' ') else path
-
-      # walk the obj if properties exist else return the obj
-      if obj? && _.has(obj, _.first(path)) && !_.isUndefined(obj[_.first(path)])
-        return @getModelProperty _.rest(path), obj[_.first(path)]
-      else
-        return obj
 
     # **Set a variety of properties on the model based on XML policy data**
     setModelState : ->

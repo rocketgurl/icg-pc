@@ -126,3 +126,71 @@ define [
     # Send Flash messages to UI
     flash : (type, msg) ->
       @Amplify.publish 'flash', type, msg
+
+    # Find a property from a collection searching with a String path
+    # example: findProperty({foo : { bar : 2 }}, 'foo bar') would return 2,
+    # which is equivalent to foo['bar']
+    findProperty : (collection, path) ->
+      if _.nully(collection) || _.nully(path) then return undefined
+
+      path = if _.isString path then path.split(' ') else path
+
+      # If path is empty, then we're done and return collection
+      if _.isArray(path) && path.length == 0 then return collection
+
+      property = _.first(path)
+
+      # If we're looking for an object with a specific attribute, then
+      # the property will be in the form: Customer[type=Insured] at which
+      # point we break the attribute string into key & val
+      if property.match /\[(.*?)\]/
+        properties = _.filter(property.split(/\[(.*?)\]/), _.identity)
+        property   = properties[0]
+        [key, val] = properties[1].split('=')
+
+      # If the property exists on the collection inspect it otherwise
+      # it doesn't exist, and return undefined
+      if _.has(collection, property) && !_.isUndefined(collection[property])
+        # If the collection property is an Array and we have a key then
+        # we need to look for the object within this collection with
+        # the matching kay.val using filter - we then pop the first object
+        # out of the filtered array and send it back
+        if _.isArray(collection[property]) && !_.isUndefined key
+
+          # Are we trying to inspect a DataItem like so?
+          # DataItem[value=Mortgagee1AddressCityProper]
+          # Identifier nodes also use the name / value structure
+          # of DataItem
+          if property == 'DataItem' || property == 'Identifier'
+            return @findDataItem collection[property], val
+
+          # Make a filter obj from key : val and use it in _.where
+          # to find any objects in the collection array that match
+          collection = _.where collection[property], _.object([key],[val])
+
+          return @findProperty _.first(collection), _.rest(path)
+        else
+          return @findProperty collection[property], _.rest(path)
+
+      else
+        undefined
+
+    # Find the specific value of a DataItem array, which is an array of
+    # object containing name/val pairs: {name: 'foo', value: 'bar'}
+    # NOTE: if the value is empty (ex: "") we return undefined
+    findDataItem : (collection, name) ->
+      if !_.isArray collection
+        return undefined
+
+      # We favor Op prefixed versions of DataItems, so we search for
+      # these first
+      op_name = "Op#{name}"
+      data_item = _.where collection, { 'name' : op_name }
+
+      if data_item.length == 0
+        data_item = _.where collection, { 'name' : name }
+
+      if data_item.length > 0
+        data_item[0].value
+      else
+        undefined
