@@ -2,25 +2,26 @@ require
   urlArgs: ''
   baseUrl: 'js'
   paths:
-    jquery      : 'lib/jquery-1.8.2'
-    jqueryui    : 'lib/jquery-ui-1.9.0.custom.min'
-    underscore  : 'lib/underscore'
-    backbone    : 'lib/backbone-min'
-    amplify     : 'lib/amplify'
-    mustache    : 'lib/requirejs.mustache'
-    base64      : 'lib/base64'
-    moment      : 'lib/moment'
-    momentrange : 'lib/moment-range'
-    xml2json    : 'lib/jquery.xml2json'
-    text        : 'lib/text'
-    domReady    : 'lib/domReady'
-    json        : 'lib/json2'
-    loader      : 'lib/heartcode-canvasloader'
-    swfobject   : 'lib/swfobject'
-    u_string    : 'lib/underscore.string'
-    herald      : 'lib/herald/herald'
-    marked      : 'lib/marked'
-    chosen      : 'lib/chosen.jquery'
+    jquery          : 'lib/jquery-1.8.2'
+    jqueryui        : 'lib/jquery-ui-1.9.0.custom.min'
+    underscore      : 'lib/underscore'
+    backbone        : 'lib/backbone-min'
+    amplify         : 'lib/amplify'
+    mustache        : 'lib/requirejs.mustache'
+    base64          : 'lib/base64'
+    moment          : 'lib/moment'
+    momentrange     : 'lib/moment-range'
+    xml2json        : 'lib/jquery.xml2json'
+    text            : 'lib/text'
+    domReady        : 'lib/domReady'
+    json            : 'lib/json2'
+    loader          : 'lib/heartcode-canvasloader'
+    swfobject       : 'lib/swfobject'
+    u_string        : 'lib/underscore.string'
+    u_policycentral : 'underscore.policycentral'
+    herald          : 'lib/herald/herald'
+    marked          : 'lib/marked'
+    chosen          : 'lib/chosen.jquery'
   priority: ['jquery','xml2json','json']
   shim:
       'jquery' :
@@ -54,17 +55,18 @@ require [
   'backbone',
   'WorkspaceController',
   'u_string',
+  'u_policycentral',
   'domReady',
   'xml2json',
   'chosen'
-], ($, _, Backbone, WorkspaceController, u_string, domReady) ->
+], ($, _, Backbone, WorkspaceController, u_string, u_policycentral, domReady) ->
 
   # Setup underscore.string
-  _.mixin(_.str.exports())
-  _.mixin({
-    deepClone: (p_object) ->
-        JSON.parse(JSON.stringify(p_object))
-    })
+  _.mixin _.str.exports()
+
+    # Bring in Underscore Policy Central extensions
+  _.mixin u_policycentral
+
 
   # Initialize application when dom is ready
   domReady ->
