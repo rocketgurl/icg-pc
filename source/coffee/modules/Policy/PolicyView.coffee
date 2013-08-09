@@ -153,6 +153,11 @@ define [
       if @controller.user.canViewAdvanced() == false
         @$el.find(".policy-nav a[href=policyrepresentations]").parent('li').hide()
 
+      # Carrier users are not allowed most things (ICS-2019)
+      if @controller.user.isCarrier() == true
+        for action in ['renewalunderwriting', 'ipmchanges', 'servicerequests']
+          @$el.find(".policy-nav a[href=#{action}]").parent('li').hide()
+
     # Switch nav items on/off
     toggle_nav_state : (el) ->
       @policy_nav_links.removeClass 'select'
