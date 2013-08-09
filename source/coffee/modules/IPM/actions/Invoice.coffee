@@ -38,7 +38,7 @@ define [
 
       # Create additional fields needed to ChangeSet
       formValues =
-        changeType         : 'INVOICE'
+        transactionType    : 'Invoice'
         reasonCode         : 'INVOICE'
         InvoiceDateCurrent : timestamp
         documentType       : 'Invoice'
@@ -46,21 +46,11 @@ define [
         documentHref       : ''
         documentId         : "Invoice-#{id_stamp}"
 
-      if _.has(@values.formValues, 'InvoiceAmountCurrent')
-        formValues.InvoiceAmountCurrent = @Helpers.formatMoney @values.formValues.InvoiceAmountCurrent
-
-      # Throws an error if this goes to server blank
-      if _.isEmpty @values.formValues.installmentCharge
-        delete @values.formValues.installmentCharge
-
-      if _.has(@values.formValues, 'installmentCharge') && @Helpers.isInt(@values.formValues.installmentCharge)
-        formValues.installmentCharge = @Helpers.formatMoney @values.formValues.installmentCharge
-
       @values.formValues = _.extend @values.formValues, formValues
 
       # Assemble the ChangeSet XML and send to server
       @ChangeSet.commitChange(
-          @ChangeSet.getPolicyChangeSet(@values)
+          @ChangeSet.getTransactionRequest(@values, @viewData),
           @callbackSuccess,
           @callbackError
         )
