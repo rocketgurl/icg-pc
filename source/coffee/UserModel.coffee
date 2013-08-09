@@ -9,6 +9,8 @@ define [
   UserModel = BaseModel.extend
 
     initialize : ->
+      @on 'change', @applyFunctions
+
       @use_cripple() # Use CrippledClient XMLSync
 
       @urlRoot = @get 'urlRoot'
@@ -22,26 +24,26 @@ define [
         @set {'digest' : @Helpers.createDigest @get('username'), @get('password')}
         delete @attributes.password
 
+    # Does the actual partial application
+    applyFunctions : (model, options) ->
+      @find = _.partial @findProperty, @get('json')
+
     # Additional document parsing to load up User with more accessible
     # information (pulling attrs out of parsed XML and into model.attributes)
     #
     parse_identity : ->
-      doc = @get 'document'
-      if doc?
-        @set 'passwordHash', doc.find('Identity').attr('passwordHash')
-        @set 'name', doc.find('Identity Name').text()
-        @set 'email', doc.find('Identity Email').text()
-
-    # Return array of <Right> elements from <PoliciesModule>
-    getPoliciesModuleRights : ->
-      doc = @get 'document'
-      doc.find("ApplicationSettings[environmentName=#{ICS360_ENV}] PoliciesModule Rights")
+      @set 'passwordHash', @find('passwordHash')
+      @set 'name', @find('Name')
+      @set 'email', @find('Email')
 
     # Return true if User has PoliciesModule > Rights > Right VIEW_ADVANCED
     canViewAdvanced : ->
-      rights = @getPoliciesModuleRights().children().filter ->
-        $(this).text() == 'VIEW_ADVANCED'
-      rights.length == 1
+      path = "ApplicationSettings[environmentName=#{ICS360_ENV}] PoliciesModule Rights Right"
+      _.contains @find(path), 'VIEW_ADVANCED'
+
+    # Is this a carrier user? (ICS-2019)
+    isCarrier : ->
+      _.where(@find 'Affiliation', { type : 'employee_carriergroup' }).length > 0
 
       
   UserModel
