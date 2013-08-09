@@ -43,7 +43,7 @@ define [
 
     # Does the actual partial application
     applyFunctions : (model, options) ->
-      @find = _.partial @findProperty, @get('json_document')
+      @find = _.partial @findProperty, @get('json')
       @findInLastTerm = _.partial @findProperty, @getLastTerm()
 
     # Is the argument null or undefined?
