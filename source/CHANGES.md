@@ -1,6 +1,10 @@
 Updates
 -------
 
+### 2.2.2
+
+- 	Carrier users no longer have access to IPM, Zendesk or Renewal Underwriting [ICS-2019](https://arc90dev.atlassian.net/browse/ICS-2019)
+
 ### 2.2.1
 
 Bug fixes:
