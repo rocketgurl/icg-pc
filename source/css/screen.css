@@ -511,8 +511,13 @@ h2.ipm-action-header { font-size: 16px; font-size: 1.6rem; color: dimgrey; margi
 
 .bor_input { margin: 0 0 10px 0; }
 .bor_input label { margin: 0 10px 0 0; font-size: 16px; font-size: 1.6rem; display: inline-block; width: 320px; text-align: right; color: dimgrey; }
+.bor_input .labelRequired { color: #444; font-weight: bold; }
+.bor_input .labelRequired:after { color: #752E2E; content: ' *'; }
+.bor_input .agent-id-indicator { color: #9c9c9c; padding-left: 5px; }
+.bor_input .agent-id-indicator img { position: relative; top: 3px; }
 .bor_input input[type=search] { font-size: 16px; font-size: 1.6rem; }
 .bor_input select { width: 120px; }
+.bor_input .loading { font-style: italic; }
 
 .bor_input_alc { font-size: 16px; font-size: 1.6rem; font-weight: bold; color: dimgrey; }
 
@@ -532,6 +537,8 @@ img.bor-spinner { margin-right: 5px; }
 .bor-comparison { min-height: 1%; }
 .bor-comparison .first { width: 49.15254%; float: left; margin-right: 1.69492%; display: inline; }
 .bor-comparison .second { width: 49.15254%; float: right; margin-right: 0; *margin-left: -1em; display: inline; }
+
+.bor .form_actions { margin-top: 40px !important; }
 
 .zd-loss-history-container { width: 100%; float: right; margin-right: 0; *margin-left: -1em; display: inline; }
 

@@ -453,6 +453,7 @@ define [
       <BrokerOfRecordChanges>
         <AgencyLocationCode>{{agencyLocationCode}}</AgencyLocationCode>
         <AgencyLocationId>{{agencyLocationId}}</AgencyLocationId>
+        <AgentId>{{agentId}}</AgentId>
       </BrokerOfRecordChanges>
     """
 
