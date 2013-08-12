@@ -15,9 +15,9 @@ define [
     OWNER_STATE   : '' # Used for 'My Referrals' switch
 
     events :
-      "change .referrals-pagination-page" : -> 
+      "change .referrals-pagination-page" : ->
         @paginateTasks(@COLLECTION, @PAGINATION_EL)
-      "change .referrals-pagination-perpage" : -> 
+      "change .referrals-pagination-perpage" : ->
         @paginateTasks(@COLLECTION, @PAGINATION_EL)
       "click .referrals-sort-link" : (e) ->
         @sortTasks(e, @COLLECTION)
@@ -36,7 +36,7 @@ define [
       @MODULE      = options.module || false
       @COLLECTION  = options.collection || false
       @PARENT_VIEW = options.view || false
-      
+
       ixlibrary    = options.ixlibrary || false
 
       # When the collection is populated, generate the views
@@ -58,8 +58,8 @@ define [
       @AssigneeList.fetch
         error : errorCallback
 
-      @AssigneeList.on 'change', @assigneeSuccess, this 
-      @AssigneeList.on 'fail', @assigneeError, this 
+      @AssigneeList.on 'change', @assigneeSuccess, this
+      @AssigneeList.on 'fail', @assigneeError, this
 
     render : ->
       # Setup flash module & main container
@@ -85,15 +85,15 @@ define [
 
       this
 
-    # **Render tasks**  
+    # **Render tasks**
     # Map the collection models into an array of ReferralTaskViews that we
     # can use to populate the overall view with task rows.
     #
-    # @param `collection` _Object_ ReferralTaskCollection  
-    # @return _Array_  
+    # @param `collection` _Object_ ReferralTaskCollection
+    # @return _Array_
     #
     renderTasks : (collection) ->
-      @TASK_VIEWS = collection.map (model) => 
+      @TASK_VIEWS = collection.map (model) =>
         new ReferralTaskView(
             model       : model,
             parent_view : this
@@ -113,8 +113,8 @@ define [
 
     # Handle server errors from the Tasks Collection
     #
-    # @param `collection` _Object_ ReferralTaskCollection  
-    # @param `response` _jqXHR_ Response object  
+    # @param `collection` _Object_ ReferralTaskCollection
+    # @param `response` _jqXHR_ Response object
     #
     tasksError : (collection, response) ->
       @toggleLoader()
@@ -124,8 +124,8 @@ define [
     # Toggle the owner field on the UI and trigger collection.getReferrals()
     #
     # @param `e` _Event_
-    # @param `collection` _Object_ ReferralTaskCollection  
-    # @param `elements` _Object_ Cached jQuery HTML Elements  
+    # @param `collection` _Object_ ReferralTaskCollection
+    # @param `elements` _Object_ Cached jQuery HTML Elements
     #
     toggleOwner : (e, collection, elements) ->
       e.preventDefault()
@@ -151,9 +151,9 @@ define [
 
     # Update the collection with values from pagination form
     #
-    # @param `collection` _Object_ ReferralTaskCollection  
-    # @param `elements` _Object_ jQuery wrapped HTML elements  
-    #     
+    # @param `collection` _Object_ ReferralTaskCollection
+    # @param `elements` _Object_ jQuery wrapped HTML elements
+    #
     paginateTasks : (collection, elements) ->
       query =
           perPage           : elements.per_page.val() || 25
@@ -163,19 +163,19 @@ define [
       @toggleLoader(true)
       collection.getReferrals(query)
 
-    # Return an object of pagination form elements  
-    # @return _Object_ 
+    # Return an object of pagination form elements
+    # @return _Object_
     cachePaginationElements : ->
       items    : @$el.find('.pagination-a')
       jump_to  : @$el.find('.referrals-pagination-page')
       per_page : @$el.find('.referrals-pagination-perpage')
- 
+
 
     # Update the pagination controls with current info
     #
-    # @param `collection` _Object_ ReferralTaskCollection  
-    # @param `elements` _Object_ jQuery wrapped HTML elements  
-    # 
+    # @param `collection` _Object_ ReferralTaskCollection
+    # @param `elements` _Object_ jQuery wrapped HTML elements
+    #
     updatePagination : (collection, elements) ->
       # Items count
       per_page = elements.per_page.val()
@@ -230,9 +230,9 @@ define [
 
     # Sort the current page of tasks in memory.
     #
-    # @param `e` _Event_ Click event 
-    # @param `collection` _Object_ ReferralTaskCollection   
-    # 
+    # @param `e` _Event_ Click event
+    # @param `collection` _Object_ ReferralTaskCollection
+    #
     sortTasks : (e, collection) ->
       e.preventDefault()
       $el = $(e.currentTarget)
@@ -252,11 +252,11 @@ define [
         $el.data('dir', 'asc')
         @swap_indicator $el, '&#9650;'
 
-    # Switch sorting indicator symbol  
+    # Switch sorting indicator symbol
     #
-    # @param `el` _HTML Element_ table header  
-    # @param `char` _String_ direction indicator  
-    #    
+    # @param `el` _HTML Element_ table header
+    # @param `char` _String_ direction indicator
+    #
     swap_indicator : (el, char) ->
       text = el.html()
       reg = /▲|▼/gi
@@ -330,7 +330,7 @@ define [
     assigneeLoader : ->
       @$el.find('.menu-status')
           .show()
-          .html('<strong class="menu-loading">Saving changes&hellip;</strong>')   
+          .html('<strong class="menu-loading">Saving changes&hellip;</strong>')
 
     assigneeSuccess : (model) ->
       @$el.find('.menu-status')
@@ -353,4 +353,3 @@ define [
       else
         $cb.val('false')
       $cb
-  

@@ -8,7 +8,7 @@ define [
       @use_cripple()
 
     getAll : ->
-      @parseBooleans @get('json').Assignee 
+      @parseBooleans @get('json').Assignee
 
     getRenewals : ->
       json = @parseBooleans @get('json').Assignee
@@ -18,9 +18,9 @@ define [
       json = @parseBooleans @get('json').Assignee
       _.where json, { new_business : true }
 
-    # **PUT XML to server and fire callbacks**  
-    # 
-    # @return _jqXHR_  
+    # **PUT XML to server and fire callbacks**
+    #
+    # @return _jqXHR_
     #
     putList : (success, error) ->
       xml = @json2xml()
@@ -44,14 +44,14 @@ define [
             success.apply(this, [this, data, textStatus, jqXHR])
         error: (jqXHR, textStatus, errorThrown) =>
           if error?
-            error.apply(this, [this, jqXHR, textStatus, errorThrown])     
+            error.apply(this, [this, jqXHR, textStatus, errorThrown])
 
     # Success Callback for putList - updates model with new XML
     #
-    # @param `model` _Object_ ReferralAssigneesModel    
-    # @param `data` _XML_ Response from server  
-    # @param `status` _String_ HTTP success/fail    
-    # @param `xhr` _jqXHR_ jQuery XHR object   
+    # @param `model` _Object_ ReferralAssigneesModel
+    # @param `data` _XML_ Response from server
+    # @param `status` _String_ HTTP success/fail
+    # @param `xhr` _jqXHR_ jQuery XHR object
     #
     putSuccess : (model, data, textStatus, xhr) ->
       parsed_data = model.parse(data, xhr)
@@ -64,9 +64,9 @@ define [
     # Error Callback for putList - PUT bailed out. This is a no-op and should
     # be implemented in ReferralQueueView (to display error messages, etc)
     #
-    # @param `model` _Object_ ReferralAssigneesModel    
-    # @param `xhr` _jqXHR_ jQuery XHR object   
-    # @param `textStatus` _String_ Error code    
+    # @param `model` _Object_ ReferralAssigneesModel
+    # @param `xhr` _jqXHR_ jQuery XHR object
+    # @param `textStatus` _String_ Error code
     # @param `errorThrown` _String_ Error msg
     #
     putError : (model, xhr, textStatus, errorThrown) ->
@@ -90,14 +90,14 @@ define [
           renewals     : renewals
         }
 
-    # **Convert Assignees JSON to XML**  
-    # 
-    # @return _String_  
+    # **Convert Assignees JSON to XML**
+    #
+    # @return _String_
     #
     json2xml : ->
       json = @get('json')
 
-      nodes = ""      
+      nodes = ""
       for assignee in json.Assignee
 
         assignee.new_business ?= false
