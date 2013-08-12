@@ -25,11 +25,19 @@
 			</select>
 		</div>
 		<div class="bor_input">
-			<label for="{{guid}}_NewLocationCode">Search:</label>
+			<label for="{{guid}}_NewLocationCode" class="labelRequired">Search:</label>
 			<select id="{{guid}}_NewLocationCode" name="NewLocationCode" data-value="{{NewLocationCode}}" required>
 				{{#EnumsNewLocationCode}}
 				<option value="{{value}}">{{label}}</option>
 				{{/EnumsNewLocationCode}}
+			</select>
+		</div>
+		<div class="bor_input">
+			<label for="{{guid}}_AgentId" class="labelRequired" id="{{guid}}_AgentIdLabel">Agent ID:</label>
+			<select id="{{guid}}_AgentId" name="AgentId" data-value="{{AgentId}}" required>
+				{{#EnumsAgentId}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsAgentId}}
 			</select>
 		</div>
 		<div class="form_actions">
