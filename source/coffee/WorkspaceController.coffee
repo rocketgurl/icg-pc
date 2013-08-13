@@ -42,6 +42,7 @@ define [
       ixadmin        : "./config/ics/#{window.ICS360_ENV}/ixadmin"
       ixvocab        : './ixvocab/api/rest/v1/'
       zendesk        : './zendesk'
+      pxclient       : '../swf/PolicySummary.swf'
 
   # Method Combinator (Decorator)
   # https://github.com/raganwald/method-combinators

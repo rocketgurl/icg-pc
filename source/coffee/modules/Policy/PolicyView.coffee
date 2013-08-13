@@ -319,7 +319,7 @@ define [
 
       if @flash_loaded is false
         swfobject.embedSWF(
-          "../swf/PolicySummary.swf",
+          @services.pxclient,
           "policy-summary-#{@cid}",
           "100%",
           "93%", # @policy_summary.height(),
