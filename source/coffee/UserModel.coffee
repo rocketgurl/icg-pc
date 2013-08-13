@@ -43,8 +43,8 @@ define [
 
     # Is this a carrier user? (ICS-2019)
     isCarrier : ->
-      _.where(@find 'Affiliation', { type : 'employee_carriergroup' }).length > 0
+      _.where(@find('Affiliation'), { type : 'employee_carriergroup' }).length > 0
 
-      
+
   UserModel
 
