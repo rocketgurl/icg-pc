@@ -328,6 +328,7 @@ define [
           null,
           {
             allowScriptAccess : 'always'
+            wmode : 'window'
           },
           null,
           (e) =>
@@ -361,7 +362,7 @@ define [
       # We need to get some global workspace information to pass along
       # to our SWF
       # workspace = @controller.workspace_state.get('workspace')
-      config    = @controller.config.get_config(@controller.workspace_state)
+      config = @controller.config.get_config(@controller.workspace_state)
 
       if not config?
         @Amplify.publish(@cid, 'warning', "There was a problem with the configuration for this policy. Sorry.")
@@ -376,6 +377,7 @@ define [
         "masterEnvironment" : window.ICS360_ENV
 
       if digest[0]? and digest[1]?
+        console.log 'INIT FLASH', digest[0], digest[1], config, settings
         obj.init(digest[0], digest[1], config, settings)
       else
         @Amplify.publish(@cid, 'warning', "There was a problem with your credentials for this policy. Sorry.")

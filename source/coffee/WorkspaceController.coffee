@@ -42,7 +42,7 @@ define [
       ixadmin        : "./config/ics/#{window.ICS360_ENV}/ixadmin"
       ixvocab        : './ixvocab/api/rest/v1/'
       zendesk        : './zendesk'
-      pxclient       : '../swf/PolicySummary.swf'
+      pxclient       : 'https://agentportal_stage.s3.amazonaws.com/swf_modules/PolicySummary/3.18.0-1/PolicySummary.swf'
 
   # Method Combinator (Decorator)
   # https://github.com/raganwald/method-combinators
@@ -516,6 +516,9 @@ define [
       # non-auth OPTIONS requests currently
       for node in ['cxserver', 'ixprofiler', 'ixrelay', 'zendesk']
         @services[node] = @config.get_universal_service(@workspace_state, node)
+
+      # Retrieve pxClient location from ixConfig
+      # @services.pxclient = @config.get_pxClient(@workspace_state)
 
       @launch_app app
 
