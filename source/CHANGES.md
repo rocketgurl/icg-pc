@@ -1,6 +1,15 @@
 Updates
 -------
 
+### 2.2.3
+
+-	IPM Endorse now uses correct term [ICS-1972](https://arc90dev.atlassian.net/browse/ICS-1972)
+-	Carrier users cannot access specific interfaces [ICS-2019](https://arc90dev.atlassian.net/browse/ICS-2019)
+-	Broker of Record change now requires an AgentId [ICS-2042](https://arc90dev.atlassian.net/browse/ICS-2042)
+-	Corrected link to XML representations [ICS-1869](https://arc90dev.atlassian.net/browse/ICS-1869)
+-	Now using a Transaction Request for invoicing [ICS-2036](https://arc90dev.atlassian.net/browse/ICS-2036)
+-	PolicySummary SWF module is now loaded from S3 [ICS-2013](https://arc90dev.atlassian.net/browse/ICS-2013)
+
 ### 2.2.2
 
 - 	Carrier users no longer have access to IPM, Zendesk or Renewal Underwriting [ICS-2019](https://arc90dev.atlassian.net/browse/ICS-2019)
