@@ -84,7 +84,7 @@ define [
       check_workspace \
       (workspace) ->
         doc = @get('document')
-        url = doc.find("ConfigItem[name=#{workspace.app}] ConfigItem[name=businesses] ConfigItem[name=#{workspace.business}] ConfigItem[name=#{window.ICS360_ENV}] ConfigItem[name=pxClientUrl]").attr('value')
+        url = doc.find("ConfigItem[name=policycentral] ConfigItem[name=policySummaryUrl]").attr('value')
         if url == undefined then false else url
 
   ConfigModel
