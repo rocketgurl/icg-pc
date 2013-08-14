@@ -377,7 +377,6 @@ define [
         "masterEnvironment" : window.ICS360_ENV
 
       if digest[0]? and digest[1]?
-        console.log 'INIT FLASH', digest[0], digest[1], config, settings
         obj.init(digest[0], digest[1], config, settings)
       else
         @Amplify.publish(@cid, 'warning', "There was a problem with your credentials for this policy. Sorry.")
