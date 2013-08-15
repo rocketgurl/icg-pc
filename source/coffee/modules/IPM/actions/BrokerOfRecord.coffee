@@ -71,7 +71,7 @@ define [
       super
 
       # AgencyLocationCode plopped into view
-      @current_alc =  @MODULE.POLICY.getTermDataItemValue('AgencyLocationCode')
+      @current_alc =  @MODULE.POLICY.find('Management AgencyLocationCode')
       @$el.find('.bor_input_alc').html @current_alc
 
       # Turn our select into a Chosen select widget
