@@ -475,9 +475,9 @@ define [
       @MODULE.POLICY
 
     # Return PolicyModel to its previous state if it has one
-    # 
+    #
     # @return _Object_ PolicyModel
-    # 
+    #
     rollbackPolicyModel : ->
       prev = @MODULE.POLICY.get('prev_document')
       if prev?

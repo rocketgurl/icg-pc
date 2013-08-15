@@ -325,6 +325,8 @@ define [
 
     invoice : ""
 
+    issue : ""
+
     make_payment : """
       <Ledger>
         <LineItem value="{{paymentAmount}}" type="PAYMENT" timestamp="{{timestamp}}">
