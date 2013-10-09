@@ -36,15 +36,20 @@ define [
       @set 'name', @find('Name')
       @set 'email', @find('Email')
 
-    # Return true if User has PoliciesModule > Rights > Right VIEW_ADVANCED
+    # True if User has ixadmin > PoliciesModule > Rights > Right > VIEW_ADVANCED
     canViewAdvanced : ->
-      path = "ApplicationSettings[environmentName=#{ICS360_ENV}] PoliciesModule Rights Right"
-      _.contains @find(path), 'VIEW_ADVANCED'
+      _.contains(
+        @findProperty(
+          _.findWhere(@get('json').ApplicationSettings, {
+            environmentName: ICS360_ENV,
+            applicationName : 'ixadmin'}),
+          'PoliciesModule Rights Right'),
+        'VIEW_ADVANCED')
 
     # Is this a carrier user? (ICS-2019)
     isCarrier : ->
-      _.where(@find('Affiliation'), { type : 'employee_carriergroup' }).length > 0
+      _.where(@find('Affiliation'),
+              { type : 'employee_carriergroup' }).length > 0
 
 
   UserModel
-
