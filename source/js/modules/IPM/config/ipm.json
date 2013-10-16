@@ -65,6 +65,10 @@
           "view": "BrokerOfRecord"
         },
         {
+          "label": "Change Customer",
+          "view": "ChangeCustomer"
+        },
+        {
           "label": "Issue (Automatic)",
           "view": "IssueAutomatic"
         }
