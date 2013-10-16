@@ -79,45 +79,45 @@
 			</footer>
 		</article>
 	</div>
-    <script>
-	    // Global ENV Setting
-		window.ICS360_ENV  = 'staging';
-		window.IPM_CAPABLE = true;
-		window.USE_PROXY   = true;
+  <script>
+    // Global ENV Setting
+    window.ICS360_ENV  = 'staging';
+    window.IPM_CAPABLE = true;
+    window.USE_PROXY   = true;
 
-    	// SWF Handler
-    	var ready = function() {
-    		window.policyViewInitSWF();
-    	}
+    // SWF Handler
+    var ready = function() {
+      window.policyViewInitSWF();
+    }
 
-    	// Google Analytics
-        var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
-        (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-        g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-        s.parentNode.insertBefore(g,s)}(document,'script'));
-    </script>
+    // Google Analytics
+    var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+    (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+            g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+            s.parentNode.insertBefore(g,s)}(document,'script'));
+  </script>
 
-    <!-- TEMPLATE: Flash Message Container -->
-    <script type="text/template" id="tpl-flash-message">
-    	<div class="flash-message-container">
-    		<div id="flash-message-{{cid}}" class="flash-message"></div>
-    	</div>
-    </script>
+  <!-- TEMPLATE: Flash Message Container -->
+  <script type="text/template" id="tpl-flash-message">
+    <div class="flash-message-container">
+    <div id="flash-message-{{cid}}" class="flash-message"></div>
+    </div>
+  </script>
 
-    <!-- TEMPLATE: Search Tab -->
-    <script type="text/template" id="tpl-workspace-tab-search">
-    	<li {{{tab_class}}}id="tab-search"><a href="{{tab_url}}"><i class="icon-search" data-tab-label="{{tab_label}}"></i></a></li>
-    </script>
+  <!-- TEMPLATE: Search Tab -->
+  <script type="text/template" id="tpl-workspace-tab-search">
+    <li {{{tab_class}}}id="tab-search"><a href="{{tab_url}}"><i class="icon-search" data-tab-label="{{tab_label}}"></i></a></li>
+  </script>
 
-    <!-- TEMPLATE: Tab + no close -->
-    <script type="text/template" id="tpl-workspace-tab-noclose">
-    	<li{{{tab_class}}}><a href="{{tab_url}}">{{tab_label}}</a></li>
-    </script>
+  <!-- TEMPLATE: Tab + no close -->
+  <script type="text/template" id="tpl-workspace-tab-noclose">
+    <li{{{tab_class}}}><a href="{{tab_url}}">{{tab_label}}</a></li>
+  </script>
 
-    <!-- TEMPLATE: Workspace Tab -->
-    <script type="text/template" id="tpl-workspace-tab">
-    	<li{{{tab_class}}}><a href="{{tab_url}}">{{tab_label}}</a><i class="icon-remove-sign" title="close this tab"></i></li>
-    </script>
+  <!-- TEMPLATE: Workspace Tab -->
+  <script type="text/template" id="tpl-workspace-tab">
+    <li{{{tab_class}}}><a href="{{tab_url}}">{{tab_label}}</a><i class="icon-remove-sign" title="close this tab"></i></li>
+  </script>
 
 </body>
 </html>
