@@ -69,6 +69,10 @@
           "view": "ChangeCustomer"
         },
         {
+          "label": "Update Mortgagee",
+          "view": "UpdateMortgagee"
+        },
+        {
           "label": "Issue (Automatic)",
           "view": "IssueAutomatic"
         }

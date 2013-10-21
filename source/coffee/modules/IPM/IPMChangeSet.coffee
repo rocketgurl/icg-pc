@@ -468,3 +468,11 @@ define [
       </BrokerOfRecordChanges>
     """
 
+    update_mortgagee : """
+      <ReasonCode>53</ReasonCode>
+      <CustomerChanges>
+        <Set>
+          {{>changes}}
+        </Set>
+      </CustomerChanges>
+    """
