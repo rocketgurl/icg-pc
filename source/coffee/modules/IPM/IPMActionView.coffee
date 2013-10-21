@@ -11,7 +11,6 @@ define [
       Issue (automatic)
       Issue (manual)
       Renew
-      Change customer
       Update mortgage
       Change additional interest
       Edit term data
