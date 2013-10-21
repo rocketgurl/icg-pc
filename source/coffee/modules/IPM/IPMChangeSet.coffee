@@ -306,6 +306,15 @@ define [
       <ReasonCode>{{reasonCode}}</ReasonCode>
     """
 
+    change_customer : """
+      <ReasonCode>{{reasonCode}}</ReasonCode>
+      <CustomerChanges>
+        <Set>
+          {{>changes}}
+        </Set>
+      </CustomerChanges>
+    """
+
     endorse : """
       <ReasonCode>{{reasonCode}}</ReasonCode>
       <Comment>{{comment}}</Comment>
