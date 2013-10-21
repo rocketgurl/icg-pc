@@ -46,6 +46,10 @@
         {
           "label": "Reverse payment",
           "view": "ReversePayment"
+        },
+        {
+          "label": "Write off charges",
+          "view": "WriteOffCharges"
         }
       ]
     },
@@ -61,19 +65,19 @@
           "view": "Endorse"
         },
         {
-          "label": "Change Broker of Record",
+          "label": "Change broker of record",
           "view": "BrokerOfRecord"
         },
         {
-          "label": "Change Customer",
+          "label": "Change customer",
           "view": "ChangeCustomer"
         },
         {
-          "label": "Update Mortgagee",
+          "label": "Update mortgagee",
           "view": "UpdateMortgagee"
         },
         {
-          "label": "Change Additional Interest",
+          "label": "Change additional interest",
           "view": "ChangeAdditionalInterest"
         },
         {

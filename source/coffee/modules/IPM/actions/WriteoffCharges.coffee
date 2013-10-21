@@ -51,7 +51,7 @@ define [
         @Helpers.formatMoney(@values.formValues.amount) ? null
 
       @values.formValues.reasonCodeLabel = \
-        $('#id_reasonCode option[value=' + @values.formValues.reasonCode + ']').html() ? null
+        $("#{@makeId('reasonCode')} option[value=#{@values.formValues.reasonCode}]").html() ? null
 
       # Assemble the ChangeSet XML and send to server
       @ChangeSet.commitChange(
