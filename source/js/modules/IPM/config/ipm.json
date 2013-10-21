@@ -73,6 +73,10 @@
           "view": "UpdateMortgagee"
         },
         {
+          "label": "Change Additional Interest",
+          "view": "ChangeAdditionalInterest"
+        },
+        {
           "label": "Issue (Automatic)",
           "view": "IssueAutomatic"
         }

@@ -315,6 +315,15 @@ define [
       </CustomerChanges>
     """
 
+    change_additional_interest : """
+      <ReasonCode>{{reasonCode}}</ReasonCode>
+      <CustomerChanges>
+        <Set>
+          {{>changes}}
+        </Set>
+      </CustomerChanges>
+    """
+
     endorse : """
       <ReasonCode>{{reasonCode}}</ReasonCode>
       <Comment>{{comment}}</Comment>
