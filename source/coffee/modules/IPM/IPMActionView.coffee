@@ -267,6 +267,10 @@ define [
       # form ids or everything explodes and sinks into the ocean.
       viewData.guid = @cid
 
+      # Filter false values out
+      for key, val of viewData
+        if val == false then viewData[key] = "" else viewData[key] = val
+
       @viewData = viewData
       @view     = view
 
