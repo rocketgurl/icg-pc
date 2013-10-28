@@ -5,7 +5,56 @@
    ===========
 
    Grab bag of functions to handle dynamic behaviors witin IPM forms,
-   sort of like a little mundane rules engine.
+   like a little bureaucrat in a little cubicle.
+
+   How to use:
+   ----------
+
+   Define some rules:
+
+   var rules = [{
+      field : 'HeatPump',
+      condition : '> 100',
+      target : 'CentralAir',
+      effect : apparatchik.showElement
+    },
+    {
+      field : 'ConstructionType',
+      condition : '== 100',
+      target : 'Cladding',
+      effect : apparatchik.showElement
+    },
+    {
+      field : 'WindstormDeductibleOption',
+      sideEffects : [
+        {
+          target : 'HurricaneDeductible',
+          condition : '== 100',
+          effect : apparatchik.showElement
+        },
+        {
+          target : 'WindHailDeductible',
+          condition : '== 200',
+          effect : apparatchik.showElement
+        }
+      ]
+    }];
+
+    Then pass them to Apparatchik: 
+
+    if (apparatchik.isProduct('fsic-dp3-la') && apparatchik.isAction('Endorse')) {
+      apparatchik.applyEnumDynamics(rules);
+    }
+
+    Notice that WindstormDeductibleOption has multiple side-effects
+    which you can define in an array.
+
+    Rules work like so:
+
+    field     : the form field you want to listen to (onChange)
+    condition : what condition it should meet (ex: < 100)
+    target    : which field to modify if condition is met
+    effect    : the function that handles effects
 
  */
 
@@ -149,14 +198,14 @@ var Apparatchik = (function(){
    *   field : 'WindstormDeductibleOption',
    *   sideEffects : [
    *     {
-   *       target : 'HurricaneDeductible',
+   *       target    : 'HurricaneDeductible',
    *       condition : '== 100',
-   *       effect : FormAction.show
+   *       effect    : Apparatchik.showElement
    *     },
    *     {
-   *       target : 'WindHailDeductible',
+   *       target    : 'WindHailDeductible',
    *       condition : '== 200',
-   *       effect : FormAction.show
+   *       effect    : Apparatchik.showElement
    *     }
    *   ]
    * }
