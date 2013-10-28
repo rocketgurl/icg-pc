@@ -2,8 +2,9 @@ define [
   'BaseView',
   'Messenger',
   'modules/IPM/IPMChangeSet',
-  'modules/IPM/IPMFormValidation'
-], (BaseView, Messenger, IPMChangeSet, IPMFormValidation) ->
+  'modules/IPM/IPMFormValidation',
+  'Apparatchik'
+], (BaseView, Messenger, IPMChangeSet, IPMFormValidation, Apparatchik) ->
 
   ###
     ACTIONVIEWS TODO:
@@ -84,6 +85,10 @@ define [
           args = _.toArray arguments
           if @validate()
             submit(args[1])
+
+      # Apparatchik is our Rules Cop for enforcing behavior sets in
+      # forms. It is actually documented in js/lib/Apparatchik.js
+      @apparatchik = new Apparatchik(@cid, @MODULE.POLICY, @MODULE.VIEW, @$el)
 
     # **fetchTemplates** grab the model.json and view.html for processing
     #

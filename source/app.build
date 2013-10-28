@@ -19,7 +19,8 @@
     json: 'lib/json2',
     loader: 'lib/heartcode-canvasloader',
     swfobject: 'lib/swfobject',
-    u_string: 'lib/underscore.string'
+    u_string: 'lib/underscore.string',
+    Apparatchik : 'lib/Apparatchik'
   },
   shim: {
     'jquery': {
@@ -47,6 +48,9 @@
     },
     'u_string': {
       deps: ['underscore']
+    },
+    'Apparatchik': {
+      deps: ['jquery','underscore','moment']
     }
   },
   modules: [
@@ -65,7 +69,7 @@
     }
   ],
   preserveLicenseComments: false,
-  removeCombined: true,
+  removeCombined: false,
   optimize: "uglify2",
   uglify2: {
       warnings: true,
