@@ -4,14 +4,14 @@
 		<div id="content_header">
 			<h2>Edit Term Data for {{ policyId }}</h2>
 		</div>
-		
+
 		<div class="content_msg stern_warning">
 			<h3>Warning</h3>
 			<p>This action manually replaces Term DataItems for the purposes of data correction.</p>
 		</div>
-		
+
 		<div class="content_body">
-			
+
 			{{#policyOverview}}
 			<section class="policyOverview">
 				<h1>Policy Overview</h1>
@@ -31,9 +31,9 @@
 			</div>
 
 			<div id="group_0" class="row">
-				<input type="text" id="id_name_0" name="name_0" value="">
-				<input type="text" id="id_current_0" name="current_0" disabled="disabled">
-				<input type="text" id="id_new_0" name="new_0">
+				<input type="text" id="{{guid}}_name_0" name="name_0" value="">
+				<input type="text" id="{{guid}}_current_0" name="current_0" disabled="disabled">
+				<input type="text" id="{{guid}}_new_0" name="new_0">
 			</div>
 
 			<div class="form_actions">
