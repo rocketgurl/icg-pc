@@ -121,7 +121,7 @@ var Apparatchik = (function(){
   };
 
   /**
-   * We need jQuery wrapped & id_ prefixed elements
+   * We need jQuery wrapped & guid_ prefixed elements
    *
    * @param {String} field   name of field
    * @return {String}
