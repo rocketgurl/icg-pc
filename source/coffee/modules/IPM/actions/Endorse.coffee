@@ -136,6 +136,48 @@ define [
       @adjustHO3VAWaterBackupCoverage()
       @adjustAlabamaLossTypeFields()
       @adjustAlabamaPropertyUsage()
+      @addFNICHO3LABehaviors()
+
+    addFNICHO3LABehaviors : ->
+      unless @apparatchik.isProduct('fnic-ho3-la') && @apparatchik.isAction('Endorse')
+        console.log "not FNIC"
+
+      rules = [
+        field: "HeatPump"
+        condition: "> 100"
+        target: "CentralAir"
+        effect: @apparatchik.showElement
+      ,
+        field: "NumberOfSolarPanels"
+        condition: "> 0"
+        target: "SolarPanelUsage"
+        effect: @apparatchik.showElement
+      ,
+        field: "ConstructionType"
+        condition: "== 100"
+        target: "Cladding"
+        effect: @apparatchik.showElement
+      ,
+        field: "WindstormDeductibleOption"
+        sideEffects: [
+          target: "HurricaneDeductible"
+          condition: "== 100"
+          effect: @apparatchik.showElement
+        ,
+          target: "WindHailDeductible"
+          condition: "== 200"
+          effect: @apparatchik.showElement
+        ]
+      ]
+      i = 0
+      while ++i < 4
+        rules.push
+          field: "HomeFeatures" + i
+          condition: "> 0"
+          target: "HomeFeatures" + i + "SquareFeet"
+          effect: @apparatchik.showElement
+
+      @apparatchik.applyEnumDynamics rules
 
     # ICS-458
     # if this is a DP3 NY form and has a Coverage L & Coverage M field we
