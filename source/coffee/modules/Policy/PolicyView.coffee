@@ -150,7 +150,7 @@ define [
         @$el.find(".policy-nav a[href=ipmchanges]").parent('li').hide()
 
       # Hide Policy representations if user doesn't have VIEW_ADVANCED <Right>
-      if @controller.user.canViewAdvanced() == false
+      if @controller.user?.canViewAdvanced() == false
         @$el.find(".policy-nav a[href=policyrepresentations]").parent('li').hide()
 
       # Carrier users are not allowed most things (ICS-2019)
