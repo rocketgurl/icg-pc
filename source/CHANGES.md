@@ -1,6 +1,11 @@
 Updates
 -------
 
+### 2.2.5
+
+- IPM focused release
+
+
 ### 2.2.3
 
 -	IPM Endorse now uses correct term [ICS-1972](https://arc90dev.atlassian.net/browse/ICS-1972)
