@@ -140,7 +140,7 @@ define [
 
     addFNICHO3LABehaviors : ->
       unless @apparatchik.isProduct('fnic-ho3-la') && @apparatchik.isAction('Endorse')
-        console.log "not FNIC"
+        return false
 
       rules = [
         field: "HeatPump"
