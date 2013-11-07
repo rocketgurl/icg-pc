@@ -71,18 +71,29 @@ define [
 
     onMailingEqualProperty : ->
       @$el.find(@makeId('MailingEqualPropertyAddress')).on 'change', (e) =>
+        insuredAddressFields = @$el.find(@makeId('InsuredMailingAddressLine1')).parents('fieldset').first()
+
         insuredMailing = @$el.find(@makeId('InsuredMailingAddressLine1'))
                              .parents('fieldset').find('h3 a')
-        if $(e.currentTarget).val() == "100" then insuredMailing.trigger('click')
+        if $(e.currentTarget).val() == "100"
+          insuredAddressFields.css('display', 'block')
+          insuredMailing.trigger('click')
+        else
+          insuredAddressFields.css('display', 'none')
 
     # Attach listeners to fields to dynamically update Insured Mailing
     # Adress when things change
     adjustInsuredAddress : ->
       mailingEqualProperty = @$el.find(@makeId('MailingEqualPropertyAddress'))
 
+      insuredAddressFields = @$el.find(@makeId('InsuredMailingAddressLine1')).parents('fieldset').first()
+
       mailingEqualProperty.on 'change', (e) =>
         if $(e.currentTarget).val() == "100"
+          insuredAddressFields.css('display', 'block')
           @loadAddressFields()
+        else
+          insuredAddressFields.css('display', 'none')
 
       listener_ids = _.map(['MailingEqualPropertyAddress', 'PropertyStreetNumber',
         'PropertyStreetName', 'PropertyAddressLine2', 'PropertyCity',
