@@ -3,7 +3,11 @@ Updates
 
 ### 2.2.5
 
-- IPM focused release
+- Provided access to additional IPM functions:
+ - Change Customer [ICS-2144](https://arc90dev.atlassian.net/browse/ICS-2144)
+ - Update Mortgagee [ICS-2145](https://arc90dev.atlassian.net/browse/ICS-2145)
+ - Change Additional Interest [ICS-2146](https://arc90dev.atlassian.net/browse/ICS-2146)
+ - Write off Charges [ICS-2147](https://arc90dev.atlassian.net/browse/ICS-2147)
 
 
 ### 2.2.3
