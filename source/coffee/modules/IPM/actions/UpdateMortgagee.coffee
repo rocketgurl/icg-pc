@@ -37,19 +37,19 @@ define [
     #
     processViewData : (vocabTerms, view) =>
       super vocabTerms, view
-      
+
       # !! Here be Dragons !!
-      # 
+      #
       # Mortgagee Data is not normally pulled in as part of the
       # viewData so we manually add it in. Otherwise we will
-      # miss a lot of fields  
+      # miss a lot of fields
       mortgagee = @MODULE.POLICY.getTermDataItemValues(vocabTerms, @MODULE.POLICY.get('mortgageeData'))
       @viewData = _.extend(@viewData, mortgagee)
-      
+
     # Apply behaviors to form after rendering
     postProcessView : ->
       super
-      
+
     # **Process Form**
     # On submit we do some action specific processing and then send to the
     # TransactionRequest monster
