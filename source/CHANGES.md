@@ -1,6 +1,10 @@
 Updates
 -------
 
+### 2.2.6
+
+- Fixes for Change Customer [ICS-2144](https://arc90dev.atlassian.net/browse/ICS-2144)
+
 ### 2.2.5
 
 - Provided access to additional IPM functions:
