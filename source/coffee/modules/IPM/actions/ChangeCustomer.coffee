@@ -62,6 +62,23 @@ define [
     processViewData : (vocabTerms, view) =>
       super vocabTerms, view
 
+      # !! Here be Dragons !!
+      #
+      # We need to manually pull Customers Customer Insured data
+      # into the form. We have to manually clean out false values
+      # from the customer object
+      customer = @MODULE.POLICY.getTermDataItemValues(
+        vocabTerms,
+        @MODULE.POLICY.find('Customers Customer[type=Insured]').DataItem)
+
+      # keys w/o false vals
+      keys = _.filter(_.keys(customer), (k) -> customer[k] != false)
+
+      # new object w/o false values created with [[k,v],[k,v]] array
+      clean_customer = _.object(_.map(keys, (k) -> [k, customer[k]]))
+
+      @viewData = _.extend(@viewData, clean_customer)
+
     # Apply behaviors to form after rendering
     postProcessView : ->
       super
