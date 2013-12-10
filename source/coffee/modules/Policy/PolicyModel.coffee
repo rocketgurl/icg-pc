@@ -131,10 +131,10 @@ define [
       # ICS-1641
       if @isQuote()
         ipm_header.id = @find('Identifiers Identifier[name=QuoteNumber]')
-        ipm_header.product = @find('Quoting CurrentQuote ProtoTerm ProtoInterval DataItem[name=PolicyType]')
+        ipm_header.product = @find('Quoting CurrentQuote ProtoTerm ProtoInterval DataItem[name=OpPolicyType]')
         ipm_header.period = do =>
-          start = @find('Quoting CurrentQuote ProtoTerm EffectiveDate')
-          end = @find('Quoting CurrentQuote ProtoTerm ExpirationDate')
+          start = @find('Quoting CurrentQuote ProtoTerm EffectiveDate') || ""
+          end = @find('Quoting CurrentQuote ProtoTerm ExpirationDate') || ""
           @Helpers.concatStrings(start.substr(0,10), end.substr(0,10), ' - ')
 
       ipm_header
@@ -255,7 +255,7 @@ define [
     # @return _Array_
     getTerms : ->
       terms = false
-      if @get('json').Terms?.Term?
+      if @get('json')?.Terms?.Term?
         terms = @get('json').Terms.Term
 
       # If there are multiple terms then return the array, otherwise
