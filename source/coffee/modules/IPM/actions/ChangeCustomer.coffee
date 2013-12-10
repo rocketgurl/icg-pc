@@ -88,13 +88,18 @@ define [
 
     onMailingEqualProperty : ->
       @$el.find(@makeId('MailingEqualPropertyAddress')).on 'change', (e) =>
-        insuredAddressFields = @$el.find(@makeId('InsuredMailingAddressLine1')).parents('fieldset').first()
+
+        insuredAddressFields = @$el.find(@makeId('InsuredMailingAddressLine1'))
+                                   .parents('fieldset')
+                                   .first()
 
         insuredMailing = @$el.find(@makeId('InsuredMailingAddressLine1'))
-                             .parents('fieldset').find('h3 a')
-        if $(e.currentTarget).val() == "100"
+                             .parents('fieldset')
+                             .find('.collapsibleFieldContainer')
+
+        if $(e.currentTarget).val() == "200"
           insuredAddressFields.css('display', 'block')
-          insuredMailing.trigger('click')
+          insuredMailing.show()
         else
           insuredAddressFields.css('display', 'none')
 
