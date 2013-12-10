@@ -236,6 +236,10 @@ define [
       if @policy_header.html() == ""
         @policy_header.html @Mustache.render tpl_ipm_header, @model.getIpmHeader()
 
+      # ICS-1641
+      if @model.isQuote()
+        $(@policy_header).find('h3').eq(0).html('Quote #')
+
       @policy_header.show()
       @POLICY_HEADER_OFFSET = @policy_header.height()
 

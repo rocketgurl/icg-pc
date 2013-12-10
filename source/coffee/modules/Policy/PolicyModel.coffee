@@ -127,6 +127,16 @@ define [
           state   : @get('state').text || @get('state')
           period  : @getPolicyPeriod()
           carrier : @getModelProperty('Management Carrier')
+
+      # ICS-1641
+      if @isQuote()
+        ipm_header.id = @find('Identifiers Identifier[name=QuoteNumber]')
+        ipm_header.product = @find('Quoting CurrentQuote ProtoTerm ProtoInterval DataItem[name=PolicyType]')
+        ipm_header.period = do =>
+          start = @find('Quoting CurrentQuote ProtoTerm EffectiveDate')
+          end = @find('Quoting CurrentQuote ProtoTerm ExpirationDate')
+          @Helpers.concatStrings(start.substr(0,10), end.substr(0,10), ' - ')
+
       ipm_header
 
     # **Get <SystemOfRecord>** - used to determine IPM eligibility.
