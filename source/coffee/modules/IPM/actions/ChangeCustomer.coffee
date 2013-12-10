@@ -88,15 +88,14 @@ define [
 
     onMailingEqualProperty : ->
       @$el.find(@makeId('MailingEqualPropertyAddress')).on 'change', (e) =>
-
-        insuredAddressFields = @$el.find(@makeId('InsuredMailingAddressLine1'))
-                                   .parents('fieldset')
-                                   .first()
+        insuredAddressFields = $(_.first(@$el.find(@makeId('InsuredMailingAddressLine1'))
+                                           .parents('fieldset')))
 
         insuredMailing = @$el.find(@makeId('InsuredMailingAddressLine1'))
                              .parents('fieldset')
                              .find('.collapsibleFieldContainer')
-
+        # 100 = yes
+        # 200 = no
         if $(e.currentTarget).val() == "200"
           insuredAddressFields.css('display', 'block')
           insuredMailing.show()
@@ -107,15 +106,7 @@ define [
     # Adress when things change
     adjustInsuredAddress : ->
       mailingEqualProperty = @$el.find(@makeId('MailingEqualPropertyAddress'))
-
       insuredAddressFields = @$el.find(@makeId('InsuredMailingAddressLine1')).parents('fieldset').first()
-
-      mailingEqualProperty.on 'change', (e) =>
-        if $(e.currentTarget).val() == "100"
-          insuredAddressFields.css('display', 'block')
-          @loadAddressFields()
-        else
-          insuredAddressFields.css('display', 'none')
 
       listener_ids = _.map(['MailingEqualPropertyAddress', 'PropertyStreetNumber',
         'PropertyStreetName', 'PropertyAddressLine2', 'PropertyCity',
