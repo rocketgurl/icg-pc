@@ -664,7 +664,7 @@ define [
 
       @$workspace_admin.find('ul').html("""
         <li>Welcome back &nbsp;<a href="#profile">#{@user.get('name')}</a></li>
-        <li><a href="/batch">mxDocTool</a></li>
+        <li><a href="/batch" target="_blank">mxDocTool</a></li>
         <li><a href="#logout">Logout</a></li>
       """)
 
