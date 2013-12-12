@@ -434,7 +434,9 @@ define [
                 true
               error : (model, resp) =>
                 # Make a new WorkspaceState as we had a problem.
-                @Amplify.publish 'controller', 'notice', "We had an issue with your saved state. Not major, but we're starting from scratch."
+                @Amplify.publish 'controller',
+                                 'notice',
+                                 "We had an issue with your saved state. Not major, but we're starting from scratch."
                 @workspace_state = @Workspaces.create()
                 true
             )
@@ -665,8 +667,7 @@ define [
       @$workspace_admin.find('ul').html("""
         <li>Welcome back &nbsp;<a href="#profile">#{@user.get('name')}</a></li>
         <li><a href="/batch" target="_blank">mxDocTool</a></li>
-        <li><a href="#logout">Logout</a></li>
-      """)
+        <li><a href="#logout">Logout</a></li>""")
 
     #### Reset Admin Links
     #
@@ -832,5 +833,3 @@ define [
 
   WorkspaceController.on "new_tab", (app_name) ->
     @toggle_apps app_name
-
-

@@ -76,8 +76,18 @@ define [
     render_tab : (template) ->
       @tab = $(Mustache.render template, { tab_class : '', tab_url : Helpers.id_safe(decodeURI(@el.id)), tab_label : @app.app_label })
       @$tab_el.append(@tab)
+      @recalcTabContainer @tab.width()
 
-    # Put tab into active state 
+    # Manually size the width of the Tab container to accomodate tabs
+    # past the width of the browser
+    recalcTabContainer : (tab) ->
+      widths = _.map(@$tab_el.find('li'), (l) -> $(l).width())
+      w = _.reduce widths, (a, b) ->
+            a + b
+        , 0
+      @$tab_el.width((w + 40) + tab)
+
+    # Put tab into active state
     activate : ->
       @tab.addClass('selected')
       @$el.css('visibility', 'visible')
@@ -92,7 +102,7 @@ define [
       if @module
         @module.trigger 'deactivate'
 
-    # Is this view activated? (boolean) 
+    # Is this view activated? (boolean)
     is_active : ->
       @tab.hasClass('selected')
 
@@ -100,13 +110,14 @@ define [
     destroy : () ->
       # Remove tab & nullify so GC can get it (?)
       if @$tab_el?
+        @$tab_el.width @$tab_el.width() - @tab.width()
         @tab.remove()
         @tab = null
         @$tab_el.find("li a[href=#{@app.app}]").parent().remove()
         @$tab_el = null
 
       # Remove content
-      @$el.html('').remove()   
+      @$el.html('').remove()
 
       # Remove from the stack
       @options.controller.trigger 'stack_remove', @
@@ -121,7 +132,7 @@ define [
     # Launch a new app (tab) within the current workspace context
     # Checks to make sure the app isn't already loaded first.
     #
-    # @param `app` _Object_ application config object  
+    # @param `app` _Object_ application config object
     #
     launch_child_app : (module, app) ->
       @options.controller.Router.append_module module, app.params.url
