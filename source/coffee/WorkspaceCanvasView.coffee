@@ -26,7 +26,6 @@ define [
 
       @app   = options.app
       @el.id = @app.app # Set container id to app name
-      console.log @app
 
       # Add to the stack
       @options.controller.trigger 'stack_add', @
