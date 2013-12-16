@@ -23,8 +23,6 @@
 		  <fieldset class="defaultOpen horizontalFields extraWide">
 			  <h3>Summary <a data-alt-text="close">change</a></h3>
 			  <div class="collapsibleFieldContainer">
-
-
 		      <div id="rate_validation_override">
 			      <input type="checkbox" name="id_rv_override" id="{{guid}}_rv_override" value="1"> <label for="{{guid}}_rv_override">Check to Override Rate Validation</label>
 		      </div>
@@ -47,7 +45,6 @@
 			      <label for="{{guid}}_comment">Comment <i>comment</i></label>
 			      <textarea id="{{guid}}_comment" name="comment"></textarea>
 		      </div>
-
 			  </div>
 		  </fieldset>
 		  <fieldset class="horizontalFields extraWide">
@@ -288,6 +285,11 @@
 			        <input type="text" id="{{guid}}_SquareFootUnderRoof" name="SquareFootUnderRoof" value="{{SquareFootUnderRoof}}" required >
 		        </div>
 
+            <div>
+	            <label for="{{guid}}_SquareFootUnderRoofFLA" class="labelRequired">Living Area as Finished Space <i>SquareFootUnderRoofFLA</i></label>
+	            <input type="text" id="{{guid}}_SquareFootUnderRoofFLA" name="SquareFootUnderRoofFLA" value="{{SquareFootUnderRoofFLA}}" required >
+            </div>
+
 		        <div>
 			        <label for="{{guid}}_ConstructionYear" class="labelRequired">Construction Year - Dwelling <i>ConstructionYear</i></label>
 			        <input type="text" id="{{guid}}_ConstructionYear" name="ConstructionYear" value="{{ConstructionYear}}" required >
@@ -388,32 +390,6 @@
 			        </select>
 		        </div>
 
-		        <div>
-			        <label for="{{guid}}_HomeFeatures1" class="labelRequired">1st Additional Home Feature <i>HomeFeatures1</i></label>
-			        <select id="{{guid}}_HomeFeatures1" name="HomeFeatures1" data-value="{{HomeFeatures1}}" required >
-				        {{#EnumsHomeFeatures1}}
-				        <option value="{{value}}">{{label}}</option>
-				        {{/EnumsHomeFeatures1}}
-			        </select>
-		        </div>
-
-		        <div>
-			        <label for="{{guid}}_HomeFeatures2" class="labelRequired">2nd Additional Home Feature <i>HomeFeatures2</i></label>
-			        <select id="{{guid}}_HomeFeatures2" name="HomeFeatures2" data-value="{{HomeFeatures2}}" required >
-				        {{#EnumsHomeFeatures2}}
-				        <option value="{{value}}">{{label}}</option>
-				        {{/EnumsHomeFeatures2}}
-			        </select>
-		        </div>
-
-		        <div>
-			        <label for="{{guid}}_HomeFeatures3" class="labelRequired">3rd Additional Home Feature <i>HomeFeatures3</i></label>
-			        <select id="{{guid}}_HomeFeatures3" name="HomeFeatures3" data-value="{{HomeFeatures3}}" required >
-				        {{#EnumsHomeFeatures3}}
-				        <option value="{{value}}">{{label}}</option>
-				        {{/EnumsHomeFeatures3}}
-			        </select>
-		        </div>
             <div>
               <label for="{{guid}}_Cladding" >Cladding <i>Cladding</i></label>
               <select id="{{guid}}_Cladding" name="Cladding" data-value="{{Cladding}}"   >

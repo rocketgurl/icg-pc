@@ -301,6 +301,11 @@
 			        <input type="text" id="{{guid}}_SquareFootUnderRoof" name="SquareFootUnderRoof" value="{{SquareFootUnderRoof}}" required >
 		        </div>
 
+            <div>
+	            <label for="{{guid}}_SquareFootUnderRoofFLA" class="labelRequired">Living Area as Finished Space <i>SquareFootUnderRoofFLA</i></label>
+	            <input type="text" id="{{guid}}_SquareFootUnderRoofFLA" name="SquareFootUnderRoofFLA" value="{{SquareFootUnderRoofFLA}}" required >
+            </div>
+
 		        <div>
 			        <label for="{{guid}}_ConstructionYear" class="labelRequired">Construction Year - Dwelling <i>ConstructionYear</i></label>
 			        <input type="text" id="{{guid}}_ConstructionYear" name="ConstructionYear" value="{{ConstructionYear}}" required >
@@ -329,7 +334,6 @@
 			        </select>
 		        </div>
 
-
             <div>
               <label for="{{guid}}_Cladding" >Cladding <i>Cladding</i></label>
               <select id="{{guid}}_Cladding" name="Cladding" data-value="{{Cladding}}"   >
@@ -350,7 +354,7 @@
 
             <div>
               <label for="{{guid}}_HomeFeatures1SquareFeet" >1st Additional Home Feature Sq Ft <i>HomeFeatures1SquareFeet</i></label>
-              <select id="{{guid}}_HomeFeatures1SquareFeet" name="HomeFeatures1SquareFeet" data-value="{{HomeFeatures1SquareFeet}}"   >
+              <select id="{{guid}}_HomeFeatures1SquareFeet" name="HomeFeatures1SquareFeet" data-value="{{HomeFeatures1SquareFeet}}">
                 {{#EnumsHomeFeatures1SquareFeet}}
 		            <option value="{{value}}">{{label}}</option>
 		            {{/EnumsHomeFeatures1SquareFeet}}
@@ -475,33 +479,6 @@
 		        </div>
 
 		        <div>
-			        <label for="{{guid}}_HomeFeatures1" class="labelRequired">1st Additional Home Feature <i>HomeFeatures1</i></label>
-			        <select id="{{guid}}_HomeFeatures1" name="HomeFeatures1" data-value="{{HomeFeatures1}}" required >
-				        {{#EnumsHomeFeatures1}}
-				        <option value="{{value}}">{{label}}</option>
-				        {{/EnumsHomeFeatures1}}
-			        </select>
-		        </div>
-
-		        <div>
-			        <label for="{{guid}}_HomeFeatures2" class="labelRequired">2nd Additional Home Feature <i>HomeFeatures2</i></label>
-			        <select id="{{guid}}_HomeFeatures2" name="HomeFeatures2" data-value="{{HomeFeatures2}}" required >
-				        {{#EnumsHomeFeatures2}}
-				        <option value="{{value}}">{{label}}</option>
-				        {{/EnumsHomeFeatures2}}
-			        </select>
-		        </div>
-
-		        <div>
-			        <label for="{{guid}}_HomeFeatures3" class="labelRequired">3rd Additional Home Feature <i>HomeFeatures3</i></label>
-			        <select id="{{guid}}_HomeFeatures3" name="HomeFeatures3" data-value="{{HomeFeatures3}}" required >
-				        {{#EnumsHomeFeatures3}}
-				        <option value="{{value}}">{{label}}</option>
-				        {{/EnumsHomeFeatures3}}
-			        </select>
-		        </div>
-
-		        <div>
 			        <label for="{{guid}}_MetalOtherStructures" class="labelRequired">Any other structure over 750 sq ft constructed of metal? <i>MetalOtherStructures</i></label>
 			        <select id="{{guid}}_MetalOtherStructures" name="MetalOtherStructures" data-value="{{MetalOtherStructures}}" required >
 				        {{#EnumsMetalOtherStructures}}
@@ -518,62 +495,10 @@
 				        {{/EnumsScreenedEnclosure}}
 			        </select>
 		        </div>
-
-		      </fieldset>
-
-		      <fieldset>
-				    <legend>Other Structures</legend>
-
-		        <div>
-			        <label for="{{guid}}_PoolType" class="labelRequired">Swimming Pool on the property? <i>PoolType</i></label>
-			        <select id="{{guid}}_PoolType" name="PoolType" data-value="{{PoolType}}" required >
-				        {{#EnumsPoolType}}
-				        <option value="{{value}}">{{label}}</option>
-				        {{/EnumsPoolType}}
-			        </select>
-		        </div>
-
-		        <div>
-			        <label for="{{guid}}_DivingBoardSlide" >Is there a diving board or a slide? <i>DivingBoardSlide</i></label>
-			        <select id="{{guid}}_DivingBoardSlide" name="DivingBoardSlide" data-value="{{DivingBoardSlide}}"  >
-				        {{#EnumsDivingBoardSlide}}
-				        <option value="{{value}}">{{label}}</option>
-				        {{/EnumsDivingBoardSlide}}
-			        </select>
-		        </div>
-
-		        <div>
-			        <label for="{{guid}}_PoolFence" >Is property around pool fenced? <i>PoolFence</i></label>
-			        <select id="{{guid}}_PoolFence" name="PoolFence" data-value="{{PoolFence}}"  >
-				        {{#EnumsPoolFence}}
-				        <option value="{{value}}">{{label}}</option>
-				        {{/EnumsPoolFence}}
-			        </select>
-		        </div>
-
-		        <div>
-			        <label for="{{guid}}_ImmovablePoolLadder" >Is there an immovable ladder present? <i>ImmovablePoolLadder</i></label>
-			        <select id="{{guid}}_ImmovablePoolLadder" name="ImmovablePoolLadder" data-value="{{ImmovablePoolLadder}}"  >
-				        {{#EnumsImmovablePoolLadder}}
-				        <option value="{{value}}">{{label}}</option>
-				        {{/EnumsImmovablePoolLadder}}
-			        </select>
-		        </div>
-
-		        <div>
-			        <label for="{{guid}}_UnlockedPoolGate" >Is pool attached to decking without a locking gate? <i>UnlockedPoolGate</i></label>
-			        <select id="{{guid}}_UnlockedPoolGate" name="UnlockedPoolGate" data-value="{{UnlockedPoolGate}}"  >
-				        {{#EnumsUnlockedPoolGate}}
-				        <option value="{{value}}">{{label}}</option>
-				        {{/EnumsUnlockedPoolGate}}
-			        </select>
-		        </div>
-
 		      </fieldset>
 
 		      <fieldset>
 				    <legend>Dwelling Interior</legend>
-
             <div>
               <label for="{{guid}}_NumberOfAtriumDoors" class="labelRequired">Number of Atrium Doors <i>NumberOfAtriumDoors</i></label>
               <select id="{{guid}}_NumberOfAtriumDoors" name="NumberOfAtriumDoors" data-value="{{NumberOfAtriumDoors}}"  required >
@@ -729,6 +654,57 @@
 
 		      </fieldset>
 
+
+		      <fieldset>
+				    <legend>Other Structures</legend>
+
+		        <div>
+			        <label for="{{guid}}_PoolType" class="labelRequired">Swimming Pool on the property? <i>PoolType</i></label>
+			        <select id="{{guid}}_PoolType" name="PoolType" data-value="{{PoolType}}" required >
+				        {{#EnumsPoolType}}
+				        <option value="{{value}}">{{label}}</option>
+				        {{/EnumsPoolType}}
+			        </select>
+		        </div>
+
+		        <div>
+			        <label for="{{guid}}_DivingBoardSlide" >Is there a diving board or a slide? <i>DivingBoardSlide</i></label>
+			        <select id="{{guid}}_DivingBoardSlide" name="DivingBoardSlide" data-value="{{DivingBoardSlide}}"  >
+				        {{#EnumsDivingBoardSlide}}
+				        <option value="{{value}}">{{label}}</option>
+				        {{/EnumsDivingBoardSlide}}
+			        </select>
+		        </div>
+
+		        <div>
+			        <label for="{{guid}}_PoolFence" >Is property around pool fenced? <i>PoolFence</i></label>
+			        <select id="{{guid}}_PoolFence" name="PoolFence" data-value="{{PoolFence}}"  >
+				        {{#EnumsPoolFence}}
+				        <option value="{{value}}">{{label}}</option>
+				        {{/EnumsPoolFence}}
+			        </select>
+		        </div>
+
+		        <div>
+			        <label for="{{guid}}_ImmovablePoolLadder" >Is there an immovable ladder present? <i>ImmovablePoolLadder</i></label>
+			        <select id="{{guid}}_ImmovablePoolLadder" name="ImmovablePoolLadder" data-value="{{ImmovablePoolLadder}}"  >
+				        {{#EnumsImmovablePoolLadder}}
+				        <option value="{{value}}">{{label}}</option>
+				        {{/EnumsImmovablePoolLadder}}
+			        </select>
+		        </div>
+
+		        <div>
+			        <label for="{{guid}}_UnlockedPoolGate" >Is pool attached to decking without a locking gate? <i>UnlockedPoolGate</i></label>
+			        <select id="{{guid}}_UnlockedPoolGate" name="UnlockedPoolGate" data-value="{{UnlockedPoolGate}}"  >
+				        {{#EnumsUnlockedPoolGate}}
+				        <option value="{{value}}">{{label}}</option>
+				        {{/EnumsUnlockedPoolGate}}
+			        </select>
+		        </div>
+
+		      </fieldset>
+
 		      <fieldset>
 				    <legend>Protective Devices</legend>
 
@@ -855,7 +831,7 @@
 			  <div class="collapsibleFieldContainer">
 
 		      <div>
-			      <label for="{{guid}}_FunctionalReplacementCost" class="labelRequired">Functional Replacement Cost For Dwelling <i>FunctionalReplacementCost</i></label>
+			      <label for="{{guid}}_FunctionalReplacementCost" class="labelRequired">Functional Replacement Cost For<i>FunctionalReplacementCost</i></label>
 			      <select id="{{guid}}_FunctionalReplacementCost" name="FunctionalReplacementCost" data-value="{{FunctionalReplacementCost}}" required >
 				      {{#EnumsFunctionalReplacementCost}}
 				      <option value="{{value}}">{{label}}</option>

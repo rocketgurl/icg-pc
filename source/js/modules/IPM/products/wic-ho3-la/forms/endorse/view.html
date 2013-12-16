@@ -386,15 +386,6 @@
 			        </select>
 		        </div>
 
-            <div>
-              <label for="{{guid}}_Cladding" >Cladding <i>Cladding</i></label>
-              <select id="{{guid}}_Cladding" name="Cladding" data-value="{{Cladding}}"   >
-                {{#EnumsCladding}}
-		            <option value="{{value}}">{{label}}</option>
-		            {{/EnumsCladding}}
-              </select>
-            </div>
-
 		        <div>
 			        <label for="{{guid}}_MasonryVeneerPercentage" >Masonry Veneer % <i>MasonryVeneerPercentage</i></label>
 			        <select id="{{guid}}_MasonryVeneerPercentage" name="MasonryVeneerPercentage" data-value="{{MasonryVeneerPercentage}}"  >
@@ -486,8 +477,22 @@
 		        </div>
 
             <div>
+	            <label for="{{guid}}_SquareFootUnderRoofFLA" class="labelRequired">Living Area as Finished Space <i>SquareFootUnderRoofFLA</i></label>
+	            <input type="text" id="{{guid}}_SquareFootUnderRoofFLA" name="SquareFootUnderRoofFLA" value="{{SquareFootUnderRoofFLA}}" required >
+            </div>
+
+            <div>
+              <label for="{{guid}}_Cladding" >Cladding <i>Cladding</i></label>
+              <select id="{{guid}}_Cladding" name="Cladding" data-value="{{Cladding}}">
+                {{#EnumsCladding}}
+		            <option value="{{value}}">{{label}}</option>
+		            {{/EnumsCladding}}
+              </select>
+            </div>
+
+            <div>
               <label for="{{guid}}_HomeFeatures1" class="labelRequired">1st Additional Home Feature <i>HomeFeatures1</i></label>
-              <select id="{{guid}}_HomeFeatures1" name="HomeFeatures1" data-value="{{HomeFeatures1}}"  required >
+              <select id="{{guid}}_HomeFeatures1" name="HomeFeatures1" data-value="{{HomeFeatures1}}" required>
                 {{#EnumsHomeFeatures1}}
 		            <option value="{{value}}">{{label}}</option>
 		            {{/EnumsHomeFeatures1}}
@@ -495,8 +500,8 @@
             </div>
 
             <div>
-              <label for="{{guid}}_HomeFeatures1SquareFeet" >1st Additional Home Feature Sq Ft <i>HomeFeatures1SquareFeet</i></label>
-              <select id="{{guid}}_HomeFeatures1SquareFeet" name="HomeFeatures1SquareFeet" data-value="{{HomeFeatures1SquareFeet}}"   >
+              <label for="{{guid}}_HomeFeatures1SquareFeet">1st Additional Home Feature Sq Ft <i>HomeFeatures1SquareFeet</i></label>
+              <select id="{{guid}}_HomeFeatures1SquareFeet" name="HomeFeatures1SquareFeet" data-value="{{HomeFeatures1SquareFeet}}">
                 {{#EnumsHomeFeatures1SquareFeet}}
 		            <option value="{{value}}">{{label}}</option>
 		            {{/EnumsHomeFeatures1SquareFeet}}
@@ -505,7 +510,7 @@
 
             <div>
               <label for="{{guid}}_HomeFeatures2" class="labelRequired">2nd Additional Home Feature <i>HomeFeatures2</i></label>
-              <select id="{{guid}}_HomeFeatures2" name="HomeFeatures2" data-value="{{HomeFeatures2}}"  required >
+              <select id="{{guid}}_HomeFeatures2" name="HomeFeatures2" data-value="{{HomeFeatures2}}" required>
                 {{#EnumsHomeFeatures2}}
 		            <option value="{{value}}">{{label}}</option>
 		            {{/EnumsHomeFeatures2}}
@@ -513,8 +518,8 @@
             </div>
 
             <div>
-              <label for="{{guid}}_HomeFeatures2SquareFeet" >2nd Additional Home Feature Sq Ft <i>HomeFeatures2SquareFeet</i></label>
-              <select id="{{guid}}_HomeFeatures2SquareFeet" name="HomeFeatures2SquareFeet" data-value="{{HomeFeatures2SquareFeet}}"   >
+              <label for="{{guid}}_HomeFeatures2SquareFeet">2nd Additional Home Feature Sq Ft <i>HomeFeatures2SquareFeet</i></label>
+              <select id="{{guid}}_HomeFeatures2SquareFeet" name="HomeFeatures2SquareFeet" data-value="{{HomeFeatures2SquareFeet}}">
                 {{#EnumsHomeFeatures2SquareFeet}}
 		            <option value="{{value}}">{{label}}</option>
 		            {{/EnumsHomeFeatures2SquareFeet}}
@@ -523,7 +528,7 @@
 
             <div>
               <label for="{{guid}}_HomeFeatures3" class="labelRequired">3rd Additional Home Feature <i>HomeFeatures3</i></label>
-              <select id="{{guid}}_HomeFeatures3" name="HomeFeatures3" data-value="{{HomeFeatures3}}"  required >
+              <select id="{{guid}}_HomeFeatures3" name="HomeFeatures3" data-value="{{HomeFeatures3}}" required>
                 {{#EnumsHomeFeatures3}}
 		            <option value="{{value}}">{{label}}</option>
 		            {{/EnumsHomeFeatures3}}
@@ -531,8 +536,8 @@
             </div>
 
             <div>
-              <label for="{{guid}}_HomeFeatures3SquareFeet" >3rd Additional Home Feature Sq Ft <i>HomeFeatures3SquareFeet</i></label>
-              <select id="{{guid}}_HomeFeatures3SquareFeet" name="HomeFeatures3SquareFeet" data-value="{{HomeFeatures3SquareFeet}}"   >
+              <label for="{{guid}}_HomeFeatures3SquareFeet">3rd Additional Home Feature Sq Ft <i>HomeFeatures3SquareFeet</i></label>
+              <select id="{{guid}}_HomeFeatures3SquareFeet" name="HomeFeatures3SquareFeet" data-value="{{HomeFeatures3SquareFeet}}">
                 {{#EnumsHomeFeatures3SquareFeet}}
 		            <option value="{{value}}">{{label}}</option>
 		            {{/EnumsHomeFeatures3SquareFeet}}
