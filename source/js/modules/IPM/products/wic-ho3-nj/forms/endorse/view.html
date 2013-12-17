@@ -524,62 +524,13 @@
 
 		      </fieldset>
 
-		      <fieldset>
-				    <legend>Other Structures</legend>
-
-		        <div>
-			        <label for="{{guid}}_PoolType" class="labelRequired">Swimming Pool on the property? <i>PoolType</i></label>
-			        <select id="{{guid}}_PoolType" name="PoolType" data-value="{{PoolType}}" required >
-				        {{#EnumsPoolType}}
-				        <option value="{{value}}">{{label}}</option>
-				        {{/EnumsPoolType}}
-			        </select>
-		        </div>
-
-		        <div>
-			        <label for="{{guid}}_DivingBoardSlide" >Is there a diving board or a slide? <i>DivingBoardSlide</i></label>
-			        <select id="{{guid}}_DivingBoardSlide" name="DivingBoardSlide" data-value="{{DivingBoardSlide}}"  >
-				        {{#EnumsDivingBoardSlide}}
-				        <option value="{{value}}">{{label}}</option>
-				        {{/EnumsDivingBoardSlide}}
-			        </select>
-		        </div>
-
-		        <div>
-			        <label for="{{guid}}_PoolFence" >Is property around pool fenced? <i>PoolFence</i></label>
-			        <select id="{{guid}}_PoolFence" name="PoolFence" data-value="{{PoolFence}}"  >
-				        {{#EnumsPoolFence}}
-				        <option value="{{value}}">{{label}}</option>
-				        {{/EnumsPoolFence}}
-			        </select>
-		        </div>
-
-		        <div>
-			        <label for="{{guid}}_ImmovablePoolLadder" >Is there an immovable ladder present? <i>ImmovablePoolLadder</i></label>
-			        <select id="{{guid}}_ImmovablePoolLadder" name="ImmovablePoolLadder" data-value="{{ImmovablePoolLadder}}"  >
-				        {{#EnumsImmovablePoolLadder}}
-				        <option value="{{value}}">{{label}}</option>
-				        {{/EnumsImmovablePoolLadder}}
-			        </select>
-		        </div>
-
-		        <div>
-			        <label for="{{guid}}_UnlockedPoolGate" >Is pool attached to decking without a locking gate? <i>UnlockedPoolGate</i></label>
-			        <select id="{{guid}}_UnlockedPoolGate" name="UnlockedPoolGate" data-value="{{UnlockedPoolGate}}"  >
-				        {{#EnumsUnlockedPoolGate}}
-				        <option value="{{value}}">{{label}}</option>
-				        {{/EnumsUnlockedPoolGate}}
-			        </select>
-		        </div>
-
-		      </fieldset>
 
 		      <fieldset>
 				    <legend>Dwelling Interior</legend>
 
             <div>
-              <label for="{{guid}}_NumberOfAtriumDoors" class="labelRequired">Number of Atrium Doors <i>NumberOfAtriumDoors</i></label>
-              <select id="{{guid}}_NumberOfAtriumDoors" name="NumberOfAtriumDoors" data-value="{{NumberOfAtriumDoors}}"  required >
+              <label for="{{guid}}_NumberOfAtriumDoors">Number of Atrium Doors <i>NumberOfAtriumDoors</i></label>
+              <select id="{{guid}}_NumberOfAtriumDoors" name="NumberOfAtriumDoors" data-value="{{NumberOfAtriumDoors}}">
                 {{#EnumsNumberOfAtriumDoors}}
 		            <option value="{{value}}">{{label}}</option>
 		            {{/EnumsNumberOfAtriumDoors}}
@@ -587,8 +538,8 @@
             </div>
 
             <div>
-              <label for="{{guid}}_NumberOfAtriumWindows" class="labelRequired">Number Of Atrium Windows <i>NumberOfAtriumWindows</i></label>
-              <select id="{{guid}}_NumberOfAtriumWindows" name="NumberOfAtriumWindows" data-value="{{NumberOfAtriumWindows}}"  required >
+              <label for="{{guid}}_NumberOfAtriumWindows">Number Of Atrium Windows <i>NumberOfAtriumWindows</i></label>
+              <select id="{{guid}}_NumberOfAtriumWindows" name="NumberOfAtriumWindows" data-value="{{NumberOfAtriumWindows}}">
                 {{#EnumsNumberOfAtriumWindows}}
 		            <option value="{{value}}">{{label}}</option>
 		            {{/EnumsNumberOfAtriumWindows}}
@@ -596,8 +547,8 @@
             </div>
 
             <div>
-              <label for="{{guid}}_NumberOfSolarPanels" class="labelRequired">Number Of Solar Panels <i>NumberOfSolarPanels</i></label>
-              <select id="{{guid}}_NumberOfSolarPanels" name="NumberOfSolarPanels" data-value="{{NumberOfSolarPanels}}"  required >
+              <label for="{{guid}}_NumberOfSolarPanels">Number Of Solar Panels <i>NumberOfSolarPanels</i></label>
+              <select id="{{guid}}_NumberOfSolarPanels" name="NumberOfSolarPanels" data-value="{{NumberOfSolarPanels}}">
                 {{#EnumsNumberOfSolarPanels}}
 		            <option value="{{value}}">{{label}}</option>
 		            {{/EnumsNumberOfSolarPanels}}
@@ -605,8 +556,8 @@
             </div>
 
             <div>
-              <label for="{{guid}}_SolarPanelUsage" >Type of Solar Panel Usage <i>SolarPanelUsage</i></label>
-              <select id="{{guid}}_SolarPanelUsage" name="SolarPanelUsage" data-value="{{SolarPanelUsage}}"   >
+              <label for="{{guid}}_SolarPanelUsage">Type of Solar Panel Usage <i>SolarPanelUsage</i></label>
+              <select id="{{guid}}_SolarPanelUsage" name="SolarPanelUsage" data-value="{{SolarPanelUsage}}">
                 {{#EnumsSolarPanelUsage}}
 		            <option value="{{value}}">{{label}}</option>
 		            {{/EnumsSolarPanelUsage}}
@@ -614,8 +565,8 @@
             </div>
 
             <div>
-              <label for="{{guid}}_HeatPump" class="labelRequired">Heat Pump <i>HeatPump</i></label>
-              <select id="{{guid}}_HeatPump" name="HeatPump" data-value="{{HeatPump}}"  required >
+              <label for="{{guid}}_HeatPump">Heat Pump <i>HeatPump</i></label>
+              <select id="{{guid}}_HeatPump" name="HeatPump" data-value="{{HeatPump}}">
                 {{#EnumsHeatPump}}
 		            <option value="{{value}}">{{label}}</option>
 		            {{/EnumsHeatPump}}
@@ -731,6 +682,54 @@
 		        </div>
 		      </fieldset>
 
+		      <fieldset>
+				    <legend>Other Structures</legend>
+
+		        <div>
+			        <label for="{{guid}}_PoolType" class="labelRequired">Swimming Pool on the property? <i>PoolType</i></label>
+			        <select id="{{guid}}_PoolType" name="PoolType" data-value="{{PoolType}}" required >
+				        {{#EnumsPoolType}}
+				        <option value="{{value}}">{{label}}</option>
+				        {{/EnumsPoolType}}
+			        </select>
+		        </div>
+
+		        <div>
+			        <label for="{{guid}}_DivingBoardSlide" >Is there a diving board or a slide? <i>DivingBoardSlide</i></label>
+			        <select id="{{guid}}_DivingBoardSlide" name="DivingBoardSlide" data-value="{{DivingBoardSlide}}"  >
+				        {{#EnumsDivingBoardSlide}}
+				        <option value="{{value}}">{{label}}</option>
+				        {{/EnumsDivingBoardSlide}}
+			        </select>
+		        </div>
+
+		        <div>
+			        <label for="{{guid}}_PoolFence" >Is property around pool fenced? <i>PoolFence</i></label>
+			        <select id="{{guid}}_PoolFence" name="PoolFence" data-value="{{PoolFence}}"  >
+				        {{#EnumsPoolFence}}
+				        <option value="{{value}}">{{label}}</option>
+				        {{/EnumsPoolFence}}
+			        </select>
+		        </div>
+
+		        <div>
+			        <label for="{{guid}}_ImmovablePoolLadder" >Is there an immovable ladder present? <i>ImmovablePoolLadder</i></label>
+			        <select id="{{guid}}_ImmovablePoolLadder" name="ImmovablePoolLadder" data-value="{{ImmovablePoolLadder}}"  >
+				        {{#EnumsImmovablePoolLadder}}
+				        <option value="{{value}}">{{label}}</option>
+				        {{/EnumsImmovablePoolLadder}}
+			        </select>
+		        </div>
+
+		        <div>
+			        <label for="{{guid}}_UnlockedPoolGate" >Is pool attached to decking without a locking gate? <i>UnlockedPoolGate</i></label>
+			        <select id="{{guid}}_UnlockedPoolGate" name="UnlockedPoolGate" data-value="{{UnlockedPoolGate}}"  >
+				        {{#EnumsUnlockedPoolGate}}
+				        <option value="{{value}}">{{label}}</option>
+				        {{/EnumsUnlockedPoolGate}}
+			        </select>
+		        </div>
+		      </fieldset>
 		      <fieldset>
 				    <legend>Protective Devices</legend>
 
