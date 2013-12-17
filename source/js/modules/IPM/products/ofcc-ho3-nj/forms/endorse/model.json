@@ -483,36 +483,6 @@
         {
             "enumerations": [
                 {
-                    "label": "Contemporary",
-                    "value": "900"
-                },
-                {
-                    "label": "1 story",
-                    "value": "1100"
-                },
-                {
-                    "label": "1.5 stories",
-                    "value": "1150"
-                },
-                {
-                    "label": "2 stories",
-                    "value": "1200"
-                },
-                {
-                    "label": "2.5 stories",
-                    "value": "1250"
-                },
-                {
-                    "label": "3 stories",
-                    "value": "1300"
-                }
-            ],
-            "label": "Home Style",
-            "name": "HomeStyle"
-        },
-        {
-            "enumerations": [
-                {
                     "label": "1",
                     "value": "1"
                 },
@@ -2732,6 +2702,30 @@
         },
         {
             "enumerations": [
+                {
+                    "label": "Contemporary",
+                    "value": "900"
+                },
+                {
+                    "label": "1 story",
+                    "value": "1100"
+                },
+                {
+                    "label": "1.5 stories",
+                    "value": "1150"
+                },
+                {
+                    "label": "2 stories",
+                    "value": "1200"
+                },
+                {
+                    "label": "2.5 stories",
+                    "value": "1250"
+                },
+                {
+                    "label": "3 stories",
+                    "value": "1300"
+                },
                 {
                     "label": "BiLevel/split",
                     "value": "100"
