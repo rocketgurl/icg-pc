@@ -692,11 +692,9 @@
 				        {{/EnumsKeroseneHeaterAge}}
 			        </select>
 		        </div>
-
-
             <div>
-              <label for="{{guid}}_NumberOfAtriumDoors" class="labelRequired">Number of Atrium Doors <i>NumberOfAtriumDoors</i></label>
-              <select id="{{guid}}_NumberOfAtriumDoors" name="NumberOfAtriumDoors" data-value="{{NumberOfAtriumDoors}}"  required >
+              <label for="{{guid}}_NumberOfAtriumDoors">Number of Atrium Doors <i>NumberOfAtriumDoors</i></label>
+              <select id="{{guid}}_NumberOfAtriumDoors" name="NumberOfAtriumDoors" data-value="{{NumberOfAtriumDoors}}">
                 {{#EnumsNumberOfAtriumDoors}}
 		            <option value="{{value}}">{{label}}</option>
 		            {{/EnumsNumberOfAtriumDoors}}
@@ -704,8 +702,8 @@
             </div>
 
             <div>
-              <label for="{{guid}}_NumberOfAtriumWindows" class="labelRequired">Number Of Atrium Windows <i>NumberOfAtriumWindows</i></label>
-              <select id="{{guid}}_NumberOfAtriumWindows" name="NumberOfAtriumWindows" data-value="{{NumberOfAtriumWindows}}"  required >
+              <label for="{{guid}}_NumberOfAtriumWindows">Number Of Atrium Windows <i>NumberOfAtriumWindows</i></label>
+              <select id="{{guid}}_NumberOfAtriumWindows" name="NumberOfAtriumWindows" data-value="{{NumberOfAtriumWindows}}">
                 {{#EnumsNumberOfAtriumWindows}}
 		            <option value="{{value}}">{{label}}</option>
 		            {{/EnumsNumberOfAtriumWindows}}
@@ -713,8 +711,8 @@
             </div>
 
             <div>
-              <label for="{{guid}}_NumberOfSolarPanels" class="labelRequired">Number Of Solar Panels <i>NumberOfSolarPanels</i></label>
-              <select id="{{guid}}_NumberOfSolarPanels" name="NumberOfSolarPanels" data-value="{{NumberOfSolarPanels}}"  required >
+              <label for="{{guid}}_NumberOfSolarPanels">Number Of Solar Panels <i>NumberOfSolarPanels</i></label>
+              <select id="{{guid}}_NumberOfSolarPanels" name="NumberOfSolarPanels" data-value="{{NumberOfSolarPanels}}">
                 {{#EnumsNumberOfSolarPanels}}
 		            <option value="{{value}}">{{label}}</option>
 		            {{/EnumsNumberOfSolarPanels}}
@@ -722,8 +720,8 @@
             </div>
 
             <div>
-              <label for="{{guid}}_SolarPanelUsage" >Type of Solar Panel Usage <i>SolarPanelUsage</i></label>
-              <select id="{{guid}}_SolarPanelUsage" name="SolarPanelUsage" data-value="{{SolarPanelUsage}}"   >
+              <label for="{{guid}}_SolarPanelUsage">Type of Solar Panel Usage <i>SolarPanelUsage</i></label>
+              <select id="{{guid}}_SolarPanelUsage" name="SolarPanelUsage" data-value="{{SolarPanelUsage}}">
                 {{#EnumsSolarPanelUsage}}
 		            <option value="{{value}}">{{label}}</option>
 		            {{/EnumsSolarPanelUsage}}
@@ -731,15 +729,13 @@
             </div>
 
             <div>
-              <label for="{{guid}}_HeatPump" class="labelRequired">Heat Pump <i>HeatPump</i></label>
-              <select id="{{guid}}_HeatPump" name="HeatPump" data-value="{{HeatPump}}"  required >
+              <label for="{{guid}}_HeatPump">Heat Pump <i>HeatPump</i></label>
+              <select id="{{guid}}_HeatPump" name="HeatPump" data-value="{{HeatPump}}">
                 {{#EnumsHeatPump}}
 		            <option value="{{value}}">{{label}}</option>
 		            {{/EnumsHeatPump}}
               </select>
             </div>
-
-
 		      </fieldset>
 
 		      <fieldset>
