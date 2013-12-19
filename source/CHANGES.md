@@ -1,6 +1,12 @@
 Updates
 -------
 
+### 2.2.7
+
+- Updated FSIC-HO3-LA Endorse form [ICS-2272](https://arc90dev.atlassian.net/browse/ICS-2272)
+- Updated WIC-HO3/HWO-AL, HIC-HO3-LA, WIC-HO3-LA, WIC-HO3-NJ,
+  OFCC-HO3-NJ, OFCC-DP3-NY Endorse forms [ICS-2271](https://arc90dev.atlassian.net/browse/ICS-2271)
+
 ### 2.2.6
 
 - Fixes for Change Customer [ICS-2144](https://arc90dev.atlassian.net/browse/ICS-2144)
