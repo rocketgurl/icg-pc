@@ -1,6 +1,7 @@
 {
   "PRODUCTS_PATH": "modules/IPM/products/",
   "PRODUCTS": [
+    "fnic-ho3-la",
     "acic-ho3-sc",
     "fsic-ho3-la",
     "hic-ho3-al",
