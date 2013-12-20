@@ -965,6 +965,10 @@
       "label": "Living Area"
     },
     {
+      "name": "SquareFootUnderRoofFLA",
+      "label": "Living Area (LA)"
+    },
+    {
       "name": "ConstructionYear",
       "label": "Construction Year - Dwelling"
     },

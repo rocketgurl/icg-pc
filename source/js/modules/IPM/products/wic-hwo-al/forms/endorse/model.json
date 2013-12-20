@@ -1,6 +1,10 @@
 {
 	"terms": [
     {
+      "name": "SquareFootUnderRoofFLA",
+      "label": "Living Area (LA)"
+    },
+    {
       "enumerations": [
         {
           "label": "Vinyl Siding",
