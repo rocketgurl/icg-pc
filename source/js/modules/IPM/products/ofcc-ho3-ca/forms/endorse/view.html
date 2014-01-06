@@ -1164,7 +1164,16 @@
 		  <fieldset class="horizontalFields extraWide">
 			  <h3>Scheduled Property <a data-alt-text="close">change</a></h3>
 			  <div class="collapsibleFieldContainer">
-					<fieldset>
+
+		      <div>
+			      <label for="{{guid}}_ScheduledPersonalPropertyIndicator" class="labelRequired"># of Scheduled Articles <i>ScheduledPersonalPropertyIndicator</i></label>
+			      <select id="{{guid}}_ScheduledPersonalPropertyIndicator" name="ScheduledPersonalPropertyIndicator" data-value="{{ScheduledPersonalPropertyIndicator}}" required >
+				      {{#EnumsScheduledPersonalPropertyIndicator}}
+				      <option value="{{value}}">{{label}}</option>
+				      {{/EnumsScheduledPersonalPropertyIndicator}}
+			      </select>
+		      </div>
+		      <fieldset>
 				    <legend>Article 1</legend>
 		        <div>
 			        <label for="{{guid}}_ScheduledPersonalProperty1Type" >Type <i>ScheduledPersonalProperty1Type</i></label>
