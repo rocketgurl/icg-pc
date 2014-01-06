@@ -117,8 +117,48 @@ var Apparatchik = (function(){
   Apparatchik.prototype.isCondition = function(val, condition) {
     var value = (_.isEmpty(val)) ? '0' : val,
         cond = (_.isNull(condition)) ? '== 0' : condition;
-    return (eval(value + cond));
+    if (_.isString(condition)) { return (eval(val + condition)); }
+    if (_.isObject(condition)) { return this.compileConditions(val,
+                                                               condition);}
+    return false;
   };
+
+  /**
+   * Take a named operator of conditions (and|or) and make the
+   * comparison to value - this is very shallow, only one level deep
+   *
+   * @param {Number} value
+   * @param {Object} conditions
+   * @return {Boolean}
+   */
+  Apparatchik.prototype.compileConditions = function(val, conditions) {
+    var _this = this,
+        op = _.first(_.keys(conditions)),
+        funcs = {
+          and : _this.compileAnd,
+          or : _this.compileOr
+        };
+    return (eval(funcs[op](val, conditions[op])));
+  };
+
+  /**
+   * Build a string with val and array of conditions to pass to
+   * eval() up in compileConditions. This is used to build
+   * compileAnd & compileOr using _.partial()
+   *
+   * @param {String} operator
+   * @param {Number} value
+   * @param {Array} conditions
+   * @return {String}
+   */
+  Apparatchik.prototype.compileOperator = function(operator, val, conditions) {
+    var op = " " + operator + " ";
+    return "(" + _.map(conditions, function(c){ return val + c; }).join(op) + ")";
+  };
+
+  // Use partial application to define specific string compilers
+  Apparatchik.prototype.compileAnd = _.partial(Apparatchik.prototype.compileOperator, '&&');
+  Apparatchik.prototype.compileOr = _.partial(Apparatchik.prototype.compileOperator, '||');
 
   /**
    * We need jQuery wrapped & guid_ prefixed elements
