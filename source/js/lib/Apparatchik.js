@@ -258,7 +258,10 @@ var Apparatchik = (function(){
   Apparatchik.prototype.resetSideEffects = function(side_effects) {
     var _this = this;
     _.each(side_effects, function(rule) {
-      _this.setTargetState(rule.target, rule.effect);
+      var _t = (!_.isArray(rule.target)) ? [rule.target] : rule.target;
+      _.each(_t, function(t) {
+        _this.setTargetState(t, rule.effect);
+      });
     });
   };
 
@@ -287,7 +290,13 @@ var Apparatchik = (function(){
     var _this = this;
     _.each(side_effects, function(rule) {
       var args = (_.has(rule, 'args')) ? rule.args : '';
-      if (_.isFunction(rule.effect)) { rule.effect.call(_this, rule.target, false, args); }
+
+      if (_.isFunction(rule.effect)) {
+        var _target = (!_.isArray(rule.target)) ? [rule.target] : rule.target;
+        _.each(_target, function(t) {
+          rule.effect.call(_this, t, false, args);
+        });
+      }
     });
   };
 
