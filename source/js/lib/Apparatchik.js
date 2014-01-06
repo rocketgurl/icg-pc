@@ -1,4 +1,4 @@
-/* global $, _, moment */
+/* global $, _, moment, exports, module, define */
 
 /**
    Apparatchik
@@ -40,7 +40,7 @@
       ]
     }];
 
-    Then pass them to Apparatchik: 
+    Then pass them to Apparatchik:
 
     if (apparatchik.isProduct('fsic-dp3-la') && apparatchik.isAction('Endorse')) {
       apparatchik.applyEnumDynamics(rules);
@@ -154,8 +154,12 @@ var Apparatchik = (function(){
    * @return {void}
    */
   Apparatchik.prototype.setTargetState = function(target, effect) {
-    if (_.isUndefined(target)) { return false; }
-    if (_.isFunction(effect)) { return effect.call(this, target, true); }
+    if (_.isUndefined(target) || !_.isFunction(effect)) { return false; }
+    var _this = this;
+    var _target = (!_.isArray(target)) ? [target] : target;
+    return _.each(target, function(t) {
+      effect.call(_this, target, true);
+    });
   };
 
   /**
@@ -166,24 +170,34 @@ var Apparatchik = (function(){
    * @return {void}
    */
   Apparatchik.prototype.setDynamicListener = function(rule) {
-    var target = this.wrapField(rule.target).parent(),
-        args   = (_.has(rule, 'args')) ? rule.args : '',
-        _this  = this,
-        field  = this.wrapField(rule.field);
+    var _this   = this,
+        _target = (!_.isArray(rule.target)) ? [rule.target] : rule.target,
+        args    = (_.has(rule, 'args')) ? rule.args : '',
+        field   = this.wrapField(rule.field);
 
     // Add a listener to 'change' which checks the condition
     field.on('change', function() {
       if (_this.isCondition($(this).val(), rule.condition)) {
-        if (_.isFunction(rule.effect)) { return rule.effect.call(_this, rule.target, false, args); }
+        if (_.isFunction(rule.effect)) {
+          _.each(_target, function(t) {
+            rule.effect.call(_this, t, false, args);
+          });
+        }
       } else {
-        _this.setTargetState(rule.target, rule.effect);
+        _.each(_target, function(t) {
+          _this.setTargetState(t, rule.effect);
+        });
       }
     });
 
     // If the value of the field already meets the condition
     // then go ahead and trigger its effect
     if (this.isCondition(field.val(), rule.condition)) {
-      if (_.isFunction(rule.effect)) { return rule.effect.call(_this, rule.target, false, args); }  
+      if (_.isFunction(rule.effect)) {
+        _.each(_target, function(t) {
+          return rule.effect.call(_this, t, false, args);
+        });
+      }
     }
   };
 
@@ -291,11 +305,11 @@ var Apparatchik = (function(){
    *
    * ================================================================
    */
-  
+
   /**
    * Effect: Show/hide element
    *
-   * @param {HTMLElement}  target  
+   * @param {HTMLElement}  target
    * @param {Boolean}      reset
    * @param {Object}       args   any args passed to func
    * @return {Object}      jQuery wrapped element
