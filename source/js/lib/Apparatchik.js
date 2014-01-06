@@ -115,10 +115,10 @@ var Apparatchik = (function(){
    * @return {Boolean}
    */
   Apparatchik.prototype.isCondition = function(val, condition) {
-    var value = (_.isEmpty(val)) ? '0' : val,
+    var value = (_.isEmpty(val) || _.isUndefined(val)) ? '0' : val,
         cond = (_.isNull(condition)) ? '== 0' : condition;
-    if (_.isString(condition)) { return (eval(val + condition)); }
-    if (_.isObject(condition)) { return this.compileConditions(val,
+    if (_.isString(condition)) { return (eval(value + cond)); }
+    if (_.isObject(condition)) { return this.compileConditions(value,
                                                                condition);}
     return false;
   };
