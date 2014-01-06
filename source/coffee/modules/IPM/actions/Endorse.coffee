@@ -136,12 +136,31 @@ define [
       @adjustHO3VAWaterBackupCoverage()
       @adjustAlabamaLossTypeFields()
       @adjustAlabamaPropertyUsage()
-      @addFNICHO3LABehaviors()
+
+      if @apparatchik.isProduct('fnic-ho3-la')
+        @addFNICHO3LABehaviors()
+
+      if @apparatchik.isProduct('ofcc-ho3-ca') || @apparatchik.isProduct('ofcc-ho5-ca')
+        @addOFCCCABehavhiors()
+
+    addOFCCCABehavhiors : ->
+      rules = []
+
+      scheduled_rule =
+        field: "ScheduledPersonalPropertyIndicator"
+        sideEffects : []
+
+      i = 0
+      while ++i < 11
+        scheduled_rule.sideEffects.push
+          target: "article_#{i}"
+          condition: "> #{i - 1}"
+          effect: @apparatchik.showElement
+
+      rules.push scheduled_rule
+      @apparatchik.applyEnumDynamics rules
 
     addFNICHO3LABehaviors : ->
-      unless @apparatchik.isProduct('fnic-ho3-la') && @apparatchik.isAction('Endorse')
-        return false
-
       rules = [
         field: "HeatPump"
         condition: "> 100"
