@@ -143,6 +143,18 @@ define [
       if @apparatchik.isProduct('ofcc-ho3-ca') || @apparatchik.isProduct('ofcc-ho5-ca')
         @addOFCCCABehavhiors()
 
+    ###
+    # Apparatchik!
+    # ============
+    # These are the "business logic" rules (think COBOL) which govern
+    # how fields behave based on certain conditions. Go look at the
+    # comments in /source/js/lib/Apparatchik.js to get a feel for how
+    # they work - it's real easy man.
+    #
+    # NOTE: These will start to get lengthy, you may want to move
+    # them into external files and pull in via RequireJS.
+    ###
+
     addOFCCCABehavhiors : ->
       rules = [
         field: "ConstructionType"
