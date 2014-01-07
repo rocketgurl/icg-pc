@@ -26,213 +26,7 @@
         },
         {
             "label": "State",
-            "name": "PropertyState",
-            "enumerations": [
-                {
-                    "label": "AK",
-                    "value": "AK"
-                },
-                {
-                    "label": "AL",
-                    "value": "AL"
-                },
-                {
-                    "label": "AR",
-                    "value": "AR"
-                },
-                {
-                    "label": "AZ",
-                    "value": "AZ"
-                },
-                {
-                    "label": "CA",
-                    "value": "CA"
-                },
-                {
-                    "label": "CO",
-                    "value": "CO"
-                },
-                {
-                    "label": "CT",
-                    "value": "CT"
-                },
-                {
-                    "label": "DC",
-                    "value": "DC"
-                },
-                {
-                    "label": "DE",
-                    "value": "DE"
-                },
-                {
-                    "label": "FL",
-                    "value": "FL"
-                },
-                {
-                    "label": "GA",
-                    "value": "GA"
-                },
-                {
-                    "label": "HI",
-                    "value": "HI"
-                },
-                {
-                    "label": "IA",
-                    "value": "IA"
-                },
-                {
-                    "label": "ID",
-                    "value": "ID"
-                },
-                {
-                    "label": "IL",
-                    "value": "IL"
-                },
-                {
-                    "label": "IN",
-                    "value": "IN"
-                },
-                {
-                    "label": "KS",
-                    "value": "KS"
-                },
-                {
-                    "label": "KY",
-                    "value": "KY"
-                },
-                {
-                    "label": "LA",
-                    "value": "LA"
-                },
-                {
-                    "label": "MA",
-                    "value": "MA"
-                },
-                {
-                    "label": "MD",
-                    "value": "MD"
-                },
-                {
-                    "label": "ME",
-                    "value": "ME"
-                },
-                {
-                    "label": "MI",
-                    "value": "MI"
-                },
-                {
-                    "label": "MN",
-                    "value": "MN"
-                },
-                {
-                    "label": "MO",
-                    "value": "MO"
-                },
-                {
-                    "label": "MS",
-                    "value": "MS"
-                },
-                {
-                    "label": "MT",
-                    "value": "MT"
-                },
-                {
-                    "label": "NC",
-                    "value": "NC"
-                },
-                {
-                    "label": "ND",
-                    "value": "ND"
-                },
-                {
-                    "label": "NE",
-                    "value": "NE"
-                },
-                {
-                    "label": "NH",
-                    "value": "NH"
-                },
-                {
-                    "label": "NJ",
-                    "value": "NJ"
-                },
-                {
-                    "label": "NM",
-                    "value": "NM"
-                },
-                {
-                    "label": "NV",
-                    "value": "NV"
-                },
-                {
-                    "label": "NY",
-                    "value": "NY"
-                },
-                {
-                    "label": "OH",
-                    "value": "OH"
-                },
-                {
-                    "label": "OK",
-                    "value": "OK"
-                },
-                {
-                    "label": "OR",
-                    "value": "OR"
-                },
-                {
-                    "label": "PA",
-                    "value": "PA"
-                },
-                {
-                    "label": "RI",
-                    "value": "RI"
-                },
-                {
-                    "label": "SC",
-                    "value": "SC"
-                },
-                {
-                    "label": "SD",
-                    "value": "SD"
-                },
-                {
-                    "label": "TN",
-                    "value": "TN"
-                },
-                {
-                    "label": "TX",
-                    "value": "TX"
-                },
-                {
-                    "label": "UT",
-                    "value": "UT"
-                },
-                {
-                    "label": "VA",
-                    "value": "VA"
-                },
-                {
-                    "label": "VT",
-                    "value": "VT"
-                },
-                {
-                    "label": "WA",
-                    "value": "WA"
-                },
-                {
-                    "label": "WI",
-                    "value": "WI"
-                },
-                {
-                    "label": "WV",
-                    "value": "WV"
-                },
-                {
-                    "label": "WY",
-                    "value": "WY"
-                }
-            ]
+            "name": "PropertyState"
         },
         {
             "label": "Zip Code",
@@ -1417,6 +1211,28 @@
         {
             "enumerations": [
                 {
+                    "label": "Single Entry",
+                    "value": "100"
+                },
+                {
+                    "label": "24-Hour Patrol",
+                    "value": "200"
+                },
+                {
+                    "label": "24-Hour Manned Gates",
+                    "value": "300"
+                },
+                {
+                    "label": "Passkey Gates",
+                    "value": "400"
+                },
+            ],
+            "label": "Secured Community Security Type",
+            "name": "GatedCommunitySecurity"
+        },
+        {
+            "enumerations": [
+                {
                     "label": "Yes",
                     "value": "100"
                 },
@@ -1430,10 +1246,6 @@
         },
         {
             "enumerations": [
-                {
-                    "label": "N/A",
-                    "value": "0"
-                },
                 {
                     "label": "1%",
                     "value": "100"
@@ -1483,34 +1295,6 @@
             ],
             "label": "Include Wind Coverage?",
             "name": "IncludesWind"
-        },
-        {
-            "enumerations": [
-                {
-                    "label": "10% - Included",
-                    "value": "1000"
-                },
-                {
-                    "label": "25%",
-                    "value": "2500"
-                }
-            ],
-            "label": "Increased Ordinance Or Law",
-            "name": "IncreasedOrdinanceLimit"
-        },
-        {
-            "enumerations": [
-                {
-                    "label": "Yes",
-                    "value": "100"
-                },
-                {
-                    "label": "No",
-                    "value": "200"
-                }
-            ],
-            "label": "Insured by Corporation, Partnership, etc.?",
-            "name": "InsuredByCorporation"
         },
         {
             "enumerations": [
@@ -2397,20 +2181,8 @@
                     "value": "0"
                 },
                 {
-                    "label": "10%",
-                    "value": "1000"
-                },
-                {
                     "label": "20%",
                     "value": "2000"
-                },
-                {
-                    "label": "25%",
-                    "value": "2500"
-                },
-                {
-                    "label": "30%",
-                    "value": "3000"
                 }
             ],
             "label": "Coverage D (% of Coverage A)",
@@ -2889,23 +2661,23 @@
                     "value": "0"
                 },
                 {
-                    "label": "6d Minimum Nailing Schedule",
+                    "label": "A: 6d nails @ 6"/12" - Plywood, Wood Planks, OSB, or Metal Deck",
                     "value": "401"
                 },
                 {
-                    "label": "8d Minimum Nailing Schedule",
+                    "label": "B: 8d nails @ 6"/12" - Plywood, Wood Planks, OSB, or Metal Deck",
                     "value": "402"
                 },
                 {
-                    "label": "8d High Wing Nailing Schedule",
+                    "label": "C: 8d nails @ 6"/6" - Plywood, Wood Planks, OSB, or Metal Deck",
                     "value": "403"
                 },
                 {
-                    "label": "Dimensional Lumber Deck - High Wind Nailing Schedule",
+                    "label": "D: 8d nails @ 6"/6" - Dimensional Lumber or Tongue & Groove",
                     "value": "404"
                 },
                 {
-                    "label": "Structurally Connected Reinforced Concrete",
+                    "label": "Reinforced Concrete Roof Deck Structurally Connected",
                     "value": "701"
                 }
             ],
@@ -3407,7 +3179,7 @@
                     "value": "65"
                 },
                 {
-                    "label": "Increased Ordinance or Law",
+                    "label": "Increase Basic Ordinance & Law ",
                     "value": "67"
                 },
                 {
