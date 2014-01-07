@@ -25,6 +25,12 @@
       effect : apparatchik.showElement
     },
     {
+      field : 'DisposalType',
+      condition : '== 200',
+      target : ['VikingFunerals', 'FuneralPyres', 'ScienceDonation'],
+      effect : apparatchik.showElement
+    },
+    {
       field : 'WindstormDeductibleOption',
       sideEffects : [
         {
@@ -53,8 +59,11 @@
 
     field     : the form field you want to listen to (onChange)
     condition : what condition it should meet (ex: < 100)
-    target    : which field to modify if condition is met
+    target    : which field(s) to modify if condition is met
     effect    : the function that handles effects
+
+    If you want a condition to modify multiple targets place the id's
+    of the target in an array: ['foo', 'bar']
 
  */
 
@@ -257,7 +266,7 @@ var Apparatchik = (function(){
    *       effect    : Apparatchik.showElement
    *     },
    *     {
-   *       target    : 'WindHailDeductible',
+   *       target    : ['WindHailDeductible', 'HailMaryDeductible'],
    *       condition : '== 200',
    *       effect    : Apparatchik.showElement
    *     }
