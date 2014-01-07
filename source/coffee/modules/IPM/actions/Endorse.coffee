@@ -144,20 +144,126 @@ define [
         @addOFCCCABehavhiors()
 
     addOFCCCABehavhiors : ->
-      rules = []
+      rules = [
+        field: "ConstructionType"
+        condition: "== 100"
+        target: "Cladding"
+        effect: @apparatchik.showElement
+      ,
+        field: "FoundationType"
+        condition: { or: ['== 150', '== 300'] }
+        target: [
+          "Basement",
+          "FoundationBasementPercentage",
+          "BasementPercentComplete"
+          ]
+        effect: @apparatchik.showElement
+      ,
+        field: "NumberOfHalfBaths"
+        condition: "> 0"
+        target: "HalfBathQuality"
+        effect: @apparatchik.showElement
+      ,
+        field: "NumberOfSolarPanels"
+        condition: "> 0"
+        target: "SolarPanelUsage"
+        effect: @apparatchik.showElement
+      ,
+        field: "WoodStove"
+        condition: "== 100"
+        target: [
+          "WSApproved",
+          "WSSupplementalHeatOnly",
+          "WSVentedChimney",
+          "WSSeparateFlue"
+          ]
+        effect: @apparatchik.showElement
+      ,
+        field: "KeroseneHeater"
+        condition: "== 100"
+        target: [
+          "KeroseneHeaterSupplementalHeatOnly",
+          "KeroseneHeaterAge"
+          ]
+        effect: @apparatchik.showElement
+      ,
+        field: "PoolType",
+        sideEffects: [
+          target: "PoolFence"
+          condition: "== 100"
+          effect: @apparatchik.showElement
+        ,
+          target: ["ImmovablePoolLadder", "UnlockedPoolGate"]
+          condition: "== 200"
+          effect: @apparatchik.showElement
+        ,
+          target: ["DivingBoardSlide", "PoolCovering"]
+          condition: "> 1"
+          effect: @apparatchik.showElement
+        ]
+      ,
+        field: "ElectronicsSpecialLimits"
+        condition: "> 1500"
+        target: "ElectronicsSpecialLimitsLocation"
+        effect: @apparatchik.showElement
+      ,
+        field: "EarthquakeCoverage"
+        condition: "== 100"
+        target: ["EarthquakeDeductible",
+                  "EarthquakeMasonryVeneerExclusion"]
+        effect: @apparatchik.showElement
+      ,
+        field: "IncidentalBusinessOccupancy"
+        condition: "== 100"
+        target: ["IncidentalBusinessOccupancyType",
+                 "IncidentalBusinessOccupancyDescription"]
+        effect: @apparatchik.showElement
+      ,
+        field: "Multipolicy"
+        condition: "== 100"
+        target: ["AutoPolicyCarier",
+                 "AutoPolicyNumber"]
+        effect: @apparatchik.showElement
+      ]
 
+      i = 0
+      while ++i < 4
+        rules.push
+          field: "HomeFeatures#{i}"
+          condition: "> 0"
+          target: "HomeFeatures#{i}SquareFeet"
+          effect: @apparatchik.showElement
+
+      # Dynamically create sideEffects for other_structures
+      other_structures_rule =
+        field: "OtherStructuresIndicator"
+        sideEffects: []
+
+      j = 0
+      while ++j < 4
+        other_structures_rule.sideEffects.push
+          target: [
+              "OtherStructures#{j}Type",
+              "OtherStructures#{j}Coverage",
+              "OtherStructures#{j}Occupancy"
+            ]
+          condition: "> #{j - 1}"
+          effect: @apparatchik.showElement
+
+      # Dynamically create sideEffects for scheduled_rule
       scheduled_rule =
         field: "ScheduledPersonalPropertyIndicator"
         sideEffects : []
 
-      i = 0
-      while ++i < 11
+      k = 0
+      while ++k < 11
         scheduled_rule.sideEffects.push
-          target: "article_#{i}"
-          condition: "> #{i - 1}"
+          target: "article_#{k}"
+          condition: "> #{k - 1}"
           effect: @apparatchik.showElement
 
-      rules.push scheduled_rule
+      rules.push scheduled_rule, other_structures_rule
+
       @apparatchik.applyEnumDynamics rules
 
     addFNICHO3LABehaviors : ->
