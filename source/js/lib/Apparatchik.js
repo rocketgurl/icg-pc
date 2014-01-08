@@ -231,11 +231,12 @@ var Apparatchik = (function(){
    * @return {void}
    */
   Apparatchik.prototype.setTargetState = function(target, effect) {
-    if (_.isUndefined(target) || !_.isFunction(effect)) { return false; }
-    var _this = this;
-    var _target = this.wrapArray(target);
+    if (_.isUndefined(target) || _.isUndefined(effect)) { return false; }
+    var _this = this,
+        _target = this.wrapArray(target),
+        _effect = this.wrapArray(effect);
     return _.each(target, function(t) {
-      effect.call(_this, target, true);
+      _this.callEffects(_effect, _this, target, true);
     });
   };
 
@@ -249,6 +250,7 @@ var Apparatchik = (function(){
   Apparatchik.prototype.setDynamicListener = function(rule) {
     var _this   = this,
         _target = this.wrapArray(rule.target),
+        _effect = this.wrapArray(rule.effect),
         args    = (_.has(rule, 'args')) ? rule.args : '',
         field   = this.wrapField(rule.field);
 
@@ -257,7 +259,7 @@ var Apparatchik = (function(){
       if (_this.isCondition($(this).val(), rule.condition)) {
         if (_.isFunction(rule.effect)) {
           _.each(_target, function(t) {
-            rule.effect.call(_this, t, false, args);
+            _this.callEffects(_effect, _this, t, false, args);
           });
         }
       } else {
@@ -270,9 +272,9 @@ var Apparatchik = (function(){
     // If the value of the field already meets the condition
     // then go ahead and trigger its effect
     if (this.isCondition(field.val(), rule.condition)) {
-      if (_.isFunction(rule.effect)) {
+      if (!_.isUndefined(rule.effect)) {
         _.each(_target, function(t) {
-          return rule.effect.call(_this, t, false, args);
+          _this.callEffects(_effect, _this, t, false, args);
         });
       }
     }
@@ -368,12 +370,34 @@ var Apparatchik = (function(){
     _.each(side_effects, function(rule) {
       var args = (_.has(rule, 'args')) ? rule.args : '';
 
-      if (_.isFunction(rule.effect)) {
-        var _target = _this.wrapArray(rule.target);
+      if (!_.isUndefined(rule.effect)) {
+        var _target = _this.wrapArray(rule.target),
+            _effect = _this.wrapArray(rule.effect);
+
         _.each(_target, function(t) {
-          rule.effect.call(_this, t, false, args);
+          _this.callEffects(_effect, _this, t, false, args);
         });
       }
+    });
+  };
+
+  /**
+   * Map over array of effect functions
+   *
+   * @param {Array} effects
+   * @param {Object} scope
+   * @param {String} target
+   * @param {Boolean} reset
+   * @param {Mixed} args
+   * @return {Array} return values of functions
+   */
+  Apparatchik.prototype.callEffects = function(effects,
+                                        scope,
+                                        target,
+                                        reset,
+                                        args) {
+    return _.map(effects, function(e) {
+      return e.call(scope, target, reset, args);
     });
   };
 
@@ -404,6 +428,19 @@ var Apparatchik = (function(){
     var $el = this.wrapField(target).parent();
     if (reset) { return $el.hide(args); }
     return $el.show(args);
+  };
+
+  Apparatchik.prototype.makeRequired = function(target, reset, args) {
+    var $el = this.wrapField(target),
+        $label = $el.siblings('label');
+
+    if (reset) {
+      $label.removeClass('labelRequired');
+      return $el.prop('required', false);
+    }
+
+    $label.addClass('labelRequired');
+    return $el.prop('required', true);
   };
 
   // Return the module
