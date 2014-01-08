@@ -239,7 +239,7 @@ define [
         effect: @apparatchik.showElement
       ,
         field: "EarthquakeCoverage"
-        condition: { and: ["== 100", "== 150"]}
+        condition: { or: ["== 100", "== 150"]}
         target: ["EarthquakeDeductible",
                   "EarthquakeMasonryVeneerExclusion"]
         effect: @apparatchik.showElement
