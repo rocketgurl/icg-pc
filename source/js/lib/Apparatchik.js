@@ -198,6 +198,14 @@ var Apparatchik = (function(){
   Apparatchik.prototype.wrapField = function(field) { return $('#' + this.guid + '_' + field); };
 
   /**
+   * Ensure input is an array
+   *
+   * @param {*} i
+   * @return {Array}
+   */
+  Apparatchik.prototype.wrapArray = function(i) { return (!_.isArray(i)) ? [i] : i; };
+
+  /**
    * Set initial state and attach listeners to fields
    *
    * @param {Object} rules
@@ -225,7 +233,7 @@ var Apparatchik = (function(){
   Apparatchik.prototype.setTargetState = function(target, effect) {
     if (_.isUndefined(target) || !_.isFunction(effect)) { return false; }
     var _this = this;
-    var _target = (!_.isArray(target)) ? [target] : target;
+    var _target = this.wrapArray(target);
     return _.each(target, function(t) {
       effect.call(_this, target, true);
     });
@@ -240,7 +248,7 @@ var Apparatchik = (function(){
    */
   Apparatchik.prototype.setDynamicListener = function(rule) {
     var _this   = this,
-        _target = (!_.isArray(rule.target)) ? [rule.target] : rule.target,
+        _target = this.wrapArray(rule.target),
         args    = (_.has(rule, 'args')) ? rule.args : '',
         field   = this.wrapField(rule.field);
 
@@ -327,7 +335,7 @@ var Apparatchik = (function(){
   Apparatchik.prototype.resetSideEffects = function(side_effects) {
     var _this = this;
     _.each(side_effects, function(rule) {
-      var _t = (!_.isArray(rule.target)) ? [rule.target] : rule.target;
+      var _t = _this.wrapArray(rule.target);
       _.each(_t, function(t) {
         _this.setTargetState(t, rule.effect);
       });
@@ -361,7 +369,7 @@ var Apparatchik = (function(){
       var args = (_.has(rule, 'args')) ? rule.args : '';
 
       if (_.isFunction(rule.effect)) {
-        var _target = (!_.isArray(rule.target)) ? [rule.target] : rule.target;
+        var _target = _this.wrapArray(rule.target);
         _.each(_target, function(t) {
           rule.effect.call(_this, t, false, args);
         });
