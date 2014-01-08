@@ -42,6 +42,7 @@ define [
       ixadmin        : "./config/ics/#{window.ICS360_ENV}/ixadmin"
       ixvocab        : './ixvocab/api/rest/v1/'
       zendesk        : './zendesk'
+      pxclient       : '../swf/PolicySummary.swf'
 
   # Method Combinator (Decorator)
   # https://github.com/raganwald/method-combinators
@@ -433,7 +434,9 @@ define [
                 true
               error : (model, resp) =>
                 # Make a new WorkspaceState as we had a problem.
-                @Amplify.publish 'controller', 'notice', "We had an issue with your saved state. Not major, but we're starting from scratch."
+                @Amplify.publish 'controller',
+                                 'notice',
+                                 "We had an issue with your saved state. Not major, but we're starting from scratch."
                 @workspace_state = @Workspaces.create()
                 true
             )
@@ -516,6 +519,9 @@ define [
       for node in ['cxserver', 'ixprofiler', 'ixrelay', 'zendesk']
         @services[node] = @config.get_universal_service(@workspace_state, node)
 
+      # Retrieve pxClient location from ixConfig
+      @services.pxclient = @config.get_pxClient(@workspace_state)
+
       @launch_app app
 
       if @check_persisted_apps()
@@ -596,10 +602,12 @@ define [
       safe_app_name = "#{Helpers.id_safe(module)}"
       safe_app_name += "_#{Helpers.id_safe(url)}" if url?
 
+      label = params.label || "#{Helpers.uc_first(module)}: #{url}"
+
       # Setup the app object to launch policy view with
       app =
         app       : safe_app_name
-        app_label : "#{Helpers.uc_first(module)}: #{url}"
+        app_label : label
         params    : params
 
       app.app.params = params
@@ -660,8 +668,8 @@ define [
 
       @$workspace_admin.find('ul').html("""
         <li>Welcome back &nbsp;<a href="#profile">#{@user.get('name')}</a></li>
-        <li><a href="#logout">Logout</a></li>
-      """)
+        <li><a href="/batch" target="_blank">mxDocTool</a></li>
+        <li><a href="#logout">Logout</a></li>""")
 
     #### Reset Admin Links
     #
@@ -827,5 +835,3 @@ define [
 
   WorkspaceController.on "new_tab", (app_name) ->
     @toggle_apps app_name
-
-

@@ -37,7 +37,19 @@ define [
             }
           ]
         }
+      agent_default =
+        {
+          label        : 'Search Agents'
+          name         : 'AgentId'
+          enumerations : [
+            {
+              label : 'Find Agent...'
+              value : '0'
+            }
+          ]
+        }
       vocabTerms.terms.push location_default
+      vocabTerms.terms.push agent_default
       @processViewData(vocabTerms, view)
       @viewData.warning = @getRenewal(@MODULE.POLICY)
 
@@ -59,11 +71,17 @@ define [
       super
 
       # AgencyLocationCode plopped into view
-      @current_alc =  @MODULE.POLICY.getTermDataItemValue('AgencyLocationCode')
+      @current_alc =  @MODULE.POLICY.find('Management AgencyLocationCode')
       @$el.find('.bor_input_alc').html @current_alc
 
-      # # Turn our select into a Chosen select widget
+      # Turn our select into a Chosen select widget
       @$el.find(@makeId('NewLocationCode')).chosen({ width: '350px' })
+
+      # Turn AgentId into a Chosen one
+      $agentIdSelect = @$el.find(@makeId('AgentId'))
+      $agentIdSelect.chosen({ width: '350px' })
+      $agentIdSelect.prop('disabled', true)
+      $agentIdSelect.trigger("chosen:updated")
 
       # Typing in the Chosen search field triggers an Ajax search
       @$el.on(
@@ -72,12 +90,17 @@ define [
           (e) => @searchAgencies $(e.currentTarget)
         )
 
+      @$el.on(
+          'change',
+          "#{@makeId('NewLocationCode')}",
+          (e, o) => @searchForAgentId o.selected
+        )
+
       # Style query_type select w/ Chosen
       @$el.find(@makeId('SearchQuery')).chosen(
         disable_search: true
         width :'200px'
       )
-      # @$el.off('keypress.search', "#{@makeId('SearchQuery')}_chosen .chzn-search input")
 
     # Not fully clear why I had to do this, but I did, the click event
     # was not getting attached to the confirm button
@@ -132,6 +155,7 @@ define [
         $(data).find('Organization Role[type=agency_location] DataItem[name=agencyLocationCode]').attr('value')
       @values.formValues.agencyLocationId = \
         $(data).find('Organization').attr('id')
+      @values.formValues.agentId = @values.formValues.AgentId
 
       # Maintain state so we don't have to get again
       @new_agency_data =
@@ -213,6 +237,11 @@ define [
 
           if organizations.length > 0
             list = (@renderSearchList o for o in organizations when $(o).find('Affiliation[side=location]').length > 0)
+
+            # We need a default, otherwise we won't get a change event
+            # on the first item, which blocks our Agent Id
+            list = "<option>-- Choose Agency Location --</option>#{list}"
+
             $list_element.html(list)
             $list_element.trigger("chosen:updated")
             $el.val(val)
@@ -317,3 +346,89 @@ define [
         }
       else
         return false
+
+    # Get XML of Identities for an organization (ALC)
+    #
+    # @param `location_code` _String_
+    # @return _jqXHR_
+    #
+    searchForAgentId : (location_code) ->
+      @displayAgentSearchIndicator()
+      xhr = @sendAgentQuery(
+        @MODULE.CONTROLLER.services.ixdirectory,
+        location_code
+      )
+      xhr.done(
+        (data, textStatus, jqxhr) =>
+          @loadAgentList(@parseAgentList(data))
+      )
+      xhr.fail(@agentListError)
+
+      xhr
+
+    # Throw an error if we can't get the Agent list
+    agentListError : (jqXHR, status, error) =>
+      @removeAgentSearchIndicator()
+      @PARENT_VIEW.displayMessage(
+        'warning',
+        "Could not retrieve Agency Id List: #{error}"
+      )
+
+    # Take XML document and create a string of <option> tags
+    #
+    # @param `data` _XML_
+    # @return _String_ <option> tags or empty
+    #
+    parseAgentList : (data) ->
+      identities = $(data).find('Organization Affiliation Identity')
+      list = if identities.length > 0
+        (@renderAgentList i for i in identities)
+      else
+        ""
+
+    # Inject <option>s into Chosen element and update
+    #
+    # @param `list` _String_ <option>s
+    #
+    loadAgentList : (list) ->
+      $list_element = @$el.find(@makeId('AgentId'))
+      $list_element.html(list)
+      $list_element.prop('disabled', false)
+      $list_element.trigger("chosen:updated")
+      @removeAgentSearchIndicator()
+
+    # **Send AgentId AJAX request to ixDirectory**
+    #
+    # @param `baseUrl` _String_ base url for ixDirectory
+    # @param `location` _String_ Search term
+    # @return _jqXHR_ Deferred object
+    #
+    sendAgentQuery : (baseUrl, location) ->
+      url = "#{baseUrl}organizations/#{location}?mode=extended"
+      $.ajax
+          url      : url
+          dataType : 'xml'
+          headers  :
+            'Authorization' : "Basic #{@MODULE.CONTROLLER.IXVOCAB_AUTH}"
+
+    # !! DOM Side-effects
+    displayAgentSearchIndicator : ->
+      $agent_id_label = @$el.find(@makeId('AgentIdLabel'))
+
+      # Remove any previous incarnations
+      $agent_id_label.find('span.agent-id-indicator').remove()
+
+      # Add a new one
+      $agent_id_label
+        .addClass('loading')
+        .append('<span class="agent-id-indicator">(searching for agents) <img src="/img/wpspin_light.gif" /></span>')
+
+    # !! DOM Side-effects
+    removeAgentSearchIndicator : ->
+      $agent_id_label = @$el.find(@makeId('AgentIdLabel'))
+      $agent_id_label.find('span.agent-id-indicator').remove()
+      $agent_id_label.removeClass('loading')
+
+    # Build <option> tags from identity node
+    renderAgentList : (identity) ->
+      "<option value=\"#{identity.attributes.id.nodeValue}\">#{identity.firstChild.childNodes[0].nodeValue}</option>"

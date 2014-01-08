@@ -1,6 +1,664 @@
 {
   "terms": [
     {
+      "enumerations": [
+        {
+          "label": "Vinyl Siding",
+          "value": "900"
+        },
+        {
+          "label": "Hardboard",
+          "value": "901"
+        },
+        {
+          "label": "Cement Fiber/Asbestos",
+          "value": "1000"
+        },
+        {
+          "label": "Metal sheathing",
+          "value": "400"
+        },
+        {
+          "label": "Unreinforced masonry or concrete",
+          "value": "200"
+        },
+        {
+          "label": "Brick Veneer",
+          "value": "300"
+        },
+        {
+          "label": "Wood Siding",
+          "value": "500"
+        },
+        {
+          "label": "Wood Shakes",
+          "value": "501"
+        },
+        {
+          "label": "Stucco",
+          "value": "302"
+        },
+        {
+          "label": "Unknown or Other",
+          "value": "0"
+        }
+      ],
+      "label": "Cladding",
+      "name": "Cladding"
+    },
+    {
+      "enumerations": [
+        {
+          "label": "Yes",
+          "value": "100"
+        },
+        {
+          "label": "No",
+          "value": "200"
+        }
+      ],
+      "label": "Heat Pump",
+      "name": "HeatPump"
+    },
+    {
+      "enumerations": [
+        {
+          "label": "None",
+          "value": "0"
+        },
+        {
+          "label": "Open porch, small",
+          "value": "110"
+        },
+        {
+          "label": "Open porch, medium",
+          "value": "120"
+        },
+        {
+          "label": "Open porch, large",
+          "value": "130"
+        },
+        {
+          "label": "Screened porch, small",
+          "value": "210"
+        },
+        {
+          "label": "Screened porch, medium",
+          "value": "220"
+        },
+        {
+          "label": "Screened porch, large",
+          "value": "230"
+        },
+        {
+          "label": "Deck, small",
+          "value": "710"
+        },
+        {
+          "label": "Deck, medium",
+          "value": "720"
+        },
+        {
+          "label": "Deck, large",
+          "value": "730"
+        },
+        {
+          "label": "Open breezeway",
+          "value": "300"
+        },
+        {
+          "label": "Screened breezeway",
+          "value": "400"
+        },
+        {
+          "label": "Open Porch",
+          "value": "100"
+        },
+        {
+          "label": "Screened Porch",
+          "value": "200"
+        },
+        {
+          "label": "Wood Deck",
+          "value": "800"
+        },
+        {
+          "label": "Composite Deck",
+          "value": "900"
+        },
+        {
+          "label": "Greenhouse",
+          "value": "500"
+        }
+      ],
+      "label": "1st Additional Home Feature",
+      "name": "HomeFeatures1"
+    },
+    {
+      "enumerations": [
+        {
+          "label": "None",
+          "value": "0"
+        },
+        {
+          "label": "Open porch, small",
+          "value": "110"
+        },
+        {
+          "label": "Open porch, medium",
+          "value": "120"
+        },
+        {
+          "label": "Open porch, large",
+          "value": "130"
+        },
+        {
+          "label": "Screened porch, small",
+          "value": "210"
+        },
+        {
+          "label": "Screened porch, medium",
+          "value": "220"
+        },
+        {
+          "label": "Screened porch, large",
+          "value": "230"
+        },
+        {
+          "label": "Deck, small",
+          "value": "710"
+        },
+        {
+          "label": "Deck, medium",
+          "value": "720"
+        },
+        {
+          "label": "Deck, large",
+          "value": "730"
+        },
+        {
+          "label": "Open breezeway",
+          "value": "300"
+        },
+        {
+          "label": "Screened breezeway",
+          "value": "400"
+        },
+        {
+          "label": "Open Porch",
+          "value": "100"
+        },
+        {
+          "label": "Screened Porch",
+          "value": "200"
+        },
+        {
+          "label": "Wood Deck",
+          "value": "800"
+        },
+        {
+          "label": "Composite Deck",
+          "value": "900"
+        },
+        {
+          "label": "Greenhouse",
+          "value": "500"
+        }
+      ],
+      "label": "2nd Additional Home Feature",
+      "name": "HomeFeatures2"
+    },
+    {
+      "enumerations": [
+        {
+          "label": "None",
+          "value": "0"
+        },
+        {
+          "label": "Open porch, small",
+          "value": "110"
+        },
+        {
+          "label": "Open porch, medium",
+          "value": "120"
+        },
+        {
+          "label": "Open porch, large",
+          "value": "130"
+        },
+        {
+          "label": "Screened porch, small",
+          "value": "210"
+        },
+        {
+          "label": "Screened porch, medium",
+          "value": "220"
+        },
+        {
+          "label": "Screened porch, large",
+          "value": "230"
+        },
+        {
+          "label": "Deck, small",
+          "value": "710"
+        },
+        {
+          "label": "Deck, medium",
+          "value": "720"
+        },
+        {
+          "label": "Deck, large",
+          "value": "730"
+        },
+        {
+          "label": "Open breezeway",
+          "value": "300"
+        },
+        {
+          "label": "Screened breezeway",
+          "value": "400"
+        },
+        {
+          "label": "Open Porch",
+          "value": "100"
+        },
+        {
+          "label": "Screened Porch",
+          "value": "200"
+        },
+        {
+          "label": "Wood Deck",
+          "value": "800"
+        },
+        {
+          "label": "Composite Deck",
+          "value": "900"
+        },
+        {
+          "label": "Greenhouse",
+          "value": "500"
+        }
+      ],
+      "label": "3rd Additional Home Feature",
+      "name": "HomeFeatures3"
+    },
+    {
+      "enumerations": [
+        {
+          "label": "Up to 100 sq ft",
+          "value": "100"
+        },
+        {
+          "label": "101 to 200 sq ft",
+          "value": "200"
+        },
+        {
+          "label": "201 to 300 sq ft",
+          "value": "300"
+        },
+        {
+          "label": "301 to 400 sq ft",
+          "value": "400"
+        },
+        {
+          "label": "401 to 500 sq ft",
+          "value": "500"
+        },
+        {
+          "label": "501 to 600 sq ft",
+          "value": "600"
+        },
+        {
+          "label": "601 to 700 sq ft",
+          "value": "700"
+        },
+        {
+          "label": "701 to 800 sq ft",
+          "value": "800"
+        },
+        {
+          "label": "801 to 900 sq ft",
+          "value": "900"
+        },
+        {
+          "label": "901 to 1000 sq ft",
+          "value": "1000"
+        },
+        {
+          "label": "1001 to 1100 sq ft",
+          "value": "1100"
+        },
+        {
+          "label": "1101 to 1200 sq ft",
+          "value": "1200"
+        },
+        {
+          "label": "1201 to 1300 sq ft",
+          "value": "1300"
+        },
+        {
+          "label": "1301 to 1400 sq ft",
+          "value": "1400"
+        },
+        {
+          "label": "Over 1400 sq ft",
+          "value": "1500"
+        }
+      ],
+      "label": "1st Home Feature Sq Ft",
+      "name": "HomeFeatures1SquareFeet"
+    },
+    {
+      "enumerations": [
+        {
+          "label": "Up to 100 sq ft",
+          "value": "100"
+        },
+        {
+          "label": "101 to 200 sq ft",
+          "value": "200"
+        },
+        {
+          "label": "201 to 300 sq ft",
+          "value": "300"
+        },
+        {
+          "label": "301 to 400 sq ft",
+          "value": "400"
+        },
+        {
+          "label": "401 to 500 sq ft",
+          "value": "500"
+        },
+        {
+          "label": "501 to 600 sq ft",
+          "value": "600"
+        },
+        {
+          "label": "601 to 700 sq ft",
+          "value": "700"
+        },
+        {
+          "label": "701 to 800 sq ft",
+          "value": "800"
+        },
+        {
+          "label": "801 to 900 sq ft",
+          "value": "900"
+        },
+        {
+          "label": "901 to 1000 sq ft",
+          "value": "1000"
+        },
+        {
+          "label": "1001 to 1100 sq ft",
+          "value": "1100"
+        },
+        {
+          "label": "1101 to 1200 sq ft",
+          "value": "1200"
+        },
+        {
+          "label": "1201 to 1300 sq ft",
+          "value": "1300"
+        },
+        {
+          "label": "1301 to 1400 sq ft",
+          "value": "1400"
+        },
+        {
+          "label": "Over 1400 sq ft",
+          "value": "1500"
+        }
+      ],
+      "label": "2nd Home Feature Sq Ft",
+      "name": "HomeFeatures2SquareFeet"
+    },
+    {
+      "enumerations": [
+        {
+          "label": "Up to 100 sq ft",
+          "value": "100"
+        },
+        {
+          "label": "101 to 200 sq ft",
+          "value": "200"
+        },
+        {
+          "label": "201 to 300 sq ft",
+          "value": "300"
+        },
+        {
+          "label": "301 to 400 sq ft",
+          "value": "400"
+        },
+        {
+          "label": "401 to 500 sq ft",
+          "value": "500"
+        },
+        {
+          "label": "501 to 600 sq ft",
+          "value": "600"
+        },
+        {
+          "label": "601 to 700 sq ft",
+          "value": "700"
+        },
+        {
+          "label": "701 to 800 sq ft",
+          "value": "800"
+        },
+        {
+          "label": "801 to 900 sq ft",
+          "value": "900"
+        },
+        {
+          "label": "901 to 1000 sq ft",
+          "value": "1000"
+        },
+        {
+          "label": "1001 to 1100 sq ft",
+          "value": "1100"
+        },
+        {
+          "label": "1101 to 1200 sq ft",
+          "value": "1200"
+        },
+        {
+          "label": "1201 to 1300 sq ft",
+          "value": "1300"
+        },
+        {
+          "label": "1301 to 1400 sq ft",
+          "value": "1400"
+        },
+        {
+          "label": "Over 1400 sq ft",
+          "value": "1500"
+        }
+      ],
+      "label": "3rd Home Feature Sq Ft",
+      "name": "HomeFeatures3SquareFeet"
+    },
+    {
+      "enumerations": [
+        {
+          "label": "No Atrium Doors",
+          "value": "0"
+        },
+        {
+          "label": "1",
+          "value": "1"
+        },
+        {
+          "label": "2",
+          "value": "2"
+        },
+        {
+          "label": "3",
+          "value": "3"
+        },
+        {
+          "label": "4",
+          "value": "4"
+        }
+      ],
+      "label": "Number Of Atrium Doors",
+      "name": "NumberOfAtriumDoors"
+    },
+    {
+      "enumerations": [
+        {
+          "label": "No Atrium Windows",
+          "value": "0"
+        },
+        {
+          "label": "1",
+          "value": "1"
+        },
+        {
+          "label": "2",
+          "value": "2"
+        },
+        {
+          "label": "3",
+          "value": "3"
+        },
+        {
+          "label": "4",
+          "value": "4"
+        }
+      ],
+      "label": "Number Of Atrium Windows",
+      "name": "NumberOfAtriumWindows"
+    },
+    {
+      "enumerations": [
+        {
+          "label": "No Solar Panels",
+          "value": "0"
+        },
+        {
+          "label": "1",
+          "value": "1"
+        },
+        {
+          "label": "2",
+          "value": "2"
+        },
+        {
+          "label": "3",
+          "value": "3"
+        },
+        {
+          "label": "4",
+          "value": "4"
+        },
+        {
+          "label": "5",
+          "value": "5"
+        },
+        {
+          "label": "6",
+          "value": "6"
+        },
+        {
+          "label": "7",
+          "value": "7"
+        },
+        {
+          "label": "8",
+          "value": "8"
+        },
+        {
+          "label": "9",
+          "value": "9"
+        },
+        {
+          "label": "10",
+          "value": "10"
+        },
+        {
+          "label": "11",
+          "value": "11"
+        },
+        {
+          "label": "12",
+          "value": "12"
+        },
+        {
+          "label": "13",
+          "value": "13"
+        },
+        {
+          "label": "14",
+          "value": "14"
+        },
+        {
+          "label": "15",
+          "value": "15"
+        },
+        {
+          "label": "16",
+          "value": "16"
+        },
+        {
+          "label": "17",
+          "value": "17"
+        },
+        {
+          "label": "18",
+          "value": "18"
+        },
+        {
+          "label": "19",
+          "value": "19"
+        },
+        {
+          "label": "20",
+          "value": "20"
+        }
+      ],
+      "label": "Number Of Solar Panels",
+      "name": "NumberOfSolarPanels"
+    },
+    {
+      "enumerations": [
+        {
+          "label": "3",
+          "value": "300"
+        },
+        {
+          "label": "4",
+          "value": "400"
+        },
+        {
+          "label": "5",
+          "value": "500"
+        },
+        {
+          "label": "6",
+          "value": "600"
+        }
+      ],
+      "label": "Number Of Stories",
+      "name": "NumberOfStories"
+    },
+    {
+      "enumerations": [
+        {
+          "label": "Supplemental Electricity",
+          "value": "100"
+        },
+        {
+          "label": "Supplemental Hot Water/Heat",
+          "value": "200"
+        }
+      ],
+      "label": "Type of Solar Panel Usage",
+      "name": "SolarPanelUsage"
+    },
+    {
       "name": "EffectiveDate",
       "label": "Effective Date"
     },
@@ -305,6 +963,10 @@
     {
       "name": "SquareFootUnderRoof",
       "label": "Living Area"
+    },
+    {
+      "name": "SquareFootUnderRoofFLA",
+      "label": "Living Area (LA)"
     },
     {
       "name": "ConstructionYear",
@@ -2185,171 +2847,33 @@
       ]
     },
     {
-      "name": "HomeFeatures1",
-      "label": "1st Additional Home Feature",
-      "enumerations": [
-        {
-          "label": "None",
-          "value": "0"
-        },
-        {
-          "label": "Open porch, small",
-          "value": "110"
-        },
-        {
-          "label": "Open porch, medium",
-          "value": "120"
-        },
-        {
-          "label": "Open porch, large",
-          "value": "130"
-        },
-        {
-          "label": "Screened porch, small",
-          "value": "210"
-        },
-        {
-          "label": "Screened porch, medium",
-          "value": "220"
-        },
-        {
-          "label": "Screened porch, large",
-          "value": "230"
-        },
-        {
-          "label": "Deck, small",
-          "value": "710"
-        },
-        {
-          "label": "Deck, medium",
-          "value": "720"
-        },
-        {
-          "label": "Deck, large",
-          "value": "730"
-        },
-        {
-          "label": "Open breezeway",
-          "value": "300"
-        },
-        {
-          "label": "Screened breezeway",
-          "value": "400"
-        }
-      ]
-    },
-    {
-      "name": "HomeFeatures2",
-      "label": "2nd Additional Home Feature",
-      "enumerations": [
-        {
-          "label": "None",
-          "value": "0"
-        },
-        {
-          "label": "Open porch, small",
-          "value": "110"
-        },
-        {
-          "label": "Open porch, medium",
-          "value": "120"
-        },
-        {
-          "label": "Open porch, large",
-          "value": "130"
-        },
-        {
-          "label": "Screened porch, small",
-          "value": "210"
-        },
-        {
-          "label": "Screened porch, medium",
-          "value": "220"
-        },
-        {
-          "label": "Screened porch, large",
-          "value": "230"
-        },
-        {
-          "label": "Deck, small",
-          "value": "710"
-        },
-        {
-          "label": "Deck, medium",
-          "value": "720"
-        },
-        {
-          "label": "Deck, large",
-          "value": "730"
-        },
-        {
-          "label": "Open breezeway",
-          "value": "300"
-        },
-        {
-          "label": "Screened breezeway",
-          "value": "400"
-        }
-      ]
-    },
-    {
-      "name": "HomeFeatures3",
-      "label": "3rd Additional Home Feature",
-      "enumerations": [
-        {
-          "label": "None",
-          "value": "0"
-        },
-        {
-          "label": "Open porch, small",
-          "value": "110"
-        },
-        {
-          "label": "Open porch, medium",
-          "value": "120"
-        },
-        {
-          "label": "Open porch, large",
-          "value": "130"
-        },
-        {
-          "label": "Screened porch, small",
-          "value": "210"
-        },
-        {
-          "label": "Screened porch, medium",
-          "value": "220"
-        },
-        {
-          "label": "Screened porch, large",
-          "value": "230"
-        },
-        {
-          "label": "Deck, small",
-          "value": "710"
-        },
-        {
-          "label": "Deck, medium",
-          "value": "720"
-        },
-        {
-          "label": "Deck, large",
-          "value": "730"
-        },
-        {
-          "label": "Open breezeway",
-          "value": "300"
-        },
-        {
-          "label": "Screened breezeway",
-          "value": "400"
-        }
-      ]
-    },
-    {
       "name": "HomeStyle",
       "label": "Home Style",
       "enumerations": [
+        {
+          "label": "Contemporary",
+          "value": "900"
+        },
+        {
+          "label": "1 story",
+          "value": "1100"
+        },
+        {
+          "label": "1.5 stories",
+          "value": "1150"
+        },
+        {
+          "label": "2 stories",
+          "value": "1200"
+        },
+        {
+          "label": "2.5 stories",
+          "value": "1250"
+        },
+        {
+          "label": "3 stories",
+          "value": "1300"
+        },
         {
           "label": "BiLevel/split",
           "value": "100"

@@ -1,6 +1,34 @@
 Updates
 -------
 
+### 2.2.7
+
+- Updated FSIC-HO3-LA Endorse form [ICS-2272](https://arc90dev.atlassian.net/browse/ICS-2272)
+- Updated WIC-HO3/HWO-AL, HIC-HO3-LA, WIC-HO3-LA, WIC-HO3-NJ,
+  OFCC-HO3-NJ, OFCC-DP3-NY Endorse forms [ICS-2271](https://arc90dev.atlassian.net/browse/ICS-2271)
+
+### 2.2.6
+
+- Fixes for Change Customer [ICS-2144](https://arc90dev.atlassian.net/browse/ICS-2144)
+
+### 2.2.5
+
+- Provided access to additional IPM functions:
+ - Change Customer [ICS-2144](https://arc90dev.atlassian.net/browse/ICS-2144)
+ - Update Mortgagee [ICS-2145](https://arc90dev.atlassian.net/browse/ICS-2145)
+ - Change Additional Interest [ICS-2146](https://arc90dev.atlassian.net/browse/ICS-2146)
+ - Write off Charges [ICS-2147](https://arc90dev.atlassian.net/browse/ICS-2147)
+
+
+### 2.2.3
+
+-	IPM Endorse now uses correct term [ICS-1972](https://arc90dev.atlassian.net/browse/ICS-1972)
+-	Carrier users cannot access specific interfaces [ICS-2019](https://arc90dev.atlassian.net/browse/ICS-2019)
+-	Broker of Record change now requires an AgentId [ICS-2042](https://arc90dev.atlassian.net/browse/ICS-2042)
+-	Corrected link to XML representations [ICS-1869](https://arc90dev.atlassian.net/browse/ICS-1869)
+-	Now using a Transaction Request for invoicing [ICS-2036](https://arc90dev.atlassian.net/browse/ICS-2036)
+-	PolicySummary SWF module is now loaded from S3 [ICS-2013](https://arc90dev.atlassian.net/browse/ICS-2013)
+
 ### 2.2.2
 
 - 	Carrier users no longer have access to IPM, Zendesk or Renewal Underwriting [ICS-2019](https://arc90dev.atlassian.net/browse/ICS-2019)

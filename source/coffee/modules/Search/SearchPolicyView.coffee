@@ -10,7 +10,7 @@ define [
     events :
       "click" : "open_policy"
 
-    # We need to brute force the View's container to the 
+    # We need to brute force the View's container to the
     # WorkspaceCanvasView's el
     initialize : (options) ->
       @data   = options.model.attributes
@@ -21,7 +21,7 @@ define [
 
     # Attach view to table
     render : ->
-      @$el.attr 
+      @$el.attr
         id : @data.identifiers.InsightPolicyId
 
       # Chomp dates
@@ -57,10 +57,12 @@ define [
       $el = $(e.currentTarget)
 
       identifiers = @model.get('identifiers')
+      last_name = @model.get('insured').lastName || ""
 
       # Setup the params object to launch policy view with
       params =
         url     : identifiers.quoteNumber
+        label : last_name + " " + identifiers.policyId
 
       @module.view.options.controller.launch_module 'policyview', params
       @module.view.options.controller.Router.append_module 'policyview', params

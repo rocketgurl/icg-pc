@@ -22,6 +22,7 @@ require
     herald          : 'lib/herald/herald'
     marked          : 'lib/marked'
     chosen          : 'lib/chosen.jquery'
+    Apparatchik     : 'lib/Apparatchik'
   priority: ['jquery','xml2json','json']
   shim:
       'jquery' :
@@ -48,6 +49,8 @@ require
       'chosen' :
         deps : ['jquery']
         exports : 'Chosen'
+      'Apparatchik' :
+        deps : ['jquery','underscore','moment']
 
 require [
   'jquery',

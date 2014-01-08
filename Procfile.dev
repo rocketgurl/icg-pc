@@ -1,0 +1,2 @@
+compass: bundle exec compass watch --trace
+cake: cake watch

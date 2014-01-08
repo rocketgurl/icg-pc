@@ -1,6 +1,7 @@
 {
   "PRODUCTS_PATH": "modules/IPM/products/",
   "PRODUCTS": [
+    "fnic-ho3-la",
     "acic-ho3-sc",
     "fsic-ho3-la",
     "hic-ho3-al",
@@ -46,6 +47,10 @@
         {
           "label": "Reverse payment",
           "view": "ReversePayment"
+        },
+        {
+          "label": "Write off charges",
+          "view": "WriteOffCharges"
         }
       ]
     },
@@ -61,8 +66,24 @@
           "view": "Endorse"
         },
         {
-          "label": "Change Broker of Record",
+          "label": "Change broker of record",
           "view": "BrokerOfRecord"
+        },
+        {
+          "label": "Change customer",
+          "view": "ChangeCustomer"
+        },
+        {
+          "label": "Update mortgagee",
+          "view": "UpdateMortgagee"
+        },
+        {
+          "label": "Change additional interest",
+          "view": "ChangeAdditionalInterest"
+        },
+        {
+          "label": "Issue (Automatic)",
+          "view": "IssueAutomatic"
         }
       ]
     },

@@ -150,7 +150,7 @@ define [
         @$el.find(".policy-nav a[href=ipmchanges]").parent('li').hide()
 
       # Hide Policy representations if user doesn't have VIEW_ADVANCED <Right>
-      if @controller.user.canViewAdvanced() == false
+      if @controller.user?.canViewAdvanced() == false
         @$el.find(".policy-nav a[href=policyrepresentations]").parent('li').hide()
 
       # Carrier users are not allowed most things (ICS-2019)
@@ -236,6 +236,10 @@ define [
       if @policy_header.html() == ""
         @policy_header.html @Mustache.render tpl_ipm_header, @model.getIpmHeader()
 
+      # ICS-1641
+      if @model.isQuote()
+        $(@policy_header).find('h3').eq(0).html('Quote #')
+
       @policy_header.show()
       @POLICY_HEADER_OFFSET = @policy_header.height()
 
@@ -319,7 +323,7 @@ define [
 
       if @flash_loaded is false
         swfobject.embedSWF(
-          "../swf/PolicySummary.swf",
+          @services.pxclient,
           "policy-summary-#{@cid}",
           "100%",
           "93%", # @policy_summary.height(),
@@ -328,6 +332,7 @@ define [
           null,
           {
             allowScriptAccess : 'always'
+            wmode : 'window'
           },
           null,
           (e) =>
@@ -361,7 +366,7 @@ define [
       # We need to get some global workspace information to pass along
       # to our SWF
       # workspace = @controller.workspace_state.get('workspace')
-      config    = @controller.config.get_config(@controller.workspace_state)
+      config = @controller.config.get_config(@controller.workspace_state)
 
       if not config?
         @Amplify.publish(@cid, 'warning', "There was a problem with the configuration for this policy. Sorry.")

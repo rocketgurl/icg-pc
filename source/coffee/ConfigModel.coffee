@@ -79,4 +79,12 @@ define [
         if url == undefined then false else url
 
 
+    # Retrieve URL of pxClient from ixConfig - pxClient is stored on S3
+    get_pxClient :
+      check_workspace \
+      (workspace) ->
+        doc = @get('document')
+        url = doc.find("ConfigItem[name=policycentral] ConfigItem[name=policySummaryUrl]").attr('value')
+        if url == undefined then false else url
+
   ConfigModel

@@ -1,0 +1,26 @@
+{
+    "terms": [
+        {
+            "name": "ReinstateReason",
+            "label": "Reason Code",
+            "enumerations": [
+                {
+                    "value": "1",
+                    "label": "Insured Request"
+                },
+                {
+                    "value": "29",
+                    "label": "Underwriting reason for cancellation resolved"
+                },
+                {
+                    "value": "28",
+                    "label": "Due to compliance or legal reasons"
+                },
+                {
+                    "value": "27",
+                    "label": "Payment received after effective date of cancellation"
+                }
+            ]
+        }
+    ]
+}

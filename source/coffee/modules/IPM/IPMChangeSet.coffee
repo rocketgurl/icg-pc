@@ -306,6 +306,24 @@ define [
       <ReasonCode>{{reasonCode}}</ReasonCode>
     """
 
+    change_customer : """
+      <ReasonCode>{{reasonCode}}</ReasonCode>
+      <CustomerChanges>
+        <Set>
+          {{>changes}}
+        </Set>
+      </CustomerChanges>
+    """
+
+    change_additional_interest : """
+      <ReasonCode>{{reasonCode}}</ReasonCode>
+      <CustomerChanges>
+        <Set>
+          {{>changes}}
+        </Set>
+      </CustomerChanges>
+    """
+
     endorse : """
       <ReasonCode>{{reasonCode}}</ReasonCode>
       <Comment>{{comment}}</Comment>
@@ -324,6 +342,8 @@ define [
     """
 
     invoice : ""
+
+    issue : ""
 
     make_payment : """
       <Ledger>
@@ -435,16 +455,14 @@ define [
     write_off_charges : """
       <Ledger>
         <LineItem value="-{{amount}}" type="WRITE_OFF_CHARGE" timestamp="{{timestamp}}">
-          <Memo>installment Charge</Memo>
-          <DataItem name="Reference" value="{{paymentReference}}" />
-          <DataItem name="PaymentMethod" value="{{paymentMethod}}" />
+          <Memo>Installment Charge</Memo>
+          <DataItem name="Reference" value="{{reasonCodeLabel}}" />
         </LineItem>
       </Ledger>
       <EventHistory>
-        <Event type="Chargeback">
-          <DataItem name="Amount" value="{{paymentAmount}}" />
-          <DataItem name="Reference" value="{{paymentReference}}" />
-          <DataItem name="PaymentMethod" value="{{paymentMethod}}" />
+        <Event type="WriteOffCharge">
+          <DataItem name="Amount" value="{{amount}}" />
+          <DataItem name="Reference" value="{{reasonCodeLabel}}" />
         </Event>
       </EventHistory>
     """
@@ -453,6 +471,15 @@ define [
       <BrokerOfRecordChanges>
         <AgencyLocationCode>{{agencyLocationCode}}</AgencyLocationCode>
         <AgencyLocationId>{{agencyLocationId}}</AgencyLocationId>
+        <AgentId>{{agentId}}</AgentId>
       </BrokerOfRecordChanges>
     """
 
+    update_mortgagee : """
+      <ReasonCode>53</ReasonCode>
+      <CustomerChanges>
+        <Set>
+          {{>changes}}
+        </Set>
+      </CustomerChanges>
+    """

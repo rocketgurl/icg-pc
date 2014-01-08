@@ -137,6 +137,185 @@ define [
       @adjustAlabamaLossTypeFields()
       @adjustAlabamaPropertyUsage()
 
+      if @apparatchik.isProduct('fnic-ho3-la')
+        @addFNICHO3LABehaviors()
+
+      if @apparatchik.isProduct('ofcc-ho3-ca') || @apparatchik.isProduct('ofcc-ho5-ca')
+        @addOFCCCABehavhiors()
+
+    ###
+    # Apparatchik!
+    # ============
+    # These are the "business logic" rules (think COBOL) which govern
+    # how fields behave based on certain conditions. Go look at the
+    # comments in /source/js/lib/Apparatchik.js to get a feel for how
+    # they work - it's real easy man.
+    #
+    # NOTE: These will start to get lengthy, you may want to move
+    # them into external files and pull in via RequireJS.
+    ###
+
+    addOFCCCABehavhiors : ->
+      rules = [
+        field: "ConstructionType"
+        condition: "== 100"
+        target: "Cladding"
+        effect: @apparatchik.showElement
+      ,
+        field: "FoundationType"
+        condition: { or: ['== 150', '== 300'] }
+        target: [
+          "Basement",
+          "FoundationBasementPercentage",
+          "BasementPercentComplete"
+          ]
+        effect: @apparatchik.showElement
+      ,
+        field: "NumberOfHalfBaths"
+        condition: "> 0"
+        target: "HalfBathQuality"
+        effect: @apparatchik.showElement
+      ,
+        field: "NumberOfSolarPanels"
+        condition: "> 0"
+        target: "SolarPanelUsage"
+        effect: @apparatchik.showElement
+      ,
+        field: "WoodStove"
+        condition: "== 100"
+        target: [
+          "WSApproved",
+          "WSSupplementalHeatOnly",
+          "WSVentedChimney",
+          "WSSeparateFlue"
+          ]
+        effect: @apparatchik.showElement
+      ,
+        field: "KeroseneHeater"
+        condition: "== 100"
+        target: [
+          "KeroseneHeaterSupplementalHeatOnly",
+          "KeroseneHeaterAge"
+          ]
+        effect: @apparatchik.showElement
+      ,
+        field: "PoolType",
+        sideEffects: [
+          target: "PoolFence"
+          condition: "== 100"
+          effect: @apparatchik.showElement
+        ,
+          target: ["ImmovablePoolLadder", "UnlockedPoolGate"]
+          condition: "== 200"
+          effect: @apparatchik.showElement
+        ,
+          target: ["DivingBoardSlide", "PoolCovering"]
+          condition: "> 1"
+          effect: @apparatchik.showElement
+        ]
+      ,
+        field: "ElectronicsSpecialLimits"
+        condition: "> 1500"
+        target: "ElectronicsSpecialLimitsLocation"
+        effect: @apparatchik.showElement
+      ,
+        field: "EarthquakeCoverage"
+        condition: "== 100"
+        target: ["EarthquakeDeductible",
+                  "EarthquakeMasonryVeneerExclusion"]
+        effect: @apparatchik.showElement
+      ,
+        field: "IncidentalBusinessOccupancy"
+        condition: "== 100"
+        target: ["IncidentalBusinessOccupancyType",
+                 "IncidentalBusinessOccupancyDescription"]
+        effect: @apparatchik.showElement
+      ,
+        field: "Multipolicy"
+        condition: "== 100"
+        target: ["AutoPolicyCarier",
+                 "AutoPolicyNumber"]
+        effect: @apparatchik.showElement
+      ]
+
+      i = 0
+      while ++i < 4
+        rules.push
+          field: "HomeFeatures#{i}"
+          condition: "> 0"
+          target: "HomeFeatures#{i}SquareFeet"
+          effect: @apparatchik.showElement
+
+      # Dynamically create sideEffects for other_structures
+      other_structures_rule =
+        field: "OtherStructuresIndicator"
+        sideEffects: []
+
+      j = 0
+      while ++j < 4
+        other_structures_rule.sideEffects.push
+          target: [
+              "OtherStructures#{j}Type",
+              "OtherStructures#{j}Coverage",
+              "OtherStructures#{j}Occupancy"
+            ]
+          condition: "> #{j - 1}"
+          effect: @apparatchik.showElement
+
+      # Dynamically create sideEffects for scheduled_rule
+      scheduled_rule =
+        field: "ScheduledPersonalPropertyIndicator"
+        sideEffects : []
+
+      k = 0
+      while ++k < 11
+        scheduled_rule.sideEffects.push
+          target: "article_#{k}"
+          condition: "> #{k - 1}"
+          effect: @apparatchik.showElement
+
+      rules.push scheduled_rule, other_structures_rule
+
+      @apparatchik.applyEnumDynamics rules
+
+    addFNICHO3LABehaviors : ->
+      rules = [
+        field: "HeatPump"
+        condition: "> 100"
+        target: "CentralAir"
+        effect: @apparatchik.showElement
+      ,
+        field: "NumberOfSolarPanels"
+        condition: "> 0"
+        target: "SolarPanelUsage"
+        effect: @apparatchik.showElement
+      ,
+        field: "ConstructionType"
+        condition: "== 100"
+        target: "Cladding"
+        effect: @apparatchik.showElement
+      ,
+        field: "WindstormDeductibleOption"
+        sideEffects: [
+          target: "HurricaneDeductible"
+          condition: "== 100"
+          effect: @apparatchik.showElement
+        ,
+          target: "WindHailDeductible"
+          condition: "== 200"
+          effect: @apparatchik.showElement
+        ]
+      ]
+      i = 0
+      while ++i < 4
+        rules.push
+          field: "HomeFeatures" + i
+          condition: "> 0"
+          target: "HomeFeatures" + i + "SquareFeet"
+          effect: @apparatchik.showElement
+
+      @apparatchik.applyEnumDynamics rules
+
     # ICS-458
     # if this is a DP3 NY form and has a Coverage L & Coverage M field we
     # need to set M to 0 when L is 0, as per Andy Levens instructions.

@@ -594,12 +594,35 @@ h2.ipm-action-header {
 		color: $darkgray;
 	}
 
+	.labelRequired {
+	    color: #444;
+	    font-weight: bold;
+		&:after
+		{
+			color: #752E2E;
+			content: ' *';
+		}
+	}
+
+	.agent-id-indicator {
+		color: lighten($darkgray, 20);
+		padding-left: 5px;
+		img {
+			position: relative;
+			top: 3px;
+		}
+	}
+
 	input[type=search] {
 		@include font-size(16);
 	}
 
 	select {
 		width: 120px;
+	}
+
+	.loading {
+		font-style: italic;
 	}
 }
 
@@ -677,4 +700,8 @@ img.bor-spinner {
 
 .bor-table {
 	@extend table.module-search;
+}
+
+.bor .form_actions {
+	margin-top: 40px !important;
 }

@@ -1,32 +1,688 @@
 {
   "terms": [
     {
-      "name": "EffectiveDate",
-      "label": "Effective Date"
+      "enumerations": [
+        {
+          "label": "Vinyl Siding",
+          "value": "900"
+        },
+        {
+          "label": "Hardboard",
+          "value": "901"
+        },
+        {
+          "label": "Cement Fiber/Asbestos",
+          "value": "1000"
+        },
+        {
+          "label": "Metal sheathing",
+          "value": "400"
+        },
+        {
+          "label": "Unreinforced masonry or concrete",
+          "value": "200"
+        },
+        {
+          "label": "Brick Veneer",
+          "value": "300"
+        },
+        {
+          "label": "Wood Siding",
+          "value": "500"
+        },
+        {
+          "label": "Wood Shakes",
+          "value": "501"
+        },
+        {
+          "label": "Stucco",
+          "value": "302"
+        },
+        {
+          "label": "Unknown or Other",
+          "value": "0"
+        }
+      ],
+      "label": "Cladding",
+      "name": "Cladding"
     },
     {
-      "name": "comment",
-      "label": "Comment"
+      "enumerations": [
+        {
+          "label": "Yes",
+          "value": "100"
+        },
+        {
+          "label": "No",
+          "value": "200"
+        }
+      ],
+      "label": "Heat Pump",
+      "name": "HeatPump"
     },
     {
-      "name": "PropertyStreetNumber",
-      "label": "Street Number"
+      "enumerations": [
+        {
+          "label": "None",
+          "value": "0"
+        },
+        {
+          "label": "Open porch, small",
+          "value": "110"
+        },
+        {
+          "label": "Open porch, medium",
+          "value": "120"
+        },
+        {
+          "label": "Open porch, large",
+          "value": "130"
+        },
+        {
+          "label": "Screened porch, small",
+          "value": "210"
+        },
+        {
+          "label": "Screened porch, medium",
+          "value": "220"
+        },
+        {
+          "label": "Screened porch, large",
+          "value": "230"
+        },
+        {
+          "label": "Deck, small",
+          "value": "710"
+        },
+        {
+          "label": "Deck, medium",
+          "value": "720"
+        },
+        {
+          "label": "Deck, large",
+          "value": "730"
+        },
+        {
+          "label": "Open breezeway",
+          "value": "300"
+        },
+        {
+          "label": "Screened breezeway",
+          "value": "400"
+        },
+        {
+          "label": "Open Porch",
+          "value": "100"
+        },
+        {
+          "label": "Screened Porch",
+          "value": "200"
+        },
+        {
+          "label": "Wood Deck",
+          "value": "800"
+        },
+        {
+          "label": "Composite Deck",
+          "value": "900"
+        },
+        {
+          "label": "Greenhouse",
+          "value": "500"
+        }
+      ],
+      "label": "1st Additional Home Feature",
+      "name": "HomeFeatures1"
     },
     {
-      "name": "PropertyStreetName",
-      "label": "Street Name"
+      "enumerations": [
+        {
+          "label": "None",
+          "value": "0"
+        },
+        {
+          "label": "Open porch, small",
+          "value": "110"
+        },
+        {
+          "label": "Open porch, medium",
+          "value": "120"
+        },
+        {
+          "label": "Open porch, large",
+          "value": "130"
+        },
+        {
+          "label": "Screened porch, small",
+          "value": "210"
+        },
+        {
+          "label": "Screened porch, medium",
+          "value": "220"
+        },
+        {
+          "label": "Screened porch, large",
+          "value": "230"
+        },
+        {
+          "label": "Deck, small",
+          "value": "710"
+        },
+        {
+          "label": "Deck, medium",
+          "value": "720"
+        },
+        {
+          "label": "Deck, large",
+          "value": "730"
+        },
+        {
+          "label": "Open breezeway",
+          "value": "300"
+        },
+        {
+          "label": "Screened breezeway",
+          "value": "400"
+        },
+        {
+          "label": "Open Porch",
+          "value": "100"
+        },
+        {
+          "label": "Screened Porch",
+          "value": "200"
+        },
+        {
+          "label": "Wood Deck",
+          "value": "800"
+        },
+        {
+          "label": "Composite Deck",
+          "value": "900"
+        },
+        {
+          "label": "Greenhouse",
+          "value": "500"
+        }
+      ],
+      "label": "2nd Additional Home Feature",
+      "name": "HomeFeatures2"
     },
     {
-      "name": "PropertyAddressLine2",
-      "label": "Address Line 2"
+      "enumerations": [
+        {
+          "label": "None",
+          "value": "0"
+        },
+        {
+          "label": "Open porch, small",
+          "value": "110"
+        },
+        {
+          "label": "Open porch, medium",
+          "value": "120"
+        },
+        {
+          "label": "Open porch, large",
+          "value": "130"
+        },
+        {
+          "label": "Screened porch, small",
+          "value": "210"
+        },
+        {
+          "label": "Screened porch, medium",
+          "value": "220"
+        },
+        {
+          "label": "Screened porch, large",
+          "value": "230"
+        },
+        {
+          "label": "Deck, small",
+          "value": "710"
+        },
+        {
+          "label": "Deck, medium",
+          "value": "720"
+        },
+        {
+          "label": "Deck, large",
+          "value": "730"
+        },
+        {
+          "label": "Open breezeway",
+          "value": "300"
+        },
+        {
+          "label": "Screened breezeway",
+          "value": "400"
+        },
+        {
+          "label": "Open Porch",
+          "value": "100"
+        },
+        {
+          "label": "Screened Porch",
+          "value": "200"
+        },
+        {
+          "label": "Wood Deck",
+          "value": "800"
+        },
+        {
+          "label": "Composite Deck",
+          "value": "900"
+        },
+        {
+          "label": "Greenhouse",
+          "value": "500"
+        }
+      ],
+      "label": "3rd Additional Home Feature",
+      "name": "HomeFeatures3"
     },
     {
-      "name": "PropertyCity",
-      "label": "City"
+      "enumerations": [
+        {
+          "label": "Up to 100 sq ft",
+          "value": "100"
+        },
+        {
+          "label": "101 to 200 sq ft",
+          "value": "200"
+        },
+        {
+          "label": "201 to 300 sq ft",
+          "value": "300"
+        },
+        {
+          "label": "301 to 400 sq ft",
+          "value": "400"
+        },
+        {
+          "label": "401 to 500 sq ft",
+          "value": "500"
+        },
+        {
+          "label": "501 to 600 sq ft",
+          "value": "600"
+        },
+        {
+          "label": "601 to 700 sq ft",
+          "value": "700"
+        },
+        {
+          "label": "701 to 800 sq ft",
+          "value": "800"
+        },
+        {
+          "label": "801 to 900 sq ft",
+          "value": "900"
+        },
+        {
+          "label": "901 to 1000 sq ft",
+          "value": "1000"
+        },
+        {
+          "label": "1001 to 1100 sq ft",
+          "value": "1100"
+        },
+        {
+          "label": "1101 to 1200 sq ft",
+          "value": "1200"
+        },
+        {
+          "label": "1201 to 1300 sq ft",
+          "value": "1300"
+        },
+        {
+          "label": "1301 to 1400 sq ft",
+          "value": "1400"
+        },
+        {
+          "label": "Over 1400 sq ft",
+          "value": "1500"
+        }
+      ],
+      "label": "1st Home Feature Sq Ft",
+      "name": "HomeFeatures1SquareFeet"
     },
     {
-      "name": "PropertyState",
-      "label": "State",
+      "enumerations": [
+        {
+          "label": "Up to 100 sq ft",
+          "value": "100"
+        },
+        {
+          "label": "101 to 200 sq ft",
+          "value": "200"
+        },
+        {
+          "label": "201 to 300 sq ft",
+          "value": "300"
+        },
+        {
+          "label": "301 to 400 sq ft",
+          "value": "400"
+        },
+        {
+          "label": "401 to 500 sq ft",
+          "value": "500"
+        },
+        {
+          "label": "501 to 600 sq ft",
+          "value": "600"
+        },
+        {
+          "label": "601 to 700 sq ft",
+          "value": "700"
+        },
+        {
+          "label": "701 to 800 sq ft",
+          "value": "800"
+        },
+        {
+          "label": "801 to 900 sq ft",
+          "value": "900"
+        },
+        {
+          "label": "901 to 1000 sq ft",
+          "value": "1000"
+        },
+        {
+          "label": "1001 to 1100 sq ft",
+          "value": "1100"
+        },
+        {
+          "label": "1101 to 1200 sq ft",
+          "value": "1200"
+        },
+        {
+          "label": "1201 to 1300 sq ft",
+          "value": "1300"
+        },
+        {
+          "label": "1301 to 1400 sq ft",
+          "value": "1400"
+        },
+        {
+          "label": "Over 1400 sq ft",
+          "value": "1500"
+        }
+      ],
+      "label": "2nd Home Feature Sq Ft",
+      "name": "HomeFeatures2SquareFeet"
+    },
+    {
+      "enumerations": [
+        {
+          "label": "Up to 100 sq ft",
+          "value": "100"
+        },
+        {
+          "label": "101 to 200 sq ft",
+          "value": "200"
+        },
+        {
+          "label": "201 to 300 sq ft",
+          "value": "300"
+        },
+        {
+          "label": "301 to 400 sq ft",
+          "value": "400"
+        },
+        {
+          "label": "401 to 500 sq ft",
+          "value": "500"
+        },
+        {
+          "label": "501 to 600 sq ft",
+          "value": "600"
+        },
+        {
+          "label": "601 to 700 sq ft",
+          "value": "700"
+        },
+        {
+          "label": "701 to 800 sq ft",
+          "value": "800"
+        },
+        {
+          "label": "801 to 900 sq ft",
+          "value": "900"
+        },
+        {
+          "label": "901 to 1000 sq ft",
+          "value": "1000"
+        },
+        {
+          "label": "1001 to 1100 sq ft",
+          "value": "1100"
+        },
+        {
+          "label": "1101 to 1200 sq ft",
+          "value": "1200"
+        },
+        {
+          "label": "1201 to 1300 sq ft",
+          "value": "1300"
+        },
+        {
+          "label": "1301 to 1400 sq ft",
+          "value": "1400"
+        },
+        {
+          "label": "Over 1400 sq ft",
+          "value": "1500"
+        }
+      ],
+      "label": "3rd Home Feature Sq Ft",
+      "name": "HomeFeatures3SquareFeet"
+    },
+    {
+      "enumerations": [
+        {
+          "label": "No Atrium Doors",
+          "value": "0"
+        },
+        {
+          "label": "1",
+          "value": "1"
+        },
+        {
+          "label": "2",
+          "value": "2"
+        },
+        {
+          "label": "3",
+          "value": "3"
+        },
+        {
+          "label": "4",
+          "value": "4"
+        }
+      ],
+      "label": "Number Of Atrium Doors",
+      "name": "NumberOfAtriumDoors"
+    },
+    {
+      "enumerations": [
+        {
+          "label": "No Atrium Windows",
+          "value": "0"
+        },
+        {
+          "label": "1",
+          "value": "1"
+        },
+        {
+          "label": "2",
+          "value": "2"
+        },
+        {
+          "label": "3",
+          "value": "3"
+        },
+        {
+          "label": "4",
+          "value": "4"
+        }
+      ],
+      "label": "Number Of Atrium Windows",
+      "name": "NumberOfAtriumWindows"
+    },
+    {
+      "enumerations": [
+        {
+          "label": "No Solar Panels",
+          "value": "0"
+        },
+        {
+          "label": "1",
+          "value": "1"
+        },
+        {
+          "label": "2",
+          "value": "2"
+        },
+        {
+          "label": "3",
+          "value": "3"
+        },
+        {
+          "label": "4",
+          "value": "4"
+        },
+        {
+          "label": "5",
+          "value": "5"
+        },
+        {
+          "label": "6",
+          "value": "6"
+        },
+        {
+          "label": "7",
+          "value": "7"
+        },
+        {
+          "label": "8",
+          "value": "8"
+        },
+        {
+          "label": "9",
+          "value": "9"
+        },
+        {
+          "label": "10",
+          "value": "10"
+        },
+        {
+          "label": "11",
+          "value": "11"
+        },
+        {
+          "label": "12",
+          "value": "12"
+        },
+        {
+          "label": "13",
+          "value": "13"
+        },
+        {
+          "label": "14",
+          "value": "14"
+        },
+        {
+          "label": "15",
+          "value": "15"
+        },
+        {
+          "label": "16",
+          "value": "16"
+        },
+        {
+          "label": "17",
+          "value": "17"
+        },
+        {
+          "label": "18",
+          "value": "18"
+        },
+        {
+          "label": "19",
+          "value": "19"
+        },
+        {
+          "label": "20",
+          "value": "20"
+        }
+      ],
+      "label": "Number Of Solar Panels",
+      "name": "NumberOfSolarPanels"
+    },
+    {
+      "enumerations": [
+        {
+          "label": "3",
+          "value": "300"
+        },
+        {
+          "label": "4",
+          "value": "400"
+        },
+        {
+          "label": "5",
+          "value": "500"
+        },
+        {
+          "label": "6",
+          "value": "600"
+        }
+      ],
+      "label": "Number Of Stories",
+      "name": "NumberOfStories"
+    },
+    {
+      "enumerations": [
+        {
+          "label": "Supplemental Electricity",
+          "value": "100"
+        },
+        {
+          "label": "Supplemental Hot Water/Heat",
+          "value": "200"
+        }
+      ],
+      "label": "Type of Solar Panel Usage",
+      "name": "SolarPanelUsage"
+    },
+    {
+      "label": "Effective Date",
+      "name": "EffectiveDate"
+    },
+    {
+      "label": "Comment",
+      "name": "comment"
+    },
+    {
+      "label": "Street Number",
+      "name": "PropertyStreetNumber"
+    },
+    {
+      "label": "Street Name",
+      "name": "PropertyStreetName"
+    },
+    {
+      "label": "Address Line 2",
+      "name": "PropertyAddressLine2"
+    },
+    {
+      "label": "City",
+      "name": "PropertyCity"
+    },
+    {
       "enumerations": [
         {
           "label": "AK",
@@ -232,227 +888,231 @@
           "label": "WY",
           "value": "WY"
         }
-      ]
+      ],
+      "label": "State",
+      "name": "PropertyState"
     },
     {
-      "name": "PropertyZipCode",
-      "label": "Zip Code"
+      "label": "Zip Code",
+      "name": "PropertyZipCode"
     },
     {
-      "name": "PropertyZipCodePlusFour",
-      "label": "Zip Plus Four"
+      "label": "Zip Plus Four",
+      "name": "PropertyZipCodePlusFour"
     },
     {
-      "name": "Elevation",
-      "label": "Elevation"
+      "label": "Elevation",
+      "name": "Elevation"
     },
     {
-      "name": "DistanceToCoast",
-      "label": "Distance to Coast (miles)"
+      "label": "Distance to Coast (miles)",
+      "name": "DistanceToCoast"
     },
     {
-      "name": "DistanceToCoastSecondary",
-      "label": "Distance to Secondary (Inner Waterway)"
+      "label": "Distance to Secondary (Inner Waterway)",
+      "name": "DistanceToCoastSecondary"
     },
     {
-      "name": "DistanceToFireDepartment",
-      "label": "Miles to Primary Responding Fire Station"
+      "label": "Miles to Primary Responding Fire Station",
+      "name": "DistanceToFireDepartment"
     },
     {
-      "name": "ReplacementCostBuilding",
-      "label": "Replacement Cost Of Dwelling"
+      "label": "Replacement Cost Of Dwelling",
+      "name": "ReplacementCostBuilding"
     },
     {
-      "name": "CoverageA",
-      "label": "Coverage A"
+      "label": "Coverage A",
+      "name": "CoverageA"
     },
     {
-      "name": "CoverageB",
-      "label": "Coverage B"
+      "label": "Coverage B",
+      "name": "CoverageB"
     },
     {
-      "name": "CoverageC",
-      "label": "Coverage C"
+      "label": "Coverage C",
+      "name": "CoverageC"
     },
     {
-      "name": "CoverageD",
-      "label": "Coverage D"
+      "label": "Coverage D",
+      "name": "CoverageD"
     },
     {
-      "name": "SquareFootUnderRoof",
-      "label": "Livable Square Feet"
+      "label": "Livable Square Feet",
+      "name": "SquareFootUnderRoof"
     },
     {
-      "name": "ConstructionYear",
-      "label": "Construction Year - Dwelling"
+      "name": "SquareFootUnderRoofFLA",
+      "label": "Living Area (LA)"
     },
     {
-      "name": "ConstructionYearRoof",
-      "label": "Construction Year - Roof"
+      "label": "Construction Year - Dwelling",
+      "name": "ConstructionYear"
     },
     {
-      "name": "IncidentalBusinessOccupancyType",
-      "label": "Business Type"
+      "label": "Construction Year - Roof",
+      "name": "ConstructionYearRoof"
     },
     {
-      "name": "IncidentalBusinessOccupancyDescription",
-      "label": "Business Description"
+      "label": "Business Type",
+      "name": "IncidentalBusinessOccupancyType"
     },
     {
-      "name": "AutoPolicyCarrier",
-      "label": "Auto Policy Carrier"
+      "label": "Business Description",
+      "name": "IncidentalBusinessOccupancyDescription"
     },
     {
-      "name": "AutoPolicyNumber",
-      "label": "Auto Policy Number"
+      "label": "Auto Policy Carrier",
+      "name": "AutoPolicyCarrier"
     },
     {
-      "name": "Insured1BirthDate",
-      "label": "Insured Date Of Birth"
+      "label": "Auto Policy Number",
+      "name": "AutoPolicyNumber"
     },
     {
-      "name": "ScheduledPersonalProperty1Limit",
-      "label": "Limit"
+      "label": "Insured Date Of Birth",
+      "name": "Insured1BirthDate"
     },
     {
-      "name": "ScheduledPersonalProperty1Description",
-      "label": "Description"
+      "label": "Limit",
+      "name": "ScheduledPersonalProperty1Limit"
     },
     {
-      "name": "ScheduledPersonalProperty2Limit",
-      "label": "Limit"
+      "label": "Description",
+      "name": "ScheduledPersonalProperty1Description"
     },
     {
-      "name": "ScheduledPersonalProperty2Description",
-      "label": "Description"
+      "label": "Limit",
+      "name": "ScheduledPersonalProperty2Limit"
     },
     {
-      "name": "ScheduledPersonalProperty3Limit",
-      "label": "Limit"
+      "label": "Description",
+      "name": "ScheduledPersonalProperty2Description"
     },
     {
-      "name": "ScheduledPersonalProperty3Description",
-      "label": "Description"
+      "label": "Limit",
+      "name": "ScheduledPersonalProperty3Limit"
     },
     {
-      "name": "ScheduledPersonalProperty4Limit",
-      "label": "Limit"
+      "label": "Description",
+      "name": "ScheduledPersonalProperty3Description"
     },
     {
-      "name": "ScheduledPersonalProperty4Description",
-      "label": "Description"
+      "label": "Limit",
+      "name": "ScheduledPersonalProperty4Limit"
     },
     {
-      "name": "ScheduledPersonalProperty5Limit",
-      "label": "Limit"
+      "label": "Description",
+      "name": "ScheduledPersonalProperty4Description"
     },
     {
-      "name": "ScheduledPersonalProperty5Description",
-      "label": "Description"
+      "label": "Limit",
+      "name": "ScheduledPersonalProperty5Limit"
     },
     {
-      "name": "ScheduledPersonalProperty6Limit",
-      "label": "Limit"
+      "label": "Description",
+      "name": "ScheduledPersonalProperty5Description"
     },
     {
-      "name": "ScheduledPersonalProperty6Description",
-      "label": "Description"
+      "label": "Limit",
+      "name": "ScheduledPersonalProperty6Limit"
     },
     {
-      "name": "ScheduledPersonalProperty7Limit",
-      "label": "Limit"
+      "label": "Description",
+      "name": "ScheduledPersonalProperty6Description"
     },
     {
-      "name": "ScheduledPersonalProperty7Description",
-      "label": "Description"
+      "label": "Limit",
+      "name": "ScheduledPersonalProperty7Limit"
     },
     {
-      "name": "ScheduledPersonalProperty8Limit",
-      "label": "Limit"
+      "label": "Description",
+      "name": "ScheduledPersonalProperty7Description"
     },
     {
-      "name": "ScheduledPersonalProperty8Description",
-      "label": "Description"
+      "label": "Limit",
+      "name": "ScheduledPersonalProperty8Limit"
     },
     {
-      "name": "ScheduledPersonalProperty9Limit",
-      "label": "Limit"
+      "label": "Description",
+      "name": "ScheduledPersonalProperty8Description"
     },
     {
-      "name": "ScheduledPersonalProperty9Description",
-      "label": "Description"
+      "label": "Limit",
+      "name": "ScheduledPersonalProperty9Limit"
     },
     {
-      "name": "ScheduledPersonalProperty10Limit",
-      "label": "Limit"
+      "label": "Description",
+      "name": "ScheduledPersonalProperty9Description"
     },
     {
-      "name": "ScheduledPersonalProperty10Description",
-      "label": "Description"
+      "label": "Limit",
+      "name": "ScheduledPersonalProperty10Limit"
     },
     {
-      "name": "LossAmount1",
-      "label": "Amount"
+      "label": "Description",
+      "name": "ScheduledPersonalProperty10Description"
     },
     {
-      "name": "LossDate1",
-      "label": "Date"
+      "label": "Amount",
+      "name": "LossAmount1"
     },
     {
-      "name": "LossDescription1",
-      "label": "Description"
+      "label": "Date",
+      "name": "LossDate1"
     },
     {
-      "name": "LossAmount2",
-      "label": "Amount"
+      "label": "Description",
+      "name": "LossDescription1"
     },
     {
-      "name": "LossDate2",
-      "label": "Date"
+      "label": "Amount",
+      "name": "LossAmount2"
     },
     {
-      "name": "LossDescription2",
-      "label": "Description"
+      "label": "Date",
+      "name": "LossDate2"
     },
     {
-      "name": "LossAmount3",
-      "label": "Amount"
+      "label": "Description",
+      "name": "LossDescription2"
     },
     {
-      "name": "LossDate3",
-      "label": "Date"
+      "label": "Amount",
+      "name": "LossAmount3"
     },
     {
-      "name": "LossDescription3",
-      "label": "Description"
+      "label": "Date",
+      "name": "LossDate3"
     },
     {
-      "name": "LossAmount4",
-      "label": "Amount"
+      "label": "Description",
+      "name": "LossDescription3"
     },
     {
-      "name": "LossDate4",
-      "label": "Date"
+      "label": "Amount",
+      "name": "LossAmount4"
     },
     {
-      "name": "LossDescription4",
-      "label": "Description"
+      "label": "Date",
+      "name": "LossDate4"
     },
     {
-      "name": "LossAmount5",
-      "label": "Amount"
+      "label": "Description",
+      "name": "LossDescription4"
     },
     {
-      "name": "LossDate5",
-      "label": "Date"
+      "label": "Amount",
+      "name": "LossAmount5"
     },
     {
-      "name": "LossDescription5",
-      "label": "Description"
+      "label": "Date",
+      "name": "LossDate5"
     },
     {
-      "name": "AdditionalAmountsOfInsurance",
-      "label": "Dwelling Additional Amounts Of Insurance",
+      "label": "Description",
+      "name": "LossDescription5"
+    },
+    {
       "enumerations": [
         {
           "label": "None",
@@ -466,11 +1126,221 @@
           "label": "0.5",
           "value": "5000"
         }
-      ]
+      ],
+      "label": "Dwelling Additional Amounts Of Insurance",
+      "name": "AdditionalAmountsOfInsurance"
     },
     {
-      "name": "AdditionalInsured1AddressState",
+      "enumerations": [
+        {
+          "label": "AK",
+          "value": "AK"
+        },
+        {
+          "label": "AL",
+          "value": "AL"
+        },
+        {
+          "label": "AR",
+          "value": "AR"
+        },
+        {
+          "label": "AZ",
+          "value": "AZ"
+        },
+        {
+          "label": "CA",
+          "value": "CA"
+        },
+        {
+          "label": "CO",
+          "value": "CO"
+        },
+        {
+          "label": "CT",
+          "value": "CT"
+        },
+        {
+          "label": "DC",
+          "value": "DC"
+        },
+        {
+          "label": "DE",
+          "value": "DE"
+        },
+        {
+          "label": "FL",
+          "value": "FL"
+        },
+        {
+          "label": "GA",
+          "value": "GA"
+        },
+        {
+          "label": "HI",
+          "value": "HI"
+        },
+        {
+          "label": "IA",
+          "value": "IA"
+        },
+        {
+          "label": "ID",
+          "value": "ID"
+        },
+        {
+          "label": "IL",
+          "value": "IL"
+        },
+        {
+          "label": "IN",
+          "value": "IN"
+        },
+        {
+          "label": "KS",
+          "value": "KS"
+        },
+        {
+          "label": "KY",
+          "value": "KY"
+        },
+        {
+          "label": "LA",
+          "value": "LA"
+        },
+        {
+          "label": "MA",
+          "value": "MA"
+        },
+        {
+          "label": "MD",
+          "value": "MD"
+        },
+        {
+          "label": "ME",
+          "value": "ME"
+        },
+        {
+          "label": "MI",
+          "value": "MI"
+        },
+        {
+          "label": "MN",
+          "value": "MN"
+        },
+        {
+          "label": "MO",
+          "value": "MO"
+        },
+        {
+          "label": "MS",
+          "value": "MS"
+        },
+        {
+          "label": "MT",
+          "value": "MT"
+        },
+        {
+          "label": "NC",
+          "value": "NC"
+        },
+        {
+          "label": "ND",
+          "value": "ND"
+        },
+        {
+          "label": "NE",
+          "value": "NE"
+        },
+        {
+          "label": "NH",
+          "value": "NH"
+        },
+        {
+          "label": "NJ",
+          "value": "NJ"
+        },
+        {
+          "label": "NM",
+          "value": "NM"
+        },
+        {
+          "label": "NV",
+          "value": "NV"
+        },
+        {
+          "label": "NY",
+          "value": "NY"
+        },
+        {
+          "label": "OH",
+          "value": "OH"
+        },
+        {
+          "label": "OK",
+          "value": "OK"
+        },
+        {
+          "label": "OR",
+          "value": "OR"
+        },
+        {
+          "label": "PA",
+          "value": "PA"
+        },
+        {
+          "label": "RI",
+          "value": "RI"
+        },
+        {
+          "label": "SC",
+          "value": "SC"
+        },
+        {
+          "label": "SD",
+          "value": "SD"
+        },
+        {
+          "label": "TN",
+          "value": "TN"
+        },
+        {
+          "label": "TX",
+          "value": "TX"
+        },
+        {
+          "label": "UT",
+          "value": "UT"
+        },
+        {
+          "label": "VA",
+          "value": "VA"
+        },
+        {
+          "label": "VT",
+          "value": "VT"
+        },
+        {
+          "label": "WA",
+          "value": "WA"
+        },
+        {
+          "label": "WI",
+          "value": "WI"
+        },
+        {
+          "label": "WV",
+          "value": "WV"
+        },
+        {
+          "label": "WY",
+          "value": "WY"
+        }
+      ],
       "label": "Additional Insured 1 Address State",
+      "name": "AdditionalInsured1AddressState"
+    },
+    {
       "enumerations": [
         {
           "label": "AK",
@@ -676,11 +1546,11 @@
           "label": "WY",
           "value": "WY"
         }
-      ]
-    },
-    {
-      "name": "AdditionalInsured2AddressState",
+      ],
       "label": "Additional Insured 2 Address State",
+      "name": "AdditionalInsured2AddressState"
+    },
+    {
       "enumerations": [
         {
           "label": "AK",
@@ -886,251 +1756,41 @@
           "label": "WY",
           "value": "WY"
         }
-      ]
-    },
-    {
-      "name": "AdditionalInsured3AddressState",
+      ],
       "label": "Additional Insured 3 Address State",
-      "enumerations": [
-        {
-          "label": "AK",
-          "value": "AK"
-        },
-        {
-          "label": "AL",
-          "value": "AL"
-        },
-        {
-          "label": "AR",
-          "value": "AR"
-        },
-        {
-          "label": "AZ",
-          "value": "AZ"
-        },
-        {
-          "label": "CA",
-          "value": "CA"
-        },
-        {
-          "label": "CO",
-          "value": "CO"
-        },
-        {
-          "label": "CT",
-          "value": "CT"
-        },
-        {
-          "label": "DC",
-          "value": "DC"
-        },
-        {
-          "label": "DE",
-          "value": "DE"
-        },
-        {
-          "label": "FL",
-          "value": "FL"
-        },
-        {
-          "label": "GA",
-          "value": "GA"
-        },
-        {
-          "label": "HI",
-          "value": "HI"
-        },
-        {
-          "label": "IA",
-          "value": "IA"
-        },
-        {
-          "label": "ID",
-          "value": "ID"
-        },
-        {
-          "label": "IL",
-          "value": "IL"
-        },
-        {
-          "label": "IN",
-          "value": "IN"
-        },
-        {
-          "label": "KS",
-          "value": "KS"
-        },
-        {
-          "label": "KY",
-          "value": "KY"
-        },
-        {
-          "label": "LA",
-          "value": "LA"
-        },
-        {
-          "label": "MA",
-          "value": "MA"
-        },
-        {
-          "label": "MD",
-          "value": "MD"
-        },
-        {
-          "label": "ME",
-          "value": "ME"
-        },
-        {
-          "label": "MI",
-          "value": "MI"
-        },
-        {
-          "label": "MN",
-          "value": "MN"
-        },
-        {
-          "label": "MO",
-          "value": "MO"
-        },
-        {
-          "label": "MS",
-          "value": "MS"
-        },
-        {
-          "label": "MT",
-          "value": "MT"
-        },
-        {
-          "label": "NC",
-          "value": "NC"
-        },
-        {
-          "label": "ND",
-          "value": "ND"
-        },
-        {
-          "label": "NE",
-          "value": "NE"
-        },
-        {
-          "label": "NH",
-          "value": "NH"
-        },
-        {
-          "label": "NJ",
-          "value": "NJ"
-        },
-        {
-          "label": "NM",
-          "value": "NM"
-        },
-        {
-          "label": "NV",
-          "value": "NV"
-        },
-        {
-          "label": "NY",
-          "value": "NY"
-        },
-        {
-          "label": "OH",
-          "value": "OH"
-        },
-        {
-          "label": "OK",
-          "value": "OK"
-        },
-        {
-          "label": "OR",
-          "value": "OR"
-        },
-        {
-          "label": "PA",
-          "value": "PA"
-        },
-        {
-          "label": "RI",
-          "value": "RI"
-        },
-        {
-          "label": "SC",
-          "value": "SC"
-        },
-        {
-          "label": "SD",
-          "value": "SD"
-        },
-        {
-          "label": "TN",
-          "value": "TN"
-        },
-        {
-          "label": "TX",
-          "value": "TX"
-        },
-        {
-          "label": "UT",
-          "value": "UT"
-        },
-        {
-          "label": "VA",
-          "value": "VA"
-        },
-        {
-          "label": "VT",
-          "value": "VT"
-        },
-        {
-          "label": "WA",
-          "value": "WA"
-        },
-        {
-          "label": "WI",
-          "value": "WI"
-        },
-        {
-          "label": "WV",
-          "value": "WV"
-        },
-        {
-          "label": "WY",
-          "value": "WY"
-        }
-      ]
+      "name": "AdditionalInsured3AddressState"
     },
     {
-      "name": "AdditionalInterest1Type",
-      "label": "Type",
       "enumerations": [
         {
           "label": "Other",
           "value": "999"
         }
-      ]
+      ],
+      "label": "Type",
+      "name": "AdditionalInterest1Type"
     },
     {
-      "name": "AdditionalInterest2Type",
-      "label": "Type",
       "enumerations": [
         {
           "label": "Other",
           "value": "999"
         }
-      ]
+      ],
+      "label": "Type",
+      "name": "AdditionalInterest2Type"
     },
     {
-      "name": "AdditionalInterest3Type",
-      "label": "Type",
       "enumerations": [
         {
           "label": "Other",
           "value": "999"
         }
-      ]
+      ],
+      "label": "Type",
+      "name": "AdditionalInterest3Type"
     },
     {
-      "name": "AllOtherPerilsDeductible",
-      "label": "All Other Perils Deductible",
       "enumerations": [
         {
           "label": "$500",
@@ -1168,11 +1828,25 @@
           "label": "$10,000",
           "value": "101"
         }
-      ]
+      ],
+      "label": "All Other Perils Deductible",
+      "name": "AllOtherPerilsDeductible"
     },
     {
-      "name": "AllWeatherAccess",
+      "enumerations": [
+        {
+          "label": "Yes",
+          "value": "100"
+        },
+        {
+          "label": "No",
+          "value": "200"
+        }
+      ],
       "label": "Accessible In All Weather?",
+      "name": "AllWeatherAccess"
+    },
+    {
       "enumerations": [
         {
           "label": "Yes",
@@ -1182,25 +1856,11 @@
           "label": "No",
           "value": "200"
         }
-      ]
-    },
-    {
-      "name": "AnimalLiability",
+      ],
       "label": "Limited Dog Liability",
-      "enumerations": [
-        {
-          "label": "Yes",
-          "value": "100"
-        },
-        {
-          "label": "No",
-          "value": "200"
-        }
-      ]
+      "name": "AnimalLiability"
     },
     {
-      "name": "Basement",
-      "label": "Basement Type",
       "enumerations": [
         {
           "label": "Daylight walkout",
@@ -1210,11 +1870,11 @@
           "label": "Blow the grade",
           "value": "500"
         }
-      ]
+      ],
+      "label": "Basement Type",
+      "name": "Basement"
     },
     {
-      "name": "BasementPercentComplete",
-      "label": "Basement Percentage Finished",
       "enumerations": [
         {
           "label": "0%",
@@ -1260,11 +1920,11 @@
           "label": "100%",
           "value": "10000"
         }
-      ]
+      ],
+      "label": "Basement Percentage Finished",
+      "name": "BasementPercentComplete"
     },
     {
-      "name": "BurglarAlarm",
-      "label": "Burglar Alarm",
       "enumerations": [
         {
           "label": "None",
@@ -1278,11 +1938,11 @@
           "label": "Central",
           "value": "4"
         }
-      ]
+      ],
+      "label": "Burglar Alarm",
+      "name": "BurglarAlarm"
     },
     {
-      "name": "CentralAir",
-      "label": "Central Air Conditioning?",
       "enumerations": [
         {
           "label": "Yes",
@@ -1292,11 +1952,11 @@
           "label": "No",
           "value": "200"
         }
-      ]
+      ],
+      "label": "Central Air Conditioning?",
+      "name": "CentralAir"
     },
     {
-      "name": "Cladding",
-      "label": "Cladding",
       "enumerations": [
         {
           "label": "Unknown or Other",
@@ -1318,11 +1978,11 @@
           "label": "Vinyl/Aluminum Siding",
           "value": "900"
         }
-      ]
+      ],
+      "label": "Cladding",
+      "name": "Cladding"
     },
     {
-      "name": "ClientTraffic",
-      "label": "Any employees, client traffic or products on the premises?",
       "enumerations": [
         {
           "label": "Yes",
@@ -1332,11 +1992,11 @@
           "label": "No",
           "value": "200"
         }
-      ]
+      ],
+      "label": "Any employees, client traffic or products on the premises?",
+      "name": "ClientTraffic"
     },
     {
-      "name": "ConstructionType",
-      "label": "Construction Type",
       "enumerations": [
         {
           "label": "Frame",
@@ -1350,11 +2010,11 @@
           "label": "Masonry",
           "value": "200"
         }
-      ]
+      ],
+      "label": "Construction Type",
+      "name": "ConstructionType"
     },
     {
-      "name": "CoverageE",
-      "label": "Coverage E",
       "enumerations": [
         {
           "label": "$100,000",
@@ -1372,11 +2032,11 @@
           "label": "$500,000",
           "value": "500000"
         }
-      ]
+      ],
+      "label": "Coverage E",
+      "name": "CoverageE"
     },
     {
-      "name": "CoverageF",
-      "label": "Coverage F",
       "enumerations": [
         {
           "label": "$1,000",
@@ -1390,11 +2050,11 @@
           "label": "$5,000",
           "value": "5000"
         }
-      ]
+      ],
+      "label": "Coverage F",
+      "name": "CoverageF"
     },
     {
-      "name": "CreditCardFraudCoverage",
-      "label": "Credit Card Fraud Coverage",
       "enumerations": [
         {
           "label": "$500",
@@ -1416,11 +2076,11 @@
           "label": "$10,000",
           "value": "10000"
         }
-      ]
+      ],
+      "label": "Credit Card Fraud Coverage",
+      "name": "CreditCardFraudCoverage"
     },
     {
-      "name": "CurrencySpecialLimits",
-      "label": "Money",
       "enumerations": [
         {
           "label": "$200 - Included",
@@ -1458,11 +2118,11 @@
           "label": "$1,000",
           "value": "1000"
         }
-      ]
+      ],
+      "label": "Money",
+      "name": "CurrencySpecialLimits"
     },
     {
-      "name": "DistanceFireStation",
-      "label": "Miles to Primary Responding Fire Station",
       "enumerations": [
         {
           "label": "Up to 5",
@@ -1472,11 +2132,11 @@
           "label": "Over 5",
           "value": "10"
         }
-      ]
+      ],
+      "label": "Miles to Primary Responding Fire Station",
+      "name": "DistanceFireStation"
     },
     {
-      "name": "DistanceFireHydrant",
-      "label": "Distance (in feet) To Nearest Fire Hydrant",
       "enumerations": [
         {
           "label": "Up to 1000",
@@ -1486,11 +2146,25 @@
           "label": "Over 1000",
           "value": "2000"
         }
-      ]
+      ],
+      "label": "Distance (in feet) To Nearest Fire Hydrant",
+      "name": "DistanceFireHydrant"
     },
     {
-      "name": "DivingBoardSlide",
+      "enumerations": [
+        {
+          "label": "Yes",
+          "value": "100"
+        },
+        {
+          "label": "No",
+          "value": "200"
+        }
+      ],
       "label": "Is there a Diving Board or Slide?",
+      "name": "DivingBoardSlide"
+    },
+    {
       "enumerations": [
         {
           "label": "Yes",
@@ -1500,25 +2174,11 @@
           "label": "No",
           "value": "200"
         }
-      ]
-    },
-    {
-      "name": "Dogs",
+      ],
       "label": "Do you own an ineligible dog breed?",
-      "enumerations": [
-        {
-          "label": "Yes",
-          "value": "100"
-        },
-        {
-          "label": "No",
-          "value": "200"
-        }
-      ]
+      "name": "Dogs"
     },
     {
-      "name": "ElectronicsSpecialLimits",
-      "label": "Electronic in a Motor Vehicle",
       "enumerations": [
         {
           "label": "$1,500 - Included",
@@ -1560,11 +2220,11 @@
           "label": "$6,000",
           "value": "$6,000"
         }
-      ]
+      ],
+      "label": "Electronic in a Motor Vehicle",
+      "name": "ElectronicsSpecialLimits"
     },
     {
-      "name": "FireAlarm",
-      "label": "Fire Alarm",
       "enumerations": [
         {
           "label": "None",
@@ -1578,11 +2238,11 @@
           "label": "Central",
           "value": "4"
         }
-      ]
+      ],
+      "label": "Fire Alarm",
+      "name": "FireAlarm"
     },
     {
-      "name": "FirearmsSpecialLimits",
-      "label": "Firearms For Loss Of Theft",
       "enumerations": [
         {
           "label": "$2,500-Included",
@@ -1748,11 +2408,11 @@
           "label": "$6,500",
           "value": "6500"
         }
-      ]
+      ],
+      "label": "Firearms For Loss Of Theft",
+      "name": "FirearmsSpecialLimits"
     },
     {
-      "name": "FoundationBasementPercentage",
-      "label": "% Basement Percentage",
       "enumerations": [
         {
           "label": "10%",
@@ -1790,11 +2450,11 @@
           "label": "90%",
           "value": "9000"
         }
-      ]
+      ],
+      "label": "% Basement Percentage",
+      "name": "FoundationBasementPercentage"
     },
     {
-      "name": "FoundationType",
-      "label": "Foundation Type",
       "enumerations": [
         {
           "label": "Slab",
@@ -1820,11 +2480,11 @@
           "label": "Enclosed - crawl space",
           "value": "205"
         }
-      ]
+      ],
+      "label": "Foundation Type",
+      "name": "FoundationType"
     },
     {
-      "name": "FullBathQuality",
-      "label": "Full Bathroom Grade",
       "enumerations": [
         {
           "label": "Basic",
@@ -1846,11 +2506,11 @@
           "label": "Designer",
           "value": "400"
         }
-      ]
+      ],
+      "label": "Full Bathroom Grade",
+      "name": "FullBathQuality"
     },
     {
-      "name": "FunctionalReplacementCost",
-      "label": "Functional Replacement Cost For Dwelling",
       "enumerations": [
         {
           "label": "Yes",
@@ -1860,11 +2520,11 @@
           "label": "No",
           "value": "200"
         }
-      ]
+      ],
+      "label": "Functional Replacement Cost For Dwelling",
+      "name": "FunctionalReplacementCost"
     },
     {
-      "name": "GarageType",
-      "label": "Type Of Garage Or Carport",
       "enumerations": [
         {
           "label": "No Garage or Carport",
@@ -1930,11 +2590,11 @@
           "label": "Carport - 3 Car",
           "value": "10130"
         }
-      ]
+      ],
+      "label": "Type Of Garage Or Carport",
+      "name": "GarageType"
     },
     {
-      "name": "GoldSpecialLimits",
-      "label": "Silver, Gold, or Pewter",
       "enumerations": [
         {
           "label": "$,2,500 - Included",
@@ -2000,11 +2660,11 @@
           "label": "$10,000",
           "value": "10000"
         }
-      ]
+      ],
+      "label": "Silver, Gold, or Pewter",
+      "name": "GoldSpecialLimits"
     },
     {
-      "name": "HalfBathQuality",
-      "label": "Half Bathroom Grade",
       "enumerations": [
         {
           "label": "Basic",
@@ -2026,186 +2686,36 @@
           "label": "Designer",
           "value": "400"
         }
-      ]
+      ],
+      "label": "Half Bathroom Grade",
+      "name": "HalfBathQuality"
     },
     {
-      "name": "HomeFeatures1",
-      "label": "1st Additional Home Feature",
       "enumerations": [
         {
-          "label": "None",
-          "value": "0"
+          "label": "Contemporary",
+          "value": "900"
         },
         {
-          "label": "Open porch, small",
-          "value": "110"
+          "label": "1 story",
+          "value": "1100"
         },
         {
-          "label": "Open porch, medium",
-          "value": "120"
+          "label": "1.5 stories",
+          "value": "1150"
         },
         {
-          "label": "Open porch, large",
-          "value": "130"
+          "label": "2 stories",
+          "value": "1200"
         },
         {
-          "label": "Screened porch, small",
-          "value": "210"
+          "label": "2.5 stories",
+          "value": "1250"
         },
         {
-          "label": "Screened porch, medium",
-          "value": "220"
+          "label": "3 stories",
+          "value": "1300"
         },
-        {
-          "label": "Screened porch, large",
-          "value": "230"
-        },
-        {
-          "label": "Deck, small",
-          "value": "710"
-        },
-        {
-          "label": "Deck, medium",
-          "value": "720"
-        },
-        {
-          "label": "Deck, large",
-          "value": "730"
-        },
-        {
-          "label": "Open breezeway",
-          "value": "300"
-        },
-        {
-          "label": "Screened breezeway",
-          "value": "400"
-        },
-        {
-          "label": "Greenhouse",
-          "value": "500"
-        }
-      ]
-    },
-    {
-      "name": "HomeFeatures2",
-      "label": "2nd Additional Home Feature",
-      "enumerations": [
-        {
-          "label": "None",
-          "value": "0"
-        },
-        {
-          "label": "Open porch, small",
-          "value": "110"
-        },
-        {
-          "label": "Open porch, medium",
-          "value": "120"
-        },
-        {
-          "label": "Open porch, large",
-          "value": "130"
-        },
-        {
-          "label": "Screened porch, small",
-          "value": "210"
-        },
-        {
-          "label": "Screened porch, medium",
-          "value": "220"
-        },
-        {
-          "label": "Screened porch, large",
-          "value": "230"
-        },
-        {
-          "label": "Deck, small",
-          "value": "710"
-        },
-        {
-          "label": "Deck, medium",
-          "value": "720"
-        },
-        {
-          "label": "Deck, large",
-          "value": "730"
-        },
-        {
-          "label": "Open breezeway",
-          "value": "300"
-        },
-        {
-          "label": "Screened breezeway",
-          "value": "400"
-        },
-        {
-          "label": "Greenhouse",
-          "value": "500"
-        }
-      ]
-    },
-    {
-      "name": "HomeFeatures3",
-      "label": "3rd Additional Home Feature",
-      "enumerations": [
-        {
-          "label": "None",
-          "value": "0"
-        },
-        {
-          "label": "Open porch, small",
-          "value": "110"
-        },
-        {
-          "label": "Open porch, medium",
-          "value": "120"
-        },
-        {
-          "label": "Open porch, large",
-          "value": "130"
-        },
-        {
-          "label": "Screened porch, small",
-          "value": "210"
-        },
-        {
-          "label": "Screened porch, medium",
-          "value": "220"
-        },
-        {
-          "label": "Screened porch, large",
-          "value": "230"
-        },
-        {
-          "label": "Deck, small",
-          "value": "710"
-        },
-        {
-          "label": "Deck, medium",
-          "value": "720"
-        },
-        {
-          "label": "Deck, large",
-          "value": "730"
-        },
-        {
-          "label": "Open breezeway",
-          "value": "300"
-        },
-        {
-          "label": "Screened breezeway",
-          "value": "400"
-        },
-        {
-          "label": "Greenhouse",
-          "value": "500"
-        }
-      ]
-    },
-    {
-      "name": "HomeStyle",
-      "label": "Home Style",
-      "enumerations": [
         {
           "label": "BiLevel/split",
           "value": "100"
@@ -2246,11 +2756,11 @@
           "label": "Townhouse - Interior Unit",
           "value": "602"
         }
-      ]
+      ],
+      "label": "Home Style",
+      "name": "HomeStyle"
     },
     {
-      "name": "IdentityFraudCoverage",
-      "label": "Identity Fraud Expense Coverage",
       "enumerations": [
         {
           "label": "$0 - Excluded",
@@ -2260,11 +2770,25 @@
           "label": "$25,000",
           "value": "25000"
         }
-      ]
+      ],
+      "label": "Identity Fraud Expense Coverage",
+      "name": "IdentityFraudCoverage"
     },
     {
-      "name": "ImmovablePoolLadder",
+      "enumerations": [
+        {
+          "label": "Yes",
+          "value": "100"
+        },
+        {
+          "label": "No",
+          "value": "200"
+        }
+      ],
       "label": "Is There An Immovable Ladder Present?",
+      "name": "ImmovablePoolLadder"
+    },
+    {
       "enumerations": [
         {
           "label": "Yes",
@@ -2274,25 +2798,11 @@
           "label": "No",
           "value": "200"
         }
-      ]
+      ],
+      "label": "Permitted Incidental Occupancies   Residence Premises ",
+      "name": "IncidentalBusinessOccupancy"
     },
     {
-      "name": "IncidentalBusinessOccupancy",
-      "label": "Permitted Incidental Occupancies – Residence Premises ",
-      "enumerations": [
-        {
-          "label": "Yes",
-          "value": "100"
-        },
-        {
-          "label": "No",
-          "value": "200"
-        }
-      ]
-    },
-    {
-      "name": "IncreasedOrdinanceLimit",
-      "label": "Increased Law/Ordinance Limit",
       "enumerations": [
         {
           "label": "0% - Excluded",
@@ -2314,11 +2824,11 @@
           "label": "100%",
           "value": "10000"
         }
-      ]
+      ],
+      "label": "Increased Law/Ordinance Limit",
+      "name": "IncreasedOrdinanceLimit"
     },
     {
-      "name": "InsuredMailingAddressState",
-      "label": "Insured Mailing Address State",
       "enumerations": [
         {
           "label": "AK",
@@ -2524,11 +3034,11 @@
           "label": "WY",
           "value": "WY"
         }
-      ]
+      ],
+      "label": "Insured Mailing Address State",
+      "name": "InsuredMailingAddressState"
     },
     {
-      "name": "JewelrySpecialLimits",
-      "label": "Jewelry and Furs",
       "enumerations": [
         {
           "label": "$1,500 - Included",
@@ -2574,11 +3084,11 @@
           "label": "$6,500",
           "value": "6500"
         }
-      ]
+      ],
+      "label": "Jewelry and Furs",
+      "name": "JewelrySpecialLimits"
     },
     {
-      "name": "KeroseneHeater",
-      "label": "Is there a kerosene or electric space heater?",
       "enumerations": [
         {
           "label": "Yes",
@@ -2588,11 +3098,11 @@
           "label": "No",
           "value": "200"
         }
-      ]
+      ],
+      "label": "Is there a kerosene or electric space heater?",
+      "name": "KeroseneHeater"
     },
     {
-      "name": "KeroseneHeaterAge",
-      "label": "Age of the heater",
       "enumerations": [
         {
           "label": "1",
@@ -2654,11 +3164,11 @@
           "label": "15 or more",
           "value": "15"
         }
-      ]
+      ],
+      "label": "Age of the heater",
+      "name": "KeroseneHeaterAge"
     },
     {
-      "name": "KeroseneHeaterSupplementalHeatOnly",
-      "label": "Supplemental heat source only?",
       "enumerations": [
         {
           "label": "Yes",
@@ -2668,11 +3178,11 @@
           "label": "No",
           "value": "200"
         }
-      ]
+      ],
+      "label": "Supplemental heat source only?",
+      "name": "KeroseneHeaterSupplementalHeatOnly"
     },
     {
-      "name": "KitchenQuality",
-      "label": "Kitchen Grade",
       "enumerations": [
         {
           "label": "Basic",
@@ -2694,11 +3204,11 @@
           "label": "Designer",
           "value": "400"
         }
-      ]
+      ],
+      "label": "Kitchen Grade",
+      "name": "KitchenQuality"
     },
     {
-      "name": "LossAssessmentCoverage",
-      "label": "Loss Assessment Coverage",
       "enumerations": [
         {
           "label": "$1,000 - Included",
@@ -2716,11 +3226,11 @@
           "label": "$10,000",
           "value": "10000"
         }
-      ]
+      ],
+      "label": "Loss Assessment Coverage",
+      "name": "LossAssessmentCoverage"
     },
     {
-      "name": "LossCatIndicator1",
-      "label": "Cat Indicator",
       "enumerations": [
         {
           "label": "Yes",
@@ -2730,11 +3240,11 @@
           "label": "No",
           "value": "200"
         }
-      ]
+      ],
+      "label": "Cat Indicator",
+      "name": "LossCatIndicator1"
     },
     {
-      "name": "LossCatIndicator2",
-      "label": "Cat Indicator",
       "enumerations": [
         {
           "label": "Yes",
@@ -2744,11 +3254,11 @@
           "label": "No",
           "value": "200"
         }
-      ]
+      ],
+      "label": "Cat Indicator",
+      "name": "LossCatIndicator2"
     },
     {
-      "name": "LossCatIndicator3",
-      "label": "Cat Indicator",
       "enumerations": [
         {
           "label": "Yes",
@@ -2758,11 +3268,11 @@
           "label": "No",
           "value": "200"
         }
-      ]
+      ],
+      "label": "Cat Indicator",
+      "name": "LossCatIndicator3"
     },
     {
-      "name": "LossCatIndicator4",
-      "label": "Cat Indicator",
       "enumerations": [
         {
           "label": "Yes",
@@ -2772,11 +3282,11 @@
           "label": "No",
           "value": "200"
         }
-      ]
+      ],
+      "label": "Cat Indicator",
+      "name": "LossCatIndicator4"
     },
     {
-      "name": "LossCatIndicator5",
-      "label": "Cat Indicator",
       "enumerations": [
         {
           "label": "Yes",
@@ -2786,11 +3296,11 @@
           "label": "No",
           "value": "200"
         }
-      ]
+      ],
+      "label": "Cat Indicator",
+      "name": "LossCatIndicator5"
     },
     {
-      "name": "LossType1",
-      "label": "Type",
       "enumerations": [
         {
           "label": "Dog bite",
@@ -2856,11 +3366,11 @@
           "label": "Other",
           "value": "700"
         }
-      ]
+      ],
+      "label": "Type",
+      "name": "LossType1"
     },
     {
-      "name": "LossType2",
-      "label": "Type",
       "enumerations": [
         {
           "label": "Dog bite",
@@ -2926,11 +3436,11 @@
           "label": "Other",
           "value": "700"
         }
-      ]
+      ],
+      "label": "Type",
+      "name": "LossType2"
     },
     {
-      "name": "LossType3",
-      "label": "Type",
       "enumerations": [
         {
           "label": "Dog bite",
@@ -2996,11 +3506,11 @@
           "label": "Other",
           "value": "700"
         }
-      ]
+      ],
+      "label": "Type",
+      "name": "LossType3"
     },
     {
-      "name": "LossType4",
-      "label": "Type",
       "enumerations": [
         {
           "label": "Dog bite",
@@ -3066,11 +3576,11 @@
           "label": "Other",
           "value": "700"
         }
-      ]
+      ],
+      "label": "Type",
+      "name": "LossType4"
     },
     {
-      "name": "LossType5",
-      "label": "Type",
       "enumerations": [
         {
           "label": "Dog bite",
@@ -3136,11 +3646,11 @@
           "label": "Other",
           "value": "700"
         }
-      ]
+      ],
+      "label": "Type",
+      "name": "LossType5"
     },
     {
-      "name": "MasonryVeneerPercentage",
-      "label": "Masonry Veneer %",
       "enumerations": [
         {
           "label": "0 - 9%",
@@ -3158,11 +3668,25 @@
           "label": "67% or Greater",
           "value": "6700"
         }
-      ]
+      ],
+      "label": "Masonry Veneer %",
+      "name": "MasonryVeneerPercentage"
     },
     {
-      "name": "MechanicalBreakdownCoverage",
+      "enumerations": [
+        {
+          "label": "Yes",
+          "value": "100"
+        },
+        {
+          "label": "No",
+          "value": "200"
+        }
+      ],
       "label": "Mechanical Breakdown Coverage",
+      "name": "MechanicalBreakdownCoverage"
+    },
+    {
       "enumerations": [
         {
           "label": "Yes",
@@ -3172,25 +3696,11 @@
           "label": "No",
           "value": "200"
         }
-      ]
-    },
-    {
-      "name": "MetalOtherStructures",
+      ],
       "label": "Any other structure over 750 sq ft constructed of metal?",
-      "enumerations": [
-        {
-          "label": "Yes",
-          "value": "100"
-        },
-        {
-          "label": "No",
-          "value": "200"
-        }
-      ]
+      "name": "MetalOtherStructures"
     },
     {
-      "name": "MonthsRented",
-      "label": "Number of Months Rented or Held for Rental",
       "enumerations": [
         {
           "label": "Not a Rental",
@@ -3204,11 +3714,11 @@
           "label": "6 months or more",
           "value": "6"
         }
-      ]
+      ],
+      "label": "Number of Months Rented or Held for Rental",
+      "name": "MonthsRented"
     },
     {
-      "name": "MonthsUnoccupied",
-      "label": "Number Of Months Unoccupied?",
       "enumerations": [
         {
           "label": "Less than a 3 months",
@@ -3218,11 +3728,25 @@
           "label": "3 months or more",
           "value": "3"
         }
-      ]
+      ],
+      "label": "Number Of Months Unoccupied?",
+      "name": "MonthsUnoccupied"
     },
     {
-      "name": "MultiLayeredRoofing",
+      "enumerations": [
+        {
+          "label": "Yes",
+          "value": "100"
+        },
+        {
+          "label": "No",
+          "value": "200"
+        }
+      ],
       "label": "More than two layers of shingles or roof materials?",
+      "name": "MultiLayeredRoofing"
+    },
+    {
       "enumerations": [
         {
           "label": "Yes",
@@ -3232,25 +3756,11 @@
           "label": "No",
           "value": "200"
         }
-      ]
-    },
-    {
-      "name": "MultiPolicy",
+      ],
       "label": "Auto Policy written through your company?",
-      "enumerations": [
-        {
-          "label": "Yes",
-          "value": "100"
-        },
-        {
-          "label": "No",
-          "value": "200"
-        }
-      ]
+      "name": "MultiPolicy"
     },
     {
-      "name": "NumberOfClaims",
-      "label": "Number Of Claims In Last 6 Years",
       "enumerations": [
         {
           "label": "None",
@@ -3276,16 +3786,38 @@
           "label": "5",
           "value": "5"
         }
-      ]
+      ],
+      "label": "Number Of Claims In Last 6 Years",
+      "name": "NumberOfClaims"
     },
     {
-      "name": "NumberOfFireplaces",
+      "enumerations": [
+        {
+          "label": "0",
+          "value": "0"
+        },
+        {
+          "label": "1",
+          "value": "1"
+        },
+        {
+          "label": "2",
+          "value": "2"
+        },
+        {
+          "label": "3",
+          "value": "3"
+        },
+        {
+          "label": "4",
+          "value": "4"
+        }
+      ],
       "label": "Number Of Fireplaces",
+      "name": "NumberOfFireplaces"
+    },
+    {
       "enumerations": [
-        {
-          "label": "0",
-          "value": "0"
-        },
         {
           "label": "1",
           "value": "1"
@@ -3301,38 +3833,16 @@
         {
           "label": "4",
           "value": "4"
+        },
+        {
+          "label": "5",
+          "value": "5"
         }
-      ]
-    },
-    {
-      "name": "NumberOfFullBaths",
+      ],
       "label": "Number Of Full Bathrooms",
-      "enumerations": [
-        {
-          "label": "1",
-          "value": "1"
-        },
-        {
-          "label": "2",
-          "value": "2"
-        },
-        {
-          "label": "3",
-          "value": "3"
-        },
-        {
-          "label": "4",
-          "value": "4"
-        },
-        {
-          "label": "5",
-          "value": "5"
-        }
-      ]
+      "name": "NumberOfFullBaths"
     },
     {
-      "name": "NumberOfHalfBaths",
-      "label": "Number Of Half Bathrooms",
       "enumerations": [
         {
           "label": "0",
@@ -3358,11 +3868,11 @@
           "label": "5",
           "value": "5"
         }
-      ]
+      ],
+      "label": "Number Of Half Bathrooms",
+      "name": "NumberOfHalfBaths"
     },
     {
-      "name": "NumberOfKitchens",
-      "label": "Number Of Kitchens",
       "enumerations": [
         {
           "label": "1",
@@ -3380,11 +3890,11 @@
           "label": "4",
           "value": "4"
         }
-      ]
+      ],
+      "label": "Number Of Kitchens",
+      "name": "NumberOfKitchens"
     },
     {
-      "name": "NumberOfStories",
-      "label": "Number Of Stories",
       "enumerations": [
         {
           "label": "1",
@@ -3430,11 +3940,11 @@
           "label": "15 or more",
           "value": "1500"
         }
-      ]
+      ],
+      "label": "Number Of Stories",
+      "name": "NumberOfStories"
     },
     {
-      "name": "OpeningProtectionType",
-      "label": "Opening Protection Type",
       "enumerations": [
         {
           "label": "Unknown",
@@ -3452,11 +3962,11 @@
           "label": "Hurricane resistant laminated glass",
           "value": "702"
         }
-      ]
+      ],
+      "label": "Opening Protection Type",
+      "name": "OpeningProtectionType"
     },
     {
-      "name": "OptionCoverageB",
-      "label": "Coverage B (% Of Coverage A)",
       "enumerations": [
         {
           "label": "5%",
@@ -3466,11 +3976,11 @@
           "label": "10%",
           "value": "1000"
         }
-      ]
+      ],
+      "label": "Coverage B (% Of Coverage A)",
+      "name": "OptionCoverageB"
     },
     {
-      "name": "OptionCoverageC",
-      "label": "Coverage C (% Of Coverage A)",
       "enumerations": [
         {
           "label": "25%",
@@ -3536,21 +4046,35 @@
           "label": "100%",
           "value": "10000"
         }
-      ]
+      ],
+      "label": "Coverage C (% Of Coverage A)",
+      "name": "OptionCoverageC"
     },
     {
-      "name": "OptionCoverageD",
-      "label": "Coverage D (% of Coverage A)",
       "enumerations": [
         {
           "label": "20%",
           "value": "2000"
         }
-      ]
+      ],
+      "label": "Coverage D (% of Coverage A)",
+      "name": "OptionCoverageD"
     },
     {
-      "name": "PatchedRoof",
+      "enumerations": [
+        {
+          "label": "Yes",
+          "value": "100"
+        },
+        {
+          "label": "No",
+          "value": "200"
+        }
+      ],
       "label": "Has roof been patched (since last full replacement/restoration)?",
+      "name": "PatchedRoof"
+    },
+    {
       "enumerations": [
         {
           "label": "Yes",
@@ -3560,11 +4084,11 @@
           "label": "No",
           "value": "200"
         }
-      ]
-    },
-    {
-      "name": "PersonalInjuryCoverage",
+      ],
       "label": "Personal Injury",
+      "name": "PersonalInjuryCoverage"
+    },
+    {
       "enumerations": [
         {
           "label": "Yes",
@@ -3574,11 +4098,11 @@
           "label": "No",
           "value": "200"
         }
-      ]
-    },
-    {
-      "name": "PersonalPropertyReplacementCost",
+      ],
       "label": "Personal Property Replacement Cost",
+      "name": "PersonalPropertyReplacementCost"
+    },
+    {
       "enumerations": [
         {
           "label": "Yes",
@@ -3588,25 +4112,11 @@
           "label": "No",
           "value": "200"
         }
-      ]
-    },
-    {
-      "name": "PoolFence",
+      ],
       "label": "Is The Property Around Pool Fenced Or Screened?",
-      "enumerations": [
-        {
-          "label": "Yes",
-          "value": "100"
-        },
-        {
-          "label": "No",
-          "value": "200"
-        }
-      ]
+      "name": "PoolFence"
     },
     {
-      "name": "PoolType",
-      "label": "Swimming Pool On Property?",
       "enumerations": [
         {
           "label": "No pool",
@@ -3620,11 +4130,11 @@
           "label": "Above ground",
           "value": "200"
         }
-      ]
+      ],
+      "label": "Swimming Pool On Property?",
+      "name": "PoolType"
     },
     {
-      "name": "PrimeTimeDiscount",
-      "label": "Prime Time Discount",
       "enumerations": [
         {
           "label": "Yes",
@@ -3634,11 +4144,11 @@
           "label": "No",
           "value": "200"
         }
-      ]
+      ],
+      "label": "Prime Time Discount",
+      "name": "PrimeTimeDiscount"
     },
     {
-      "name": "PropertyHazardLocation",
-      "label": "Property Hazard Location",
       "enumerations": [
         {
           "label": "Extreme",
@@ -3660,11 +4170,11 @@
           "label": "Low",
           "value": "Low"
         }
-      ]
+      ],
+      "label": "Property Hazard Location",
+      "name": "PropertyHazardLocation"
     },
     {
-      "name": "PropertyOccupancy",
-      "label": "Property Occupancy",
       "enumerations": [
         {
           "label": "Owner",
@@ -3674,11 +4184,11 @@
           "label": "Tenant",
           "value": "200"
         }
-      ]
+      ],
+      "label": "Property Occupancy",
+      "name": "PropertyOccupancy"
     },
     {
-      "name": "PropertyUsage",
-      "label": "Property Usage",
       "enumerations": [
         {
           "label": "Primary",
@@ -3692,11 +4202,11 @@
           "label": "Seasonal",
           "value": "300"
         }
-      ]
+      ],
+      "label": "Property Usage",
+      "name": "PropertyUsage"
     },
     {
-      "name": "ProtectionClass",
-      "label": "Protection Class",
       "enumerations": [
         {
           "label": "1",
@@ -3742,11 +4252,11 @@
           "label": "10",
           "value": "10"
         }
-      ]
+      ],
+      "label": "Protection Class",
+      "name": "ProtectionClass"
     },
     {
-      "name": "ResidenceEmployees",
-      "label": "More than 2 residence employees?",
       "enumerations": [
         {
           "label": "Yes",
@@ -3756,11 +4266,11 @@
           "label": "No",
           "value": "200"
         }
-      ]
+      ],
+      "label": "More than 2 residence employees?",
+      "name": "ResidenceEmployees"
     },
     {
-      "name": "RoofCoveringType",
-      "label": "Roof Covering Material",
       "enumerations": [
         {
           "label": "Unknown",
@@ -3810,11 +4320,11 @@
           "label": "Metal - Steel",
           "value": "200"
         }
-      ]
+      ],
+      "label": "Roof Covering Material",
+      "name": "RoofCoveringType"
     },
     {
-      "name": "RoofGeometryType",
-      "label": "Roof Geometry Type",
       "enumerations": [
         {
           "label": "Unknown",
@@ -3832,11 +4342,11 @@
           "label": "Hip",
           "value": "300"
         }
-      ]
+      ],
+      "label": "Roof Geometry Type",
+      "name": "RoofGeometryType"
     },
     {
-      "name": "ScheduledPersonalProperty10LossSettlement",
-      "label": "Loss Settlement",
       "enumerations": [
         {
           "label": "Standard",
@@ -3846,11 +4356,11 @@
           "label": "Agreed",
           "value": "200"
         }
-      ]
+      ],
+      "label": "Loss Settlement",
+      "name": "ScheduledPersonalProperty10LossSettlement"
     },
     {
-      "name": "ScheduledPersonalProperty10Type",
-      "label": "Type",
       "enumerations": [
         {
           "label": "Cameras",
@@ -3888,11 +4398,11 @@
           "label": "Stamps",
           "value": "1000"
         }
-      ]
+      ],
+      "label": "Type",
+      "name": "ScheduledPersonalProperty10Type"
     },
     {
-      "name": "ScheduledPersonalProperty1LossSettlement",
-      "label": "Loss Settlement",
       "enumerations": [
         {
           "label": "Standard",
@@ -3902,11 +4412,11 @@
           "label": "Agreed",
           "value": "200"
         }
-      ]
+      ],
+      "label": "Loss Settlement",
+      "name": "ScheduledPersonalProperty1LossSettlement"
     },
     {
-      "name": "ScheduledPersonalProperty1Type",
-      "label": "Type",
       "enumerations": [
         {
           "label": "Cameras",
@@ -3944,11 +4454,11 @@
           "label": "Stamps",
           "value": "1000"
         }
-      ]
+      ],
+      "label": "Type",
+      "name": "ScheduledPersonalProperty1Type"
     },
     {
-      "name": "ScheduledPersonalProperty2LossSettlement",
-      "label": "Loss Settlement",
       "enumerations": [
         {
           "label": "Standard",
@@ -3958,11 +4468,11 @@
           "label": "Agreed",
           "value": "200"
         }
-      ]
+      ],
+      "label": "Loss Settlement",
+      "name": "ScheduledPersonalProperty2LossSettlement"
     },
     {
-      "name": "ScheduledPersonalProperty2Type",
-      "label": "Type",
       "enumerations": [
         {
           "label": "Cameras",
@@ -4000,11 +4510,11 @@
           "label": "Stamps",
           "value": "1000"
         }
-      ]
+      ],
+      "label": "Type",
+      "name": "ScheduledPersonalProperty2Type"
     },
     {
-      "name": "ScheduledPersonalProperty3LossSettlement",
-      "label": "Loss Settlement",
       "enumerations": [
         {
           "label": "Standard",
@@ -4014,11 +4524,11 @@
           "label": "Agreed",
           "value": "200"
         }
-      ]
+      ],
+      "label": "Loss Settlement",
+      "name": "ScheduledPersonalProperty3LossSettlement"
     },
     {
-      "name": "ScheduledPersonalProperty3Type",
-      "label": "Type",
       "enumerations": [
         {
           "label": "Cameras",
@@ -4056,11 +4566,11 @@
           "label": "Stamps",
           "value": "1000"
         }
-      ]
+      ],
+      "label": "Type",
+      "name": "ScheduledPersonalProperty3Type"
     },
     {
-      "name": "ScheduledPersonalProperty4LossSettlement",
-      "label": "Loss Settlement",
       "enumerations": [
         {
           "label": "Standard",
@@ -4070,11 +4580,11 @@
           "label": "Agreed",
           "value": "200"
         }
-      ]
+      ],
+      "label": "Loss Settlement",
+      "name": "ScheduledPersonalProperty4LossSettlement"
     },
     {
-      "name": "ScheduledPersonalProperty4Type",
-      "label": "Type",
       "enumerations": [
         {
           "label": "Cameras",
@@ -4112,11 +4622,11 @@
           "label": "Stamps",
           "value": "1000"
         }
-      ]
+      ],
+      "label": "Type",
+      "name": "ScheduledPersonalProperty4Type"
     },
     {
-      "name": "ScheduledPersonalProperty5LossSettlement",
-      "label": "Loss Settlement",
       "enumerations": [
         {
           "label": "Standard",
@@ -4126,11 +4636,11 @@
           "label": "Agreed",
           "value": "200"
         }
-      ]
+      ],
+      "label": "Loss Settlement",
+      "name": "ScheduledPersonalProperty5LossSettlement"
     },
     {
-      "name": "ScheduledPersonalProperty5Type",
-      "label": "Type",
       "enumerations": [
         {
           "label": "Cameras",
@@ -4168,11 +4678,11 @@
           "label": "Stamps",
           "value": "1000"
         }
-      ]
+      ],
+      "label": "Type",
+      "name": "ScheduledPersonalProperty5Type"
     },
     {
-      "name": "ScheduledPersonalProperty6LossSettlement",
-      "label": "Loss Settlement",
       "enumerations": [
         {
           "label": "Standard",
@@ -4182,11 +4692,11 @@
           "label": "Agreed",
           "value": "200"
         }
-      ]
+      ],
+      "label": "Loss Settlement",
+      "name": "ScheduledPersonalProperty6LossSettlement"
     },
     {
-      "name": "ScheduledPersonalProperty6Type",
-      "label": "Type",
       "enumerations": [
         {
           "label": "Cameras",
@@ -4224,11 +4734,11 @@
           "label": "Stamps",
           "value": "1000"
         }
-      ]
+      ],
+      "label": "Type",
+      "name": "ScheduledPersonalProperty6Type"
     },
     {
-      "name": "ScheduledPersonalProperty7LossSettlement",
-      "label": "Loss Settlement",
       "enumerations": [
         {
           "label": "Standard",
@@ -4238,11 +4748,11 @@
           "label": "Agreed",
           "value": "200"
         }
-      ]
+      ],
+      "label": "Loss Settlement",
+      "name": "ScheduledPersonalProperty7LossSettlement"
     },
     {
-      "name": "ScheduledPersonalProperty7Type",
-      "label": "Type",
       "enumerations": [
         {
           "label": "Cameras",
@@ -4280,11 +4790,11 @@
           "label": "Stamps",
           "value": "1000"
         }
-      ]
+      ],
+      "label": "Type",
+      "name": "ScheduledPersonalProperty7Type"
     },
     {
-      "name": "ScheduledPersonalProperty8LossSettlement",
-      "label": "Loss Settlement",
       "enumerations": [
         {
           "label": "Standard",
@@ -4294,11 +4804,11 @@
           "label": "Agreed",
           "value": "200"
         }
-      ]
+      ],
+      "label": "Loss Settlement",
+      "name": "ScheduledPersonalProperty8LossSettlement"
     },
     {
-      "name": "ScheduledPersonalProperty8Type",
-      "label": "Type",
       "enumerations": [
         {
           "label": "Cameras",
@@ -4336,11 +4846,11 @@
           "label": "Stamps",
           "value": "1000"
         }
-      ]
+      ],
+      "label": "Type",
+      "name": "ScheduledPersonalProperty8Type"
     },
     {
-      "name": "ScheduledPersonalProperty9LossSettlement",
-      "label": "Loss Settlement",
       "enumerations": [
         {
           "label": "Standard",
@@ -4350,11 +4860,11 @@
           "label": "Agreed",
           "value": "200"
         }
-      ]
+      ],
+      "label": "Loss Settlement",
+      "name": "ScheduledPersonalProperty9LossSettlement"
     },
     {
-      "name": "ScheduledPersonalProperty9Type",
-      "label": "Type",
       "enumerations": [
         {
           "label": "Cameras",
@@ -4392,11 +4902,11 @@
           "label": "Stamps",
           "value": "1000"
         }
-      ]
+      ],
+      "label": "Type",
+      "name": "ScheduledPersonalProperty9Type"
     },
     {
-      "name": "ScreenedEnclosure",
-      "label": "Any screened enclosures, attached or detached (sides and roof screened)?",
       "enumerations": [
         {
           "label": "Yes",
@@ -4406,11 +4916,11 @@
           "label": "No",
           "value": "200"
         }
-      ]
+      ],
+      "label": "Any screened enclosures, attached or detached (sides and roof screened)?",
+      "name": "ScreenedEnclosure"
     },
     {
-      "name": "SecuritiesSpecialLimits",
-      "label": "Securities",
       "enumerations": [
         {
           "label": "$1,500 - Included",
@@ -4476,11 +4986,11 @@
           "label": "$3,000",
           "value": "3000"
         }
-      ]
+      ],
+      "label": "Securities",
+      "name": "SecuritiesSpecialLimits"
     },
     {
-      "name": "StructureType",
-      "label": "Structure Type",
       "enumerations": [
         {
           "label": "Single family dwelling",
@@ -4502,11 +5012,11 @@
           "label": "Row or Townhouse",
           "value": "105"
         }
-      ]
+      ],
+      "label": "Structure Type",
+      "name": "StructureType"
     },
     {
-      "name": "TownHouseStructureType",
-      "label": "# Of Units In Fire Division",
       "enumerations": [
         {
           "label": "1 to 2",
@@ -4524,11 +5034,25 @@
           "label": "9 or over",
           "value": "900"
         }
-      ]
+      ],
+      "label": "# Of Units In Fire Division",
+      "name": "TownHouseStructureType"
     },
     {
-      "name": "UnlockedPoolGate",
+      "enumerations": [
+        {
+          "label": "Yes",
+          "value": "100"
+        },
+        {
+          "label": "No",
+          "value": "200"
+        }
+      ],
       "label": "Is pool attached to decking without a locking gate?",
+      "name": "UnlockedPoolGate"
+    },
+    {
       "enumerations": [
         {
           "label": "Yes",
@@ -4538,11 +5062,11 @@
           "label": "No",
           "value": "200"
         }
-      ]
-    },
-    {
-      "name": "ViciousAnimal",
+      ],
       "label": "Any dog ever bitten or displayed vicious tendencies?",
+      "name": "ViciousAnimal"
+    },
+    {
       "enumerations": [
         {
           "label": "Yes",
@@ -4552,25 +5076,11 @@
           "label": "No",
           "value": "200"
         }
-      ]
-    },
-    {
-      "name": "VisibleFromRoad",
+      ],
       "label": "Visible From Main, Public Road?",
-      "enumerations": [
-        {
-          "label": "Yes",
-          "value": "100"
-        },
-        {
-          "label": "No",
-          "value": "200"
-        }
-      ]
+      "name": "VisibleFromRoad"
     },
     {
-      "name": "WaterBackupCoverage",
-      "label": "Sewer/Water Back Up Coverage",
       "enumerations": [
         {
           "label": "$0 - Excluded",
@@ -4580,11 +5090,11 @@
           "label": "$5,000",
           "value": "5000"
         }
-      ]
+      ],
+      "label": "Sewer/Water Back Up Coverage",
+      "name": "WaterBackupCoverage"
     },
     {
-      "name": "WindHailDeductible",
-      "label": "Wind Hail Deductible",
       "enumerations": [
         {
           "label": "None",
@@ -4610,11 +5120,11 @@
           "label": "5.00%",
           "value": "500"
         }
-      ]
+      ],
+      "label": "Wind Hail Deductible",
+      "name": "WindHailDeductible"
     },
     {
-      "name": "WoodStove",
-      "label": "Is There A Wood, Wood Pellet Or Coal Stove?",
       "enumerations": [
         {
           "label": "Yes",
@@ -4624,419 +5134,421 @@
           "label": "No",
           "value": "200"
         }
-      ]
+      ],
+      "label": "Is There A Wood, Wood Pellet Or Coal Stove?",
+      "name": "WoodStove"
     },
     {
-      "name": "CancelReason",
-      "label": "Reason Code",
       "enumerations": [
         {
-          "value": "1",
-          "label": "Insured Request"
+          "label": "Insured Request",
+          "value": "1"
         },
         {
-          "value": "2",
-          "label": "Nonpayment Of Premium"
+          "label": "Nonpayment Of Premium",
+          "value": "2"
         },
         {
-          "value": "3",
-          "label": "Insured Convicted Of Crime"
+          "label": "Insured Convicted Of Crime",
+          "value": "3"
         },
         {
-          "value": "4",
-          "label": "Discovery Of Fraud Or Material Misrepresentation"
+          "label": "Discovery Of Fraud Or Material Misrepresentation",
+          "value": "4"
         },
         {
-          "value": "5",
-          "label": "Discovery Of Willful Or Reckless Acts Of Omissions"
+          "label": "Discovery Of Willful Or Reckless Acts Of Omissions",
+          "value": "5"
         },
         {
-          "value": "6",
-          "label": "Physical Changes In The Property Insured"
+          "label": "Physical Changes In The Property Insured",
+          "value": "6"
         },
         {
-          "value": "7",
-          "label": "Increase In Liability Hazards Beyond What Is Normally Accepted"
+          "label": "Increase In Liability Hazards Beyond What Is Normally Accepted",
+          "value": "7"
         },
         {
-          "value": "8",
-          "label": "Increase In Property Hazards Beyond What Is Normally Accepted"
+          "label": "Increase In Property Hazards Beyond What Is Normally Accepted",
+          "value": "8"
         },
         {
-          "value": "9",
-          "label": "Overexposed In Area Where Risk Is Located"
+          "label": "Overexposed In Area Where Risk Is Located",
+          "value": "9"
         },
         {
-          "value": "10",
-          "label": "Change In Occupancy Status"
+          "label": "Change In Occupancy Status",
+          "value": "10"
         },
         {
-          "value": "11",
-          "label": "Other Underwriting Reasons"
+          "label": "Other Underwriting Reasons",
+          "value": "11"
         },
         {
-          "value": "12",
-          "label": "Cancel/Rewrite"
+          "label": "Cancel/Rewrite",
+          "value": "12"
         },
         {
-          "value": "13",
-          "label": "Change In Ownership"
+          "label": "Change In Ownership",
+          "value": "13"
         },
         {
-          "value": "14",
-          "label": "Missing Required Documentation"
+          "label": "Missing Required Documentation",
+          "value": "14"
         },
         {
-          "value": "15",
-          "label": "Insured Request (short-rate)"
+          "label": "Insured Request (short-rate)",
+          "value": "15"
         },
         {
-          "value": "16",
-          "label": "Nonpayment Of Premium (flat)"
+          "label": "Nonpayment Of Premium (flat)",
+          "value": "16"
         }
-      ]
+      ],
+      "label": "Reason Code",
+      "name": "CancelReason"
     },
     {
-      "name": "ReinstateReason",
-      "label": "Reason Code",
       "enumerations": [
         {
-          "value": "1",
-          "label": "Insured Request"
+          "label": "Insured Request",
+          "value": "1"
         },
         {
-          "value": "27",
-          "label": "Payment Received After Effective Date Of Cancellation"
+          "label": "Payment Received After Effective Date Of Cancellation",
+          "value": "27"
         },
         {
-          "value": "28",
-          "label": "Due To Compliance Or Legal Reasons"
+          "label": "Due To Compliance Or Legal Reasons",
+          "value": "28"
         },
         {
-          "value": "29",
-          "label": "Underwriting Reason For Cancellation Resolved"
+          "label": "Underwriting Reason For Cancellation Resolved",
+          "value": "29"
         }
-      ]
+      ],
+      "label": "Reason Code",
+      "name": "ReinstateReason"
     },
     {
-      "name": "PendingCancelReason",
-      "label": "Reason Code",
       "enumerations": [
         {
-          "value": "1",
-          "label": "Insured Request"
+          "label": "Insured Request",
+          "value": "1"
         },
         {
-          "value": "2",
-          "label": "Nonpayment Of Premium"
+          "label": "Nonpayment Of Premium",
+          "value": "2"
         },
         {
-          "value": "3",
-          "label": "Insured Convicted Of Crime"
+          "label": "Insured Convicted Of Crime",
+          "value": "3"
         },
         {
-          "value": "4",
-          "label": "Discovery Of Fraud Or Material Misrepresentation"
+          "label": "Discovery Of Fraud Or Material Misrepresentation",
+          "value": "4"
         },
         {
-          "value": "5",
-          "label": "Discovery Of Willful Or Reckless Acts Of Omissions"
+          "label": "Discovery Of Willful Or Reckless Acts Of Omissions",
+          "value": "5"
         },
         {
-          "value": "6",
-          "label": "Physical Changes In The Property Insured"
+          "label": "Physical Changes In The Property Insured",
+          "value": "6"
         },
         {
-          "value": "7",
-          "label": "Increase In Liability Hazards Beyond What Is Normally Accepted"
+          "label": "Increase In Liability Hazards Beyond What Is Normally Accepted",
+          "value": "7"
         },
         {
-          "value": "8",
-          "label": "Increase In Property Hazards Beyond What Is Normally Accepted"
+          "label": "Increase In Property Hazards Beyond What Is Normally Accepted",
+          "value": "8"
         },
         {
-          "value": "9",
-          "label": "Overexposed In Area Where Risk Is Located"
+          "label": "Overexposed In Area Where Risk Is Located",
+          "value": "9"
         },
         {
-          "value": "10",
-          "label": "Change In Occupancy Status"
+          "label": "Change In Occupancy Status",
+          "value": "10"
         },
         {
-          "value": "11",
-          "label": "Other Underwriting Reasons"
+          "label": "Other Underwriting Reasons",
+          "value": "11"
         },
         {
-          "value": "12",
-          "label": "Cancel/Rewrite"
+          "label": "Cancel/Rewrite",
+          "value": "12"
         },
         {
-          "value": "13",
-          "label": "Change In Ownership"
+          "label": "Change In Ownership",
+          "value": "13"
         },
         {
-          "value": "14",
-          "label": "Missing Required Documentation"
+          "label": "Missing Required Documentation",
+          "value": "14"
         },
         {
-          "value": "15",
-          "label": "Insured Request (short-rate)"
+          "label": "Insured Request (short-rate)",
+          "value": "15"
         },
         {
-          "value": "16",
-          "label": "Nonpayment Of Premium (flat)"
+          "label": "Nonpayment Of Premium (flat)",
+          "value": "16"
         },
         {
-          "value": "201",
-          "label": "Payment Received"
+          "label": "Payment Received",
+          "value": "201"
         }
-      ]
+      ],
+      "label": "Reason Code",
+      "name": "PendingCancelReason"
     },
     {
-      "name": "RescindPendingCancelReason",
-      "label": "Reason Code",
       "enumerations": [
         {
-          "value": "1",
-          "label": "Insured Request"
+          "label": "Insured Request",
+          "value": "1"
         },
         {
-          "value": "28",
-          "label": "Due To Compliance Or Legal Reasons"
+          "label": "Due To Compliance Or Legal Reasons",
+          "value": "28"
         },
         {
-          "value": "29",
-          "label": "Underwriting Reason For Cancellation Resolved"
+          "label": "Underwriting Reason For Cancellation Resolved",
+          "value": "29"
         }
-      ]
+      ],
+      "label": "Reason Code",
+      "name": "RescindPendingCancelReason"
     },
     {
-      "name": "ChangeAdditionalInterestReason",
-      "label": "Reason Code",
       "enumerations": [
         {
-          "value": "51",
-          "label": "Add Or Change Additional Interest"
+          "label": "Add Or Change Additional Interest",
+          "value": "51"
         },
         {
-          "value": "77",
-          "label": "Add Or Change Third Party Designee"
+          "label": "Add Or Change Third Party Designee",
+          "value": "77"
         }
-      ]
+      ],
+      "label": "Reason Code",
+      "name": "ChangeAdditionalInterestReason"
     },
     {
-      "name": "ChangeCustomerReason",
-      "label": "Reason Code",
       "enumerations": [
         {
-          "value": "52",
-          "label": "Add Or Change Additional Insured"
+          "label": "Add Or Change Additional Insured",
+          "value": "52"
         },
         {
-          "value": "54",
-          "label": "Change Mailing Address Only"
+          "label": "Change Mailing Address Only",
+          "value": "54"
         },
         {
-          "value": "153",
-          "label": "Change Contact Information"
+          "label": "Change Contact Information",
+          "value": "153"
         },
         {
-          "value": "154",
-          "label": "Change Customer Name"
+          "label": "Change Customer Name",
+          "value": "154"
         },
         {
-          "value": "99",
-          "label": "Change Property Address"
+          "label": "Change Property Address",
+          "value": "99"
         }
-      ]
+      ],
+      "label": "Reason Code",
+      "name": "ChangeCustomerReason"
     },
     {
-      "name": "UpdateMortgageeReason",
-      "label": "Reason Code",
       "enumerations": [
         {
-          "value": "53",
-          "label": "Add Or Change Mortgagee Or Lien Holder"
+          "label": "Add Or Change Mortgagee Or Lien Holder",
+          "value": "53"
         }
-      ]
+      ],
+      "label": "Reason Code",
+      "name": "UpdateMortgageeReason"
     },
     {
-      "name": "EndorseReason",
-      "label": "Reason Code",
       "enumerations": [
         {
-          "value": "57",
-          "label": "Add Or Change Additional Amounts Of Insurance "
+          "label": "Add Or Change Additional Amounts Of Insurance ",
+          "value": "57"
         },
         {
-          "value": "58",
-          "label": "Remove Or Add Functional Replacement Cost"
+          "label": "Remove Or Add Functional Replacement Cost",
+          "value": "58"
         },
         {
-          "value": "60",
-          "label": "Change Coverage A"
+          "label": "Change Coverage A",
+          "value": "60"
         },
         {
-          "value": "61",
-          "label": "Change Coverage C"
+          "label": "Change Coverage C",
+          "value": "61"
         },
         {
-          "value": "62",
-          "label": "Change Coverage D"
+          "label": "Change Coverage D",
+          "value": "62"
         },
         {
-          "value": "63",
-          "label": "Change Personal Liability "
+          "label": "Change Personal Liability ",
+          "value": "63"
         },
         {
-          "value": "64",
-          "label": "Change Medical Payments"
+          "label": "Change Medical Payments",
+          "value": "64"
         },
         {
-          "value": "65",
-          "label": "Add Water Back Up"
+          "label": "Add Water Back Up",
+          "value": "65"
         },
         {
-          "value": "66",
-          "label": "Add Identity Fraud"
+          "label": "Add Identity Fraud",
+          "value": "66"
         },
         {
-          "value": "67",
-          "label": "Increase Basic Ordinance & Law "
+          "label": "Increase Basic Ordinance & Law ",
+          "value": "67"
         },
         {
-          "value": "68",
-          "label": "Add Other Structures"
+          "label": "Add Other Structures",
+          "value": "68"
         },
         {
-          "value": "69",
-          "label": "Add Permitted Incidental Occupancy"
+          "label": "Add Permitted Incidental Occupancy",
+          "value": "69"
         },
         {
-          "value": "70",
-          "label": "Add Watercraft Liability"
+          "label": "Add Watercraft Liability",
+          "value": "70"
         },
         {
-          "value": "72",
-          "label": "Add Personal Injury"
+          "label": "Add Personal Injury",
+          "value": "72"
         },
         {
-          "value": "73",
-          "label": "Change All Peril Deductible"
+          "label": "Change All Peril Deductible",
+          "value": "73"
         },
         {
-          "value": "74",
-          "label": "Schedule Personal Property"
+          "label": "Schedule Personal Property",
+          "value": "74"
         },
         {
-          "value": "75",
-          "label": "Change Hurricane Deductible"
+          "label": "Change Hurricane Deductible",
+          "value": "75"
         },
         {
-          "value": "78",
-          "label": "Change Loss Settlement For Contents"
+          "label": "Change Loss Settlement For Contents",
+          "value": "78"
         },
         {
-          "value": "80",
-          "label": "Increase Loss Assessment"
+          "label": "Increase Loss Assessment",
+          "value": "80"
         },
         {
-          "value": "82",
-          "label": "Add Earthquake Coverage"
+          "label": "Add Earthquake Coverage",
+          "value": "82"
         },
         {
-          "value": "84",
-          "label": "Increase Coverage Based On Physical Inspection"
+          "label": "Increase Coverage Based On Physical Inspection",
+          "value": "84"
         },
         {
-          "value": "85",
-          "label": "Change Rating Characteristics Based On Physical Inspection"
+          "label": "Change Rating Characteristics Based On Physical Inspection",
+          "value": "85"
         },
         {
-          "value": "86",
-          "label": "Increase Credit Card, EFT Coverage"
+          "label": "Increase Credit Card, EFT Coverage",
+          "value": "86"
         },
         {
-          "value": "87",
-          "label": "Change Personal Property Special Limits"
+          "label": "Change Personal Property Special Limits",
+          "value": "87"
         },
         {
-          "value": "93",
-          "label": "Change Deductible Based On Physical Inspection"
+          "label": "Change Deductible Based On Physical Inspection",
+          "value": "93"
         },
         {
-          "value": "94",
-          "label": "Change in Coverage B"
+          "label": "Change in Coverage B",
+          "value": "94"
         },
         {
-          "value": "96",
-          "label": "Mechanical breakdown"
+          "label": "Mechanical breakdown",
+          "value": "96"
         },
         {
-          "value": "97",
-          "label": "Update interior risk characteristics"
+          "label": "Update interior risk characteristics",
+          "value": "97"
         },
         {
-          "value": "98",
-          "label": "Add pool to policy"
+          "label": "Add pool to policy",
+          "value": "98"
         },
         {
-          "value": "98",
-          "label": "Update property location address"
+          "label": "Update property location address",
+          "value": "98"
         },
         {
-          "value": "121",
-          "label": "Protective device credit"
+          "label": "Protective device credit",
+          "value": "121"
         },
         {
-          "value": "122",
-          "label": "Wind-loss mitigation credit"
+          "label": "Wind-loss mitigation credit",
+          "value": "122"
         },
         {
-          "value": "123",
-          "label": "Multi-policy discount"
+          "label": "Multi-policy discount",
+          "value": "123"
         },
         {
-          "value": "124",
-          "label": "Prime-time discount"
+          "label": "Prime-time discount",
+          "value": "124"
         },
         {
-          "value": "125",
-          "label": "Conditional liability surcharge"
+          "label": "Conditional liability surcharge",
+          "value": "125"
         }
-      ]
+      ],
+      "label": "Reason Code",
+      "name": "EndorseReason"
     },
     {
-      "name": "ChangePaymentPlanReason",
-      "label": "Reason Code",
       "enumerations": [
         {
-          "value": "155",
-          "label": "Change Payment Plan"
+          "label": "Change Payment Plan",
+          "value": "155"
         }
-      ]
+      ],
+      "label": "Reason Code",
+      "name": "ChangePaymentPlanReason"
     },
     {
-      "name": "ApplyChargeReason",
-      "label": "Reason Code",
       "enumerations": [
         {
-          "value": "900",
-          "label": "Installment Charge"
+          "label": "Installment Charge",
+          "value": "900"
         },
         {
-          "value": "901",
-          "label": "Late Payment Charge"
+          "label": "Late Payment Charge",
+          "value": "901"
         },
         {
-          "value": "902",
-          "label": "NSF Charge"
+          "label": "NSF Charge",
+          "value": "902"
         },
         {
-          "value": "903",
-          "label": "Service Charge"
+          "label": "Service Charge",
+          "value": "903"
         }
-      ]
+      ],
+      "label": "Reason Code",
+      "name": "ApplyChargeReason"
     }
   ]
 }

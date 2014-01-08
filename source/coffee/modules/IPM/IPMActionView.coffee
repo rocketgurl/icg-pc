@@ -2,8 +2,9 @@ define [
   'BaseView',
   'Messenger',
   'modules/IPM/IPMChangeSet',
-  'modules/IPM/IPMFormValidation'
-], (BaseView, Messenger, IPMChangeSet, IPMFormValidation) ->
+  'modules/IPM/IPMFormValidation',
+  'Apparatchik'
+], (BaseView, Messenger, IPMChangeSet, IPMFormValidation, Apparatchik) ->
 
   ###
     ACTIONVIEWS TODO:
@@ -11,7 +12,6 @@ define [
       Issue (automatic)
       Issue (manual)
       Renew
-      Change customer
       Update mortgage
       Change additional interest
       Edit term data
@@ -85,6 +85,10 @@ define [
           args = _.toArray arguments
           if @validate()
             submit(args[1])
+
+      # Apparatchik is our Rules Cop for enforcing behavior sets in
+      # forms. It is actually documented in js/lib/Apparatchik.js
+      @apparatchik = new Apparatchik(@cid, @MODULE.POLICY, @MODULE.VIEW, @$el)
 
     # **fetchTemplates** grab the model.json and view.html for processing
     #
@@ -267,6 +271,10 @@ define [
       # We need to add the CID to the view data to namespace all the
       # form ids or everything explodes and sinks into the ocean.
       viewData.guid = @cid
+
+      # Filter false values out
+      for key, val of viewData
+        if val == false then viewData[key] = "" else viewData[key] = val
 
       @viewData = viewData
       @view     = view
@@ -475,9 +483,9 @@ define [
       @MODULE.POLICY
 
     # Return PolicyModel to its previous state if it has one
-    # 
+    #
     # @return _Object_ PolicyModel
-    # 
+    #
     rollbackPolicyModel : ->
       prev = @MODULE.POLICY.get('prev_document')
       if prev?
