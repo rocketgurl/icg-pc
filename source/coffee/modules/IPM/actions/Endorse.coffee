@@ -164,11 +164,11 @@ define [
         sideEffects: [
           target: "HurricaneDeductible"
           condition: "== 100"
-          effect: @apparatchik.showElement
+          effect: [@apparatchik.showElement, @apparatchik.makeRequired]
         ,
           target: "WindHailDeductible"
           condition: "== 200"
-          effect: @apparatchik.showElement
+          effect: [@apparatchik.showElement, @apparatchik.makeRequired]
         ]
       ]
 
