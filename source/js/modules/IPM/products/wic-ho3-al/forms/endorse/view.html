@@ -1,5 +1,5 @@
 <!-- Endorse WIC HO3 Alabama -->
-<form action="endorse" method="get" accept-charset="utf-8" class="collapsedSections">
+	<form action="endorse" method="get" accept-charset="utf-8" class="collapsedSections">
 	<div id="content">
 		<div id="content_header">
 			<h2>{{#preview}}Previewing {{/preview}} Endorsement for {{ policyId }}</h2>
@@ -46,9 +46,9 @@
 			</fieldset>
 
 			<fieldset class="horizontalFields defaultOpen extraWide">
-
+			  
 				<h3>Section I &amp; II Coverages <a data-alt-text="close">change</a></h3>
-
+			  
 				<div class="collapsibleFieldContainer">
 					<div>
 						<label for="{{guid}}_ReplacementCostBuilding" class="labelRequired">Replacement Cost of Dwelling <i>ReplacementCostBuilding</i></label>
@@ -95,7 +95,7 @@
 						<label for="{{guid}}_CoverageD">Coverage D <i>CoverageD</i></label>
 						<input type="text" id="{{guid}}_CoverageD" name="CoverageD" value="{{CoverageD}}" readonly>
 					</div>
-
+				  
 				  <!-- wic-ho3-al -->
 					<div>
 						<label for="{{guid}}_CoverageE">Coverage E <i>CoverageE</i></label>
@@ -113,147 +113,38 @@
 							{{/EnumsCoverageF}}
 						</select>
 					</div>
-
+				  
 				</div>
 			</fieldset>
 
-      <fieldset class="horizontalFields">
-        <h3>Construction &amp; Protection <a data-alt-text="close">change</a></h3>
-        <div class="collapsibleFieldContainer">
-          <!-- Exterior -->
-          <fieldset>
-            <legend>Dwelling Exterior</legend>
-            <div>
-	            <label for="{{guid}}_SquareFootUnderRoofFLA">Living Area as Finished Space <i>SquareFootUnderRoofFLA</i></label>
-	            <input type="text" id="{{guid}}_SquareFootUnderRoofFLA" name="SquareFootUnderRoofFLA" value="{{SquareFootUnderRoofFLA}}">
-            </div>
-
-            <div>
-              <label for="{{guid}}_Cladding" >Cladding <i>Cladding</i></label>
-              <select id="{{guid}}_Cladding" name="Cladding" data-value="{{Cladding}}">
-                {{#EnumsCladding}}
-		            <option value="{{value}}">{{label}}</option>
-		            {{/EnumsCladding}}
-              </select>
-            </div>
-
-            <div>
-              <label for="{{guid}}_HomeFeatures1" class="labelRequired">1st Additional Home Feature <i>HomeFeatures1</i></label>
-              <select id="{{guid}}_HomeFeatures1" name="HomeFeatures1" data-value="{{HomeFeatures1}}" required>
-                {{#EnumsHomeFeatures1}}
-		            <option value="{{value}}">{{label}}</option>
-		            {{/EnumsHomeFeatures1}}
-              </select>
-            </div>
-
-            <div>
-              <label for="{{guid}}_HomeFeatures1SquareFeet">1st Additional Home Feature Sq Ft <i>HomeFeatures1SquareFeet</i></label>
-              <select id="{{guid}}_HomeFeatures1SquareFeet" name="HomeFeatures1SquareFeet" data-value="{{HomeFeatures1SquareFeet}}">
-                {{#EnumsHomeFeatures1SquareFeet}}
-		            <option value="{{value}}">{{label}}</option>
-		            {{/EnumsHomeFeatures1SquareFeet}}
-              </select>
-            </div>
-
-            <div>
-              <label for="{{guid}}_HomeFeatures2" class="labelRequired">2nd Additional Home Feature <i>HomeFeatures2</i></label>
-              <select id="{{guid}}_HomeFeatures2" name="HomeFeatures2" data-value="{{HomeFeatures2}}" required>
-                {{#EnumsHomeFeatures2}}
-		            <option value="{{value}}">{{label}}</option>
-		            {{/EnumsHomeFeatures2}}
-              </select>
-            </div>
-
-            <div>
-              <label for="{{guid}}_HomeFeatures2SquareFeet">2nd Additional Home Feature Sq Ft <i>HomeFeatures2SquareFeet</i></label>
-              <select id="{{guid}}_HomeFeatures2SquareFeet" name="HomeFeatures2SquareFeet" data-value="{{HomeFeatures2SquareFeet}}">
-                {{#EnumsHomeFeatures2SquareFeet}}
-		            <option value="{{value}}">{{label}}</option>
-		            {{/EnumsHomeFeatures2SquareFeet}}
-              </select>
-            </div>
-
-            <div>
-              <label for="{{guid}}_HomeFeatures3" class="labelRequired">3rd Additional Home Feature <i>HomeFeatures3</i></label>
-              <select id="{{guid}}_HomeFeatures3" name="HomeFeatures3" data-value="{{HomeFeatures3}}" required>
-                {{#EnumsHomeFeatures3}}
-		            <option value="{{value}}">{{label}}</option>
-		            {{/EnumsHomeFeatures3}}
-              </select>
-            </div>
-
-            <div>
-              <label for="{{guid}}_HomeFeatures3SquareFeet">3rd Additional Home Feature Sq Ft <i>HomeFeatures3SquareFeet</i></label>
-              <select id="{{guid}}_HomeFeatures3SquareFeet" name="HomeFeatures3SquareFeet" data-value="{{HomeFeatures3SquareFeet}}">
-                {{#EnumsHomeFeatures3SquareFeet}}
-		            <option value="{{value}}">{{label}}</option>
-		            {{/EnumsHomeFeatures3SquareFeet}}
-              </select>
-            </div>
-          </fieldset>
-
-          <!-- Interior -->
-          <fieldset>
-            <legend>Dwelling Interior</legend>
-            <div>
-              <label for="{{guid}}_NumberOfAtriumDoors">Number of Atrium Doors <i>NumberOfAtriumDoors</i></label>
-              <select id="{{guid}}_NumberOfAtriumDoors" name="NumberOfAtriumDoors" data-value="{{NumberOfAtriumDoors}}">
-                {{#EnumsNumberOfAtriumDoors}}
-		            <option value="{{value}}">{{label}}</option>
-		            {{/EnumsNumberOfAtriumDoors}}
-              </select>
-            </div>
-
-            <div>
-              <label for="{{guid}}_NumberOfAtriumWindows">Number Of Atrium Windows <i>NumberOfAtriumWindows</i></label>
-              <select id="{{guid}}_NumberOfAtriumWindows" name="NumberOfAtriumWindows" data-value="{{NumberOfAtriumWindows}}">
-                {{#EnumsNumberOfAtriumWindows}}
-		            <option value="{{value}}">{{label}}</option>
-		            {{/EnumsNumberOfAtriumWindows}}
-              </select>
-            </div>
-
-            <div>
-              <label for="{{guid}}_NumberOfSolarPanels">Number Of Solar Panels <i>NumberOfSolarPanels</i></label>
-              <select id="{{guid}}_NumberOfSolarPanels" name="NumberOfSolarPanels" data-value="{{NumberOfSolarPanels}}">
-                {{#EnumsNumberOfSolarPanels}}
-		            <option value="{{value}}">{{label}}</option>
-		            {{/EnumsNumberOfSolarPanels}}
-              </select>
-            </div>
-
-            <div>
-              <label for="{{guid}}_SolarPanelUsage">Type of Solar Panel Usage <i>SolarPanelUsage</i></label>
-              <select id="{{guid}}_SolarPanelUsage" name="SolarPanelUsage" data-value="{{SolarPanelUsage}}">
-                {{#EnumsSolarPanelUsage}}
-		            <option value="{{value}}">{{label}}</option>
-		            {{/EnumsSolarPanelUsage}}
-              </select>
-            </div>
-
-            <div>
-              <label for="{{guid}}_HeatPump">Heat Pump <i>HeatPump</i></label>
-              <select id="{{guid}}_HeatPump" name="HeatPump" data-value="{{HeatPump}}">
-                {{#EnumsHeatPump}}
-		            <option value="{{value}}">{{label}}</option>
-		            {{/EnumsHeatPump}}
-              </select>
-            </div>
-
-          </fieldset>
-      </fieldset>
-
-
 			<fieldset class="horizontalFields">
 				<h3>Deductibles <a data-alt-text="close">change</a></h3>
-
 				<div class="collapsibleFieldContainer">
+
 					<div>
-						<label for="{{guid}}_HurricaneDeductible" class="labelRequired">Named Storm Deductible <i>HurricaneDeductible</i></label>
-						<select id="{{guid}}_HurricaneDeductible" name="HurricaneDeductible" data-value="{{HurricaneDeductible}}" required>
+						<label for="{{guid}}_WindstormDeductibleOption" class="labelRequired">Wind/Hail or Named Storm Deductible <i>WindstormDeductibleOption</i></label>
+						<select id="{{guid}}_WindstormDeductibleOption" name="WindstormDeductibleOption" data-value="{{WindstormDeductibleOption}}" required>
+							{{#EnumsWindstormDeductibleOption}}
+							<option value="{{value}}">{{label}}</option>
+							{{/EnumsWindstormDeductibleOption}}
+						</select>
+					</div>
+
+					<div>
+						<label for="{{guid}}_HurricaneDeductible">Hurricane Deductible <i>HurricaneDeductible</i></label>
+						<select id="{{guid}}_HurricaneDeductible" name="HurricaneDeductible" data-value="{{HurricaneDeductible}}">
 							{{#EnumsHurricaneDeductible}}
 							<option value="{{value}}">{{label}}</option>
 							{{/EnumsHurricaneDeductible}}
+						</select>
+					</div>
+
+					<div>
+						<label for="{{guid}}_WindHailDeductible">Wind/Hail Deductible <i>WindHailDeductible</i></label>
+						<select id="{{guid}}_WindHailDeductible" name="WindHailDeductible" data-value="{{WindHailDeductible}}">
+							{{#EnumsWindHailDeductible}}
+							<option value="{{value}}">{{label}}</option>
+							{{/EnumsWindHailDeductible}}
 						</select>
 					</div>
 
@@ -267,7 +158,6 @@
 					</div>
 				</div>
 			</fieldset>
-
 
 		  <!-- wic-ho3-al : Special limits -->
 			<fieldset class="horizontalFields">
@@ -325,12 +215,10 @@
 				</div>
 			</fieldset>
 
-
 			<fieldset class="horizontalFields extraWide">
 				<h3>Optional Coverages <a data-alt-text="close">change</a></h3>
 
 				<div class="collapsibleFieldContainer">
-
 					<!-- wic-ho3-al -->
 					<div>
 						<label for="{{guid}}_IdentityFraudCoverage">Identity Fraud Expense <i>IdentityFraudCoverage</i></label>
@@ -399,7 +287,6 @@
 							{{/EnumsWaterBackupCoverage}}
 						</select>
 					</div>
-
 				</div>
 			</fieldset>
 
@@ -511,8 +398,6 @@
 				</div>
 			</fieldset>
 
-
-
 			<fieldset class="horizontalFields">
 				<h3>Overrides <a data-alt-text="close">change</a></h3>
 
@@ -527,202 +412,203 @@
 				<input type="submit" class="button" value="Preview"> <a href="home">Nevermind, go back</a>
 			</div>
 
-		  </div>
-		  <input type="hidden" id="{{guid}}_preview" name="preview" value="true">
-		  {{/preview}}
+		</div>
+		<input type="hidden" id="{{guid}}_preview" name="preview" value="true">
+		{{/preview}}
 
-		  {{#preview}}
-		  <div class="content_body preview">
-			  <div class="table_wrapping">
-				  <table class="data_table" summary="Table containing preview of endorsement.">
-					  <col span="1" class="col_labels"></col>
-					  <col span="2"></col>
-					  <col span="1" class="col_days"></col>
-					  <colgroup span="3" class="col_non_hurricane">
-						  <col></col>
-						  <col></col>
-						  <col></col>
-					  </colgroup>
-					  <colgroup span="3" class="col_hurricane">
-						  <col></col>
-						  <col></col>
-						  <col></col>
-					  </colgroup>
-					  <col span="3" class="col_amounts"></col>
-					  <thead>
-				   		<tr>
-				   			<th>&nbsp;</th>
-				   			<th>&nbsp;</th>
-				   			<th>&nbsp;</th>
-				   			<th>&nbsp;</th>
-				   			<th colspan='3' class="col_group_heading">Non-Hurricane Premium</th>
-				   			<th colspan='3' class="col_group_heading">Hurricane Premium</th>
-				   			<th>&nbsp;</th>
-				   			<th>&nbsp;</th>
-				   			<th>&nbsp;</th>
-				   		</tr>
-				   		<tr>
-				   			<th>&nbsp;</th>
-				   			<th>Starts</th>
-				   			<th>Ends</th>
-				   			<th>#&nbsp;Days</th>
-				   			<th class="col_group_cap_open">Unadjusted</th>
-				   			<th>Adjustment</th>
-				   			<th class="col_group_cap_close">Adjusted</th>
+		{{#preview}}
+		<div class="content_body preview">
+			<div class="table_wrapping">
+				<table class="data_table" summary="Table containing preview of endorsement.">
+					<col span="1" class="col_labels"></col>
+					<col span="2"></col>
+					<col span="1" class="col_days"></col>
+					<colgroup span="3" class="col_non_hurricane">
+						<col></col>
+						<col></col>
+						<col></col>
+					</colgroup>
+					<colgroup span="3" class="col_hurricane">
+						<col></col>
+						<col></col>
+						<col></col>
+					</colgroup>
+					<col span="3" class="col_amounts"></col>
+					<thead>
+				   	<tr>
+				   		<th>&nbsp;</th>
+				   		<th>&nbsp;</th>
+				   		<th>&nbsp;</th>
+				   		<th>&nbsp;</th>
+				   		<th colspan='3' class="col_group_heading">Non-Hurricane Premium</th>
+				   		<th colspan='3' class="col_group_heading">Hurricane Premium</th>
+				   		<th>&nbsp;</th>
+				   		<th>&nbsp;</th>
+				   		<th>&nbsp;</th>
+				   	</tr>
+				   	<tr>
+				   		<th>&nbsp;</th>
+				   		<th>Starts</th>
+				   		<th>Ends</th>
+				   		<th>#&nbsp;Days</th>
+				   		<th class="col_group_cap_open">Unadjusted</th>
+				   		<th>Adjustment</th>
+				   		<th class="col_group_cap_close">Adjusted</th>
 
-				   			<th class="col_group_cap_open">Unadjusted</th>
-				   			<th>Adjustment</th>
-				   			<th class="col_group_cap_close">Adjusted</th>
+				   		<th class="col_group_cap_open">Unadjusted</th>
+				   		<th>Adjustment</th>
+				   		<th class="col_group_cap_close">Adjusted</th>
 
-				   			<th>Premium Before Fees</th>
-				   			<th>Total Fees and Taxes</th>
-				   			<th>Total Premium and Fees</th>
-				   		</tr>
-					  </thead>
+				   		<th>Premium Before Fees</th>
+				   		<th>Total Fees and Taxes</th>
+				   		<th>Total Premium and Fees</th>
+				   	</tr>
+					</thead>
 
-					  <tbody>
-						  <tr>
-							  <td>Proposed Term</td>
-							  <td>{{#term}}{{ fmtStartDate }}{{/term}}</td>
-							  <td>{{#term}}{{ fmtEndDate }}{{/term}}</td>
-							  <td>{{#term}}{{ days }}{{/term}}</td>
+					<tbody>
+						<tr>
+							<td>Proposed Term</td>
+							<td>{{#term}}{{ fmtStartDate }}{{/term}}</td>
+							<td>{{#term}}{{ fmtEndDate }}{{/term}}</td>
+							<td>{{#term}}{{ days }}{{/term}}</td>
 
-							  <td>{{#term}}{{ grandSubtotalNonCat }}{{/term}}</td>
-							  <td>-</td>
-							  <td>{{#term}}{{ grandSubtotalNonCat }}{{/term}}</td>
+							<td>{{#term}}{{ grandSubtotalNonCat }}{{/term}}</td>
+							<td>-</td>
+							<td>{{#term}}{{ grandSubtotalNonCat }}{{/term}}</td>
 
-							  <td>{{#term}}{{ grandSubtotalCat }}{{/term}}</td>
-							  <td>-</td>
-							  <td>{{#term}}{{ grandSubtotalCat }}{{/term}}</td>
+							<td>{{#term}}{{ grandSubtotalCat }}{{/term}}</td>
+							<td>-</td>
+							<td>{{#term}}{{ grandSubtotalCat }}{{/term}}</td>
 
-							  <td>{{#term}}{{ grandSubtotal }}{{/term}}</td>
-							  <td>{{#term}}{{ fees }}{{/term}}</td>
-							  <td>{{#term}}{{ grandTotal }}{{/term}}</td>
-						  </tr>
+							<td>{{#term}}{{ grandSubtotal }}{{/term}}</td>
+							<td>{{#term}}{{ fees }}{{/term}}</td>
+							<td>{{#term}}{{ grandTotal }}{{/term}}</td>
+						</tr>
 
-						  <tr>
-							  {{#current_policy}}
-							  <td>Current Term</td>
-							  <td>{{#term}}{{ fmtStartDate }}{{/term}}</td>
-							  <td>{{#term}}{{ fmtEndDate }}{{/term}}</td>
-							  <td>{{#term}}{{ days }}{{/term}}</td>
+						<tr>
+							{{#current_policy}}
+							<td>Current Term</td>
+							<td>{{#term}}{{ fmtStartDate }}{{/term}}</td>
+							<td>{{#term}}{{ fmtEndDate }}{{/term}}</td>
+							<td>{{#term}}{{ days }}{{/term}}</td>
 
-							  <td>{{#term}}{{ grandSubtotalNonCat }}{{/term}}</td>
-							  <td>-</td>
-							  <td>{{#term}}{{ grandSubtotalNonCat }}{{/term}}</td>
+							<td>{{#term}}{{ grandSubtotalNonCat }}{{/term}}</td>
+							<td>-</td>
+							<td>{{#term}}{{ grandSubtotalNonCat }}{{/term}}</td>
 
-							  <td>{{#term}}{{ grandSubtotalCat }}{{/term}}</td>
-							  <td>-</td>
-							  <td>{{#term}}{{ grandSubtotalCat }}{{/term}}</td>
+							<td>{{#term}}{{ grandSubtotalCat }}{{/term}}</td>
+							<td>-</td>
+							<td>{{#term}}{{ grandSubtotalCat }}{{/term}}</td>
 
-							  <td>{{#term}}{{ grandSubtotal }}{{/term}}</td>
-							  <td>{{#term}}{{ fees }}{{/term}}</td>
-							  <td>{{#term}}{{ grandTotal }}{{/term}}</td>
-							  {{/current_policy}}
-						  </tr>
+							<td>{{#term}}{{ grandSubtotal }}{{/term}}</td>
+							<td>{{#term}}{{ fees }}{{/term}}</td>
+							<td>{{#term}}{{ grandTotal }}{{/term}}</td>
+							{{/current_policy}}
+						</tr>
 
-						  <tr class="dividing_row">
-							  <td colspan="3">
-								  <h4>Proposed Policy</h4>
-							  </td>
-							  <td>&nbsp;</td>
-							  <td>&nbsp;</td>
-							  <td>&nbsp;</td>
-							  <td>&nbsp;</td>
-							  <td>&nbsp;</td>
-							  <td>&nbsp;</td>
-							  <td>&nbsp;</td>
-							  <td>&nbsp;</td>
-							  <td>&nbsp;</td>
-							  <td>&nbsp;</td>
-						  </tr>
+						<tr class="dividing_row">
+							<td colspan="3">
+								<h4>Proposed Policy</h4>
+							</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+						</tr>
 
-						  {{#intervals}}
-						  <tr {{#isNew}}class="calc_row"{{/isNew}}>
-							  <td>Interval</td>
-							  <td>{{ fmtStartDate }}</td>
-							  <td>{{ fmtEndDate }}</td>
-							  <td>{{ days }}</td>
+						{{#intervals}}
+						<tr {{#isNew}}class="calc_row"{{/isNew}}>
+							<td>Interval</td>
+							<td>{{ fmtStartDate }}</td>
+							<td>{{ fmtEndDate }}</td>
+							<td>{{ days }}</td>
 
-							  <!--The new interval-->
-						    {{#isNew}}
-							  <td>{{grandSubtotalNonCatUnadjusted}}</td>
-							  <td>
-								  <input type="text" name="NonHurricanePremiumDollarAdjustmentFRC" value="{{nonCatAdjustment}}">
-							  </td>
-							  <td class="calculated_value">{{ grandSubtotalNonCat }}</td>
-							  <td>{{grandSubtotalCatUnadjusted}}</td>
-							  <td>
-								  <input type="text" name="HurricanePremiumDollarAdjustmentFRC" value="{{catAdjustment}}">
-							  </td>
-							  <td class="calculated_value">{{grandSubtotalCat}}</td>
-							  <td class="subtotal">{{grandSubtotal}}</td>
-						    {{/isNew}}
+							<!--The new interval-->
+						  {{#isNew}}
+							<td>{{grandSubtotalNonCatUnadjusted}}</td>
+							<td>
+								<input type="text" name="NonHurricanePremiumDollarAdjustmentFRC" value="{{nonCatAdjustment}}">
+							</td>
+							<td class="calculated_value">{{ grandSubtotalNonCat }}</td>
+							<td>{{grandSubtotalCatUnadjusted}}</td>
+							<td>
+								<input type="text" name="HurricanePremiumDollarAdjustmentFRC" value="{{catAdjustment}}">
+							</td>
+							<td class="calculated_value">{{grandSubtotalCat}}</td>
+							<td class="subtotal">{{grandSubtotal}}</td>
+						  {{/isNew}}
 
-							  <!--All other intervals-->
-						    {{^isNew}}
-							  <td>{{grandSubtotalNonCat}}</td>
-							  <td>-</td>
-							  <td>{{grandSubtotalNonCat}}</td>
+							<!--All other intervals-->
+						  {{^isNew}}
+							<td>{{grandSubtotalNonCat}}</td>
+							<td>-</td>
+							<td>{{grandSubtotalNonCat}}</td>
 
-							  <td>{{grandSubtotalCat}}</td>
-							  <td>-</td>
-							  <td>{{grandSubtotalCat}}</td>
-							  <td>{{grandSubtotal}}</td>
-						    {{/isNew}}
+							<td>{{grandSubtotalCat}}</td>
+							<td>-</td>
+							<td>{{grandSubtotalCat}}</td>
+							<td>{{grandSubtotal}}</td>
+						  {{/isNew}}
 
-							  <td>-</td>
-							  <td>-</td>
-						  </tr>
-						  {{/intervals}}
+							<td>-</td>
+							<td>-</td>
+						</tr>
+						{{/intervals}}
 
-						  <tr class="dividing_row">
-							  <td colspan="3">
-								  <h4>Current Policy</h4>
-							  </td>
-							  <td>&nbsp;</td>
-							  <td>&nbsp;</td>
-							  <td>&nbsp;</td>
-							  <td>&nbsp;</td>
-							  <td>&nbsp;</td>
-							  <td>&nbsp;</td>
-							  <td>&nbsp;</td>
-							  <td>&nbsp;</td>
-							  <td>&nbsp;</td>
-							  <td>&nbsp;</td>
-						  </tr>
+						<tr class="dividing_row">
+							<td colspan="3">
+								<h4>Current Policy</h4>
+							</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+							<td>&nbsp;</td>
+						</tr>
 
-						  {{#current_policy}}
-						  {{#intervals}}
-						  <tr>
-							  <td>Interval</td>
-							  <td>{{ fmtStartDate }}</td>
-							  <td>{{ fmtEndDate }}</td>
-							  <td>{{ days }}</td>
+						{{#current_policy}}
+						{{#intervals}}
+						<tr>
+							<td>Interval</td>
+							<td>{{ fmtStartDate }}</td>
+							<td>{{ fmtEndDate }}</td>
+							<td>{{ days }}</td>
 
-							  <td>{{ grandSubtotalNonCat }}</td>
-							  <td>-</td>
-							  <td>{{ grandSubtotalNonCat }}</td>
+							<td>{{ grandSubtotalNonCat }}</td>
+							<td>-</td>
+							<td>{{ grandSubtotalNonCat }}</td>
 
-							  <td>{{ grandSubtotalCat }}</td>
-							  <td>-</td>
-							  <td>{{ grandSubtotalCat }}</td>
+							<td>{{ grandSubtotalCat }}</td>
+							<td>-</td>
+							<td>{{ grandSubtotalCat }}</td>
 
-							  <td>{{ grandSubtotal }}</td>
-							  <td>-</td>
-							  <td>-</td>
-						  </tr>
-						  {{/intervals}}
-						  {{/current_policy}}
-					  </tbody>
-				  </table>
-			  </div>
+							<td>{{ grandSubtotal }}</td>
+							<td>-</td>
+							<td>-</td>
+						</tr>
+						{{/intervals}}
+						{{/current_policy}}
+					</tbody>
+				</table>
+			</div>
 
-			  <div class="form_actions">
-				  <input type="button" id="updatePreview" class="button" value="Update Preview">
-				  <input type="submit" class="button" value="Confirm"> <a href="home">Cancel</a>
-			  </div>
-		  </div>
-		  {{/preview}}
-	  </div>
+			<div class="form_actions">
+				<input type="button" id="updatePreview" class="button" value="Update Preview">
+				<input type="submit" class="button" value="Confirm"> <a href="home">Cancel</a>
+			</div>
+		</div>
+		{{/preview}}
+	</div>
 </form>
+
