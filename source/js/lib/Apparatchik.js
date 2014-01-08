@@ -430,6 +430,14 @@ var Apparatchik = (function(){
     return $el.show(args);
   };
 
+  /**
+   * Effect: Set form element and label to required state
+   *
+   * @param {HTMLElement}  target
+   * @param {Boolean}      reset
+   * @param {Object}       args   any args passed to func
+   * @return {Object}      jQuery wrapped element
+   */
   Apparatchik.prototype.makeRequired = function(target, reset, args) {
     var $el = this.wrapField(target),
         $label = $el.siblings('label');
