@@ -244,8 +244,8 @@
 					<fieldset>
 						<legend>Personal info</legend>
 						<div>
-							<label for="{{guid}}_Insured1BirthDate">Birth date <i>Insured1BirthDate</i></label>
-							<input type="text" id="{{guid}}_Insured1BirthDate" name="Insured1BirthDate" value="{{Insured1BirthDate}}" class="datepicker" data-year-range="-100:+0">
+							<label for="{{guid}}_Insured1BirthDate" class="labelRequired">Birth date <i>Insured1BirthDate</i></label>
+							<input type="text" id="{{guid}}_Insured1BirthDate" name="Insured1BirthDate" value="{{Insured1BirthDate}}" class="datepicker" data-year-range="-100:+0" required>
 						</div>
 
 						<div>
@@ -400,11 +400,11 @@
 				</div>
 			</fieldset>
 			{{/additionalInsured}}
-			<fieldset class="form_actions">
+
+			<div class="form_actions">
 				<input type="submit" class="button" value="Confirm">
 				<a href="home">Nevermind, go back</a>
-			</fieldset>
-
+			</div>
 		</div>
 	</div>
 </form>
