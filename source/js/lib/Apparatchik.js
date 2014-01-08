@@ -425,9 +425,13 @@ var Apparatchik = (function(){
    * @return {Object}      jQuery wrapped element
    */
   Apparatchik.prototype.showElement = function(target, reset, args) {
-    var $el = this.wrapField(target).parent();
-    if (reset) { return $el.hide(args); }
-    return $el.show(args);
+    var _target = this.wrapArray(target),
+        _this = this;
+    _.each(_target, function(t){
+      var $el = _this.wrapField(t).parent();
+      if (reset) { return $el.hide(args); }
+      $el.show(args);
+    });
   };
 
   /**
