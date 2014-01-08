@@ -137,6 +137,9 @@ define [
       @adjustAlabamaLossTypeFields()
       @adjustAlabamaPropertyUsage()
 
+      if @apparatchik.isProduct('wic-hwo-al') || @apparatchik.isProduct('wic-ho3-al')
+        @addWICALBEhaviors()
+
       if @apparatchik.isProduct('fnic-ho3-la')
         @addFNICHO3LABehaviors()
 
@@ -154,6 +157,22 @@ define [
     # NOTE: These will start to get lengthy, you may want to move
     # them into external files and pull in via RequireJS.
     ###
+
+    addWICALBEhaviors : ->
+      rules = [
+        field: "WindstormDeductibleOption"
+        sideEffects: [
+          target: "HurricaneDeductible"
+          condition: "== 100"
+          effect: @apparatchik.showElement
+        ,
+          target: "WindHailDeductible"
+          condition: "== 200"
+          effect: @apparatchik.showElement
+        ]
+      ]
+
+      @apparatchik.applyEnumDynamics rules
 
     addOFCCCABehavhiors : ->
       rules = [
