@@ -53,6 +53,14 @@ compiled JavaScript files via the RequireJS rules in
 Everything will be dumped in `build` and version numbers (taken from
 the most recent Git tag) will be added to the compiled files.
 
+### Special note about IPM Forms
+
+All of the HTML templates for Policy Management (IPM) are found in `/source/js/modules/IPM/products`. You will get many tickets to update these forms, and you will be tempted to modify them within this repo. **You do so at your peril, and this way lies only madness.** You should make all changes to IPM templates in the [ipm-toolchain](https://github.com/icg360/ipm-toolchain) repo and then copy over the built folders to this one.
+
+**ipm-toolchain** is the canonical source for the HTML/JSON IPM files. Additionally, the ICS team is the canonical source of data for the insurance products and therefore it is incumbent upon them to maintain up-to-date versions of their Excel files. This warning has been given, heed as you will.
+
+That said, `/sources/coffee/modules/IPM/actions` contains all of the `.coffee` files to handling IPM actions such as Endorse. These are the "logic" behind the actions and reside in this repo. 
+
 ### Browser Compatability List
 
 * Firefox 12+
