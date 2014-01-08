@@ -1,6 +1,17 @@
 Updates
 -------
 
+### 2.2.8
+
+- Created IIC-HO3-SC Endorse forms
+  [ICS-2337](https://arc90dev.atlassian.net/browse/ICS-2337)
+- Enable post-bind for Occidental CA product
+  [ICS-2261](https://arc90dev.atlassian.net/browse/ICS-2261)
+- Updated deductibles for WIC AL Endorse forms
+  [ICS-2269](https://arc90dev.atlassian.net/browse/ICS-2269)
+- Add addtional enums to FNIC-HO3-LA endorse form
+  [ICS-2270](https://arc90dev.atlassian.net/browse/ICS-2270)
+
 ### 2.2.7
 
 - Updated FSIC-HO3-LA Endorse form [ICS-2272](https://arc90dev.atlassian.net/browse/ICS-2272)
