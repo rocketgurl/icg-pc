@@ -85,6 +85,11 @@
     If you want a condition to modify multiple targets place the id's
     of the target in an array: ['foo', 'bar']
 
+    You can also pack multiple functions into effect, also because
+    these are functions, you can drop your own closure in there
+    taking the standard arguments for an effect to handle custom
+    one-off jobbies.
+
  */
 
 var Apparatchik = (function(){
