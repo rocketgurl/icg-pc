@@ -1019,7 +1019,11 @@
 
 <div>
 	<label for="{{guid}}_EarthquakeLossAssessmentCoverage" >Earthquake Loss Assessment <i>EarthquakeLossAssessmentCoverage</i></label>
-	<input type="text" id="{{guid}}_EarthquakeLossAssessmentCoverage" name="EarthquakeLossAssessmentCoverage" value="{{EarthquakeLossAssessmentCoverage}}"  >
+  <select id="{{guid}}_EarthquakeLossAssessmentCoverage" name="EarthquakeLossAssessmentCoverage" data-value="{{EarthquakeLossAssessmentCoverage}}"  required >
+    {{#EnumsEarthquakeLossAssessmentCoverage}}
+		<option value="{{value}}">{{label}}</option>
+		{{/EnumsEarthquakeLossAssessmentCoverage}}
+  </select>
 </div>
 
 <div>
