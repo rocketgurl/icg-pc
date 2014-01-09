@@ -372,7 +372,8 @@ var Apparatchik = (function(){
 
       if (!_.isUndefined(rule.effect)) {
         var _target = _this.wrapArray(rule.target),
-            _effect = _this.wrapArray(rule.effect);
+            _effect = _this.wrapArray(rule.effect),
+            args    = (_.has(rule, 'args')) ? rule.args : '';
 
         _.each(_target, function(t) {
           _this.callEffects(_effect, _this, t, false, args);
@@ -453,6 +454,32 @@ var Apparatchik = (function(){
 
     $label.addClass('labelRequired');
     return $el.prop('required', true);
+  };
+
+  /**
+   * Effect: disable form element
+   *
+   * @param {HTMLElement}  target
+   * @param {Boolean}      reset
+   * @param {Object}       args   any args passed to func
+   * @return {Object}      jQuery wrapped element
+   */
+  Apparatchik.prototype.makeReadOnly = function(target, reset, args) {
+    var $el = this.wrapField(target);
+    if (reset) { $el.prop('disabled', false); }
+    return $el.prop('disabled', true);
+  };
+
+  /**
+   * Effect: force form element to be NOT disabled
+   *
+   * @param {HTMLElement}  target
+   * @param {Boolean}      reset
+   * @param {Object}       args   any args passed to func
+   * @return {Object}      jQuery wrapped element
+   */
+  Apparatchik.prototype.makeWritable = function(target, reset, args) {
+    return this.wrapField(target).prop('disabled', false);
   };
 
   // Return the module

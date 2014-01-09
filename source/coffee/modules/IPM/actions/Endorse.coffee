@@ -239,10 +239,23 @@ define [
         effect: @apparatchik.showElement
       ,
         field: "EarthquakeCoverage"
-        condition: { or: ["== 100", "== 150"]}
-        target: ["EarthquakeDeductible",
-                  "EarthquakeMasonryVeneerExclusion"]
-        effect: @apparatchik.showElement
+        sideEffects: [
+          condition: { or: ["== 100", "== 150"]}
+          target: ["EarthquakeDeductible", "EarthquakeMasonryVeneerExclusion"]
+          effect: [@apparatchik.showElement, @apparatchik.makeWritable]
+        ,
+          condition: "== 150"
+          target: "EarthquakeDeductible"
+          effect: [@apparatchik.makeReadOnly, (t) ->
+              # dynamically set value of field based on parent val
+              $el = @wrapField t
+              $parent = @wrapField "EarthquakeCoverage"
+              if ($parent.val() == '150')
+                $el.val('1500')
+              else
+                $el.val(false)
+            ]
+        ]
       ,
         field: "IncidentalBusinessOccupancy"
         condition: "== 100"
