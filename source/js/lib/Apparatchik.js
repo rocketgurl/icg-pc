@@ -235,7 +235,7 @@ var Apparatchik = (function(){
     var _this = this,
         _target = this.wrapArray(target),
         _effect = this.wrapArray(effect);
-    return _.each(target, function(t) {
+    return _.each(_target, function(t) {
       _this.callEffects(_effect, _this, target, true);
     });
   };
@@ -257,7 +257,7 @@ var Apparatchik = (function(){
     // Add a listener to 'change' which checks the condition
     field.on('change', function() {
       if (_this.isCondition($(this).val(), rule.condition)) {
-        if (_.isFunction(rule.effect)) {
+        if (!_.isEmpty(_effect)) {
           _.each(_target, function(t) {
             _this.callEffects(_effect, _this, t, false, args);
           });
