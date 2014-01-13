@@ -437,7 +437,9 @@ define [
     #### Check logged in state
     is_loggedin : ->
       if !@user?
-        @Amplify.publish 'controller', 'notice', "Please login to Policy Central to continue."
+        @Amplify.publish 'controller',
+                         'notice',
+                         "Please login to Policy Central to continue."
         @build_login()
         return false
       return true
@@ -453,7 +455,9 @@ define [
 
       menu = @config.get 'menu'
       if menu == false
-        @Amplify.publish 'controller', 'warning', "Sorry, you do not have access to any items in this environment."
+        @Amplify.publish 'controller',
+                         'warning',
+                         "Sorry, you do not have access to any items in this environment."
         return
 
       group_label = apps = menu[@current_state.business].contexts[@current_state.context].label
@@ -467,9 +471,36 @@ define [
       # race conditions (new tabs pushing onto the stack as old ones pop off)
       @teardown_workspace()
 
+      # Manually adjust CSS
       if $('#header').height() < 95
         $('#header').css('height', '95px')
 
+      # Setup service URLs
+      @configureServices()
+
+      @launch_app app
+
+      if @check_persisted_apps()
+        # Is this a search? attempt to launch it
+        if @current_state.module?
+          @launch_module(@current_state.module, @current_state.params)
+        @reassess_apps()
+
+      data =
+        business : @current_state.business
+        group    : MenuHelper.check_length(group_label)
+        'app'    : app.app_label
+
+      # Set breadcrumb
+      @set_breadcrumb(data)
+
+      # Store our workplace information in localStorage
+      @set_nav_state()
+
+    # Scan config model and dynamically update services object
+    # to use the correct URLs
+    #
+    configureServices : ->
       # Set the path to pxCentral & ixLibrary to the correct instance
       ixlibrary = @config.get_ixLibrary(@workspace_state)
       if ixlibrary.baseURL? || ixlibrary.baseURL != undefined
@@ -492,26 +523,6 @@ define [
 
       # Retrieve pxClient location from ixConfig
       @services.pxclient = @config.get_pxClient(@workspace_state)
-
-      @launch_app app
-
-      if @check_persisted_apps()
-        # Is this a search? attempt to launch it
-        if @current_state.module?
-          @launch_module(@current_state.module, @current_state.params)
-        @reassess_apps()
-
-      data =
-        business : @current_state.business
-        group    : MenuHelper.check_length(group_label)
-        'app'    : app.app_label
-
-      # Set breadcrumb
-      @set_breadcrumb(data)
-
-      # Store our workplace information in localStorage
-      @set_nav_state()
-
 
     # Build the breadcrumb in the top nav
     #
@@ -637,10 +648,7 @@ define [
       if !@$workspace_admin_initial?
         @$workspace_admin_initial = @$workspace_admin.find('ul').html()
 
-      @$workspace_admin.find('ul').html("""
-        <li>Welcome back &nbsp;<a href="#profile">#{@user.get('name')}</a></li>
-        <li><a href="/batch" target="_blank">mxDocTool</a></li>
-        <li><a href="#logout">Logout</a></li>""")
+      @$workspace_admin.find('ul').html("""<li>Welcome back &nbsp;<a href="#profile">#{@user.get('name')}</a></li><li><a href="/batch" target="_blank">mxDocTool</a></li><li><a href="#logout">Logout</a></li>""")
 
     #### Reset Admin Links
     #
