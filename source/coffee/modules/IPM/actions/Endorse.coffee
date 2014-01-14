@@ -50,7 +50,7 @@ define [
     submit : (e) ->
       super e
 
-      console.log ['submit', @values]
+      #console.log ['submit', @values]
 
       @values.formValues.transactionType = 'Endorsement'
 
@@ -538,7 +538,7 @@ define [
       interval_fields = _.omit(
         term_fields,
         _.difference(_.keys(term_fields), interval_field_names)
-        )
+      )
 
       # Adjustment values used in interval processing
       adjustments =
