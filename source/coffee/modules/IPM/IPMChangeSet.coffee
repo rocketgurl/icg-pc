@@ -333,6 +333,14 @@ define [
       </IntervalRequest>
     """
 
+    renew : """
+      <RenewalChanges>
+        <Set>
+          {{>changes}}
+        </Set>
+      </RenewalChanges>
+    """
+
     generate_document : """
       <DocumentChanges>
         <Set>

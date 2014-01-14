@@ -66,6 +66,10 @@
           "view": "Endorse"
         },
         {
+          "label": "Renew",
+          "view": "Renew"
+        },
+        {
           "label": "Change broker of record",
           "view": "BrokerOfRecord"
         },
