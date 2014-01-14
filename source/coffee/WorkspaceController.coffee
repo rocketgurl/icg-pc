@@ -79,14 +79,12 @@ define [
     global_flash          : new Messenger($('#canvas'), 'controller')
     Workspaces            : new WorkspaceStateCollection()
     workspace_zindex      : 30000
+    workspace_stack       : {} # store a ref to WorkspaceStack here
     IXVOCAB_AUTH          : 'Y29tLmljcy5hcHBzLmluc2lnaHRjZW50cmFsOjVhNWE3NGNjODBjMzUyZWVkZDVmODA4MjkzZWFjMTNk'
 
     # Simple logger
     logger : (msg) ->
       @Amplify.publish 'log', msg
-
-    # Maintain an array of WorkspaceCanvasView objects (all of our tabs)
-    workspace_stack : new WorkspaceStack(this)
 
     # If app is not saved in @workspace_state and is not the
     # workspace defined app then we need to add it to our
@@ -787,6 +785,9 @@ define [
 
   _.extend WorkspaceController, Backbone.Events
 
+  # Maintain an array of WorkspaceCanvasView objects (all of our
+  # tabs)
+  WorkspaceController.workspace_stack = new WorkspaceStack(WorkspaceController)
 
   # Events for Controller
   #
