@@ -451,6 +451,7 @@ h2.ipm-action-header { font-size: 16px; font-size: 1.6rem; color: dimgrey; margi
 .ipm-container fieldset label.labelRequired { color: #444; font-weight: bold; }
 .ipm-container fieldset label.labelRequired:after { color: #752E2E; content: ' *'; }
 .ipm-container fieldset label.validation_error { color: #a00; }
+.ipm-container fieldset div > i { margin: 0 0 0 10px; padding: 5px 0 0 0; font-size: 12px; font-size: 1.2rem; color: #4f4f4f; }
 .ipm-container fieldset input.validation_error, .ipm-container fieldset textarea.validation_error { box-shadow: 0 0 5px #a00000; background-color: #f3c2ca; }
 .ipm-container fieldset select.validation_error { background: #fcc; }
 .ipm-container fieldset input { vertical-align: top; }
@@ -477,6 +478,10 @@ h2.ipm-action-header { font-size: 16px; font-size: 1.6rem; color: dimgrey; margi
 .data_table thead { border-bottom: lightgrey 1px solid; }
 .data_table thead tr { background: #e5e5e5; }
 .data_table th { font-size: 12px; font-size: 1.2rem; font-weight: bold; padding: 4px 8px; text-align: center; }
+.data_table th.contains_var { cursor: help; }
+.data_table th.col_group_heading { background-color: rgba(53, 53, 53, 0.05); border-left: 1px solid #B8B8B8; border-right: 1px solid #B8B8B8; padding-top: 4px; font-size: 1em; vertical-align: bottom; }
+.data_table th i { background-color: #F3E893; -webkit-border-radius: 4px; -moz-border-radius: 4px; -ms-border-radius: 4px; -o-border-radius: 4px; border-radius: 4px; color: #1f1f1f; display: block; font-size: 0.85em; font-weight: normal; opacity: 0; padding: 2px 4px; position: absolute; z-index: 2000; margin-top: 5px; -webkit-transition-delay: 0.3s; -moz-transition-delay: 0.3s; -o-transition-delay: 0.3s; transition-delay: 0.3s; -webkit-transition-property: opacity; -moz-transition-property: opacity; -o-transition-property: opacity; transition-property: opacity; -webkit-transition-duration: 0.2s; -moz-transition-duration: 0.2s; -o-transition-duration: 0.2s; transition-duration: 0.2s; }
+.data_table th:hover i { opacity: 1; }
 .data_table td { font-size: 14px; font-size: 1.4rem; padding: 8px; text-align: right; color: dimgrey; }
 .data_table td input[type=text] { font-size: 14px; font-size: 1.4rem; width: 50px; padding: 1px 3px; text-align: right; }
 .data_table .calculated_value, .data_table .subtotal { color: #000; font-weight: bold; }
