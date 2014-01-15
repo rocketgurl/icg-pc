@@ -483,6 +483,12 @@ define [
       </BrokerOfRecordChanges>
     """
 
+    unlock_policy : """
+      <Flags>
+        <Flag name="{{name}}" value="{{value}}"/>
+      </Flags>
+    """
+
     update_mortgagee : """
       <ReasonCode>53</ReasonCode>
       <CustomerChanges>
