@@ -18,9 +18,19 @@ define [
         MODULE      : @MODULE
       })
 
+      @MILLISECONDS_PER_DAY = 24 * 60 * 60 * 1000
+      @MONEYFIELDS = ['GrandSubtotalNonCatUnadjusted',
+                      'GrandSubtotalCatUnadjusted',
+                      'GrandSubtotalNonCat',
+                      'GrandSubtotalCat',
+                      'GrandSubtotal',
+                      'TotalFees',
+                      'TotalPremium']
+
       @coverage_calculations     = {} # Custom calculations objects
       @transaction_request_xml   = null
       @override_validation_state = false # used to override rate validation
+
       @events =
         "click fieldset h3" : "toggleFieldset"
 
@@ -39,6 +49,10 @@ define [
     #
     processView : (vocabTerms, view) =>
       @processViewData(vocabTerms, view)
+
+      # Used in processPreview
+      @previousTerms = @getTermsForPreview()
+
       @trigger "loaded", this, @postProcessView
 
     # **Apply behaviors to default form after rendering**
@@ -80,9 +94,21 @@ define [
     # in the callbackPreview()
     #
     processPreview : (vocabTerms, view) =>
+      # Do some initial gathering using Endorse methods
       @processViewData(vocabTerms, view)
       @viewData.preview        = @Endorse.parseIntervals(@values)
       @viewData.current_policy = @current_policy_intervals
+
+      @viewData.proposedTerm = @getTermsForPreview true
+      @viewData.previousTerms = @previousTerms
+
+      # If a premium override has been entered we need to display a message
+      if !_.isEmpty(@viewData.GrandSubtotalOverride)
+        @viewData.premiumOverride = true
+        @viewData.msg = true
+        @viewData.msgType = 'warning'
+        @viewData.msgHeading = 'A premium override has ben applied'
+        @viewData.msgText = 'Values affected by the override are highlighted below.'
 
       @trigger("loaded", this, @postProcessPreview)
 
@@ -138,6 +164,54 @@ define [
       )
 
     preview : ->
+
+
+    # We need to return a data set made of Proposed Term and Previous
+    # Term. We use the Terms of the policy and abstract out the items
+    # that we need, returning an array of the custom object(s)
+    #
+    # @param _Boolean_ last_term  if true then just use lastTerm()
+    # @return _Array_
+    #
+    getTermsForPreview : (last_term) ->
+
+      terms = if last_term then [@MODULE.POLICY.getLastTerm()] else @MODULE.POLICY.getTerms()
+      vocab_terms = @tpl_cache.Renew.model || {}
+
+      _.map terms, (term) =>
+        current = @MODULE.POLICY.getTermDataItemValues(vocab_terms)
+
+        # Remove any false values from object
+        current_term = _.object(_.keys(current), _.map(_.values(current), (i) -> i || ""))
+
+        start_date = Date.parse term.EffectiveDate
+        end_date = Date.parse term.ExpirationDate
+
+        current_term.startDate = @Helpers.stripTimeFromDate term.EffectiveDate, 'MM DD YYYY'
+        current_term.endDate = @Helpers.stripTimeFromDate term.ExpirationDate, 'MM DD YYYY'
+
+        current_term.days = Math.round (end_date - start_date) / @MILLISECONDS_PER_DAY
+
+        # There was a situation (in the murky past) in which FRC values
+        # were coming up null, so we needed to ensure a zero value
+        catAdjust = current_term.HurricanePremiumDollarAdjustmentFRC || 0
+        nonCatAdjust = current_term.NonHurricanePremiumDollarAdjustmentFRC || 0
+
+        current_term.GrandSubtotalNonCatUnadjusted =
+          parseInt(current_term.GrandSubtotalNonCat, 10) - parseInt(nonCatAdjust, 10)
+
+        current_term.GrandSubtotalCatUnadjusted =
+          parseInt(current_term.GrandSubtotalCat, 10) - parseInt(catAdjust, 10)
+
+        # format $$ fields
+        @formatMoneyFields current_term, @MONEYFIELDS
+
+    # Loop through whitelisted fields and format for display as $$
+    formatMoneyFields : (term, whitelist) ->
+      _ret = _.clone term
+      for w in whitelist
+        _ret[w] = @Helpers.formatMoney parseInt(_ret[w], 10)
+      _ret
 
     # ICS-1363 & ICS-1564
     #
