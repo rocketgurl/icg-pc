@@ -12,7 +12,7 @@ define [
     initialize : ->
       super
       @events =
-        "click .ipm-action-links li a" : "submit"
+        "click .unlock-links li a" : "submit"
 
     ready : ->
       super
