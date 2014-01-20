@@ -113,6 +113,15 @@
 							{{/EnumsHurricaneDeductible}}
 						</select>
 					</div>
+
+		      <div>
+			      <label for="{{guid}}_AllOtherPerilsDeductible" class="labelRequired">All Other Perils Deductible $ <i>AllOtherPerilsDeductible</i></label>
+			      <select id="{{guid}}_AllOtherPerilsDeductible" name="AllOtherPerilsDeductible" data-value="{{AllOtherPerilsDeductible}}" required >
+				      {{#EnumsAllOtherPerilsDeductible}}
+				      <option value="{{value}}">{{label}}</option>
+				      {{/EnumsAllOtherPerilsDeductible}}
+			      </select>
+		      </div>
 				</div>
 			</fieldset>
 
@@ -460,7 +469,7 @@
 					<col span="1" class="col_hurricane"></col>
 					<col span="3" class="col_amounts"></col>
 					<thead>
-					<tr>
+					  <tr>
 			   			<th>Term</th>
 			   			<th>Starts</th>
 			   			<th>Ends</th>
@@ -513,3 +522,4 @@
 		{{/preview}}
 	</div>
 </form>
+

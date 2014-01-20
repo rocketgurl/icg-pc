@@ -72,17 +72,8 @@
 						<i>(Expiring: {{CoverageC}})</i>
 					</div>
 					<div>
-						<label for="{{guid}}_OptionCoverageD" class="labelRequired">Coverage D (% of Coverage A) <i>OptionCoverageD</i></label>
-						<select id="{{guid}}_OptionCoverageD" name="OptionCoverageD" data-value="{{OptionCoverageD}}" data-affects="CoverageD" required>
-							{{#EnumsOptionCoverageD}}
-							<option value="{{value}}">{{label}}</option>
-							{{/EnumsOptionCoverageD}}
-						</select>
-					</div>
-					<div>
 						<label for="{{guid}}_CoverageD">Coverage D <i>CoverageD</i></label>
 						<input type="text" id="{{guid}}_CoverageD" name="CoverageD" value="{{CoverageD}}" readonly>
-						<i>(Expiring: {{CoverageD}})</i>
 					</div>
 					<div>
 						<label for="{{guid}}_CoverageE">Coverage E <i>CoverageE</i></label>
@@ -528,3 +519,4 @@
 		{{/preview}}
 	</div>
 </form>
+
