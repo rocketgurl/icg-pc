@@ -181,7 +181,7 @@
 
 		        <div>
 			        <label for="{{guid}}_OptionCoverageB" class="labelRequired">Coverage B (% Of Coverage A) <i>OptionCoverageB</i></label>
-			        <select id="{{guid}}_OptionCoverageB" name="OptionCoverageB" data-value="{{OptionCoverageB}}" required >
+			        <select id="{{guid}}_OptionCoverageB" name="OptionCoverageB" data-value="{{OptionCoverageB}}" data-affects="CoverageB" required >
 				        {{#EnumsOptionCoverageB}}
 				        <option value="{{value}}">{{label}}</option>
 				        {{/EnumsOptionCoverageB}}
@@ -190,12 +190,12 @@
 
 		        <div>
 			        <label for="{{guid}}_CoverageB">Coverage B <i>CoverageB</i></label>
-			        <input type="text" id="{{guid}}_CoverageB" name="CoverageB" value="{{CoverageB}}" readonly>
+			        <input type="text" id="{{guid}}_CoverageB" name="CoverageB" value="{{CoverageB}}" disabled="disabled">
 		        </div>
 
 		        <div>
 			        <label for="{{guid}}_OptionCoverageC" class="labelRequired">Coverage C (% Of Coverage A) <i>OptionCoverageC</i></label>
-			        <select id="{{guid}}_OptionCoverageC" name="OptionCoverageC" data-value="{{OptionCoverageC}}" required >
+			        <select id="{{guid}}_OptionCoverageC" name="OptionCoverageC" data-value="{{OptionCoverageC}}" data-affects="CoverageC" required >
 				        {{#EnumsOptionCoverageC}}
 				        <option value="{{value}}">{{label}}</option>
 				        {{/EnumsOptionCoverageC}}
@@ -204,12 +204,12 @@
 
 		        <div>
 			        <label for="{{guid}}_CoverageC">Coverage C <i>CoverageC</i></label>
-			        <input type="text" id="{{guid}}_CoverageC" name="CoverageC" value="{{CoverageC}}" readonly>
+			        <input type="text" id="{{guid}}_CoverageC" name="CoverageC" value="{{CoverageC}}" disabled="disabled">
 		        </div>
 
 		        <div>
 			        <label for="{{guid}}_OptionCoverageD" class="labelRequired">Coverage D (% Of Coverage A) <i>OptionCoverageD</i></label>
-			        <select id="{{guid}}_OptionCoverageD" name="OptionCoverageD" data-value="{{OptionCoverageD}}" required >
+			        <select id="{{guid}}_OptionCoverageD" name="OptionCoverageD" data-value="{{OptionCoverageD}}" data-affects="CoverageD" required >
 				        {{#EnumsOptionCoverageD}}
 				        <option value="{{value}}">{{label}}</option>
 				        {{/EnumsOptionCoverageD}}
@@ -218,7 +218,7 @@
 
 		        <div>
 			        <label for="{{guid}}_CoverageD">Coverage D <i>CoverageD</i></label>
-			        <input type="text" id="{{guid}}_CoverageD" name="CoverageD" value="{{CoverageD}}" readonly>
+			        <input type="text" id="{{guid}}_CoverageD" name="CoverageD" value="{{CoverageD}}" disabled="disabled">
 		        </div>
 
 		        <div>
@@ -1479,12 +1479,12 @@
 				    <legend id="{{guid}}_loss_1">Loss 1</legend>
 		        <div>
 			        <label for="{{guid}}_LossAmount1" >Amount <i>LossAmount1</i></label>
-			        <input type="text" id="{{guid}}_LossAmount1" name="LossAmount1" value="{{LossAmount1}}"  readonly>
+			        <input type="text" id="{{guid}}_LossAmount1" name="LossAmount1" value="{{LossAmount1}}"   >
 		        </div>
 
 		        <div>
 			        <label for="{{guid}}_LossDate1" >Date <i>LossDate1</i></label>
-			        <input type="text" id="{{guid}}_LossDate1" name="LossDate1" value="{{LossDate1}}" class="datepicker"  readonly>
+			        <input type="text" id="{{guid}}_LossDate1" name="LossDate1" value="{{LossDate1}}" class="datepicker"   >
 		        </div>
 
 		        <div>
@@ -1507,19 +1507,19 @@
 
 		        <div>
 			        <label for="{{guid}}_LossDescription1" >Description <i>LossDescription1</i></label>
-			        <input type="text" id="{{guid}}_LossDescription1" name="LossDescription1" value="{{LossDescription1}}"  readonly>
+			        <input type="text" id="{{guid}}_LossDescription1" name="LossDescription1" value="{{LossDescription1}}"   >
 		        </div>
 		      </fieldset>
 		      <fieldset>
 				    <legend id="{{guid}}_loss_2">Loss 2</legend>
 		        <div>
 			        <label for="{{guid}}_LossAmount2" >Amount <i>LossAmount2</i></label>
-			        <input type="text" id="{{guid}}_LossAmount2" name="LossAmount2" value="{{LossAmount2}}"  readonly>
+			        <input type="text" id="{{guid}}_LossAmount2" name="LossAmount2" value="{{LossAmount2}}"   >
 		        </div>
 
 		        <div>
 			        <label for="{{guid}}_LossDate2" >Date <i>LossDate2</i></label>
-			        <input type="text" id="{{guid}}_LossDate2" name="LossDate2" value="{{LossDate2}}" class="datepicker"  readonly>
+			        <input type="text" id="{{guid}}_LossDate2" name="LossDate2" value="{{LossDate2}}" class="datepicker"   >
 		        </div>
 
 		        <div>
@@ -1542,19 +1542,19 @@
 
 		        <div>
 			        <label for="{{guid}}_LossDescription2" >Description <i>LossDescription2</i></label>
-			        <input type="text" id="{{guid}}_LossDescription2" name="LossDescription2" value="{{LossDescription2}}"  readonly>
+			        <input type="text" id="{{guid}}_LossDescription2" name="LossDescription2" value="{{LossDescription2}}"   >
 		        </div>
 		      </fieldset>
 		      <fieldset>
 				    <legend id="{{guid}}_loss_3">Loss 3</legend>
 		        <div>
 			        <label for="{{guid}}_LossAmount3" >Amount <i>LossAmount3</i></label>
-			        <input type="text" id="{{guid}}_LossAmount3" name="LossAmount3" value="{{LossAmount3}}"  readonly>
+			        <input type="text" id="{{guid}}_LossAmount3" name="LossAmount3" value="{{LossAmount3}}"   >
 		        </div>
 
 		        <div>
 			        <label for="{{guid}}_LossDate3" >Date <i>LossDate3</i></label>
-			        <input type="text" id="{{guid}}_LossDate3" name="LossDate3" value="{{LossDate3}}" class="datepicker"  readonly>
+			        <input type="text" id="{{guid}}_LossDate3" name="LossDate3" value="{{LossDate3}}" class="datepicker"   >
 		        </div>
 
 		        <div>
@@ -1577,19 +1577,19 @@
 
 		        <div>
 			        <label for="{{guid}}_LossDescription3" >Description <i>LossDescription3</i></label>
-			        <input type="text" id="{{guid}}_LossDescription3" name="LossDescription3" value="{{LossDescription3}}"  readonly>
+			        <input type="text" id="{{guid}}_LossDescription3" name="LossDescription3" value="{{LossDescription3}}"   >
 		        </div>
 		      </fieldset>
 		      <fieldset>
 				    <legend id="{{guid}}_loss_4">Loss 4</legend>
 		        <div>
 			        <label for="{{guid}}_LossAmount4" >Amount <i>LossAmount4</i></label>
-			        <input type="text" id="{{guid}}_LossAmount4" name="LossAmount4" value="{{LossAmount4}}"  readonly>
+			        <input type="text" id="{{guid}}_LossAmount4" name="LossAmount4" value="{{LossAmount4}}"   >
 		        </div>
 
 		        <div>
 			        <label for="{{guid}}_LossDate4" >Date <i>LossDate4</i></label>
-			        <input type="text" id="{{guid}}_LossDate4" name="LossDate4" value="{{LossDate4}}" class="datepicker"  readonly>
+			        <input type="text" id="{{guid}}_LossDate4" name="LossDate4" value="{{LossDate4}}" class="datepicker"   >
 		        </div>
 
 		        <div>
@@ -1612,19 +1612,19 @@
 
 		        <div>
 			        <label for="{{guid}}_LossDescription4" >Description <i>LossDescription4</i></label>
-			        <input type="text" id="{{guid}}_LossDescription4" name="LossDescription4" value="{{LossDescription4}}"  readonly>
+			        <input type="text" id="{{guid}}_LossDescription4" name="LossDescription4" value="{{LossDescription4}}"   >
 		        </div>
 		      </fieldset>
 		      <fieldset>
 				    <legend id="{{guid}}_loss_5">Loss 5</legend>
 		        <div>
 			        <label for="{{guid}}_LossAmount5" >Amount <i>LossAmount5</i></label>
-			        <input type="text" id="{{guid}}_LossAmount5" name="LossAmount5" value="{{LossAmount5}}"  readonly>
+			        <input type="text" id="{{guid}}_LossAmount5" name="LossAmount5" value="{{LossAmount5}}"   >
 		        </div>
 
 		        <div>
 			        <label for="{{guid}}_LossDate5" >Date <i>LossDate5</i></label>
-			        <input type="text" id="{{guid}}_LossDate5" name="LossDate5" value="{{LossDate5}}" class="datepicker"  readonly>
+			        <input type="text" id="{{guid}}_LossDate5" name="LossDate5" value="{{LossDate5}}" class="datepicker"   >
 		        </div>
 
 		        <div>
@@ -1647,7 +1647,7 @@
 
 		        <div>
 			        <label for="{{guid}}_LossDescription5" >Description <i>LossDescription5</i></label>
-			        <input type="text" id="{{guid}}_LossDescription5" name="LossDescription5" value="{{LossDescription5}}"  readonly>
+			        <input type="text" id="{{guid}}_LossDescription5" name="LossDescription5" value="{{LossDescription5}}"   >
 		        </div>
 		      </fieldset>
 			  </div>
