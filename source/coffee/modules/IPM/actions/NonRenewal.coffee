@@ -20,7 +20,6 @@ define [
       @events =
         "click input[name=nonrenew]" : "loadSubAction"
         "click input[name=pending]" : "loadSubAction"
-        "click input[name=reinstate]" : "loadSubAction"
         "click input[name=rescind]" : "loadSubAction"
 
       # Metadata about Cancellation types, used in views
@@ -33,14 +32,10 @@ define [
             'effectiveDate' : 'dateRange'
         'pending' :
           label  : 'PendingNonRenewal'
-          title  : 'The policy has been set to pending cancel'
-          submit : 'Set to pending non-renew'
+          title  : 'The policy has been set to pending non-renewal'
+          submit : 'Set to pending non-renewal'
           validators :
             'effectiveDate' : 'dateRange'
-        'reinstate' :
-          label  : 'Reinstatement'
-          title  : 'The non-renewal has been reinstated'
-          submit : 'Reinstate this policy'
         'rescind' :
           label  : 'PendingNonRenewalRescission'
           title  : 'The policy pending non-renewal has been rescinded'
@@ -63,12 +58,12 @@ define [
       @CURRENT_SUBVIEW = false
       [viewData, view] = @processViewData(vocabTerms, view)
 
-      @processCancellationData(viewData)
+      @processNonRenewalData(viewData)
       @trigger "loaded", this, @postProcessView
 
     # **Build sub view template using existing data objects**
     #
-    # We need to rebuild the @viewData object (processCancellationData) for
+    # We need to rebuild the @viewData object (processNonRenewalData) for
     # subviews, otherwise we will lose some data and get very subtle bugs
     # (missing dateRange, etc.)
     #
@@ -80,7 +75,7 @@ define [
       # to go back to the parent view, hence third param of **true** in
       # @processViewData
       [viewData, view] = @processViewData(vocabTerms, view, true)
-      @processCancellationData(viewData)
+      @processNonRenewalData(viewData)
 
       # Load form validation rules into FormValidation
       if _.has(@TRANSACTION_TYPES[@CURRENT_SUBVIEW], 'validators')
@@ -134,7 +129,8 @@ define [
 
       @trigger("loaded", this, @postProcessSubView)
 
-    # Assemble additional fields needed for the cancellation views
+    # Inspect the Policy to determine which buttons on the view to
+    # enable/disable and which labels to display
     #
     # @param `viewData` _object_ model.json values
     # @return _Object_ updated @viewData
@@ -151,16 +147,6 @@ define [
         policyEffectiveDate     : policy.getEffectiveDate()
         policyExpirationDate    : policy.getExpirationDate()
         nonRenewalEffectiveDate : null
-
-      # getState() may return an object
-      if _.isObject nonrenew_data.policyState
-        nonrenew_data.policyStateVal = nonrenew_data.policyState.text
-      else
-        nonrenew_data.policyStateVal = nonrenew_data.policyState
-
-      # Pending Cancellation policies require additional field processing
-      if nonrenew_data.pendingCancel && _.isObject(nonrenew_data.pendingCancel)
-        nonrenew_data = @processPendingCancellation(nonrenew_data, viewData)
 
       # Process more data based on policyState
       nonrenew_data = switch nonrenew_data.policyStateVal
@@ -180,21 +166,6 @@ define [
     # @return _Object_ updated nonrenew_data
     #
     processPendingCancellation : (nonrenew_data, viewData) ->
-      reasonLabel = _.where(viewData.EnumsReasonCodesAndLabels, { value : nonrenew_data.pendingCancel.reasonCode })
-      if _.isArray(reasonLabel) && reasonLabel.length > 0
-        reasonLabel = reasonLabel[0]['label']
-
-      nonrenew_data.pendingCancelReasonCode = \
-        nonrenew_data.pendingCancel.reasonCode
-
-      nonrenew_data.pendingCancelReasonCodeLabel = reasonLabel
-
-      nonrenew_data.cancellationEffectiveDate    = \
-        @Helpers.stripTimeFromDate(nonrenew_data.pendingCancel.cancellationEffectiveDate)
-
-      # I find this to be dubious, erasing the object with a boolean - DN
-      nonrenew_data.pendingCancel = true
-
       nonrenew_data
 
     # Assemble message fields and other values for Active Policies
@@ -203,35 +174,7 @@ define [
     # @return _Object_ updated nonrenew_data
     #
     processActivePolicy : (nonrenew_data) ->
-      if nonrenew_data.pendingCancel
-        active_data =
-          cancelDisabled    : ''
-          reinstateDisabled : 'disabled'
-          pendingDisabled   : 'disabled'
-          rescindDisabled   : ''
-          msg               : true
-          msgType           : 'notice'
-          msgHeading        : 'This is an active policy that is pending cancellation.'
-          msgText           : """
-            Cancellation is effective <b>#{nonrenew_data.cancellationEffectiveDate}</b> due to <b>#{nonrenew_data.pendingCancelReasonCodeLabel}</b>
-          """
-      else
-        active_data =
-          cancelDisabled            : ''
-          pendingDisabled           : ''
-          reinstateDisabled         : 'disabled'
-          rescindDisabled           : 'disabled'
-          pendingCancelReasonCode   : null
-          cancellationEffectiveDate : null
-          msg                       : false
-          msgType                   : null
-          msgHeading                : null
-          msgText                   : null
-
-      if @CURRENT_SUBVIEW != false
-        active_data.msg = false
-
-      _.extend(nonrenew_data, active_data)
+      nonrenew_data
 
     # Assemble message fields and other values for Cancelled Policies
     #
@@ -240,31 +183,7 @@ define [
     # @return _Object_ updated nonrenew_data
     #
     processCancelledPolicy : (nonrenew_data, viewData) ->
-      reasonLabel = _.where(viewData.EnumsReasonCodesAndLabels, { value : nonrenew_data.policyState.reasonCode })
-
-      if _.isArray(reasonLabel) && reasonLabel.length > 0
-        reasonLabel = reasonLabel[0]['label']
-
-      effectiveDate = 'not available'
-      if _.has(nonrenew_data.policyState, 'effectiveDate')
-        effectiveDate = @Helpers.stripTimeFromDate(nonrenew_data.policyState.effectiveDate)
-
-      active_data =
-        cancelDisabled    : 'disabled'
-        pendingDisabled   : 'disabled'
-        rescindDisabled   : 'disabled'
-        reinstateDisabled : ''
-        msg               : true
-        msgType           : 'notice'
-        msgHeading        : 'This is a cancelled policy'
-        msgText           : """
-            Cancellation took effect <b>#{effectiveDate}</b> due to <b>#{reasonLabel}</b>
-          """
-
-      if @CURRENT_SUBVIEW != false
-        active_data.msg = false
-
-      _.extend(nonrenew_data, active_data)
+      nonrenew_data
 
     # Load a sub-view into the current space
     # These are triggered by button clicks
@@ -275,7 +194,7 @@ define [
         action = $(e.currentTarget).attr('name') ? false
         if action?
           @CURRENT_SUBVIEW = action
-          @fetchTemplates(@MODULE.POLICY, action, @processSubView, true)
+          @fetchTemplates(@MODULE.POLICY, "nonrenewal_#{action}", @processSubView, true)
         else
           msg = "Could not load that action. Contact support."
           @PARENT_VIEW.displayMessage('error', msg, 12000)
@@ -309,12 +228,6 @@ define [
       # We selectively delete certain empty values later
       if @values.formValues.comment == ''
         @values.formValues.comment = '__deleteEmptyProperty'
-
-      transaction_types =
-        'cancel'         : 'Cancellation'
-        'cancel_pending' : 'PendingCancellation'
-        'reinstate'      : 'Reinstatement'
-        'rescind'        : 'PendingCancellationRescission'
 
       @values.formValues.transactionType = @TRANSACTION_TYPES[@CURRENT_SUBVIEW].label ? false
 
