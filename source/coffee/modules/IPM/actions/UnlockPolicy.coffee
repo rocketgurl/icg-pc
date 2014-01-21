@@ -1,10 +1,18 @@
 define [
-  'modules/IPM/IPMActionView'
-], (IPMActionView) ->
+  'modules/IPM/IPMActionView',
+  'mustache'
+], (IPMActionView, Mustache) ->
 
   ###
   # This sends a very minimal and simple PCS which should
   # 'unlock' a policy
+  #
+  # !! NOTE !!
+  #
+  # We have to make a custom PCS and send it to
+  # pxServer, not pxCentral so we handroll the XML and
+  # point ChangeSet to pxServer
+  #
   ###
 
   class UnlockPolicy extends IPMActionView
@@ -27,12 +35,18 @@ define [
 
     submit : (e) ->
       super
+      context =
+        user : @MODULE.USER.get 'email'
 
-      @values.formValues.name = "locked"
-      @values.formValues.value = "false"
+      tpl = """<PolicyChangeSet schemaVersion="2.1" username="{{user}}" description="Unlock Policy"><Flags><Flag name="locked" value="false"/></Flags></PolicyChangeSet>"""
+
+      xml      = Mustache.render tpl, context
+      id       = @MODULE.POLICY.id
+      pxserver = "#{@MODULE.CONTROLLER.services.pxserver}/#{id}"
 
       @ChangeSet.commitChange(
-        @ChangeSet.getPolicyChangeSet(@values),
+        xml,
         @callbackSuccess,
         @callbackError
+        { url : pxserver }
       )
