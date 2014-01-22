@@ -48,5 +48,7 @@ define [
         xml,
         @callbackSuccess,
         @callbackError
-        { url : pxserver }
+        url : pxserver
+        headers :
+          'Authorization' : "Basic #{@MODULE.CONTROLLER.IXVOCAB_AUTH}"
       )
