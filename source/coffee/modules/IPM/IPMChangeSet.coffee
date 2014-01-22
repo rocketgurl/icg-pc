@@ -374,6 +374,7 @@ define [
     """
 
     change_payment_plan : """
+      <Comment>{{comment}}</Comment>
       <AccountingChanges>
         <Set>
           <DataItem name="Payor" value="{{payor}}"/>

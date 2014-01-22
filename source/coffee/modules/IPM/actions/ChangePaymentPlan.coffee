@@ -36,6 +36,11 @@ define [
       @processViewData(vocabTerms, view)
       @trigger "loaded", this, @postProcessView
 
+    postProcessView : ->
+      super
+
+      @$el.find(@makeId('paymentPlanType')).val(@MODULE.POLICY.find('Accounting PaymentPlan type'))
+
     # **Process Form**
     # On submit we do some action specific processing and then send to the
     # TransactionRequest monster
@@ -48,12 +53,15 @@ define [
         endDate            : @MODULE.POLICY.get('lastInterval').EndDate ? null
         termEffectiveDate  : @MODULE.POLICY.get('firstTerm').EffectiveDate ? null
         termExpirationDate : @MODULE.POLICY.get('firstTerm').ExpirationDate ? null
+        comment            : @$el.find(@makeId('comment')).val()
 
       values.payor = if @values.formValues.paymentPlanType == 'invoice' then 100 else 200
 
       @values.formValues = _.extend(@values.formValues, values)
 
       @values.formValues.transactionType = 'AccountingChanges'
+
+      console.log @values
 
       # Assemble the ChangeSet XML and send to server
       @ChangeSet.commitChange(
