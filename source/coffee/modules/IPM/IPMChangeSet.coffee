@@ -368,7 +368,7 @@ define [
     change_payment_plan : """
       <AccountingChanges>
         <Set>
-          <DataItem name="Payor" value="200"/>
+          <DataItem name="Payor" value="{{payor}}"/>
           <DataItem name="PaymentPlanType" value="{{paymentPlanType}}"/>
         </Set>
         <Delete/>

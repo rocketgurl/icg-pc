@@ -49,6 +49,8 @@ define [
         termEffectiveDate  : @MODULE.POLICY.get('firstTerm').EffectiveDate ? null
         termExpirationDate : @MODULE.POLICY.get('firstTerm').ExpirationDate ? null
 
+      values.payor = if @values.formValues.paymentPlanType == 'invoice' then 100 else 200
+
       @values.formValues = _.extend(@values.formValues, values)
 
       @values.formValues.transactionType = 'AccountingChanges'
