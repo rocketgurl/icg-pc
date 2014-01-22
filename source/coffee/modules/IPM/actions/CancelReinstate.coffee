@@ -266,6 +266,9 @@ define [
 
       _.extend(cancel_data, active_data)
 
+    # Load a sub-view into the current space
+    # These are triggered by button clicks
+    #
     loadSubAction : (e) ->
       e.preventDefault()
       if e.currentTarget.className != 'disabled'
@@ -462,4 +465,3 @@ define [
         viewData.preview.AdvanceNoticeDays = 0
 
       viewData
-
