@@ -1,6 +1,15 @@
 Updates
 -------
 
+### 2.3.0
+
+- Comment box for PCN is not carrying data over in IPM [ICS-2362](https://arc90dev.atlassian.net/browse/ICS-2362)
+- California Coverage amounts not updating [ICS-2353](https://arc90dev.atlassian.net/browse/ICS-2353)
+- As a Processor, I would like to be able to unlock a policy through IPM [ICS-2342](https://arc90dev.atlassian.net/browse/ICS-2342)
+- As a policy servicer, I want Policy Central to support payment plan changes by submitting a TransactionRequest of type AccountingChanges. [ICS-2092](https://arc90dev.atlassian.net/browse/ICS-2092)
+- Update FSIC-DP3-LA Endorse Forms	 Critical [ICS-2352](https://arc90dev.atlassian.net/browse/ICS-2352)
+- Add field to OFCC/WIC-HO3-NJ Endorse Forms [ICS-2354](https://arc90dev.atlassian.net/browse/ICS-2354)
+
 ### 2.2.8
 
 - Created IIC-HO3-SC Endorse forms
