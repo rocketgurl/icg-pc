@@ -152,6 +152,7 @@ define [
         policyExpirationDate         : policy.getExpirationDate()
         cancellationEffectiveDate    : null
 
+
       # getState() may return an object
       if _.isObject cancel_data.policyState
         cancel_data.policyStateVal = cancel_data.policyState.text

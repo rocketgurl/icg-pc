@@ -304,6 +304,7 @@ define [
 
     cancel_reinstate : """
       <ReasonCode>{{reasonCode}}</ReasonCode>
+      <Comment>{{comment}}</Comment>
     """
 
     change_customer : """
