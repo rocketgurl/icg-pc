@@ -1,7 +1,8 @@
 define [
   'modules/IPM/IPMActionView',
-  'modules/IPM/actions/Endorse'
-], (IPMActionView, Endorse) ->
+  'modules/IPM/actions/Endorse',
+  'mustache'
+], (IPMActionView, Endorse, Mustache) ->
 
   # **NOTE** - we are loading in the EndorseAction because we need to use
   # Endorse.parseIntervals
@@ -19,8 +20,8 @@ define [
 
       @events =
         "click input[name=nonrenew]" : "loadSubAction"
-        "click input[name=pending]" : "loadSubAction"
-        "click input[name=rescind]" : "loadSubAction"
+        "click input[name=nonrenewpending]" : "loadSubAction"
+        "click input[name=nonrenewrescind]" : "loadSubAction"
 
       # Metadata about Cancellation types, used in views
       @TRANSACTION_TYPES =
@@ -28,18 +29,60 @@ define [
           label  : 'NonRenewal'
           title  : 'The police has been set for immediate non-renewal'
           submit : 'Non-renew this policy immediately'
-          validators :
-            'effectiveDate' : 'dateRange'
-        'pending' :
+        'nonrenewpending' :
           label  : 'PendingNonRenewal'
           title  : 'The policy has been set to pending non-renewal'
           submit : 'Set to pending non-renewal'
-          validators :
-            'effectiveDate' : 'dateRange'
-        'rescind' :
+        'nonrenewrescind' :
           label  : 'PendingNonRenewalRescission'
           title  : 'The policy pending non-renewal has been rescinded'
           submit : 'Rescind pending non-renewal'
+
+      @REASON_CODES = [
+        label: "Insured Request"
+        value: "1"
+      ,
+        label: "Physical Changes In The Property Insured"
+        value: "6"
+      ,
+        label: "Increase In Liability Hazards Beyond What Is Normally Accepted"
+        value: "7"
+      ,
+        label: "Increase In Property Hazards Beyond What Is Normally Accepted"
+        value: "8"
+      ,
+        label: "Overexposed In Area Where Risk Is Located"
+        value: "9"
+      ,
+        label: "Change In Occupancy Status"
+        value: "10"
+      ,
+        label: "Other Underwriting Reasons"
+        value: "11"
+      ,
+        label: "Change In Ownership"
+        value: "13"
+      ,
+        label: "Missing Required Documentation"
+        value: "14"
+      ]
+
+      @XML_TEMPLATE = """
+        <TransactionRequest schemaVersion="1.7" type="{{transactionType}}">
+          <Initiation>
+            <Initiator type="user">{{user}}</Initiator>
+          </Initiation>
+          <Target>
+            <Identifiers>
+              <Identifier name="InsightPolicyId" value="{{id}}"/>
+            </Identifiers>
+            <SourceVersion>{{version}}</SourceVersion>
+          </Target>
+          {{#reasonCode}}
+          <ReasonCode>{{reasonCode}}</ReasonCode>
+          {{/reasonCode}}
+        </TransactionRequest>
+      """
 
     ready : ->
       super
@@ -77,10 +120,6 @@ define [
       [viewData, view] = @processViewData(vocabTerms, view, true)
       @processNonRenewalData(viewData)
 
-      # Load form validation rules into FormValidation
-      if _.has(@TRANSACTION_TYPES[@CURRENT_SUBVIEW], 'validators')
-        @FormValidation.validators = @TRANSACTION_TYPES[@CURRENT_SUBVIEW].validators
-
       @trigger "loaded", this, @postProcessSubView
 
     # Apply standard DOM behaviors to sub views after rendered then override
@@ -105,27 +144,13 @@ define [
       @processViewData(vocabTerms, view, true)
 
       @viewDataPrevious = _.deepClone @viewData
+      @viewData.preview = @Endorse.parseIntervals(@values)
 
-      @viewData.preview        = @Endorse.parseIntervals(@values)
-      @viewData.current_policy = @current_policy_intervals
-
-      preview_values = @extractEventValues(@MODULE.POLICY, @viewData)
       preview_labels = @determinePreviewLabel(@values.formValues, @viewData)
-      preview_effective_date = @determineCorrectPreviewDate(@MODULE.POLICY, @viewData)
-
-      @viewData = _.extend(
-        @viewData, preview_values, preview_labels, preview_effective_date
-      )
-
-      # Calculate AdvanceNoticeDays
-      @viewData = _.extend(@viewData, @calculateAdvanceNoticeDays(@viewData))
+      @viewData = _.extend(@viewData, preview_labels)
 
       # Get submitLabel
       @viewData.preview.submitLabel = @TRANSACTION_TYPES[@CURRENT_SUBVIEW].submit ? ''
-
-      # What's the RateType?
-      @viewData.preview.RateType = if @viewData.preview.ReasonCode == "15" then \
-        "Short-Rate" else "Pro Rata"
 
       @trigger("loaded", this, @postProcessSubView)
 
@@ -139,51 +164,10 @@ define [
       policy = @MODULE.POLICY
 
       nonrenew_data =
-        policyState             : policy.getState()
-        policyStateVal          : null
-        pendingNonRenewal       : policy.find('Management PendingNonRenewal')
-        pendingReasonCode       : null
-        pendingReasonCodeLabel  : null
-        policyEffectiveDate     : policy.getEffectiveDate()
-        policyExpirationDate    : policy.getExpirationDate()
-        nonRenewalEffectiveDate : null
-
-      # Process more data based on policyState
-      nonrenew_data = switch nonrenew_data.policyStateVal
-        when 'ACTIVEPOLICY'
-          @processActivePolicy(nonrenew_data)
-        when 'CANCELLEDPOLICY'
-          @processCancelledPolicy(nonrenew_data, viewData)
-        else nonrenew_data
+        reasonCode : policy.find('Management PendingNonRenewal')
+        EnumsNonRenewReason : @REASON_CODES
 
       @viewData = _.extend(viewData, nonrenew_data)
-
-    # Pending Cancellations need some extra data extrapolated from the
-    # viewData object
-    #
-    # @param `nonrenew_data` _Object_ values for cancellation
-    # @param `viewData` _object_ model.json values
-    # @return _Object_ updated nonrenew_data
-    #
-    processPendingCancellation : (nonrenew_data, viewData) ->
-      nonrenew_data
-
-    # Assemble message fields and other values for Active Policies
-    #
-    # @param `nonrenew_data` _Object_ values for cancellation
-    # @return _Object_ updated nonrenew_data
-    #
-    processActivePolicy : (nonrenew_data) ->
-      nonrenew_data
-
-    # Assemble message fields and other values for Cancelled Policies
-    #
-    # @param `nonrenew_data` _Object_ values for cancellation
-    # @param `viewData` _object_ model.json values
-    # @return _Object_ updated nonrenew_data
-    #
-    processCancelledPolicy : (nonrenew_data, viewData) ->
-      nonrenew_data
 
     # Load a sub-view into the current space
     # These are triggered by button clicks
@@ -194,7 +178,7 @@ define [
         action = $(e.currentTarget).attr('name') ? false
         if action?
           @CURRENT_SUBVIEW = action
-          @fetchTemplates(@MODULE.POLICY, "nonrenewal_#{action}", @processSubView, true)
+          @fetchTemplates(@MODULE.POLICY, "nonrenewal-#{action}", @processSubView, true)
         else
           msg = "Could not load that action. Contact support."
           @PARENT_VIEW.displayMessage('error', msg, 12000)
@@ -236,11 +220,6 @@ define [
         @PARENT_VIEW.displayMessage('error', msg, 12000)
         return false
 
-      # Derive intervals from the form values and policy, we use
-      # this in the Preview, comparing it against what comes back
-      # from the server
-      @current_policy_intervals = @Endorse.parseIntervals(@values)
-
       # Format the date to match the TR 1.4 spec
       if _.has(@values.formValues, 'effectiveDate')
         @values.formValues.effectiveDate = @Helpers.stripTimeFromDate(@values.formValues.effectiveDate)
@@ -260,64 +239,23 @@ define [
           options.headers =
             'X-Commit' : false
 
+      # Data for the Transaction Request XML
+      context =
+        transactionType : @values.formValues.transactionType
+        reasonCode      : @values.formValues.reasonCode
+        user            : @MODULE.USER.get 'email'
+        id              : @MODULE.POLICY.get 'insight_id'
+        version         : @ChangeSet.getPolicyVersion()
+
+      xml = Mustache.render @XML_TEMPLATE, context
+
       # Assemble the TransactionRequest XML and send to server
       @ChangeSet.commitChange(
-          @ChangeSet.getTransactionRequest(@values, @viewData),
+          xml,
           callbackFunc,
           @callbackError,
           options
         )
-
-    # Parse most recent Event object from Policy and use it to build
-    # values for the Cancellation preview
-    #
-    # @param `policy` _Object_ Policy
-    # @param `viewData` _object_ model.json values
-    # @return _Object_ updated viewData
-    #
-    extractEventValues : (policy, viewData) ->
-      # Find the most recent Cancellation/PendingCancellation in the Policy.
-      # Most recent is last in the XML, so we flip the array with reverse()
-      events = policy.get('json').EventHistory.Event.reverse()
-      cancellation = _.find(events, (event) ->
-          event.type == 'Cancel' || event.type == 'PendingCancellation'
-        )
-
-      viewData.preview.Action = \
-        if cancellation.type == "Cancel"
-          "Cancellation"
-        else
-          "Pending Cancellation"
-
-      data_whitelist = [
-        'AppliedDate',
-        'reasonCode',
-        'reasonCodeLabel',
-        'EffectiveDate',
-        'ChangeInPremium',
-        'ChangeInTax',
-        'CancelAmount',
-        'ChangeInFee'
-      ]
-
-      data_money = [
-        'ChangeInPremium',
-        'ChangeInTax',
-        'CancelAmount',
-        'ChangeInFee'
-      ]
-
-      # Loop through whitelisted data items and drop properly formatted
-      # values into the preview object
-      for data in cancellation.DataItem
-        if _.contains(data_whitelist, data.name)
-          if _.contains(data_money, data.name)
-            viewData.preview[_.classify(data.name)] = \
-              "$#{@Helpers.formatMoney(data.value)}"
-          else
-            viewData.preview[_.classify(data.name)] = data.value
-
-      viewData
 
     # Parse most recent Event object from Policy and use it to build
     # values for the Cancellation preview
@@ -329,15 +267,11 @@ define [
     determinePreviewLabel : (formValues, viewData) ->
       # Labels for buttons
       preview_labels =
-        "PendingCancellationRescission" : "rescission of pending cancellation"
-        "Reinstatement"                 : "reinstatement"
-        "PendingCancellation"           : "pending cancellation"
-        "Cancellation"                  : "cancellation"
+        'NonRenewal'                 : 'The policy has been set for immediate non-renewal'
+        'PendingNonRenewal'          : 'The policy has been set to pending non-renewal'
+        'PendingNonRenewalRecission' : 'The policy pending non-renewal has been rescinded'
 
       viewData.preview.PreviewLabel = preview_labels[formValues.transactionType]
-
-      if formValues.transactionType == "PendingCancellation" || formValues.transactionType == "Resinstatement"
-        viewData.preview.Undo = true
 
       viewData
 
