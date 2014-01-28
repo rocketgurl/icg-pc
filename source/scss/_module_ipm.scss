@@ -561,11 +561,13 @@ h2.ipm-action-header {
 	padding-left: 15px !important;
 }
 
-#cancellation fieldset li input {
+#cancellation fieldset li input,
+#nonrenewal fieldset li input {
 	@include simple-color(hue(#2b90d2), saturation(#2b90d2), lightness(#2b90d2));
 }
 
-#cancellation fieldset li input:disabled {
+#cancellation fieldset li input:disabled,
+#nonrenewal fieldset li input:disabled {
 	@include simple-color(hue($lightgray), saturation($lightgray), lightness($lightgray));
 	color: $darkgray;
 	font-style: italic;
