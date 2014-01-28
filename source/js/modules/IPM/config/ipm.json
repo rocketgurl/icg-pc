@@ -84,6 +84,10 @@
         {
           "label": "Issue (Automatic)",
           "view": "IssueAutomatic"
+        },
+        {
+          "label": "Non-renewals",
+          "view": "NonRenewal"
         }
       ]
     },
