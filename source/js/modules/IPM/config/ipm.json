@@ -90,7 +90,7 @@
           "view": "IssueAutomatic"
         },
         {
-          "label": "Non-renewals",
+          "label": "Non-Renew",
           "view": "NonRenewal"
         }
       ]

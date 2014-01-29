@@ -167,6 +167,13 @@ define [
         reasonCode : policy.find('Management PendingNonRenewal')
         EnumsNonRenewReason : @REASON_CODES
 
+      # Toggle buttons on/off depending on Managament >
+      # PendingNonRenewal existence
+      if _.isUndefined nonrenew_data.reasonCode
+        nonrenew_data.nonrenewDisabled = nonrenew_data.rescindPendingDisabled = 'disabled'
+      else
+        nonrenew_data.setPendingDisabled = 'disabled'
+
       @viewData = _.extend(viewData, nonrenew_data)
 
     # Load a sub-view into the current space
