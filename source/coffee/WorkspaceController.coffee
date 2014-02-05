@@ -4,6 +4,7 @@ define [
   'backbone',
   'UserModel',
   'ConfigModel',
+  'WorkspaceStack',
   'WorkspaceStateModel',
   'WorkspaceStateCollection',
   'WorkspaceLoginView',
@@ -19,7 +20,7 @@ define [
   'Cookie',
   'herald',
   'marked'
-], ($, _, Backbone, UserModel, ConfigModel, WorkspaceStateModel, WorkspaceStateCollection, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter, SearchContextCollection, Messenger, Base64, MenuHelper, AppRules, Helpers, Cookie, Herald, marked, xml2json) ->
+], ($, _, Backbone, UserModel, ConfigModel, WorkspaceStack, WorkspaceStateModel, WorkspaceStateCollection, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter, SearchContextCollection, Messenger, Base64, MenuHelper, AppRules, Helpers, Cookie, Herald, marked, xml2json) ->
 
   # Global log object for debugging
   #
@@ -78,44 +79,12 @@ define [
     global_flash          : new Messenger($('#canvas'), 'controller')
     Workspaces            : new WorkspaceStateCollection()
     workspace_zindex      : 30000
+    workspace_stack       : {} # store a ref to WorkspaceStack here
     IXVOCAB_AUTH          : 'Y29tLmljcy5hcHBzLmluc2lnaHRjZW50cmFsOjVhNWE3NGNjODBjMzUyZWVkZDVmODA4MjkzZWFjMTNk'
 
     # Simple logger
     logger : (msg) ->
       @Amplify.publish 'log', msg
-
-    # Keep tabs on what's in our Workspace.
-    # This should contain WorkspaceCanvasView-enabled objects
-    workspace_stack : []
-
-    # Add a view to the stack, but check for duplicates first
-    stack_add : (view) ->
-      exists = _.find @workspace_stack, (item) ->
-        return item.app.app == view.app.app
-      if !exists?
-        @workspace_stack.push view
-
-    # Remove a view from the stack
-    stack_remove : (view) ->
-      _.each @workspace_stack, (obj, index) =>
-        if view.app.app == obj.app.app
-          @workspace_stack.splice index, 1
-          # Remove params from stack if present
-          if view.app.params?
-            @current_state.params = null
-            @set_nav_state()
-            @update_address()
-
-    # Remove all views from stack
-    stack_clear : () ->
-      @workspace_stack = []
-      #@workspace_state.set 'apps', [] # maintain in state
-
-    # Find a view in the stack and return it
-    stack_get : (app) ->
-      for index, obj of @workspace_stack
-        if app == obj.app.app
-          return obj
 
     # If app is not saved in @workspace_state and is not the
     # workspace defined app then we need to add it to our
@@ -466,7 +435,9 @@ define [
     #### Check logged in state
     is_loggedin : ->
       if !@user?
-        @Amplify.publish 'controller', 'notice', "Please login to Policy Central to continue."
+        @Amplify.publish 'controller',
+                         'notice',
+                         "Please login to Policy Central to continue."
         @build_login()
         return false
       return true
@@ -482,7 +453,9 @@ define [
 
       menu = @config.get 'menu'
       if menu == false
-        @Amplify.publish 'controller', 'warning', "Sorry, you do not have access to any items in this environment."
+        @Amplify.publish 'controller',
+                         'warning',
+                         "Sorry, you do not have access to any items in this environment."
         return
 
       group_label = apps = menu[@current_state.business].contexts[@current_state.context].label
@@ -496,9 +469,36 @@ define [
       # race conditions (new tabs pushing onto the stack as old ones pop off)
       @teardown_workspace()
 
+      # Manually adjust CSS
       if $('#header').height() < 95
         $('#header').css('height', '95px')
 
+      # Setup service URLs
+      @configureServices()
+
+      @launch_app app
+
+      if @check_persisted_apps()
+        # Is this a search? attempt to launch it
+        if @current_state.module?
+          @launch_module(@current_state.module, @current_state.params)
+        @reassess_apps()
+
+      data =
+        business : @current_state.business
+        group    : MenuHelper.check_length(group_label)
+        'app'    : app.app_label
+
+      # Set breadcrumb
+      @set_breadcrumb(data)
+
+      # Store our workplace information in localStorage
+      @set_nav_state()
+
+    # Scan config model and dynamically update services object
+    # to use the correct URLs
+    #
+    configureServices : ->
       # Set the path to pxCentral & ixLibrary to the correct instance
       ixlibrary = @config.get_ixLibrary(@workspace_state)
       if ixlibrary.baseURL? || ixlibrary.baseURL != undefined
@@ -521,26 +521,6 @@ define [
 
       # Retrieve pxClient location from ixConfig
       @services.pxclient = @config.get_pxClient(@workspace_state)
-
-      @launch_app app
-
-      if @check_persisted_apps()
-        # Is this a search? attempt to launch it
-        if @current_state.module?
-          @launch_module(@current_state.module, @current_state.params)
-        @reassess_apps()
-
-      data =
-        business : @current_state.business
-        group    : MenuHelper.check_length(group_label)
-        'app'    : app.app_label
-
-      # Set breadcrumb
-      @set_breadcrumb(data)
-
-      # Store our workplace information in localStorage
-      @set_nav_state()
-
 
     # Build the breadcrumb in the top nav
     #
@@ -613,7 +593,7 @@ define [
       app.app.params = params
 
       # If doesn't already exist launch it
-      stack_check = @stack_get safe_app_name
+      stack_check = @workspace_stack.get safe_app_name
       if !stack_check?
         @launch_app app
       else
@@ -666,10 +646,7 @@ define [
       if !@$workspace_admin_initial?
         @$workspace_admin_initial = @$workspace_admin.find('ul').html()
 
-      @$workspace_admin.find('ul').html("""
-        <li>Welcome back &nbsp;<a href="#profile">#{@user.get('name')}</a></li>
-        <li><a href="/batch" target="_blank">mxDocTool</a></li>
-        <li><a href="#logout">Logout</a></li>""")
+      @$workspace_admin.find('ul').html("""<li>Welcome back &nbsp;<a href="#profile">#{@user.get('name')}</a></li><li><a href="/batch" target="_blank">mxDocTool</a></li><li><a href="#logout">Logout</a></li>""")
 
     #### Reset Admin Links
     #
@@ -711,7 +688,7 @@ define [
       # Tab close icon
       @$workspace_tabs.on 'click', 'li i.icon-remove-sign', (e) =>
         e.preventDefault()
-        @stack_get($(e.target).prev().attr('href')).destroy()
+        @workspace_stack.get($(e.target).prev().attr('href')).destroy()
         @reassess_apps()
 
     #### Set Active Url
@@ -724,7 +701,7 @@ define [
     # @param `app_name` _String_ app_name from tab href
     #
     set_active_url : (app_name) ->
-      for view in @workspace_stack
+      for view in @workspace_stack.stack
         if app_name == view.app.app
           module = view.module
           if module? and module.app? and module.app.params?
@@ -739,7 +716,7 @@ define [
 
     # Loop through app stack and switch app states
     toggle_apps : (app_name) ->
-      for view in @workspace_stack
+      for view in @workspace_stack.stack
         if app_name == view.app.app
           view.activate()
           @active_view = view
@@ -752,24 +729,24 @@ define [
     # then activate the last one in the stack.
     reassess_apps : ->
       # No stack, no need
-      if @workspace_stack.length == 0
+      if @workspace_stack.stack.length == 0
         return false
 
-      active = _.filter @workspace_stack, (view) ->
+      active = _.filter @workspace_stack.stack, (view) ->
         return view.is_active()
 
       if active.length == 0
-        last_view = _.last @workspace_stack
+        last_view = _.last @workspace_stack.stack
         @toggle_apps last_view.app.app
 
     # Tell every app in the stack to commit seppuku
     teardown_workspace : ->
       @set_breadcrumb()
-      _.each @workspace_stack, (view, index) =>
+      _.each @workspace_stack.stack, (view, index) =>
         view.destroy()
         view = null
-      if @workspace_stack.length > 0
-        @stack_clear()
+      if @workspace_stack.stack.length > 0
+        @workspace_stack.clear()
         @$workspace_tabs.html('')
         $('#target').empty()
         true
@@ -808,6 +785,9 @@ define [
 
   _.extend WorkspaceController, Backbone.Events
 
+  # Maintain an array of WorkspaceCanvasView objects (all of our
+  # tabs)
+  WorkspaceController.workspace_stack = new WorkspaceStack(WorkspaceController)
 
   # Events for Controller
   #
@@ -827,10 +807,10 @@ define [
     @launch_module(module, params)
 
   WorkspaceController.on "stack_add", (view) ->
-    @stack_add view
+    @workspace_stack.add view
 
   WorkspaceController.on "stack_remove", (view) ->
-    @stack_remove(view)
+    @workspace_stack.remove(view)
     @state_remove(view.app)
 
   WorkspaceController.on "new_tab", (app_name) ->

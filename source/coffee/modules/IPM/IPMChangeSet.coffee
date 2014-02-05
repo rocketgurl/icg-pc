@@ -304,6 +304,7 @@ define [
 
     cancel_reinstate : """
       <ReasonCode>{{reasonCode}}</ReasonCode>
+      <Comment>{{comment}}</Comment>
     """
 
     change_customer : """
@@ -331,6 +332,14 @@ define [
         <StartDate>{{effectiveDate}}</StartDate>
         {{>changes}}
       </IntervalRequest>
+    """
+
+    renew : """
+      <RenewalChanges>
+        <Set>
+          {{>changes}}
+        </Set>
+      </RenewalChanges>
     """
 
     generate_document : """
@@ -366,41 +375,14 @@ define [
     """
 
     change_payment_plan : """
-    <Terms>
-      <Term>
-        <EffectiveDate>{{termEffectiveDate}}</EffectiveDate>
-        <ExpirationDate>{{termExpirationDate}}</ExpirationDate>
-        <Changes>
-          <Set>
-            <DataItem name="OpPaymentPlanType" value="{{paymentPlanType}}"/>
-          </Set>
-        </Changes>
-      </Term>
-    </Terms>
-    <Intervals>
-      <Interval>
-        <StartDate>{{startDate}}</StartDate>
-        <EndDate>{{endDate}}</EndDate>
-        <Changes>
-          <Set>
-            <DataItem name="OpPaymentPlanType" value="{{paymentPlanType}}"/>
-            <DataItem name="PaymentPlanType" value="{{paymentPlanType}}"/>
-          </Set>
-        </Changes>
-      </Interval>
-    </Intervals>
-    <PaymentPlan type="{{paymentPlanType}}">
-      <Installments/>
-    </PaymentPlan>
-    <EventHistory>
-      <Event type="Endorse">
-        <DataItem name="reasonCode" value="155"/>
-        <DataItem name="reasonCodeLabel" value="Change Payment Plan"/>
-        <DataItem name="AppliedDate" value="{{appliedDate}}"/>
-        <DataItem name="OpPaymentPlanType" value="{{paymentPlanType}}"/>
-        <DataItem name="PaymentPlanType" value="{{paymentPlanType}}"/>
-      </Event>
-    </EventHistory>
+      <Comment>{{comment}}</Comment>
+      <AccountingChanges>
+        <Set>
+          <DataItem name="Payor" value="{{payor}}"/>
+          <DataItem name="PaymentPlanType" value="{{paymentPlanType}}"/>
+        </Set>
+        <Delete/>
+      </AccountingChanges>
     """
 
     premium_disbursement : """
@@ -473,6 +455,12 @@ define [
         <AgencyLocationId>{{agencyLocationId}}</AgencyLocationId>
         <AgentId>{{agentId}}</AgentId>
       </BrokerOfRecordChanges>
+    """
+
+    unlock_policy : """
+      <Flags>
+        <Flag name="{{name}}" value="{{value}}"/>
+      </Flags>
     """
 
     update_mortgagee : """

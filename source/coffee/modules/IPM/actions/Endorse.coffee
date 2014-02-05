@@ -50,7 +50,7 @@ define [
     submit : (e) ->
       super e
 
-      console.log ['submit', @values]
+      #console.log ['submit', @values]
 
       @values.formValues.transactionType = 'Endorsement'
 
@@ -137,6 +137,9 @@ define [
       @adjustAlabamaLossTypeFields()
       @adjustAlabamaPropertyUsage()
 
+      if @apparatchik.isProduct('wic-hwo-al') || @apparatchik.isProduct('wic-ho3-al')
+        @addWICALBEhaviors()
+
       if @apparatchik.isProduct('fnic-ho3-la')
         @addFNICHO3LABehaviors()
 
@@ -154,6 +157,22 @@ define [
     # NOTE: These will start to get lengthy, you may want to move
     # them into external files and pull in via RequireJS.
     ###
+
+    addWICALBEhaviors : ->
+      rules = [
+        field: "WindstormDeductibleOption"
+        sideEffects: [
+          target: "HurricaneDeductible"
+          condition: "== 100"
+          effect: [@apparatchik.showElement, @apparatchik.makeRequired]
+        ,
+          target: "WindHailDeductible"
+          condition: "== 200"
+          effect: [@apparatchik.showElement, @apparatchik.makeRequired]
+        ]
+      ]
+
+      @apparatchik.applyEnumDynamics rules
 
     addOFCCCABehavhiors : ->
       rules = [
@@ -220,10 +239,23 @@ define [
         effect: @apparatchik.showElement
       ,
         field: "EarthquakeCoverage"
-        condition: "== 100"
-        target: ["EarthquakeDeductible",
-                  "EarthquakeMasonryVeneerExclusion"]
-        effect: @apparatchik.showElement
+        sideEffects: [
+          condition: { or: ["== 100", "== 150"]}
+          target: ["EarthquakeDeductible", "EarthquakeMasonryVeneerExclusion"]
+          effect: [@apparatchik.showElement, @apparatchik.makeWritable]
+        ,
+          condition: "== 100"
+          target: "EarthquakeDeductible"
+          effect: [@apparatchik.makeReadOnly, (t) ->
+              # dynamically set value of field based on parent val
+              $el = @wrapField t
+              $parent = @wrapField "EarthquakeCoverage"
+              if ($parent.val() == '100')
+                $el.val('1500')
+              else
+                $el.val(false)
+            ]
+        ]
       ,
         field: "IncidentalBusinessOccupancy"
         condition: "== 100"
@@ -506,7 +538,7 @@ define [
       interval_fields = _.omit(
         term_fields,
         _.difference(_.keys(term_fields), interval_field_names)
-        )
+      )
 
       # Adjustment values used in interval processing
       adjustments =

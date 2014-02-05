@@ -66,6 +66,10 @@
           "view": "Endorse"
         },
         {
+          "label": "Renew",
+          "view": "Renew"
+        },
+        {
           "label": "Change broker of record",
           "view": "BrokerOfRecord"
         },
@@ -84,6 +88,10 @@
         {
           "label": "Issue (Automatic)",
           "view": "IssueAutomatic"
+        },
+        {
+          "label": "Non-Renew",
+          "view": "NonRenewal"
         }
       ]
     },
@@ -93,6 +101,10 @@
         {
           "label": "Generate document",
           "view": "GenerateDocument"
+        },
+        {
+          "label": "Unlock policy",
+          "view": "UnlockPolicy"
         }
       ]
     }

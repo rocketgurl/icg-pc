@@ -152,6 +152,7 @@ define [
         policyExpirationDate         : policy.getExpirationDate()
         cancellationEffectiveDate    : null
 
+
       # getState() may return an object
       if _.isObject cancel_data.policyState
         cancel_data.policyStateVal = cancel_data.policyState.text
@@ -266,6 +267,9 @@ define [
 
       _.extend(cancel_data, active_data)
 
+    # Load a sub-view into the current space
+    # These are triggered by button clicks
+    #
     loadSubAction : (e) ->
       e.preventDefault()
       if e.currentTarget.className != 'disabled'
@@ -462,4 +466,3 @@ define [
         viewData.preview.AdvanceNoticeDays = 0
 
       viewData
-

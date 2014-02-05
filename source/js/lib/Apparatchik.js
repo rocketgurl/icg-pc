@@ -85,6 +85,11 @@
     If you want a condition to modify multiple targets place the id's
     of the target in an array: ['foo', 'bar']
 
+    You can also pack multiple functions into effect, also because
+    these are functions, you can drop your own closure in there
+    taking the standard arguments for an effect to handle custom
+    one-off jobbies.
+
  */
 
 var Apparatchik = (function(){
@@ -198,6 +203,14 @@ var Apparatchik = (function(){
   Apparatchik.prototype.wrapField = function(field) { return $('#' + this.guid + '_' + field); };
 
   /**
+   * Ensure input is an array
+   *
+   * @param {*} i
+   * @return {Array}
+   */
+  Apparatchik.prototype.wrapArray = function(i) { return (!_.isArray(i)) ? [i] : i; };
+
+  /**
    * Set initial state and attach listeners to fields
    *
    * @param {Object} rules
@@ -223,11 +236,12 @@ var Apparatchik = (function(){
    * @return {void}
    */
   Apparatchik.prototype.setTargetState = function(target, effect) {
-    if (_.isUndefined(target) || !_.isFunction(effect)) { return false; }
-    var _this = this;
-    var _target = (!_.isArray(target)) ? [target] : target;
-    return _.each(target, function(t) {
-      effect.call(_this, target, true);
+    if (_.isUndefined(target) || _.isUndefined(effect)) { return false; }
+    var _this = this,
+        _target = this.wrapArray(target),
+        _effect = this.wrapArray(effect);
+    return _.each(_target, function(t) {
+      _this.callEffects(_effect, _this, target, true);
     });
   };
 
@@ -240,16 +254,17 @@ var Apparatchik = (function(){
    */
   Apparatchik.prototype.setDynamicListener = function(rule) {
     var _this   = this,
-        _target = (!_.isArray(rule.target)) ? [rule.target] : rule.target,
+        _target = this.wrapArray(rule.target),
+        _effect = this.wrapArray(rule.effect),
         args    = (_.has(rule, 'args')) ? rule.args : '',
         field   = this.wrapField(rule.field);
 
     // Add a listener to 'change' which checks the condition
     field.on('change', function() {
       if (_this.isCondition($(this).val(), rule.condition)) {
-        if (_.isFunction(rule.effect)) {
+        if (!_.isEmpty(_effect)) {
           _.each(_target, function(t) {
-            rule.effect.call(_this, t, false, args);
+            _this.callEffects(_effect, _this, t, false, args);
           });
         }
       } else {
@@ -262,9 +277,9 @@ var Apparatchik = (function(){
     // If the value of the field already meets the condition
     // then go ahead and trigger its effect
     if (this.isCondition(field.val(), rule.condition)) {
-      if (_.isFunction(rule.effect)) {
+      if (!_.isUndefined(rule.effect)) {
         _.each(_target, function(t) {
-          return rule.effect.call(_this, t, false, args);
+          _this.callEffects(_effect, _this, t, false, args);
         });
       }
     }
@@ -327,7 +342,7 @@ var Apparatchik = (function(){
   Apparatchik.prototype.resetSideEffects = function(side_effects) {
     var _this = this;
     _.each(side_effects, function(rule) {
-      var _t = (!_.isArray(rule.target)) ? [rule.target] : rule.target;
+      var _t = _this.wrapArray(rule.target);
       _.each(_t, function(t) {
         _this.setTargetState(t, rule.effect);
       });
@@ -360,12 +375,35 @@ var Apparatchik = (function(){
     _.each(side_effects, function(rule) {
       var args = (_.has(rule, 'args')) ? rule.args : '';
 
-      if (_.isFunction(rule.effect)) {
-        var _target = (!_.isArray(rule.target)) ? [rule.target] : rule.target;
+      if (!_.isUndefined(rule.effect)) {
+        var _target = _this.wrapArray(rule.target),
+            _effect = _this.wrapArray(rule.effect),
+            args    = (_.has(rule, 'args')) ? rule.args : '';
+
         _.each(_target, function(t) {
-          rule.effect.call(_this, t, false, args);
+          _this.callEffects(_effect, _this, t, false, args);
         });
       }
+    });
+  };
+
+  /**
+   * Map over array of effect functions
+   *
+   * @param {Array} effects
+   * @param {Object} scope
+   * @param {String} target
+   * @param {Boolean} reset
+   * @param {Mixed} args
+   * @return {Array} return values of functions
+   */
+  Apparatchik.prototype.callEffects = function(effects,
+                                        scope,
+                                        target,
+                                        reset,
+                                        args) {
+    return _.map(effects, function(e) {
+      return e.call(scope, target, reset, args);
     });
   };
 
@@ -393,9 +431,60 @@ var Apparatchik = (function(){
    * @return {Object}      jQuery wrapped element
    */
   Apparatchik.prototype.showElement = function(target, reset, args) {
-    var $el = this.wrapField(target).parent();
-    if (reset) { return $el.hide(args); }
-    return $el.show(args);
+    var _target = this.wrapArray(target),
+        _this = this;
+    _.each(_target, function(t){
+      var $el = _this.wrapField(t).parent();
+      if (reset) { return $el.hide(args); }
+      $el.show(args);
+    });
+  };
+
+  /**
+   * Effect: Set form element and label to required state
+   *
+   * @param {HTMLElement}  target
+   * @param {Boolean}      reset
+   * @param {Object}       args   any args passed to func
+   * @return {Object}      jQuery wrapped element
+   */
+  Apparatchik.prototype.makeRequired = function(target, reset, args) {
+    var $el = this.wrapField(target),
+        $label = $el.siblings('label');
+
+    if (reset) {
+      $label.removeClass('labelRequired');
+      return $el.prop('required', false);
+    }
+
+    $label.addClass('labelRequired');
+    return $el.prop('required', true);
+  };
+
+  /**
+   * Effect: disable form element
+   *
+   * @param {HTMLElement}  target
+   * @param {Boolean}      reset
+   * @param {Object}       args   any args passed to func
+   * @return {Object}      jQuery wrapped element
+   */
+  Apparatchik.prototype.makeReadOnly = function(target, reset, args) {
+    var $el = this.wrapField(target);
+    if (reset) { $el.prop('disabled', false); }
+    return $el.prop('disabled', true);
+  };
+
+  /**
+   * Effect: force form element to be NOT disabled
+   *
+   * @param {HTMLElement}  target
+   * @param {Boolean}      reset
+   * @param {Object}       args   any args passed to func
+   * @return {Object}      jQuery wrapped element
+   */
+  Apparatchik.prototype.makeWritable = function(target, reset, args) {
+    return this.wrapField(target).prop('disabled', false);
   };
 
   // Return the module
