@@ -151,7 +151,8 @@ define [
 
       reasonCode = @values.formValues.reasonCode
       reason = _.first(_.filter(@REASON_CODES, (item) -> item.value == reasonCode }))
-      if _.isUndefined reason
+      
+      if !_.isUndefined(reason) && _.has reason, 'label'
         @viewData.preview.ReasonCode = reasonCode + " - " + reason.label
       else
         @viewData.preview.ReasonCode = reasonCode
