@@ -1,5 +1,6 @@
 <!-- Endorse OFCC HO3 New Jersey -->
-	<form action="endorse" method="get" accept-charset="utf-8" class="collapsedSections">
+	<!-- Endorse: html/ofc_ho3_nj_020514_xlsx_endorse.rhtml  -->
+<form action="endorse" method="get" accept-charset="utf-8" class="collapsedSections">
 	<div id="content">
 
 	<div id="content_header">
@@ -23,7 +24,7 @@
 		<fieldset class="defaultOpen horizontalFields extraWide">
 			<h3>Summary <a data-alt-text="close">change</a></h3>
 			<div class="collapsibleFieldContainer">
-
+				
 		<div id="rate_validation_override">
 			<input type="checkbox" name="id_rv_override" id="{{guid}}_rv_override" value="1"> <label for="{{guid}}_rv_override">Check to Override Rate Validation</label>
 		</div>
@@ -56,7 +57,7 @@
 			<h3>Location <a data-alt-text="close">change</a></h3>
 			<div class="collapsibleFieldContainer">
 						<fieldset>
-				<legend id="{{guid}}_risk_address">Risk Address</legend>
+				<legend id="{{guid}}_risk_address">Risk Address</legend>				
 		<div>
 			<label for="{{guid}}_PropertyStreetNumber" class="labelRequired">Street Number <i>PropertyStreetNumber</i></label>
 			<input type="text" id="{{guid}}_PropertyStreetNumber" name="PropertyStreetNumber" value="{{PropertyStreetNumber}}" required >
@@ -111,7 +112,7 @@
 
 		</fieldset>
 		<fieldset>
-				<legend id="{{guid}}_other">Other</legend>
+				<legend id="{{guid}}_other">Other</legend>				
 		<div>
 			<label for="{{guid}}_Elevation" >Elevation <i>Elevation</i></label>
 			<input type="text" id="{{guid}}_Elevation" name="Elevation" value="{{Elevation}}"  >
@@ -189,7 +190,7 @@
 			<h3>Section I &amp; II Limits of Liability <a data-alt-text="close">change</a></h3>
 			<div class="collapsibleFieldContainer">
 						<fieldset>
-				<legend id="{{guid}}_basic_coverage___deductible_options">Basic Coverage & Deductible Options</legend>
+				<legend id="{{guid}}_basic_coverage___deductible_options">Basic Coverage & Deductible Options</legend>				
 		<div>
 			<label for="{{guid}}_ReplacementCostBuilding" class="labelRequired">Replacement Cost Of Dwelling <i>ReplacementCostBuilding</i></label>
 			<input type="text" id="{{guid}}_ReplacementCostBuilding" name="ReplacementCostBuilding" value="{{ReplacementCostBuilding}}" required >
@@ -324,7 +325,7 @@
 			<h3>Construction &amp; Protection <a data-alt-text="close">change</a></h3>
 			<div class="collapsibleFieldContainer">
 						<fieldset>
-				<legend id="{{guid}}_dwelling_exterior">Dwelling Exterior</legend>
+				<legend id="{{guid}}_dwelling_exterior">Dwelling Exterior</legend>				
 		<div>
 			<label for="{{guid}}_SquareFootUnderRoof" class="labelRequired">Livable Square Feet <i>SquareFootUnderRoof</i></label>
 			<input type="text" id="{{guid}}_SquareFootUnderRoof" name="SquareFootUnderRoof" value="{{SquareFootUnderRoof}}" required >
@@ -490,11 +491,11 @@
 
 
 		<div>
-			<label for="{{guid}}_HomeFeatures1Square Feet" >1st Additional Home Feature Sq Ft <i>HomeFeatures1Square Feet</i></label>
-			<select id="{{guid}}_HomeFeatures1Square Feet" name="HomeFeatures1Square Feet" data-value="{{HomeFeatures1Square Feet}}"   >
-				{{#EnumsHomeFeatures1Square Feet}}
+			<label for="{{guid}}_HomeFeatures1SquareFeet" >1st Additional Home Feature Sq Ft <i>HomeFeatures1SquareFeet</i></label>
+			<select id="{{guid}}_HomeFeatures1SquareFeet" name="HomeFeatures1SquareFeet" data-value="{{HomeFeatures1SquareFeet}}"   >
+				{{#EnumsHomeFeatures1SquareFeet}}
 				<option value="{{value}}">{{label}}</option>
-				{{/EnumsHomeFeatures1Square Feet}}
+				{{/EnumsHomeFeatures1SquareFeet}}
 			</select>
 		</div>
 
@@ -512,11 +513,11 @@
 
 
 		<div>
-			<label for="{{guid}}_HomeFeatures2Square Feet" >2nd Additional Home Feature Sq Ft <i>HomeFeatures2Square Feet</i></label>
-			<select id="{{guid}}_HomeFeatures2Square Feet" name="HomeFeatures2Square Feet" data-value="{{HomeFeatures2Square Feet}}"   >
-				{{#EnumsHomeFeatures2Square Feet}}
+			<label for="{{guid}}_HomeFeatures2SquareFeet" >2nd Additional Home Feature Sq Ft <i>HomeFeatures2SquareFeet</i></label>
+			<select id="{{guid}}_HomeFeatures2SquareFeet" name="HomeFeatures2SquareFeet" data-value="{{HomeFeatures2SquareFeet}}"   >
+				{{#EnumsHomeFeatures2SquareFeet}}
 				<option value="{{value}}">{{label}}</option>
-				{{/EnumsHomeFeatures2Square Feet}}
+				{{/EnumsHomeFeatures2SquareFeet}}
 			</select>
 		</div>
 
@@ -534,11 +535,11 @@
 
 
 		<div>
-			<label for="{{guid}}_HomeFeatures3Square Feet" >3rd Additional Home Feature Sq Ft <i>HomeFeatures3Square Feet</i></label>
-			<select id="{{guid}}_HomeFeatures3Square Feet" name="HomeFeatures3Square Feet" data-value="{{HomeFeatures3Square Feet}}"   >
-				{{#EnumsHomeFeatures3Square Feet}}
+			<label for="{{guid}}_HomeFeatures3SquareFeet" >3rd Additional Home Feature Sq Ft <i>HomeFeatures3SquareFeet</i></label>
+			<select id="{{guid}}_HomeFeatures3SquareFeet" name="HomeFeatures3SquareFeet" data-value="{{HomeFeatures3SquareFeet}}"   >
+				{{#EnumsHomeFeatures3SquareFeet}}
 				<option value="{{value}}">{{label}}</option>
-				{{/EnumsHomeFeatures3Square Feet}}
+				{{/EnumsHomeFeatures3SquareFeet}}
 			</select>
 		</div>
 
@@ -566,7 +567,7 @@
 
 		</fieldset>
 		<fieldset>
-				<legend id="{{guid}}_other_structures">Other Structures</legend>
+				<legend id="{{guid}}_other_structures">Other Structures</legend>				
 
 		<div>
 			<label for="{{guid}}_PoolType" class="labelRequired">Swimming Pool on the property? <i>PoolType</i></label>
@@ -623,7 +624,7 @@
 
 		</fieldset>
 		<fieldset>
-				<legend id="{{guid}}_dwelling_interior">Dwelling Interior</legend>
+				<legend id="{{guid}}_dwelling_interior">Dwelling Interior</legend>				
 
 		<div>
 			<label for="{{guid}}_NumberOfKitchens" class="labelRequired">Number Of Kitchens <i>NumberOfKitchens</i></label>
@@ -812,7 +813,7 @@
 
 		</fieldset>
 		<fieldset>
-				<legend id="{{guid}}_protective_devices">Protective Devices</legend>
+				<legend id="{{guid}}_protective_devices">Protective Devices</legend>				
 
 		<div>
 			<label for="{{guid}}_BurglarAlarm" class="labelRequired">Burglar Alarm <i>BurglarAlarm</i></label>
@@ -836,7 +837,7 @@
 
 		</fieldset>
 		<fieldset>
-				<legend id="{{guid}}_windstorm_mitigation_features">Windstorm Mitigation Features</legend>
+				<legend id="{{guid}}_windstorm_mitigation_features">Windstorm Mitigation Features</legend>				
 
 		<div>
 			<label for="{{guid}}_RoofGeometryType" class="labelRequired">Roof Geometry Type <i>RoofGeometryType</i></label>
@@ -899,7 +900,7 @@
 			<h3>Occupancy &amp; Property Usage <a data-alt-text="close">change</a></h3>
 			<div class="collapsibleFieldContainer">
 						<fieldset>
-				<legend id="{{guid}}_occupancy">Occupancy</legend>
+				<legend id="{{guid}}_occupancy">Occupancy</legend>				
 
 		<div>
 			<label for="{{guid}}_PropertyOccupancy" class="labelRequired">Property Occupancy <i>PropertyOccupancy</i></label>
@@ -950,7 +951,7 @@
 		<fieldset class="horizontalFields extraWide">
 			<h3>Optional Coverages and Endorsements <a data-alt-text="close">change</a></h3>
 			<div class="collapsibleFieldContainer">
-
+				
 
 		<div>
 			<label for="{{guid}}_FunctionalReplacementCost" class="labelRequired">Functional Replacement Cost For Dwelling <i>FunctionalReplacementCost</i></label>
@@ -1253,7 +1254,7 @@
 		<fieldset class="horizontalFields extraWide">
 			<h3>Credits, Discounts and Surcharges <a data-alt-text="close">change</a></h3>
 			<div class="collapsibleFieldContainer">
-
+				
 
 		<div>
 			<label for="{{guid}}_HandrailWalkwayLiability" class="labelRequired">Handrail Liability Surcharge <i>HandrailWalkwayLiability</i></label>
@@ -1309,7 +1310,7 @@
 			<h3>Scheduled Property <a data-alt-text="close">change</a></h3>
 			<div class="collapsibleFieldContainer">
 						<fieldset>
-				<legend id="{{guid}}_article_1">Article 1</legend>
+				<legend id="{{guid}}_article_1">Article 1</legend>				
 
 		<div>
 			<label for="{{guid}}_ScheduledPersonalProperty1Type" >Type <i>ScheduledPersonalProperty1Type</i></label>
@@ -1343,7 +1344,7 @@
 
 		</fieldset>
 		<fieldset>
-				<legend id="{{guid}}_article_2">Article 2</legend>
+				<legend id="{{guid}}_article_2">Article 2</legend>				
 
 		<div>
 			<label for="{{guid}}_ScheduledPersonalProperty2Type" >Type <i>ScheduledPersonalProperty2Type</i></label>
@@ -1377,7 +1378,7 @@
 
 		</fieldset>
 		<fieldset>
-				<legend id="{{guid}}_article_3">Article 3</legend>
+				<legend id="{{guid}}_article_3">Article 3</legend>				
 
 		<div>
 			<label for="{{guid}}_ScheduledPersonalProperty3Type" >Type <i>ScheduledPersonalProperty3Type</i></label>
@@ -1411,7 +1412,7 @@
 
 		</fieldset>
 		<fieldset>
-				<legend id="{{guid}}_article_4">Article 4</legend>
+				<legend id="{{guid}}_article_4">Article 4</legend>				
 
 		<div>
 			<label for="{{guid}}_ScheduledPersonalProperty4Type" >Type <i>ScheduledPersonalProperty4Type</i></label>
@@ -1445,7 +1446,7 @@
 
 		</fieldset>
 		<fieldset>
-				<legend id="{{guid}}_article_5">Article 5</legend>
+				<legend id="{{guid}}_article_5">Article 5</legend>				
 
 		<div>
 			<label for="{{guid}}_ScheduledPersonalProperty5Type" >Type <i>ScheduledPersonalProperty5Type</i></label>
@@ -1479,7 +1480,7 @@
 
 		</fieldset>
 		<fieldset>
-				<legend id="{{guid}}_article_6">Article 6</legend>
+				<legend id="{{guid}}_article_6">Article 6</legend>				
 
 		<div>
 			<label for="{{guid}}_ScheduledPersonalProperty6Type" >Type <i>ScheduledPersonalProperty6Type</i></label>
@@ -1513,7 +1514,7 @@
 
 		</fieldset>
 		<fieldset>
-				<legend id="{{guid}}_article_7">Article 7</legend>
+				<legend id="{{guid}}_article_7">Article 7</legend>				
 
 		<div>
 			<label for="{{guid}}_ScheduledPersonalProperty7Type" >Type <i>ScheduledPersonalProperty7Type</i></label>
@@ -1547,7 +1548,7 @@
 
 		</fieldset>
 		<fieldset>
-				<legend id="{{guid}}_article_8">Article 8</legend>
+				<legend id="{{guid}}_article_8">Article 8</legend>				
 
 		<div>
 			<label for="{{guid}}_ScheduledPersonalProperty8Type" >Type <i>ScheduledPersonalProperty8Type</i></label>
@@ -1581,7 +1582,7 @@
 
 		</fieldset>
 		<fieldset>
-				<legend id="{{guid}}_article_9">Article 9</legend>
+				<legend id="{{guid}}_article_9">Article 9</legend>				
 
 		<div>
 			<label for="{{guid}}_ScheduledPersonalProperty9Type" >Type <i>ScheduledPersonalProperty9Type</i></label>
@@ -1615,7 +1616,7 @@
 
 		</fieldset>
 		<fieldset>
-				<legend id="{{guid}}_article_10">Article 10</legend>
+				<legend id="{{guid}}_article_10">Article 10</legend>				
 
 		<div>
 			<label for="{{guid}}_ScheduledPersonalProperty10Type" >Type <i>ScheduledPersonalProperty10Type</i></label>
@@ -1654,7 +1655,7 @@
 		<fieldset class="horizontalFields extraWide">
 			<h3>Loss History <a data-alt-text="close">change</a></h3>
 			<div class="collapsibleFieldContainer">
-
+				
 
 		<div>
 			<label for="{{guid}}_NumberOfClaims" class="labelRequired">Number Of Claims In Last 6 Years <i>NumberOfClaims</i></label>
@@ -1666,7 +1667,7 @@
 		</div>
 
 		<fieldset>
-				<legend id="{{guid}}_loss_1">Loss 1</legend>
+				<legend id="{{guid}}_loss_1">Loss 1</legend>				
 		<div>
 			<label for="{{guid}}_LossAmount1" >Amount <i>LossAmount1</i></label>
 			<input type="text" id="{{guid}}_LossAmount1" name="LossAmount1" value="{{LossAmount1}}"  readonly>
@@ -1705,7 +1706,7 @@
 		</div>
 		</fieldset>
 		<fieldset>
-				<legend id="{{guid}}_loss_2">Loss 2</legend>
+				<legend id="{{guid}}_loss_2">Loss 2</legend>				
 		<div>
 			<label for="{{guid}}_LossAmount2" >Amount <i>LossAmount2</i></label>
 			<input type="text" id="{{guid}}_LossAmount2" name="LossAmount2" value="{{LossAmount2}}"  readonly>
@@ -1744,7 +1745,7 @@
 		</div>
 		</fieldset>
 		<fieldset>
-				<legend id="{{guid}}_loss_3">Loss 3</legend>
+				<legend id="{{guid}}_loss_3">Loss 3</legend>				
 		<div>
 			<label for="{{guid}}_LossAmount3" >Amount <i>LossAmount3</i></label>
 			<input type="text" id="{{guid}}_LossAmount3" name="LossAmount3" value="{{LossAmount3}}"  readonly>
@@ -1783,7 +1784,7 @@
 		</div>
 		</fieldset>
 		<fieldset>
-				<legend id="{{guid}}_loss_4">Loss 4</legend>
+				<legend id="{{guid}}_loss_4">Loss 4</legend>				
 		<div>
 			<label for="{{guid}}_LossAmount4" >Amount <i>LossAmount4</i></label>
 			<input type="text" id="{{guid}}_LossAmount4" name="LossAmount4" value="{{LossAmount4}}"  readonly>
@@ -1822,7 +1823,7 @@
 		</div>
 		</fieldset>
 		<fieldset>
-				<legend id="{{guid}}_loss_5">Loss 5</legend>
+				<legend id="{{guid}}_loss_5">Loss 5</legend>				
 		<div>
 			<label for="{{guid}}_LossAmount5" >Amount <i>LossAmount5</i></label>
 			<input type="text" id="{{guid}}_LossAmount5" name="LossAmount5" value="{{LossAmount5}}"  readonly>
