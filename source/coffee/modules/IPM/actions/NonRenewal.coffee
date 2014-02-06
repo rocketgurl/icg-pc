@@ -164,7 +164,7 @@ define [
       policy = @MODULE.POLICY
 
       nonrenew_data =
-        reasonCode : policy.find('Management PendingNonRenewal').reasonCode
+        reasonCode : policy.find('Management PendingNonRenewal reasonCode')
         EnumsNonRenewReason : @REASON_CODES
 
       # Toggle buttons on/off depending on Managament >
