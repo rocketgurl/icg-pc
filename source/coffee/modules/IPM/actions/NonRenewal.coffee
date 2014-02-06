@@ -150,8 +150,11 @@ define [
       @viewData = _.extend(@viewData, preview_labels)
 
       reasonCode = @values.formValues.reasonCode
-      reasonLabel = _.filter(@REASON_CODES, (item) -> item.value == reasonCode })[0].label
-      @viewData.preview.ReasonCode = reasonCode + " - " + reasonLabel 
+      reason = _.first(_.filter(@REASON_CODES, (item) -> item.value == reasonCode }))
+      if _.isUndefined reason
+        @viewData.preview.ReasonCode = reasonCode + " - " + reason.label
+      else
+        @viewData.preview.ReasonCode = reasonCode
 
       # Get submitLabel
       @viewData.preview.submitLabel = @TRANSACTION_TYPES[@CURRENT_SUBVIEW].submit ? ''
@@ -308,7 +311,7 @@ define [
 
       viewData
 
-    # Date math to get AdvanceNotceDays
+    # Date math to get AdvanceNoticeDays
     #
     # @param `viewData` _object_ model.json values
     # @return _Object_ updated viewData
