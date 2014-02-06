@@ -1,6 +1,10 @@
 Updates
 -------
 
+### 2.3.1
+
+- RCE updates
+
 ### 2.3.0
 
 - Comment box for PCN is not carrying data over in IPM [ICS-2362](https://arc90dev.atlassian.net/browse/ICS-2362)
