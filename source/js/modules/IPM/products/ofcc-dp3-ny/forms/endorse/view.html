@@ -1,5 +1,5 @@
 <!-- Endorse OFCC DP3 New York -->
-	<!-- Endorse: html/ofc_dp3_ny_020514_xlsx_endorse.rhtml  -->
+	<!-- source_file: html/ofc_dp3_ny_xlsx_endorse.rhtml  -->
 <form action="endorse" method="get" accept-charset="utf-8" class="collapsedSections">
 	<div id="content">
 
@@ -78,10 +78,17 @@
 			<input type="text" id="{{guid}}_PropertyCity" name="PropertyCity" value="{{PropertyCity}}" required >
 		</div>
 
+<!-- State is NY Only -->
+
 		<div>
 			<label for="{{guid}}_PropertyState" class="labelRequired">State <i>PropertyState</i></label>
-			<input type="text" id="{{guid}}_PropertyState" name="PropertyState" value="{{PropertyState}}" required >
+			<select id="{{guid}}_PropertyState" name="PropertyState" data-value="{{PropertyState}}"  required >
+				{{#EnumsPropertyState}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsPropertyState}}
+			</select>
 		</div>
+
 
 		<div>
 			<label for="{{guid}}_PropertyZipCode" class="labelRequired">Zip Code <i>PropertyZipCode</i></label>

@@ -1,5 +1,5 @@
 <!-- Endorse WIC HO3 New Jersey -->
-	<!-- Endorse: html/wic_ho3_nj_020514_xlsx_endorse.rhtml  -->
+	<!-- source_file: html/wic_ho3_nj_xlsx_endorse.rhtml  -->
 <form action="endorse" method="get" accept-charset="utf-8" class="collapsedSections">
 	<div id="content">
 
@@ -78,7 +78,7 @@
 			<input type="text" id="{{guid}}_PropertyCity" name="PropertyCity" value="{{PropertyCity}}" required >
 		</div>
 
-<!-- State is LA Only -->
+<!-- State is NJ Only -->
 
 		<div>
 			<label for="{{guid}}_PropertyState" class="labelRequired">State <i>PropertyState</i></label>
@@ -353,17 +353,6 @@
 				{{#EnumsConstructionType}}
 				<option value="{{value}}">{{label}}</option>
 				{{/EnumsConstructionType}}
-			</select>
-		</div>
-
-
-
-		<div>
-			<label for="{{guid}}_Cladding" >Cladding <i>Cladding</i></label>
-			<select id="{{guid}}_Cladding" name="Cladding" data-value="{{Cladding}}"   >
-				{{#EnumsCladding}}
-				<option value="{{value}}">{{label}}</option>
-				{{/EnumsCladding}}
 			</select>
 		</div>
 
