@@ -1,4 +1,5 @@
 <!-- Endorse HIC HO3 Louisiana -->
+	<!-- Endorse HIC HO3 Louisiana -->
 <form action="endorse" method="get" accept-charset="utf-8" class="collapsedSections">
 	<div id="content">
 
@@ -363,10 +364,10 @@
 			        <input type="text" id="{{guid}}_SquareFootUnderRoof" name="SquareFootUnderRoof" value="{{SquareFootUnderRoof}}">
 		        </div>
 
-            <div>
-	            <label for="{{guid}}_SquareFootUnderRoofFLA">Living Area as Finished Space <i>SquareFootUnderRoofFLA</i></label>
-	            <input type="text" id="{{guid}}_SquareFootUnderRoofFLA" name="SquareFootUnderRoofFLA" value="{{SquareFootUnderRoofFLA}}" >
-            </div>
+		        <div>
+			        <label for="{{guid}}_SquareFootUnderRoofLA" class="labelRequired">Living Area (LA) <i>SquareFootUnderRoof (LA)</i></label>
+			        <input type="text" id="{{guid}}_SquareFootUnderRoofLA" name="SquareFootUnderRoofLA" value="{{SquareFootUnderRoofLA}}">
+		        </div>
 
 		        <div>
 			        <label for="{{guid}}_ConstructionYear" class="labelRequired">Construction Year - Dwelling <i>ConstructionYear</i></label>
@@ -476,6 +477,10 @@
 				        {{/EnumsBasementPercentComplete}}
 			        </select>
 		        </div>
+            <div>
+	            <label for="{{guid}}_SquareFootUnderRoofFLA" class="labelRequired">Living Area as Finished Space <i>SquareFootUnderRoofFLA</i></label>
+	            <input type="text" id="{{guid}}_SquareFootUnderRoofFLA" name="SquareFootUnderRoofFLA" value="{{SquareFootUnderRoofFLA}}" required >
+            </div>
 
             <div>
               <label for="{{guid}}_Cladding" >Cladding <i>Cladding</i></label>
@@ -810,8 +815,8 @@
 		        </div>
 
             <div>
-              <label for="{{guid}}_NumberOfAtriumDoors">Number of Atrium Doors <i>NumberOfAtriumDoors</i></label>
-              <select id="{{guid}}_NumberOfAtriumDoors" name="NumberOfAtriumDoors" data-value="{{NumberOfAtriumDoors}}">
+              <label for="{{guid}}_NumberOfAtriumDoors" class="labelRequired">Number of Atrium Doors <i>NumberOfAtriumDoors</i></label>
+              <select id="{{guid}}_NumberOfAtriumDoors" name="NumberOfAtriumDoors" data-value="{{NumberOfAtriumDoors}}"  required >
                 {{#EnumsNumberOfAtriumDoors}}
 		            <option value="{{value}}">{{label}}</option>
 		            {{/EnumsNumberOfAtriumDoors}}
@@ -819,8 +824,8 @@
             </div>
 
             <div>
-              <label for="{{guid}}_NumberOfAtriumWindows">Number Of Atrium Windows <i>NumberOfAtriumWindows</i></label>
-              <select id="{{guid}}_NumberOfAtriumWindows" name="NumberOfAtriumWindows" data-value="{{NumberOfAtriumWindows}}">
+              <label for="{{guid}}_NumberOfAtriumWindows" class="labelRequired">Number Of Atrium Windows <i>NumberOfAtriumWindows</i></label>
+              <select id="{{guid}}_NumberOfAtriumWindows" name="NumberOfAtriumWindows" data-value="{{NumberOfAtriumWindows}}"  required >
                 {{#EnumsNumberOfAtriumWindows}}
 		            <option value="{{value}}">{{label}}</option>
 		            {{/EnumsNumberOfAtriumWindows}}
@@ -828,8 +833,8 @@
             </div>
 
             <div>
-              <label for="{{guid}}_NumberOfSolarPanels">Number Of Solar Panels <i>NumberOfSolarPanels</i></label>
-              <select id="{{guid}}_NumberOfSolarPanels" name="NumberOfSolarPanels" data-value="{{NumberOfSolarPanels}}">
+              <label for="{{guid}}_NumberOfSolarPanels" class="labelRequired">Number Of Solar Panels <i>NumberOfSolarPanels</i></label>
+              <select id="{{guid}}_NumberOfSolarPanels" name="NumberOfSolarPanels" data-value="{{NumberOfSolarPanels}}"  required >
                 {{#EnumsNumberOfSolarPanels}}
 		            <option value="{{value}}">{{label}}</option>
 		            {{/EnumsNumberOfSolarPanels}}
@@ -837,8 +842,8 @@
             </div>
 
             <div>
-              <label for="{{guid}}_SolarPanelUsage">Type of Solar Panel Usage <i>SolarPanelUsage</i></label>
-              <select id="{{guid}}_SolarPanelUsage" name="SolarPanelUsage" data-value="{{SolarPanelUsage}}">
+              <label for="{{guid}}_SolarPanelUsage" >Type of Solar Panel Usage <i>SolarPanelUsage</i></label>
+              <select id="{{guid}}_SolarPanelUsage" name="SolarPanelUsage" data-value="{{SolarPanelUsage}}"   >
                 {{#EnumsSolarPanelUsage}}
 		            <option value="{{value}}">{{label}}</option>
 		            {{/EnumsSolarPanelUsage}}
@@ -846,14 +851,13 @@
             </div>
 
             <div>
-              <label for="{{guid}}_HeatPump">Heat Pump <i>HeatPump</i></label>
-              <select id="{{guid}}_HeatPump" name="HeatPump" data-value="{{HeatPump}}">
+              <label for="{{guid}}_HeatPump" class="labelRequired">Heat Pump <i>HeatPump</i></label>
+              <select id="{{guid}}_HeatPump" name="HeatPump" data-value="{{HeatPump}}"  required >
                 {{#EnumsHeatPump}}
 		            <option value="{{value}}">{{label}}</option>
 		            {{/EnumsHeatPump}}
               </select>
             </div>
-
 		      </fieldset>
 		      <fieldset>
 				    <legend>Protective Devices</legend>
@@ -1905,3 +1909,4 @@
 	  {{/preview}}
 	</div>
 </form>
+

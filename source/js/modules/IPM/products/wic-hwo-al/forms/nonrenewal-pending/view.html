@@ -1,10 +1,21 @@
 <!-- Product: WIC HWO Alabama -->
-<form action="unlock_policy" method="get" accept-charset="utf-8">
+<form action="pending" method="get" accept-charset="utf-8">
 	<div id="content">
 		<div id="content_header">
-			<h2>Unlock {{policyId}}</h2>
+			<h2>Nonrenew policy {{ policyId }}</h2>
 		</div>
+
+		{{#msg}}
+		<div class="content_msg {{msgType}}">
+			<h3>{{msgHeading}}</h3>
+			{{#msgText}}
+			<p>{{{msgText}}}</p>
+			{{/msgText}}
+		</div>
+		{{/msg}}
+
 		<div class="content_body">
+
 			{{#policyOverview}}
 			<section class="policyOverview">
 				<h1>Policy Overview</h1>
@@ -16,18 +27,11 @@
 				</ul>
 			</section>
 			{{/policyOverview}}
-			<fieldset class="columnActions">
-				<div class="column">
-					<section class="ipm-action-links unlock-links">
-						<ul>
-							<li><a name="unlock">Click to unlock {{policyId}}</a>
-						</ul>
-					</section>
-				</div>
-			</fieldset>
+
 			<div class="form_actions">
-				<a href="home">Nevermind, go back</a>
+				<input type="submit" class="button" value="Preview"> <a href="cancellation">Nevermind, go back</a>
 			</div>
 		</div>
 	</div>
+  <input type="hidden" id="{{guid}}_preview" name="preview" value="true" >
 </form>
