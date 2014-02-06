@@ -79,14 +79,9 @@
 		</div>
 
 <!-- State is NY Only -->
-
 		<div>
 			<label for="{{guid}}_PropertyState" class="labelRequired">State <i>PropertyState</i></label>
-			<select id="{{guid}}_PropertyState" name="PropertyState" data-value="{{PropertyState}}"  required >
-				{{#EnumsPropertyState}}
-				<option value="{{value}}">{{label}}</option>
-				{{/EnumsPropertyState}}
-			</select>
+			<input type="text" id="{{guid}}_PropertyState" name="PropertyState" value="{{PropertyState}}" required >
 		</div>
 
 
