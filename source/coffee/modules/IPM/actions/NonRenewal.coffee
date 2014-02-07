@@ -284,7 +284,7 @@ define [
       preview_labels =
         'NonRenewal'                 : 'The policy has been set for immediate non-renewal'
         'PendingNonRenewal'          : 'The policy has been set to pending non-renewal'
-        'PendingNonRenewalRecission' : 'The policy pending non-renewal has been rescinded'
+        'PendingNonRenewalRescission' : 'The policy pending non-renewal has been rescinded'
 
       viewData.preview.PreviewLabel = preview_labels[formValues.transactionType]
 
