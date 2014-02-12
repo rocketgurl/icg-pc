@@ -149,6 +149,14 @@ define [
       preview_labels = @determinePreviewLabel(@values.formValues, @viewData)
       @viewData = _.extend(@viewData, preview_labels)
 
+      reasonCode = @values.formValues.reasonCode
+      reason = _.first(_.filter(@REASON_CODES, (item) -> item.value == reasonCode))
+      
+      if !_.isUndefined(reason) && _.has reason, 'label'
+        @viewData.preview.ReasonCode = reasonCode + " - " + reason.label
+      else
+        @viewData.preview.ReasonCode = reasonCode
+
       # Get submitLabel
       @viewData.preview.submitLabel = @TRANSACTION_TYPES[@CURRENT_SUBVIEW].submit ? ''
 
@@ -164,7 +172,7 @@ define [
       policy = @MODULE.POLICY
 
       nonrenew_data =
-        reasonCode : policy.find('Management PendingNonRenewal')
+        reasonCode : policy.find('Management PendingNonRenewal reasonCode')
         EnumsNonRenewReason : @REASON_CODES
 
       # Toggle buttons on/off depending on Managament >
@@ -276,46 +284,8 @@ define [
       preview_labels =
         'NonRenewal'                 : 'The policy has been set for immediate non-renewal'
         'PendingNonRenewal'          : 'The policy has been set to pending non-renewal'
-        'PendingNonRenewalRecission' : 'The policy pending non-renewal has been rescinded'
+        'PendingNonRenewalRescission' : 'The policy pending non-renewal has been rescinded'
 
       viewData.preview.PreviewLabel = preview_labels[formValues.transactionType]
-
-      viewData
-
-    # ICS-1000 : For Pending Cancellations we want to show CancellationEffectiveDate
-    # from the preview XML doc. For immediate cancellations we want to show
-    # EffectiveDate from the preview XML doc. This is partially to
-    # future proof things so that if the server does calculations on the
-    # preview XML doc in the future we will show them to the user here
-    # instead of their raw input.
-    #
-    # @param `policy` _Object_ Policy
-    # @param `viewData` _object_ model.json values
-    # @return _Object_ updated viewData
-    #
-    determineCorrectPreviewDate : (policy, viewData) ->
-      management = policy.get('json').Management
-
-      if @values.formValues.transactionType == "PendingCancellation"
-        viewData.preview.EffectiveDate = \
-          management.PendingCancellation.cancellationEffectiveDate
-      else if _.has(management, 'policyState') && _.has(management.policyState, 'effectiveDate')
-        viewData.preview.EffectiveDate = management.policyState.effectiveDate
-
-      viewData
-
-    # Date math to get AdvanceNotceDays
-    #
-    # @param `viewData` _object_ model.json values
-    # @return _Object_ updated viewData
-    #
-    calculateAdvanceNoticeDays : (viewData) ->
-      MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
-
-      viewData.preview.AdvanceNoticeDays = \
-        (Date.parse(viewData.preview.EffectiveDate) - Date.parse(viewData.preview.AppliedDate)) / MILLISECONDS_PER_DAY;
-
-      if viewData.preview.AdvanceNoticeDays < 0
-        viewData.preview.AdvanceNoticeDays = 0
 
       viewData
