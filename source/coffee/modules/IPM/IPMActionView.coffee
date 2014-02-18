@@ -104,7 +104,7 @@ define [
       product_name = if policy.isDovetail() then 'dovetail' else policy.get('productName')
 
       path  = "/js/#{@MODULE.CONFIG.PRODUCTS_PATH}#{product_name}/forms/#{_.slugify(action)}"
-
+      
       # Stash the files in the cache on first load
       if _.isNull(@tpl_cache) || !_.has(@tpl_cache, action) || nocache
         model = $.getJSON("#{path}/model.json")
@@ -376,6 +376,13 @@ define [
     # @param `jqXHR` _Object_ XHR object
     #
     callbackSuccess : (data, status, jqXHR) =>
+   
+      #if the ChangeSet/Transaction is successful, we want to send the Notes
+      #as an additional post asyncronously and then go ahead and handle the success
+      #messaging for the action
+      @postAdditionalNotes(@MODULE.POLICY);
+      
+      #handle the message success      
       msg_text = if @PARENT_VIEW.success_msg then @PARENT_VIEW.success_msg else @PARENT_VIEW.view_state
       msg = "#{msg_text} completed successfully"
 
@@ -388,6 +395,7 @@ define [
       @resetPolicyModel(data, jqXHR, true)
 
       @PARENT_VIEW.route 'Home'
+
 
     # **Error handling from ChangeSet**
     #
@@ -423,6 +431,93 @@ define [
           @errors = @errorParseHTML(jqXHR)
 
       @displayError 'warning', @errors
+    
+    
+    # **Notes field handling, post a notes ChangeSet**
+    #
+    # @param `policy` _Object_ PolicyModel
+    #
+    postAdditionalNotes : (policy) =>
+    
+      #Get the Notes field value, if it exists
+      #currentForm was added to ensure the correct addNotes textarea was used, as that field 
+      #is included on multiple form elements
+      notes = @currentForm.find('textarea[name=addNotes]').val();
+      notes = $.trim(notes);
+      delete @currentForm
+      
+      #if user does not add notes, skip this step entirely  
+      if notes? and notes isnt ''
+        username = @MODULE.USER.get 'username'
+          
+        notexml = """
+          <PolicyChangeSet schemaVersion="2.1" username="#{username}" description="Adding a note">
+              <Note>
+                  <Content><![CDATA[#{notes}]]></Content>
+              </Note>
+          </PolicyChangeSet>
+        """         
+      
+        xmldoc  = $.parseXML(notexml) #Parse xml w/jQuery
+        payload_schema = "schema=#{@ChangeSet.getPayloadType(xmldoc)}.#{@ChangeSet.getSchemaVersion(xmldoc)}" 
+      
+        # Assemble the AJAX params
+        options =
+          url         :  policy.url()
+          type        : 'POST'
+          dataType    : 'xml'
+          contentType : "application/xml; #{payload_schema}"
+          context     : @
+          data        : notexml
+          headers     :
+              'Authorization' : "Basic #{policy.get('digest')}"
+              'Accept'        : 'application/vnd.ics360.insurancepolicy.2.8+xml'
+              'X-Commit'      : true
+
+
+        # Post
+        post = $.ajax(options)
+        $.when(post).then(@callbackNoteSuccess, @callbackNoteError)
+
+
+    # **Success handling from ChangeSet (Note Save)**
+    #
+    # @param `data` _XML_ Policy XML
+    # @param `status` _String_ Status of callback
+    # @param `jqXHR` _Object_ XHR object
+    #
+    callbackNoteSuccess : (data, status, jqXHR) =>
+        
+        #A successful note save will occur silently
+        return
+        
+       
+    # **Error handling from ChangeSet (Note Save)**
+    #
+    # @param `jqXHR` _Object_ XHR object
+    # @param `status` _String_ Status of callback
+    # @param `error` _String_ Error
+    #
+    callbackNoteError : (jqXHR, status, error) =>
+        
+      # On a note save, we want to post the error to the screen as a
+      # secondary error warning if it fails
+      
+      # If we don't get an XHR response, then something very bad has
+      # happened indeed.
+      if !jqXHR
+        @PARENT_VIEW.displayError(
+          'warning',
+          'Fatal: Error received with no response from server'
+        ).remove_loader()
+
+        return false
+
+      @errors = @errorParseHTML(jqXHR)
+
+      @displayError 'warning', @errors
+      
+        
 
     # **Preview Callback**
     # If a policy comes back to for Preview we need to do a little processing
@@ -563,6 +658,10 @@ define [
       @PARENT_VIEW.insert_loader('Processing policy') # Add loader
 
       form = @$el.find('form')
+      
+      # currentForm was added to support the postAdditionNotes function 
+      @currentForm = form
+      
       if form.length > 0
 
         @values.formValues    = @getFormValues form
