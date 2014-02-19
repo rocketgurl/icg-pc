@@ -1,364 +1,368 @@
 <!-- Product: FSIC DP3 Louisiana -->
 <form action="change_additional_interest" method="get" accept-charset="utf-8" class="collapsedSections">
-	<div id="content">
-		<div id="content_header">
-			<h2>Change Additional Interest for Policy {{policyId}}</h2>
-		</div>
+    <div id="content">
+        <div id="content_header">
+            <h2>Change Additional Interest for Policy {{policyId}}</h2>
+        </div>
 
-		<div class="content_body">
+        <div class="content_body">
 
-			{{#policyOverview}}
-			<section class="policyOverview">
-				<h1>Policy Overview</h1>
-				<ul>
-					<li>{{InsuredFirstName}} {{InsuredMiddleName}} {{InsuredLastName}}</li>
-					<li>{{InsuredMailingAddressLine1}}</li>
-					<li>{{InsuredMailingAddressLine2}}</li>
-					<li>{{InsuredMailingAddressCity}}, {{InsuredMailingAddressState}} {{InsuredMailingAddressZip}}</li>
-				</ul>
-			</section>
-			{{/policyOverview}}
+            {{#policyOverview}}
+            <section class="policyOverview">
+                <h1>Policy Overview</h1>
+                <ul>
+                    <li>{{InsuredFirstName}} {{InsuredMiddleName}} {{InsuredLastName}}</li>
+                    <li>{{InsuredMailingAddressLine1}}</li>
+                    <li>{{InsuredMailingAddressLine2}}</li>
+                    <li>{{InsuredMailingAddressCity}}, {{InsuredMailingAddressState}} {{InsuredMailingAddressZip}}</li>
+                </ul>
+            </section>
+            {{/policyOverview}}
 
-			<fieldset>
-				<div>
-					<label for="{{guid}}_reasonCode" class="labelRequired">Reason code</label>
-					<select id="{{guid}}_reasonCode" name="reasonCode" required>
-						{{#EnumsChangeAdditionalInterestReason}}
-						<option value="{{value}}">{{label}}</option>
-						{{/EnumsChangeAdditionalInterestReason}}
-					</select>
-				</div>
-			</fieldset>
+            <fieldset>
+                <div>
+                    <label for="{{guid}}_reasonCode" class="labelRequired">Reason code</label>
+                    <select id="{{guid}}_reasonCode" name="reasonCode" required>
+                        {{#EnumsChangeAdditionalInterestReason}}
+                        <option value="{{value}}">{{label}}</option>
+                        {{/EnumsChangeAdditionalInterestReason}}
+                    </select>
+                </div>
+            </fieldset>
 
-			<fieldset class="defaultOpen">
-				<h3>Additional Interest 1 <a data-alt-text="close">change</a></h3>
-				<div class="collapsibleFieldContainer">
-					<fieldset>
-						<div>
-							<label for="{{guid}}_AdditionalInterest1Type">Type <i>AdditionalInterest1Type</i></label>
-							<select id="{{guid}}_AdditionalInterest1Type" name="AdditionalInterest1Type" data-value="{{AdditionalInterest1Type}}">
-							
-								{{#EnumsAdditionalInterestTypes}}
-							
-								<option value="{{value}}">{{label}}</option>
-							
-								{{/EnumsAdditionalInterestTypes}}
-							
-							</select>
-						</div>
-						<div>
-							<label for="{{guid}}_AdditionalInterest1Name">Name <i>AdditionalInterest1Name</i></label>
-							<input id="{{guid}}_AdditionalInterest1Name" type="text" name="AdditionalInterest1Name" value="{{AdditionalInterest1Name}}">
-						</div>
-					</fieldset>
-					<fieldset>
-						<legend>Mailing address</legend>
+            <fieldset class="defaultOpen">
+                <h3>Additional Interest 1 <a data-alt-text="close">change</a></h3>
+                <div class="collapsibleFieldContainer">
+                    <fieldset>
+                        <div>
+                            <label for="{{guid}}_AdditionalInterest1Type">Type <i>AdditionalInterest1Type</i></label>
+                            <select id="{{guid}}_AdditionalInterest1Type" name="AdditionalInterest1Type" data-value="{{AdditionalInterest1Type}}">
+                            
+                                {{#EnumsAdditionalInterestTypes}}
+                            
+                                <option value="{{value}}">{{label}}</option>
+                            
+                                {{/EnumsAdditionalInterestTypes}}
+                            
+                            </select>
+                        </div>
+                        <div>
+                            <label for="{{guid}}_AdditionalInterest1Name">Name <i>AdditionalInterest1Name</i></label>
+                            <input id="{{guid}}_AdditionalInterest1Name" type="text" name="AdditionalInterest1Name" value="{{AdditionalInterest1Name}}">
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Mailing address</legend>
 
-						<div>
-							<label for="{{guid}}_AdditionalInterest1AddressLine1">Address line 1 <i>AdditionalInterest1AddressLine1</i></label>
-							<input type="text" id="{{guid}}_AdditionalInterest1AddressLine1" name="AdditionalInterest1AddressLine1" value="{{AdditionalInterest1AddressLine1}}">
-						</div>
-						<div>
-							<label for="{{guid}}_AdditionalInterest1AddressLine2">Address line 2 <i>AdditionalInterest1AddressLine2</i></label>
-							<input type="text" id="{{guid}}_AdditionalInterest1AddressLine2" name="AdditionalInterest1AddressLine2" value="{{AdditionalInterest1AddressLine2}}">
-						</div>
+                        <div>
+                            <label for="{{guid}}_AdditionalInterest1AddressLine1">Address line 1 <i>AdditionalInterest1AddressLine1</i></label>
+                            <input type="text" id="{{guid}}_AdditionalInterest1AddressLine1" name="AdditionalInterest1AddressLine1" value="{{AdditionalInterest1AddressLine1}}">
+                        </div>
+                        <div>
+                            <label for="{{guid}}_AdditionalInterest1AddressLine2">Address line 2 <i>AdditionalInterest1AddressLine2</i></label>
+                            <input type="text" id="{{guid}}_AdditionalInterest1AddressLine2" name="AdditionalInterest1AddressLine2" value="{{AdditionalInterest1AddressLine2}}">
+                        </div>
 
-						<div>
-							<label for="{{guid}}_AdditionalInterest1AddressCity">City <i>AdditionalInterest1AddressCity</i></label>
-							<input type="text" id="{{guid}}_AdditionalInterest1AddressCity" name="AdditionalInterest1AddressCity" value="{{AdditionalInterest1AddressCity}}">
-						</div>
-						<div>
-							<label for="{{guid}}_AdditionalInterest1AddressState">State <i>AdditionalInterest1AddressState</i></label>
-							<select id="{{guid}}_AdditionalInterest1AddressState" name="AdditionalInterest1AddressState" data-value="{{AdditionalInterest1AddressState}}{{^AdditionalInterest1AddressState}}0{{/AdditionalInterest1AddressState}}">
-								<option value="0">Select</option>
-								<option value="AL">Alabama</option>
-								<option value="AK">Alaska</option>
-								<option value="AZ">Arizona</option>
-								<option value="AR">Arkansas</option>
-								<option value="CA">California</option>
-								<option value="CO">Colorado</option>
-								<option value="CT">Connecticut</option>
-								<option value="DE">Delaware</option>
-								<option value="DC">District Of Columbia</option>
-								<option value="FL">Florida</option>
-								<option value="GA">Georgia</option>
-								<option value="HI">Hawaii</option>
-								<option value="ID">Idaho</option>
-								<option value="IL">Illinois</option>
-								<option value="IN">Indiana</option>
-								<option value="IA">Iowa</option>
-								<option value="KS">Kansas</option>
-								<option value="KY">Kentucky</option>
-								<option value="LA">Louisiana</option>
-								<option value="ME">Maine</option>
-								<option value="MD">Maryland</option>
-								<option value="MA">Massachusetts</option>
-								<option value="MI">Michigan</option>
-								<option value="MN">Minnesota</option>
-								<option value="MS">Mississippi</option>
-								<option value="MO">Missouri</option>
-								<option value="MT">Montana</option>
-								<option value="NE">Nebraska</option>
-								<option value="NV">Nevada</option>
-								<option value="NH">New Hampshire</option>
-								<option value="NJ">New Jersey</option>
-								<option value="NM">New Mexico</option>
-								<option value="NY">New York</option>
-								<option value="NC">North Carolina</option>
-								<option value="ND">North Dakota</option>
-								<option value="OH">Ohio</option>
-								<option value="OK">Oklahoma</option>
-								<option value="OR">Oregon</option>
-								<option value="PA">Pennsylvania</option>
-								<option value="RI">Rhode Island</option>
-								<option value="SC">South Carolina</option>
-								<option value="SD">South Dakota</option>
-								<option value="TN">Tennessee</option>
-								<option value="TX">Texas</option>
-								<option value="UT">Utah</option>
-								<option value="VT">Vermont</option>
-								<option value="VA">Virginia</option>
-								<option value="WA">Washington</option>
-								<option value="WV">West Virginia</option>
-								<option value="WI">Wisconsin</option>
-								<option value="WY">Wyoming</option>
-							</select>
-						</div>
-						<div>
-							<label for="{{guid}}_AdditionalInterest1AddressZip">Zip <i>AdditionalInterest1AddressZip</i></label>
-							<input type="text" id="{{guid}}_AdditionalInterest1AddressZip" name="AdditionalInterest1AddressZip" value="{{AdditionalInterest1AddressZip}}" size="5">
-						</div>
-					</fieldset>
-					<fieldset>
-						<div>
-							<label for="{{guid}}_AdditionalInterest1ReferenceNumber">Reference Number <i>AdditionalInterest1ReferenceNumber</i></label>
-							<input type="text" id="{{guid}}_AdditionalInterest1ReferenceNumber" name="AdditionalInterest1ReferenceNumber" value="{{AdditionalInterest1ReferenceNumber}}">
-						</div>
-					</fieldset>
-				</div>
-			</fieldset>
+                        <div>
+                            <label for="{{guid}}_AdditionalInterest1AddressCity">City <i>AdditionalInterest1AddressCity</i></label>
+                            <input type="text" id="{{guid}}_AdditionalInterest1AddressCity" name="AdditionalInterest1AddressCity" value="{{AdditionalInterest1AddressCity}}">
+                        </div>
+                        <div>
+                            <label for="{{guid}}_AdditionalInterest1AddressState">State <i>AdditionalInterest1AddressState</i></label>
+                            <select id="{{guid}}_AdditionalInterest1AddressState" name="AdditionalInterest1AddressState" data-value="{{AdditionalInterest1AddressState}}{{^AdditionalInterest1AddressState}}0{{/AdditionalInterest1AddressState}}">
+                                <option value="0">Select</option>
+                                <option value="AL">Alabama</option>
+                                <option value="AK">Alaska</option>
+                                <option value="AZ">Arizona</option>
+                                <option value="AR">Arkansas</option>
+                                <option value="CA">California</option>
+                                <option value="CO">Colorado</option>
+                                <option value="CT">Connecticut</option>
+                                <option value="DE">Delaware</option>
+                                <option value="DC">District Of Columbia</option>
+                                <option value="FL">Florida</option>
+                                <option value="GA">Georgia</option>
+                                <option value="HI">Hawaii</option>
+                                <option value="ID">Idaho</option>
+                                <option value="IL">Illinois</option>
+                                <option value="IN">Indiana</option>
+                                <option value="IA">Iowa</option>
+                                <option value="KS">Kansas</option>
+                                <option value="KY">Kentucky</option>
+                                <option value="LA">Louisiana</option>
+                                <option value="ME">Maine</option>
+                                <option value="MD">Maryland</option>
+                                <option value="MA">Massachusetts</option>
+                                <option value="MI">Michigan</option>
+                                <option value="MN">Minnesota</option>
+                                <option value="MS">Mississippi</option>
+                                <option value="MO">Missouri</option>
+                                <option value="MT">Montana</option>
+                                <option value="NE">Nebraska</option>
+                                <option value="NV">Nevada</option>
+                                <option value="NH">New Hampshire</option>
+                                <option value="NJ">New Jersey</option>
+                                <option value="NM">New Mexico</option>
+                                <option value="NY">New York</option>
+                                <option value="NC">North Carolina</option>
+                                <option value="ND">North Dakota</option>
+                                <option value="OH">Ohio</option>
+                                <option value="OK">Oklahoma</option>
+                                <option value="OR">Oregon</option>
+                                <option value="PA">Pennsylvania</option>
+                                <option value="RI">Rhode Island</option>
+                                <option value="SC">South Carolina</option>
+                                <option value="SD">South Dakota</option>
+                                <option value="TN">Tennessee</option>
+                                <option value="TX">Texas</option>
+                                <option value="UT">Utah</option>
+                                <option value="VT">Vermont</option>
+                                <option value="VA">Virginia</option>
+                                <option value="WA">Washington</option>
+                                <option value="WV">West Virginia</option>
+                                <option value="WI">Wisconsin</option>
+                                <option value="WY">Wyoming</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="{{guid}}_AdditionalInterest1AddressZip">Zip <i>AdditionalInterest1AddressZip</i></label>
+                            <input type="text" id="{{guid}}_AdditionalInterest1AddressZip" name="AdditionalInterest1AddressZip" value="{{AdditionalInterest1AddressZip}}" size="5">
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div>
+                            <label for="{{guid}}_AdditionalInterest1ReferenceNumber">Reference Number <i>AdditionalInterest1ReferenceNumber</i></label>
+                            <input type="text" id="{{guid}}_AdditionalInterest1ReferenceNumber" name="AdditionalInterest1ReferenceNumber" value="{{AdditionalInterest1ReferenceNumber}}">
+                        </div>
+                    </fieldset>
+                </div>
+            </fieldset>
 
-			<fieldset>
-				<h3>Additional Interest 2 <a data-alt-text="close">change</a></h3>
-				<div class="collapsibleFieldContainer">
-					<fieldset>
-						<div>
-							<label for="{{guid}}_AdditionalInterest2Type">Type <i>AdditionalInterest2Type</i></label>
-							<select id="{{guid}}_AdditionalInterest2Type" name="AdditionalInterest2Type" data-value="{{AdditionalInterest2Type}}">
-							
-								{{#EnumsAdditionalInterestTypes}}
-							
-								<option value="{{value}}">{{label}}</option>
-							
-								{{/EnumsAdditionalInterestTypes}}
-							
-							</select>
-						</div>
-						<div>
-							<label for="{{guid}}_AdditionalInterest2Name">Name <i>AdditionalInterest2Name</i></label>
-							<input id="{{guid}}_AdditionalInterest2Name" type="text" name="AdditionalInterest2Name" value="{{AdditionalInterest2Name}}">
-						</div>
-					</fieldset>
-					<fieldset>
-						<legend>Mailing address</legend>
+            <fieldset>
+                <h3>Additional Interest 2 <a data-alt-text="close">change</a></h3>
+                <div class="collapsibleFieldContainer">
+                    <fieldset>
+                        <div>
+                            <label for="{{guid}}_AdditionalInterest2Type">Type <i>AdditionalInterest2Type</i></label>
+                            <select id="{{guid}}_AdditionalInterest2Type" name="AdditionalInterest2Type" data-value="{{AdditionalInterest2Type}}">
+                            
+                                {{#EnumsAdditionalInterestTypes}}
+                            
+                                <option value="{{value}}">{{label}}</option>
+                            
+                                {{/EnumsAdditionalInterestTypes}}
+                            
+                            </select>
+                        </div>
+                        <div>
+                            <label for="{{guid}}_AdditionalInterest2Name">Name <i>AdditionalInterest2Name</i></label>
+                            <input id="{{guid}}_AdditionalInterest2Name" type="text" name="AdditionalInterest2Name" value="{{AdditionalInterest2Name}}">
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Mailing address</legend>
 
-						<div>
-							<label for="{{guid}}_AdditionalInterest2AddressLine1">Address line 1 <i>AdditionalInterest2AddressLine1</i></label>
-							<input type="text" id="{{guid}}_AdditionalInterest2AddressLine1" name="AdditionalInterest2AddressLine1" value="{{AdditionalInterest2AddressLine1}}">
-						</div>
-						<div>
-							<label for="{{guid}}_AdditionalInterest2AddressLine2">Address line 2 <i>AdditionalInterest2AddressLine2</i></label>
-							<input type="text" id="{{guid}}_AdditionalInterest2AddressLine2" name="AdditionalInterest2AddressLine2" value="{{AdditionalInterest2AddressLine2}}">
-						</div>
+                        <div>
+                            <label for="{{guid}}_AdditionalInterest2AddressLine1">Address line 1 <i>AdditionalInterest2AddressLine1</i></label>
+                            <input type="text" id="{{guid}}_AdditionalInterest2AddressLine1" name="AdditionalInterest2AddressLine1" value="{{AdditionalInterest2AddressLine1}}">
+                        </div>
+                        <div>
+                            <label for="{{guid}}_AdditionalInterest2AddressLine2">Address line 2 <i>AdditionalInterest2AddressLine2</i></label>
+                            <input type="text" id="{{guid}}_AdditionalInterest2AddressLine2" name="AdditionalInterest2AddressLine2" value="{{AdditionalInterest2AddressLine2}}">
+                        </div>
 
-						<div>
-							<label for="{{guid}}_AdditionalInterest2AddressCity">City <i>AdditionalInterest2AddressCity</i></label>
-							<input type="text" id="{{guid}}_AdditionalInterest2AddressCity" name="AdditionalInterest2AddressCity" value="{{AdditionalInterest2AddressCity}}">
-						</div>
-						<div>
-							<label for="{{guid}}_AdditionalInterest2AddressState">State <i>AdditionalInterest2AddressState</i></label>
-							<select id="{{guid}}_AdditionalInterest2AddressState" name="AdditionalInterest2AddressState" data-value="{{AdditionalInterest2AddressState}}{{^AdditionalInterest2AddressState}}0{{/AdditionalInterest2AddressState}}">
-								<option value="0">Select</option>
-								<option value="AL">Alabama</option>
-								<option value="AK">Alaska</option>
-								<option value="AZ">Arizona</option>
-								<option value="AR">Arkansas</option>
-								<option value="CA">California</option>
-								<option value="CO">Colorado</option>
-								<option value="CT">Connecticut</option>
-								<option value="DE">Delaware</option>
-								<option value="DC">District Of Columbia</option>
-								<option value="FL">Florida</option>
-								<option value="GA">Georgia</option>
-								<option value="HI">Hawaii</option>
-								<option value="ID">Idaho</option>
-								<option value="IL">Illinois</option>
-								<option value="IN">Indiana</option>
-								<option value="IA">Iowa</option>
-								<option value="KS">Kansas</option>
-								<option value="KY">Kentucky</option>
-								<option value="LA">Louisiana</option>
-								<option value="ME">Maine</option>
-								<option value="MD">Maryland</option>
-								<option value="MA">Massachusetts</option>
-								<option value="MI">Michigan</option>
-								<option value="MN">Minnesota</option>
-								<option value="MS">Mississippi</option>
-								<option value="MO">Missouri</option>
-								<option value="MT">Montana</option>
-								<option value="NE">Nebraska</option>
-								<option value="NV">Nevada</option>
-								<option value="NH">New Hampshire</option>
-								<option value="NJ">New Jersey</option>
-								<option value="NM">New Mexico</option>
-								<option value="NY">New York</option>
-								<option value="NC">North Carolina</option>
-								<option value="ND">North Dakota</option>
-								<option value="OH">Ohio</option>
-								<option value="OK">Oklahoma</option>
-								<option value="OR">Oregon</option>
-								<option value="PA">Pennsylvania</option>
-								<option value="RI">Rhode Island</option>
-								<option value="SC">South Carolina</option>
-								<option value="SD">South Dakota</option>
-								<option value="TN">Tennessee</option>
-								<option value="TX">Texas</option>
-								<option value="UT">Utah</option>
-								<option value="VT">Vermont</option>
-								<option value="VA">Virginia</option>
-								<option value="WA">Washington</option>
-								<option value="WV">West Virginia</option>
-								<option value="WI">Wisconsin</option>
-								<option value="WY">Wyoming</option>
-							</select>
-						</div>
-						<div>
-							<label for="{{guid}}_AdditionalInterest2AddressZip">Zip <i>AdditionalInterest2AddressZip</i></label>
-							<input type="text" id="{{guid}}_AdditionalInterest2AddressZip" name="AdditionalInterest2AddressZip" value="{{AdditionalInterest2AddressZip}}" size="5">
-						</div>
-					</fieldset>
-					<fieldset>
-						<div>
-							<label for="{{guid}}_AdditionalInterest2ReferenceNumber">Reference Number <i>AdditionalInterest2ReferenceNumber</i></label>
-							<input type="text" id="{{guid}}_AdditionalInterest2ReferenceNumber" name="AdditionalInterest2ReferenceNumber" value="{{AdditionalInterest2ReferenceNumber}}">
-						</div>
-					</fieldset>
-				</div>
-			</fieldset>
+                        <div>
+                            <label for="{{guid}}_AdditionalInterest2AddressCity">City <i>AdditionalInterest2AddressCity</i></label>
+                            <input type="text" id="{{guid}}_AdditionalInterest2AddressCity" name="AdditionalInterest2AddressCity" value="{{AdditionalInterest2AddressCity}}">
+                        </div>
+                        <div>
+                            <label for="{{guid}}_AdditionalInterest2AddressState">State <i>AdditionalInterest2AddressState</i></label>
+                            <select id="{{guid}}_AdditionalInterest2AddressState" name="AdditionalInterest2AddressState" data-value="{{AdditionalInterest2AddressState}}{{^AdditionalInterest2AddressState}}0{{/AdditionalInterest2AddressState}}">
+                                <option value="0">Select</option>
+                                <option value="AL">Alabama</option>
+                                <option value="AK">Alaska</option>
+                                <option value="AZ">Arizona</option>
+                                <option value="AR">Arkansas</option>
+                                <option value="CA">California</option>
+                                <option value="CO">Colorado</option>
+                                <option value="CT">Connecticut</option>
+                                <option value="DE">Delaware</option>
+                                <option value="DC">District Of Columbia</option>
+                                <option value="FL">Florida</option>
+                                <option value="GA">Georgia</option>
+                                <option value="HI">Hawaii</option>
+                                <option value="ID">Idaho</option>
+                                <option value="IL">Illinois</option>
+                                <option value="IN">Indiana</option>
+                                <option value="IA">Iowa</option>
+                                <option value="KS">Kansas</option>
+                                <option value="KY">Kentucky</option>
+                                <option value="LA">Louisiana</option>
+                                <option value="ME">Maine</option>
+                                <option value="MD">Maryland</option>
+                                <option value="MA">Massachusetts</option>
+                                <option value="MI">Michigan</option>
+                                <option value="MN">Minnesota</option>
+                                <option value="MS">Mississippi</option>
+                                <option value="MO">Missouri</option>
+                                <option value="MT">Montana</option>
+                                <option value="NE">Nebraska</option>
+                                <option value="NV">Nevada</option>
+                                <option value="NH">New Hampshire</option>
+                                <option value="NJ">New Jersey</option>
+                                <option value="NM">New Mexico</option>
+                                <option value="NY">New York</option>
+                                <option value="NC">North Carolina</option>
+                                <option value="ND">North Dakota</option>
+                                <option value="OH">Ohio</option>
+                                <option value="OK">Oklahoma</option>
+                                <option value="OR">Oregon</option>
+                                <option value="PA">Pennsylvania</option>
+                                <option value="RI">Rhode Island</option>
+                                <option value="SC">South Carolina</option>
+                                <option value="SD">South Dakota</option>
+                                <option value="TN">Tennessee</option>
+                                <option value="TX">Texas</option>
+                                <option value="UT">Utah</option>
+                                <option value="VT">Vermont</option>
+                                <option value="VA">Virginia</option>
+                                <option value="WA">Washington</option>
+                                <option value="WV">West Virginia</option>
+                                <option value="WI">Wisconsin</option>
+                                <option value="WY">Wyoming</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="{{guid}}_AdditionalInterest2AddressZip">Zip <i>AdditionalInterest2AddressZip</i></label>
+                            <input type="text" id="{{guid}}_AdditionalInterest2AddressZip" name="AdditionalInterest2AddressZip" value="{{AdditionalInterest2AddressZip}}" size="5">
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div>
+                            <label for="{{guid}}_AdditionalInterest2ReferenceNumber">Reference Number <i>AdditionalInterest2ReferenceNumber</i></label>
+                            <input type="text" id="{{guid}}_AdditionalInterest2ReferenceNumber" name="AdditionalInterest2ReferenceNumber" value="{{AdditionalInterest2ReferenceNumber}}">
+                        </div>
+                    </fieldset>
+                </div>
+            </fieldset>
 
-			<fieldset>
-				<h3>Additional Interest 3 <a data-alt-text="close">change</a></h3>
-				<div class="collapsibleFieldContainer">
-					<fieldset>
-						<div>
-							<label for="{{guid}}_AdditionalInterest3Type">Type <i>AdditionalInterest3Type</i></label>
-							<select id="{{guid}}_AdditionalInterest3Type" name="AdditionalInterest3Type" data-value="{{AdditionalInterest3Type}}">
-							
-								{{#EnumsAdditionalInterestTypes}}
-							
-								<option value="{{value}}">{{label}}</option>
-							
-								{{/EnumsAdditionalInterestTypes}}
-							
-							</select>
-						</div>
-						<div>
-							<label for="{{guid}}_AdditionalInterest3Name">Name <i>AdditionalInterest3Name</i></label>
-							<input id="{{guid}}_AdditionalInterest3Name" type="text" name="AdditionalInterest3Name" value="{{AdditionalInterest3Name}}">
-						</div>
-					</fieldset>
-					<fieldset>
-						<legend>Mailing address</legend>
+            <fieldset>
+                <h3>Additional Interest 3 <a data-alt-text="close">change</a></h3>
+                <div class="collapsibleFieldContainer">
+                    <fieldset>
+                        <div>
+                            <label for="{{guid}}_AdditionalInterest3Type">Type <i>AdditionalInterest3Type</i></label>
+                            <select id="{{guid}}_AdditionalInterest3Type" name="AdditionalInterest3Type" data-value="{{AdditionalInterest3Type}}">
+                            
+                                {{#EnumsAdditionalInterestTypes}}
+                            
+                                <option value="{{value}}">{{label}}</option>
+                            
+                                {{/EnumsAdditionalInterestTypes}}
+                            
+                            </select>
+                        </div>
+                        <div>
+                            <label for="{{guid}}_AdditionalInterest3Name">Name <i>AdditionalInterest3Name</i></label>
+                            <input id="{{guid}}_AdditionalInterest3Name" type="text" name="AdditionalInterest3Name" value="{{AdditionalInterest3Name}}">
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <legend>Mailing address</legend>
 
-						<div>
-							<label for="{{guid}}_AdditionalInterest3AddressLine1">Address line 1 <i>AdditionalInterest3AddressLine1</i></label>
-							<input type="text" id="{{guid}}_AdditionalInterest3AddressLine1" name="AdditionalInterest3AddressLine1" value="{{AdditionalInterest3AddressLine1}}">
-						</div>
-						<div>
-							<label for="{{guid}}_AdditionalInterest3AddressLine2">Address line 2 <i>AdditionalInterest3AddressLine2</i></label>
-							<input type="text" id="{{guid}}_AdditionalInterest3AddressLine2" name="AdditionalInterest3AddressLine2" value="{{AdditionalInterest3AddressLine2}}">
-						</div>
+                        <div>
+                            <label for="{{guid}}_AdditionalInterest3AddressLine1">Address line 1 <i>AdditionalInterest3AddressLine1</i></label>
+                            <input type="text" id="{{guid}}_AdditionalInterest3AddressLine1" name="AdditionalInterest3AddressLine1" value="{{AdditionalInterest3AddressLine1}}">
+                        </div>
+                        <div>
+                            <label for="{{guid}}_AdditionalInterest3AddressLine2">Address line 2 <i>AdditionalInterest3AddressLine2</i></label>
+                            <input type="text" id="{{guid}}_AdditionalInterest3AddressLine2" name="AdditionalInterest3AddressLine2" value="{{AdditionalInterest3AddressLine2}}">
+                        </div>
 
-						<div>
-							<label for="{{guid}}_AdditionalInterest3AddressCity">City <i>AdditionalInterest3AddressCity</i></label>
-							<input type="text" id="{{guid}}_AdditionalInterest3AddressCity" name="AdditionalInterest3AddressCity" value="{{AdditionalInterest3AddressCity}}">
-						</div>
-						<div>
-							<label for="{{guid}}_AdditionalInterest3AddressState">State <i>AdditionalInterest3AddressState</i></label>
-							<select id="{{guid}}_AdditionalInterest3AddressState" name="AdditionalInterest3AddressState" data-value="{{AdditionalInterest3AddressState}}{{^AdditionalInterest3AddressState}}0{{/AdditionalInterest3AddressState}}">
-								<option value="0">Select</option>
-								<option value="AL">Alabama</option>
-								<option value="AK">Alaska</option>
-								<option value="AZ">Arizona</option>
-								<option value="AR">Arkansas</option>
-								<option value="CA">California</option>
-								<option value="CO">Colorado</option>
-								<option value="CT">Connecticut</option>
-								<option value="DE">Delaware</option>
-								<option value="DC">District Of Columbia</option>
-								<option value="FL">Florida</option>
-								<option value="GA">Georgia</option>
-								<option value="HI">Hawaii</option>
-								<option value="ID">Idaho</option>
-								<option value="IL">Illinois</option>
-								<option value="IN">Indiana</option>
-								<option value="IA">Iowa</option>
-								<option value="KS">Kansas</option>
-								<option value="KY">Kentucky</option>
-								<option value="LA">Louisiana</option>
-								<option value="ME">Maine</option>
-								<option value="MD">Maryland</option>
-								<option value="MA">Massachusetts</option>
-								<option value="MI">Michigan</option>
-								<option value="MN">Minnesota</option>
-								<option value="MS">Mississippi</option>
-								<option value="MO">Missouri</option>
-								<option value="MT">Montana</option>
-								<option value="NE">Nebraska</option>
-								<option value="NV">Nevada</option>
-								<option value="NH">New Hampshire</option>
-								<option value="NJ">New Jersey</option>
-								<option value="NM">New Mexico</option>
-								<option value="NY">New York</option>
-								<option value="NC">North Carolina</option>
-								<option value="ND">North Dakota</option>
-								<option value="OH">Ohio</option>
-								<option value="OK">Oklahoma</option>
-								<option value="OR">Oregon</option>
-								<option value="PA">Pennsylvania</option>
-								<option value="RI">Rhode Island</option>
-								<option value="SC">South Carolina</option>
-								<option value="SD">South Dakota</option>
-								<option value="TN">Tennessee</option>
-								<option value="TX">Texas</option>
-								<option value="UT">Utah</option>
-								<option value="VT">Vermont</option>
-								<option value="VA">Virginia</option>
-								<option value="WA">Washington</option>
-								<option value="WV">West Virginia</option>
-								<option value="WI">Wisconsin</option>
-								<option value="WY">Wyoming</option>
-							</select>
-						</div>
-						<div>
-							<label for="{{guid}}_AdditionalInterest3AddressZip">Zip <i>AdditionalInterest3AddressZip</i></label>
-							<input type="text" id="{{guid}}_AdditionalInterest3AddressZip" name="AdditionalInterest3AddressZip" value="{{AdditionalInterest3AddressZip}}" size="5">
-						</div>
-					</fieldset>
-					<fieldset>
-						<div>
-							<label for="{{guid}}_AdditionalInterest3ReferenceNumber">Reference Number <i>AdditionalInterest3ReferenceNumber</i></label>
-							<input type="text" id="{{guid}}_AdditionalInterest3ReferenceNumber" name="AdditionalInterest3ReferenceNumber" value="{{AdditionalInterest3ReferenceNumber}}">
-						</div>
-					</fieldset>
-				</div>
-			</fieldset>
+                        <div>
+                            <label for="{{guid}}_AdditionalInterest3AddressCity">City <i>AdditionalInterest3AddressCity</i></label>
+                            <input type="text" id="{{guid}}_AdditionalInterest3AddressCity" name="AdditionalInterest3AddressCity" value="{{AdditionalInterest3AddressCity}}">
+                        </div>
+                        <div>
+                            <label for="{{guid}}_AdditionalInterest3AddressState">State <i>AdditionalInterest3AddressState</i></label>
+                            <select id="{{guid}}_AdditionalInterest3AddressState" name="AdditionalInterest3AddressState" data-value="{{AdditionalInterest3AddressState}}{{^AdditionalInterest3AddressState}}0{{/AdditionalInterest3AddressState}}">
+                                <option value="0">Select</option>
+                                <option value="AL">Alabama</option>
+                                <option value="AK">Alaska</option>
+                                <option value="AZ">Arizona</option>
+                                <option value="AR">Arkansas</option>
+                                <option value="CA">California</option>
+                                <option value="CO">Colorado</option>
+                                <option value="CT">Connecticut</option>
+                                <option value="DE">Delaware</option>
+                                <option value="DC">District Of Columbia</option>
+                                <option value="FL">Florida</option>
+                                <option value="GA">Georgia</option>
+                                <option value="HI">Hawaii</option>
+                                <option value="ID">Idaho</option>
+                                <option value="IL">Illinois</option>
+                                <option value="IN">Indiana</option>
+                                <option value="IA">Iowa</option>
+                                <option value="KS">Kansas</option>
+                                <option value="KY">Kentucky</option>
+                                <option value="LA">Louisiana</option>
+                                <option value="ME">Maine</option>
+                                <option value="MD">Maryland</option>
+                                <option value="MA">Massachusetts</option>
+                                <option value="MI">Michigan</option>
+                                <option value="MN">Minnesota</option>
+                                <option value="MS">Mississippi</option>
+                                <option value="MO">Missouri</option>
+                                <option value="MT">Montana</option>
+                                <option value="NE">Nebraska</option>
+                                <option value="NV">Nevada</option>
+                                <option value="NH">New Hampshire</option>
+                                <option value="NJ">New Jersey</option>
+                                <option value="NM">New Mexico</option>
+                                <option value="NY">New York</option>
+                                <option value="NC">North Carolina</option>
+                                <option value="ND">North Dakota</option>
+                                <option value="OH">Ohio</option>
+                                <option value="OK">Oklahoma</option>
+                                <option value="OR">Oregon</option>
+                                <option value="PA">Pennsylvania</option>
+                                <option value="RI">Rhode Island</option>
+                                <option value="SC">South Carolina</option>
+                                <option value="SD">South Dakota</option>
+                                <option value="TN">Tennessee</option>
+                                <option value="TX">Texas</option>
+                                <option value="UT">Utah</option>
+                                <option value="VT">Vermont</option>
+                                <option value="VA">Virginia</option>
+                                <option value="WA">Washington</option>
+                                <option value="WV">West Virginia</option>
+                                <option value="WI">Wisconsin</option>
+                                <option value="WY">Wyoming</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="{{guid}}_AdditionalInterest3AddressZip">Zip <i>AdditionalInterest3AddressZip</i></label>
+                            <input type="text" id="{{guid}}_AdditionalInterest3AddressZip" name="AdditionalInterest3AddressZip" value="{{AdditionalInterest3AddressZip}}" size="5">
+                        </div>
+                    </fieldset>
+                    <fieldset>
+                        <div>
+                            <label for="{{guid}}_AdditionalInterest3ReferenceNumber">Reference Number <i>AdditionalInterest3ReferenceNumber</i></label>
+                            <input type="text" id="{{guid}}_AdditionalInterest3ReferenceNumber" name="AdditionalInterest3ReferenceNumber" value="{{AdditionalInterest3ReferenceNumber}}">
+                        </div>
+                    </fieldset>
+                </div>
+                <div>
+                    <label for="{{guid}}_addNotes" class="noteslabel">Notes</label>
+                    <textarea class="notesfield" id="{{guid}}_addNotes" name="addNotes" value=""></textarea>
+                </div>
+            </fieldset>
 
-			<div class="form_actions">
-				<input type="submit" class="button" value="Confirm">
-				<a href="home">Nevermind, go back</a>
-			</div>
+            <div class="form_actions">
+                <input type="submit" class="button" value="Confirm">
+                <a href="home">Nevermind, go back</a>
+            </div>
 
-		</div>
-	</div>
+        </div>
+    </div>
 </form>

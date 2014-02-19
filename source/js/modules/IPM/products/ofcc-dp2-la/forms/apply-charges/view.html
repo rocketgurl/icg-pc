@@ -1,43 +1,46 @@
 <!-- Product: OFCC DP1 Louisiana -->
 <form action="apply_charges" method="get" accept-charset="utf-8">
-	<div id="content">
-		<div id="content_header">
-			<h2>Apply Charges for {{policyId}}</h2>
-		</div>
+    <div id="content">
+        <div id="content_header">
+            <h2>Apply Charges for {{policyId}}</h2>
+        </div>
 
-		<div class="content_body">
+        <div class="content_body">
 
-			{{#policyOverview}}
-			<section class="policyOverview">
-				<h1>Policy Overview</h1>
-				<ul>
-					<li>{{InsuredFirstName}} {{InsuredMiddleName}} {{InsuredLastName}}</li>
-					<li>{{InsuredMailingAddressLine1}}</li>
-					<li>{{InsuredMailingAddressLine2}}</li>
-					<li>{{InsuredMailingAddressCity}}, {{InsuredMailingAddressState}} {{InsuredMailingAddressZip}}</li>
-				</ul>
-			</section>
-			{{/policyOverview}}
+            {{#policyOverview}}
+            <section class="policyOverview">
+                <h1>Policy Overview</h1>
+                <ul>
+                    <li>{{InsuredFirstName}} {{InsuredMiddleName}} {{InsuredLastName}}</li>
+                    <li>{{InsuredMailingAddressLine1}}</li>
+                    <li>{{InsuredMailingAddressLine2}}</li>
+                    <li>{{InsuredMailingAddressCity}}, {{InsuredMailingAddressState}} {{InsuredMailingAddressZip}}</li>
+                </ul>
+            </section>
+            {{/policyOverview}}
 
-			<fieldset>
-				<div>
-					<label for="{{guid}}_reasonCode" class="labelRequired">Reason Code</label>
-					<select id="{{guid}}_reasonCode" name="reasonCode" required>
-						{{#EnumsChargesReason}}
-						<option value="{{value}}">{{label}}</option>
-						{{/EnumsChargesReason}}
-					</select>
-				</div>
+            <fieldset>
+                <div>
+                    <label for="{{guid}}_reasonCode" class="labelRequired">Reason Code</label>
+                    <select id="{{guid}}_reasonCode" name="reasonCode" required>
+                        {{#EnumsChargesReason}}
+                        <option value="{{value}}">{{label}}</option>
+                        {{/EnumsChargesReason}}
+                    </select>
+                </div>
 
-				<div>
-					<label for="{{guid}}_amount" class="labelRequired">Amount</label>
-					<span class="moneyLabel">$</span> <input type="text" id="{{guid}}_amount" class="moneyInput" name="amount" value="" required>
-				</div>
-
-				<div class="form_actions">
-					<input type="submit" class="button" value="Confirm"> <a href="home">Nevermind, go back</a>
-				</div>
-			</fieldset>
-		</div>
-	</div>
+                <div>
+                    <label for="{{guid}}_amount" class="labelRequired">Amount</label>
+                    <span class="moneyLabel">$</span> <input type="text" id="{{guid}}_amount" class="moneyInput" name="amount" value="" required>
+                </div>
+                <div>
+                    <label for="{{guid}}_addNotes">Notes</label>
+                    <textarea cols="50" rows="7" id="{{guid}}_addNotes" name="addNotes" value=""></textarea>
+                </div>            
+                <div class="form_actions">
+                    <input type="submit" class="button" value="Confirm"> <a href="home">Nevermind, go back</a>
+                </div>
+            </fieldset>
+        </div>
+    </div>
 </form>
