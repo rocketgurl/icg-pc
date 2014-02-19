@@ -1,529 +1,533 @@
 <!-- Product: HIC HO3 Louisiana -->
 <form action="renew" method="get" accept-charset="utf-8" class="collapsedSections">
-	<div id="content">
-		<div id="content_header">
-			<h2>{{#preview}}Previewing Renewal for {{/preview}} {{^preview}}Renew {{/preview}} policy {{ policyId }}</h2>
-		</div>
+    <div id="content">
+        <div id="content_header">
+            <h2>{{#preview}}Previewing Renewal for {{/preview}} {{^preview}}Renew {{/preview}} policy {{ policyId }}</h2>
+        </div>
 
-		{{^preview}}
-		<div class="content_body">
+        {{^preview}}
+        <div class="content_body">
 
-			{{#policyOverview}}
-			<section class="policyOverview">
-				<h1>Policy Overview</h1>
-				<ul>
-					<li>{{InsuredFirstName}} {{InsuredMiddleName}} {{InsuredLastName}}</li>
-					<li>{{InsuredMailingAddressLine1}}</li>
-					<li>{{InsuredMailingAddressLine2}}</li>
-					<li>{{InsuredMailingAddressCity}}, {{InsuredMailingAddressState}} {{InsuredMailingAddressZip}}</li>
-				</ul>
-			</section>
-			{{/policyOverview}}
+            {{#policyOverview}}
+            <section class="policyOverview">
+                <h1>Policy Overview</h1>
+                <ul>
+                    <li>{{InsuredFirstName}} {{InsuredMiddleName}} {{InsuredLastName}}</li>
+                    <li>{{InsuredMailingAddressLine1}}</li>
+                    <li>{{InsuredMailingAddressLine2}}</li>
+                    <li>{{InsuredMailingAddressCity}}, {{InsuredMailingAddressState}} {{InsuredMailingAddressZip}}</li>
+                </ul>
+            </section>
+            {{/policyOverview}}
 
-			<fieldset class="horizontalFields">
-				<h3>Premium Override <a data-alt-text="close">change</a></h3>
-				<div class="collapsibleFieldContainer">
-					<div>
-						<label for="{{guid}}_GrandSubtotalOverride">Premium Before Fees <i>GrandSubtotalOverride</i></label>
-						<input type="number" min="1" id="{{guid}}_GrandSubtotalOverride" name="GrandSubtotalOverride" value="{{GrandSubtotalOverride}}">
-						<i>(Must be blank or > 0)</i>
-					</div>
-				</div>
-			</fieldset>
+            <fieldset class="horizontalFields">
+                <h3>Premium Override <a data-alt-text="close">change</a></h3>
+                <div class="collapsibleFieldContainer">
+                    <div>
+                        <label for="{{guid}}_GrandSubtotalOverride">Premium Before Fees <i>GrandSubtotalOverride</i></label>
+                        <input type="number" min="1" id="{{guid}}_GrandSubtotalOverride" name="GrandSubtotalOverride" value="{{GrandSubtotalOverride}}">
+                        <i>(Must be blank or > 0)</i>
+                    </div>
+                </div>
+            </fieldset>
 
-			<fieldset class="horizontalFields extraWide defaultOpen">
-				<h3>Section I &amp; II Coverages <a data-alt-text="close">change</a></h3>
-				<div class="collapsibleFieldContainer">
-					<div>
-						<label for="{{guid}}_ReplacementCostBuilding" class="labelRequired">Replacement Cost of Dwelling <i>ReplacementCostBuilding</i></label>
-						<input type="text" id="{{guid}}_ReplacementCostBuilding" name="ReplacementCostBuilding" value="{{ReplacementCostBuilding}}" required>
-						<i>(Expiring: {{ReplacementCostBuilding}})</i>
-					</div>
-					<div>
-						<label for="{{guid}}_CoverageA" class="labelRequired">Coverage A <i>CoverageA</i></label>
-						<input type="text" id="{{guid}}_CoverageA" name="CoverageA" value="{{CoverageA}}" required>
-						<i>(Expiring: {{CoverageA}})</i>
-					</div>
-					<div>
-						<label for="{{guid}}_OptionCoverageB" class="labelRequired">Coverage B (% of Coverage A) <i>OptionCoverageB</i></label>
-						<select id="{{guid}}_OptionCoverageB" name="OptionCoverageB" data-value="{{OptionCoverageB}}" data-affects="CoverageB" required>
-							{{#EnumsOptionCoverageB}}
-							<option value="{{value}}">{{label}}</option>
-							{{/EnumsOptionCoverageB}}
-						</select>
-					</div>
-					<div>
-						<label for="{{guid}}_CoverageB">Coverage B <i>CoverageB</i></label>
-						<input type="text" id="{{guid}}_CoverageB" name="CoverageB" value="{{CoverageB}}" readonly>
-						<i>(Expiring: {{CoverageB}})</i>
-					</div>
-					<div>
-						<label for="{{guid}}_OptionCoverageC" class="labelRequired">Coverage C (% of Coverage A) <i>OptionCoverageC</i></label>
-						<select id="{{guid}}_OptionCoverageC" name="OptionCoverageC" data-value="{{OptionCoverageC}}" data-affects="CoverageC" required>
-							{{#EnumsOptionCoverageC}}
-							<option value="{{value}}">{{label}}</option>
-							{{/EnumsOptionCoverageC}}
-						</select>
-					</div>
-					<div>
-						<label for="{{guid}}_CoverageC">Coverage C <i>CoverageC</i></label>
-						<input type="text" id="{{guid}}_CoverageC" name="CoverageC" value="{{CoverageC}}" readonly>
-						<i>(Expiring: {{CoverageC}})</i>
-					</div>
-					<div>
-						<label for="{{guid}}_OptionCoverageD" class="labelRequired">Coverage D (% of Coverage A) <i>OptionCoverageD</i></label>
-						<select id="{{guid}}_OptionCoverageD" name="OptionCoverageD" data-value="{{OptionCoverageD}}" data-affects="CoverageD" required>
-							{{#EnumsOptionCoverageD}}
-							<option value="{{value}}">{{label}}</option>
-							{{/EnumsOptionCoverageD}}
-						</select>
-					</div>
-					<div>
-						<label for="{{guid}}_CoverageD">Coverage D <i>CoverageD</i></label>
-						<input type="text" id="{{guid}}_CoverageD" name="CoverageD" value="{{CoverageD}}" readonly>
-						<i>(Expiring: {{CoverageD}})</i>
-					</div>
-					<div>
-						<label for="{{guid}}_CoverageE">Coverage E <i>CoverageE</i></label>
-						<select id="{{guid}}_CoverageE" name="CoverageE" data-value="{{CoverageE}}">
-							{{#EnumsCoverageE}}
-							<option value="{{value}}">{{label}}</option>
-							{{/EnumsCoverageE}}
-						</select>
-						<i>(Expiring: {{CoverageE}})</i>
-					</div>
-					<div>
-						<label for="{{guid}}_CoverageF">Coverage F <i>CoverageF</i></label>
-						<select id="{{guid}}_CoverageF" name="CoverageF" data-value="{{CoverageF}}">
-							{{#EnumsCoverageF}}
-							<option value="{{value}}">{{label}}</option>
-							{{/EnumsCoverageF}}
-						</select>
-						<i>(Expiring: {{CoverageF}})</i>
-					</div>
-				</div>
-			</fieldset>
+            <fieldset class="horizontalFields extraWide defaultOpen">
+                <h3>Section I &amp; II Coverages <a data-alt-text="close">change</a></h3>
+                <div class="collapsibleFieldContainer">
+                    <div>
+                        <label for="{{guid}}_ReplacementCostBuilding" class="labelRequired">Replacement Cost of Dwelling <i>ReplacementCostBuilding</i></label>
+                        <input type="text" id="{{guid}}_ReplacementCostBuilding" name="ReplacementCostBuilding" value="{{ReplacementCostBuilding}}" required>
+                        <i>(Expiring: {{ReplacementCostBuilding}})</i>
+                    </div>
+                    <div>
+                        <label for="{{guid}}_CoverageA" class="labelRequired">Coverage A <i>CoverageA</i></label>
+                        <input type="text" id="{{guid}}_CoverageA" name="CoverageA" value="{{CoverageA}}" required>
+                        <i>(Expiring: {{CoverageA}})</i>
+                    </div>
+                    <div>
+                        <label for="{{guid}}_OptionCoverageB" class="labelRequired">Coverage B (% of Coverage A) <i>OptionCoverageB</i></label>
+                        <select id="{{guid}}_OptionCoverageB" name="OptionCoverageB" data-value="{{OptionCoverageB}}" data-affects="CoverageB" required>
+                            {{#EnumsOptionCoverageB}}
+                            <option value="{{value}}">{{label}}</option>
+                            {{/EnumsOptionCoverageB}}
+                        </select>
+                    </div>
+                    <div>
+                        <label for="{{guid}}_CoverageB">Coverage B <i>CoverageB</i></label>
+                        <input type="text" id="{{guid}}_CoverageB" name="CoverageB" value="{{CoverageB}}" readonly>
+                        <i>(Expiring: {{CoverageB}})</i>
+                    </div>
+                    <div>
+                        <label for="{{guid}}_OptionCoverageC" class="labelRequired">Coverage C (% of Coverage A) <i>OptionCoverageC</i></label>
+                        <select id="{{guid}}_OptionCoverageC" name="OptionCoverageC" data-value="{{OptionCoverageC}}" data-affects="CoverageC" required>
+                            {{#EnumsOptionCoverageC}}
+                            <option value="{{value}}">{{label}}</option>
+                            {{/EnumsOptionCoverageC}}
+                        </select>
+                    </div>
+                    <div>
+                        <label for="{{guid}}_CoverageC">Coverage C <i>CoverageC</i></label>
+                        <input type="text" id="{{guid}}_CoverageC" name="CoverageC" value="{{CoverageC}}" readonly>
+                        <i>(Expiring: {{CoverageC}})</i>
+                    </div>
+                    <div>
+                        <label for="{{guid}}_OptionCoverageD" class="labelRequired">Coverage D (% of Coverage A) <i>OptionCoverageD</i></label>
+                        <select id="{{guid}}_OptionCoverageD" name="OptionCoverageD" data-value="{{OptionCoverageD}}" data-affects="CoverageD" required>
+                            {{#EnumsOptionCoverageD}}
+                            <option value="{{value}}">{{label}}</option>
+                            {{/EnumsOptionCoverageD}}
+                        </select>
+                    </div>
+                    <div>
+                        <label for="{{guid}}_CoverageD">Coverage D <i>CoverageD</i></label>
+                        <input type="text" id="{{guid}}_CoverageD" name="CoverageD" value="{{CoverageD}}" readonly>
+                        <i>(Expiring: {{CoverageD}})</i>
+                    </div>
+                    <div>
+                        <label for="{{guid}}_CoverageE">Coverage E <i>CoverageE</i></label>
+                        <select id="{{guid}}_CoverageE" name="CoverageE" data-value="{{CoverageE}}">
+                            {{#EnumsCoverageE}}
+                            <option value="{{value}}">{{label}}</option>
+                            {{/EnumsCoverageE}}
+                        </select>
+                        <i>(Expiring: {{CoverageE}})</i>
+                    </div>
+                    <div>
+                        <label for="{{guid}}_CoverageF">Coverage F <i>CoverageF</i></label>
+                        <select id="{{guid}}_CoverageF" name="CoverageF" data-value="{{CoverageF}}">
+                            {{#EnumsCoverageF}}
+                            <option value="{{value}}">{{label}}</option>
+                            {{/EnumsCoverageF}}
+                        </select>
+                        <i>(Expiring: {{CoverageF}})</i>
+                    </div>
+                </div>
+            </fieldset>
 
-			<fieldset class="horizontalFields">
-				<h3>Deductibles <a data-alt-text="close">change</a></h3>
-				<div class="collapsibleFieldContainer">
-					<div>
-						<label for="{{guid}}_HurricaneDeductible" class="labelRequired">Named Storm Deductible <i>HurricaneDeductible</i></label>
-						<select id="{{guid}}_HurricaneDeductible" name="HurricaneDeductible" data-value="{{HurricaneDeductible}}" required>
-							{{#EnumsHurricaneDeductible}}
-							<option value="{{value}}">{{label}}</option>
-							{{/EnumsHurricaneDeductible}}
-						</select>
-					</div>
-				</div>
-			</fieldset>
+            <fieldset class="horizontalFields">
+                <h3>Deductibles <a data-alt-text="close">change</a></h3>
+                <div class="collapsibleFieldContainer">
+                    <div>
+                        <label for="{{guid}}_HurricaneDeductible" class="labelRequired">Named Storm Deductible <i>HurricaneDeductible</i></label>
+                        <select id="{{guid}}_HurricaneDeductible" name="HurricaneDeductible" data-value="{{HurricaneDeductible}}" required>
+                            {{#EnumsHurricaneDeductible}}
+                            <option value="{{value}}">{{label}}</option>
+                            {{/EnumsHurricaneDeductible}}
+                        </select>
+                    </div>
+                </div>
+            </fieldset>
 
-			<fieldset class="horizontalFields">
-				<h3>Windstorm Mitigation Features <a data-alt-text="close">change</a></h3>
-				<div class="collapsibleFieldContainer">
-					<div>
-						<label for="{{guid}}_OpeningProtectionType">Opening Protection <i>OpeningProtectionType</i></label>
-						<select id="{{guid}}_OpeningProtectionType" name="OpeningProtectionType" data-value="{{OpeningProtectionType}}">
-							{{#EnumsOpeningProtectionType}}
-							<option value="{{value}}">{{label}}</option>
-							{{/EnumsOpeningProtectionType}}
-						</select>
-					</div>
-					<div>
-						<label for="{{guid}}_RoofCoveringType">Roof Covering Material <i>RoofCoveringType</i></label>
-						<select id="{{guid}}_RoofCoveringType" name="RoofCoveringType" data-value="{{RoofCoveringType}}">
-							{{#EnumsRoofCoveringType}}
-							<option value="{{value}}">{{label}}</option>
-							{{/EnumsRoofCoveringType}}
-						</select>
-					</div>
-					<div>
-						<label for="{{guid}}_RoofGeometryType">Roof Geometry <i>RoofGeometryType</i></label>
-						<select id="{{guid}}_RoofGeometryType" name="RoofGeometryType" data-value="{{RoofGeometryType}}">
-							{{#EnumsRoofGeometryType}}
-							<option value="{{value}}">{{label}}</option>
-							{{/EnumsRoofGeometryType}}
-						</select>
-					</div>
-					<div>
-						<label for="{{guid}}_RoofDeckAttachmentType">Roof Deck Attachment <i>RoofDeckAttachmentType</i></label>
-						<select id="{{guid}}_RoofDeckAttachmentType" name="RoofDeckAttachmentType" data-value="{{RoofDeckAttachmentType}}">
-							{{#EnumsRoofDeckAttachmentType}}
-							<option value="{{value}}">{{label}}</option>
-							{{/EnumsRoofDeckAttachmentType}}
-						</select>
-					</div>
-					<div>
-						<label for="{{guid}}_RoofWallConnectionType">Roof Wall Connection <i>RoofWallConnectionType</i></label>
-						<select id="{{guid}}_RoofWallConnectionType" name="RoofWallConnectionType" data-value="{{RoofWallConnectionType}}">
-							{{#EnumsRoofWallConnectionType}}
-							<option value="{{value}}">{{label}}</option>
-							{{/EnumsRoofWallConnectionType}}
-						</select>
-					</div>
-				</div>
-			</fieldset>
-			<fieldset>
-				<h3>Loss History <a data-alt-text="close">change</a></h3>
-				<div class="collapsibleFieldContainer">
-					<fieldset>
-						<legend>Loss 1</legend>
-						<div>
-							<label for="{{guid}}_LossAmount1">Amount <i>LossAmount1</i></label>
-							<input type="text" id="{{guid}}_LossAmount1" name="LossAmount1" value="{{LossAmount1}}">
-						</div>
-						<div>
-							<label for="{{guid}}_LossDate1">Date <i>LossDate1</i></label>
-							<input type="text" id="{{guid}}_LossDate1" name="LossDate1" value="{{LossDate1}}" class="datepicker">
-						</div>
-						<div>
-							<label for="{{guid}}_LossType1">Type <i>LossType1</i></label>
-							<select id="{{guid}}_LossType1" name="LossType1" data-value="{{LossType1}}">
-								{{#EnumsLossType1}}
-								<option value="{{value}}">{{label}}</option>
-								{{/EnumsLossType1}}
-							</select>
-						</div>
-						<div>
-							<label for="{{guid}}_LossCatIndicator1">Cat Indicator <i>LossCatIndicator1</i></label>
-							<select id="{{guid}}_LossCatIndicator1" name="LossCatIndicator1" data-value="{{LossCatIndicator1}}">
-								{{#EnumsLossCatIndicator1}}
-								<option value="{{value}}">{{label}}</option>
-								{{/EnumsLossCatIndicator1}}
-							</select>
-						</div>
-						<div class="hasTextarea">
-							<label for="{{guid}}_LossDescription1">Description <i>LossDescription1</i></label>
-							<textarea id="{{guid}}_LossDescription1" name="LossDescription1" rows="5" cols="25" {{#LossDescription1}}data-hadValue="true"{{/LossDescription1}}>{{LossDescription1}}</textarea>
-						</div>
-					</fieldset>
+            <fieldset class="horizontalFields">
+                <h3>Windstorm Mitigation Features <a data-alt-text="close">change</a></h3>
+                <div class="collapsibleFieldContainer">
+                    <div>
+                        <label for="{{guid}}_OpeningProtectionType">Opening Protection <i>OpeningProtectionType</i></label>
+                        <select id="{{guid}}_OpeningProtectionType" name="OpeningProtectionType" data-value="{{OpeningProtectionType}}">
+                            {{#EnumsOpeningProtectionType}}
+                            <option value="{{value}}">{{label}}</option>
+                            {{/EnumsOpeningProtectionType}}
+                        </select>
+                    </div>
+                    <div>
+                        <label for="{{guid}}_RoofCoveringType">Roof Covering Material <i>RoofCoveringType</i></label>
+                        <select id="{{guid}}_RoofCoveringType" name="RoofCoveringType" data-value="{{RoofCoveringType}}">
+                            {{#EnumsRoofCoveringType}}
+                            <option value="{{value}}">{{label}}</option>
+                            {{/EnumsRoofCoveringType}}
+                        </select>
+                    </div>
+                    <div>
+                        <label for="{{guid}}_RoofGeometryType">Roof Geometry <i>RoofGeometryType</i></label>
+                        <select id="{{guid}}_RoofGeometryType" name="RoofGeometryType" data-value="{{RoofGeometryType}}">
+                            {{#EnumsRoofGeometryType}}
+                            <option value="{{value}}">{{label}}</option>
+                            {{/EnumsRoofGeometryType}}
+                        </select>
+                    </div>
+                    <div>
+                        <label for="{{guid}}_RoofDeckAttachmentType">Roof Deck Attachment <i>RoofDeckAttachmentType</i></label>
+                        <select id="{{guid}}_RoofDeckAttachmentType" name="RoofDeckAttachmentType" data-value="{{RoofDeckAttachmentType}}">
+                            {{#EnumsRoofDeckAttachmentType}}
+                            <option value="{{value}}">{{label}}</option>
+                            {{/EnumsRoofDeckAttachmentType}}
+                        </select>
+                    </div>
+                    <div>
+                        <label for="{{guid}}_RoofWallConnectionType">Roof Wall Connection <i>RoofWallConnectionType</i></label>
+                        <select id="{{guid}}_RoofWallConnectionType" name="RoofWallConnectionType" data-value="{{RoofWallConnectionType}}">
+                            {{#EnumsRoofWallConnectionType}}
+                            <option value="{{value}}">{{label}}</option>
+                            {{/EnumsRoofWallConnectionType}}
+                        </select>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset>
+                <h3>Loss History <a data-alt-text="close">change</a></h3>
+                <div class="collapsibleFieldContainer">
+                    <fieldset>
+                        <legend>Loss 1</legend>
+                        <div>
+                            <label for="{{guid}}_LossAmount1">Amount <i>LossAmount1</i></label>
+                            <input type="text" id="{{guid}}_LossAmount1" name="LossAmount1" value="{{LossAmount1}}">
+                        </div>
+                        <div>
+                            <label for="{{guid}}_LossDate1">Date <i>LossDate1</i></label>
+                            <input type="text" id="{{guid}}_LossDate1" name="LossDate1" value="{{LossDate1}}" class="datepicker">
+                        </div>
+                        <div>
+                            <label for="{{guid}}_LossType1">Type <i>LossType1</i></label>
+                            <select id="{{guid}}_LossType1" name="LossType1" data-value="{{LossType1}}">
+                                {{#EnumsLossType1}}
+                                <option value="{{value}}">{{label}}</option>
+                                {{/EnumsLossType1}}
+                            </select>
+                        </div>
+                        <div>
+                            <label for="{{guid}}_LossCatIndicator1">Cat Indicator <i>LossCatIndicator1</i></label>
+                            <select id="{{guid}}_LossCatIndicator1" name="LossCatIndicator1" data-value="{{LossCatIndicator1}}">
+                                {{#EnumsLossCatIndicator1}}
+                                <option value="{{value}}">{{label}}</option>
+                                {{/EnumsLossCatIndicator1}}
+                            </select>
+                        </div>
+                        <div class="hasTextarea">
+                            <label for="{{guid}}_LossDescription1">Description <i>LossDescription1</i></label>
+                            <textarea id="{{guid}}_LossDescription1" name="LossDescription1" rows="5" cols="25" {{#LossDescription1}}data-hadValue="true"{{/LossDescription1}}>{{LossDescription1}}</textarea>
+                        </div>
+                    </fieldset>
 
-					<fieldset>
-						<legend>Loss 2</legend>
-						<div>
-							<label for="{{guid}}_LossAmount2">Amount <i>LossAmount2</i></label>
-							<input type="text" id="{{guid}}_LossAmount2" name="LossAmount2" value="{{LossAmount2}}">
-						</div>
-						<div>
-							<label for="{{guid}}_LossDate2">Date <i>LossDate2</i></label>
-							<input type="text" id="{{guid}}_LossDate2" name="LossDate2" value="{{LossDate2}}" class="datepicker">
-						</div>
-						<div>
-							<label for="{{guid}}_LossType2">Type <i>LossType2</i></label>
-							<select id="{{guid}}_LossType2" name="LossType2" data-value="{{LossType2}}">
-								{{#EnumsLossType2}}
-								<option value="{{value}}">{{label}}</option>
-								{{/EnumsLossType2}}
-							</select>
-						</div>
-						<div>
-							<label for="{{guid}}_LossCatIndicator2">Cat Indicator <i>LossCatIndicator2</i></label>
-							<select id="{{guid}}_LossCatIndicator2" name="LossCatIndicator2" data-value="{{LossCatIndicator2}}">
-								{{#EnumsLossCatIndicator2}}
-								<option value="{{value}}">{{label}}</option>
-								{{/EnumsLossCatIndicator2}}
-							</select>
-						</div>
-						<div class="hasTextarea">
-							<label for="{{guid}}_LossDescription2">Description <i>LossDescription2</i></label>
-							<textarea id="{{guid}}_LossDescription2" name="LossDescription2" rows="5" cols="25" {{#LossDescription2}}data-hadValue="true"{{/LossDescription2}}>{{LossDescription2}}</textarea>
-						</div>
-					</fieldset>
+                    <fieldset>
+                        <legend>Loss 2</legend>
+                        <div>
+                            <label for="{{guid}}_LossAmount2">Amount <i>LossAmount2</i></label>
+                            <input type="text" id="{{guid}}_LossAmount2" name="LossAmount2" value="{{LossAmount2}}">
+                        </div>
+                        <div>
+                            <label for="{{guid}}_LossDate2">Date <i>LossDate2</i></label>
+                            <input type="text" id="{{guid}}_LossDate2" name="LossDate2" value="{{LossDate2}}" class="datepicker">
+                        </div>
+                        <div>
+                            <label for="{{guid}}_LossType2">Type <i>LossType2</i></label>
+                            <select id="{{guid}}_LossType2" name="LossType2" data-value="{{LossType2}}">
+                                {{#EnumsLossType2}}
+                                <option value="{{value}}">{{label}}</option>
+                                {{/EnumsLossType2}}
+                            </select>
+                        </div>
+                        <div>
+                            <label for="{{guid}}_LossCatIndicator2">Cat Indicator <i>LossCatIndicator2</i></label>
+                            <select id="{{guid}}_LossCatIndicator2" name="LossCatIndicator2" data-value="{{LossCatIndicator2}}">
+                                {{#EnumsLossCatIndicator2}}
+                                <option value="{{value}}">{{label}}</option>
+                                {{/EnumsLossCatIndicator2}}
+                            </select>
+                        </div>
+                        <div class="hasTextarea">
+                            <label for="{{guid}}_LossDescription2">Description <i>LossDescription2</i></label>
+                            <textarea id="{{guid}}_LossDescription2" name="LossDescription2" rows="5" cols="25" {{#LossDescription2}}data-hadValue="true"{{/LossDescription2}}>{{LossDescription2}}</textarea>
+                        </div>
+                    </fieldset>
 
-					<fieldset>
-						<legend>Loss 3</legend>
-						<div>
-							<label for="{{guid}}_LossAmount3">Amount <i>LossAmount3</i></label>
-							<input type="text" id="{{guid}}_LossAmount3" name="LossAmount3" value="{{LossAmount3}}">
-						</div>
-						<div>
-							<label for="{{guid}}_LossDate3">Date <i>LossDate3</i></label>
-							<input type="text" id="{{guid}}_LossDate3" name="LossDate3" value="{{LossDate3}}" class="datepicker">
-						</div>
-						<div>
-							<label for="{{guid}}_LossType3">Type <i>LossType3</i></label>
-							<select id="{{guid}}_LossType3" name="LossType3" data-value="{{LossType3}}">
-								{{#EnumsLossType3}}
-								<option value="{{value}}">{{label}}</option>
-								{{/EnumsLossType3}}
-							</select>
-						</div>
-						<div>
-							<label for="{{guid}}_LossCatIndicator3">Cat Indicator <i>LossCatIndicator3</i></label>
-							<select id="{{guid}}_LossCatIndicator3" name="LossCatIndicator3" data-value="{{LossCatIndicator3}}">
-								{{#EnumsLossCatIndicator3}}
-								<option value="{{value}}">{{label}}</option>
-								{{/EnumsLossCatIndicator3}}
-							</select>
-						</div>
-						<div>
-							<label for="{{guid}}_LossDescription3">Description <i>LossDescription3</i></label>
-							<textarea id="{{guid}}_LossDescription3" name="LossDescription3" rows="5" cols="25" {{#LossDescription3}}data-hadValue="true"{{/LossDescription3}}>{{LossDescription3}}</textarea>
-						</div>
-					</fieldset>
+                    <fieldset>
+                        <legend>Loss 3</legend>
+                        <div>
+                            <label for="{{guid}}_LossAmount3">Amount <i>LossAmount3</i></label>
+                            <input type="text" id="{{guid}}_LossAmount3" name="LossAmount3" value="{{LossAmount3}}">
+                        </div>
+                        <div>
+                            <label for="{{guid}}_LossDate3">Date <i>LossDate3</i></label>
+                            <input type="text" id="{{guid}}_LossDate3" name="LossDate3" value="{{LossDate3}}" class="datepicker">
+                        </div>
+                        <div>
+                            <label for="{{guid}}_LossType3">Type <i>LossType3</i></label>
+                            <select id="{{guid}}_LossType3" name="LossType3" data-value="{{LossType3}}">
+                                {{#EnumsLossType3}}
+                                <option value="{{value}}">{{label}}</option>
+                                {{/EnumsLossType3}}
+                            </select>
+                        </div>
+                        <div>
+                            <label for="{{guid}}_LossCatIndicator3">Cat Indicator <i>LossCatIndicator3</i></label>
+                            <select id="{{guid}}_LossCatIndicator3" name="LossCatIndicator3" data-value="{{LossCatIndicator3}}">
+                                {{#EnumsLossCatIndicator3}}
+                                <option value="{{value}}">{{label}}</option>
+                                {{/EnumsLossCatIndicator3}}
+                            </select>
+                        </div>
+                        <div>
+                            <label for="{{guid}}_LossDescription3">Description <i>LossDescription3</i></label>
+                            <textarea id="{{guid}}_LossDescription3" name="LossDescription3" rows="5" cols="25" {{#LossDescription3}}data-hadValue="true"{{/LossDescription3}}>{{LossDescription3}}</textarea>
+                        </div>
+                    </fieldset>
 
-					<fieldset>
-						<legend>Loss 4</legend>
-						<div>
-							<label for="{{guid}}_LossAmount4">Amount <i>LossAmount4</i></label>
-							<input type="text" id="{{guid}}_LossAmount4" name="LossAmount4" value="{{LossAmount4}}">
-						</div>
-						<div>
-							<label for="{{guid}}_LossDate4">Date <i>LossDate4</i></label>
-							<input type="text" id="{{guid}}_LossDate4" name="LossDate4" value="{{LossDate4}}" class="datepicker">
-						</div>
-						<div>
-							<label for="{{guid}}_LossType4">Type <i>LossType4</i></label>
-							<select id="{{guid}}_LossType4" name="LossType4" data-value="{{LossType4}}">
-								{{#EnumsLossType4}}
-								<option value="{{value}}">{{label}}</option>
-								{{/EnumsLossType4}}
-							</select>
-						</div>
-						<div>
-							<label for="{{guid}}_LossCatIndicator4">Cat Indicator <i>LossCatIndicator4</i></label>
-							<select id="{{guid}}_LossCatIndicator4" name="LossCatIndicator4" data-value="{{LossCatIndicator4}}">
-								{{#EnumsLossCatIndicator4}}
-								<option value="{{value}}">{{label}}</option>
-								{{/EnumsLossCatIndicator4}}
-							</select>
-						</div>
-						<div>
-							<label for="{{guid}}_LossDescription4">Description <i>LossDescription4</i></label>
-							<textarea id="{{guid}}_LossDescription4" name="LossDescription4" rows="5" cols="25" {{#LossDescription4}}data-hadValue="true"{{/LossDescription4}}>{{LossDescription4}}</textarea>
-						</div>
-					</fieldset>
+                    <fieldset>
+                        <legend>Loss 4</legend>
+                        <div>
+                            <label for="{{guid}}_LossAmount4">Amount <i>LossAmount4</i></label>
+                            <input type="text" id="{{guid}}_LossAmount4" name="LossAmount4" value="{{LossAmount4}}">
+                        </div>
+                        <div>
+                            <label for="{{guid}}_LossDate4">Date <i>LossDate4</i></label>
+                            <input type="text" id="{{guid}}_LossDate4" name="LossDate4" value="{{LossDate4}}" class="datepicker">
+                        </div>
+                        <div>
+                            <label for="{{guid}}_LossType4">Type <i>LossType4</i></label>
+                            <select id="{{guid}}_LossType4" name="LossType4" data-value="{{LossType4}}">
+                                {{#EnumsLossType4}}
+                                <option value="{{value}}">{{label}}</option>
+                                {{/EnumsLossType4}}
+                            </select>
+                        </div>
+                        <div>
+                            <label for="{{guid}}_LossCatIndicator4">Cat Indicator <i>LossCatIndicator4</i></label>
+                            <select id="{{guid}}_LossCatIndicator4" name="LossCatIndicator4" data-value="{{LossCatIndicator4}}">
+                                {{#EnumsLossCatIndicator4}}
+                                <option value="{{value}}">{{label}}</option>
+                                {{/EnumsLossCatIndicator4}}
+                            </select>
+                        </div>
+                        <div>
+                            <label for="{{guid}}_LossDescription4">Description <i>LossDescription4</i></label>
+                            <textarea id="{{guid}}_LossDescription4" name="LossDescription4" rows="5" cols="25" {{#LossDescription4}}data-hadValue="true"{{/LossDescription4}}>{{LossDescription4}}</textarea>
+                        </div>
+                    </fieldset>
 
-					<fieldset>
-						<legend>Loss 5</legend>
-						<div>
-							<label for="{{guid}}_LossAmount5">Amount <i>LossAmount5</i></label>
-							<input type="text" id="{{guid}}_LossAmount5" name="LossAmount5" value="{{LossAmount5}}">
-						</div>
-						<div>
-							<label for="{{guid}}_LossDate5">Date <i>LossDate5</i></label>
-							<input type="text" id="{{guid}}_LossDate5" name="LossDate5" value="{{LossDate5}}" class="datepicker">
-						</div>
-						<div>
-							<label for="{{guid}}_LossType5">Type <i>LossType5</i></label>
-							<select id="{{guid}}_LossType5" name="LossType5" data-value="{{LossType5}}">
-								{{#EnumsLossType5}}
-								<option value="{{value}}">{{label}}</option>
-								{{/EnumsLossType5}}
-							</select>
-						</div>
-						<div>
-							<label for="{{guid}}_LossCatIndicator5">Cat Indicator <i>LossCatIndicator5</i></label>
-							<select id="{{guid}}_LossCatIndicator5" name="LossCatIndicator5" data-value="{{LossCatIndicator5}}">
-								{{#EnumsLossCatIndicator5}}
-								<option value="{{value}}">{{label}}</option>
-								{{/EnumsLossCatIndicator5}}
-							</select>
-						</div>
-						<div>
-							<label for="{{guid}}_LossDescription5">Description <i>LossDescription5</i></label>
-							<textarea id="{{guid}}_LossDescription5" name="LossDescription5" rows="5" cols="25" {{#LossDescription5}}data-hadValue="true"{{/LossDescription5}}>{{LossDescription5}}</textarea>
-						</div>
-					</fieldset>
-				</div>
-			</fieldset>
-			<fieldset class="horizontalFields">
-				<h3>Credits, Discounts and Surcharges <a data-alt-text="close">change</a></h3>
-				<div class="collapsibleFieldContainer">
-					<div>
-						<label for="{{guid}}_PrimeTimeDiscount">Prime Time Discount <i>PrimeTimeDiscount</i></label>
-						<select id="{{guid}}_PrimeTimeDiscount" name="PrimeTimeDiscount" data-value="{{PrimeTimeDiscount}}">
-							{{#EnumsPrimeTimeDiscount}}
-							<option value="{{value}}">{{label}}</option>
-							{{/EnumsPrimeTimeDiscount}}
-						</select>
-					</div>
-					<div>
-						<label for="{{guid}}_MultiPolicy">Multi-policy Discount <i>MultiPolicy</i></label>
-						<select id="{{guid}}_MultiPolicy" name="MultiPolicy" data-value="{{MultiPolicy}}">
-							{{#EnumsMultiPolicy}}
-							<option value="{{value}}">{{label}}</option>
-							{{/EnumsMultiPolicy}}
-						</select>
-					</div>
-					<div>
-						<label for="{{guid}}_AutoPolicyCarrier">Auto Policy Carrier <i>AutoPolicyCarrier</i></label>
-						<input type="text" id="{{guid}}_AutoPolicyCarrier" name="AutoPolicyCarrier" value="{{AutoPolicyCarrier}}">
-					</div>
-					<div>
-						<label for="{{guid}}_AutoPolicyNumber">Auto Policy Number <i>AutoPolicyNumber</i></label>
-						<input type="text" id="{{guid}}_AutoPolicyNumber" name="AutoPolicyNumber" value="{{AutoPolicyNumber}}">
-					</div>
-					<div>
-						<label for="{{guid}}_LiabilityHazardPoints">Additional Liability Hazards <i>LiabilityHazardPoints</i></label>
-						<input type="text" id="{{guid}}_LiabilityHazardPoints" name="LiabilityHazardPoints" value="{{LiabilityHazardPoints}}">
-					</div>
-				</div>
-			</fieldset>
-			<fieldset class="horizontalFields">
-				<h3>Construction Information <a data-alt-text="close">change</a></h3>
-				<div class="collapsibleFieldContainer">
-					<div>
-						<label for="{{guid}}_ConstructionYear">Construction Year <i>ConstructionYear</i></label>
-						<input type="text" id="{{guid}}_ConstructionYear" name="ConstructionYear" value="{{ConstructionYear}}">
-					</div>
-					<div>
-						<label for="{{guid}}_SquareFootUnderRoof">Total Living Area (sq ft) <i>SquareFootUnderRoof</i></label>
-						<input type="text" id="{{guid}}_SquareFootUnderRoof" name="SquareFootUnderRoof" value="{{SquareFootUnderRoof}}">
-					</div>
-					<div>
-						<label for="{{guid}}_StructureType">Structure Type <i>StructureType</i></label>
-						<select id="{{guid}}_StructureType" name="StructureType" data-value="{{StructureType}}">
-							{{#EnumsStructureType}}
-							<option value="{{value}}">{{label}}</option>
-							{{/EnumsStructureType}}
-						</select>
-					</div>
-					<div>
-						<label for="{{guid}}_ConstructionType">Construction Type <i>ConstructionType</i></label>
-						<select id="{{guid}}_ConstructionType" name="ConstructionType" data-value="{{ConstructionType}}">
-							{{#EnumsConstructionType}}
-							<option value="{{value}}">{{label}}</option>
-							{{/EnumsConstructionType}}
-						</select>
-					</div>
-					<div>
-						<label for="{{guid}}_NumberOfStories">Number Of Stories <i>NumberOfStories</i></label>
-						<select id="{{guid}}_NumberOfStories" name="NumberOfStories" data-value="{{NumberOfStories}}">
-							{{#EnumsNumberOfStories}}
-							<option value="{{value}}">{{label}}</option>
-							{{/EnumsNumberOfStories}}
-						</select>
-					</div>
-					<div>
-						<label for="{{guid}}_HomeStyle">Home Style <i>HomeStyle</i></label>
-						<select id="{{guid}}_HomeStyle" name="HomeStyle" data-value="{{HomeStyle}}">
-							{{#EnumsHomeStyle}}
-							<option value="{{value}}">{{label}}</option>
-							{{/EnumsHomeStyle}}
-						</select>
-					</div>
-					<div>
-						<label for="{{guid}}_PoolType">Pool On Premises <i>PoolType</i></label>
-						<select id="{{guid}}_PoolType" name="PoolType" data-value="{{PoolType}}">
-							{{#EnumsPoolType}}
-							<option value="{{value}}">{{label}}</option>
-							{{/EnumsPoolType}}
-						</select>
-					</div>
-					<div>
-						<label for="{{guid}}_PoolFence">Pool Enclosure <i>PoolFence</i></label>
-						<select id="{{guid}}_PoolFence" name="PoolFence" data-value="{{PoolFence}}">
-							{{#EnumsPoolFence}}
-							<option value="{{value}}">{{label}}</option>
-							{{/EnumsPoolFence}}
-						</select>
-					</div>
-				</div>
-			</fieldset>
-			<fieldset class="horizontalFields extraWide">
-				<h3>Location Information <a data-alt-text="close">change</a></h3>
-				<div class="collapsibleFieldContainer">
-					<div>
-						<label for="{{guid}}_DistanceToCoast">Distance To Coast <i>DistanceToCoast</i></label>
-						<input type="text" id="{{guid}}_DistanceToCoast" name="DistanceToCoast" value="{{DistanceToCoast}}">
-					</div>
-					<div>
-						<label for="{{guid}}_DistanceToCoastSecondary">Distance To Inner Waterway <i>DistanceToCoastSecondary</i></label>
-						<input type="text" id="{{guid}}_DistanceToCoastSecondary" name="DistanceToCoastSecondary" value="{{DistanceToCoastSecondary}}">
-					</div>
-				</div>
-			</fieldset>
+                    <fieldset>
+                        <legend>Loss 5</legend>
+                        <div>
+                            <label for="{{guid}}_LossAmount5">Amount <i>LossAmount5</i></label>
+                            <input type="text" id="{{guid}}_LossAmount5" name="LossAmount5" value="{{LossAmount5}}">
+                        </div>
+                        <div>
+                            <label for="{{guid}}_LossDate5">Date <i>LossDate5</i></label>
+                            <input type="text" id="{{guid}}_LossDate5" name="LossDate5" value="{{LossDate5}}" class="datepicker">
+                        </div>
+                        <div>
+                            <label for="{{guid}}_LossType5">Type <i>LossType5</i></label>
+                            <select id="{{guid}}_LossType5" name="LossType5" data-value="{{LossType5}}">
+                                {{#EnumsLossType5}}
+                                <option value="{{value}}">{{label}}</option>
+                                {{/EnumsLossType5}}
+                            </select>
+                        </div>
+                        <div>
+                            <label for="{{guid}}_LossCatIndicator5">Cat Indicator <i>LossCatIndicator5</i></label>
+                            <select id="{{guid}}_LossCatIndicator5" name="LossCatIndicator5" data-value="{{LossCatIndicator5}}">
+                                {{#EnumsLossCatIndicator5}}
+                                <option value="{{value}}">{{label}}</option>
+                                {{/EnumsLossCatIndicator5}}
+                            </select>
+                        </div>
+                        <div>
+                            <label for="{{guid}}_LossDescription5">Description <i>LossDescription5</i></label>
+                            <textarea id="{{guid}}_LossDescription5" name="LossDescription5" rows="5" cols="25" {{#LossDescription5}}data-hadValue="true"{{/LossDescription5}}>{{LossDescription5}}</textarea>
+                        </div>
+                    </fieldset>
+                </div>
+            </fieldset>
+            <fieldset class="horizontalFields">
+                <h3>Credits, Discounts and Surcharges <a data-alt-text="close">change</a></h3>
+                <div class="collapsibleFieldContainer">
+                    <div>
+                        <label for="{{guid}}_PrimeTimeDiscount">Prime Time Discount <i>PrimeTimeDiscount</i></label>
+                        <select id="{{guid}}_PrimeTimeDiscount" name="PrimeTimeDiscount" data-value="{{PrimeTimeDiscount}}">
+                            {{#EnumsPrimeTimeDiscount}}
+                            <option value="{{value}}">{{label}}</option>
+                            {{/EnumsPrimeTimeDiscount}}
+                        </select>
+                    </div>
+                    <div>
+                        <label for="{{guid}}_MultiPolicy">Multi-policy Discount <i>MultiPolicy</i></label>
+                        <select id="{{guid}}_MultiPolicy" name="MultiPolicy" data-value="{{MultiPolicy}}">
+                            {{#EnumsMultiPolicy}}
+                            <option value="{{value}}">{{label}}</option>
+                            {{/EnumsMultiPolicy}}
+                        </select>
+                    </div>
+                    <div>
+                        <label for="{{guid}}_AutoPolicyCarrier">Auto Policy Carrier <i>AutoPolicyCarrier</i></label>
+                        <input type="text" id="{{guid}}_AutoPolicyCarrier" name="AutoPolicyCarrier" value="{{AutoPolicyCarrier}}">
+                    </div>
+                    <div>
+                        <label for="{{guid}}_AutoPolicyNumber">Auto Policy Number <i>AutoPolicyNumber</i></label>
+                        <input type="text" id="{{guid}}_AutoPolicyNumber" name="AutoPolicyNumber" value="{{AutoPolicyNumber}}">
+                    </div>
+                    <div>
+                        <label for="{{guid}}_LiabilityHazardPoints">Additional Liability Hazards <i>LiabilityHazardPoints</i></label>
+                        <input type="text" id="{{guid}}_LiabilityHazardPoints" name="LiabilityHazardPoints" value="{{LiabilityHazardPoints}}">
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset class="horizontalFields">
+                <h3>Construction Information <a data-alt-text="close">change</a></h3>
+                <div class="collapsibleFieldContainer">
+                    <div>
+                        <label for="{{guid}}_ConstructionYear">Construction Year <i>ConstructionYear</i></label>
+                        <input type="text" id="{{guid}}_ConstructionYear" name="ConstructionYear" value="{{ConstructionYear}}">
+                    </div>
+                    <div>
+                        <label for="{{guid}}_SquareFootUnderRoof">Total Living Area (sq ft) <i>SquareFootUnderRoof</i></label>
+                        <input type="text" id="{{guid}}_SquareFootUnderRoof" name="SquareFootUnderRoof" value="{{SquareFootUnderRoof}}">
+                    </div>
+                    <div>
+                        <label for="{{guid}}_StructureType">Structure Type <i>StructureType</i></label>
+                        <select id="{{guid}}_StructureType" name="StructureType" data-value="{{StructureType}}">
+                            {{#EnumsStructureType}}
+                            <option value="{{value}}">{{label}}</option>
+                            {{/EnumsStructureType}}
+                        </select>
+                    </div>
+                    <div>
+                        <label for="{{guid}}_ConstructionType">Construction Type <i>ConstructionType</i></label>
+                        <select id="{{guid}}_ConstructionType" name="ConstructionType" data-value="{{ConstructionType}}">
+                            {{#EnumsConstructionType}}
+                            <option value="{{value}}">{{label}}</option>
+                            {{/EnumsConstructionType}}
+                        </select>
+                    </div>
+                    <div>
+                        <label for="{{guid}}_NumberOfStories">Number Of Stories <i>NumberOfStories</i></label>
+                        <select id="{{guid}}_NumberOfStories" name="NumberOfStories" data-value="{{NumberOfStories}}">
+                            {{#EnumsNumberOfStories}}
+                            <option value="{{value}}">{{label}}</option>
+                            {{/EnumsNumberOfStories}}
+                        </select>
+                    </div>
+                    <div>
+                        <label for="{{guid}}_HomeStyle">Home Style <i>HomeStyle</i></label>
+                        <select id="{{guid}}_HomeStyle" name="HomeStyle" data-value="{{HomeStyle}}">
+                            {{#EnumsHomeStyle}}
+                            <option value="{{value}}">{{label}}</option>
+                            {{/EnumsHomeStyle}}
+                        </select>
+                    </div>
+                    <div>
+                        <label for="{{guid}}_PoolType">Pool On Premises <i>PoolType</i></label>
+                        <select id="{{guid}}_PoolType" name="PoolType" data-value="{{PoolType}}">
+                            {{#EnumsPoolType}}
+                            <option value="{{value}}">{{label}}</option>
+                            {{/EnumsPoolType}}
+                        </select>
+                    </div>
+                    <div>
+                        <label for="{{guid}}_PoolFence">Pool Enclosure <i>PoolFence</i></label>
+                        <select id="{{guid}}_PoolFence" name="PoolFence" data-value="{{PoolFence}}">
+                            {{#EnumsPoolFence}}
+                            <option value="{{value}}">{{label}}</option>
+                            {{/EnumsPoolFence}}
+                        </select>
+                    </div>
+                </div>
+            </fieldset>
+            <fieldset class="horizontalFields extraWide">
+                <h3>Location Information <a data-alt-text="close">change</a></h3>
+                <div class="collapsibleFieldContainer">
+                    <div>
+                        <label for="{{guid}}_DistanceToCoast">Distance To Coast <i>DistanceToCoast</i></label>
+                        <input type="text" id="{{guid}}_DistanceToCoast" name="DistanceToCoast" value="{{DistanceToCoast}}">
+                    </div>
+                    <div>
+                        <label for="{{guid}}_DistanceToCoastSecondary">Distance To Inner Waterway <i>DistanceToCoastSecondary</i></label>
+                        <input type="text" id="{{guid}}_DistanceToCoastSecondary" name="DistanceToCoastSecondary" value="{{DistanceToCoastSecondary}}">
+                    </div>
+                </div>
+            </fieldset>
 
-			<div class="form_actions">
-				<input type="submit" class="button" value="Preview"> <a href="home">Nevermind, go back</a>
-			</div>
+            <div class="form_actions">
+                <input type="submit" class="button" value="Preview"> <a href="home">Nevermind, go back</a>
+            </div>
 
-		</div>
-		<input type="hidden" id="{{guid}}_preview" name="preview" value="true">
-		{{/preview}}
+        </div>
+        <input type="hidden" id="{{guid}}_preview" name="preview" value="true">
+        {{/preview}}
 
-		{{#preview}}
-		{{#msg}}
-		<div class="content_msg {{msgType}}">
-			<h3>{{msgHeading}}</h3>
-			{{#msgText}}
-			<p>{{{msgText}}}</p>
-			{{/msgText}}
-		</div>
-		{{/msg}}
-		<div class="content_body preview {{#premiumOverride}}premium_override{{/premiumOverride}}">
-			<div class="table_wrapping">
-				<table class="data_table" summary="Table containing renewal preview data.">
-					<col span="1" class="col_labels"></col>
-					<col span="2"></col>
-					<col span="1" class="col_days"></col>
-				
-					<col span="1" class="col_non_hurricane"></col>
-					<col span="1" class="col_hurricane"></col>
-				
-					<col span="3" class="col_amounts"></col>
-					<thead>
-				
-					<tr>
-			   			<th>Term</th>
-			   			<th>Starts</th>
-			   			<th>Ends</th>
-			   			<th>#&nbsp;Days</th>
-			   			<th class="col_group_cap_open col_group_cap_close contains_var">Non-Hurricane Premium <i>OpGrandSubtotalNonCatUnadjusted</i></th>
-			   		
-			   			<th class="col_group_cap_open col_group_cap_close contains_var">Hurricane Premium <i>OpGrandSubtotalCatUnadjusted</i></th>
-			   		
-			   			<th class="contains_var">Premium Before Fees <i>OpGrandSubtotal</i></th>
-			   			<th class="contains_var">Total Fees and Taxes <i>OpTotalFees</i></th>
-			   			<th class="contains_var">Total Premium and Fees <i>OpTotalPremium</i></th>
-			   		</tr>
-				
-					</thead>
+        {{#preview}}
+        {{#msg}}
+        <div class="content_msg {{msgType}}">
+            <h3>{{msgHeading}}</h3>
+            {{#msgText}}
+            <p>{{{msgText}}}</p>
+            {{/msgText}}
+        </div>
+        {{/msg}}
+        <div class="content_body preview {{#premiumOverride}}premium_override{{/premiumOverride}}">
+            <div class="table_wrapping">
+                <table class="data_table" summary="Table containing renewal preview data.">
+                    <col span="1" class="col_labels"></col>
+                    <col span="2"></col>
+                    <col span="1" class="col_days"></col>
+                
+                    <col span="1" class="col_non_hurricane"></col>
+                    <col span="1" class="col_hurricane"></col>
+                
+                    <col span="3" class="col_amounts"></col>
+                    <thead>
+                
+                    <tr>
+                        <th>Term</th>
+                        <th>Starts</th>
+                        <th>Ends</th>
+                        <th>#&nbsp;Days</th>
+                        <th class="col_group_cap_open col_group_cap_close contains_var">Non-Hurricane Premium <i>OpGrandSubtotalNonCatUnadjusted</i></th>
+                    
+                        <th class="col_group_cap_open col_group_cap_close contains_var">Hurricane Premium <i>OpGrandSubtotalCatUnadjusted</i></th>
+                    
+                        <th class="contains_var">Premium Before Fees <i>OpGrandSubtotal</i></th>
+                        <th class="contains_var">Total Fees and Taxes <i>OpTotalFees</i></th>
+                        <th class="contains_var">Total Premium and Fees <i>OpTotalPremium</i></th>
+                    </tr>
+                
+                    </thead>
 
-					<tbody>
-						{{#proposedTerm}}
-						
-						<tr class="calc_row">
-							<td><b>New</b></td>
-							<td>{{startDate}}</td>
-							<td>{{endDate}}</td>
-							<td>{{days}}</td>
-							<td class="override_sensitive">{{GrandSubtotalNonCatUnadjusted}}</td>
-							<td class="override_sensitive">{{GrandSubtotalCatUnadjusted}}</td>
-							<td class="subtotal override_sensitive">{{GrandSubtotal}}</td>
-							<td class="fees">{{TotalFees}}</td>
-							<td class="total">{{TotalPremium}}</td>
-						</tr>
-						
-						{{/proposedTerm}}
+                    <tbody>
+                        {{#proposedTerm}}
+                        
+                        <tr class="calc_row">
+                            <td><b>New</b></td>
+                            <td>{{startDate}}</td>
+                            <td>{{endDate}}</td>
+                            <td>{{days}}</td>
+                            <td class="override_sensitive">{{GrandSubtotalNonCatUnadjusted}}</td>
+                            <td class="override_sensitive">{{GrandSubtotalCatUnadjusted}}</td>
+                            <td class="subtotal override_sensitive">{{GrandSubtotal}}</td>
+                            <td class="fees">{{TotalFees}}</td>
+                            <td class="total">{{TotalPremium}}</td>
+                        </tr>
+                        
+                        {{/proposedTerm}}
 
-						{{#previousTerms}}
-						<tr>
-							<td>Previous</td>
-							<td>{{startDate}}</td>
-							<td>{{endDate}}</td>
-							<td>{{days}}</td>
-							<td>{{GrandSubtotalNonCat}}</td>
+                        {{#previousTerms}}
+                        <tr>
+                            <td>Previous</td>
+                            <td>{{startDate}}</td>
+                            <td>{{endDate}}</td>
+                            <td>{{days}}</td>
+                            <td>{{GrandSubtotalNonCat}}</td>
 
-						
+                        
 
-							<td>{{GrandSubtotalCat}}</td>
+                            <td>{{GrandSubtotalCat}}</td>
 
-						
+                        
 
-							<td>{{GrandSubtotal}}</td>
-							<td>{{TotalFees}}</td>
-							<td>{{TotalPremium}}</td>
-						</tr>
-						{{/previousTerms}}
-					</tbody>
-				</table>
-			</div>
-			<div class="form_actions">
-				<input type="submit" class="button" value="Confirm"> <a href="home">Cancel</a>
-			</div>
-		</div>
-		{{/preview}}
-	</div>
+                            <td>{{GrandSubtotal}}</td>
+                            <td>{{TotalFees}}</td>
+                            <td>{{TotalPremium}}</td>
+                        </tr>
+                        {{/previousTerms}}
+                    </tbody>
+                </table>
+            </div>
+            <div>
+               <h2>Notes</h2>
+               <textarea cols="97" rows="7" id="{{guid}}_addNotes" name="addNotes" value=""></textarea>
+            </div>
+            <div class="form_actions">
+                <input type="submit" class="button" value="Confirm"> <a href="home">Cancel</a>
+            </div>
+        </div>
+        {{/preview}}
+    </div>
 </form>

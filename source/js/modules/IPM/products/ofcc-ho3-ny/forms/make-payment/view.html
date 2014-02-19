@@ -1,0 +1,57 @@
+<!-- Product: OFCC HO3 New York -->
+<form action="make_payment" method="get" accept-charset="utf-8">
+	<div id="content">
+		<div id="content_header">
+			<h2>Make a Payment on {{policyId}}</h2>
+		</div>
+
+		<div class="content_body">
+
+			{{#policyOverview}}
+			<section class="policyOverview">
+				<h1>Policy Overview</h1>
+				<ul>
+					<li>{{InsuredFirstName}} {{InsuredMiddleName}} {{InsuredLastName}}</li>
+					<li>{{InsuredMailingAddressLine1}}</li>
+					<li>{{InsuredMailingAddressLine2}}</li>
+					<li>{{InsuredMailingAddressCity}}, {{InsuredMailingAddressState}} {{InsuredMailingAddressZip}}</li>
+				</ul>
+			</section>
+			{{/policyOverview}}
+
+			<fieldset>
+				<div>
+					<label for="{{guid}}_appliedDate" class="labelRequired">Applied Date</label>
+					<input type="text" id="{{guid}}_appliedDate" name="appliedDate" value="" class="datepicker" required>
+				</div>
+				<div>
+					<label for="{{guid}}_paymentAmount" class="labelRequired">Amount</label>
+					<span class="moneyLabel">$</span> <input type="text" id="{{guid}}_paymentAmount" class="moneyInput" name="paymentAmount" value="" required>
+				</div>
+				<div>
+					<label for="{{guid}}_paymentReference">Reference</label>
+					<input type="text" id="{{guid}}_paymentReference" name="paymentReference" value="">
+				</div>
+				<div>
+					<label for="{{guid}}_paymentBatch">Batch</label>
+					<input type="text" id="{{guid}}_paymentBatch" name="paymentBatch" value="">
+				</div>
+				<div>
+					<label for="{{guid}}_postmarkDate">Postmark Date</label>
+					<input type="text" id="{{guid}}_postmarkDate" name="postmarkDate" value="" class="datepicker">
+				</div>
+				<div>
+					<label for="{{guid}}_paymentMethod" class="labelRequired">Payment Method</label>
+					<select id="{{guid}}_paymentMethod" name="paymentMethod" required>
+						{{#EnumsPaymentMethod}}
+						<option value="{{value}}">{{label}}</option>
+						{{/EnumsPaymentMethod}}
+					</select>
+				</div>
+				<div class="form_actions">
+					<input type="submit" class="button" value="Confirm"> <a href="home">Nevermind, go back</a>
+				</div>
+			</fieldset>
+		</div>
+	</div>
+</form>

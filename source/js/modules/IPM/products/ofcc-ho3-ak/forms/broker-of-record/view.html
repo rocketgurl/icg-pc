@@ -1,156 +1,160 @@
 <!-- Broker of Record - Product: OFCC HO3 Alaska -->
 <form action="endorse" method="get" accept-charset="utf-8" class="collapsedSections">
 <div id="content" class="bor">
-	<div id="content_header">
-		<h2>{{#preview}}Previewing {{/preview}}Change Broker of Record for {{ policyId }}</h2>
-	</div>
+    <div id="content_header">
+        <h2>{{#preview}}Previewing {{/preview}}Change Broker of Record for {{ policyId }}</h2>
+    </div>
 
-	{{#warning}}
-	<div class="bor-notification">
-		It has been <strong>{{warning.days}} days</strong> since the Effective Date of the Policy Term ({{warning.effective_date}}). Please wait until the policy renews before changing the Broker of Record unless the request was received within 90 days of the latest policy term OR the insured explicitly requested a policy term change.
-	</div>
-	{{/warning}}
+    {{#warning}}
+    <div class="bor-notification">
+        It has been <strong>{{warning.days}} days</strong> since the Effective Date of the Policy Term ({{warning.effective_date}}). Please wait until the policy renews before changing the Broker of Record unless the request was received within 90 days of the latest policy term OR the insured explicitly requested a policy term change.
+    </div>
+    {{/warning}}
 
-	{{^preview}}
-	<div class="content_body">
-		<div class="bor_input">
-			<label>Current Agency Location Code:</label>
-			<span class="bor_input_alc"></span>
-		</div>
-		<div class="bor_input">
-			<label for="{{guid}}_SearchQuery">Search for new Agency Location Code by: </label>
-			<select name="SearchQuery" id="{{guid}}_SearchQuery">
-				<option value="agencyLocationCode">Agency Location Code</option>
-				<option value="name">Name</option>
-			</select>
-		</div>
-		<div class="bor_input">
-			<label for="{{guid}}_NewLocationCode" class="labelRequired">Search:</label>
-			<select id="{{guid}}_NewLocationCode" name="NewLocationCode" data-value="{{NewLocationCode}}" required>
-				{{#EnumsNewLocationCode}}
-				<option value="{{value}}">{{label}}</option>
-				{{/EnumsNewLocationCode}}
-			</select>
-		</div>
-		<div class="bor_input">
-			<label for="{{guid}}_AgentId" class="labelRequired" id="{{guid}}_AgentIdLabel">Agent ID:</label>
-			<select id="{{guid}}_AgentId" name="AgentId" data-value="{{AgentId}}" required>
-				{{#EnumsAgentId}}
-				<option value="{{value}}">{{label}}</option>
-				{{/EnumsAgentId}}
-			</select>
-		</div>
-		<div class="form_actions">
-			<input type="submit" class="button" value="Preview"> &nbsp;
-			<a href="cancellation">Nevermind, go back</a>
-		</div>
-	</div>
-	<input type="hidden" id="{{guid}}_preview" name="preview" value="true">
-	{{/preview}}
-	{{#preview}}
-	<div class="content_body">
-		<section class="bor-mailing-address">
-			<h2>Mailing address for new Broker of Record</h2>
-			<p>{{{address}}}</p>
-		</section>
-		{{^dovetail}}
-		<section class="bor-comparison">
-			<div class="first">
-				<h2>Old Broker of Record information</h2>
-				<table class="bor-table">
-					<thead>
-						<th>
-							Field
-						</th>
-						<th>
-							Value
-						</th>
-					</thead>
-					<tbody>
-						{{#old_bor}}
-						<tr>
-							<td>Agency Affiliation</td>
-							<td>{{agency_affiliation}}</td>
-						</tr>
-						<tr>
-							<td>Agency Location Code</td>
-							<td>{{agency_location_code}}</td>
-						</tr>
-						<tr>
-							<td>Agency Location Name</td>
-							<td>{{agency_location_name}}</td>
-						</tr>
-						<tr>
-							<td>Agency Name</td>
-							<td>{{agency_name}}</td>
-						</tr>
-						{{/old_bor}}
-					</tbody>
-				</table>
-			</div>
-			<div class="second">
-				<h2>New Broker of Record information</h2>
-				<table class="bor-table">
-					<thead>
-						<th>
-							Field
-						</th>
-						<th>
-							Value
-						</th>
-					</thead>
-					<tbody>
-						{{#new_bor}}
-						<tr>
-							<td>Agency Affiliation</td>
-							<td>{{agency_affiliation}}</td>
-						</tr>
-						<tr>
-							<td>Agency Location Code</td>
-							<td>{{agency_location_code}}</td>
-						</tr>
-						<tr>
-							<td>Agency Location Name</td>
-							<td>{{agency_location_name}}</td>
-						</tr>
-						<tr>
-							<td>Agency Name</td>
-							<td>{{agency_name}}</td>
-						</tr>
-						{{/new_bor}}
-					</tbody>
-				</table>
-			</div>
-		</section>
-		{{/dovetail}}
-		<section class="bor-history">
-			<h2>Broker of Record history <span>(applies to commisions)</span></h2>
-			{{#dovetail}}
-			<h3 class="disclaimer">The following changes will be requested upon submission. The policy will not reflect the change if it is externally managed. Please allow up to 48 hours for the change to be processed.</h3>
-			{{/dovetail}}
-			<table class="bor-table">
-				<thead>
-					<th>Policy term</th>
-					<th>Policy term data</th>
-					<th>Current agency location</th>
-					<th>Proposed agency location code</th>
-				</thead>
-				<tbody>
-					{{#history}}
-					<tr>
-						<td>{{policy_term}}</td>
-						<td>{{policy_term_dates}}</td>
-						<td>{{current_alc}}</td>
-						<td>{{proposed_alc}}</td>
-					</tr>
-					{{/history}}
-				</tbody>
-			</table>
-		</section>
-		<div class="form_actions">
-			<input type="submit" class="button" value="Confirm"> <a href="home">Cancel</a>
-		</div>
-	</div>
-	{{/preview}}
+    {{^preview}}
+    <div class="content_body">
+        <div class="bor_input">
+            <label>Current Agency Location Code:</label>
+            <span class="bor_input_alc"></span>
+        </div>
+        <div class="bor_input">
+            <label for="{{guid}}_SearchQuery">Search for new Agency Location Code by: </label>
+            <select name="SearchQuery" id="{{guid}}_SearchQuery">
+                <option value="agencyLocationCode">Agency Location Code</option>
+                <option value="name">Name</option>
+            </select>
+        </div>
+        <div class="bor_input">
+            <label for="{{guid}}_NewLocationCode" class="labelRequired">Search:</label>
+            <select id="{{guid}}_NewLocationCode" name="NewLocationCode" data-value="{{NewLocationCode}}" required>
+                {{#EnumsNewLocationCode}}
+                <option value="{{value}}">{{label}}</option>
+                {{/EnumsNewLocationCode}}
+            </select>
+        </div>
+        <div class="bor_input">
+            <label for="{{guid}}_AgentId" class="labelRequired" id="{{guid}}_AgentIdLabel">Agent ID:</label>
+            <select id="{{guid}}_AgentId" name="AgentId" data-value="{{AgentId}}" required>
+                {{#EnumsAgentId}}
+                <option value="{{value}}">{{label}}</option>
+                {{/EnumsAgentId}}
+            </select>
+        </div>
+        <div class="form_actions">
+            <input type="submit" class="button" value="Preview"> &nbsp;
+            <a href="cancellation">Nevermind, go back</a>
+        </div>
+    </div>
+    <input type="hidden" id="{{guid}}_preview" name="preview" value="true">
+    {{/preview}}
+    {{#preview}}
+    <div class="content_body">
+        <section class="bor-mailing-address">
+            <h2>Mailing address for new Broker of Record</h2>
+            <p>{{{address}}}</p>
+        </section>
+        {{^dovetail}}
+        <section class="bor-comparison">
+            <div class="first">
+                <h2>Old Broker of Record information</h2>
+                <table class="bor-table">
+                    <thead>
+                        <th>
+                            Field
+                        </th>
+                        <th>
+                            Value
+                        </th>
+                    </thead>
+                    <tbody>
+                        {{#old_bor}}
+                        <tr>
+                            <td>Agency Affiliation</td>
+                            <td>{{agency_affiliation}}</td>
+                        </tr>
+                        <tr>
+                            <td>Agency Location Code</td>
+                            <td>{{agency_location_code}}</td>
+                        </tr>
+                        <tr>
+                            <td>Agency Location Name</td>
+                            <td>{{agency_location_name}}</td>
+                        </tr>
+                        <tr>
+                            <td>Agency Name</td>
+                            <td>{{agency_name}}</td>
+                        </tr>
+                        {{/old_bor}}
+                    </tbody>
+                </table>
+            </div>
+            <div class="second">
+                <h2>New Broker of Record information</h2>
+                <table class="bor-table">
+                    <thead>
+                        <th>
+                            Field
+                        </th>
+                        <th>
+                            Value
+                        </th>
+                    </thead>
+                    <tbody>
+                        {{#new_bor}}
+                        <tr>
+                            <td>Agency Affiliation</td>
+                            <td>{{agency_affiliation}}</td>
+                        </tr>
+                        <tr>
+                            <td>Agency Location Code</td>
+                            <td>{{agency_location_code}}</td>
+                        </tr>
+                        <tr>
+                            <td>Agency Location Name</td>
+                            <td>{{agency_location_name}}</td>
+                        </tr>
+                        <tr>
+                            <td>Agency Name</td>
+                            <td>{{agency_name}}</td>
+                        </tr>
+                        {{/new_bor}}
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        {{/dovetail}}
+        <section class="bor-history">
+            <h2>Broker of Record history <span>(applies to commisions)</span></h2>
+            {{#dovetail}}
+            <h3 class="disclaimer">The following changes will be requested upon submission. The policy will not reflect the change if it is externally managed. Please allow up to 48 hours for the change to be processed.</h3>
+            {{/dovetail}}
+            <table class="bor-table">
+                <thead>
+                    <th>Policy term</th>
+                    <th>Policy term data</th>
+                    <th>Current agency location</th>
+                    <th>Proposed agency location code</th>
+                </thead>
+                <tbody>
+                    {{#history}}
+                    <tr>
+                        <td>{{policy_term}}</td>
+                        <td>{{policy_term_dates}}</td>
+                        <td>{{current_alc}}</td>
+                        <td>{{proposed_alc}}</td>
+                    </tr>
+                    {{/history}}
+                </tbody>
+            </table>
+            <div>
+               <h2>Notes</h2>
+               <textarea cols="97" rows="7" id="{{guid}}_addNotes" name="addNotes" value=""></textarea>
+            </div>            
+        </section>
+        <div class="form_actions">
+            <input type="submit" class="button" value="Confirm"> <a href="home">Cancel</a>
+        </div>
+    </div>
+    {{/preview}}
 </div>
 </form>
