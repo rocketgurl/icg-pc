@@ -1,5 +1,5 @@
 <!-- Product: FSIC HO3 Louisiana -->
-    <!-- source_file: html/fsic_ho3_la_2_xlsx_renew.rhtml  -->
+    <!-- source_file: html/fsic_ho3_la_3_xlsx_renew.rhtml  -->
 <form action="renew" method="get" accept-charset="utf-8" class="collapsedSections">
     <div id="content">
         <div id="content_header">
@@ -209,8 +209,8 @@
 				<legend id="{{guid}}_loss_1">Loss 1</legend>				
 
 		<div>
-			<label for="{{guid}}_LossAmount1" class="labelRequired">Amount <i>LossAmount1</i></label>
-			<select id="{{guid}}_LossAmount1" name="LossAmount1" data-value="{{LossAmount1}}"  required >
+			<label for="{{guid}}_LossAmount1" >Amount <i>LossAmount1</i></label>
+			<select id="{{guid}}_LossAmount1" name="LossAmount1" data-value="{{LossAmount1}}"   >
 				{{#EnumsLossAmount1}}
 				<option value="{{value}}">{{label}}</option>
 				{{/EnumsLossAmount1}}
@@ -622,11 +622,6 @@
 		<div>
 			<label for="{{guid}}_DistanceToCoast" class="labelRequired">Distance To Primary Coastline <i>DistanceToCoast</i></label>
 			<input type="text" id="{{guid}}_DistanceToCoast" name="DistanceToCoast" value="{{DistanceToCoast}}" required >
-		</div>
-
-		<div>
-			<label for="{{guid}}_DistanceToCoastSecondary" class="labelRequired">Distance To Secondary Coastline <i>DistanceToCoastSecondary</i></label>
-			<input type="text" id="{{guid}}_DistanceToCoastSecondary" name="DistanceToCoastSecondary" value="{{DistanceToCoastSecondary}}" required >
 		</div>
 
 			</div>
