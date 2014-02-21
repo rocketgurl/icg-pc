@@ -207,16 +207,10 @@
 			<div class="collapsibleFieldContainer">
 						<fieldset>
 				<legend id="{{guid}}_loss_1">Loss 1</legend>				
-
 		<div>
 			<label for="{{guid}}_LossAmount1" >Amount <i>LossAmount1</i></label>
-			<select id="{{guid}}_LossAmount1" name="LossAmount1" data-value="{{LossAmount1}}"   >
-				{{#EnumsLossAmount1}}
-				<option value="{{value}}">{{label}}</option>
-				{{/EnumsLossAmount1}}
-			</select>
+			<input type="text" id="{{guid}}_LossAmount1" name="LossAmount1" value="{{LossAmount1}}"  >
 		</div>
-
 
 		<div>
 			<label for="{{guid}}_LossDate1" >Date <i>LossDate1</i></label>
