@@ -1,25 +1,25 @@
 <!-- Endorse OFCC HO3 New York -->
 	<!-- source_file: html/ofc_ho3_ny_xlsx_endorse.rhtml  -->
 <form action="endorse" method="get" accept-charset="utf-8" class="collapsedSections">
-	<div id="content">
+    <div id="content">
 
-	<div id="content_header">
-		<h2>{{#preview}}Previewing {{/preview}} Endorsement for {{ policyId }}</h2>
-	</div>
+    <div id="content_header">
+        <h2>{{#preview}}Previewing {{/preview}} Endorsement for {{ policyId }}</h2>
+    </div>
 
-	{{^preview}}
-	<div class="content_body">
-		{{#policyOverview}}
-		<section class="policyOverview">
-			<h1>Policy Overview</h1>
-			<ul>
-				<li>{{InsuredFirstName}} {{InsuredMiddleName}} {{InsuredLastName}}</li>
-				<li>{{InsuredMailingAddressLine1}}</li>
-				<li>{{InsuredMailingAddressLine2}}</li>
-				<li>{{InsuredMailingAddressCity}}, {{InsuredMailingAddressState}} {{InsuredMailingAddressZip}}</li>
-			</ul>
-		</section>
-		{{/policyOverview}}
+    {{^preview}}
+    <div class="content_body">
+        {{#policyOverview}}
+        <section class="policyOverview">
+            <h1>Policy Overview</h1>
+            <ul>
+                <li>{{InsuredFirstName}} {{InsuredMiddleName}} {{InsuredLastName}}</li>
+                <li>{{InsuredMailingAddressLine1}}</li>
+                <li>{{InsuredMailingAddressLine2}}</li>
+                <li>{{InsuredMailingAddressCity}}, {{InsuredMailingAddressState}} {{InsuredMailingAddressZip}}</li>
+            </ul>
+        </section>
+        {{/policyOverview}}
 
 		<fieldset class="defaultOpen horizontalFields extraWide">
 			<h3>Summary <a data-alt-text="close">change</a></h3>
@@ -2047,138 +2047,145 @@
 		</fieldset>
 
 
-		<div class="form_actions">
-			<input type="submit" class="button" value="Preview"> <a href="home">Nevermind, go back</a>
-		</div>
-	</div>
-	<input type="hidden" id="{{guid}}_preview" name="preview" value="true">
-	{{/preview}}
+        <div class="form_actions">
+            <input type="submit" class="button" value="Preview"> <a href="home">Nevermind, go back</a>
+        </div>
+    </div>
+    <input type="hidden" id="{{guid}}_preview" name="preview" value="true">
+    {{/preview}}
 
-	{{#preview}}
-	<div class="content_body preview">
-		<div class="table_wrapping">
-			<table class="data_table" summary="Table containing preview of endorsement.">
-				<col span="1" class="col_labels"></col>
-				<col span="2"></col>
-				<col span="1" class="col_days"></col>
-				<col span="1" class="col_non_hurricane"></col>
-				<col span="1" class="col_hurricane"></col>
-				<col span="3" class="col_amounts"></col>
-				<thead>
-		   		<tr>
-		   			<th>&nbsp;</th>
-		   			<th>Starts</th>
-		   			<th>Ends</th>
-		   			<th>#&nbsp;Days</th>
-		   			<th class="col_group_cap_open col_group_cap_close">Non-Hurricane Premium</th>
-		   			<th class="col_group_cap_open col_group_cap_close">Hurricane Premium</th>
-		   			<th>Premium Before Fees</th>
-		   			<th>Total Fees and Taxes</th>
-		   			<th>Total Premium and Fees</th>
-		   		</tr>
-				</thead>
+    {{#preview}}
+    <div class="content_body preview">
+        <div class="table_wrapping">
+            <table class="data_table" summary="Table containing preview of endorsement.">
+                <col span="1" class="col_labels"></col>
+                <col span="2"></col>
+                <col span="1" class="col_days"></col>
+                <col span="1" class="col_non_hurricane"></col>
+                <col span="1" class="col_hurricane"></col>
+                <col span="3" class="col_amounts"></col>
+                <thead>
+                <tr>
+                    <th>&nbsp;</th>
+                    <th>Starts</th>
+                    <th>Ends</th>
+                    <th>#&nbsp;Days</th>
+                    <th class="col_group_cap_open col_group_cap_close">Non-Hurricane Premium</th>
+                    <th class="col_group_cap_open col_group_cap_close">Hurricane Premium</th>
+                    <th>Premium Before Fees</th>
+                    <th>Total Fees and Taxes</th>
+                    <th>Total Premium and Fees</th>
+                </tr>
+                </thead>
 
-				<tbody>
-					<tr>
-						<td>Proposed Term</td>
-						<td>{{#term}}{{fmtStartDate}}{{/term}}</td>
-						<td>{{#term}}{{fmtEndDate}}{{/term}}</td>
-						<td>{{#term}}{{days}}{{/term}}</td>
-						<td>{{#term}}{{grandSubtotalNonCat}}{{/term}}</td>
-						<td>{{#term}}{{grandSubtotalCat}}{{/term}}</td>
-						<td>{{#term}}{{grandSubtotal}}{{/term}}</td>
-						<td>{{#term}}{{fees}}{{/term}}</td>
-						<td>{{#term}}{{grandTotal}}{{/term}}</td>
-					</tr>
+                <tbody>
+                    <tr>
+                        <td>Proposed Term</td>
+                        <td>{{#term}}{{fmtStartDate}}{{/term}}</td>
+                        <td>{{#term}}{{fmtEndDate}}{{/term}}</td>
+                        <td>{{#term}}{{days}}{{/term}}</td>
+                        <td>{{#term}}{{grandSubtotalNonCat}}{{/term}}</td>
+                        <td>{{#term}}{{grandSubtotalCat}}{{/term}}</td>
+                        <td>{{#term}}{{grandSubtotal}}{{/term}}</td>
+                        <td>{{#term}}{{fees}}{{/term}}</td>
+                        <td>{{#term}}{{grandTotal}}{{/term}}</td>
+                    </tr>
 
-					<tr>
-						{{#current_policy}}
-						<td>Current Term</td>
-						<td>{{#term}}{{fmtStartDate}}{{/term}}</td>
-						<td>{{#term}}{{fmtEndDate}}{{/term}}</td>
-						<td>{{#term}}{{days}}{{/term}}</td>
-						<td>{{#term}}{{grandSubtotalNonCat}}{{/term}}</td>
-						<td>{{#term}}{{grandSubtotalCat}}{{/term}}</td>
-						<td>{{#term}}{{grandSubtotal}}{{/term}}</td>
-						<td>{{#term}}{{fees}}{{/term}}</td>
-						<td>{{#term}}{{grandTotal}}{{/term}}</td>
-						{{/current_policy}}
-					</tr>
+                    <tr>
+                        {{#current_policy}}
+                        <td>Current Term</td>
+                        <td>{{#term}}{{fmtStartDate}}{{/term}}</td>
+                        <td>{{#term}}{{fmtEndDate}}{{/term}}</td>
+                        <td>{{#term}}{{days}}{{/term}}</td>
+                        <td>{{#term}}{{grandSubtotalNonCat}}{{/term}}</td>
+                        <td>{{#term}}{{grandSubtotalCat}}{{/term}}</td>
+                        <td>{{#term}}{{grandSubtotal}}{{/term}}</td>
+                        <td>{{#term}}{{fees}}{{/term}}</td>
+                        <td>{{#term}}{{grandTotal}}{{/term}}</td>
+                        {{/current_policy}}
+                    </tr>
 
-					<tr class="dividing_row">
-						<td colspan="3">
-							<h4>Proposed Policy</h4>
-						</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-					</tr>
+                    <tr class="dividing_row">
+                        <td colspan="3">
+                            <h4>Proposed Policy</h4>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
 
-					{{#intervals}}
-					<tr {{#isNew}}class="calc_row"{{/isNew}}>
-						<td>Interval</td>
-						<td>{{fmtStartDate}}</td>
-						<td>{{fmtEndDate}}</td>
-						<td>{{days}}</td>
+                    {{#intervals}}
+                    <tr {{#isNew}}class="calc_row"{{/isNew}}>
+                        <td>Interval</td>
+                        <td>{{fmtStartDate}}</td>
+                        <td>{{fmtEndDate}}</td>
+                        <td>{{days}}</td>
 
-						<!--The new interval-->
-					{{#isNew}}
-						<td>{{grandSubtotalNonCatUnadjusted}}</td>
-						<td>{{grandSubtotalCatUnadjusted}}</td>
-						<td class="subtotal">{{grandSubtotal}}</td>
-					{{/isNew}}
+                        <!--The new interval-->
+                    {{#isNew}}
+                        <td>{{grandSubtotalNonCatUnadjusted}}</td>
+                        <td>{{grandSubtotalCatUnadjusted}}</td>
+                        <td class="subtotal">{{grandSubtotal}}</td>
+                    {{/isNew}}
 
-						<!--All other intervals-->
-					{{^isNew}}
-						<td>{{grandSubtotalNonCat}}</td>
-						<td>{{grandSubtotalCat}}</td>
-						<td>{{grandSubtotal}}</td>
-					{{/isNew}}
+                        <!--All other intervals-->
+                    {{^isNew}}
+                        <td>{{grandSubtotalNonCat}}</td>
+                        <td>{{grandSubtotalCat}}</td>
+                        <td>{{grandSubtotal}}</td>
+                    {{/isNew}}
 
-						<td>-</td>
-						<td>-</td>
-					</tr>
-					{{/intervals}}
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                    {{/intervals}}
 
-					<tr class="dividing_row">
-						<td colspan="3">
-							<h4>Current Policy</h4>
-						</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-						<td>&nbsp;</td>
-					</tr>
+                    <tr class="dividing_row">
+                        <td colspan="3">
+                            <h4>Current Policy</h4>
+                        </td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                        <td>&nbsp;</td>
+                    </tr>
 
-					{{#current_policy}}
-					{{#intervals}}
-					<tr>
-						<td>Interval</td>
-						<td>{{fmtStartDate}}</td>
-						<td>{{fmtEndDate}}</td>
-						<td>{{days}}</td>
-						<td>{{grandSubtotalNonCat}}</td>
-						<td>{{grandSubtotalCat}}</td>
-						<td>{{grandSubtotal}}</td>
-						<td>-</td>
-						<td>-</td>
-					</tr>
-					{{/intervals}}
-					{{/current_policy}}
-				</tbody>
-			</table>
-		</div>
+                    {{#current_policy}}
+                    {{#intervals}}
+                    <tr>
+                        <td>Interval</td>
+                        <td>{{fmtStartDate}}</td>
+                        <td>{{fmtEndDate}}</td>
+                        <td>{{days}}</td>
+                        <td>{{grandSubtotalNonCat}}</td>
+                        <td>{{grandSubtotalCat}}</td>
+                        <td>{{grandSubtotal}}</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                    {{/intervals}}
+                    {{/current_policy}}
+                </tbody>
+            </table>
+        </div>
 
-		<div class="form_actions">
-			<input type="submit" class="button" value="Confirm"> <a href="home">Cancel</a>
-		</div>
-	</div>
-	{{/preview}}
-	</div>
+        <fieldset>
+            <div>
+                <label for="{{guid}}_addNotes" class="noteslabel">Notes</label>
+                <textarea class="notesfield" id="{{guid}}_addNotes" name="addNotes" value=""></textarea>
+            </div>
+        </fieldset>
+        
+        <div class="form_actions">
+            <input type="submit" class="button" value="Confirm"> <a href="home">Cancel</a>
+        </div>
+    </div>
+    {{/preview}}
+    </div>
 </form>
 
