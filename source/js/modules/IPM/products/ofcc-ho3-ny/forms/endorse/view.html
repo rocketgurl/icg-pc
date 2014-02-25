@@ -1,5 +1,5 @@
 <!-- Endorse OFCC HO3 New York -->
-	<!-- source_file: html/ofc_ho3_ny_2_xlsx_endorse.rhtml  -->
+	<!-- source_file: html/ofc_ho3_ny_4_xlsx_endorse.rhtml  -->
 <form action="endorse" method="get" accept-charset="utf-8" class="collapsedSections">
     <div id="content">
 
@@ -129,7 +129,6 @@
 		</div>
 
 
-<!-- Miles to Primary Responding Fire Station is Ineger -->
 
 		<div>
 			<label for="{{guid}}_DistanceFireStation" class="labelRequired">Miles to Primary Responding Fire Station <i>DistanceFireStation</i></label>
@@ -972,50 +971,6 @@
 
 
 		<div>
-			<label for="{{guid}}_MonthsUnoccupied" class="labelRequired">Number Of Months Unoccupied? <i>MonthsUnoccupied</i></label>
-			<select id="{{guid}}_MonthsUnoccupied" name="MonthsUnoccupied" data-value="{{MonthsUnoccupied}}"  required >
-				{{#EnumsMonthsUnoccupied}}
-				<option value="{{value}}">{{label}}</option>
-				{{/EnumsMonthsUnoccupied}}
-			</select>
-		</div>
-
-
-
-		<div>
-			<label for="{{guid}}_ShortTermRental" class="labelRequired">Any unit leased less than 12 months? <i>ShortTermRental</i></label>
-			<select id="{{guid}}_ShortTermRental" name="ShortTermRental" data-value="{{ShortTermRental}}"  required >
-				{{#EnumsShortTermRental}}
-				<option value="{{value}}">{{label}}</option>
-				{{/EnumsShortTermRental}}
-			</select>
-		</div>
-
-
-
-		<div>
-			<label for="{{guid}}_SingleOccupancy" class="labelRequired">Single tenants under age 30? <i>SingleOccupancy</i></label>
-			<select id="{{guid}}_SingleOccupancy" name="SingleOccupancy" data-value="{{SingleOccupancy}}"  required >
-				{{#EnumsSingleOccupancy}}
-				<option value="{{value}}">{{label}}</option>
-				{{/EnumsSingleOccupancy}}
-			</select>
-		</div>
-
-
-
-		<div>
-			<label for="{{guid}}_StudentOccupancy" class="labelRequired">Full-time student tenant? <i>StudentOccupancy</i></label>
-			<select id="{{guid}}_StudentOccupancy" name="StudentOccupancy" data-value="{{StudentOccupancy}}"  required >
-				{{#EnumsStudentOccupancy}}
-				<option value="{{value}}">{{label}}</option>
-				{{/EnumsStudentOccupancy}}
-			</select>
-		</div>
-
-
-
-		<div>
 			<label for="{{guid}}_ResidenceHeldInTrust" class="labelRequired">Residence Held in Trust <i>ResidenceHeldInTrust</i></label>
 			<select id="{{guid}}_ResidenceHeldInTrust" name="ResidenceHeldInTrust" data-value="{{ResidenceHeldInTrust}}"  required >
 				{{#EnumsResidenceHeldInTrust}}
@@ -1055,17 +1010,6 @@
 			<label for="{{guid}}_BeneficiaryName" >Beneficiary Name <i>BeneficiaryName</i></label>
 			<input type="text" id="{{guid}}_BeneficiaryName" name="BeneficiaryName" value="{{BeneficiaryName}}"  >
 		</div>
-
-
-		<div>
-			<label for="{{guid}}_AbsenteeLandlord" class="labelRequired">Absentee Landlord? <i>AbsenteeLandlord</i></label>
-			<select id="{{guid}}_AbsenteeLandlord" name="AbsenteeLandlord" data-value="{{AbsenteeLandlord}}"  required >
-				{{#EnumsAbsenteeLandlord}}
-				<option value="{{value}}">{{label}}</option>
-				{{/EnumsAbsenteeLandlord}}
-			</select>
-		</div>
-
 		</fieldset>
 			</div>
 		</fieldset>
@@ -1103,17 +1047,6 @@
 				{{#EnumsOffPremisesTheftBuyback}}
 				<option value="{{value}}">{{label}}</option>
 				{{/EnumsOffPremisesTheftBuyback}}
-			</select>
-		</div>
-
-
-
-		<div>
-			<label for="{{guid}}_VacancyCoverage" class="labelRequired">Vacancy Coverage <i>VacancyCoverage</i></label>
-			<select id="{{guid}}_VacancyCoverage" name="VacancyCoverage" data-value="{{VacancyCoverage}}"  required >
-				{{#EnumsVacancyCoverage}}
-				<option value="{{value}}">{{label}}</option>
-				{{/EnumsVacancyCoverage}}
 			</select>
 		</div>
 
@@ -1235,28 +1168,6 @@
 				{{#EnumsFirearmsSpecialLimits}}
 				<option value="{{value}}">{{label}}</option>
 				{{/EnumsFirearmsSpecialLimits}}
-			</select>
-		</div>
-
-
-
-		<div>
-			<label for="{{guid}}_ElectronicsSpecialLimits" class="labelRequired">Electronic Apparatus <i>ElectronicsSpecialLimits</i></label>
-			<select id="{{guid}}_ElectronicsSpecialLimits" name="ElectronicsSpecialLimits" data-value="{{ElectronicsSpecialLimits}}"  required >
-				{{#EnumsElectronicsSpecialLimits}}
-				<option value="{{value}}">{{label}}</option>
-				{{/EnumsElectronicsSpecialLimits}}
-			</select>
-		</div>
-
-
-
-		<div>
-			<label for="{{guid}}_ElectronicsSpecialLimitsLocation" >Electronic Apparatus Location <i>ElectronicsSpecialLimitsLocation</i></label>
-			<select id="{{guid}}_ElectronicsSpecialLimitsLocation" name="ElectronicsSpecialLimitsLocation" data-value="{{ElectronicsSpecialLimitsLocation}}"   >
-				{{#EnumsElectronicsSpecialLimitsLocation}}
-				<option value="{{value}}">{{label}}</option>
-				{{/EnumsElectronicsSpecialLimitsLocation}}
 			</select>
 		</div>
 
