@@ -10,8 +10,9 @@ define [
   'text!modules/RenewalUnderwriting/templates/tpl_renewal_underwriting_wrapper.html',
   'modules/IPM/IPMModule',
   'modules/ZenDesk/ZenDeskView',
-  'modules/PolicyRepresentation/PolicyRepresentationView'
-], (BaseView, Messenger, Base64, RenewalUnderwritingView, swfobject, tpl_policy_container, tpl_policy_error, tpl_ipm_header, tpl_ru_wrapper, IPMModule, ZenDeskView, PolicyRepresentationView) ->
+  'modules/PolicyRepresentation/PolicyRepresentationView',
+  'modules/Quoting/QuotingModule'
+], (BaseView, Messenger, Base64, RenewalUnderwritingView, swfobject, tpl_policy_container, tpl_policy_error, tpl_ipm_header, tpl_ru_wrapper, IPMModule, ZenDeskView, PolicyRepresentationView, QuotingModule) ->
 
   PolicyView = BaseView.extend
 
@@ -66,10 +67,12 @@ define [
         if @render()
           @show_overview()
           @teardown_ipmchanges()
+          @teardown_quoting()          
         # Only show it again if this is the overview route
         else if @current_route == 'overview' || @current_route == null
           @show_overview()
           @teardown_ipmchanges()
+          @teardown_quoting()
 
       # Need to let the footer know that we changed height
       @module.trigger 'workspace.rendered'
@@ -133,6 +136,9 @@ define [
       # Setup IPM Module
       @IPM = new IPMModule(@model, $("#policy-ipm-#{@cid}"), @controller)
 
+      # Setup Quoting Module
+      @Quoting = new QuotingModule(@model, $("#policy-quoting-#{@cid}"), @controller)
+
       true
 
     # Certain actions are not visible if this is a quote, or a Dovetail policy
@@ -144,6 +150,8 @@ define [
       if @model.isQuote()
         for action in ['renewalunderwriting', 'servicerequests']
           @$el.find(".policy-nav a[href=#{action}]").parent('li').hide()
+      else
+        @$el.find(".policy-nav a[href=quoting]").parent('li').hide()
 
       # If we're not IPM or Dovetail then no IPM for you!
       if @model.isIPM() == false && @model.isDovetail() == false
@@ -398,6 +406,17 @@ define [
       ipm_container = @$el.find("#policy-ipm-#{@cid}")
       @hide_element ipm_container
 
+    # Show Quoting
+    show_quoting : ->
+      quoting_container = @$el.find("#policy-quoting-#{@cid}")
+      @show_element quoting_container
+      @resize_view quoting_container
+
+    # Hide Quoting 
+    teardown_quoting : ->
+      quoting_container = @$el.find("#policy-quoting-#{@cid}")
+      @hide_element quoting_container
+      
     # Load Renewal Underwriting Views
     show_renewalunderwriting : ->
       content = @Mustache.render tpl_ru_wrapper, { cid : @cid }
@@ -432,7 +451,7 @@ define [
 
     teardown_servicerequests : ->
       @hideViewContainer 'zendesk'
-
+      
     show_policyrepresentations : ->
       $pr_el = @createViewContainer('policyrep', 'policyrep-container')
 
