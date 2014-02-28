@@ -160,11 +160,13 @@ define [
         $(this).attr('data-value')
 
       # Attach datepickers where appropriate
+      $dp = @$el.find('.datepicker')
+
       date_options =
-        dateFormat : 'yy-mm-dd'
+        dateFormat : if $dp.attr('name') is 'Insured1BirthDate' then 'mm/dd/yy' else 'yy-mm-dd'
 
       if $.datepicker
-        @$el.find('.datepicker').datepicker(date_options)
+        $dp.datepicker(date_options)
 
       # Attach event listener to preview button
       @$el.find('form input.button[type=submit]').on(
