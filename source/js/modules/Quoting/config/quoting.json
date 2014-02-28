@@ -22,7 +22,7 @@
       "actions": [
         {
           "label": "Unlock Quote",
-          "view": "UnlockPolicy"
+          "view": "UnlockQuote"
         }
       ]
     }

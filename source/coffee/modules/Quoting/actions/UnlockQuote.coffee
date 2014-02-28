@@ -5,7 +5,7 @@ define [
 
   ###
   # This sends a very minimal and simple PCS which should
-  # 'unlock' a policy
+  # 'unlock' a quote 
   #
   # !! NOTE !!
   #
@@ -15,7 +15,7 @@ define [
   #
   ###
 
-  class UnlockPolicy extends QuotingActionView
+  class UnlockQuote extends QuotingActionView
 
     initialize : ->
       super
@@ -24,7 +24,7 @@ define [
 
     ready : ->
       super
-      @fetchTemplates(@MODULE.POLICY, 'unlock-policy', @processView)
+      @fetchTemplates(@MODULE.POLICY, 'unlock-quote', @processView)
 
     processViewData : (vocabTerms, view) =>
       super vocabTerms, view
@@ -33,6 +33,7 @@ define [
       @processViewData(vocabTerms, view)
       @trigger "loaded", this, @postProcessView
 
+    # NOTE: The ChangeSet is a PolicyChangeSet and refers to policies, but this action only applies to quotes
     submit : (e) ->
       super
       context =

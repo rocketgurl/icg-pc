@@ -287,7 +287,7 @@ define [
 
     # Template bodies (partials) for specific actions
 
-    unlock_policy : """
+    unlock_quote: """
       <Flags>
         <Flag name="{{name}}" value="{{value}}"/>
       </Flags>

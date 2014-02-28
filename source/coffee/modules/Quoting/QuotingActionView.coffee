@@ -97,7 +97,7 @@ define [
       # Dovetail policies are scoped only to BoR and don't have most forms
       product_name = if policy.isDovetail() then 'dovetail' else policy.get('productName')
   
-      if action == 'unlock-policy'
+      if action == 'unlock-quote'
         path  = "/js/#{@MODULE.CONFIG.TEMPLATES_PATH}/#{action}"
       else
         path  = "/js/#{@MODULE.CONFIG.PRODUCTS_PATH}#{product_name}/forms/#{_.slugify(action)}"
