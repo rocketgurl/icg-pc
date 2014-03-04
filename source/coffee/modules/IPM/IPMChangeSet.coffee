@@ -97,7 +97,8 @@ define [
       for key, val of fields
         if key.indexOf('Date') != -1
           if val && val != "false" && val != "" && val != "__deleteEmptyProperty"
-            fields[key] = Helpers.formatDate(val)
+            format = if key is 'Insured1BirthDate' then 'MM/DD/YYYY' else 'YYYY-MM-DD'
+            fields[key] = Helpers.formatDate(val, format)
       fields
 
     # When we do a preview of a policy we get back a new version with an
