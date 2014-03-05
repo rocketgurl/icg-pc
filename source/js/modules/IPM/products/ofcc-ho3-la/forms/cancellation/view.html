@@ -107,15 +107,9 @@
               <th scope="row">Total Change</th>
               <td>{{CancelAmount}}</td>
             </tr>
-            {{/ChangeInPremium}}
+			{{/ChangeInPremium}}
           </tbody>
         </table>
-      </div>
-      <div>
-          <br/><br/>
-          <label for="{{guid}}_addNotes" class="cancelnoteslabel">Notes</label>
-          <br/><br/>
-          <textarea cols="97" rows="7" id="{{guid}}_addNotes" name="addNotes" value=""></textarea>
       </div>
       <div class="form_actions">
       <p>{{^Undo}}Confirm{{/Undo}}{{#Undo}}Undo{{/Undo}}&nbsp;this action?</p>
