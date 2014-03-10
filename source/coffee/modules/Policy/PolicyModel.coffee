@@ -128,6 +128,11 @@ define [
           period  : @getPolicyPeriod()
           carrier : @getModelProperty('Management Carrier')
 
+      #ICS-2446
+      pcFlag = @find('Management Flags Flag[name=PendingCancellation]')
+      if pcFlag? 
+        ipm_header.status = 'Pending Cancellation'
+     
       # ICS-1641
       if @isQuote()
         ipm_header.id = @find('Identifiers Identifier[name=QuoteNumber]')
