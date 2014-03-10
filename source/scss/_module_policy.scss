@@ -115,11 +115,10 @@ Module: Policy
 		color: $darkblue;
 		display: inline;
 		span {
-		    color: $orange;
+		        color: $orange;
+		        &.ipm-header-cancel-status {
+	                        color: #FF0000;
+                        }
 		}
-	}
-}
-
-.ipm-header-cancel-status {
-    color: #FF0000 !important;
+	}	
 }
