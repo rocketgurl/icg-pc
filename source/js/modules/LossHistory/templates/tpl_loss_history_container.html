@@ -1,0 +1,38 @@
+{{#lossHistoryFlag}}
+<h1 class="standalone-loss-history">Loss history</h1>
+<div class="ru-loss-history-container">
+	<table class="ru-loss-history">
+		<thead>
+			<tr>
+				<th>Loss</th>
+				<th>Date&nbsp;of&nbsp;loss</th>
+				<th>Claim&nbsp;#</th>
+				<th>Amount</th>
+				<th>Status</th>
+				<th>Cause&nbsp;of&nbsp;loss</th>
+				<th>Cat&nbsp;indicator</th>
+				<th>Loss&nbsp;carrier</th>
+				<th>Description</th>
+			</tr>
+		</thead>
+		<tbody>
+			{{#lossHistory}}
+			<tr>
+				<td>{{lossNumber}}</td>
+				<td>{{lossDate}}</td>
+				<td>{{claimNumber}}</td>
+				<td>{{amount}}</td>
+				<td>{{status}}</td>
+				<td>{{lossCause}}</td>
+				<td>{{catIndicator}}</td>
+				<td>{{lossCarrier}}</td>
+				<td>{{description}}</td>
+			</tr>
+			{{/lossHistory}}
+		</tbody>
+	</table>
+</div>
+{{/lossHistoryFlag}}
+{{^lossHistoryFlag}}
+<h2>&nbsp;</h2>
+{{/lossHistoryFlag}}
