@@ -1,5 +1,5 @@
 <!-- Product: FSIC HO3 Louisiana -->
-    <!-- source_file: html/fsic_ho3_la_030714_xlsx_renew.rhtml  -->
+    <!-- source_file: html/fsic_ho3_la_0314_xlsx_renew.rhtml  -->
 <form action="renew" method="get" accept-charset="utf-8" class="collapsedSections">
     <div id="content">
         <div id="content_header">
@@ -25,8 +25,8 @@
 			<div class="collapsibleFieldContainer">
 				
 		<div>
-			<label for="{{guid}}_HurricaneBaseRate" >Hurricane Base Rate <i>HurricaneBaseRate</i></label>
-			<input type="text" id="{{guid}}_HurricaneBaseRate" name="HurricaneBaseRate" value="{{HurricaneBaseRate}}"  readonly>
+			<label for="{{guid}}_HurricaneBaseRate" class="labelRequired">Hurricane Base Rate <i>HurricaneBaseRate</i></label>
+			<input type="text" id="{{guid}}_HurricaneBaseRate" name="HurricaneBaseRate" value="{{HurricaneBaseRate}}" required >
 		</div>
 
 			</div>
@@ -115,6 +115,17 @@
 				{{#EnumsCoverageF}}
 				<option value="{{value}}">{{label}}</option>
 				{{/EnumsCoverageF}}
+			</select>
+		</div>
+
+
+
+		<div>
+			<label for="{{guid}}_PriorCoverageE" >Personal or Premises Liability Limit on Prior Policy? <i>PriorCoverageE</i></label>
+			<select id="{{guid}}_PriorCoverageE" name="PriorCoverageE" data-value="{{PriorCoverageE}}"   >
+				{{#EnumsPriorCoverageE}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsPriorCoverageE}}
 			</select>
 		</div>
 
