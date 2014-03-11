@@ -7,11 +7,12 @@ define [
   'text!modules/Policy/templates/tpl_policy_container.html',
   'text!modules/Policy/templates/tpl_policy_error.html',
   'text!modules/Policy/templates/tpl_ipm_header.html',
+  'text!modules/Policy/templates/tpl_ipm_header_pc.html',
   'text!modules/RenewalUnderwriting/templates/tpl_renewal_underwriting_wrapper.html',
   'modules/IPM/IPMModule',
   'modules/ZenDesk/ZenDeskView',
   'modules/PolicyRepresentation/PolicyRepresentationView'
-], (BaseView, Messenger, Base64, RenewalUnderwritingView, swfobject, tpl_policy_container, tpl_policy_error, tpl_ipm_header, tpl_ru_wrapper, IPMModule, ZenDeskView, PolicyRepresentationView) ->
+], (BaseView, Messenger, Base64, RenewalUnderwritingView, swfobject, tpl_policy_container, tpl_policy_error, tpl_ipm_header, tpl_ipm_header_pc, tpl_ru_wrapper, IPMModule, ZenDeskView, PolicyRepresentationView) ->
 
   PolicyView = BaseView.extend
 
@@ -233,8 +234,14 @@ define [
     # If the policy_header doesn't exist then build it, otherwise
     # just make visible
     build_policy_header : ->
+      
+      #ICS-2446
+      ipm_header = @model.getIpmHeader()
       if @policy_header.html() == ""
-        @policy_header.html @Mustache.render tpl_ipm_header, @model.getIpmHeader()
+        if ipm_header.status?
+          @policy_header.html @Mustache.render tpl_ipm_header_pc, ipm_header
+        else
+          @policy_header.html @Mustache.render tpl_ipm_header, ipm_header
 
       # ICS-1641
       if @model.isQuote()
