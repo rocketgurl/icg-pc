@@ -162,6 +162,8 @@ define [
       # Attach datepickers where appropriate
       $dp = @$el.find('.datepicker')
 
+      # ICS-2408: Insured1BirthDate format mm/dd/yy. Note that ui datepicker format
+      # differs from moment.js as seen in IPMChangeSet, for example
       date_options =
         dateFormat : if $dp.attr('name') is 'Insured1BirthDate' then 'mm/dd/yy' else 'yy-mm-dd'
 
