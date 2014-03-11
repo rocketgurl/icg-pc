@@ -97,7 +97,11 @@ define [
       for key, val of fields
         if key.indexOf('Date') != -1
           if val && val != "false" && val != "" && val != "__deleteEmptyProperty"
-            format = if key is 'Insured1BirthDate' then 'MM/DD/YYYY' else 'YYYY-MM-DD'
+
+            # ICS-2408: Insured1BirthDate format MM/DD/YYYY
+            # 'L' format => see http://momentjs.com/ => Internationalization
+            format = if key is 'Insured1BirthDate' then 'L' else 'YYYY-MM-DD'
+
             fields[key] = Helpers.formatDate(val, format)
       fields
 
