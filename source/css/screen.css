@@ -297,8 +297,7 @@ Module: Policy
 .policy-header h3 { font-size: 12px; font-size: 1.2rem; margin: 0 0 5px 0; color: #007ac9; vertical-align: text-top; }
 .policy-header h2 { font-size: 14px; font-size: 1.4rem; font-weight: bold; color: #002857; display: inline; }
 .policy-header h2 span { color: #fe8400; }
-
-.ipm-header-cancel-status { color: #FF0000 !important; }
+.policy-header h2 span.ipm-header-cancel-status { color: #981e32; }
 
 .ru-container, .zd-container { *zoom: 1; width: 96.4%; padding-left: 1.8%; padding-right: 1.8%; margin-left: auto; margin-right: auto; border: #ddd 1px solid; background-color: #f4f4f4; display: none; }
 .ru-container:after, .zd-container:after { content: ""; display: table; clear: both; }

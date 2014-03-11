@@ -117,7 +117,7 @@ Module: Policy
 		span {
 		        color: $orange;
 		        &.ipm-header-cancel-status {
-	                        color: #FF0000;
+	                        color: $red;
                         }
 		}
 	}	
