@@ -287,11 +287,13 @@ define [
 
       # Normalize dates
       for field in ['reviewPeriod', 'reviewDeadline']
-        resp.renewal[field] = _.trim resp.renewal[field].replace(/00:00:00.0/g,'')
+        if resp.renewal[field]?
+          resp.renewal[field] = _.trim resp.renewal[field].replace(/00:00:00.0/g,'')
 
       # Remove quotes from scores (per Terry)
       for field in ['newInsuranceScore', 'oldInsuranceScore']
-        resp.insuranceScore[field] = resp.insuranceScore[field].replace(/'|"/g,'')
+        if resp.insuranceScore[field]?
+          resp.insuranceScore[field] = resp.insuranceScore[field].replace(/'|"/g,'')
 
       resp
 
