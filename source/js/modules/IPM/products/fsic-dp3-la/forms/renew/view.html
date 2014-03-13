@@ -414,28 +414,6 @@
 				
 
 		<div>
-			<label for="{{guid}}_AffinityDiscount" class="labelRequired">Affinity Discount <i>AffinityDiscount</i></label>
-			<select id="{{guid}}_AffinityDiscount" name="AffinityDiscount" data-value="{{AffinityDiscount}}"  required >
-				{{#EnumsAffinityDiscount}}
-				<option value="{{value}}">{{label}}</option>
-				{{/EnumsAffinityDiscount}}
-			</select>
-		</div>
-
-
-
-		<div>
-			<label for="{{guid}}_AffinityDiscountType" >Affinity Discount Type <i>AffinityDiscountType</i></label>
-			<select id="{{guid}}_AffinityDiscountType" name="AffinityDiscountType" data-value="{{AffinityDiscountType}}"   >
-				{{#EnumsAffinityDiscountType}}
-				<option value="{{value}}">{{label}}</option>
-				{{/EnumsAffinityDiscountType}}
-			</select>
-		</div>
-
-
-
-		<div>
 			<label for="{{guid}}_MultiPolicy" class="labelRequired">Companion Policy written through Family Security? <i>MultiPolicy</i></label>
 			<select id="{{guid}}_MultiPolicy" name="MultiPolicy" data-value="{{MultiPolicy}}"  required >
 				{{#EnumsMultiPolicy}}
@@ -497,17 +475,6 @@
 			<label for="{{guid}}_Insured1BirthDate" >Insured Date Of Birth <i>Insured1BirthDate</i></label>
 			<input type="text" id="{{guid}}_Insured1BirthDate" name="Insured1BirthDate" value="{{Insured1BirthDate}}" class="datepicker"  >
 		</div>
-
-
-		<div>
-			<label for="{{guid}}_EPolicyOption" class="labelRequired">E-Policy Discount <i>EPolicyOption</i></label>
-			<select id="{{guid}}_EPolicyOption" name="EPolicyOption" data-value="{{EPolicyOption}}"  required >
-				{{#EnumsEPolicyOption}}
-				<option value="{{value}}">{{label}}</option>
-				{{/EnumsEPolicyOption}}
-			</select>
-		</div>
-
 
 			</div>
 		</fieldset>
