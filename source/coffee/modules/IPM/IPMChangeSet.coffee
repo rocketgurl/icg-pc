@@ -286,7 +286,7 @@ define [
     # Tempalte for data item insertion
     dataItemTemplate : """
       {{#intervalRequest}}
-      <DataItem name="{{key}}" value="{{value}}" />
+      <DataItem name="{{key}}" value="{{{value}}}" />
       {{/intervalRequest}}
     """
 
