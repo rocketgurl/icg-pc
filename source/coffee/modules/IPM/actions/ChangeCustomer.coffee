@@ -45,7 +45,7 @@ define [
 
       view_data.additionalInsured = _.map(_.values(grouped), (g, idx) ->
         item_prefix = "AdditionalInsured#{idx+1}"
-        field_keys = _.map(g, (k) -> k.replace(item_prefix, ''))
+        field_keys = _.map(g, (k) -> k.replace(item_prefix, '') )
         field_values = _.map(g, (v) -> view_data[v])
         o = _.object(field_keys, field_values)
         o.number = idx + 1
