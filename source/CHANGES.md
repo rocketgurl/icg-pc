@@ -1,6 +1,18 @@
 Updates
 -------
 
+### 2.4.3
+
+- [ICS-2324](https://icg360.atlassian.net/browse/ICS-2324) Fixing automated note adding on cancellation forms
+- [ICS-2330](https://icg360.atlassian.net/browse/ICS-2330) Fixing endorse form required
+- [ICS-2372](https://icg360.atlassian.net/browse/ICS-2372) Update IIC-HO3-SC endorse forms
+- [ICS-2397](https://icg360.atlassian.net/browse/ICS-2397) Create ofcc-ny-ho3 IPM endorse forms
+- [ICS-2399](https://icg360.atlassian.net/browse/ICS-2399) SquareFootUnderRoofFLA for wic-al-ho3/hwo
+
+
+...
+
+
 ### 2.3.1
 
 - RCE updates
