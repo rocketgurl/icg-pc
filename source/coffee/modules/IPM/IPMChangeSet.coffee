@@ -97,7 +97,12 @@ define [
       for key, val of fields
         if key.indexOf('Date') != -1
           if val && val != "false" && val != "" && val != "__deleteEmptyProperty"
-            fields[key] = Helpers.formatDate(val)
+
+            # ICS-2408: Insured1BirthDate format MM/DD/YYYY
+            # 'L' format => see http://momentjs.com/ => Internationalization
+            format = if key is 'Insured1BirthDate' then 'L' else 'YYYY-MM-DD'
+
+            fields[key] = Helpers.formatDate(val, format)
       fields
 
     # When we do a preview of a policy we get back a new version with an
@@ -281,7 +286,7 @@ define [
     # Tempalte for data item insertion
     dataItemTemplate : """
       {{#intervalRequest}}
-      <DataItem name="{{key}}" value="{{value}}" />
+      <DataItem name="{{key}}" value="{{{value}}}" />
       {{/intervalRequest}}
     """
 
