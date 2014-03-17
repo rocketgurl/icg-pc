@@ -1,6 +1,19 @@
 Updates
 -------
 
+### 2.4.5
+
+- [ICS-2408](https://icg360.atlassian.net/browse/ICS-2408) Change Birthdate formats for IPM Customer Changes to mm/dd/yyyy
+- [ICS-2419](https://icg360.atlassian.net/browse/ICS-2419) Added Loss History at binding to be available for all policies
+- [ICS-2429](https://icg360.atlassian.net/browse/ICS-2429) FSIC Renew Forms for HO3/DP3
+- [ICS-2431](https://icg360.atlassian.net/browse/ICS-2431) Fix problems preventing Additional Insured forms from updating
+- [ICS-2443](https://icg360.atlassian.net/browse/ICS-2443) Update WIC HO3 AL IPM Endorse forms
+- [ICS-2445](https://icg360.atlassian.net/browse/ICS-2445) Update WIC HWO AL IPM Endorse forms
+
+### 2.4.4
+
+- [ICSREQ-819](https://icg360.atlassian.net/browse/ICSREQ-819) Fixing errors related to renewal underwriting tab not loading for certain policies
+
 ### 2.4.3
 
 - [ICS-2324](https://icg360.atlassian.net/browse/ICS-2324) Fixing automated note adding on cancellation forms
