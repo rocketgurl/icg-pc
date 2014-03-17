@@ -9,10 +9,12 @@ define [
   'text!modules/Policy/templates/tpl_ipm_header.html',
   'text!modules/Policy/templates/tpl_ipm_header_pc.html',
   'text!modules/RenewalUnderwriting/templates/tpl_renewal_underwriting_wrapper.html',
+  'text!modules/LossHistory/templates/tpl_loss_history_wrapper.html',
   'modules/IPM/IPMModule',
   'modules/ZenDesk/ZenDeskView',
-  'modules/PolicyRepresentation/PolicyRepresentationView'
-], (BaseView, Messenger, Base64, RenewalUnderwritingView, swfobject, tpl_policy_container, tpl_policy_error, tpl_ipm_header, tpl_ipm_header_pc, tpl_ru_wrapper, IPMModule, ZenDeskView, PolicyRepresentationView) ->
+  'modules/PolicyRepresentation/PolicyRepresentationView',
+  'modules/LossHistory/LossHistoryView'
+], (BaseView, Messenger, Base64, RenewalUnderwritingView, swfobject, tpl_policy_container, tpl_policy_error, tpl_ipm_header, tpl_ipm_header_pc, tpl_ru_wrapper, tpl_lh_wrapper, IPMModule, ZenDeskView, PolicyRepresentationView, LossHistoryView) ->
 
   PolicyView = BaseView.extend
 
@@ -143,7 +145,7 @@ define [
       # We hide a few actions if this is a quote
       hide_actions = []
       if @model.isQuote()
-        for action in ['renewalunderwriting', 'servicerequests']
+        for action in ['renewalunderwriting', 'servicerequests', 'losshistory']
           @$el.find(".policy-nav a[href=#{action}]").parent('li').hide()
 
       # If we're not IPM or Dovetail then no IPM for you!
@@ -454,5 +456,24 @@ define [
 
     teardown_policyrepresentations : ->
       @hideViewContainer 'policyrep'
+
+    # Load Loss History Views
+    show_losshistory : ->
+      content = @Mustache.render tpl_lh_wrapper, { cid : @cid }
+      $lh_el = @createViewContainer('loss-history', null, content)
+
+      # If container not already loaded, then insert element into DOM
+      if @lh_container == null || @lh_container == undefined
+        @lh_container = new LossHistoryView({
+            $el         : $lh_el
+            policy      : @model
+            policy_view : this
+          }).render()
+      else
+        @resize_workspace(@lh_container.$el, null)
+        @show_element $lh_el
+
+    teardown_losshistory : ->
+      @hideViewContainer 'loss-history'
 
   PolicyView

@@ -435,6 +435,13 @@ define [
         # walk the response and adjust information to match the view
         resp = @processRenewalResponse(resp)
 
+        if resp.lossHistoryFlag == true 
+          for lossRecord in resp.lossHistory
+            do (lossRecord) -> 
+              lossDate = lossRecord.lossDate
+              if lossDate.indexOf(' ') != -1
+                lossRecord.lossDate = lossDate.substring 0, lossDate.indexOf(' ')
+            
         @$el.html(@Mustache.render tpl_ru_container, resp)
 
         @removeLoader()

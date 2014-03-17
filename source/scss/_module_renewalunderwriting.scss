@@ -16,7 +16,10 @@
 	h1 {
 		color: $darkblue;
 		@include font-size(24);
-		@include emboss;		
+		@include emboss;
+		&.standalone-loss-history {
+		        margin-bottom: 20px;
+	        }
 	}
 
 	h2 {
@@ -207,7 +210,7 @@
 }
 
 .ru-loss-history-container {
-	@include span-columns(12 omega, 12);
+	@include span-columns(12 omega, 12);	
 }
 
 .ru-loss-history {
