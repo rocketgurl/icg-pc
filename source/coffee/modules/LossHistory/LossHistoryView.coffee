@@ -79,6 +79,18 @@ define [
         # walk the response and adjust information to match the view
         resp = @processRenewalResponse(resp)
 
+        if resp.lossHistoryFlag == false
+          @removeLoader()
+          $("#lh-spinner-#{@PolicyView.cid}").find("span").html("No Loss History for this Policy")
+          return false
+        
+        # trim the timestamp off the date data
+        for lossRecord in resp.lossHistory
+          do (lossRecord) -> 
+            lossDate = lossRecord.lossDate
+            if lossDate.indexOf(' ') != -1
+              lossRecord.lossDate = lossDate.substring 0, lossDate.indexOf(' ')
+
         @$el.html(@Mustache.render tpl_lh_container, resp)
 
         @removeLoader()
