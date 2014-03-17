@@ -1,5 +1,5 @@
 <!-- Product: FSIC HO3 Louisiana -->
-    <!-- source_file: html/fsic_ho3_la_3_xlsx_renew.rhtml  -->
+    <!-- source_file: html/fsic_ho3_la_0314_xlsx_renew.rhtml  -->
 <form action="renew" method="get" accept-charset="utf-8" class="collapsedSections">
     <div id="content">
         <div id="content_header">
@@ -21,12 +21,12 @@
         {{/policyOverview}}
 
 		<fieldset class="horizontalFields extraWide">
-			<h3>Premium Override <a data-alt-text="close">change</a></h3>
+			<h3>Hurricane Base Rate <a data-alt-text="close">change</a></h3>
 			<div class="collapsibleFieldContainer">
 				
 		<div>
-			<label for="{{guid}}_GrandSubtotalOverride" >Premium Before Fees <i>GrandSubtotalOverride</i></label>
-			<input type="text" id="{{guid}}_GrandSubtotalOverride" name="GrandSubtotalOverride" value="{{GrandSubtotalOverride}}"  readonly>
+			<label for="{{guid}}_HurricaneBaseRate" class="labelRequired">Hurricane Base Rate <i>HurricaneBaseRate</i></label>
+			<input type="text" id="{{guid}}_HurricaneBaseRate" name="HurricaneBaseRate" value="{{HurricaneBaseRate}}" required >
 		</div>
 
 			</div>
@@ -115,6 +115,17 @@
 				{{#EnumsCoverageF}}
 				<option value="{{value}}">{{label}}</option>
 				{{/EnumsCoverageF}}
+			</select>
+		</div>
+
+
+
+		<div>
+			<label for="{{guid}}_PriorCoverageE" >Personal or Premises Liability Limit on Prior Policy? <i>PriorCoverageE</i></label>
+			<select id="{{guid}}_PriorCoverageE" name="PriorCoverageE" data-value="{{PriorCoverageE}}"   >
+				{{#EnumsPriorCoverageE}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsPriorCoverageE}}
 			</select>
 		</div>
 
@@ -616,6 +627,357 @@
 		<div>
 			<label for="{{guid}}_DistanceToCoast" class="labelRequired">Distance To Primary Coastline <i>DistanceToCoast</i></label>
 			<input type="text" id="{{guid}}_DistanceToCoast" name="DistanceToCoast" value="{{DistanceToCoast}}" required >
+		</div>
+
+			</div>
+		</fieldset>
+
+		<fieldset class="horizontalFields extraWide">
+			<h3>Optional Coverages and Endorsements <a data-alt-text="close">change</a></h3>
+			<div class="collapsibleFieldContainer">
+				
+
+		<div>
+			<label for="{{guid}}_AdvantagePackageEndorsement" class="labelRequired">Advantage/Advantage Plus Coverage Endorsements <i>AdvantagePackageEndorsement</i></label>
+			<select id="{{guid}}_AdvantagePackageEndorsement" name="AdvantagePackageEndorsement" data-value="{{AdvantagePackageEndorsement}}"  required >
+				{{#EnumsAdvantagePackageEndorsement}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsAdvantagePackageEndorsement}}
+			</select>
+		</div>
+
+
+
+		<div>
+			<label for="{{guid}}_PersonalPropertyReplacementCost" class="labelRequired">Personal Property Replacement Cost <i>PersonalPropertyReplacementCost</i></label>
+			<select id="{{guid}}_PersonalPropertyReplacementCost" name="PersonalPropertyReplacementCost" data-value="{{PersonalPropertyReplacementCost}}"  required >
+				{{#EnumsPersonalPropertyReplacementCost}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsPersonalPropertyReplacementCost}}
+			</select>
+		</div>
+
+
+
+		<div>
+			<label for="{{guid}}_AdditionalAmountsOfInsurance" class="labelRequired">Increased Replacement Cost on Dwelling <i>AdditionalAmountsOfInsurance</i></label>
+			<select id="{{guid}}_AdditionalAmountsOfInsurance" name="AdditionalAmountsOfInsurance" data-value="{{AdditionalAmountsOfInsurance}}"  required >
+				{{#EnumsAdditionalAmountsOfInsurance}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsAdditionalAmountsOfInsurance}}
+			</select>
+		</div>
+
+
+
+		<div>
+			<label for="{{guid}}_IncreasedOrdinanceLimit" class="labelRequired">Increased Ordinance Or Law <i>IncreasedOrdinanceLimit</i></label>
+			<select id="{{guid}}_IncreasedOrdinanceLimit" name="IncreasedOrdinanceLimit" data-value="{{IncreasedOrdinanceLimit}}"  required >
+				{{#EnumsIncreasedOrdinanceLimit}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsIncreasedOrdinanceLimit}}
+			</select>
+		</div>
+
+
+
+		<div>
+			<label for="{{guid}}_LossAssessmentCoverage" class="labelRequired">Loss Assessment Coverage <i>LossAssessmentCoverage</i></label>
+			<select id="{{guid}}_LossAssessmentCoverage" name="LossAssessmentCoverage" data-value="{{LossAssessmentCoverage}}"  required >
+				{{#EnumsLossAssessmentCoverage}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsLossAssessmentCoverage}}
+			</select>
+		</div>
+
+
+
+		<div>
+			<label for="{{guid}}_IdentityFraudCoverage" class="labelRequired">Identity Fraud Expense Coverage <i>IdentityFraudCoverage</i></label>
+			<select id="{{guid}}_IdentityFraudCoverage" name="IdentityFraudCoverage" data-value="{{IdentityFraudCoverage}}"  required >
+				{{#EnumsIdentityFraudCoverage}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsIdentityFraudCoverage}}
+			</select>
+		</div>
+
+
+
+		<div>
+			<label for="{{guid}}_WaterBackupCoverage" class="labelRequired">Sewer/ Water Backup Coverage <i>WaterBackupCoverage</i></label>
+			<select id="{{guid}}_WaterBackupCoverage" name="WaterBackupCoverage" data-value="{{WaterBackupCoverage}}"  required >
+				{{#EnumsWaterBackupCoverage}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsWaterBackupCoverage}}
+			</select>
+		</div>
+
+
+
+		<div>
+			<label for="{{guid}}_PersonalInjuryCoverage" class="labelRequired">Personal Injury Liability <i>PersonalInjuryCoverage</i></label>
+			<select id="{{guid}}_PersonalInjuryCoverage" name="PersonalInjuryCoverage" data-value="{{PersonalInjuryCoverage}}"  required >
+				{{#EnumsPersonalInjuryCoverage}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsPersonalInjuryCoverage}}
+			</select>
+		</div>
+
+
+
+		<div>
+			<label for="{{guid}}_BusinessPropertyLimit" class="labelRequired">Business Property - Increased Limits <i>BusinessPropertyLimit</i></label>
+			<select id="{{guid}}_BusinessPropertyLimit" name="BusinessPropertyLimit" data-value="{{BusinessPropertyLimit}}"  required >
+				{{#EnumsBusinessPropertyLimit}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsBusinessPropertyLimit}}
+			</select>
+		</div>
+
+
+
+		<div>
+			<label for="{{guid}}_AnimalLiability" class="labelRequired">Limited Animal Liability <i>AnimalLiability</i></label>
+			<select id="{{guid}}_AnimalLiability" name="AnimalLiability" data-value="{{AnimalLiability}}"  required >
+				{{#EnumsAnimalLiability}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsAnimalLiability}}
+			</select>
+		</div>
+
+
+
+		<div>
+			<label for="{{guid}}_AssistedLivingCareCoverage" class="labelRequired">Assisted Living Care Coverage <i>AssistedLivingCareCoverage</i></label>
+			<select id="{{guid}}_AssistedLivingCareCoverage" name="AssistedLivingCareCoverage" data-value="{{AssistedLivingCareCoverage}}"  required >
+				{{#EnumsAssistedLivingCareCoverage}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsAssistedLivingCareCoverage}}
+			</select>
+		</div>
+
+
+		<div>
+			<label for="{{guid}}_AssistedLivingCareCoverageNumberOfNamedRelatives" >Number of Named Relatives <i>AssistedLivingCareCoverageNumberOfNamedRelatives</i></label>
+			<input type="text" id="{{guid}}_AssistedLivingCareCoverageNumberOfNamedRelatives" name="AssistedLivingCareCoverageNumberOfNamedRelatives" value="{{AssistedLivingCareCoverageNumberOfNamedRelatives}}"  >
+		</div>
+
+		<div>
+			<label for="{{guid}}_AssistedLivingCareCoverageNamedRelative1" >1st Named Relative <i>AssistedLivingCareCoverageNamedRelative1</i></label>
+			<input type="text" id="{{guid}}_AssistedLivingCareCoverageNamedRelative1" name="AssistedLivingCareCoverageNamedRelative1" value="{{AssistedLivingCareCoverageNamedRelative1}}"  >
+		</div>
+
+		<div>
+			<label for="{{guid}}_AssistedLivingCareCoverageNamedRelative2" >2nd Named Relative <i>AssistedLivingCareCoverageNamedRelative2</i></label>
+			<input type="text" id="{{guid}}_AssistedLivingCareCoverageNamedRelative2" name="AssistedLivingCareCoverageNamedRelative2" value="{{AssistedLivingCareCoverageNamedRelative2}}"  >
+		</div>
+
+		<div>
+			<label for="{{guid}}_AssistedLivingCareCoverageFacilityName" >Care Facility - Name <i>AssistedLivingCareCoverageFacilityName</i></label>
+			<input type="text" id="{{guid}}_AssistedLivingCareCoverageFacilityName" name="AssistedLivingCareCoverageFacilityName" value="{{AssistedLivingCareCoverageFacilityName}}"  >
+		</div>
+
+		<div>
+			<label for="{{guid}}_AssistedLivingCareCoverageFacilityAddressLine1" >Care Facility - Address Line 1 <i>AssistedLivingCareCoverageFacilityAddressLine1</i></label>
+			<input type="text" id="{{guid}}_AssistedLivingCareCoverageFacilityAddressLine1" name="AssistedLivingCareCoverageFacilityAddressLine1" value="{{AssistedLivingCareCoverageFacilityAddressLine1}}"  >
+		</div>
+
+		<div>
+			<label for="{{guid}}_AssistedLivingCareCoverageFacilityAddressLine2" >Care Facility - Address Line 2 <i>AssistedLivingCareCoverageFacilityAddressLine2</i></label>
+			<input type="text" id="{{guid}}_AssistedLivingCareCoverageFacilityAddressLine2" name="AssistedLivingCareCoverageFacilityAddressLine2" value="{{AssistedLivingCareCoverageFacilityAddressLine2}}"  >
+		</div>
+
+		<div>
+			<label for="{{guid}}_AssistedLivingCareCoverageFacilityAddressCity" >Care Facility - Address City <i>AssistedLivingCareCoverageFacilityAddressCity</i></label>
+			<input type="text" id="{{guid}}_AssistedLivingCareCoverageFacilityAddressCity" name="AssistedLivingCareCoverageFacilityAddressCity" value="{{AssistedLivingCareCoverageFacilityAddressCity}}"  >
+		</div>
+
+		<div>
+			<label for="{{guid}}_AssistedLivingCareCoverageFacilityAddressState" >Care Facility - Address State <i>AssistedLivingCareCoverageFacilityAddressState</i></label>
+			<input type="text" id="{{guid}}_AssistedLivingCareCoverageFacilityAddressState" name="AssistedLivingCareCoverageFacilityAddressState" value="{{AssistedLivingCareCoverageFacilityAddressState}}"  >
+		</div>
+
+		<div>
+			<label for="{{guid}}_AssistedLivingCareCoverageFacilityAddressZip" >Care Facility - Address Zip <i>AssistedLivingCareCoverageFacilityAddressZip</i></label>
+			<input type="text" id="{{guid}}_AssistedLivingCareCoverageFacilityAddressZip" name="AssistedLivingCareCoverageFacilityAddressZip" value="{{AssistedLivingCareCoverageFacilityAddressZip}}"  >
+		</div>
+
+
+		<div>
+			<label for="{{guid}}_GoldSpecialLimits" class="labelRequired">Special Limits - Silver/Gold/Pewter <i>GoldSpecialLimits</i></label>
+			<select id="{{guid}}_GoldSpecialLimits" name="GoldSpecialLimits" data-value="{{GoldSpecialLimits}}"  required >
+				{{#EnumsGoldSpecialLimits}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsGoldSpecialLimits}}
+			</select>
+		</div>
+
+
+
+		<div>
+			<label for="{{guid}}_JewelrySpecialLimits" class="labelRequired">Special Limits - Jewelry <i>JewelrySpecialLimits</i></label>
+			<select id="{{guid}}_JewelrySpecialLimits" name="JewelrySpecialLimits" data-value="{{JewelrySpecialLimits}}"  required >
+				{{#EnumsJewelrySpecialLimits}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsJewelrySpecialLimits}}
+			</select>
+		</div>
+
+
+
+		<div>
+			<label for="{{guid}}_FirearmsSpecialLimits" class="labelRequired">Special Limits -  Firearms <i>FirearmsSpecialLimits</i></label>
+			<select id="{{guid}}_FirearmsSpecialLimits" name="FirearmsSpecialLimits" data-value="{{FirearmsSpecialLimits}}"  required >
+				{{#EnumsFirearmsSpecialLimits}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsFirearmsSpecialLimits}}
+			</select>
+		</div>
+
+
+
+		<div>
+			<label for="{{guid}}_IncidentalBusinessOccupancy" class="labelRequired">Incidental Business Occupancy <i>IncidentalBusinessOccupancy</i></label>
+			<select id="{{guid}}_IncidentalBusinessOccupancy" name="IncidentalBusinessOccupancy" data-value="{{IncidentalBusinessOccupancy}}"  required >
+				{{#EnumsIncidentalBusinessOccupancy}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsIncidentalBusinessOccupancy}}
+			</select>
+		</div>
+
+
+		<div>
+			<label for="{{guid}}_IncidentalBusinessOccupancyType" >Business Type <i>IncidentalBusinessOccupancyType</i></label>
+			<input type="text" id="{{guid}}_IncidentalBusinessOccupancyType" name="IncidentalBusinessOccupancyType" value="{{IncidentalBusinessOccupancyType}}"  >
+		</div>
+
+
+		<div>
+			<label for="{{guid}}_IncidentalBusinessOccupancyLocation" >Business Location <i>IncidentalBusinessOccupancyLocation</i></label>
+			<select id="{{guid}}_IncidentalBusinessOccupancyLocation" name="IncidentalBusinessOccupancyLocation" data-value="{{IncidentalBusinessOccupancyLocation}}"   >
+				{{#EnumsIncidentalBusinessOccupancyLocation}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsIncidentalBusinessOccupancyLocation}}
+			</select>
+		</div>
+
+
+		<div>
+			<label for="{{guid}}_IncidentalBusinessOccupancyDescription" >Business Description <i>IncidentalBusinessOccupancyDescription</i></label>
+			<input type="text" id="{{guid}}_IncidentalBusinessOccupancyDescription" name="IncidentalBusinessOccupancyDescription" value="{{IncidentalBusinessOccupancyDescription}}"  >
+		</div>
+
+
+		<div>
+			<label for="{{guid}}_ClientTraffic" class="labelRequired">Any employees, client traffic or products on the premises? <i>ClientTraffic</i></label>
+			<select id="{{guid}}_ClientTraffic" name="ClientTraffic" data-value="{{ClientTraffic}}"  required >
+				{{#EnumsClientTraffic}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsClientTraffic}}
+			</select>
+		</div>
+
+
+
+		<div>
+			<label for="{{guid}}_ResidenceEmployees" class="labelRequired">More than 2 residence employees? <i>ResidenceEmployees</i></label>
+			<select id="{{guid}}_ResidenceEmployees" name="ResidenceEmployees" data-value="{{ResidenceEmployees}}"  required >
+				{{#EnumsResidenceEmployees}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsResidenceEmployees}}
+			</select>
+		</div>
+
+
+
+		<div>
+			<label for="{{guid}}_SpecialComputerCoverage" class="labelRequired">Home Computer Coverage <i>SpecialComputerCoverage</i></label>
+			<select id="{{guid}}_SpecialComputerCoverage" name="SpecialComputerCoverage" data-value="{{SpecialComputerCoverage}}"  required >
+				{{#EnumsSpecialComputerCoverage}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsSpecialComputerCoverage}}
+			</select>
+		</div>
+
+
+
+		<div>
+			<label for="{{guid}}_MechanicalBreakdownCoverage" class="labelRequired">Equipment Breakdown Coverage <i>MechanicalBreakdownCoverage</i></label>
+			<select id="{{guid}}_MechanicalBreakdownCoverage" name="MechanicalBreakdownCoverage" data-value="{{MechanicalBreakdownCoverage}}"  required >
+				{{#EnumsMechanicalBreakdownCoverage}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsMechanicalBreakdownCoverage}}
+			</select>
+		</div>
+
+
+
+		<div>
+			<label for="{{guid}}_NonStructuralHailLossLimitation" class="labelRequired">Non-Structural Hail Loss Limitation <i>NonStructuralHailLossLimitation</i></label>
+			<select id="{{guid}}_NonStructuralHailLossLimitation" name="NonStructuralHailLossLimitation" data-value="{{NonStructuralHailLossLimitation}}"  required >
+				{{#EnumsNonStructuralHailLossLimitation}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsNonStructuralHailLossLimitation}}
+			</select>
+		</div>
+
+
+
+		<div>
+			<label for="{{guid}}_PersonalPropertyOtherResidences" class="labelRequired">Personal Property Other Residences <i>PersonalPropertyOtherResidences</i></label>
+			<select id="{{guid}}_PersonalPropertyOtherResidences" name="PersonalPropertyOtherResidences" data-value="{{PersonalPropertyOtherResidences}}"  required >
+				{{#EnumsPersonalPropertyOtherResidences}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsPersonalPropertyOtherResidences}}
+			</select>
+		</div>
+
+
+
+		<div>
+			<label for="{{guid}}_PersonalPropertyOtherResidencesIncreasedLimit" >Personal Property Other Residences Increased Limit <i>PersonalPropertyOtherResidencesIncreasedLimit</i></label>
+			<select id="{{guid}}_PersonalPropertyOtherResidencesIncreasedLimit" name="PersonalPropertyOtherResidencesIncreasedLimit" data-value="{{PersonalPropertyOtherResidencesIncreasedLimit}}"   >
+				{{#EnumsPersonalPropertyOtherResidencesIncreasedLimit}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsPersonalPropertyOtherResidencesIncreasedLimit}}
+			</select>
+		</div>
+
+
+
+		<div>
+			<label for="{{guid}}_NumberOfInsuredOtherMembers" class="labelRequired">Insured Other Members of Your Household <i>NumberOfInsuredOtherMembers</i></label>
+			<select id="{{guid}}_NumberOfInsuredOtherMembers" name="NumberOfInsuredOtherMembers" data-value="{{NumberOfInsuredOtherMembers}}"  required >
+				{{#EnumsNumberOfInsuredOtherMembers}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsNumberOfInsuredOtherMembers}}
+			</select>
+		</div>
+
+
+		<div>
+			<label for="{{guid}}_InsuredOtherMember1Name" >1st Insured Other Member Name <i>InsuredOtherMember1Name</i></label>
+			<input type="text" id="{{guid}}_InsuredOtherMember1Name" name="InsuredOtherMember1Name" value="{{InsuredOtherMember1Name}}"  >
+		</div>
+
+		<div>
+			<label for="{{guid}}_InsuredOtherMember2Name" >2nd Insured Other Member Name <i>InsuredOtherMember2Name</i></label>
+			<input type="text" id="{{guid}}_InsuredOtherMember2Name" name="InsuredOtherMember2Name" value="{{InsuredOtherMember2Name}}"  >
+		</div>
+
+		<div>
+			<label for="{{guid}}_InsuredOtherMember3Name" >3rd Insured Other Member Name <i>InsuredOtherMember3Name</i></label>
+			<input type="text" id="{{guid}}_InsuredOtherMember3Name" name="InsuredOtherMember3Name" value="{{InsuredOtherMember3Name}}"  >
+		</div>
+
+		<div>
+			<label for="{{guid}}_InsuredOtherMember4Name" >4th Insured Other Member Name <i>InsuredOtherMember4Name</i></label>
+			<input type="text" id="{{guid}}_InsuredOtherMember4Name" name="InsuredOtherMember4Name" value="{{InsuredOtherMember4Name}}"  >
+		</div>
+
+		<div>
+			<label for="{{guid}}_InsuredOtherMember4Name" >5th Insured Other Member Name <i>InsuredOtherMember4Name</i></label>
+			<input type="text" id="{{guid}}_InsuredOtherMember4Name" name="InsuredOtherMember4Name" value="{{InsuredOtherMember4Name}}"  >
 		</div>
 
 			</div>
