@@ -1,5 +1,5 @@
 <!-- Endorse OFCC HO3 New York -->
-	<!-- source_file: html/ofc_ho3_ny_endorse_032414_xlsx_endorse.rhtml  -->
+	<!-- source_file: html/ofc_ho3_ny_4_xlsx_endorse.rhtml  -->
 <form action="endorse" method="get" accept-charset="utf-8" class="collapsedSections">
     <div id="content">
 
@@ -129,10 +129,16 @@
 		</div>
 
 
+
 		<div>
-			<label for="{{guid}}_DistanceToFireDepartment" class="labelRequired">Miles to Primary Responding Fire Station <i>DistanceToFireDepartment</i></label>
-			<input type="text" id="{{guid}}_DistanceToFireDepartment" name="DistanceToFireDepartment" value="{{DistanceToFireDepartment}}" required >
+			<label for="{{guid}}_DistanceFireStation" class="labelRequired">Miles to Primary Responding Fire Station <i>DistanceFireStation</i></label>
+			<select id="{{guid}}_DistanceFireStation" name="DistanceFireStation" data-value="{{DistanceFireStation}}"  required >
+				{{#EnumsDistanceFireStation}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsDistanceFireStation}}
+			</select>
 		</div>
+
 
 
 		<div>
@@ -197,11 +203,6 @@
 
 		<fieldset>
 				<legend id="{{guid}}_basic_coverage___deductible_options">Basic Coverage & Deductible Options</legend>				
-		<div>
-			<label for="{{guid}}_ReplacementCostBuilding" class="labelRequired">Replacement Cost Of Dwelling <i>ReplacementCostBuilding</i></label>
-			<input type="text" id="{{guid}}_ReplacementCostBuilding" name="ReplacementCostBuilding" value="{{ReplacementCostBuilding}}" required >
-		</div>
-
 		<div>
 			<label for="{{guid}}_CoverageA" class="labelRequired">Coverage A <i>CoverageA</i></label>
 			<input type="text" id="{{guid}}_CoverageA" name="CoverageA" value="{{CoverageA}}" required >
@@ -1019,33 +1020,11 @@
 				
 
 		<div>
-			<label for="{{guid}}_PersonalPropertyReplacementCost" class="labelRequired">Personal Property Replacement Cost <i>PersonalPropertyReplacementCost</i></label>
-			<select id="{{guid}}_PersonalPropertyReplacementCost" name="PersonalPropertyReplacementCost" data-value="{{PersonalPropertyReplacementCost}}"  required >
-				{{#EnumsPersonalPropertyReplacementCost}}
-				<option value="{{value}}">{{label}}</option>
-				{{/EnumsPersonalPropertyReplacementCost}}
-			</select>
-		</div>
-
-
-
-		<div>
 			<label for="{{guid}}_FunctionalReplacementCost" class="labelRequired">Functional Replacement Cost For Dwelling <i>FunctionalReplacementCost</i></label>
 			<select id="{{guid}}_FunctionalReplacementCost" name="FunctionalReplacementCost" data-value="{{FunctionalReplacementCost}}"  required >
 				{{#EnumsFunctionalReplacementCost}}
 				<option value="{{value}}">{{label}}</option>
 				{{/EnumsFunctionalReplacementCost}}
-			</select>
-		</div>
-
-
-
-		<div>
-			<label for="{{guid}}_AdditionalAmountsOfInsurance" class="labelRequired">Dwelling Additional Amounts Of Insurance <i>AdditionalAmountsOfInsurance</i></label>
-			<select id="{{guid}}_AdditionalAmountsOfInsurance" name="AdditionalAmountsOfInsurance" data-value="{{AdditionalAmountsOfInsurance}}"  required >
-				{{#EnumsAdditionalAmountsOfInsurance}}
-				<option value="{{value}}">{{label}}</option>
-				{{/EnumsAdditionalAmountsOfInsurance}}
 			</select>
 		</div>
 
