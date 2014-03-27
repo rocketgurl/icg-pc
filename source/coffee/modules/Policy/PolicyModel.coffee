@@ -37,9 +37,12 @@ define [
       # Explicitly bind 'private' composable functions to this object
       # scope. These functions are _.composed() into other functions and
       # need their scope forced
-      for f in ['getFirstValue', 'getIdentifierArray', 'checkNull', 'baseGetIntervalsOfTerm', 'baseGetCustomerData']
-        @[f] = _.bind @[f], this
-
+      _.bindAll(this,
+                'getFirstValue',
+                'getIdentifierArray',
+                'checkNull',
+                'baseGetIntervalsOfTerm',
+                'baseGetCustomerData')
 
     # Does the actual partial application
     applyFunctions : (model, options) ->
