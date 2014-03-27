@@ -662,6 +662,24 @@
                             <label for="{{guid}}_PropertyHazardLocationLastUpdated" class="labelRequired">Property Hazard Update <i>PropertyHazardLocationLastUpdated</i></label>
                             <input type="text" id="{{guid}}_PropertyHazardLocationLastUpdated" name="PropertyHazardLocationLastUpdated" value="{{PropertyHazardLocationLastUpdated}}" class="datepicker" data-year-range="-100:+0" required>
                         </div>
+
+                        <div>
+                            <label for="{{guid}}_ProtectionClassRating">Protection Class (New) <i>ProtectionClassRating</i></label>
+                            <select id="{{guid}}_ProtectionClassRating" name="ProtectionClassRating" data-value="{{ProtectionClassRating}}" >
+                                {{#EnumsProtectionClassRating}}
+                                <option value="{{value}}">{{label}}</option>
+                                {{/EnumsProtectionClassRating}}
+                            </select>
+                        </div>
+
+                        <div>
+                            <label for="{{guid}}_ProtectionClass">Protection Class (Old) <i>ProtectionClass</i></label>
+                            <select id="{{guid}}_ProtectionClass" name="ProtectionClass" data-value="{{ProtectionClass}}" >
+                                {{#EnumsProtectionClass}}
+                                <option value="{{value}}">{{label}}</option>
+                                {{/EnumsProtectionClass}}
+                            </select>
+                        </div>
                     </fieldset>
                 </div>
             </fieldset>
