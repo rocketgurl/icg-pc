@@ -29,10 +29,10 @@ define [
       @use_xml() # Use CrippledClient XMLSync
 
       # When the model is loaded, make sure its state is current
-      @on 'change', (e) ->
-        e.setModelState()
-        e.get_pxServerIndex()
-        e.applyFunctions()
+      @on 'change', (model) ->
+        model.setModelState()
+        model.get_pxServerIndex()
+        model.applyFunctions()
 
       # Explicitly bind 'private' composable functions to this object
       # scope. These functions are _.composed() into other functions and
