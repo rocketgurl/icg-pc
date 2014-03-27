@@ -129,7 +129,7 @@ define [
           carrier : @getModelProperty('Management Carrier')
 
       #ICS-2446
-      pcFlag = @find('Management Flags Flag[name=PendingCancellation]')
+      pcFlag = @find?('Management Flags Flag[name=PendingCancellation]')
       if pcFlag? 
         ipm_header.status = 'Pending Cancellation'
      
