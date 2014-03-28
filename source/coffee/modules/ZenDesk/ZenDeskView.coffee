@@ -21,7 +21,7 @@ define [
       policyQuery = @policy.getPolicyId()
       #ICS-2486 - remove the final two digits (representing the term) so we can grab all tickets
       if policyQuery.length > 2
-        policyQuery = @policy.getPolicyId().substring(0,@policy.getPolicyId().length-2)
+        policyQuery = policyQuery.substring(0, policyQuery.length-2)
         
       @fetch_tickets(policyQuery)
 
