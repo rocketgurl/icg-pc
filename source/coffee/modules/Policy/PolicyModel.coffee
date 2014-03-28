@@ -553,23 +553,27 @@ define [
 
     # **Set a variety of properties on the model based on XML policy data**
     setModelState : ->
-      if @get('document')? || @get('document') != undefined
-        @set('state', @getState())
-        @set('quote', @isQuote())
-        @set('pendingCancel', @isPendingCancel())
-        @set('cancellationEffectiveDate', @getCancellationEffectiveDate())
-        @set('cancelled', @isCancelled())
-        @set('terms', @getTerms())
-        @set('firstTerm', @getFirstTerm())
-        @set('lastInterval', @getLastInterval())
-        @set('insuredData', @getCustomerData('Insured'))
-        @set('mortgageeData', @getCustomerData('Mortgagee'))
-        @set('additionalInterestData', @getCustomerData('AdditionalInterest'))
-        @set('productName', @getProductName())
-        @set('insight_id', @getIdentifier('InsightPolicyId'))
-        @set('isIssued', @isIssued())
-        @set('effectiveDate', @getEffectiveDate())
-        @set('expirationDate', @getExpirationDate())
-        @set('version', @getPolicyVersion())
+      if @get('document')?.length
+        @set(
+          'state': @getState(),
+          'quote': @isQuote(),
+          'pendingCancel': @isPendingCancel(),
+          'cancellationEffectiveDate': @getCancellationEffectiveDate(),
+          'cancelled': @isCancelled(),
+          'terms': @getTerms(),
+          'firstTerm': @getFirstTerm(),
+          'lastInterval': @getLastInterval(),
+          'insuredData': @getCustomerData('Insured'),
+          'mortgageeData': @getCustomerData('Mortgagee'),
+          'additionalInterestData': @getCustomerData('AdditionalInterest'),
+          'productName': @getProductName(),
+          'insightId': @getIdentifier('InsightPolicyId'),
+          'policyId': @getPolicyId(),
+          'policyPrefix': @getPolicyPrefix(),
+          'isIssued': @isIssued(),
+          'effectiveDate': @getEffectiveDate(),
+          'expirationDate': @getExpirationDate(),
+          'version': @getPolicyVersion()
+          )
 
   PolicyModel
