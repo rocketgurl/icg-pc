@@ -113,9 +113,13 @@ define [
 
     # **Return the full policy id taken from the XML**
     # @return _String_
-    getPolicyId: ->
-      id = @getIdentifier('PolicyID')
+    getPolicyId : ->
+      id = @get('policyId') ? @getIdentifier('PolicyID')
       if id then id else ''
+
+    getPolicyPrefix : ->
+      pid = @getPolicyId()
+      pid.substring(0, 3)
 
     # **Build an object containing information for the IPM header**
     # @return _Object_
