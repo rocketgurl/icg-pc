@@ -56,7 +56,7 @@ define [
       values.formValues = @processDateFields(values.formValues)
 
       context =
-        id            : policy.get 'insight_id'
+        id            : policy.get 'insightId'
         user          : user.get 'email'
         version       : @getPolicyVersion()
         timestamp     : values.formValues.timestamp || Helpers.makeTimestamp()
@@ -157,7 +157,7 @@ define [
       values.formValues = @processChangeFields(values.formValues)
 
       context =
-        id            : policy.get 'insight_id'
+        id            : policy.get 'insightId'
         user          : user.get 'email'
         version       : policy.getValueByPath('Management Version')
         timestamp     : values.formValues.timestamp || Helpers.makeTimestamp()
