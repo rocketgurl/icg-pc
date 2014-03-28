@@ -44,11 +44,14 @@ define [
                             i[pos] if (pos != -1))
 
       view_data.additionalInsured = _.map(_.values(grouped), (g, idx) ->
-        field_values = _.map(g, (v) -> t = view_data[v]; delete view_data[v]; t)
-        o = _.object(g, field_values)
+        item_prefix = "AdditionalInsured#{idx+1}"
+        field_keys = _.map(g, (k) -> k.replace(item_prefix, '') )
+        field_values = _.map(g, (v) -> view_data[v])
+        o = _.object(field_keys, field_values)
         o.number = idx + 1
-        o.itemPrefix = "AdditionalInsured#{idx+1}"
-        o)
+        o.itemPrefix = item_prefix
+        o
+      )
 
     # **Build a viewData object to populate the template form with**
     #

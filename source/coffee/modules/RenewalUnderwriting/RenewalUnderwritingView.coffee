@@ -287,11 +287,13 @@ define [
 
       # Normalize dates
       for field in ['reviewPeriod', 'reviewDeadline']
-        resp.renewal[field] = _.trim resp.renewal[field].replace(/00:00:00.0/g,'')
+        if resp.renewal[field]?
+          resp.renewal[field] = _.trim resp.renewal[field].replace(/00:00:00.0/g,'')
 
       # Remove quotes from scores (per Terry)
       for field in ['newInsuranceScore', 'oldInsuranceScore']
-        resp.insuranceScore[field] = resp.insuranceScore[field].replace(/'|"/g,'')
+        if resp.insuranceScore[field]?
+          resp.insuranceScore[field] = resp.insuranceScore[field].replace(/'|"/g,'')
 
       resp
 
@@ -433,6 +435,13 @@ define [
         # walk the response and adjust information to match the view
         resp = @processRenewalResponse(resp)
 
+        if resp.lossHistoryFlag == true 
+          for lossRecord in resp.lossHistory
+            do (lossRecord) -> 
+              lossDate = lossRecord.lossDate
+              if lossDate.indexOf(' ') != -1
+                lossRecord.lossDate = lossDate.substring 0, lossDate.indexOf(' ')
+            
         @$el.html(@Mustache.render tpl_ru_container, resp)
 
         @removeLoader()

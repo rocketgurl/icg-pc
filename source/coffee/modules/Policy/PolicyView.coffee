@@ -7,13 +7,15 @@ define [
   'text!modules/Policy/templates/tpl_policy_container.html',
   'text!modules/Policy/templates/tpl_policy_error.html',
   'text!modules/Policy/templates/tpl_ipm_header.html',
+  'text!modules/Policy/templates/tpl_ipm_header_pc.html',
   'text!modules/RenewalUnderwriting/templates/tpl_renewal_underwriting_wrapper.html',
+  'text!modules/LossHistory/templates/tpl_loss_history_wrapper.html',
   'modules/IPM/IPMModule',
   'modules/ZenDesk/ZenDeskView',
   'modules/PolicyRepresentation/PolicyRepresentationView',
-  'modules/Quoting/QuotingModule'
-], (BaseView, Messenger, Base64, RenewalUnderwritingView, swfobject, tpl_policy_container, tpl_policy_error, tpl_ipm_header, tpl_ru_wrapper, IPMModule, ZenDeskView, PolicyRepresentationView, QuotingModule) ->
-
+  'modules/Quoting/QuotingModule',
+  'modules/LossHistory/LossHistoryView' 
+], (BaseView, Messenger, Base64, RenewalUnderwritingView, swfobject, tpl_policy_container, tpl_policy_error, tpl_ipm_header, tpl_ipm_header_pc, tpl_ru_wrapper, tpl_lh_wrapper, IPMModule, ZenDeskView, PolicyRepresentationView, QuotingModule, LossHistoryView) ->
   PolicyView = BaseView.extend
 
     events :
@@ -148,7 +150,7 @@ define [
       # We hide a few actions if this is a quote
       hide_actions = []
       if @model.isQuote()
-        for action in ['renewalunderwriting', 'servicerequests']
+        for action in ['renewalunderwriting', 'servicerequests', 'losshistory']
           @$el.find(".policy-nav a[href=#{action}]").parent('li').hide()
       else
         @$el.find(".policy-nav a[href=quoting]").parent('li').hide()
@@ -241,8 +243,14 @@ define [
     # If the policy_header doesn't exist then build it, otherwise
     # just make visible
     build_policy_header : ->
+      
+      #ICS-2446
+      ipm_header = @model.getIpmHeader()
       if @policy_header.html() == ""
-        @policy_header.html @Mustache.render tpl_ipm_header, @model.getIpmHeader()
+        if ipm_header.status?
+          @policy_header.html @Mustache.render tpl_ipm_header_pc, ipm_header
+        else
+          @policy_header.html @Mustache.render tpl_ipm_header, ipm_header
 
       # ICS-1641
       if @model.isQuote()
@@ -466,5 +474,24 @@ define [
 
     teardown_policyrepresentations : ->
       @hideViewContainer 'policyrep'
+
+    # Load Loss History Views
+    show_losshistory : ->
+      content = @Mustache.render tpl_lh_wrapper, { cid : @cid }
+      $lh_el = @createViewContainer('loss-history', null, content)
+
+      # If container not already loaded, then insert element into DOM
+      if @lh_container == null || @lh_container == undefined
+        @lh_container = new LossHistoryView({
+            $el         : $lh_el
+            policy      : @model
+            policy_view : this
+          }).render()
+      else
+        @resize_workspace(@lh_container.$el, null)
+        @show_element $lh_el
+
+    teardown_losshistory : ->
+      @hideViewContainer 'loss-history'
 
   PolicyView
