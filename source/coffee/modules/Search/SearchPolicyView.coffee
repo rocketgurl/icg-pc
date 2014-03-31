@@ -60,9 +60,11 @@ define [
       last_name = @model.get('insured').lastName || ""
 
       # Setup the params object to launch policy view with
+      if identifiers.policyId? then policyLabel = identifiers.policyId else policyLabel = identifiers.quoteNumber 
+      
       params =
         url     : identifiers.quoteNumber
-        label : last_name + " " + identifiers.policyId
+        label : last_name + " " + policyLabel
 
       @module.view.options.controller.launch_module 'policyview', params
       @module.view.options.controller.Router.append_module 'policyview', params
