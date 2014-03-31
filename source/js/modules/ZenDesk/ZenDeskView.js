@@ -14,9 +14,7 @@
         var policyQuery;
         this.show();
         policyQuery = this.policy.getPolicyId();
-        if (policyQuery.length > 2) {
-          policyQuery = policyQuery.substring(0, policyQuery.length - 2);
-        }
+        policyQuery = policyQuery.substring(0, policyQuery.length - 2);
         return this.fetch_tickets(policyQuery);
       },
       render: function() {
