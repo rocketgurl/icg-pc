@@ -19,6 +19,12 @@ define [
       EXPIRED_QUOTE      : 'EXPIREDQUOTE',
       NON_RENEWED_POLICY : 'NONRENEWEDPOLICY'
 
+    # Any products that have name conflicts
+    # Where the first 3 identifiers aren't enough
+    PRODUCT_COLLISIONS : [
+      'OFCC-HO3-LA'
+    ]
+
     # Setup model
     # -----------
     # Notice the forced binding in initialize() - this aids
@@ -349,19 +355,22 @@ define [
     # **Derive the product name from policy information**
     # @return _String_
     getProductName : ->
-      terms = @getLastTerm()
+      name = @get('productName')
+      unless name?
+        terms = @getLastTerm()
 
-      # CRU4 return DataItem objs directly, in CRU6 we have to go
-      # searching through Intervals to find the correct DataItem obj
-      if terms.DataItem?
-        terms = terms.DataItem
-      else if terms.Intervals?.Interval?
-        if _.isArray(terms.Intervals.Interval)
-          terms = terms.Intervals.Interval[0].DataItem
-        else
-          terms = terms.Intervals.Interval.DataItem
+        # CRU4 return DataItem objs directly, in CRU6 we have to go
+        # searching through Intervals to find the correct DataItem obj
+        if terms.DataItem?
+          terms = terms.DataItem
+        else if terms.Intervals?.Interval?
+          if _.isArray(terms.Intervals.Interval)
+            terms = terms.Intervals.Interval[0].DataItem
+          else
+            terms = terms.Intervals.Interval.DataItem
 
-      name  = "#{@getDataItem(terms, 'Program')}-#{@getDataItem(terms, 'PolicyType')}-#{@getDataItem(terms, 'PropertyState')}"
+        name = "#{@getDataItem(terms, 'Program')}-#{@getDataItem(terms, 'PolicyType')}-#{@getDataItem(terms, 'PropertyState')}"
+        name = @_resolveProductNameCollision(name)
       name.toLowerCase()
 
     # **Find <Identifier> by name and return value or false**
@@ -384,6 +393,18 @@ define [
         issued = _.findWhere(@get('json').EventHistory.Event, { type : 'Issue' })
         return _.isObject issued
       false
+
+    # ICS-2475: Products with naming collisions,
+    # as defined in the @product_collisions list
+    #
+    # @param `product_name` _String_
+    # @return _String_ the product name with policy prefix appended
+    _resolveProductNameCollision : (product_name) ->
+      if product_name in @PRODUCT_COLLISIONS
+        policy_prefix = @get('policyPrefix') ? @getPolicyPrefix()
+        product_name += '-' + policy_prefix
+      product_name
+
 
     # **TODO: MOVE INTO HELPER MIXIN**
     # Some date strings we'll be dealing with are formatted with a full
