@@ -1,5 +1,5 @@
 <!-- Product: FSIC DP3 Louisiana -->
-<form action="change_customer" method="get" accept-charset="utf-8" class="collapsedSections">
+    <form action="change_customer" method="get" accept-charset="utf-8" class="collapsedSections">
     <div id="content">
         <div id="content_header">
             <h2>Change Customer for Policy {{policyId}}</h2>
@@ -134,6 +134,14 @@
                     <fieldset>
                         <legend>Name</legend>
                         <div>
+                            <label for="{{guid}}_InsuredByCorporation" class="labelRequired">Insured by Corporation, Partnership, etc.? <i>InsuredByCorporation</i></label>
+                            <select id="{{guid}}_InsuredByCorporation" name="InsuredByCorporation" required>
+                                {{#EnumsInsuredByCorporation}}
+                                <option value="{{value}}">{{label}}</option>
+                                {{/EnumsInsuredByCorporation}}
+                            </select>
+                        </div>
+                        <div>
                             <label for="{{guid}}_InsuredFirstName" class="labelRequired">First <i>InsuredFirstName</i></label>
                             <input type="text" id="{{guid}}_InsuredFirstName" name="InsuredFirstName" value="{{InsuredFirstName}}" required>
                         </div>
@@ -144,6 +152,10 @@
                         <div>
                             <label for="{{guid}}_InsuredLastName" class="labelRequired">Last <i>InsuredLastName</i></label>
                             <input type="text" id="{{guid}}_InsuredLastName" name="InsuredLastName" value="{{InsuredLastName}}" required>
+                        </div>
+                        <div>
+                            <label for="{{guid}}_InsuredName" class="labelRequired">Insured Name <i>InsuredName</i></label>
+                            <input type="text" id="{{guid}}_InsuredName" name="InsuredName" value="{{InsuredName}}" required>
                         </div>
                     </fieldset>
 
@@ -416,3 +428,4 @@
         </div>
     </div>
 </form>
+

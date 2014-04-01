@@ -67,7 +67,7 @@ define [
       templateName = "generate_document-#{@MODULE.POLICY.get('productName')}"
 
       @values.formValues.generating    = true
-      @values.formValues.policyId      = @MODULE.POLICY.get 'insight_id'
+      @values.formValues.policyId      = @MODULE.POLICY.get 'insightId'
       @values.formValues.documentId    = "#{@CURRENT_ACTION.type}-#{idStamp}"
       @values.formValues.documentType  = @CURRENT_ACTION.type
       @values.formValues.documentLabel = @CURRENT_ACTION.label
