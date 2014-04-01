@@ -146,7 +146,7 @@ define [
 
       #ICS-2446
       pcFlag = @find?('Management Flags Flag[name=PendingCancellation]')
-      if pcFlag? 
+      if pcFlag?
         ipm_header.status = 'Pending Cancellation'
      
       # ICS-1641
@@ -372,7 +372,11 @@ define [
           else
             terms = terms.Intervals.Interval.DataItem
 
-        name = "#{@getDataItem(terms, 'Program')}-#{@getDataItem(terms, 'PolicyType')}-#{@getDataItem(terms, 'PropertyState')}"
+
+        program        = @getDataItem terms, 'Program'
+        policy_type    = @getDataItem terms, 'PolicyType'
+        property_state = @getDataItem terms, 'PropertyState'
+        name = "#{program}-#{policy_type}-#{property_state}"
         name = @_resolveProductNameCollision(name).toLowerCase()
       name
 
