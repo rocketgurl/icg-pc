@@ -60,7 +60,7 @@ define [
       last_name = @model.get('insured').lastName || ""
 
       # Setup the params object to launch policy view with
-      if identifiers.policyId? then policyLabel = identifiers.policyId else policyLabel = identifiers.quoteNumber 
+      policyLabel = identifiers.policyId ? identifiers.quoteNumber 
       
       params =
         url     : identifiers.quoteNumber
