@@ -1188,10 +1188,16 @@
 		</div>
 
 
+
 		<div>
 			<label for="{{guid}}_IncidentalBusinessOccupancy" >Incidental Business Occupancy <i>IncidentalBusinessOccupancy</i></label>
-			<input type="text" id="{{guid}}_IncidentalBusinessOccupancy" name="IncidentalBusinessOccupancy" value="{{IncidentalBusinessOccupancy}}"  >
+			<select id="{{guid}}_IncidentalBusinessOccupancy" name="IncidentalBusinessOccupancy" data-value="{{IncidentalBusinessOccupancy}}"   >
+				{{#EnumsIncidentalBusinessOccupancy}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsIncidentalBusinessOccupancy}}
+			</select>
 		</div>
+
 
 		<div>
 			<label for="{{guid}}_IncidentalBusinessOccupancyType" >Business Type <i>IncidentalBusinessOccupancyType</i></label>
