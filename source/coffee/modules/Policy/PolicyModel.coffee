@@ -372,7 +372,6 @@ define [
           else
             terms = terms.Intervals.Interval.DataItem
 
-
         program        = @getDataItem terms, 'Program'
         policy_type    = @getDataItem terms, 'PolicyType'
         property_state = @getDataItem terms, 'PropertyState'
