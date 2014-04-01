@@ -400,8 +400,8 @@ define [
         return _.isObject issued
       false
 
-    # ICS-2475: Products with naming collisions,
-    # as defined in the @product_collisions list
+    # **Products with naming collisions (ICS-2475)**
+    # as defined in the @PRODUCT_COLLISIONS list
     #
     # @param `product_name` _String_
     # @return _String_ the product name with policy prefix appended
