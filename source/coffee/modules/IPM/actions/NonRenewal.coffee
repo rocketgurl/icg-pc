@@ -259,7 +259,7 @@ define [
         transactionType : @values.formValues.transactionType
         reasonCode      : @values.formValues.reasonCode
         user            : @MODULE.USER.get 'email'
-        id              : @MODULE.POLICY.get 'insight_id'
+        id              : @MODULE.POLICY.get 'insightId'
         version         : @ChangeSet.getPolicyVersion()
 
       xml = Mustache.render @XML_TEMPLATE, context
