@@ -120,12 +120,15 @@ define [
     # **Return the full policy id taken from the XML**
     # @return _String_
     getPolicyId : ->
-      id = @get('policyId') ? @getIdentifier('PolicyID')
+      id = @getIdentifier('PolicyID')
       if id then id else ''
 
     getPolicyPrefix : ->
-      pid = @getPolicyId()
-      pid.substring(0, 3)
+      prefix = @get('policyPrefix')
+      unless prefix?
+        id = @getPolicyId()
+        prefix = id.substring(0, 3)
+      prefix
 
     # **Build an object containing information for the IPM header**
     # @return _Object_
@@ -370,8 +373,8 @@ define [
             terms = terms.Intervals.Interval.DataItem
 
         name = "#{@getDataItem(terms, 'Program')}-#{@getDataItem(terms, 'PolicyType')}-#{@getDataItem(terms, 'PropertyState')}"
-        name = @_resolveProductNameCollision(name)
-      name.toLowerCase()
+        name = @_resolveProductNameCollision(name).toLowerCase()
+      name
 
     # **Find <Identifier> by name and return value or false**
     # @param `name` _String_ name attr of element
@@ -402,7 +405,7 @@ define [
     _resolveProductNameCollision : (product_name) ->
       if product_name in @PRODUCT_COLLISIONS
         policy_prefix = @get('policyPrefix') ? @getPolicyPrefix()
-        product_name += '-' + policy_prefix
+        product_name = "#{product_name}-#{policy_prefix}"
       product_name
 
 
