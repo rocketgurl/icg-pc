@@ -605,6 +605,7 @@ define [
           'mortgageeData': @getCustomerData('Mortgagee'),
           'additionalInterestData': @getCustomerData('AdditionalInterest'),
           'productName': @getProductName(),
+          'policyPrefix': @getPolicyPrefix(),
           'insightId': @getIdentifier('InsightPolicyId'),
           'policyId': @getPolicyId(),
           'isIssued': @isIssued(),
