@@ -25,6 +25,10 @@ define [
       'OFCC-HO3-LA'
     ]
 
+    SPECIAL_PROGRAMS : [
+      'LAP'
+    ]
+
     # Setup model
     # -----------
     # Notice the forced binding in initialize() - this aids
@@ -402,13 +406,16 @@ define [
 
     # **Products with naming collisions (ICS-2475)**
     # as defined in the @PRODUCT_COLLISIONS list
+    # only augment product name if the policy prefix is
+    # in the list of @SPECIAL_PROGRAMS
     #
     # @param `product_name` _String_
-    # @return _String_ the product name with policy prefix appended
+    # @return _String_ the product name, modified or not
     _resolveProductNameCollision : (product_name) ->
       if product_name in @PRODUCT_COLLISIONS
-        policy_prefix = @get('policyPrefix') ? @getPolicyPrefix()
-        product_name = "#{product_name}-#{policy_prefix}"
+        policy_prefix = @getPolicyPrefix()
+        if policy_prefix in @SPECIAL_PROGRAMS
+          product_name = "#{product_name}-#{policy_prefix}"
       product_name
 
 
@@ -598,9 +605,9 @@ define [
           'mortgageeData': @getCustomerData('Mortgagee'),
           'additionalInterestData': @getCustomerData('AdditionalInterest'),
           'productName': @getProductName(),
+          'policyPrefix': @getPolicyPrefix(),
           'insightId': @getIdentifier('InsightPolicyId'),
           'policyId': @getPolicyId(),
-          'policyPrefix': @getPolicyPrefix(),
           'isIssued': @isIssued(),
           'effectiveDate': @getEffectiveDate(),
           'expirationDate': @getExpirationDate(),
