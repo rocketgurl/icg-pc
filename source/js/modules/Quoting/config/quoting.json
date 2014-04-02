@@ -1,0 +1,31 @@
+{
+  "PRODUCTS_PATH": "modules/IPM/products/",
+  "PRODUCTS": [
+    "fnic-ho3-la",
+    "acic-ho3-sc",
+    "fsic-ho3-la",
+    "hic-ho3-al",
+    "hic-ho3-la",
+    "ofcc-dp3-ny",
+    "ofcc-ho3-ak",
+    "ofcc-ho3-nj",
+    "ofcc-ho3-va",
+    "wic-ho3-al",
+    "wic-ho3-la",
+    "wic-ho3-nj",
+    "wic-hwo-al"
+  ],
+  "ACTIONS_PATH": "modules/Quoting/actions/",
+  "ACTIONS": [
+    {
+      "label": "Quoting Actions",
+      "actions": [
+        {
+          "label": "Unlock Quote",
+          "view": "UnlockQuote"
+        }
+      ]
+    }
+  ],
+  "TEMPLATES_PATH": "modules/Quoting/templates"
+}

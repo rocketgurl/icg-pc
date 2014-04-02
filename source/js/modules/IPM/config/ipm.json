@@ -112,10 +112,6 @@
         {
           "label": "Generate document",
           "view": "GenerateDocument"
-        },
-        {
-          "label": "Unlock policy",
-          "view": "UnlockPolicy"
         }
       ]
     }
