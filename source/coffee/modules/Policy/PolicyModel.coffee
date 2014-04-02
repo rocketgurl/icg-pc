@@ -19,6 +19,12 @@ define [
       EXPIRED_QUOTE      : 'EXPIREDQUOTE',
       NON_RENEWED_POLICY : 'NONRENEWEDPOLICY'
 
+    # Any products that have name conflicts
+    # Where the first 3 identifiers aren't enough
+    PRODUCT_COLLISIONS : [
+      'OFCC-HO3-LA'
+    ]
+
     # Setup model
     # -----------
     # Notice the forced binding in initialize() - this aids
@@ -29,17 +35,20 @@ define [
       @use_xml() # Use CrippledClient XMLSync
 
       # When the model is loaded, make sure its state is current
-      @on 'change', (e) ->
-        e.setModelState()
-        e.get_pxServerIndex()
-        e.applyFunctions()
+      @on 'change', (model) ->
+        model.setModelState()
+        model.get_pxServerIndex()
+        model.applyFunctions()
 
       # Explicitly bind 'private' composable functions to this object
       # scope. These functions are _.composed() into other functions and
       # need their scope forced
-      for f in ['getFirstValue', 'getIdentifierArray', 'checkNull', 'baseGetIntervalsOfTerm', 'baseGetCustomerData']
-        @[f] = _.bind @[f], this
-
+      _.bindAll(this,
+                'getFirstValue',
+                'getIdentifierArray',
+                'checkNull',
+                'baseGetIntervalsOfTerm',
+                'baseGetCustomerData')
 
     # Does the actual partial application
     applyFunctions : (model, options) ->
@@ -110,9 +119,16 @@ define [
 
     # **Return the full policy id taken from the XML**
     # @return _String_
-    getPolicyId: ->
+    getPolicyId : ->
       id = @getIdentifier('PolicyID')
       if id then id else ''
+
+    getPolicyPrefix : ->
+      prefix = @get('policyPrefix')
+      unless prefix?
+        id = @getPolicyId()
+        prefix = id.substring(0, 3)
+      prefix
 
     # **Build an object containing information for the IPM header**
     # @return _Object_
@@ -129,8 +145,8 @@ define [
           carrier : @getModelProperty('Management Carrier')
 
       #ICS-2446
-      pcFlag = @find('Management Flags Flag[name=PendingCancellation]')
-      if pcFlag? 
+      pcFlag = @find?('Management Flags Flag[name=PendingCancellation]')
+      if pcFlag?
         ipm_header.status = 'Pending Cancellation'
      
       # ICS-1641
@@ -342,20 +358,26 @@ define [
     # **Derive the product name from policy information**
     # @return _String_
     getProductName : ->
-      terms = @getLastTerm()
+      name = @get('productName')
+      unless name?
+        terms = @getLastTerm()
 
-      # CRU4 return DataItem objs directly, in CRU6 we have to go
-      # searching through Intervals to find the correct DataItem obj
-      if terms.DataItem?
-        terms = terms.DataItem
-      else if terms.Intervals?.Interval?
-        if _.isArray(terms.Intervals.Interval)
-          terms = terms.Intervals.Interval[0].DataItem
-        else
-          terms = terms.Intervals.Interval.DataItem
+        # CRU4 return DataItem objs directly, in CRU6 we have to go
+        # searching through Intervals to find the correct DataItem obj
+        if terms.DataItem?
+          terms = terms.DataItem
+        else if terms.Intervals?.Interval?
+          if _.isArray(terms.Intervals.Interval)
+            terms = terms.Intervals.Interval[0].DataItem
+          else
+            terms = terms.Intervals.Interval.DataItem
 
-      name  = "#{@getDataItem(terms, 'Program')}-#{@getDataItem(terms, 'PolicyType')}-#{@getDataItem(terms, 'PropertyState')}"
-      name.toLowerCase()
+        program        = @getDataItem terms, 'Program'
+        policy_type    = @getDataItem terms, 'PolicyType'
+        property_state = @getDataItem terms, 'PropertyState'
+        name = "#{program}-#{policy_type}-#{property_state}"
+        name = @_resolveProductNameCollision(name).toLowerCase()
+      name
 
     # **Find <Identifier> by name and return value or false**
     # @param `name` _String_ name attr of element
@@ -377,6 +399,18 @@ define [
         issued = _.findWhere(@get('json').EventHistory.Event, { type : 'Issue' })
         return _.isObject issued
       false
+
+    # **Products with naming collisions (ICS-2475)**
+    # as defined in the @PRODUCT_COLLISIONS list
+    #
+    # @param `product_name` _String_
+    # @return _String_ the product name with policy prefix appended
+    _resolveProductNameCollision : (product_name) ->
+      if product_name in @PRODUCT_COLLISIONS
+        policy_prefix = @get('policyPrefix') ? @getPolicyPrefix()
+        product_name = "#{product_name}-#{policy_prefix}"
+      product_name
+
 
     # **TODO: MOVE INTO HELPER MIXIN**
     # Some date strings we'll be dealing with are formatted with a full
@@ -550,23 +584,27 @@ define [
 
     # **Set a variety of properties on the model based on XML policy data**
     setModelState : ->
-      if @get('document')? || @get('document') != undefined
-        @set('state', @getState())
-        @set('quote', @isQuote())
-        @set('pendingCancel', @isPendingCancel())
-        @set('cancellationEffectiveDate', @getCancellationEffectiveDate())
-        @set('cancelled', @isCancelled())
-        @set('terms', @getTerms())
-        @set('firstTerm', @getFirstTerm())
-        @set('lastInterval', @getLastInterval())
-        @set('insuredData', @getCustomerData('Insured'))
-        @set('mortgageeData', @getCustomerData('Mortgagee'))
-        @set('additionalInterestData', @getCustomerData('AdditionalInterest'))
-        @set('productName', @getProductName())
-        @set('insight_id', @getIdentifier('InsightPolicyId'))
-        @set('isIssued', @isIssued())
-        @set('effectiveDate', @getEffectiveDate())
-        @set('expirationDate', @getExpirationDate())
-        @set('version', @getPolicyVersion())
+      if @get('document')?.length
+        @set(
+          'state': @getState(),
+          'quote': @isQuote(),
+          'pendingCancel': @isPendingCancel(),
+          'cancellationEffectiveDate': @getCancellationEffectiveDate(),
+          'cancelled': @isCancelled(),
+          'terms': @getTerms(),
+          'firstTerm': @getFirstTerm(),
+          'lastInterval': @getLastInterval(),
+          'insuredData': @getCustomerData('Insured'),
+          'mortgageeData': @getCustomerData('Mortgagee'),
+          'additionalInterestData': @getCustomerData('AdditionalInterest'),
+          'productName': @getProductName(),
+          'insightId': @getIdentifier('InsightPolicyId'),
+          'policyId': @getPolicyId(),
+          'policyPrefix': @getPolicyPrefix(),
+          'isIssued': @isIssued(),
+          'effectiveDate': @getEffectiveDate(),
+          'expirationDate': @getExpirationDate(),
+          'version': @getPolicyVersion()
+          )
 
   PolicyModel

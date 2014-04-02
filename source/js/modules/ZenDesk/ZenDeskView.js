@@ -11,8 +11,11 @@
         return this;
       },
       fetch: function() {
+        var policyQuery;
         this.show();
-        return this.fetch_tickets(this.policy.getPolicyId());
+        policyQuery = this.policy.getPolicyId();
+        policyQuery = policyQuery.substring(0, policyQuery.length - 2);
+        return this.fetch_tickets(policyQuery);
       },
       render: function() {
         this.remove_loader();

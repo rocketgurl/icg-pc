@@ -1,19 +1,33 @@
 {
   "PRODUCTS_PATH": "modules/IPM/products/",
   "PRODUCTS": [
-    "fnic-ho3-la",
     "acic-ho3-sc",
+    "iic-ho3-sc",
+    "fnic-ho3-la",
     "fsic-ho3-la",
+    "fsic-dp3-la",
     "hic-ho3-al",
     "hic-ho3-la",
-    "ofcc-dp3-ny",
+    "ofcc-ho2-la",
     "ofcc-ho3-ak",
+    "ofcc-ho3-ca",
+    "ofcc-ho3-la-lap",
+    "ofcc-ho3-la-lch",
     "ofcc-ho3-nj",
+    "ofcc-ho5-ca",
+    "ofcc-dp1-la",
+    "ofcc-dp2-la",
+    "ofcc-dp3-la",
+    "ofcc-dp3-ny",
+    "ofcc-ho3-ny",
     "ofcc-ho3-va",
     "wic-ho3-al",
     "wic-ho3-la",
     "wic-ho3-nj",
     "wic-hwo-al"
+  ],
+  "PRODUCT_COLLISIONS": [
+    "ofcc-ho3-la"
   ],
   "ACTIONS_PATH": "modules/IPM/actions/",
   "ACTIONS": [
