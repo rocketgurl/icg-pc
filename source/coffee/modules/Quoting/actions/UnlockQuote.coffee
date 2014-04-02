@@ -39,7 +39,7 @@ define [
       context =
         user : @MODULE.USER.get 'email'
 
-      tpl = """<PolicyChangeSet schemaVersion="2.1" username="{{user}}" description="Unlock Policy"><Flags><Flag name="locked" value="false"/></Flags></PolicyChangeSet>"""
+      tpl = """<PolicyChangeSet schemaVersion="2.1" username="{{user}}" description="Unlock Policy"><Flags><Flag name="ReviewLock" value="false"/></Flags></PolicyChangeSet>"""
 
       xml      = Mustache.render tpl, context
       id       = @MODULE.POLICY.id
