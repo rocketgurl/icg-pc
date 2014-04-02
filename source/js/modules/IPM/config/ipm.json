@@ -12,7 +12,7 @@
     "ofcc-ho3-ak",
     "ofcc-ho3-ca",
     "ofcc-ho3-la-lap",
-    "ofcc-ho3-la-lch",
+    "ofcc-ho3-la",
     "ofcc-ho3-nj",
     "ofcc-ho5-ca",
     "ofcc-dp1-la",
@@ -25,9 +25,6 @@
     "wic-ho3-la",
     "wic-ho3-nj",
     "wic-hwo-al"
-  ],
-  "PRODUCT_COLLISIONS": [
-    "ofcc-ho3-la"
   ],
   "ACTIONS_PATH": "modules/IPM/actions/",
   "ACTIONS": [
