@@ -140,4 +140,4 @@ Updates:
 
 Bug fixes:
 
--	Corrected ID collisions in IPM forms which prevented correct use of datepicker
+-	Corrected ID collisions in IPM forms which prevented correct use of datepicker.
