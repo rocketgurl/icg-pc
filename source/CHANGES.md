@@ -1,6 +1,20 @@
 Updates
 -------
 
+### 2.5.0
+
+- [ICS-2423](https://icg360.atlassian.net/browse/ICS-2423) Update fsic-la-ho3 forms
+- [ICS-2447](https://icg360.atlassian.net/browse/ICS-2447) Update fsic-la-dp3 customer change forms
+- [ICS-2448](https://icg360.atlassian.net/browse/ICS-2448) Update IPM forms for DistanceToFireDepartment
+- [ICS-2449](https://icg360.atlassian.net/browse/ICS-2449) Update ofcc-ny-ho3 IPM forms
+- [ICS-2457](https://icg360.atlassian.net/browse/ICS-2457) Make Zendesk links configurable by program
+- [ICS-2464](https://icg360.atlassian.net/browse/ICS-2464) Add Protection Class fields to ofcc-va-ho3
+- [ICS-2471](https://icg360.atlassian.net/browse/ICS-2471) Update fnic-la-ho3 IPM endorse forms
+- [ICS-2475](https://icg360.atlassian.net/browse/ICS-2475) Handle IPM program naming collision for LA preferred product
+- [ICS-2478](https://icg360.atlassian.net/browse/ICS-2478) Update wic-al IPM forms
+- [ICS-2479](https://icg360.atlassian.net/browse/ICS-2479) Create endorse forms for OFCC LA to IPM platform
+- [ICS-2486](https://icg360.atlassian.net/browse/ICS-2486) Improve Zendesk ticket search
+
 ### 2.4.5
 
 - [ICS-2408](https://icg360.atlassian.net/browse/ICS-2408) Change Birthdate formats for IPM Customer Changes to mm/dd/yyyy
