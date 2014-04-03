@@ -120,7 +120,7 @@ def yellow(text); colorize(text, 33); end
 task :default => [:build]
 
 # Build task
-task :build => [:coffee, :version, :compile, :prune_build, :cleanup]
+task :build => [:coffee, :version, :compile, :prune_build, :cleanup, :liverebel]
 
 # If CoffeeScript is present in the ENV then compile .coffee to .js
 task :coffee do
@@ -188,4 +188,13 @@ task :cleanup do
   FileUtils.rm index_munge
   FileUtils.mv index_clean, index_munge
   set_urlargs '', "source/js/main.js"
+end
+
+task :liverebel do
+  prefix      = File.dirname(__FILE__)
+  lr_dir      = file_join_safe(prefix, 'liverebel')
+  unless File.directory?(BUILD_DIR)
+    FileUtils.mkdir BUILD_DIR
+  end
+  FileUtils.cp_r lr_dir, BUILD_DIR
 end
