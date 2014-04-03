@@ -7,7 +7,6 @@ Updates
 - [ICS-2447](https://icg360.atlassian.net/browse/ICS-2447) Update fsic-la-dp3 customer change forms
 - [ICS-2448](https://icg360.atlassian.net/browse/ICS-2448) Update IPM forms for DistanceToFireDepartment
 - [ICS-2449](https://icg360.atlassian.net/browse/ICS-2449) Update ofcc-ny-ho3 IPM forms
-- [ICS-2457](https://icg360.atlassian.net/browse/ICS-2457) Make Zendesk links configurable by program
 - [ICS-2464](https://icg360.atlassian.net/browse/ICS-2464) Add Protection Class fields to ofcc-va-ho3
 - [ICS-2471](https://icg360.atlassian.net/browse/ICS-2471) Update fnic-la-ho3 IPM endorse forms
 - [ICS-2475](https://icg360.atlassian.net/browse/ICS-2475) Handle IPM program naming collision for LA preferred product
