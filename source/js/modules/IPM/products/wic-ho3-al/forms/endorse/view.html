@@ -1,5 +1,5 @@
 <!-- Endorse WIC HO3 Alabama -->
-	<!-- source_file: html/wic_ho3_al_031414_xlsx_endorse.rhtml  -->
+	<!-- source_file: product_templates/wic-ho3-al/_endorse.rhtml  -->
 <form action="endorse" method="get" accept-charset="utf-8" class="collapsedSections">
     <div id="content">
 
@@ -97,8 +97,8 @@
 
 
 		<div>
-			<label for="{{guid}}_PropertyHazardLocation">Property Hazard Location <i>PropertyHazardLocation</i></label>
-			<select id="{{guid}}_PropertyHazardLocation" name="PropertyHazardLocation" data-value="{{PropertyHazardLocation}}" >
+			<label for="{{guid}}_PropertyHazardLocation" >Property Hazard Location <i>PropertyHazardLocation</i></label>
+			<select id="{{guid}}_PropertyHazardLocation" name="PropertyHazardLocation" data-value="{{PropertyHazardLocation}}"   >
 				{{#EnumsPropertyHazardLocation}}
 				<option value="{{value}}">{{label}}</option>
 				{{/EnumsPropertyHazardLocation}}
@@ -107,8 +107,8 @@
 
 
 		<div>
-			<label for="{{guid}}_PropertyHazardLocationLastUpdated">Property Hazard Location Last Updated <i>PropertyHazardLocationLastUpdated</i></label>
-			<input type="text" id="{{guid}}_PropertyHazardLocationLastUpdated" name="PropertyHazardLocationLastUpdated" value="{{PropertyHazardLocationLastUpdated}}" class="datepicker" >
+			<label for="{{guid}}_PropertyHazardLocationLastUpdated" >Property Hazard Location Last Updated <i>PropertyHazardLocationLastUpdated</i></label>
+			<input type="text" id="{{guid}}_PropertyHazardLocationLastUpdated" name="PropertyHazardLocationLastUpdated" value="{{PropertyHazardLocationLastUpdated}}" class="datepicker"  >
 		</div>
 		</fieldset>
 		<fieldset>
@@ -134,12 +134,10 @@
 		</div>
 
 
-
-        <div>
-            <label for="{{guid}}_DistanceToFireDepartment" >Miles to Primary Responding Fire Station <i>DistanceToFireDepartment</i></label>
-            <input type="text" id="{{guid}}_DistanceToFireDepartment" name="DistanceToFireDepartment" value="{{DistanceToFireDepartment}}"  >
-        </div>
-
+		<div>
+			<label for="{{guid}}_DistanceToFireDepartment" >Miles to Primary Responding Fire Station <i>DistanceToFireDepartment</i></label>
+			<input type="text" id="{{guid}}_DistanceToFireDepartment" name="DistanceToFireDepartment" value="{{DistanceToFireDepartment}}"  >
+		</div>
 
 
 		<div>
@@ -229,7 +227,7 @@
 
 		<div>
 			<label for="{{guid}}_OptionCoverageD" class="labelRequired">Coverage D (% of Coverage A) <i>OptionCoverageD</i></label>
-			<select id="{{guid}}_OptionCoverageD" name="OptionCoverageD" data-value="{{OptionCoverageD}}" data-affects="CoverageD" required>
+			<select id="{{guid}}_OptionCoverageD" name="OptionCoverageD" data-value="{{OptionCoverageD}}" data-affects="CoverageD" required >
 				{{#EnumsOptionCoverageD}}
 				<option value="{{value}}">{{label}}</option>
 				{{/EnumsOptionCoverageD}}
