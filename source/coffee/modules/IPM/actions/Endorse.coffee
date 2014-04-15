@@ -50,8 +50,6 @@ define [
     submit : (e) ->
       super e
 
-      #console.log ['submit', @values]
-
       @values.formValues.transactionType = 'Endorsement'
 
       # Derive intervals from the form values and policy, we use
@@ -579,8 +577,6 @@ define [
       #   for field, value of interval
       #     if !_.has(parsed, field)
       #       parsed[field] = value
-
-      console.log ['parseIntervals', parsed]
 
       parsed
 
