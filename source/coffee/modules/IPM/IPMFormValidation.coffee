@@ -87,9 +87,9 @@ define [
     # @param `form` _jQuery_ Form object    
     # @return _Object_  
     #
-    mergeValidators : (required_fields, validators, form) ->
+    mergeValidators : (required_fields, validators, form, form_cid) ->
       for name, rule of validators
-        el = form.find("#id_#{name}").get()
+        el = form.find "##{form_cid}_#{name}"
         if el.length > 0
           if _.has(required_fields, name)
             required_fields[name].push rule

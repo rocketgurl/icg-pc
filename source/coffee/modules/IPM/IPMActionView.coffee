@@ -625,7 +625,8 @@ define [
         @FormValidation.mergeValidators(
           required_fields,
           @FormValidation.validators,
-          @$el
+          @$el,
+          @cid
         )
 
       fields = for field, rules of @FormValidation.validators
