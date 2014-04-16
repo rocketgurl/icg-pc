@@ -1,6 +1,15 @@
 Updates
 -------
 
+### 2.5.1
+
+- [ICS-2410](https://icg360.atlassian.net/browse/ICS-2410) "Unlock Policy" should be available for quotes only
+- [ICS-2523](https://icg360.atlassian.net/browse/ICS-2523) Cancellations Should Not Allow Effective Dates prior to policy inception date
+- [ICS-2530](https://icg360.atlassian.net/browse/ICS-2530) Add "Replacement Policy Placed with other SageSure Carrier" reasoncode to all CRU-4 Programs
+- [ICS-2531](https://icg360.atlassian.net/browse/ICS-2531) Add additional OptionCoverageB enums to FSIC-DP3-LA Endorse Forms
+- [ICS-2535](https://icg360.atlassian.net/browse/ICS-2535) Add enum/Reason Code to FNIC-HO3-LA endorse forms
+- [ICS-2538](https://icg360.atlassian.net/browse/ICS-2538) Update wic-nj-ho3 renew forms
+
 ### 2.5.0
 
 - [ICS-2423](https://icg360.atlassian.net/browse/ICS-2423) Update fsic-la-ho3 forms
