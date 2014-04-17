@@ -92,12 +92,12 @@ define [
     # the cancel/nevermind button to get back to CancelReinstate screen
     postProcessSubView : ->
       @postProcessView()
-      cancel = @$el.find('.form_actions a')
-      cancel.off 'click' # need to reset click to prevent stepping on @goHome()
-      cancel.on 'click', (e) =>
+      nevermindButton = @$el.find('.form_actions a')
+      nevermindButton.off 'click' # need to reset click to prevent stepping on @goHome()
+      nevermindButton.one 'click', (e) =>
         e.preventDefault()
-        $(this).off 'click'
-        @fetchTemplates(@MODULE.POLICY, 'cancellation', @processView)
+        policy = @rollbackPolicyModel()
+        @fetchTemplates(policy, 'cancellation', @processView)
 
     # **Process Preview**
     #
