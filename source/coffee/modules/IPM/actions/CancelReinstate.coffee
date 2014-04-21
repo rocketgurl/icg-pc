@@ -470,27 +470,27 @@ define [
           when 2, 6, 7, 8, 10, 11, 14
             delete validators.effectiveDate
             $dateField
-              .prop { disabled: true, readonly: false }
-              .removeClass 'validation_error'
-              .fadeTo 300, 0.6
-              .val ''
+              .prop({ disabled: true, readonly: false })
+              .removeClass('validation_error')
+              .fadeTo(300, 0.6)
+              .val('')
 
           # Reason code 16 should set the Effective Date
           # to the Current Term Effective Date
           when 16
             validators.effectiveDate = 'dateRange'
             $dateField
-              .prop { disabled: false, readonly: true }
-              .val @MODULE.POLICY.getEffectiveDate()
-              .removeClass 'validation_error'
-              .fadeTo 300, 0.6
+              .prop({ disabled: false, readonly: true })
+              .val(@MODULE.POLICY.getEffectiveDate())
+              .removeClass('validation_error')
+              .fadeTo(300, 0.6)
 
           # Otherwise enable and add the dateRange validator back
           else
             validators.effectiveDate = 'dateRange'
             $dateField
-              .prop { disabled: false, readonly: false }
-              .fadeTo 300, 1
+              .prop({ disabled: false, readonly: false })
+              .fadeTo(300, 1)
 
     # **Date math to get AdvanceNotceDays**
     #
