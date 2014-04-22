@@ -122,16 +122,10 @@
 		</div>
 
 
-
 		<div>
 			<label for="{{guid}}_PropertyHazardLocationEarthquakeLastUpdated" class="labelRequired">Property Hazard Location - Earthquake - Last Updated <i>PropertyHazardLocationEarthquakeLastUpdated</i></label>
-			<select id="{{guid}}_PropertyHazardLocationEarthquakeLastUpdated" name="PropertyHazardLocationEarthquakeLastUpdated" data-value="{{PropertyHazardLocationEarthquakeLastUpdated}}"  required >
-				{{#EnumsPropertyHazardLocationEarthquakeLastUpdated}}
-				<option value="{{value}}">{{label}}</option>
-				{{/EnumsPropertyHazardLocationEarthquakeLastUpdated}}
-			</select>
+			<input type="text" id="{{guid}}_PropertyHazardLocationEarthquakeLastUpdated" name="PropertyHazardLocationEarthquakeLastUpdated" value="{{PropertyHazardLocationEarthquakeLastUpdated}}" class="datepicker" required >
 		</div>
-
 		</fieldset>
 		<fieldset>
 				<legend id="{{guid}}_other">Other</legend>				
