@@ -476,6 +476,20 @@ var Apparatchik = (function(){
   };
 
   /**
+   * Effect: clear element value
+   *
+   * @param {HTMLElement}  target
+   * @param {Boolean}      reset
+   * @param {Object}       args   any args passed to func
+   * @return {Object}      jQuery wrapped element
+   */
+  Apparatchik.prototype.clearValue = function(target, reset, args) {
+    var $el = this.wrapField(target);
+    if (reset) return $el;
+    return $el.val('');
+  };
+
+  /**
    * Effect: force form element to be NOT disabled
    *
    * @param {HTMLElement}  target
