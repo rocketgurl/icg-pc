@@ -243,7 +243,7 @@ var Apparatchik = (function(){
         _target = this.wrapArray(target),
         _effect = this.wrapArray(effect);
     return _.each(_target, function(t) {
-      _this.callEffects(_effect, _this, target, true);
+      _this.callEffects(_effect, _this, t, true);
     });
   };
 
