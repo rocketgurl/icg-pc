@@ -179,6 +179,16 @@ define [
         target: "Cladding"
         effect: @apparatchik.showElement
       ,
+        field: "ReplacementCostBuilding"
+        condition: "onchange"
+        target: [
+          'ReplacementCostLaborMaterialsSupplies',
+          'ReplacementCostDebrisRemoval',
+          'ReplacementCostOverheadProfit',
+          'ReplacementCostPermitsPlans'
+          ]
+        effect: @apparatchik.clearValue
+      ,
         field: "FoundationType"
         condition: { or: ['== 150', '== 300'] }
         target: [
