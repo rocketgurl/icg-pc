@@ -38,6 +38,16 @@
       target : 'CentralAir',
       effect : apparatchik.showElement
     },
+      field: "ReplacementCostBuilding"
+      condition: "onchange"
+      target: [
+          'ReplacementCostLaborMaterialsSupplies',
+          'ReplacementCostDebrisRemoval',
+          'ReplacementCostOverheadProfit',
+          'ReplacementCostPermitsPlans'
+          ]
+      effect: @apparatchik.clearValue
+    },
     {
       field : 'ConstructionType',
       condition : '== 100',
