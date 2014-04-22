@@ -151,9 +151,11 @@ var Apparatchik = (function(){
   Apparatchik.prototype.isCondition = function(val, condition) {
     var value = (_.isEmpty(val) || _.isUndefined(val)) ? '0' : val,
         cond = (_.isNull(condition)) ? '== 0' : condition;
+    if (condition === 'onchange') return true;
     if (_.isString(condition)) { return (eval(value + cond)); }
-    if (_.isObject(condition)) { return this.compileConditions(value,
-                                                               condition);}
+    if (_.isObject(condition)) {
+      return this.compileConditions(value, condition);
+    }
     return false;
   };
 
@@ -276,11 +278,14 @@ var Apparatchik = (function(){
 
     // If the value of the field already meets the condition
     // then go ahead and trigger its effect
-    if (this.isCondition(field.val(), rule.condition)) {
-      if (!_.isUndefined(rule.effect)) {
-        _.each(_target, function(t) {
-          _this.callEffects(_effect, _this, t, false, args);
-        });
+    // UNLESS the condition is 'onchange'
+    if (rule.condition !== 'onchange') {
+      if (this.isCondition(field.val(), rule.condition)) {
+        if (!_.isUndefined(rule.effect)) {
+          _.each(_target, function(t) {
+            _this.callEffects(_effect, _this, t, false, args);
+          });
+        }
       }
     }
   };
