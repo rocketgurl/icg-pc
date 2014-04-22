@@ -1,5 +1,5 @@
-<!-- Product: WIC HWO Alabama -->
-<form action="renew" method="get" accept-charset="utf-8" class="collapsedSections">
+<!-- Renew WIC HWO Alabama -->
+    <form action="renew" method="get" accept-charset="utf-8" class="collapsedSections">
     <div id="content">
         <div id="content_header">
             <h2>{{#preview}}Previewing Renewal for {{/preview}} {{^preview}}Renew {{/preview}} policy {{ policyId }}</h2>
@@ -458,7 +458,7 @@
                     <col span="1" class="col_labels"></col>
                     <col span="2"></col>
                     <col span="1" class="col_days"></col>
-                
+
                     <!-- wic-ho3-al || wic-hwo-al -->
                     <colgroup span="3" class="col_non_hurricane">
                         <col></col>
@@ -470,10 +470,9 @@
                         <col></col>
                         <col></col>
                     </colgroup>
-                
                     <col span="3" class="col_amounts"></col>
                     <thead>
-                
+
                     <!-- wic-ho3-al || wic-hwo-al -->
                     <tr>
                         <th>&nbsp;</th>
@@ -503,12 +502,10 @@
                         <th class="contains_var">Total Fees and Taxes <i>OpTotalFees</i></th>
                         <th class="contains_var">Total Premium and Fees <i>OpTotalPremium</i></th>
                     </tr>
-                
                     </thead>
 
                     <tbody>
                         {{#proposedTerm}}
-                        
                         <!-- wic-ho3-al || wic-hwo-al -->
                         <tr class="calc_row">
                             <td><b>New</b></td>
@@ -528,7 +525,6 @@
                             <td class="fees">{{TotalFees}}</td>
                             <td class="total">{{TotalPremium}}</td>
                         </tr>
-                        
                         {{/proposedTerm}}
 
                         {{#previousTerms}}
@@ -539,19 +535,15 @@
                             <td>{{days}}</td>
                             <td>{{GrandSubtotalNonCat}}</td>
 
-                        
                             <!-- wic-ho3-al || wic-hwo-al -->
                             <td>-</td>
                             <td>{{GrandSubtotalNonCat}}</td>
-                        
 
                             <td>{{GrandSubtotalCat}}</td>
 
-                        
                             <!-- wic-ho3-al || wic-hwo-al -->
                             <td>-</td>
                             <td>{{GrandSubtotalCat}}</td>
-                        
 
                             <td>{{GrandSubtotal}}</td>
                             <td>{{TotalFees}}</td>

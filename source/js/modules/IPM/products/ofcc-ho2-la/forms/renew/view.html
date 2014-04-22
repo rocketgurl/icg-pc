@@ -1,5 +1,5 @@
-<!-- Product: OFCC HO2 Louisiana -->
-<form action="renew" method="get" accept-charset="utf-8" class="collapsedSections">
+<!-- Renew OFCC HO2 Louisiana -->
+    <form action="renew" method="get" accept-charset="utf-8" class="collapsedSections">
     <div id="content">
         <div id="content_header">
             <h2>{{#preview}}Previewing Renewal for {{/preview}} {{^preview}}Renew {{/preview}} policy {{ policyId }}</h2>
@@ -458,32 +458,25 @@
                     <col span="1" class="col_labels"></col>
                     <col span="2"></col>
                     <col span="1" class="col_days"></col>
-                
                     <col span="1" class="col_non_hurricane"></col>
                     <col span="1" class="col_hurricane"></col>
-                
                     <col span="3" class="col_amounts"></col>
                     <thead>
-                
                     <tr>
                         <th>Term</th>
                         <th>Starts</th>
                         <th>Ends</th>
                         <th>#&nbsp;Days</th>
                         <th class="col_group_cap_open col_group_cap_close contains_var">Non-Hurricane Premium <i>OpGrandSubtotalNonCatUnadjusted</i></th>
-                    
                         <th class="col_group_cap_open col_group_cap_close contains_var">Hurricane Premium <i>OpGrandSubtotalCatUnadjusted</i></th>
-                    
                         <th class="contains_var">Premium Before Fees <i>OpGrandSubtotal</i></th>
                         <th class="contains_var">Total Fees and Taxes <i>OpTotalFees</i></th>
                         <th class="contains_var">Total Premium and Fees <i>OpTotalPremium</i></th>
                     </tr>
-                
                     </thead>
 
                     <tbody>
                         {{#proposedTerm}}
-                        
                         <tr class="calc_row">
                             <td><b>New</b></td>
                             <td>{{startDate}}</td>
@@ -495,7 +488,6 @@
                             <td class="fees">{{TotalFees}}</td>
                             <td class="total">{{TotalPremium}}</td>
                         </tr>
-                        
                         {{/proposedTerm}}
 
                         {{#previousTerms}}
@@ -506,11 +498,7 @@
                             <td>{{days}}</td>
                             <td>{{GrandSubtotalNonCat}}</td>
 
-                        
-
                             <td>{{GrandSubtotalCat}}</td>
-
-                        
 
                             <td>{{GrandSubtotal}}</td>
                             <td>{{TotalFees}}</td>
@@ -531,3 +519,4 @@
         {{/preview}}
     </div>
 </form>
+
