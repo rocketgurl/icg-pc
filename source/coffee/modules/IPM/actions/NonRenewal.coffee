@@ -146,8 +146,9 @@ define [
       @viewDataPrevious = _.deepClone @viewData
       @viewData.preview = @Endorse.parseIntervals(@values)
 
+      preview_values = @extractEventValues(@MODULE.POLICY, @viewData)
       preview_labels = @determinePreviewLabel(@values.formValues, @viewData)
-      @viewData = _.extend(@viewData, preview_labels)
+      @viewData = _.extend(@viewData, preview_values, preview_labels)
 
       reasonCode = @values.formValues.reasonCode
       reason = _.first(_.filter(@REASON_CODES, (item) -> item.value == reasonCode))
