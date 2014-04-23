@@ -432,6 +432,14 @@ h2.ipm-action-header {
                   width: auto !important;
             }
       }
+      .preview {
+            fieldset {
+                  label {
+                        display: block;
+                        padding: 10px 0;
+                  }
+            }
+      }
 
 }
 
