@@ -146,8 +146,9 @@ define [
       @viewDataPrevious = _.deepClone @viewData
       @viewData.preview = @Endorse.parseIntervals(@values)
 
+      preview_values = @extractEventValues(@MODULE.POLICY, @viewData)
       preview_labels = @determinePreviewLabel(@values.formValues, @viewData)
-      @viewData = _.extend(@viewData, preview_labels)
+      @viewData = _.extend(@viewData, preview_values, preview_labels)
 
       reasonCode = @values.formValues.reasonCode
       reason = _.first(_.filter(@REASON_CODES, (item) -> item.value == reasonCode))
@@ -254,26 +255,38 @@ define [
           options.headers =
             'X-Commit' : false
 
-      # Data for the Transaction Request XML
-      context =
-        transactionType : @values.formValues.transactionType
-        reasonCode      : @values.formValues.reasonCode
-        user            : @MODULE.USER.get 'email'
-        id              : @MODULE.POLICY.get 'insightId'
-        version         : @ChangeSet.getPolicyVersion()
-
-      xml = Mustache.render @XML_TEMPLATE, context
-
       # Assemble the TransactionRequest XML and send to server
       @ChangeSet.commitChange(
-          xml,
+          @ChangeSet.getTransactionRequest(@values, @viewData),
           callbackFunc,
           @callbackError,
           options
         )
 
     # Parse most recent Event object from Policy and use it to build
-    # values for the Cancellation preview
+    # values for the NonRenewal preview
+    #
+    # @param `policy` _Object_ Policy
+    # @param `viewData` _object_ model.json values
+    # @return _Object_ updated viewData
+    #
+    extractEventValues : (policy, viewData) ->
+      # Find the most recent Cancellation/PendingCancellation in the Policy.
+      # Most recent is last in the XML, so we flip the array with reverse()
+      events = policy.get('json').EventHistory.Event.reverse()
+      actionsMap =
+        "RescindPendingNonRenewal": "Rescind Pending Non-Renewal"
+        "PendingNonRenewal": "Pending Non-Renewal"
+        "NonRenewal": "Non-Renewal"
+
+      nonrenewal = _.find(events, (event) ->
+          _.indexOf(_.keys(actionsMap), event.type) >= 0
+        )
+
+      viewData.preview.Action = actionsMap[nonrenewal.type]
+      viewData
+
+    # Determine the preview label
     #
     # @param `formValues` _Object_ @values.formValues
     # @param `viewData` _object_ model.json values

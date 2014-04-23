@@ -312,6 +312,11 @@ define [
       <Comment>{{comment}}</Comment>
     """
 
+    non_renewal : """
+      <ReasonCode>{{reasonCode}}</ReasonCode>
+      <Comment>{{comment}}</Comment>
+    """
+
     change_customer : """
       <ReasonCode>{{reasonCode}}</ReasonCode>
       <CustomerChanges>
