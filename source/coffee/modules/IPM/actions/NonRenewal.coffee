@@ -275,9 +275,9 @@ define [
       # Most recent is last in the XML, so we flip the array with reverse()
       events = policy.get('json').EventHistory.Event.reverse()
       actionsMap =
-        "RescindPendingNonRenewal": "Rescind Pending Non-Renewal"
-        "PendingNonRenewal": "Pending Non-Renewal"
-        "NonRenewal": "Non-Renewal"
+        'RescindPendingNonRenewal': 'Rescind Pending Non-Renewal'
+        'PendingNonRenewal': 'Pending Non-Renewal'
+        'NonRenewal': 'Non-Renewal'
 
       nonrenewal = _.find(events, (event) ->
           _.indexOf(_.keys(actionsMap), event.type) >= 0
