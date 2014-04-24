@@ -226,8 +226,11 @@ define [
       super e
 
       # We selectively delete certain empty values later
-      if @values.formValues.comment == ''
+      unless @values.formValues.comment
         @values.formValues.comment = '__deleteEmptyProperty'
+
+      unless @values.formValues.effectiveDate
+        @values.formValues.effectiveDate = '__deleteEmptyProperty'
 
       @values.formValues.transactionType = @TRANSACTION_TYPES[@CURRENT_SUBVIEW].label ? false
 
@@ -235,10 +238,6 @@ define [
         msg = "There was an error determining which Transaction Type this request is."
         @PARENT_VIEW.displayMessage('error', msg, 12000)
         return false
-
-      # Format the date to match the TR 1.4 spec
-      if _.has(@values.formValues, 'effectiveDate')
-        @values.formValues.effectiveDate = @Helpers.stripTimeFromDate(@values.formValues.effectiveDate)
 
       # Success callback
       callbackFunc = @callbackSuccess
