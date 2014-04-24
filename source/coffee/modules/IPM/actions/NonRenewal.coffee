@@ -171,17 +171,25 @@ define [
     #
     processNonRenewalData : (viewData) ->
       policy = @MODULE.POLICY
+      reasonCode = policy.find('Management PendingNonRenewal reasonCode')
+      nonrenew_data = { EnumsNonRenewReason: @REASON_CODES }
 
-      nonrenew_data =
-        reasonCode : policy.find('Management PendingNonRenewal reasonCode')
-        EnumsNonRenewReason : @REASON_CODES
+      # Management > PendingNonRenewal isn't set yet without a policy refresh,
+      # so this is our attempt to show the correct state
+      unless reasonCode?
+        lastEvent = _.last policy.find('EventHistory Event')
+        if lastEvent.type is 'PendingNonRenewal'
+          getReasonCode = (item) -> item.name is 'reasonCode'
+          reasonCode = _.find(lastEvent.DataItem, getReasonCode).value
 
-      # Toggle buttons on/off depending on Managament >
-      # PendingNonRenewal existence
-      if _.isUndefined nonrenew_data.reasonCode
-        nonrenew_data.nonrenewDisabled = nonrenew_data.rescindPendingDisabled = 'disabled'
-      else
+      # Toggle buttons on/off depending on
+      # reason code's existence
+      if reasonCode?
+        nonrenew_data.reasonCode = reasonCode
         nonrenew_data.setPendingDisabled = 'disabled'
+      else
+        nonrenew_data.nonrenewDisabled = 'disabled'
+        nonrenew_data.rescindPendingDisabled = 'disabled'
 
       @viewData = _.extend(viewData, nonrenew_data)
 
