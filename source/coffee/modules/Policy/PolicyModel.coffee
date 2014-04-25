@@ -454,6 +454,17 @@ define [
       else
         false
 
+    # **Determine policy inception date**
+    # This is the effective date of the *first* term
+    # @return _String_
+    getInceptionDate : ->
+      first_term = @getFirstTerm()
+      date = first_term['EffectiveDate'] || ''
+      if date != undefined || date != ''
+        @_stripTimeFromDate date
+      else
+        false
+
     # **Determine policy effective date** from XML and convert to
     # standardized format
     # @return _String_

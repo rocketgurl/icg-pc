@@ -151,6 +151,7 @@ define [
         pendingCancelReasonCodeLabel : null
         policyEffectiveDate          : policy.getEffectiveDate()
         policyExpirationDate         : policy.getExpirationDate()
+        policyInceptionDate          : policy.getInceptionDate()
         cancellationEffectiveDate    : null
 
 
