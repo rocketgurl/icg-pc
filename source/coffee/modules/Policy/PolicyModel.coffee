@@ -633,16 +633,16 @@ define [
     # @param `view_id` _String_ The cid of the calling view
     #
     refresh : (view_id) ->
-      options =
+      xhr = $.ajax(
         url     : @url()
         type    : 'GET'
         headers :
           'Authorization' : "Basic #{@get('digest')}"
           'Cache-Control' : 'no-cache'
-
-      xhr = $.ajax(options)
+        )
       xhr.done @reset(view_id)
       xhr.fail @refreshFail(view_id)
+      return this
 
     # **Load new Policy XML into Model**
     #
@@ -653,8 +653,7 @@ define [
     #
     reset : (view_id) ->
       view_id = view_id || @get('module').policy_view.cid
-
-      return (data, textStatus, jqXHR) =>
+      (data, textStatus, jqXHR) =>
         new_attributes = @parse(data, jqXHR)
 
         # Swap out Policy XML with new XML, saving the old one
@@ -682,10 +681,10 @@ define [
     #
     refreshFail : (view_id) ->
       view_id = view_id || @get('module').policy_view.cid
-
-      return (jqXHR, textStatus, errorThrown) =>
+      (jqXHR, textStatus, errorThrown) =>
         @trigger 'policy_response', textStatus
         @Amplify.publish(view_id, 'warning',
           "There was an error refreshing the policy: #{jqXHR.status} (#{errorThrown})", 2000)
+        return this
 
   PolicyModel
