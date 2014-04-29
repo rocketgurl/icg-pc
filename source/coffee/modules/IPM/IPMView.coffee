@@ -19,9 +19,14 @@ define [
   # actions views.
   class IPMView extends BaseView
 
+    events :
+      "click .policy-refresh" : "refreshPolicy"
+
     # Set up our working area but injecting various HTML containers into the
     # DOM then kick off the default route
     initialize : (options) ->
+      _.bindAll this, 'refreshPolicy'
+
       # Keep track of our current sub-view
       @view_state   = ''
       @view_cache   = {}
@@ -43,9 +48,25 @@ define [
       @$el = @MODULE.CONTAINER
       @buildHtmlElements()
 
+      # Setup policy refresh
+      @refreshPolicy = _.throttle(@refreshPolicy, 1000)
+      @MODULE.POLICY.on 'policy_response', @remove_loader, this
+
       # If we're in a default state then launch home
       if _.isEmpty @view_state
         @route 'Home'
+
+    refreshPolicy : ->
+      @handleRefreshButton true
+      @insert_loader 'Refreshing Policy...'
+      @MODULE.POLICY.refresh @cid
+
+    # **Disable / Enable the policy refresh button**
+    #
+    # @param `action` _String_ name of IPMActionView to loade w/ require()
+    #
+    handleRefreshButton : (disable) ->
+      @$('.policy-refresh').prop('disabled', disable is true)
 
     # **Build and render needed HTML elements within the view**
     buildHtmlElements : ->
@@ -178,6 +199,7 @@ define [
     # Drop a loader graphic into the view
     insert_loader : (msg) ->
       @$el.find("#ipm-loader-#{@cid}").show()
+      @handleRefreshButton true
       try
         # Drop in message is present
         if msg?
@@ -197,7 +219,7 @@ define [
           @loader.kill()
           # @loader = null
           @$el.find("#ipm-loader-#{@cid}").hide()
-          @$el.find("#ipm-spinner-#{@cid} div").remove()
+          @handleRefreshButton false
       catch e
         @$el.find("#ipm-spinner-#{@cid} div").remove()
       this
