@@ -46,13 +46,14 @@
 {{/preview}}
 
 {{#preview}}
-<form id="cancellation" action="#" method="get" accept-charset="utf-8">
+<form id="nonrenewal" action="#" method="get" accept-charset="utf-8">
   <div id="content">
     <div id="content_header">
       <h2>{{PreviewLabel}} : {{policyId}}</h2>
     </div>
 
     <div class="content_body preview">
+
       {{#policyOverview}}
       <section class="policyOverview">
         <h1>Policy Overview</h1>
@@ -64,17 +65,31 @@
         </ul>
       </section>
       {{/policyOverview}}
-      <div class="table_wrapping">
-      <p>&nbsp;&nbsp;&nbsp;{{^Undo}}Proposed{{/Undo}}{{#Undo}}Previous{{/Undo}}&nbsp;action:</p>
-      <p>
-        <strong>Non-Renewal Reason:</strong> {{ReasonCode}}
-      </p>
-      <p>
-        <strong>Action:</strong> {{PreviewLabel}}
-      </p>
-      </div>
+
+      <fieldset>
+        <div class="table_wrapping">
+          <table class="summary_table" summary="Proposed action">
+            <caption>{{^Undo}}Proposed{{/Undo}}{{#Undo}}Previous{{/Undo}} action</caption>
+            <tbody>
+              <tr>
+                <th scope="row">Action</th>
+                <td>{{Action}}</td>
+              </tr>
+              <tr>
+                <th scope="row">Non-Renewal Reason</th>
+                <td>{{ReasonCode}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div>
+          <label for="{{guid}}_addNotes">Notes</label>
+          <textarea cols="97" rows="7" id="{{guid}}_addNotes" name="addNotes" value=""></textarea>
+        </div>
+      </fieldset>
       <div class="form_actions">
-      <p>{{^Undo}}Confirm{{/Undo}}{{#Undo}}Undo{{/Undo}}&nbsp;this action?</p>
+        <p>{{^Undo}}Confirm{{/Undo}}{{#Undo}}Undo{{/Undo}} this action?</p>
         <input type="submit" class="button" value="{{ submitLabel }}"> <a href="home">Nevermind, go back</a>
       </div>
     </div>

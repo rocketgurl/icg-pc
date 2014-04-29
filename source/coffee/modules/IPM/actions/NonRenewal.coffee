@@ -126,12 +126,12 @@ define [
     # the cancel/nevermind button to get back to CancelReinstate screen
     postProcessSubView : ->
       @postProcessView()
-      cancel = @$el.find('.form_actions a')
-      cancel.off 'click' # need to reset click to prevent stepping on @goHome()
-      cancel.on 'click', (e) =>
+      nevermindButton = @$el.find('.form_actions a')
+      nevermindButton.off 'click' # need to reset click to prevent stepping on @goHome()
+      nevermindButton.one 'click', (e) =>
         e.preventDefault()
-        $(this).off 'click'
-        @fetchTemplates(@MODULE.POLICY, 'nonrenewal', @processView)
+        policy = @rollbackPolicyModel()
+        @fetchTemplates(policy, 'nonrenewal', @processView)
 
     # **Process Preview**
     #
@@ -146,8 +146,9 @@ define [
       @viewDataPrevious = _.deepClone @viewData
       @viewData.preview = @Endorse.parseIntervals(@values)
 
+      preview_values = @extractEventValues(@MODULE.POLICY, @viewData)
       preview_labels = @determinePreviewLabel(@values.formValues, @viewData)
-      @viewData = _.extend(@viewData, preview_labels)
+      @viewData = _.extend(@viewData, preview_values, preview_labels)
 
       reasonCode = @values.formValues.reasonCode
       reason = _.first(_.filter(@REASON_CODES, (item) -> item.value == reasonCode))
@@ -170,17 +171,25 @@ define [
     #
     processNonRenewalData : (viewData) ->
       policy = @MODULE.POLICY
+      reasonCode = policy.find('Management PendingNonRenewal reasonCode')
+      nonrenew_data = { EnumsNonRenewReason: @REASON_CODES }
 
-      nonrenew_data =
-        reasonCode : policy.find('Management PendingNonRenewal reasonCode')
-        EnumsNonRenewReason : @REASON_CODES
+      # Management > PendingNonRenewal isn't set yet without a policy refresh,
+      # so this is our attempt to show the correct state
+      unless reasonCode?
+        lastEvent = _.last policy.find('EventHistory Event')
+        if lastEvent.type is 'PendingNonRenewal'
+          getReasonCode = (item) -> item.name is 'reasonCode'
+          reasonCode = _.find(lastEvent.DataItem, getReasonCode).value
 
-      # Toggle buttons on/off depending on Managament >
-      # PendingNonRenewal existence
-      if _.isUndefined nonrenew_data.reasonCode
-        nonrenew_data.nonrenewDisabled = nonrenew_data.rescindPendingDisabled = 'disabled'
-      else
+      # Toggle buttons on/off depending on
+      # reason code's existence
+      if reasonCode?
+        nonrenew_data.reasonCode = reasonCode
         nonrenew_data.setPendingDisabled = 'disabled'
+      else
+        nonrenew_data.nonrenewDisabled = 'disabled'
+        nonrenew_data.rescindPendingDisabled = 'disabled'
 
       @viewData = _.extend(viewData, nonrenew_data)
 
@@ -225,8 +234,11 @@ define [
       super e
 
       # We selectively delete certain empty values later
-      if @values.formValues.comment == ''
+      unless @values.formValues.comment
         @values.formValues.comment = '__deleteEmptyProperty'
+
+      unless @values.formValues.effectiveDate
+        @values.formValues.effectiveDate = '__deleteEmptyProperty'
 
       @values.formValues.transactionType = @TRANSACTION_TYPES[@CURRENT_SUBVIEW].label ? false
 
@@ -234,10 +246,6 @@ define [
         msg = "There was an error determining which Transaction Type this request is."
         @PARENT_VIEW.displayMessage('error', msg, 12000)
         return false
-
-      # Format the date to match the TR 1.4 spec
-      if _.has(@values.formValues, 'effectiveDate')
-        @values.formValues.effectiveDate = @Helpers.stripTimeFromDate(@values.formValues.effectiveDate)
 
       # Success callback
       callbackFunc = @callbackSuccess
@@ -254,26 +262,38 @@ define [
           options.headers =
             'X-Commit' : false
 
-      # Data for the Transaction Request XML
-      context =
-        transactionType : @values.formValues.transactionType
-        reasonCode      : @values.formValues.reasonCode
-        user            : @MODULE.USER.get 'email'
-        id              : @MODULE.POLICY.get 'insightId'
-        version         : @ChangeSet.getPolicyVersion()
-
-      xml = Mustache.render @XML_TEMPLATE, context
-
       # Assemble the TransactionRequest XML and send to server
       @ChangeSet.commitChange(
-          xml,
+          @ChangeSet.getTransactionRequest(@values, @viewData),
           callbackFunc,
           @callbackError,
           options
         )
 
     # Parse most recent Event object from Policy and use it to build
-    # values for the Cancellation preview
+    # values for the NonRenewal preview
+    #
+    # @param `policy` _Object_ Policy
+    # @param `viewData` _object_ model.json values
+    # @return _Object_ updated viewData
+    #
+    extractEventValues : (policy, viewData) ->
+      # Find the most recent Cancellation/PendingCancellation in the Policy.
+      # Most recent is last in the XML, so we flip the array with reverse()
+      events = policy.get('json').EventHistory.Event.reverse()
+      actionsMap =
+        'RescindPendingNonRenewal': 'Rescind Pending Non-Renewal'
+        'PendingNonRenewal': 'Pending Non-Renewal'
+        'NonRenewal': 'Non-Renewal'
+
+      nonrenewal = _.find(events, (event) ->
+          _.indexOf(_.keys(actionsMap), event.type) >= 0
+        )
+
+      viewData.preview.Action = actionsMap[nonrenewal.type]
+      viewData
+
+    # Determine the preview label
     #
     # @param `formValues` _Object_ @values.formValues
     # @param `viewData` _object_ model.json values

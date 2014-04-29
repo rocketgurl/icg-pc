@@ -1,5 +1,5 @@
-<!-- Endorse OFCC HO3 California -->
-	<!-- source_file: product_templates/ofcc-ho3-ca/_endorse.rhtml  -->
+<!-- Product: OFCC HO3 California -->
+<!-- source_file: product_templates/ofcc-ho3-ca/_endorse.rhtml  -->
 <form action="endorse" method="get" accept-charset="utf-8" class="collapsedSections">
     <div id="content">
 
@@ -122,16 +122,10 @@
 		</div>
 
 
-
 		<div>
 			<label for="{{guid}}_PropertyHazardLocationEarthquakeLastUpdated" class="labelRequired">Property Hazard Location - Earthquake - Last Updated <i>PropertyHazardLocationEarthquakeLastUpdated</i></label>
-			<select id="{{guid}}_PropertyHazardLocationEarthquakeLastUpdated" name="PropertyHazardLocationEarthquakeLastUpdated" data-value="{{PropertyHazardLocationEarthquakeLastUpdated}}"  required >
-				{{#EnumsPropertyHazardLocationEarthquakeLastUpdated}}
-				<option value="{{value}}">{{label}}</option>
-				{{/EnumsPropertyHazardLocationEarthquakeLastUpdated}}
-			</select>
+			<input type="text" id="{{guid}}_PropertyHazardLocationEarthquakeLastUpdated" name="PropertyHazardLocationEarthquakeLastUpdated" value="{{PropertyHazardLocationEarthquakeLastUpdated}}" class="datepicker" required >
 		</div>
-
 		</fieldset>
 		<fieldset>
 				<legend id="{{guid}}_other">Other</legend>				
@@ -2095,4 +2089,3 @@
     {{/preview}}
     </div>
 </form>
-

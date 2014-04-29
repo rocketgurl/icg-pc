@@ -64,7 +64,8 @@ define [
         effectiveDate : values.formValues.effectiveDate || Helpers.makeTimestamp()
         comment       : values.formValues.comment || "posted by Policy Central IPM Module"
 
-      context.effectiveDate = Helpers.stripTimeFromDate(context.effectiveDate)
+      unless context.effectiveDate is '__deleteEmptyProperty'
+        context.effectiveDate = Helpers.stripTimeFromDate(context.effectiveDate)
 
       # Get changed form values and assemble into array suitable for templates
       dataItems = @getChangedDataItems(values, vocabTerms)
@@ -308,6 +309,11 @@ define [
     """
 
     cancel_reinstate : """
+      <ReasonCode>{{reasonCode}}</ReasonCode>
+      <Comment>{{comment}}</Comment>
+    """
+
+    non_renewal : """
       <ReasonCode>{{reasonCode}}</ReasonCode>
       <Comment>{{comment}}</Comment>
     """

@@ -1,3 +1,5 @@
+requirejs.config { waitSeconds: 0 }
+
 require
   urlArgs: ''
   baseUrl: 'js'

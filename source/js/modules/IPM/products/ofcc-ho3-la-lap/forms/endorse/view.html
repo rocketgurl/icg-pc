@@ -1,5 +1,5 @@
-<!-- Endorse OFCC HO3 Louisiana -->
-	<!-- source_file: product_templates/ofcc-ho3-la-lap/_endorse.rhtml  -->
+<!-- Product: OFCC HO3 Louisiana -->
+<!-- source_file: product_templates/ofcc-ho3-la-lap/_endorse.rhtml  -->
 <form action="endorse" method="get" accept-charset="utf-8" class="collapsedSections">
     <div id="content">
 
@@ -1231,6 +1231,17 @@
 		</div>
 
 
+
+		<div>
+			<label for="{{guid}}_ACVLossSettlementRoof" class="labelRequired">ACV Settlement Windstorm or Hail Losses to Roof <i>ACVLossSettlementRoof</i></label>
+			<select id="{{guid}}_ACVLossSettlementRoof" name="ACVLossSettlementRoof" data-value="{{ACVLossSettlementRoof}}"  required >
+				{{#EnumsACVLossSettlementRoof}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsACVLossSettlementRoof}}
+			</select>
+		</div>
+
+
 			</div>
 		</fieldset>
 
@@ -2006,4 +2017,3 @@
     {{/preview}}
     </div>
 </form>
-

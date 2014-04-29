@@ -38,6 +38,16 @@
       target : 'CentralAir',
       effect : apparatchik.showElement
     },
+      field: "ReplacementCostBuilding"
+      condition: "onchange"
+      target: [
+          'ReplacementCostLaborMaterialsSupplies',
+          'ReplacementCostDebrisRemoval',
+          'ReplacementCostOverheadProfit',
+          'ReplacementCostPermitsPlans'
+          ]
+      effect: @apparatchik.clearValue
+    },
     {
       field : 'ConstructionType',
       condition : '== 100',
@@ -151,9 +161,11 @@ var Apparatchik = (function(){
   Apparatchik.prototype.isCondition = function(val, condition) {
     var value = (_.isEmpty(val) || _.isUndefined(val)) ? '0' : val,
         cond = (_.isNull(condition)) ? '== 0' : condition;
+    if (condition === 'onchange') return true;
     if (_.isString(condition)) { return (eval(value + cond)); }
-    if (_.isObject(condition)) { return this.compileConditions(value,
-                                                               condition);}
+    if (_.isObject(condition)) {
+      return this.compileConditions(value, condition);
+    }
     return false;
   };
 
@@ -241,7 +253,7 @@ var Apparatchik = (function(){
         _target = this.wrapArray(target),
         _effect = this.wrapArray(effect);
     return _.each(_target, function(t) {
-      _this.callEffects(_effect, _this, target, true);
+      _this.callEffects(_effect, _this, t, true);
     });
   };
 
@@ -276,11 +288,14 @@ var Apparatchik = (function(){
 
     // If the value of the field already meets the condition
     // then go ahead and trigger its effect
-    if (this.isCondition(field.val(), rule.condition)) {
-      if (!_.isUndefined(rule.effect)) {
-        _.each(_target, function(t) {
-          _this.callEffects(_effect, _this, t, false, args);
-        });
+    // UNLESS the condition is 'onchange'
+    if (rule.condition !== 'onchange') {
+      if (this.isCondition(field.val(), rule.condition)) {
+        if (!_.isUndefined(rule.effect)) {
+          _.each(_target, function(t) {
+            _this.callEffects(_effect, _this, t, false, args);
+          });
+        }
       }
     }
   };
@@ -473,6 +488,20 @@ var Apparatchik = (function(){
     var $el = this.wrapField(target);
     if (reset) { $el.prop('disabled', false); }
     return $el.prop('disabled', true);
+  };
+
+  /**
+   * Effect: clear element value
+   *
+   * @param {HTMLElement}  target
+   * @param {Boolean}      reset
+   * @param {Object}       args   any args passed to func
+   * @return {Object}      jQuery wrapped element
+   */
+  Apparatchik.prototype.clearValue = function(target, reset, args) {
+    var $el = this.wrapField(target);
+    if (reset) return $el;
+    return $el.val('');
   };
 
   /**

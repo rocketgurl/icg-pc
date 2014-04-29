@@ -142,7 +142,7 @@ define [
     #
     formatDate : (date, format) ->
       format = format ? 'YYYY-MM-DD'
-      moment(date).format(format)
+      date && moment(date).format(format)
 
     # Create an ISO timestamp
     makeTimestamp : ->

@@ -41,7 +41,7 @@
                     </div>
                     <div>
                         <label for="{{guid}}_CoverageA" class="labelRequired">Coverage A <i>CoverageA</i></label>
-                        <input type="text" id="{{guid}}_CoverageA" name="CoverageA" value="{{CoverageA}}" required>
+                        <input type="text" id="{{guid}}_CoverageA" name="CoverageA" value="{{CoverageA}}" data-calculations="{ CoverageD : '.3' }" required>
                         <i>(Expiring: {{CoverageA}})</i>
                     </div>
                     <div>
@@ -69,14 +69,6 @@
                         <label for="{{guid}}_CoverageC">Coverage C <i>CoverageC</i></label>
                         <input type="text" id="{{guid}}_CoverageC" name="CoverageC" value="{{CoverageC}}" readonly>
                         <i>(Expiring: {{CoverageC}})</i>
-                    </div>
-                    <div>
-                        <label for="{{guid}}_OptionCoverageD" class="labelRequired">Coverage D (% of Coverage A) <i>OptionCoverageD</i></label>
-                        <select id="{{guid}}_OptionCoverageD" name="OptionCoverageD" data-value="{{OptionCoverageD}}" data-affects="CoverageD" required>
-                            {{#EnumsOptionCoverageD}}
-                            <option value="{{value}}">{{label}}</option>
-                            {{/EnumsOptionCoverageD}}
-                        </select>
                     </div>
                     <div>
                         <label for="{{guid}}_CoverageD">Coverage D <i>CoverageD</i></label>
@@ -113,6 +105,14 @@
                             {{#EnumsHurricaneDeductible}}
                             <option value="{{value}}">{{label}}</option>
                             {{/EnumsHurricaneDeductible}}
+                        </select>
+                    </div>
+                    <div>
+                        <label for="{{guid}}_AllOtherPerilsDeductible" class="labelRequired">All Other Perils Deductible $ <i>AllOtherPerilsDeductible</i></label>
+                        <select id="{{guid}}_AllOtherPerilsDeductible" name="AllOtherPerilsDeductible" data-value="{{AllOtherPerilsDeductible}}" required >
+                            {{#EnumsAllOtherPerilsDeductible}}
+                            <option value="{{value}}">{{label}}</option>
+                            {{/EnumsAllOtherPerilsDeductible}}
                         </select>
                     </div>
                 </div>
@@ -458,32 +458,25 @@
                     <col span="1" class="col_labels"></col>
                     <col span="2"></col>
                     <col span="1" class="col_days"></col>
-                
                     <col span="1" class="col_non_hurricane"></col>
                     <col span="1" class="col_hurricane"></col>
-                
                     <col span="3" class="col_amounts"></col>
                     <thead>
-                
-                    <tr>
+                      <tr>
                         <th>Term</th>
                         <th>Starts</th>
                         <th>Ends</th>
                         <th>#&nbsp;Days</th>
                         <th class="col_group_cap_open col_group_cap_close contains_var">Non-Hurricane Premium <i>OpGrandSubtotalNonCatUnadjusted</i></th>
-                    
                         <th class="col_group_cap_open col_group_cap_close contains_var">Hurricane Premium <i>OpGrandSubtotalCatUnadjusted</i></th>
-                    
                         <th class="contains_var">Premium Before Fees <i>OpGrandSubtotal</i></th>
                         <th class="contains_var">Total Fees and Taxes <i>OpTotalFees</i></th>
                         <th class="contains_var">Total Premium and Fees <i>OpTotalPremium</i></th>
                     </tr>
-                
                     </thead>
 
                     <tbody>
                         {{#proposedTerm}}
-                        
                         <tr class="calc_row">
                             <td><b>New</b></td>
                             <td>{{startDate}}</td>
@@ -495,7 +488,6 @@
                             <td class="fees">{{TotalFees}}</td>
                             <td class="total">{{TotalPremium}}</td>
                         </tr>
-                        
                         {{/proposedTerm}}
 
                         {{#previousTerms}}
@@ -505,13 +497,7 @@
                             <td>{{endDate}}</td>
                             <td>{{days}}</td>
                             <td>{{GrandSubtotalNonCat}}</td>
-
-                        
-
                             <td>{{GrandSubtotalCat}}</td>
-
-                        
-
                             <td>{{GrandSubtotal}}</td>
                             <td>{{TotalFees}}</td>
                             <td>{{TotalPremium}}</td>
@@ -520,10 +506,12 @@
                     </tbody>
                 </table>
             </div>
-            <div>
-               <h2>Notes</h2>
-               <textarea cols="97" rows="7" id="{{guid}}_addNotes" name="addNotes" value=""></textarea>
-            </div>
+            <fieldset>
+                <div>
+                    <label for="{{guid}}_addNotes" class="noteslabel">Notes</label>
+                    <textarea class="notesfield" id="{{guid}}_addNotes" name="addNotes" value=""></textarea>
+                </div>
+            </fieldset>
             <div class="form_actions">
                 <input type="submit" class="button" value="Confirm"> <a href="home">Cancel</a>
             </div>

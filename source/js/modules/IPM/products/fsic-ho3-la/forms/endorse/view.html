@@ -1,5 +1,5 @@
-<!-- Endorse FSIC HO3 Louisiana -->
-	<!-- source_file: product_templates/fsic-ho3-la/_endorse.rhtml  -->
+<!-- Product: FSIC HO3 Louisiana -->
+<!-- source_file: product_templates/fsic-ho3-la/_endorse.rhtml  -->
 <form action="endorse" method="get" accept-charset="utf-8" class="collapsedSections">
     <div id="content">
 
@@ -206,7 +206,7 @@
 
 		<div>
 			<label for="{{guid}}_OptionCoverageD" class="labelRequired">Coverage D (% of Coverage A) <i>OptionCoverageD</i></label>
-			<select id="{{guid}}_OptionCoverageD" name="OptionCoverageD" data-value="{{OptionCoverageD}}" data-affects="CoverageD" required disabled="disabled">
+			<select id="{{guid}}_OptionCoverageD" name="OptionCoverageD" data-value="{{OptionCoverageD}}" data-affects="CoverageD" required >
 				{{#EnumsOptionCoverageD}}
 				<option value="{{value}}">{{label}}</option>
 				{{/EnumsOptionCoverageD}}
@@ -1915,4 +1915,3 @@
     {{/preview}}
     </div>
 </form>
-

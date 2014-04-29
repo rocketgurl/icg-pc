@@ -24,6 +24,7 @@ define [
     constructor : (@view, @app, @params) ->
       # Make sure we have some kind of params
       @params = @app.params if @app.params?
+      @digest = @view.options.controller.user.get('digest')
 
       # Bind events
       _.extend @, Backbone.Events
@@ -42,7 +43,8 @@ define [
       @policy_model = new PolicyModel(
         id      : id
         urlRoot : @view.options.controller.services.pxcentral
-        digest  : @view.options.controller.user.get('digest')
+        digest  : @digest
+        module  : this
         )
 
       @policy_view = new PolicyView(
@@ -54,12 +56,11 @@ define [
       @policy_model.on 'policy_error', @throwLoadError, this
 
       @messenger = new Messenger(@policy_view, @policy_view.cid)
-      digest     = @view.options.controller.user.get('digest')
       window.pol = @policy_model
 
       @policy_model.fetch({
         headers :
-          'Authorization'   : "Basic #{digest}"
+          'Authorization'   : "Basic #{@digest}"
         success : (model, response, options) =>
           @policy_view.trigger 'loaded'
         error : (model, xhr, options) =>

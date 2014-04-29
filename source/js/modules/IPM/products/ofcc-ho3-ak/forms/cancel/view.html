@@ -39,7 +39,7 @@
                 </div>
                 <div>
                     <label for="{{guid}}_effectiveDate" class="labelRequired">Effective date</label>
-                    <input data-min-date="{{policyEffectiveDate}}" data-max-date="{{policyExpirationDate}}" type="text" id="{{guid}}_effectiveDate" name="effectiveDate" value="{{cancellationEffectiveDate}}" class="datepicker" {{#pendingCancel}}disabled {{/pendingCancel}}required>
+                    <input data-min-date="{{policyInceptionDate}}" data-max-date="{{policyExpirationDate}}" type="text" id="{{guid}}_effectiveDate" name="effectiveDate" value="{{cancellationEffectiveDate}}" class="datepicker" {{#pendingCancel}}disabled {{/pendingCancel}}required>
                 </div>
                 <div>
                     <label for="{{guid}}_comment">Comment</label>

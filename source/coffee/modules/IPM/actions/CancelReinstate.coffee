@@ -22,6 +22,7 @@ define [
         "click input[name=cancel_pending]" : "loadSubAction"
         "click input[name=reinstate]" : "loadSubAction"
         "click input[name=rescind]" : "loadSubAction"
+        "change select[name=reasonCode]" : "handlePendingCancelReasonCodes"
 
       # Metadata about Cancellation types, used in views
       @TRANSACTION_TYPES =
@@ -92,12 +93,12 @@ define [
     # the cancel/nevermind button to get back to CancelReinstate screen
     postProcessSubView : ->
       @postProcessView()
-      cancel = @$el.find('.form_actions a')
-      cancel.off 'click' # need to reset click to prevent stepping on @goHome()
-      cancel.on 'click', (e) =>
+      nevermindButton = @$el.find('.form_actions a')
+      nevermindButton.off 'click' # need to reset click to prevent stepping on @goHome()
+      nevermindButton.one 'click', (e) =>
         e.preventDefault()
-        $(this).off 'click'
-        @fetchTemplates(@MODULE.POLICY, 'cancellation', @processView)
+        policy = @rollbackPolicyModel()
+        @fetchTemplates(policy, 'cancellation', @processView)
 
     # **Process Preview**
     #
@@ -150,6 +151,7 @@ define [
         pendingCancelReasonCodeLabel : null
         policyEffectiveDate          : policy.getEffectiveDate()
         policyExpirationDate         : policy.getExpirationDate()
+        policyInceptionDate          : policy.getInceptionDate()
         cancellationEffectiveDate    : null
 
 
@@ -451,7 +453,47 @@ define [
 
       viewData
 
-    # Date math to get AdvanceNotceDays
+    # **Custom behavior for Pending Cancel reason codes Enum**
+    #
+    # See https://icg360.atlassian.net/browse/ICS-2520
+    # @param `e` _Object_ event object
+    #
+    handlePendingCancelReasonCodes : (e) ->
+      if @CURRENT_SUBVIEW is 'cancel_pending'
+        reasonCode = +e.currentTarget.value # coerce value to Number
+        validators = @TRANSACTION_TYPES.cancel_pending.validators
+        $dateField = @$el.find 'input[name=effectiveDate]'
+
+        switch reasonCode
+          # The following reason codes should clear
+          # & disable the Effective Date field
+          # (dateRange validator must also be removed)
+          when 2, 6, 7, 8, 10, 11, 14
+            delete validators.effectiveDate
+            $dateField
+              .prop({ disabled: true, readonly: false })
+              .removeClass('validation_error')
+              .fadeTo(300, 0.6)
+              .val('')
+
+          # Reason code 16 should set the Effective Date
+          # to the Current Term Effective Date
+          when 16
+            validators.effectiveDate = 'dateRange'
+            $dateField
+              .prop({ disabled: false, readonly: true })
+              .val(@MODULE.POLICY.getEffectiveDate())
+              .removeClass('validation_error')
+              .fadeTo(300, 0.6)
+
+          # Otherwise enable and add the dateRange validator back
+          else
+            validators.effectiveDate = 'dateRange'
+            $dateField
+              .prop({ disabled: false, readonly: false })
+              .fadeTo(300, 1)
+
+    # **Date math to get AdvanceNotceDays**
     #
     # @param `viewData` _object_ model.json values
     # @return _Object_ updated viewData
