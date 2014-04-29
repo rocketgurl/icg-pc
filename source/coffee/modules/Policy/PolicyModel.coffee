@@ -47,12 +47,15 @@ define [
       # Explicitly bind 'private' composable functions to this object
       # scope. These functions are _.composed() into other functions and
       # need their scope forced
-      _.bindAll(this,
-                'getFirstValue',
-                'getIdentifierArray',
-                'checkNull',
-                'baseGetIntervalsOfTerm',
-                'baseGetCustomerData')
+      _.bindAll(this
+                'getFirstValue'
+                'getIdentifierArray'
+                'checkNull'
+                'baseGetIntervalsOfTerm'
+                'baseGetCustomerData'
+                'reset'
+                'refreshFail'
+                )
 
     # Does the actual partial application
     applyFunctions : (model, options) ->
@@ -624,5 +627,64 @@ define [
           'expirationDate': @getExpirationDate(),
           'version': @getPolicyVersion()
           )
+
+    # **Grab the latest version of the Policy**
+    #
+    # @param `view_id` _String_ The cid of the calling view
+    #
+    refresh : (view_id) ->
+      options =
+        url     : @url()
+        type    : 'GET'
+        headers :
+          'Authorization' : "Basic #{@get('digest')}"
+
+      xhr = $.ajax(options)
+      xhr.done @reset(view_id)
+      xhr.fail @refreshFail(view_id)
+
+    # **Load new Policy XML into Model**
+    #
+    # Inject the new policy XML into the model and setModelState()
+    #
+    # @param `view_id` _String_ The cid of the calling view
+    # @return _Func_ Closure to handle jqXHR response
+    #
+    reset : (view_id) ->
+      view_id = view_id || @get('module').policy_view.cid
+
+      return (data, textStatus, jqXHR) =>
+        new_attributes = @parse(data, jqXHR)
+
+        # Swap out Policy XML with new XML, saving the old one
+        new_attributes.prev_document =
+          document : @get('document')
+          json     : @get('json')
+
+        # Model.set() chokes on something in the response object,
+        # so we just jam the values into attributes directly.
+        for key, val of new_attributes
+          @attributes[key] = val
+
+        @trigger 'policy_response', textStatus
+        @Amplify.publish(view_id, 'success',
+          "Policy #{@get('policyId')} refreshed!", 2000)
+
+        @trigger 'change', this
+
+    # **Handle jqXHR failure**
+    #
+    # Throw a hopefully helpful error
+    #
+    # @param `view_id` _String_ The cid of the calling view
+    # @return _Func_ Closure to handle jqXHR response
+    #
+    refreshFail : (view_id) ->
+      view_id = view_id || @get('module').policy_view.cid
+
+      return (jqXHR, textStatus, errorThrown) =>
+        @trigger 'policy_response', textStatus
+        @Amplify.publish(view_id, 'warning',
+          "There was an error refreshing the policy: #{jqXHR.status} (#{errorThrown})", 2000)
 
   PolicyModel
