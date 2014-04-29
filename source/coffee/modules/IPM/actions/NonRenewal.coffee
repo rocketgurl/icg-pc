@@ -177,8 +177,9 @@ define [
       # Management > PendingNonRenewal isn't set yet without a policy refresh,
       # so this is our attempt to show the correct state
       unless reasonCode?
-        lastEvent = _.last policy.find('EventHistory Event')
-        if lastEvent.type is 'PendingNonRenewal'
+        events = policy.find('EventHistory Event')
+        lastEvent = if _.isArray(events) then _.last(events) else events
+        if lastEvent?.type is 'PendingNonRenewal'
           getReasonCode = (item) -> item.name is 'reasonCode'
           reasonCode = _.find(lastEvent.DataItem, getReasonCode).value
 
