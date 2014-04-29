@@ -219,7 +219,13 @@ h2.ipm-action-header {
 
       .button {
             @include simple-color(hue(#2b90d2), saturation(#2b90d2), lightness(#2b90d2));
+            &:disabled {
+                  @include simple-color(hue(#eee), saturation(#eee), lightness(#eee));
+                  color: #aaa;
+            }
       }
+
+      .policy-refresh { margin-left: 10px; }
 
       #updatePreview {
             float: right;
