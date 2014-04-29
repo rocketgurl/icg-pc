@@ -638,6 +638,7 @@ define [
         type    : 'GET'
         headers :
           'Authorization' : "Basic #{@get('digest')}"
+          'Cache-Control' : 'no-cache'
 
       xhr = $.ajax(options)
       xhr.done @reset(view_id)
