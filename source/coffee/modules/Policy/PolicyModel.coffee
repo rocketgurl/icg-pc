@@ -452,7 +452,7 @@ define [
     # @return _String_
     getEffectiveDate : ->
       date = @getTermItem('EffectiveDate')
-      if date != undefined || date != ''
+      if date != undefined && date != ''
         @_stripTimeFromDate date
       else
         false
@@ -463,7 +463,7 @@ define [
     getInceptionDate : ->
       first_term = @getFirstTerm()
       date = first_term['EffectiveDate'] || ''
-      if date != undefined || date != ''
+      if date != undefined && date != ''
         @_stripTimeFromDate date
       else
         false
@@ -473,7 +473,7 @@ define [
     # @return _String_
     getExpirationDate : ->
       date = @getTermItem('ExpirationDate')
-      if date != undefined || date != ''
+      if date != undefined && date != ''
         @_stripTimeFromDate date
       else
         false
