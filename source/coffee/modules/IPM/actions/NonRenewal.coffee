@@ -241,9 +241,7 @@ define [
       unless @values.formValues.comment
         @values.formValues.comment = '__deleteEmptyProperty'
 
-      unless @values.formValues.effectiveDate
-        @values.formValues.effectiveDate = '__deleteEmptyProperty'
-
+      @values.formValues.effectiveDate = @MODULE.POLICY.get('effectiveDate')
       @values.formValues.transactionType = @TRANSACTION_TYPES[@CURRENT_SUBVIEW].label ? false
 
       if !@values.formValues.transactionType
