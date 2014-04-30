@@ -57,7 +57,6 @@ define [
         @route 'Home'
 
     refreshPolicy : ->
-      @handleRefreshButton true
       @insert_loader 'Refreshing Policy...'
       @MODULE.POLICY.refresh @cid
 
