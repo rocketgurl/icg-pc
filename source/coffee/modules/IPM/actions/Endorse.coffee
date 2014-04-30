@@ -144,6 +144,8 @@ define [
       if @apparatchik.isProduct('ofcc-ho3-ca') || @apparatchik.isProduct('ofcc-ho5-ca')
         @addOFCCCABehavhiors()
 
+      @addOFCCHO3AKBehaviors() if @apparatchik.isProduct('ofcc-ho3-ak')
+
     ###
     # Apparatchik!
     # ============
@@ -171,6 +173,12 @@ define [
       ]
 
       @apparatchik.applyEnumDynamics rules
+
+    addOFCCHO3AKBehaviors : ->
+      # ICS-2557 Set InsuranceScore to ReadOnly when PolicyTerm < 3
+      policy_term = @MODULE.POLICY.getPolicyTerm()
+      $insurance_score = @$el.find('input[name=InsuranceScore]')
+      $insurance_score.prop('readonly', policy_term < 3)
 
     addOFCCCABehavhiors : ->
       rules = [
