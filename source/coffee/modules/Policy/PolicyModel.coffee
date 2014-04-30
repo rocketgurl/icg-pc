@@ -447,6 +447,15 @@ define [
       if moment(date)?
         moment(date).format(format)
 
+    # **Get the OpPolicyTerm value** from the last Term
+    # @return _String_
+    getPolicyTerm : ->
+      doc = @get('document')
+      if doc?.length
+        items = doc.find("Terms Term > DataItem[name=OpPolicyTerm]")
+        policy_term = items.last().attr('value')
+      policy_term
+
     # **Determine policy effective date** from XML and convert to
     # standardized format
     # @return _String_
