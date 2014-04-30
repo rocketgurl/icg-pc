@@ -178,6 +178,9 @@ define [
       # so this is our attempt to show the correct state
       unless reasonCode?
         events = policy.find('EventHistory Event')
+
+        # policy.find returns an Array of Events if there are multiple Event
+        # objects but only the one Event object if there is only one
         lastEvent = if _.isArray(events) then _.last(events) else events
         if lastEvent?.type is 'PendingNonRenewal'
           getReasonCode = (item) -> item.name is 'reasonCode'
