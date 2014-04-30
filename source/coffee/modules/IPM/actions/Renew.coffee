@@ -86,6 +86,9 @@ define [
       # Product specific form adjustments
       @recalculateImmediately()
 
+      # Product specific form adjustments
+      @addOFCCHO3AKBehaviors() if @apparatchik.isProduct('ofcc-ho3-ak')
+
     # **Process Preview**
     #
     # Same as processView() but we add an interval obj to viewData to tell the
@@ -276,3 +279,10 @@ define [
           for key, val of @coverage_calculations
             calc_val = value_a * parseFloat val
             @$el.find("input[name=#{key}]").val calc_val
+
+    addOFCCHO3AKBehaviors : ->
+      # ICS-2557 Set InsuranceScore to ReadOnly when PolicyTerm < 2
+      policy_term = @MODULE.POLICY.getPolicyTerm()
+      $insurance_score = @$el.find('input[name=InsuranceScore]')
+      $insurance_score.prop('readonly', policy_term < 2)
+
