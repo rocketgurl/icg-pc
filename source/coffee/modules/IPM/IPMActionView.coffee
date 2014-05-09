@@ -228,7 +228,7 @@ define [
         #
         if el.is 'select'
           if `el.data('value') != val`
-            changed.push name
+            changed.push(name) if val?
 
         # Check on <textarea> fields.
         else if el.is 'textarea'
