@@ -187,19 +187,38 @@ define [
       $insurance_score.prop('readonly', policy_term < 3)
 
     addOFCCHO6SCBehaviors : ->
+      $ITDI = @$el.find('select[name=IncreasedTheftDeductibleIndicator]')
+      $AOPD = @$el.find('select[name=AllOtherPerilsDeductible]')
+
       rules = [
-        field: 'AllOtherPerilsDeductible'
+        field : 'AllOtherPerilsDeductible'
         sideEffects : [
-            target    : 'IncreasedTheftDeductibleIndicator',
+            # Display only when AllOtherPerilsDeductible < 25
             condition : '< 25',
+            target    : 'IncreasedTheftDeductibleIndicator'
             effect    : @apparatchik.showElement
           ,
-            target    : 'TheftDeductibleDisplayI',
-            condition : '< 10',
+            # Display only when AllOtherPerilsDeductible < 10
+            # and IncreasedTheftDeductibleIndicator = 100
+            condition : { and : ['< 10', (-> $ITDI.val() == '100')] }
+            target    : 'TheftDeductibleDisplayI'
             effect    : @apparatchik.showElement
           ,
-            target    : 'TheftDeductibleDisplayII',
-            condition : '>= 10',
+            # Display only when AllOtherPerilsDeductible >= 10
+            # and IncreasedTheftDeductibleIndicator = 100
+            condition : { and : ['>= 10', '< 25', (-> $ITDI.val() == '100')] }
+            target    : 'TheftDeductibleDisplayII'
+            effect    : @apparatchik.showElement
+        ]
+      ,
+        field : 'IncreasedTheftDeductibleIndicator'
+        sideEffects : [
+            condition : { and : ['== 100', (-> $AOPD.val() < 10)] }
+            target    : 'TheftDeductibleDisplayI'
+            effect    : @apparatchik.showElement
+          ,
+            condition : { and : ['== 100', (-> $AOPD.val() >= 10)] }
+            target    : 'TheftDeductibleDisplayII'
             effect    : @apparatchik.showElement
         ]
       ]
