@@ -144,7 +144,13 @@ define [
       if @apparatchik.isProduct('ofcc-ho3-ca') || @apparatchik.isProduct('ofcc-ho5-ca')
         @addOFCCCABehavhiors()
 
-      @addOFCCHO3AKBehaviors() if @apparatchik.isProduct('ofcc-ho3-ak')
+      if @apparatchik.isProduct('ofcc-ho3-ak')
+        @addOFCCHO3AKBehaviors()
+
+      if @apparatchik.isProduct('ofcc-ho6-sc')
+        @adjustOFCCHO6SCForms()
+        @addOFCCHO6SCBehaviors()
+
 
     ###
     # Apparatchik!
@@ -179,6 +185,26 @@ define [
       policy_term = @MODULE.POLICY.getPolicyTerm()
       $insurance_score = @$el.find('input[name=InsuranceScore]')
       $insurance_score.prop('readonly', policy_term < 3)
+
+    addOFCCHO6SCBehaviors : ->
+      rules = [
+        field: 'AllOtherPerilsDeductible'
+        sideEffects : [
+            target    : 'IncreasedTheftDeductibleIndicator',
+            condition : '< 25',
+            effect    : @apparatchik.showElement
+          ,
+            target    : 'TheftDeductibleDisplayI',
+            condition : '< 10',
+            effect    : @apparatchik.showElement
+          ,
+            target    : 'TheftDeductibleDisplayII',
+            condition : '>= 10',
+            effect    : @apparatchik.showElement
+        ]
+      ]
+
+      @apparatchik.applyEnumDynamics rules
 
     addOFCCCABehavhiors : ->
       rules = [
@@ -363,6 +389,22 @@ define [
           effect: @apparatchik.showElement
 
       @apparatchik.applyEnumDynamics rules
+
+    # ICS-2573
+    # For OFCC HO6 SC forms, CoverageD should be calculated by "CoverageC * 0.5"
+    adjustOFCCHO6SCForms : ->
+      coverage_c = @$el.find('input[name=CoverageC]');
+      coverage_d = @$el.find('input[name=CoverageD]');
+
+      if coverage_c == null || coverage_d == null
+        return false
+
+      coverage_c.on('keyup', (e) ->
+        val = parseFloat(e.currentTarget.value)
+        half = val / 2
+        half = half.toFixed(2) if val % 2 != 0
+        coverage_d.val half
+        )
 
     # ICS-458
     # if this is a DP3 NY form and has a Coverage L & Coverage M field we
