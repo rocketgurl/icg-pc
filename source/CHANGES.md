@@ -4,13 +4,12 @@ Updates
 ### 2.5.2
 
 - [ICS-2520](https://icg360.atlassian.net/browse/ICS-2520) Error discovered on Cancel/Reinstate Action From in Policy Central
-- [ICS-2541](https://icg360.atlassian.net/browse/ICS-2541) As a user of Policy Central, I would like to be able to refresh my policy tab so that I can ensure I have the most recent version of the policy    2 - Major - Major loss of function. VALIDATION
+- [ICS-2541](https://icg360.atlassian.net/browse/ICS-2541) As a user of Policy Central, I would like to be able to refresh my policy tab so that I can ensure I have the most recent version of the policy
 - [ICS-2542](https://icg360.atlassian.net/browse/ICS-2542) Add conditional logic to ofcc-ho3-ca endorse forms
 - [ICS-2549](https://icg360.atlassian.net/browse/ICS-2549) Update fsic endorse forms
 - [ICS-2552](https://icg360.atlassian.net/browse/ICS-2552) Update ofcc-la-ho3-lap endorse forms
 - [ICS-2553](https://icg360.atlassian.net/browse/ICS-2553) Unable to process cancellation to prior term
 - [ICS-2557](https://icg360.atlassian.net/browse/ICS-2557) Add conditional logic to ofcc-ho3-ak forms
-
 
 ### 2.5.1
 
@@ -160,4 +159,4 @@ Updates:
 
 Bug fixes:
 
--	Corrected ID collisions in IPM forms which prevented correct use of datepicker.
+-	Corrected ID collisions in IPM forms which prevented correct use of datepicker
