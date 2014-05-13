@@ -28,6 +28,9 @@ define [
     
     Modal    : new ModalHelper()
 
+    # give all views access to the favicon start / stop methods
+    favicon  : Helpers.faviconLoader()
+
     # Simple logger pubsub
     logger : (msg) ->
       @Amplify.publish 'log', msg

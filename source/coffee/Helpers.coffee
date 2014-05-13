@@ -2,8 +2,9 @@ define [
   'jquery',
   'underscore',
   'base64',
-  'loader'
-], ($, _, Base64, CanvasLoader) ->
+  'loader',
+  'favicon'
+], ($, _, Base64, CanvasLoader, Favicon) ->
 
   Helpers =
 
@@ -52,6 +53,21 @@ define [
       cl.setRange 0.9
       cl.show()
       return cl
+
+    # Simple start and stop methods for animating favicon
+    # loading icon. 250ms seems to be the smallest interval
+    # we can use without getting choppy
+    faviconLoader : ->
+      originalTitle = document.title
+      favicon = new Favicon([
+        '/ico/gear-0.png'
+        '/ico/gear-1.png'
+        '/ico/gear-2.png'
+      ], 250)
+      return {
+        start : (optDocTitle) -> favicon.animate(optDocTitle)
+        stop : -> favicon.set('/favicon.ico', originalTitle)
+      }
 
     # Simple wrapper on setTimeout
     callback_delay : (ms, func) =>

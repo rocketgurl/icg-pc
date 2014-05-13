@@ -67,6 +67,7 @@ define [
       if @loaded_state
         # This is our first load, so show the SWF
         if @render()
+          @favicon.start()
           @show_overview()
           @teardown_ipmchanges()
           @teardown_quoting()          
@@ -367,11 +368,24 @@ define [
     flash_callback : (e) ->
       if not e.success or e.success is not true
         @Amplify.publish(@cid, 'warning', "We could not launch the Flash player to load the summary. Sorry.")
+        @favicon.stop()
         return false
+
+      @poll_swf(e.ref, @favicon.stop) if e.ref?
 
       # Grab the SWF ready() function for ourselves!
       window.policyViewInitSWF = =>
         @initialize_swf()
+
+    # Set up a timer to periodically check value of swfObj.PercentLoaded()
+    # Fire the callback when PercentLoaded() == 100
+    poll_swf : (swfObj, callback) ->
+      if swfObj.PercentLoaded?
+        loadCheckInterval = setInterval(( ->
+          if swfObj.PercentLoaded() == 100
+            clearInterval(loadCheckInterval)
+            callback()
+        ), 1000)
 
     # When the SWF calls ready() this is fired and passed
     # policy data along

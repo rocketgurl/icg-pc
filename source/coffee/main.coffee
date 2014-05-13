@@ -25,6 +25,7 @@ require
     marked          : 'lib/marked'
     chosen          : 'lib/chosen.jquery'
     Apparatchik     : 'lib/Apparatchik'
+    favicon         : 'lib/favicon'
   priority: ['jquery','xml2json','json']
   shim:
       'jquery' :
