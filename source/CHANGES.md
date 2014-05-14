@@ -1,6 +1,14 @@
 Updates
 -------
 
+### 2.5.3
+
+- [ICS-2521](https://icg360.atlassian.net/browse/ICS-2521) Update Favicon to show "working" state
+- [ICS-2533](https://icg360.atlassian.net/browse/ICS-2533) Non-Renewal Actions Need a Functioning Comments Box
+- [ICS-2537](https://icg360.atlassian.net/browse/ICS-2537) Fix Policy Transaction Request for Issuance - Effective Date
+- [ICS-2573](https://icg360.atlassian.net/browse/ICS-2573) Add conditional logic to ofcc-ho6-sc endorse forms
+- [ICS-2575](https://icg360.atlassian.net/browse/ICS-2575) Issue with EffectiveDate greater than EffectiveDatePolicyTerm
+
 ### 2.5.2
 
 - [ICS-2520](https://icg360.atlassian.net/browse/ICS-2520) Error discovered on Cancel/Reinstate Action From in Policy Central
