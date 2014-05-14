@@ -162,6 +162,7 @@ var Apparatchik = (function(){
     var value = (_.isEmpty(val) || _.isUndefined(val)) ? '0' : val,
         cond = (_.isNull(condition)) ? '== 0' : condition;
     if (condition === 'onchange') return true;
+    if (_.isFunction(condition)) { return condition(); }
     if (_.isString(condition)) { return (eval(value + cond)); }
     if (_.isObject(condition)) {
       return this.compileConditions(value, condition);
@@ -198,8 +199,14 @@ var Apparatchik = (function(){
    * @return {String}
    */
   Apparatchik.prototype.compileOperator = function(operator, val, conditions) {
-    var op = " " + operator + " ";
-    return "(" + _.map(conditions, function(c){ return val + c; }).join(op) + ")";
+    var op = " " + operator + " ",
+        conditions = _.map(conditions, function (condition) {
+          // the condition can optionally be a function that returns
+          // a boolean. e.g. function () { return $el.val() == '100'; }
+          if (_.isFunction(condition)) return condition();
+          return val + condition;
+        });
+    return "(" + conditions.join(op) + ")";
   };
 
   // Use partial application to define specific string compilers

@@ -144,7 +144,13 @@ define [
       if @apparatchik.isProduct('ofcc-ho3-ca') || @apparatchik.isProduct('ofcc-ho5-ca')
         @addOFCCCABehavhiors()
 
-      @addOFCCHO3AKBehaviors() if @apparatchik.isProduct('ofcc-ho3-ak')
+      if @apparatchik.isProduct('ofcc-ho3-ak')
+        @addOFCCHO3AKBehaviors()
+
+      if @apparatchik.isProduct('ofcc-ho6-sc')
+        @adjustOFCCHO6SCForms()
+        @addOFCCHO6SCBehaviors()
+
 
     ###
     # Apparatchik!
@@ -179,6 +185,45 @@ define [
       policy_term = @MODULE.POLICY.getPolicyTerm()
       $insurance_score = @$el.find('input[name=InsuranceScore]')
       $insurance_score.prop('readonly', policy_term < 3)
+
+    addOFCCHO6SCBehaviors : ->
+      $ITDI = @$el.find('select[name=IncreasedTheftDeductibleIndicator]')
+      $AOPD = @$el.find('select[name=AllOtherPerilsDeductible]')
+
+      rules = [
+        field : 'AllOtherPerilsDeductible'
+        sideEffects : [
+            # Display only when AllOtherPerilsDeductible < 25
+            condition : '< 25',
+            target    : 'IncreasedTheftDeductibleIndicator'
+            effect    : @apparatchik.showElement
+          ,
+            # Display only when AllOtherPerilsDeductible < 10
+            # and IncreasedTheftDeductibleIndicator = 100
+            condition : { and : ['< 10', (-> $ITDI.val() == '100')] }
+            target    : 'TheftDeductibleDisplayI'
+            effect    : @apparatchik.showElement
+          ,
+            # Display only when AllOtherPerilsDeductible >= 10
+            # and IncreasedTheftDeductibleIndicator = 100
+            condition : { and : ['>= 10', '< 25', (-> $ITDI.val() == '100')] }
+            target    : 'TheftDeductibleDisplayII'
+            effect    : @apparatchik.showElement
+        ]
+      ,
+        field : 'IncreasedTheftDeductibleIndicator'
+        sideEffects : [
+            condition : { and : ['== 100', (-> $AOPD.val() < 10)] }
+            target    : 'TheftDeductibleDisplayI'
+            effect    : @apparatchik.showElement
+          ,
+            condition : { and : ['== 100', (-> $AOPD.val() >= 10)] }
+            target    : 'TheftDeductibleDisplayII'
+            effect    : @apparatchik.showElement
+        ]
+      ]
+
+      @apparatchik.applyEnumDynamics rules
 
     addOFCCCABehavhiors : ->
       rules = [
@@ -363,6 +408,22 @@ define [
           effect: @apparatchik.showElement
 
       @apparatchik.applyEnumDynamics rules
+
+    # ICS-2573
+    # For OFCC HO6 SC forms, CoverageD should be calculated by "CoverageC * 0.5"
+    adjustOFCCHO6SCForms : ->
+      coverage_c = @$el.find('input[name=CoverageC]');
+      coverage_d = @$el.find('input[name=CoverageD]');
+
+      if coverage_c == null || coverage_d == null
+        return false
+
+      coverage_c.on('keyup', (e) ->
+        val = parseFloat(e.currentTarget.value)
+        half = val / 2
+        half = half.toFixed(2) if val % 2 != 0
+        coverage_d.val half
+        )
 
     # ICS-458
     # if this is a DP3 NY form and has a Coverage L & Coverage M field we

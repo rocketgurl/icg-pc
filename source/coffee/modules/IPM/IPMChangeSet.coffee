@@ -81,7 +81,10 @@ define [
     # @return _Array_ of key:value objects for template
     #
     getChangedDataItems : (values, vocabTerms) ->
-      changed    = values.changedValues
+
+      # including effectiveDate in changes causes problems down the line
+      # so we filter it out here, because we don't like problems
+      changed    = _.without(values.changedValues, 'effectiveDate')
       keys       = _.intersection(_.keys(vocabTerms), changed)
       change_set = _.pick(values.formValues, keys)
       out        = []

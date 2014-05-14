@@ -149,6 +149,7 @@ define [
     fetch : (query) ->
       # Drop the loading UI in place
       @loader_ui(true)
+      @favicon.start() if @fetch_count > 0
       @policies.reset() # wipe out the collection models
 
       # If we can't get the user's credentials we try up to 10
@@ -160,12 +161,12 @@ define [
       @policies.fetch(
         data    : query
         headers :
-          # 'X-Authorization' : "Basic #{digest}"
           'Authorization'   : "Basic #{digest}"
         success : (collection, resp) =>
           #check for empty requests
           if collection.models.length == 0
             @loader_ui(false)
+            @favicon.stop()
             @Amplify.publish @cid, 'notice', "No policies found when searching for #{query.q}", 3000
             return
 
@@ -173,6 +174,7 @@ define [
 
           # Remove loader UI
           @loader_ui(false)
+          @favicon.stop()
 
           # Set the URL params
           @params = 
@@ -185,10 +187,13 @@ define [
 
           # Need to let the footer know that we changed height
           @module.trigger 'workspace.rendered'
+          @fetch_count += 1
         
         error : (collection, resp) =>
           @Amplify.publish @cid, 'warning', "There was a problem with this request: #{resp.status} - #{resp.statusText}"
           @loader_ui(false)
+          favicon.stop()
+          @fetch_count += 1
       )
 
     # Reset active state on elements
