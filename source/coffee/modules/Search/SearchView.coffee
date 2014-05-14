@@ -149,7 +149,7 @@ define [
     fetch : (query) ->
       # Drop the loading UI in place
       @loader_ui(true)
-      @favicon.start('Searching...') if @fetch_count > 0
+      @favicon.start() if @fetch_count > 0
       @policies.reset() # wipe out the collection models
 
       # If we can't get the user's credentials we try up to 10
