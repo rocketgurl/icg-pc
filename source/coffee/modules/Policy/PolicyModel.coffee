@@ -508,7 +508,7 @@ define [
     #
     getTermDataItemValue : (name) ->
       doc = @get('document')
-      if doc?
+      if doc? && !_.isEmpty('doc')
         value = doc.find("Terms Term DataItem[name=Op#{name}]").attr('value') || doc.find("Terms Term DataItem[name=#{name}]").attr('value')
       value
 
