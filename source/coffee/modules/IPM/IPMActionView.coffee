@@ -7,6 +7,7 @@ define [
 ], (BaseView, Messenger, IPMChangeSet, IPMFormValidation, Apparatchik) ->
 
   ###
+    Still relevant?
     ACTIONVIEWS TODO:
       Write off charges
       Issue (automatic)
