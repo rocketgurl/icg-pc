@@ -7,6 +7,7 @@ define [
 ], (BaseView, Messenger, IPMChangeSet, IPMFormValidation, Apparatchik) ->
 
   ###
+    Still relevant?
     ACTIONVIEWS TODO:
       Write off charges
       Issue (automatic)
@@ -249,9 +250,10 @@ define [
     # @param `vocabTerms` _Object_ model.json
     # @param `view` _HTML Template_
     # @param `nocache` _Boolean_ on true do not store data in cache
+    # @param `term` _Object_ optional term to override the default Term in getTermDataItemValues
     # @return _Array_ [viewData, view]
     #
-    processViewData : (vocabTerms, view, nocache) ->
+    processViewData : (vocabTerms, view, nocache, term = null) ->
       if !nocache?
         @tpl_cache[@PARENT_VIEW.view_state] =
           model : vocabTerms
@@ -260,7 +262,7 @@ define [
       viewData = {}
 
       if vocabTerms?
-        viewData = @MODULE.POLICY.getTermDataItemValues(vocabTerms)
+        viewData = @MODULE.POLICY.getTermDataItemValues(vocabTerms, term)
         viewData = @MODULE.POLICY.getEnumerations(viewData, vocabTerms)
 
       viewData = _.extend(
