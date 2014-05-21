@@ -14,7 +14,10 @@ define [
     tab        : null
 
     initialize : (options) ->
-      @$tab_el      = options.controller.$workspace_tabs
+      _.bindAll this, 'positionFooter'
+
+      controller    = @controller = options.controller
+      @$tab_el      = controller.$workspace_tabs
       @template     = options.template if options.template?
       @template_tab = if options.template_tab? then options.template_tab else $('#tpl-workspace-tab').html()
       @params       = options.params ? null
@@ -27,8 +30,13 @@ define [
       @app   = options.app
       @el.id = @app.app # Set container id to app name
 
+      # Need to debounce this function. When called by policy_view.view_resize
+      # there's some weirdness with event collision happening that kills the
+      # swf when it's initially loading
+      @.on 'view.resized', _.debounce(@positionFooter, 0)
+
       # Add to the stack
-      @options.controller.trigger 'stack_add', @
+      controller.trigger 'stack_add', @
 
       # Initialize module
       require ["modules/#{@options.module_type}"], (Module) =>
@@ -139,6 +147,9 @@ define [
       @options.controller.launch_module module, app
 
     positionFooter : ->
-      $('#footer-main').css(
-          'marginTop' : @$el.height() + 20
-        )
+      active_view = @controller.active_view
+
+      if active_view?.cid == @cid
+        $('#footer-main').css(
+            'marginTop' : @$el.height() + 20
+          )

@@ -718,9 +718,9 @@ define [
     toggle_apps : (app_name) ->
       for view in @workspace_stack.stack
         if app_name == view.app.app
-          view.activate()
           @active_view = view
           @set_active_url app_name
+          view.activate()
           true
         else
           view.deactivate()
