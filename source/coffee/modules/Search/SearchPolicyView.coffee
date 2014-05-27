@@ -17,13 +17,11 @@ define [
       @parent = options.container.$el
       @target = @parent.find('table.module-search tbody')
       @module = options.model.collection.container.module
+      @el.id  = "#{@data.identifiers.policyId}-#{@cid}"
       @render()
 
     # Attach view to table
     render : ->
-      @$el.attr
-        id : @data.identifiers.InsightPolicyId
-
       # Chomp dates
       @data.effectiveDate = @data.effectiveDate.substr(0,10) if @data.effectiveDate?
 
