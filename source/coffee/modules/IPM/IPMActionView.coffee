@@ -215,9 +215,10 @@ define [
     getChangedValues : (form) ->
       changed = []
       form.find(':input').each (i, element) ->
-        el   = $(element)
-        val  = el.val()
-        name = el.attr 'name'
+        el     = $(element)
+        name   = el.attr 'name'
+        oldval = el.data 'value'
+        newval = el.val()
 
         # Check on data-value of <select> element
         #
@@ -228,18 +229,18 @@ define [
         # This could cause an issue going forward, hence the note. - DN
         #
         if el.is 'select'
-          if `el.data('value') != val`
-            changed.push(name) if val?
+          unless oldval == '' && newval == '0'
+            changed.push(name) if newval? && `el.data('value') != newval`
 
         # Check on <textarea> fields.
         else if el.is 'textarea'
-          if val.trim() != ''
+          if newval.trim() != ''
             changed.push name
-          if val.trim() == '' && el.data('hadValue')
+          if newval.trim() == '' && el.data('hadValue')
             changed.push name
 
         else
-          if val != element.getAttribute('value')
+          if newval != element.getAttribute('value')
             changed.push name
 
       changed
