@@ -60,12 +60,10 @@ define [
       @values.formValues.transactionType = 'MortgageeChanges'
       @values.formValues.id              = @MODULE.POLICY.getPolicyId()
 
-      # Manually filter out "0"s from unchanges State <select>s
       states = _.filter(_.keys(@values.formValues), (k) -> k.match(/State/))
       for state in states
         if @values.formValues[state] == "0"
           @values.formValues[state] = ""
-          @values.changedValues = _.reject(@values.changedValues, (i) -> i == state )
 
       # Assemble the ChangeSet XML and send to server
       @ChangeSet.commitChange(

@@ -264,6 +264,7 @@ define [
       offset = offset ? @POLICY_HEADER_OFFSET
       element = element ? @$el.find("#policy-workspace-#{@cid}")
       @Helpers.resize_element(element, offset, scroll)
+      @controller.active_view?.trigger 'view.resized'
 
     resize_workspace : (element, workspace) ->
       workspace = workspace ? @$el.find("#policy-workspace-#{@cid}")

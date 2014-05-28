@@ -1067,11 +1067,33 @@
 				
 
 		<div>
+			<label for="{{guid}}_PersonalPropertyReplacementCost" class="labelRequired">Personal Property Replacement Cost <i>PersonalPropertyReplacementCost</i></label>
+			<select id="{{guid}}_PersonalPropertyReplacementCost" name="PersonalPropertyReplacementCost" data-value="{{PersonalPropertyReplacementCost}}"  required >
+				{{#EnumsPersonalPropertyReplacementCost}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsPersonalPropertyReplacementCost}}
+			</select>
+		</div>
+
+
+
+		<div>
 			<label for="{{guid}}_FunctionalReplacementCost" class="labelRequired">Functional Replacement Cost For Dwelling <i>FunctionalReplacementCost</i></label>
 			<select id="{{guid}}_FunctionalReplacementCost" name="FunctionalReplacementCost" data-value="{{FunctionalReplacementCost}}"  required >
 				{{#EnumsFunctionalReplacementCost}}
 				<option value="{{value}}">{{label}}</option>
 				{{/EnumsFunctionalReplacementCost}}
+			</select>
+		</div>
+
+
+
+		<div>
+			<label for="{{guid}}_AdditionalAmountsOfInsurance" class="labelRequired">Dwelling Additional Amounts Of Insurance <i>AdditionalAmountsOfInsurance</i></label>
+			<select id="{{guid}}_AdditionalAmountsOfInsurance" name="AdditionalAmountsOfInsurance" data-value="{{AdditionalAmountsOfInsurance}}"  required >
+				{{#EnumsAdditionalAmountsOfInsurance}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsAdditionalAmountsOfInsurance}}
 			</select>
 		</div>
 

@@ -618,7 +618,7 @@ define [
     # If there are other apps persisted in localStorage we need
     # to launch those as well
     check_persisted_apps : ->
-      if !@workspace_state?
+      if !@workspace_state? || _.isEmpty(@workspace_state)
         return false
       saved_apps = @workspace_state.get 'apps'
       if saved_apps?
@@ -718,9 +718,9 @@ define [
     toggle_apps : (app_name) ->
       for view in @workspace_stack.stack
         if app_name == view.app.app
-          view.activate()
           @active_view = view
           @set_active_url app_name
+          view.activate()
           true
         else
           view.deactivate()

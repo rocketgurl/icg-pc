@@ -1014,6 +1014,17 @@
 
 
 		<div>
+			<label for="{{guid}}_ScreenedEnclosureLimit" >Swimming Pool and/or Patio Limited Coverage <i>ScreenedEnclosureLimit</i></label>
+			<select id="{{guid}}_ScreenedEnclosureLimit" name="ScreenedEnclosureLimit" data-value="{{ScreenedEnclosureLimit}}"   >
+				{{#EnumsScreenedEnclosureLimit}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsScreenedEnclosureLimit}}
+			</select>
+		</div>
+
+
+
+		<div>
 			<label for="{{guid}}_IncreasedOrdinanceLimit" class="labelRequired">Ordinance Or Law <i>IncreasedOrdinanceLimit</i></label>
 			<select id="{{guid}}_IncreasedOrdinanceLimit" name="IncreasedOrdinanceLimit" data-value="{{IncreasedOrdinanceLimit}}"  required >
 				{{#EnumsIncreasedOrdinanceLimit}}

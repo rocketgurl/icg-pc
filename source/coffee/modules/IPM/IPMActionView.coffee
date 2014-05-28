@@ -7,6 +7,7 @@ define [
 ], (BaseView, Messenger, IPMChangeSet, IPMFormValidation, Apparatchik) ->
 
   ###
+    Still relevant?
     ACTIONVIEWS TODO:
       Write off charges
       Issue (automatic)
@@ -214,9 +215,10 @@ define [
     getChangedValues : (form) ->
       changed = []
       form.find(':input').each (i, element) ->
-        el   = $(element)
-        val  = el.val()
-        name = el.attr 'name'
+        el     = $(element)
+        name   = el.attr 'name'
+        oldval = el.data 'value'
+        newval = el.val()
 
         # Check on data-value of <select> element
         #
@@ -227,18 +229,18 @@ define [
         # This could cause an issue going forward, hence the note. - DN
         #
         if el.is 'select'
-          if `el.data('value') != val`
-            changed.push(name) if val?
+          unless oldval == '' && newval == '0'
+            changed.push(name) if newval? && `el.data('value') != newval`
 
         # Check on <textarea> fields.
         else if el.is 'textarea'
-          if val.trim() != ''
+          if newval.trim() != ''
             changed.push name
-          if val.trim() == '' && el.data('hadValue')
+          if newval.trim() == '' && el.data('hadValue')
             changed.push name
 
         else
-          if val != element.getAttribute('value')
+          if newval != element.getAttribute('value')
             changed.push name
 
       changed
@@ -249,9 +251,10 @@ define [
     # @param `vocabTerms` _Object_ model.json
     # @param `view` _HTML Template_
     # @param `nocache` _Boolean_ on true do not store data in cache
+    # @param `term` _Object_ optional term to override the default Term in getTermDataItemValues
     # @return _Array_ [viewData, view]
     #
-    processViewData : (vocabTerms, view, nocache) ->
+    processViewData : (vocabTerms, view, nocache, term = null) ->
       if !nocache?
         @tpl_cache[@PARENT_VIEW.view_state] =
           model : vocabTerms
@@ -260,7 +263,7 @@ define [
       viewData = {}
 
       if vocabTerms?
-        viewData = @MODULE.POLICY.getTermDataItemValues(vocabTerms)
+        viewData = @MODULE.POLICY.getTermDataItemValues(vocabTerms, term)
         viewData = @MODULE.POLICY.getEnumerations(viewData, vocabTerms)
 
       viewData = _.extend(

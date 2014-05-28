@@ -77,8 +77,8 @@ define [
         app       : 'search'
         app_label : 'search'
         tab       : '#tpl-workspace-tab-search'
-        params    : 
-          renewalreviewrequired : true 
+        params    : null
+          # renewalreviewrequired : true
 
     policy_search_params :
       required : false

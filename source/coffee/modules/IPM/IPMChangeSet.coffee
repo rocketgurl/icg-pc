@@ -283,6 +283,9 @@ define [
         {{#effectiveDate}}
         <EffectiveDate>{{effectiveDate}}</EffectiveDate>
         {{/effectiveDate}}
+        {{#appliedDate}}
+        <AppliedDate>{{appliedDate}}</AppliedDate>
+        {{/appliedDate}}
         {{>body}}
       </TransactionRequest>
     """

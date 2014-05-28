@@ -1763,6 +1763,28 @@
 			<input type="text" id="{{guid}}_Insured1BirthDate" name="Insured1BirthDate" value="{{Insured1BirthDate}}" class="datepicker"  >
 		</div>
 
+
+		<div>
+			<label for="{{guid}}_LapseInCoverage" class="labelRequired">Lapse in Coverage <i>LapseInCoverage</i></label>
+			<select id="{{guid}}_LapseInCoverage" name="LapseInCoverage" data-value="{{LapseInCoverage}}"  required >
+				{{#EnumsLapseInCoverage}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsLapseInCoverage}}
+			</select>
+		</div>
+
+
+
+		<div>
+			<label for="{{guid}}_LapseInCoveragePeriod" >Lapse in Coverage Period <i>LapseInCoveragePeriod</i></label>
+			<select id="{{guid}}_LapseInCoveragePeriod" name="LapseInCoveragePeriod" data-value="{{LapseInCoveragePeriod}}"   >
+				{{#EnumsLapseInCoveragePeriod}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsLapseInCoveragePeriod}}
+			</select>
+		</div>
+
+
 			</div>
 		</fieldset>
 
@@ -1773,7 +1795,7 @@
 
 		<div>
 			<label for="{{guid}}_NumberOfClaims" class="labelRequired">Number Of Claims In Last 6 Years <i>NumberOfClaims</i></label>
-			<select id="{{guid}}_NumberOfClaims" name="NumberOfClaims" data-value="{{NumberOfClaims}}"  required disabled="disabled">
+			<select id="{{guid}}_NumberOfClaims" name="NumberOfClaims" data-value="{{NumberOfClaims}}"  required >
 				{{#EnumsNumberOfClaims}}
 				<option value="{{value}}">{{label}}</option>
 				{{/EnumsNumberOfClaims}}

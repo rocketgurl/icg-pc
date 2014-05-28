@@ -36,7 +36,8 @@ define [
     # @return _Array_ [viewData object, view object]
     #
     processViewData : (vocabTerms, view) =>
-      super vocabTerms, view
+      additionalInterestData = @MODULE.POLICY.get 'additionalInterestData'
+      super vocabTerms, view, false, additionalInterestData
 
     # Apply behaviors to form after rendering
     postProcessView : ->
