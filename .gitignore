@@ -7,3 +7,4 @@ source/js/modules/*/*.js
 source/js/modules/*/*/*.js
 node_modules/
 .DS_Store
+source/css/bootstrap/*
