@@ -1,9 +1,4 @@
 // Policy Central 2.0 - SCSS Globals
-
-// Bootstrap variables
-$body-bg: inherit !default;
-
-@import "bootstrap";
 @import "susy";
 @import "compass";
 
@@ -14,38 +9,48 @@ $experimental-support-for-svg: true;
 // http://susy.oddbird.net
 // Using a 12-col very fluid layout
 //
-$total-columns  : 12;
-$gutter-width   : 1em;
-$grid-padding   : 1.5%;
+$total-columns: 12;
+$gutter-width: 1em;
+$grid-padding: 1.5%;
 $container-style: fluid;
 $container-width: 100%;
 
 // Core color definitions
-$blue      : #165788; // Insight blue
-$darkblue  : #002857; // Good for text
-$lightgray : #ededed; // Background gray
-$darkgray  : #696969; // Good for text
-$orange    : #fe8400;
-$darkgreen : #4d6c00;
-$white     : #fff;
-$colblue   : #007ac9; // Sortable column headers & such
-$rowselect : #ffccff;
+$blue: #165788;
 
-$yellow      : #fcd450;
-$green       : #247200;
-$green-light : #97ee6f;
-$red         : #981e32;
+// Insight blue
+$darkblue: #002857;
+
+// Good for text
+$lightgray: #ededed;
+
+// Background gray
+$darkgray: dimgrey;
+
+// Good for text
+$orange: #fe8400;
+$darkgreen: #4d6c00;
+$white: white;
+$colblue: #007ac9;
+
+// Sortable column headers & such
+$rowselect: #ffccff;
+
+$yellow: #fcd450;
+$green: #247200;
+$green-light: #97ee6f;
+$red: #981e32;
 
 // Flash Msg. Colors
-$success-text   : #fff;
-$success-base   : lighten($green, 10);
-$success-bottom : lighten($green, 5);
-$notice-text    : darken($yellow, 43);
-$notice-base    : $yellow;
-$notice-bottom  : darken($yellow, 3);
-$warning-text   : #ffffff;
-$warning-base   : $red;
-$warning-bottom : $red;
+$success-text: white;
+$success-base: lighten($green, 10);
+$success-bottom: lighten($green, 5);
+$notice-text: darken($yellow, 43);
+$notice-base: $yellow;
+$notice-bottom: darken($yellow, 3);
+$warning-text: white;
+$warning-base: $red;
+$warning-bottom: $red;
 
 // Core font stacks
 @mixin sans {
@@ -54,7 +59,7 @@ $warning-bottom : $red;
 
 // Generate pixel & rem size (for IE & everyone else)
 @function size($pixels) {
-  $rem : $pixels / 10;
+  $rem: $pixels / 10;
   @return #{$rem}rem;
 }
 
@@ -72,67 +77,66 @@ $warning-bottom : $red;
   box-shadow: darken($lightgray, 20) 0 -1px 0;
 }
 
-@mixin emboss($color : #ffffff) {
+@mixin emboss($color: white) {
   text-shadow: 0 1px $color;
 }
 
 // Buttons
-@mixin simple-color ($base-hue, $base-saturation, $base-lightness) {
-  $start-gradient : hsl($base-hue, $base-saturation, $base-lightness);
-  $stop-gradient  : saturate(darken(hsl($base-hue, $base-saturation, $base-lightness), 11%), 9%);
-  $border         : saturate(darken(hsl($base-hue, $base-saturation, $base-lightness), 14%), 9%);
-  $inset-shadow   : desaturate(lighten(hsl($base-hue, $base-saturation, $base-lightness), 14%), 8%);
-  $text-shadow    : saturate(darken(hsl($base-hue, $base-saturation, $base-lightness), 18%), 15%);
-  $color          : hsl(0, 0, 100%);
-
+@mixin simple-color($base-hue, $base-saturation, $base-lightness) {
+  $start-gradient: hsl($base-hue, $base-saturation, $base-lightness);
+  $stop-gradient: saturate(darken(hsl($base-hue, $base-saturation, $base-lightness), 11%), 9%);
+  $border: saturate(darken(hsl($base-hue, $base-saturation, $base-lightness), 14%), 9%);
+  $inset-shadow: desaturate(lighten(hsl($base-hue, $base-saturation, $base-lightness), 14%), 8%);
+  $text-shadow: saturate(darken(hsl($base-hue, $base-saturation, $base-lightness), 18%), 15%);
+  $color: hsl(0, 0, 100%);
   @if $base-lightness > 70% {
     $color: hsl(0, 0, 20%);
     $text-shadow: saturate(lighten(hsl($base-hue, $base-saturation, $base-lightness), 4%), 10%);
   }
-
   @include background-image(linear-gradient($start-gradient, $stop-gradient));
-  border      : 1px solid $border;
-  @include border-radius (3px);
-  @include box-shadow (inset 0 1px 0 0 $inset-shadow);
-  color       : $color;
-  font-weight : bold;
-  padding     : 8px 12px !important;
-  text-shadow : 0 1px 0 $text-shadow;
-  text-align  : center;
+  border: 1px solid $border;
+  @include border-radius(3px);
+  @include box-shadow(inset 0 1px 0 0 $inset-shadow);
+  color: $color;
+  font-weight: bold;
+  padding: 9px 12px;
+  text-shadow: 0 1px 0 $text-shadow;
+  text-align: center;
   @include sans;
   @include font-size(14);
-
   &:hover {
-  $start-gradient : desaturate(darken(hsl($base-hue, $base-saturation, $base-lightness), 5%), 4%);
-  $stop-gradient  : saturate(darken(hsl($base-hue, $base-saturation, $base-lightness), 14%), 8%);
-  $inset-shadow   : desaturate(lighten(hsl($base-hue, $base-saturation, $base-lightness), 5%), 7%);
-
-  @include background-image(linear-gradient($start-gradient, $stop-gradient));
-  @include box-shadow (inset 0 1px 0 0 $inset-shadow);
-  cursor: pointer;
+    $start-gradient: desaturate(darken(hsl($base-hue, $base-saturation, $base-lightness), 5%), 4%);
+    $stop-gradient: saturate(darken(hsl($base-hue, $base-saturation, $base-lightness), 14%), 8%);
+    $inset-shadow: desaturate(lighten(hsl($base-hue, $base-saturation, $base-lightness), 5%), 7%);
+    @include background-image(linear-gradient($start-gradient, $stop-gradient));
+    @include box-shadow(inset 0 1px 0 0 $inset-shadow);
+    cursor: pointer;
   }
-
   &:active {
-  $border       : saturate(darken(hsl($base-hue, $base-saturation, $base-lightness), 14%), 9%);
-  $inset-shadow : saturate(darken(hsl($base-hue, $base-saturation, $base-lightness), 17%), 7%);
-
-  @include box-shadow (inset 0 0 8px 4px $inset-shadow, inset 0 0 8px 4px $inset-shadow, 0 1px 1px 0 #eee);
-  border: 1px solid $border;
+    $border: saturate(darken(hsl($base-hue, $base-saturation, $base-lightness), 14%), 9%);
+    $inset-shadow: saturate(darken(hsl($base-hue, $base-saturation, $base-lightness), 17%), 7%);
+    @include box-shadow(inset 0 0 8px 4px $inset-shadow, inset 0 0 8px 4px $inset-shadow, 0 1px 1px 0 #eeeeee);
+    border: 1px solid $border;
   }
 }
 
 @mixin clearfix {
   &:before,
   &:after {
-    content: " "; // 1
-    display: table; // 2
+    content: " ";
+    // 1
+    display: table;
+    // 2
+ 
   }
   &:after {
     clear: both;
   }
 }
 
-.clearfix { @include clearfix; }
+.clearfix {
+  @include clearfix;
+}
 
 // Remove outline around links
 a {
