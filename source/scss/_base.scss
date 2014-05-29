@@ -1,4 +1,9 @@
 // Policy Central 2.0 - SCSS Globals
+
+// Bootstrap variables
+$body-bg: inherit !default;
+
+@import "bootstrap";
 @import "susy";
 @import "compass";
 
