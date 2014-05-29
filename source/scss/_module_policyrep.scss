@@ -1,56 +1,52 @@
 .policyrep-container {
-	$container-width: 100%;
-	$gutter-width: 1em;
-	$grid-padding: 1.8%;
-	@include container;
-	border: #ddd 1px solid;
-	background-color: #f4f4f4;
-
-	h1 {
-		font-weight: bold;
-		color: $darkblue;
-		@include font-size(24);
-		@include emboss;
-		margin: 20px 0 0 0;
-	}
-
-	h2 {
-		font-weight: bold;
-		color: $darkgray;
-		@include font-size(16);
-		margin: 10px 0 10px 0;
-	}
+  $container-width: 100%;
+  $gutter-width: 1em;
+  $grid-padding: 1.8%;
+  @include container;
+  border: #ddd 1px solid;
+  background-color: #f4f4f4;
+  h1 {
+    font-weight: bold;
+    color: $darkblue;
+    @include font-size(24);
+    @include emboss;
+    margin: 20px 0 0 0;
+  }
+  h2 {
+    font-weight: bold;
+    color: $darkgray;
+    @include font-size(16);
+    margin: 10px 0 10px 0;
+  }
 }
 
 .policyrep-list {
-	margin: 40px 0;
-	li {
-		margin: 0 0 30px 0;
-		a {
-			@include font-size(18);
-			color: $blue;
-			text-decoration: none;
-		}
-		p {
-			@include font-size(14);
-			color: $darkgray;
-			margin: 5px 0;
-		}
-	}
-
-	h3 {
-		@include font-size(18);
-		color: $darkgray;
-		margin: 0 0 20px 0;
-	}
-
-	li > ul {
-		margin: 0 0 0 20px;
-		li {
-			margin: 0 0 20px 20px;
-			list-style-type: disc;
-			@include font-size(18);
-			color: darken($lightgray, 30);
-		}
-	}
+  margin: 40px 0;
+  li {
+    margin: 0 0 30px 0;
+    a {
+      @include font-size(18);
+      color: $blue;
+      text-decoration: none;
+    }
+    p {
+      @include font-size(14);
+      color: $darkgray;
+      margin: 5px 0;
+    }
+  }
+  h3 {
+    @include font-size(18);
+    color: $darkgray;
+    margin: 0 0 20px 0;
+  }
+  li > ul {
+    margin: 0 0 0 20px;
+    li {
+      margin: 0 0 20px 20px;
+      list-style-type: disc;
+      @include font-size(18);
+      color: darken($lightgray, 30);
+    }
+  }
 }

@@ -1,12 +1,12 @@
 /* Page */
 #page {
-	@include background-image(linear-gradient(top, $blue, darken($blue, 10)));	
+  @include background-image(linear-gradient(top, $blue, darken($blue, 10)));
 }
 
 .button-green {
-	@include simple-color (79, 100%, 32%);
+  @include simple-color(79, 100%, 32%);
 }
 
 .button-disabled {
-	@include simple-color (360, 0%, 93%);
+  @include simple-color(360, 0%, 93%);
 }
