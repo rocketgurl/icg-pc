@@ -10,12 +10,13 @@ define [
   'text!modules/Policy/templates/tpl_ipm_header_pc.html',
   'text!modules/RenewalUnderwriting/templates/tpl_renewal_underwriting_wrapper.html',
   'text!modules/LossHistory/templates/tpl_loss_history_wrapper.html',
+  'modules/PolicyQuickView/PolicyQuickView',
   'modules/IPM/IPMModule',
   'modules/ZenDesk/ZenDeskView',
   'modules/PolicyRepresentation/PolicyRepresentationView',
   'modules/Quoting/QuotingModule',
   'modules/LossHistory/LossHistoryView' 
-], (BaseView, Messenger, Base64, RenewalUnderwritingView, swfobject, tpl_policy_container, tpl_policy_error, tpl_ipm_header, tpl_ipm_header_pc, tpl_ru_wrapper, tpl_lh_wrapper, IPMModule, ZenDeskView, PolicyRepresentationView, QuotingModule, LossHistoryView) ->
+], (BaseView, Messenger, Base64, RenewalUnderwritingView, swfobject, tpl_policy_container, tpl_policy_error, tpl_ipm_header, tpl_ipm_header_pc, tpl_ru_wrapper, tpl_lh_wrapper, PolicyQuickView, IPMModule, ZenDeskView, PolicyRepresentationView, QuotingModule, LossHistoryView) ->
   PolicyView = BaseView.extend
 
     events :
@@ -135,6 +136,13 @@ define [
 
       # Register flash message pubsub for this view
       @messenger = new Messenger(@options.view, @cid)
+
+      # Setup QuickView Module
+      @QuickView = new PolicyQuickView(
+                        el         : "#policy-quickview-#{@cid}"
+                        controller : @controller
+                        model      : @model
+                        )
 
       # Setup IPM Module
       @IPM = new IPMModule(@model, $("#policy-ipm-#{@cid}"), @controller)
@@ -417,6 +425,17 @@ define [
         @Amplify.publish(@cid, 'warning', "There was a problem with your credentials for this policy. Sorry.")
 
       @flash_loaded = true # set state
+
+    # Show HTML Quick View
+    show_quickview : ->
+      quickview_container = @$el.find("#policy-quickview-#{@cid}")
+      @show_element quickview_container
+      @resize_view quickview_container
+
+    # Hide HTML Quick View
+    teardown_quickview : ->
+      quickview_container = @$el.find("#policy-quickview-#{@cid}")
+      @hide_element quickview_container
 
     # Load mxAdmin into workarea and inject policy header
     show_ipmchanges : ->
