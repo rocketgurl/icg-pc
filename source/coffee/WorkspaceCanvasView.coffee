@@ -14,8 +14,6 @@ define [
     tab        : null
 
     initialize : (options) ->
-      _.bindAll this, 'positionFooter'
-
       controller    = @controller = options.controller
       @$tab_el      = controller.$workspace_tabs
       @template     = options.template if options.template?
@@ -30,20 +28,13 @@ define [
       @app   = options.app
       @el.id = @app.app # Set container id to app name
 
-      # Need to debounce this function. When called by policy_view.view_resize
-      # there's some weirdness with event collision happening that kills the
-      # swf when it's initially loading
-      @.on 'view.resized', _.debounce(@positionFooter, 0)
-
       # Add to the stack
       controller.trigger 'stack_add', @
 
       # Initialize module
       require ["modules/#{@options.module_type}"], (Module) =>
         @module = new Module(@, @app)
-        @module.on('workspace.rendered', => @positionFooter())
-        if _.has(Module.prototype, 'load')
-          @module.load()
+        @module.load() if _.has(Module.prototype, 'load')
 
       @render()
 
@@ -58,13 +49,6 @@ define [
     render : ->
       # Drop loader image into place until our Module is good and ready
       @$el.html Mustache.render tpl_module_loader, {module_name : @app.app_label, app : @app.app}
-
-      @options.controller.workspace_zindex++
-
-      @$el.css(
-        'visibility' : 'hidden'
-        'zIndex'     : @options.controller.workspace_zindex
-      )
 
       @$target.append(@$el)
       @render_tab(@template_tab)
@@ -82,7 +66,11 @@ define [
 
     # Create tab for this view
     render_tab : (template) ->
-      @tab = $(Mustache.render template, { tab_class : '', tab_url : Helpers.id_safe(decodeURI(@el.id)), tab_label : @app.app_label })
+      @tab = $(Mustache.render template, {
+                tab_class : '',
+                tab_url : Helpers.id_safe(decodeURI(@el.id)),
+                tab_label : @app.app_label
+              })
       @$tab_el.append(@tab)
       @recalcTabContainer @tab.width()
 
@@ -97,16 +85,15 @@ define [
 
     # Put tab into active state
     activate : ->
-      @tab.addClass('selected')
-      @$el.css('visibility', 'visible')
-      @positionFooter()
+      @tab.addClass 'selected'
+      @$el.removeClass 'inactive'
       if @module
         @module.trigger 'activate'
 
     # Put tab into inactive state
     deactivate : ->
-      @tab.removeClass('selected')
-      @$el.css('visibility', 'hidden')
+      @tab.removeClass 'selected'
+      @$el.addClass 'inactive'
       if @module
         @module.trigger 'deactivate'
 
@@ -145,11 +132,3 @@ define [
     launch_child_app : (module, app) ->
       @options.controller.Router.append_module module, app.params.url
       @options.controller.launch_module module, app
-
-    positionFooter : ->
-      active_view = @controller.active_view
-
-      if active_view?.cid == @cid
-        $('#footer-main').css(
-            'marginTop' : @$el.height() + 20
-          )
