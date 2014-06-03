@@ -71,7 +71,7 @@
       fetchSuccess: function(data, textStatus, jqXHR) {
         this.tickets = this.processResults(data);
         this.render();
-        this.policy_view.resize_workspace(this.$el, null);
+        this.policy_view.resize_view(this.$el);
         return this.tickets;
       },
       fetchError: function(jqXHR, textStatus, errorThrown) {
