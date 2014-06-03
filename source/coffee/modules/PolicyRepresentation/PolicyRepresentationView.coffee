@@ -14,6 +14,7 @@ define [
     render : ->
       view = @getRepresentationLinks()
       @$el.html @Mustache.render tpl_policyrep_container, view
+      this
 
     # Assemble HREFs for links. Use different IDs for quotes/policies
     getRepresentationLinks : ->
