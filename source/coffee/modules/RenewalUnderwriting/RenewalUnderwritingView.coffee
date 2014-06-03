@@ -113,7 +113,6 @@ define [
       @Amplify.publish(@PolicyView.cid, 'warning', "Could not fetch assignees list from server : #{xhr.status} - #{xhr.statusText}", 2000)
 
     render : ->
-      @show()
       if $("#ru-spinner-#{@PolicyView.cid}").length > 0
         $("#ru-loader-#{@PolicyView.cid}").show()
         @loader = @Helpers.loader("ru-spinner-#{@PolicyView.cid}", 80, '#696969')
@@ -136,12 +135,6 @@ define [
       if @loader?
         @loader.kill()
         $("#ru-loader-#{@cid}").hide()
-
-    show : ->
-      @$el.fadeIn('fast')
-
-    hide : ->
-      @$el.hide()
 
     process_event : (e) ->
       e.preventDefault()
@@ -445,8 +438,7 @@ define [
         @$el.html(@Mustache.render tpl_ru_container, resp)
 
         @removeLoader()
-        @show()
-        @PolicyView.resize_workspace(@$el, null)
+        @PolicyView.resize_view @$el
         @attachDatepickers()
       else
         @renewalError({statusText : 'Dataset empty', status : 'Backbone'})
