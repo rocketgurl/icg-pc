@@ -67,21 +67,28 @@ Module: Policy
 }
 
 .policy-module {
-  width: 100%;
-  background: $white;
-  display: block;
-  border: #ddd 1px solid;
+  @include clearfix();
+  position: relative;
   margin: 0;
   padding: 0;
-  position: relative;
-}
-
-.policy-flash {
-  min-height: 90%;
-}
-
-.policy-swf {
-  margin: 0;
+  width: 100%;
+  background: $modulegray;
+  border: #ddd 1px solid;
+  overflow: auto;
+  z-index: 1;
+  &.inactive {
+    visibility: hidden;
+    height: 0 !important;
+    min-height: 0 !important;
+    opacity: 0;
+    overflow: hidden;
+    border: 0;
+    z-index: -1;
+  }
+  &.policy-swf {
+    border: 0;
+    overflow: visible;
+  }
 }
 
 .policy-header {

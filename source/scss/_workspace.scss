@@ -1,4 +1,5 @@
 #workspace {
+  @include clearfix;
   nav {
     @include container;
     background: transparent;
@@ -132,23 +133,31 @@
       z-index: 1;
     }
   }
-  article {
+  article,
+  footer {
     @include container;
-    padding: 0 0 20px 0;
-    margin-top: -12px;
-    // Correct position offset from tabs
- 
+    width: auto;
   }
+  article { padding-bottom: 20px; }
   #canvas {
-    @include span-columns(12 omega, 12);
+    @include clearfix;
+  }
+  .workspace-canvas {
+    &.inactive {
+      visibility: hidden;
+      height: 0;
+      opacity: 0;
+      overflow: hidden;
+    }
   }
 }
 
 #workspace {
   footer {
-    @include span-columns(12 omega, 12);
-    margin: 20px 0;
-    padding: 20px 0;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    padding-top: 20px;
+    padding-bottom: 20px;
     @include divider(top);
     ul {
       margin: 0;
@@ -338,12 +347,6 @@
   background: url("/img/logo_bg.png") top right no-repeat;
   background-position: 140% 65%;
   background-size: 60%;
-}
-
-// WorkspaceCanvasView element
-.workspace-canvas {
-  position: absolute;
-  width: 97%;
 }
 
 #test_module {
