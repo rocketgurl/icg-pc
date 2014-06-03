@@ -27,7 +27,6 @@ define [
       @LossHistoryModel.on 'losshistory:error', @lossHistoryError, this
 
     render : ->
-      @show()
       if $("#lh-spinner-#{@PolicyView.cid}").length > 0
         $("#lh-loader-#{@PolicyView.cid}").show()
         @loader = @Helpers.loader("lh-spinner-#{@PolicyView.cid}", 80, '#696969')
@@ -46,12 +45,6 @@ define [
       if @loader?
         @loader.kill()
         $("#lh-loader-#{@cid}").hide()
-
-    show : ->
-      @$el.fadeIn('fast')
-
-    hide : ->
-      @$el.hide()
 
     process_event : (e) ->
       e.preventDefault()
@@ -94,8 +87,7 @@ define [
         @$el.html(@Mustache.render tpl_lh_container, resp)
 
         @removeLoader()
-        @show()
-        @PolicyView.resize_workspace(@$el, null)
+        @PolicyView.resize_view @$el
       else
         @removeLoader()
         @lossHistoryError({statusText : 'Dataset empty', status : 'Backbone'})
