@@ -1,6 +1,7 @@
 define [
   'BaseView'
-], (BaseView) ->
+  'text!modules/PolicyQuickView/templates/tpl_quickview_container.html'
+], (BaseView, template) ->
 
   # PolicyQuickView
   # ====
@@ -11,7 +12,8 @@ define [
 
     initialize : (options) ->
       @CONTROLLER = options.controller
-      @render()
 
     render : ->
-      console.log @model.toJSON()
+      console.log @$el
+      template = @Mustache.render template, { cid : @cid }
+      @$el.html template
