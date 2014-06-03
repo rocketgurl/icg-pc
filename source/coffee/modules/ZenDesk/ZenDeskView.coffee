@@ -72,7 +72,7 @@ define [
     fetchSuccess : (data, textStatus, jqXHR) ->
       @tickets = @processResults data
       @render()
-      @policy_view.resize_workspace(@$el, null)
+      @policy_view.resize_view @$el
       @tickets
 
     fetchError : (jqXHR, textStatus, errorThrown) ->
