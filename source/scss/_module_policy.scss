@@ -78,12 +78,14 @@ Module: Policy
   z-index: 1;
   &.inactive {
     visibility: hidden;
-    height: 0 !important;
-    min-height: 0 !important;
     opacity: 0;
     overflow: hidden;
-    border: 0;
     z-index: -1;
+    margin: 0;
+    padding: 0;
+    height: 0 !important;
+    min-height: 0 !important;
+    border: 0;
   }
   &.policy-swf {
     border: 0;

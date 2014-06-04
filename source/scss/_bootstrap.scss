@@ -1,6 +1,6 @@
 // Custom bootstrap variables go here
 $body-bg: inherit !default;
-
+$nav-tabs-active-link-hover-bg: #fff;
 
 // Core variables and mixins
 // Only enable what you need
@@ -27,7 +27,7 @@ $body-bg: inherit !default;
 // @import "bootstrap/dropdowns";
 // @import "bootstrap/button-groups";
 // @import "bootstrap/input-groups";
-// @import "bootstrap/navs";
+@import "bootstrap/navs";
 // @import "bootstrap/navbar";
 // @import "bootstrap/breadcrumbs";
 // @import "bootstrap/pagination";

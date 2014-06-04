@@ -1,7 +1,8 @@
 define [
+  'tab'
   'BaseView'
   'text!modules/PolicyQuickView/templates/tpl_quickview_container.html'
-], (BaseView, template) ->
+], (tab, BaseView, template) ->
 
   # PolicyQuickView
   # ====
@@ -13,7 +14,7 @@ define [
     initialize : (options) ->
       @CONTROLLER = options.controller
       @POLICY = options.policy
+      @template = @Mustache.render template, { cid : @cid }
 
     render : ->
-      template = @Mustache.render template, { cid : @cid }
-      @$el.html template
+      @$el.html @template
