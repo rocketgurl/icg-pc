@@ -372,7 +372,7 @@ define [
       if @policy_qv_container.html() == ''
         pqv = new PolicyQuickView({
             controller : @controller
-            model      : @model
+            policy     : @model
             el         : @policy_qv_container[0]
           })
         pqv.render()
@@ -401,7 +401,7 @@ define [
     show_renewalunderwriting : ->
       if @policy_ru_container.html() == ''
         ruv = new RenewalUnderwritingView({
-            $el         : @policy_ru_container
+            el          : @policy_ru_container[0]
             policy      : @model
             policy_view : this
           })
@@ -415,7 +415,7 @@ define [
     show_servicerequests : ->
       if @policy_zd_container.html() == ''
         zdv = new ZenDeskView({
-            $el         : @policy_zd_container
+            el          : @policy_zd_container[0]
             policy      : @model
             policy_view : this
           })
@@ -429,7 +429,7 @@ define [
     show_policyrepresentations : ->
       if @policy_pr_container.html() == ''
         prv = new PolicyRepresentationView({
-            $el         : @policy_pr_container
+            el          : @policy_pr_container[0]
             policy      : @model
             policy_view : this,
             services    : @services
@@ -445,7 +445,7 @@ define [
     show_losshistory : ->
       if @policy_lh_container.html() == ''
         lhv = new LossHistoryView({
-            $el         : @policy_lh_container
+            el          : @policy_lh_container[0]
             policy      : @model
             policy_view : this
           })

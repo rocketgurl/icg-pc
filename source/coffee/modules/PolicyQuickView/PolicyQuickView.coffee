@@ -12,8 +12,8 @@ define [
 
     initialize : (options) ->
       @CONTROLLER = options.controller
+      @POLICY = options.policy
 
     render : ->
-      console.log @$el
       template = @Mustache.render template, { cid : @cid }
       @$el.html template

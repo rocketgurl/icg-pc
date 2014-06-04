@@ -9,7 +9,6 @@ define [
   LossHistoryView = BaseView.extend
 
     initialize : (options) ->
-      @$el         = options.$el
       @Policy      = options.policy
       @PolicyView  = options.policy_view
       @User        = @PolicyView.controller.user
@@ -23,14 +22,12 @@ define [
         )
 
       # Attach events to model
+      @LossHistoryModel.on 'all', -> console.log(arguments)
       @LossHistoryModel.on 'losshistory:success', @lossHistorySuccess, this
       @LossHistoryModel.on 'losshistory:error', @lossHistoryError, this
 
     render : ->
-      if $("#lh-spinner-#{@PolicyView.cid}").length > 0
-        $("#lh-loader-#{@PolicyView.cid}").show()
-        @loader = @Helpers.loader("lh-spinner-#{@PolicyView.cid}", 80, '#696969')
-        @loader.setFPS(48)
+      @setupLoader()
    
       @LossHistoryModel.fetch(
         success : (model, resp) ->
@@ -41,10 +38,18 @@ define [
 
       this # so we can chain
 
+    setupLoader : ->
+      $loader = $("""
+        <div id="lh-loader-#{@cid}" class="lh-loader">
+          <h2 id="lh-spinner-#{@cid}"><span>Loading Loss History&hellip;</span></h2>
+        </div>
+        """)
+      @$el.append $loader
+      @loader = @Helpers.loader "lh-spinner-#{@cid}", 80, '#696969'
+      @loader.setFPS 48
+
     removeLoader : ->
-      if @loader?
-        @loader.kill()
-        $("#lh-loader-#{@cid}").hide()
+      @loader?.kill()
 
     process_event : (e) ->
       e.preventDefault()
@@ -66,7 +71,7 @@ define [
         # display that information to the user and return
         if _.isEmpty resp
           @removeLoader()
-          $("#lh-spinner-#{@PolicyView.cid}").find("span").html("No Loss History for this Policy")
+          $("#lh-spinner-#{@cid}").find("span").html("No Loss History for this Policy")
           return false
 
         # walk the response and adjust information to match the view
@@ -74,7 +79,7 @@ define [
 
         if resp.lossHistoryFlag == false
           @removeLoader()
-          $("#lh-spinner-#{@PolicyView.cid}").find("span").html("No Loss History for this Policy")
+          $("#lh-spinner-#{@cid}").find("span").html("No Loss History for this Policy")
           return false
         
         # trim the timestamp off the date data
@@ -84,7 +89,7 @@ define [
             if lossDate.indexOf(' ') != -1
               lossRecord.lossDate = lossDate.substring 0, lossDate.indexOf(' ')
 
-        @$el.html(@Mustache.render tpl_lh_container, resp)
+        @$el.html @Mustache.render tpl_lh_container, resp
 
         @removeLoader()
         @PolicyView.resize_view @$el

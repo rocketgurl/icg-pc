@@ -50,7 +50,6 @@ define [
         @inspectDispositionOption(@process_event e)
 
     initialize : (options) ->
-      @$el         = options.$el
       @Policy      = options.policy
       @PolicyView  = options.policy_view
       @User        = @PolicyView.controller.user

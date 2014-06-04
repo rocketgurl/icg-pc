@@ -4,34 +4,25 @@
     var ZenDeskView;
     return ZenDeskView = BaseView.extend({
       initialize: function(options) {
-        var _ref;
-        _ref = [options.$el, options.policy, options.policy_view], this.$el = _ref[0], this.policy = _ref[1], this.policy_view = _ref[2];
-        this.$el.append("<div id=\"zd_shim_" + this.cid + "\" class=\"zd-shim\"><div id=\"zd_loader_" + this.cid + "\" class=\"zd-loader\"></div></div>");
-        this.fetchSuccess = _.bind(this.fetchSuccess, this);
+        _.bindAll(this, 'fetchSuccess');
+        this.policy = options.policy;
+        this.policy_view = options.policy_view;
+        this.shim = $("<div id=\"zd_shim_" + this.cid + "\" class=\"zd-shim\">\n  <div id=\"zd_loader_" + this.cid + "\" class=\"zd-loader\"></div>\n</div>");
+        this.$el.append(this.shim);
+        this.attach_loader();
         return this;
       },
       fetch: function() {
         var policyQuery;
-        this.show();
         policyQuery = this.policy.getPolicyId();
         policyQuery = policyQuery.substring(0, policyQuery.length - 2);
         return this.fetch_tickets(policyQuery);
       },
       render: function() {
         this.remove_loader();
-        return this.$el.find("#zd_shim_" + this.cid).html(this.Mustache.render(tpl_zd_container, {
+        return this.shim.html(this.Mustache.render(tpl_zd_container, {
           results: this.tickets.results
         }));
-      },
-      show: function() {
-        return this.$el.fadeIn('fast', (function(_this) {
-          return function() {
-            return _this.attach_loader();
-          };
-        })(this));
-      },
-      hide: function() {
-        return this.$el.hide();
       },
       attach_loader: function() {
         if ($("#zd_loader_" + this.cid).length > 0) {

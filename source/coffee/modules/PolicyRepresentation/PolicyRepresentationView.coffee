@@ -7,7 +7,7 @@ define [
   PolicyRepresentationView = BaseView.extend
 
     initialize : (options) ->
-      for prop in ['$el','policy','policy_view','services']
+      for prop in ['policy','policy_view','services']
         @[prop] = options[prop]
       this
 
