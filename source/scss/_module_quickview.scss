@@ -1,2 +1,17 @@
 .qv-container {
+  padding: 0 1.8%;
+  h1, h2 {
+    font-weight: bold;
+  }
+  h1 {
+    margin: 15px 0 0 0;
+    @include font-size(24);
+    @include emboss;
+    color: $darkblue;
+  }
+  h2 {
+    margin: 20px 0 10px 0;
+    @include font-size(18);
+    color: $darkgray;
+  }
 }

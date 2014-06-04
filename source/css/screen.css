@@ -591,6 +591,11 @@ Module: Policy
 .policy-header h2 span { color: #fe8400; }
 .policy-header h2 span.ipm-header-cancel-status { color: #981e32; }
 
+.qv-container { padding: 0 1.8%; }
+.qv-container h1, .qv-container h2 { font-weight: bold; }
+.qv-container h1 { margin: 15px 0 0 0; font-size: 24px; font-size: 2.4rem; text-shadow: 0 1px white; color: #002857; }
+.qv-container h2 { margin: 20px 0 10px 0; font-size: 18px; font-size: 1.8rem; color: dimgrey; }
+
 .ru-container, .zd-container { padding: 0 1.8%; }
 .ru-container h1, .zd-container h1, .ru-container h2, .zd-container h2 { width: 100%; float: right; margin-right: 0; *margin-left: -1em; display: inline; font-weight: bold; margin: 15px 0 0 0; }
 .ru-container h1, .zd-container h1 { color: #002857; font-size: 24px; font-size: 2.4rem; text-shadow: 0 1px white; }
@@ -676,7 +681,7 @@ Module: Policy
 .lh-loss-history td a { font-weight: bold; color: #007ac9 !important; }
 .lh-loss-history td:first-child { text-align: center; }
 
-.lh-loader { display: none; text-align: center; margin: 40px 0; min-height: 200px; }
+.lh-loader { text-align: center; margin: 40px 0; min-height: 200px; }
 .lh-loader h2 { font-size: 18px; font-size: 1.8rem; color: #878787; margin: 20px 0; }
 .lh-loader h2 span { display: block; margin: 0 0 10px 0; }
 
