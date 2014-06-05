@@ -24,7 +24,7 @@ define [
     # We need to brute force the View's container to the
     # WorkspaceCanvasView's el
     initialize : (options) ->
-      _.bindAll this, 'resize_modules'
+      _.bindAll this, 'resize_modules', 'resize_swf_container'
       @view          = options.view
       @el            = options.view.el
       @$el           = options.view.$el
@@ -125,16 +125,16 @@ define [
 
       @build_policy_header()
 
-      # Set the initial module size
-      @resize_modules()
-
       # Register flash message pubsub for this view
       @messenger = new Messenger(@options.view, @cid)
 
+      # Set the initial swf container size
+      @resize_swf_container()
+
       # Attach a resize event to the window
       # Must be done after template is injected
-      resizer = _.debounce @resize_modules, 300
-      $(window).resize resizer
+      resize_swf_container = _.debounce @resize_swf_container, 300
+      $(window).resize resize_swf_container
 
       this
 
@@ -264,9 +264,14 @@ define [
       offset = offset ? @POLICY_HEADER_OFFSET
       @Helpers.resize_element(element, offset, scroll)
 
+    resize_swf_container : ->
+      if @policy_swf_container.length
+        @resize_view @policy_swf_container
+
+    # Should you ever wish to resize all the policy modules,
+    # This is here for you.
     resize_modules : ->
-      if @policy_workspace.length
-        @resize_view @policy_workspace, 0
+      if @policy_modules.length
         _.each @policy_modules, ((module) -> @resize_view @$(module)), this
 
     show_element : ($elem) ->
