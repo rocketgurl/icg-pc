@@ -68,6 +68,7 @@
 }
 
 .ipm-home-action-view ul li ul {
+
   border: 0;
   margin: 10px 0 5px 0;
 }
@@ -366,6 +367,9 @@ h2.ipm-action-header {
     }
     legend {
       @include font-size(14);
+      display: inline;
+      display: inline-block;
+      width: inherit;
       font-weight: bold;
       color: $white;
       padding: 5px;
