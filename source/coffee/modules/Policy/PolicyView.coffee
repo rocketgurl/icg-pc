@@ -131,8 +131,7 @@ define [
       # Set the initial swf container size
       @resize_swf_container()
 
-      # Attach a resize event to the window
-      # Must be done after template is injected
+      # Attach a resize event listener to the window
       resize_swf_container = _.debounce @resize_swf_container, 300
       $(window).resize resize_swf_container
 
@@ -340,7 +339,7 @@ define [
       if _.isFunction obj.PercentLoaded
         load_check_interval = setInterval(( ->
           if obj.PercentLoaded() == 100
-            clearInterval(load_check_interval)
+            clearInterval load_check_interval
             callback()
         ), 1000)
 
@@ -349,10 +348,9 @@ define [
     initialize_swf : (swf_obj) ->
       return true if @flash_loaded
 
-      # We need to get some global workspace information to pass along
-      # to our SWF
-      # workspace = @controller.workspace_state.get('workspace')
-      config = @controller.config.get_config(@controller.workspace_state)
+      # We need to get some global workspace information
+      # to pass along to our SWF
+      config = @controller.config.get_config @controller.workspace_state
 
       if not config?
         @Amplify.publish(@cid, 'warning', "There was a problem with the configuration for this policy. Sorry.")
@@ -446,7 +444,6 @@ define [
     teardown_policyrepresentations : ->
       @hide_element @policy_pr_container
 
-    # Load Loss History Views
     show_losshistory : ->
       if @policy_lh_container.html() == ''
         lhv = new LossHistoryView({
