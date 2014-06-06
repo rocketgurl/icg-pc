@@ -61,6 +61,10 @@ define [
 
       @values.formValues.transactionType = 'AccountingChanges'
 
+      # ICS-2572: Effective Date should be explicitly set to the Policy Effective date
+      # In order to allow Payment Plan Changes to be applied before Policy Inception
+      @values.formValues.effectiveDate = @MODULE.POLICY.getEffectiveDate()
+
       # Assemble the ChangeSet XML and send to server
       @ChangeSet.commitChange(
           @ChangeSet.getTransactionRequest(@values, @viewData),
