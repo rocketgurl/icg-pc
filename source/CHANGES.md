@@ -1,6 +1,18 @@
 Updates
 -------
 
+### 2.5.4
+
+- [ICS-2572](https://icg360.atlassian.net/browse/ICS-2572) Ability to change payment plan prior to new term effective date
+- [ICS-2582](https://icg360.atlassian.net/browse/ICS-2582) Additional interest IPM form not pulling the right variables for Additional Interests
+- [ICS-2583](https://icg360.atlassian.net/browse/ICS-2583) Policy Central - Improve footer behavior & version display
+- [ICS-2596](https://icg360.atlassian.net/browse/ICS-2596) Update iic-ho3-sc endorse forms
+- [ICS-2599](https://icg360.atlassian.net/browse/ICS-2599) Update fnic-ho3-la endorse forms
+- [ICS-2603](https://icg360.atlassian.net/browse/ICS-2603) Add EQ Coverage to NJ IPM Forms
+- [ICS-2605](https://icg360.atlassian.net/browse/ICS-2605) Mortgagee1AddressState is not in TransactionReqest when deleting mortgagee
+- [ICS-2607](https://icg360.atlassian.net/browse/ICS-2607) Update wic-al IPM Endorse forms
+- [ICS-2608](https://icg360.atlassian.net/browse/ICS-2608) Add Lapse in Coverage Surcharge to ofcc-ho3-ny
+
 ### 2.5.3
 
 - [ICS-2521](https://icg360.atlassian.net/browse/ICS-2521) Update Favicon to show "working" state
