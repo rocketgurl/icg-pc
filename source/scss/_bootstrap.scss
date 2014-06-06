@@ -1,6 +1,7 @@
 // Custom bootstrap variables go here
 $body-bg: inherit !default;
 $nav-tabs-active-link-hover-bg: #fff;
+// $table-border-color: transparent;
 
 // Core variables and mixins
 // Only enable what you need
@@ -15,10 +16,10 @@ $nav-tabs-active-link-hover-bg: #fff;
 
 // Core CSS
 @import "bootstrap/scaffolding";
-// @import "bootstrap/type";
+@import "bootstrap/type";
 // @import "bootstrap/code";
-// @import "bootstrap/grid";
-// @import "bootstrap/tables";
+@import "bootstrap/grid";
+@import "bootstrap/tables";
 @import "bootstrap/forms";
 @import "bootstrap/buttons";
 
@@ -36,11 +37,11 @@ $nav-tabs-active-link-hover-bg: #fff;
 // @import "bootstrap/badges";
 // @import "bootstrap/jumbotron";
 // @import "bootstrap/thumbnails";
-// @import "bootstrap/alerts";
+@import "bootstrap/alerts";
 // @import "bootstrap/progress-bars";
 // @import "bootstrap/media";
 // @import "bootstrap/list-group";
-// @import "bootstrap/panels";
+@import "bootstrap/panels";
 // @import "bootstrap/responsive-embed";
 // @import "bootstrap/wells";
 // @import "bootstrap/close";
