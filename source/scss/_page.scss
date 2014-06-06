@@ -10,3 +10,15 @@
 .button-disabled {
   @include simple-color(360, 0%, 93%);
 }
+
+a {
+  &:hover,
+  &:focus {
+    text-decoration: inherit;
+  }
+}
+
+ul {
+  @include clearfix();
+  @extend .list-unstyled;
+}
