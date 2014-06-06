@@ -1,13 +1,23 @@
 <!-- Nav tabs -->
-<ul id="qv-tabs-{{cid}}" class="nav nav-tabs">
-  <li class="active"><a href="#servicing-{{cid}}" data-toggle="tab">Servicing</a></li>
-  <li><a href="#underwriting-{{cid}}" data-toggle="tab">Underwriting</a></li>
-  <li><a href="#claims-{{cid}}" data-toggle="tab">Claims</a></li>
-</ul>
+<div id="qv-tabs-{{cid}}">
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#tab-servicing-{{cid}}" data-toggle="tab">Servicing</a></li>
+    <li><a href="#tab-underwriting-{{cid}}" data-toggle="tab">Underwriting</a></li>
+    <li><a href="#tab-claims-{{cid}}" data-toggle="tab">Claims</a></li>
+  </ul>
 
-<!-- Tab panes -->
-<div id="qv-tab-content-{{cid}}" class="tab-content">
-  <div class="tab-pane active" id="servicing-{{cid}}">SERVICING</div>
-  <div class="tab-pane" id="underwriting-{{cid}}">UNDERWRITING</div>
-  <div class="tab-pane" id="claims-{{cid}}">CLAIMS</div>
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div class="tab-pane clearfix active" id="tab-servicing-{{cid}}"></div>
+    <div class="tab-pane clearfix" id="tab-underwriting-{{cid}}">
+      <div class="col-xs-12">
+        <div class="alert alert-info"><strong>COMING SOON:</strong> Underwriting</div>
+      </div>
+    </div>
+    <div class="tab-pane clearfix" id="tab-claims-{{cid}}">
+      <div class="col-xs-12">
+        <div class="alert alert-info"><strong>COMING SOON:</strong> Claims</div>
+      </div>
+    </div>
+  </div>
 </div>

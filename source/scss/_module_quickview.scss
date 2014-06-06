@@ -1,29 +1,43 @@
 .qv-container {
-  padding: 10px 0;
+  background: #fff;
   @include font-size(14);
+
   h1, h2 {
     font-weight: bold;
   }
+
   h1 {
     margin: 15px 0 0 0;
     @include font-size(24);
     @include emboss;
     color: $darkblue;
   }
+
   h2 {
     margin: 20px 0 10px 0;
     @include font-size(18);
     color: $darkgray;
   }
 
-  .nav,
-  .tab-content {
-    padding-left: 1.8%;
-    padding-right: 1.8%;
+  .nav {
+    padding-top: 10px;
+    padding-left: 15px;
+    padding-right: 15px;
+    background-color: $modulegray;
   }
 
   .tab-content {
-    padding-top: 15px;
+    padding: 15px 0;
     background-color: #fff;
+  }
+
+  .policy-status {
+    font-weight: bold;
+    text-align: center;
+    text-transform: uppercase;
+  }
+
+  .table .label {
+    text-align: right;
   }
 }
