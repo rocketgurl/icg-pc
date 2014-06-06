@@ -9,7 +9,7 @@
     ul {
       margin: 0;
       padding: 0 4px;
-      line-height: 26px;
+      line-height: 28px;
       width: 100px;
       height: 30px;
       overflow: hidden;
@@ -138,7 +138,10 @@
     @include container;
     width: auto;
   }
-  article { padding-bottom: 20px; }
+  article {
+    margin-top: -12px;
+    padding-bottom: 20px;
+  }
   #canvas {
     @include clearfix;
   }

@@ -3,6 +3,10 @@ Module: Policy
 */
 .policy-nav {
   @include span-columns(2, 12);
+  > ul {
+    @include clearfix();
+    @extend .list-unstyled;
+  }
   li {
     margin: 0;
     border-top: $white 1px solid;
