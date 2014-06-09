@@ -2,6 +2,11 @@
 @import "susy";
 @import "compass";
 
+// Custom bootstrap variables go here
+$body-bg: inherit !default;
+$nav-tabs-active-link-hover-bg: #fff;
+$table-border-color: transparent;
+
 // SVG Backgrounds
 $experimental-support-for-svg: true;
 
