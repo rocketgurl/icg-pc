@@ -26,6 +26,7 @@ require
     chosen          : 'lib/chosen.jquery'
     Apparatchik     : 'lib/Apparatchik'
     favicon         : 'lib/favicon'
+    tab             : 'lib/bootstrap/tab'
   priority: ['jquery','xml2json','json']
   shim:
       'jquery' :
