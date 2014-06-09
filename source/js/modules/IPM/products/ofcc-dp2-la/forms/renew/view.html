@@ -31,13 +31,13 @@
 
 		<div>
 			<label for="{{guid}}_CoverageA" class="labelRequired">Coverage A <i>CoverageA</i></label>
-			<input type="text" id="{{guid}}_CoverageA" name="CoverageA" value="{{CoverageA}}" required >
+			<input type="text" id="{{guid}}_CoverageA" name="CoverageA" value="{{CoverageA}}" required readonly>
 		</div>
 
 
 		<div>
 			<label for="{{guid}}_OptionCoverageC" class="labelRequired">Coverage C <i>OptionCoverageC</i></label>
-			<select id="{{guid}}_OptionCoverageC" name="OptionCoverageC" data-value="{{OptionCoverageC}}" data-affects="CoverageC" required >
+			<select id="{{guid}}_OptionCoverageC" name="OptionCoverageC" data-value="{{OptionCoverageC}}" data-affects="CoverageC" required disabled="disabled">
 				{{#EnumsOptionCoverageC}}
 				<option value="{{value}}">{{label}}</option>
 				{{/EnumsOptionCoverageC}}
