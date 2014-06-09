@@ -40,4 +40,13 @@
   .table .label {
     text-align: right;
   }
+
+  .panel-heading {
+    em, strong { display: inline-block; }
+  }
+
+  .agent-support {
+    margin-top: 40px;
+    padding: 0 15%;
+  }
 }
