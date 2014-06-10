@@ -1,9 +1,9 @@
 define [
   'tab'
   'BaseView'
+  'modules/PolicyQuickView/ServicingTabView'
   'text!modules/PolicyQuickView/templates/tpl_quickview_container.html'
-  'text!modules/PolicyQuickView/templates/tpl_servicing_tab.html'
-], (tab, BaseView, tpl_qv_container, tpl_servicing_tab) ->
+], (tab, BaseView, ServicingTabView, tpl_qv_container) ->
 
   # PolicyQuickView
   # ====
@@ -13,15 +13,17 @@ define [
     initialize : (options) ->
       @CONTROLLER = options.controller
       @POLICY = options.policy
-
       @tpl_qv_container = @Mustache.render tpl_qv_container, { cid : @cid }
-      @tpl_servicing_tab = @Mustache.render tpl_servicing_tab, { cid : @cid }
 
     render : ->
       @$el.html @tpl_qv_container
       @cache_elements()
 
-      @tab_servicing.html @tpl_servicing_tab
+      servicing_tab = new ServicingTabView
+        controller : @CONTROLLER
+        policy     : @POLICY
+
+      @tab_servicing.append servicing_tab.$el
 
     cache_elements : ->
       cid = @cid
