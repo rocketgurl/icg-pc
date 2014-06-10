@@ -1,6 +1,14 @@
 Updates
 -------
 
+### 2.5.5
+
+- [ICS-2572](https://icg360.atlassian.net/browse/ICS-2572) Ability to change payment plan prior to new term effective date
+- [ICS-2600](https://icg360.atlassian.net/browse/ICS-2600) Add Reason code to Change Customer forms
+- [ICS-2610](https://icg360.atlassian.net/browse/ICS-2610) AdditionalInterest1AddressState is not in TransactionReqest when deleting additional interests
+- [ICS-2621](https://icg360.atlassian.net/browse/ICS-2621) Add Reason Code to ofcc-ho3-ak
+- [ICS-2623](https://icg360.atlassian.net/browse/ICS-2623) Update ofcc-ny-ho3 Endorse enums
+
 ### 2.5.4
 
 - [ICS-2572](https://icg360.atlassian.net/browse/ICS-2572) Ability to change payment plan prior to new term effective date
