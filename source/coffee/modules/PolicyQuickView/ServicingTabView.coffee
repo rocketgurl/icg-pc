@@ -16,6 +16,7 @@ define [
 
       @agency_location_model = @get_agency_location_model()
       @agency_location_model.on 'change', @render_servicing_tab_data, this
+      return this
 
     get_agency_location_model : ->
       new AgencyLocationModel
