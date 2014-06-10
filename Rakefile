@@ -125,10 +125,11 @@ task :build => [:coffee, :version, :compile, :prune_build, :cleanup, :liverebel]
 # If CoffeeScript is present in the ENV then compile .coffee to .js
 task :coffee do
   unless ENV['COFFEE_SCRIPT_PATH'].nil?
-    unless system "#{COFFEE_BUILD}"
+    build_coffee = system "#{COFFEE_BUILD}"
+    unless build_coffee
       puts red "!!! CoffeeScript compile FAILED!"
-      puts red "CS PATH: #{ENV['COFFEE_SCRIPT_PATH']}"
       puts red "CS BUILD: #{COFFEE_BUILD}"
+      puts red build_coffee
       exit 1
     else
       puts green "  >> CoffeeScript compile a success"
