@@ -167,6 +167,40 @@ define [
 
       ipm_header
 
+    # Assemble all the policy data for servicing tab into one place
+    getServicingData : ->
+      insuredData = @get 'insuredData'
+      mortgageeData = @get 'mortgageeData'
+      data =
+        PolicyState      : @get('state').text || @get('state')
+        OriginSys        : @getTermDataItemValue('QuoteOriginationSystem')
+        QuoteNum         : @id
+        PolicyPeriod     : @getPolicyPeriod()
+        PropertyAddress  :
+          StreetNumber : @getTermDataItemValue('PropertyStreetNumber')
+          StreetName   : @getTermDataItemValue('PropertyStreetName')
+          City         : @getTermDataItemValue('PropertyCity')
+          State        : @getTermDataItemValue('PropertyState')
+          ZipCode      : @getTermDataItemValue('PropertyZipCode')
+        MailingAddress   : @getDataItemValues insuredData, [
+            'InsuredMailingAddressLine1'
+            'InsuredMailingAddressLine2'
+            'InsuredMailingAddressCity'
+            'InsuredMailingAddressState'
+            'InsuredMailingAddressZip'
+          ]
+        PrimaryMortgagee : @getDataItemValues mortgageeData, [
+            'MortgageeNumber1'
+            'Mortgagee1AddressLine1'
+            'Mortgagee1AddressLine2'
+            'Mortgagee1AddressCity'
+            'Mortgagee1AddressState'
+            'Mortgagee1AddressZip'
+            'LoanNumber1'
+          ]
+        PolicyId      : @getPolicyId()
+        AgencyLocationCode : @getAgencyLocationCode()
+
     # **Get <SystemOfRecord>** - used to determine IPM eligibility.
     # @return _String_
     getSystemOfRecord : -> @getModelProperty('Management SystemOfRecord')
@@ -584,10 +618,13 @@ define [
 
     # Return the version number
     getPolicyVersion : ->
-      @getModelProperty('Management Version')
+      @getModelProperty 'Management Version'
 
     getAgencyLocationId : ->
-      @getModelProperty('Management AgencyLocationId')
+      @getModelProperty 'Management AgencyLocationId'
+
+    getAgencyLocationCode : ->
+      @getModelProperty 'Management AgencyLocationCode'
 
     # Return Policy data for use in overviews
     getPolicyOverview : ->

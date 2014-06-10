@@ -20,13 +20,17 @@ define [
     get_agency_location_model : ->
       new AgencyLocationModel
         urlRoot : "#{@CONTROLLER.services.ixdirectory}organizations"
-        id      : @POLICY.getAgencyLocationId()
+        id      : @POLICY.getAgencyLocationCode()
         auth    : @CONTROLLER.IXVOCAB_AUTH
 
     render_servicing_tab_data : (agency_location) ->
       data =
         cid    : @cid
-        agency : agency_location.toJSON()
+        Agency : agency_location.toJSON()
+
+      _.extend data, @POLICY.getServicingData()
+
+      console.log data
 
       template = @Mustache.render tpl_servicing_tab, data
       @render template
