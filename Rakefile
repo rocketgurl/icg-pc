@@ -129,7 +129,7 @@ task :coffee do
     unless build_coffee
       puts red "!!! CoffeeScript compile FAILED!"
       puts red "CS BUILD: #{COFFEE_BUILD}"
-      puts red build_coffee
+      puts red "ERR: #{$?}"
       exit 1
     else
       puts green "  >> CoffeeScript compile a success"
