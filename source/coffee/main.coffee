@@ -27,7 +27,7 @@ require
     Apparatchik     : 'lib/Apparatchik'
     favicon         : 'lib/favicon'
     tab             : 'lib/bootstrap/tab'
-  priority: ['jquery','xml2json','json']
+  priority: ['jquery', 'xml2json', 'json']
   shim:
       'jquery' :
         deps    : ['require']
@@ -54,7 +54,11 @@ require
         deps : ['jquery']
         exports : 'Chosen'
       'Apparatchik' :
-        deps : ['jquery','underscore','moment']
+        deps : ['jquery', 'underscore', 'moment']
+      'favicon' :
+        exports : 'favicon'
+      'tab' :
+        deps: ['jquery']
 
 require [
   'jquery',

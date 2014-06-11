@@ -53,7 +53,10 @@
     },
     'Apparatchik': {
       deps: ['jquery','underscore','moment']
-    }
+    },
+    'favicon': {
+      exports: 'favicon'
+    },
     'tab': {
       deps: ['jquery']
     }
