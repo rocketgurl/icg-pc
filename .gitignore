@@ -3,7 +3,6 @@
 Gemfile.lock
 build/*
 source/js/*.js
-!source/js/app.build.js
 source/js/modules/*.js
 source/js/modules/*/*.js
 source/js/modules/*/*/*.js
