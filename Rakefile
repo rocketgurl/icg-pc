@@ -127,8 +127,6 @@ task :coffee do
   unless ENV['COFFEE_SCRIPT_PATH'].nil?
     unless system "#{COFFEE_BUILD}"
       puts red "!!! CoffeeScript compile FAILED!"
-      puts $?
-      exit 1
     else
       puts green "  >> CoffeeScript compile a success"
     end
