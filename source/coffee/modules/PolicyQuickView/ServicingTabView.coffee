@@ -31,7 +31,7 @@ define [
 
       _.extend data, @POLICY.getServicingData()
 
-      # console.log data
+      console.log data
 
       template = @Mustache.render tpl_servicing_tab, data
       @render template
