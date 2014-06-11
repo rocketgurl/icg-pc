@@ -27,8 +27,8 @@ RJS_CONFIG = file_join_safe('source', 'js', 'app.build.js')
 RJS_BUILD = "#{ENV['REQUIRE_JS_PATH']} -o #{RJS_CONFIG}"
 
 # CoffeeScript Compilation commands
-COFFEE_SOURCE = File.join('source', 'coffee')
-COFFEE_OUTPUT = File.join('source', 'js')
+COFFEE_SOURCE = file_join_safe('source', 'coffee')
+COFFEE_OUTPUT = file_join_safe('source', 'js')
 COFFEE_BUILD = "#{ENV['COFFEE_SCRIPT_PATH']} -o #{COFFEE_OUTPUT} -c #{COFFEE_SOURCE}"
 
 # Build location
@@ -127,8 +127,8 @@ task :coffee do
   unless ENV['COFFEE_SCRIPT_PATH'].nil?
     unless system "#{COFFEE_BUILD}"
       puts red "!!! CoffeeScript compile FAILED!"
-      puts `coffee -v`
-      puts `r.js.cmd -v`
+      puts `#{ENV['COFFEE_SCRIPT_PATH']} -v`
+      puts `#{ENV['REQUIRE_JS_PATH']} -v`
       exit 1
     else
       puts green "  >> CoffeeScript compile a success"
