@@ -182,14 +182,14 @@ define [
           City         : @getTermDataItemValue('PropertyCity')
           State        : @getTermDataItemValue('PropertyState')
           ZipCode      : @getTermDataItemValue('PropertyZipCode')
-        MailingAddress   : @getDataItemValues insuredData, [
+        MailingAddress   : @getDataItemValues(insuredData, [
             'InsuredMailingAddressLine1'
             'InsuredMailingAddressLine2'
             'InsuredMailingAddressCity'
             'InsuredMailingAddressState'
             'InsuredMailingAddressZip'
-          ]
-        PrimaryMortgagee : @getDataItemValues mortgageeData, [
+          ])
+        PrimaryMortgagee : @getDataItemValues(mortgageeData, [
             'MortgageeNumber1'
             'Mortgagee1AddressLine1'
             'Mortgagee1AddressLine2'
@@ -197,7 +197,7 @@ define [
             'Mortgagee1AddressState'
             'Mortgagee1AddressZip'
             'LoanNumber1'
-          ]
+          ])
         PolicyId      : @getPolicyId()
         AgencyLocationCode : @getAgencyLocationCode()
 
