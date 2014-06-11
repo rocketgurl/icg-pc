@@ -3,7 +3,7 @@ define [
   'underscore',
   'base64',
   'loader',
-  'favicon'
+  'lib/favicon'
 ], ($, _, Base64, CanvasLoader, Favicon) ->
 
   Helpers =
