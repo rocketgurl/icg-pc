@@ -17,6 +17,7 @@
     text: 'lib/text',
     domReady: 'lib/domReady',
     json: 'lib/json2',
+    herald: 'lib/herald/herald',
     loader: 'lib/heartcode-canvasloader',
     swfobject: 'lib/swfobject',
     u_string: 'lib/underscore.string',
