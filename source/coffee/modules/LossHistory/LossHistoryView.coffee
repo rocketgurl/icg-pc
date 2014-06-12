@@ -22,7 +22,6 @@ define [
         )
 
       # Attach events to model
-      @LossHistoryModel.on 'all', -> console.log(arguments)
       @LossHistoryModel.on 'losshistory:success', @lossHistorySuccess, this
       @LossHistoryModel.on 'losshistory:error', @lossHistoryError, this
 
