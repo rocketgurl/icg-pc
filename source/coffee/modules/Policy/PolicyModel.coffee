@@ -171,25 +171,31 @@ define [
     getServicingData : ->
       insuredData = @get 'insuredData'
       mortgageeData = @get 'mortgageeData'
+      accountingData = @getAccountingData()
+      accountingDataItems = accountingData.DataItem
+      invoiceDueDate = @getDataItem accountingDataItems, 'InvoiceDueDateNext'
+      paymentDateLast = @getDataItem accountingDataItems, 'PaymentDateLast'
+      console.log 'Accounting', accountingData
+
       data =
-        PolicyState      : @get('state').text || @get('state')
-        OriginSys        : @getTermDataItemValue('QuoteOriginationSystem')
-        QuoteNum         : @id
-        PolicyPeriod     : @getPolicyPeriod()
-        PropertyAddress  :
+        PolicyState       : @get('state').text || @get('state')
+        OriginatingSystem : @getTermDataItemValue('QuoteOriginationSystem')
+        QuoteNumber       : @id
+        PolicyPeriod      : @getPolicyPeriod()
+        PropertyAddress   :
           StreetNumber : @getTermDataItemValue('PropertyStreetNumber')
           StreetName   : @getTermDataItemValue('PropertyStreetName')
           City         : @getTermDataItemValue('PropertyCity')
           State        : @getTermDataItemValue('PropertyState')
           ZipCode      : @getTermDataItemValue('PropertyZipCode')
-        MailingAddress   : @getDataItemValues(insuredData, [
+        MailingAddress    : @getDataItemValues(insuredData, [
             'InsuredMailingAddressLine1'
             'InsuredMailingAddressLine2'
             'InsuredMailingAddressCity'
             'InsuredMailingAddressState'
             'InsuredMailingAddressZip'
           ])
-        PrimaryMortgagee : @getDataItemValues(mortgageeData, [
+        PrimaryMortgagee  : @getDataItemValues(mortgageeData, [
             'MortgageeNumber1'
             'Mortgagee1AddressLine1'
             'Mortgagee1AddressLine2'
@@ -198,8 +204,19 @@ define [
             'Mortgagee1AddressZip'
             'LoanNumber1'
           ])
-        PolicyId      : @getPolicyId()
+        PolicyId           : @getPolicyId()
         AgencyLocationCode : @getAgencyLocationCode()
+        TotalPremium       : @getTermDataItemValue('TotalPremium')
+        OutstandingBalance : @getOutstandingBalance()
+        PastDueBalance     : @getDataItem(accountingDataItems, 'PastDueBalance')
+        MinimumPayment     : @getDataItem(accountingDataItems, 'MinimumPaymentDue')
+        InvoiceDueDate     : @_stripTimeFromDate(invoiceDueDate)
+        PaymentAmountLast  : @getDataItem(accountingDataItems, 'PaymentAmountLast')
+        PaymentDateLast    : @_stripTimeFromDate(paymentDateLast)
+
+    getOutstandingBalance : ->
+      items = @getAccountingData().DataItem
+      @getDataItem(items, 'OutstandingBalanceDue') || @getDataItem(items, 'OutstandingBalance')
 
     # **Get <SystemOfRecord>** - used to determine IPM eligibility.
     # @return _String_
@@ -366,6 +383,9 @@ define [
     # getCustomerData wrapped in null check
     getCustomerData : (type) ->
       _.compose(@baseGetCustomerData, @checkNull) type
+
+    getAccountingData : ->
+      accounting = @getModelProperty 'Accounting'
 
     # **Retrieve intervals of given Term obj**
     # @param `term` _Object_ Term obj

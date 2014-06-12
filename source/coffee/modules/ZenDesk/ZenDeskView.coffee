@@ -12,6 +12,8 @@ define [
       @policy = options.policy
       @policy_view = options.policy_view
       
+      console.log 'AMPLIFY', @Amplify
+
       @shim = $("""
         <div id="zd_shim_#{@cid}" class="zd-shim">
           <div id="zd_loader_#{@cid}" class="zd-loader"></div>
