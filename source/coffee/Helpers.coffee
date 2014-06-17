@@ -127,11 +127,11 @@ define [
     # @return _String_ (Float)
     #
     formatMoney : (n) ->
-      n = parseFloat(n, 10) # convert a string val from form into a Number
-      if _.isNaN(n)
-        return '0.00'
+      n = parseFloat n # convert a string val from form into a Number
+      if _.isNaN n
+        '0.00'
       else
-        n.toFixed(2)
+        n.toFixed 2
 
     # Some date strings we'll be dealing with are formatted with a full
     # timestamp like: "2011-01-15T23:00:00-04:00". The time, after the "T"
