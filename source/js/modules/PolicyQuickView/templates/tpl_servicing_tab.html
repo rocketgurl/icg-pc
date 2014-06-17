@@ -1,105 +1,166 @@
-<div class="col-xs-6">
-  <div class="alert alert-success policy-status">Active Policy</div>
-  <table class="table">
-    <tbody>
-      <tr>
-        <td class="label">Originating System</td>
-        <td><strong>Agent Portal</strong></td>
-      </tr>
-      <tr>
-        <td class="label">Quote #</td>
-        <td><strong>CRU4Q-87019</strong></td>
-      </tr>
-      <tr>
-        <td class="label">Policy Period</td>
-        <td><strong>Mar 26, 2014 - Mar 26, 2014</strong></td>
-      </tr>
-      <tr>
-        <td class="label">Property Address</td>
-        <td>
-          <a class="address-link" href="#">
-            <div>11524 13th St</div>
-            <div>Ozone Park, NY 11420</div>
-          </a>
-        </td>
-      </tr>
-      <tr>
-        <td class="label">Mailing Address</td>
-        <td>
-          <div>11524 13th St</div>
-          <div>Ozone Park, NY 11420</div>
-        </td>
-      </tr>
-      <tr>
-        <td class="label">Primary Mortgagee</td>
-        <td>
-          <div><strong>Movement Mortage</strong></div>
-          <div>LLC ISA OA/Atima</div>
-          <div>PO Box 5942</div>
-          <div>Troy, MI 48007</div>
-          <div>712255489653</div>
-        </td>
-      </tr>
-      <tr>
-        <td class="label">Agency</td>
-        <td>
-          <div><strong>GEICO Insurance Agency, Inc.</strong></div>
-          <div>One Geico Blvd</div>
-          <div>Fredricksburg, VA 43102</div>
-          <div>888-395-1200</div>
-          <div><a href="mailto:specialgeicoemail@geico.com">specialgeicoemail@geico.com</a></div>
-        </td>
-      </tr>
-      <tr>
-        <td class="label">ALC#</td>
-        <td><strong>P712255</strong></td>
-      </tr>
-    </tbody>
-  </table>
+<div {{#IsQuote}}class="col-xs-12"{{/IsQuote}}{{#IsNotQuote}}class="col-xs-6"{{/IsNotQuote}}>
+  <div class="alert alert-{{PolicyStateLabelClass}} policy-status">{{PolicyState}}</div>
+  
+  <div class="section-holder">
+    {{#OriginatingSystem}}
+    <section>
+      <label>Originating System</label>
+      <div><strong>{{OriginatingSystem}}</strong></div>
+    </section>
+    {{/OriginatingSystem}}
+
+    {{#QuoteNumber}}
+    <section>
+      <label>Quote #</label>
+      <div><strong>{{QuoteNumber}}</strong></div>
+    </section>
+    {{/QuoteNumber}}
+
+    {{#PropertyAddress}}
+    <section>
+      <label>Property Address</label>
+      <a class="address-link" href="#" target="_blank">
+        <div>{{PropertyStreetNumber}} {{PropertyStreetName}}</div>
+        <div>{{PropertyCity}}, {{PropertyState}} {{PropertyZipCode}}</div>
+      </a>
+    </section>
+    {{/PropertyAddress}}
+
+    {{#MailingAddress}}
+    <section>
+      <label>Mailing Address</label>
+      <div>{{InsuredMailingAddressLine1}}</div>
+      {{#InsuredMailingAddressLine2}}
+      <div>{{InsuredMailingAddressLine2}}</div>
+      {{/InsuredMailingAddressLine2}}
+      <div>{{InsuredMailingAddressCity}}, {{InsuredMailingAddressState}} {{InsuredMailingAddressZip}}</div>
+    </section>
+    {{/MailingAddress}}
+
+    {{#PrimaryMortgagee}}
+    <section>
+      <label>Primary Mortgagee</label>
+      <div><strong>{{MortgageeNumber1}}</strong></div>
+      {{#Mortgagee1AddressLine1}}
+      <div><small>{{Mortgagee1AddressLine1}}</small></div>
+      {{/Mortgagee1AddressLine1}}
+      {{#Mortgagee1AddressLine2}}
+      <div><small>{{Mortgagee1AddressLine2}}</small></div>
+      {{/Mortgagee1AddressLine2}}
+      <div><small>{{Mortgagee1AddressCity}}, {{Mortgagee1AddressState}} {{Mortgagee1AddressZip}}</small></div>
+      {{#LoanNumber1}}
+      <div><strong>{{LoanNumber1}}</strong></div>
+      {{/LoanNumber1}}
+    </section>
+    {{/PrimaryMortgagee}}
+
+    {{#Agency}}
+    <section>
+      <label>Agency</label>
+      <div><strong>{{Name}}</strong></div>
+      {{#MailingAddress}}
+      {{#Street1}}
+      <div><small>{{Street1}}</small></div>
+      {{/Street1}}
+      {{#Street2}}
+      <div><small>{{Street2}}</small></div>
+      {{/Street2}}
+      {{#Street3}}
+      <div><small>{{Street3}}</small></div>
+      {{/Street3}}
+      <div><small>{{City}}, {{Province}} {{PostalCode}}</small></div>
+      {{/MailingAddress}}
+      {{#PhoneNumber}}
+      <div><strong>{{PhoneNumber}}</strong></div>
+      {{/PhoneNumber}}
+      {{#EmailAddress}}
+      <div class="no-transform">
+        <a href="mailto:{{EmailAddress}}?subject={{PolicyId}}">{{EmailAddress}}</a>
+      </div>
+      {{/EmailAddress}}
+    </section>
+    {{/Agency}}
+
+    {{#AgencyLocationCode}}
+    <section>
+      <label>ALC#</label>
+      <div><strong>{{AgencyLocationCode}}</strong></div>
+    </section>
+    {{/AgencyLocationCode}}
+  </div>
 
   <div class="agent-support">
-    <a href="#" class="btn btn-primary btn-lg btn-block">Open Agent Support View</a>
+    <a href="#" class="btn btn-dark btn-lg">Open Agent Support View</a>
   </div>
 </div>
 
+{{#IsNotQuote}}
 <div class="col-xs-6">
+  {{#BillingIsCurrent}}
   <div class="alert alert-success policy-status">Billing: Current</div>
-  <table class="table">
-    <tbody>
-      <tr>
-        <td class="label">Total Premium</td>
-        <td><strong>$1380.00</strong></td>
-      </tr>
-      <tr>
-        <td class="label">Outstanding Balance</td>
-        <td><strong>$1242.00</strong></td>
-      </tr>
-      <tr>
-        <td class="label">Past Due Balance</td>
-        <td><strong>$0.00</strong></td>
-      </tr>
-      <tr>
-        <td class="label">Minimum Payment</td>
-        <td><strong>$138.00</strong></td>
-      </tr>
-      <tr>
-        <td class="label">Payment Due Date</td>
-        <td><strong>Jun 08, 2014</strong></td>
-      </tr>
-      <tr>
-        <td class="label">Equity Date</td>
-        <td><strong>Jun 28, 2014</strong></td>
-      </tr>
-      <tr>
-        <td class="label">Last Payment Received</td>
-        <td><strong>$138.00 - May 04, 2014</strong></td>
-      </tr>
-      <tr>
-        <td class="label">Payment Plan</td>
-        <td><strong>Ten Pay</strong></td>
-      </tr>
-    </tbody>
-  </table>
+  {{/BillingIsCurrent}}
+  {{#BillingIsPastDue}}
+  <div class="alert alert-danger policy-status">Billing: Past Due</div>
+  {{/BillingIsPastDue}}
+
+  <div class="section-holder">
+    
+    {{#TotalPremium}}
+    <section>
+      <label>Total Premium</label>
+      <div><strong>${{TotalPremium}}</strong></div>
+    </section>
+    {{/TotalPremium}}
+
+    {{#OutstandingBalance}}
+    <section>
+      <label>Outstanding Balance</label>
+      <div><strong>${{OutstandingBalance}}</strong></div>
+    </section>
+    {{/OutstandingBalance}}
+
+    {{#PastDueBalance}}
+    <section>
+      <label>Past Due Balance</label>
+      <div><strong>${{PastDueBalance}}</strong></div>
+    </section>
+    {{/PastDueBalance}}
+
+    {{#MinimumPayment}}
+    <section>
+      <label>Minimum Payment</label>
+      <div><strong>${{MinimumPayment}}</strong></div>
+    </section>
+    {{/MinimumPayment}}
+
+    {{#InvoiceDueDate}}
+    <section>
+      <label>Invoice Due Date</label>
+      <div><strong>{{InvoiceDueDate}}</strong></div>
+    </section>
+    {{/InvoiceDueDate}}
+
+    {{#EquityDate}}
+    <section>
+      <label>Equity Date</label>
+      <div><strong>{{EquityDate}}</strong></div>
+    </section>
+    {{/EquityDate}}
+
+    {{#LastPaymentReceived}}
+    <section>
+      <label>Last Payment Received</label>
+      <div><strong>${{LastPaymentReceived}}</strong></div>
+    </section>
+    {{/LastPaymentReceived}}
+
+    {{#PaymentPlanType}}
+    <section>
+      <label>Payment Plan</label>
+      <div><strong>{{PaymentPlanType}}</strong></div>
+    </section>
+    {{/PaymentPlanType}}
+  </div>
 
   <div class="panel panel-default">
     <div class="panel-heading">
@@ -115,59 +176,23 @@
           <th>Amount</th>
         </tr>
       </thead>
+
       <tbody>
+
+        {{#Installments}}
+        {{#number}}
         <tr>
-          <td>May 01, 2014</td>
-          <td>May 08, 2014</td>
-          <td>$138.00</td>
+          <td>{{invoiceDate}}</td>
+          <td>{{dueDate}}</td>
+          <td>${{amount}}</td>
         </tr>
-        <tr>
-          <td>Jun 01, 2014</td>
-          <td>Jun 08, 2014</td>
-          <td>$138.00</td>
-        </tr>
-        <tr>
-          <td>Jul 01, 2014</td>
-          <td>Jul 08, 2014</td>
-          <td>$138.00</td>
-        </tr>
-        <tr>
-          <td>Aug 01, 2014</td>
-          <td>Aug 08, 2014</td>
-          <td>$138.00</td>
-        </tr>
-        <tr>
-          <td>Sep 01, 2014</td>
-          <td>Sep 08, 2014</td>
-          <td>$138.00</td>
-        </tr>
-        <tr>
-          <td>Oct 01, 2014</td>
-          <td>Oct 08, 2014</td>
-          <td>$138.00</td>
-        </tr>
-        <tr>
-          <td>Nov 01, 2014</td>
-          <td>Nov 08, 2014</td>
-          <td>$138.00</td>
-        </tr>
-        <tr>
-          <td>Dec 01, 2014</td>
-          <td>Dec 08, 2014</td>
-          <td>$138.00</td>
-        </tr>
-        <tr>
-          <td>Jan 01, 2014</td>
-          <td>Jan 08, 2014</td>
-          <td>$138.00</td>
-        </tr>
-        <tr>
-          <td>Feb 01, 2014</td>
-          <td>Feb 08, 2014</td>
-          <td>$138.00</td>
-        </tr>
+        {{/number}}
+        {{/Installments}}
+
       </tbody>
     </table>
   </div>
+
 </div>
+{{/IsNotQuote}}
 
