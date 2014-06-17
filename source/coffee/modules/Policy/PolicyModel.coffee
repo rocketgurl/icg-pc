@@ -1,6 +1,7 @@
 define [
   'BaseModel'
-], (BaseModel) ->
+  'Helpers'
+], (BaseModel, Helpers) ->
 
   #### Policy
   #
@@ -122,7 +123,10 @@ define [
     getPolicyPeriod : ->
       start = @getTermItem('EffectiveDate').substr(0,10)
       end   = @getTermItem('ExpirationDate').substr(0,10)
-      @Helpers.concatStrings(start, end, ' - ')
+      if start && end
+        @Helpers.concatStrings(start, end, ' - ')
+      else
+        ''
 
     # **Return the full policy id taken from the XML**
     # @return _String_
@@ -167,35 +171,46 @@ define [
 
       ipm_header
 
-    # Assemble all the policy data for servicing tab into one place
+    # Assemble all the policy data for HTML QuickView servicing tab into one place
     getServicingData : ->
-      insuredData = @get 'insuredData'
-      mortgageeData = @get 'mortgageeData'
-      accountingData = @getAccountingData()
+      lastTerm            = @getLastTerm()
+      insuredData         = @get 'insuredData'
+      mortgageeData       = @get 'mortgageeData'
+      accountingData      = @getAccountingData()
       accountingDataItems = accountingData.DataItem
-      invoiceDueDate = @getDataItem accountingDataItems, 'InvoiceDueDateNext'
-      paymentDateLast = @getDataItem accountingDataItems, 'PaymentDateLast'
-      console.log 'Accounting', accountingData
+      invoiceDueDate      = @getDataItem(accountingDataItems, 'InvoiceDueDateNext') || ''
+      equityDate          = @getDataItem(accountingDataItems, 'EquityDate') || ''
+      pastDueBalance      = Helpers.formatMoney(@getDataItem(accountingDataItems, 'PastDueBalance'))
+      paymentDateLast     = @_stripTimeFromDate(@getDataItem(accountingDataItems, 'PaymentDateLast') || '')
+      paymentAmountLast   = Helpers.formatMoney(@getDataItem(accountingDataItems, 'PaymentAmountLast'))
+      paymentPlan         = accountingData.PaymentPlan || {}
+      billingIsPastDue    = pastDueBalance > 0
+      policyIsQuote       = @isQuote()
 
       data =
-        PolicyState       : @get('state').text || @get('state')
-        OriginatingSystem : @getTermDataItemValue('QuoteOriginationSystem')
         QuoteNumber       : @id
-        PolicyPeriod      : @getPolicyPeriod()
-        PropertyAddress   :
-          StreetNumber : @getTermDataItemValue('PropertyStreetNumber')
-          StreetName   : @getTermDataItemValue('PropertyStreetName')
-          City         : @getTermDataItemValue('PropertyCity')
-          State        : @getTermDataItemValue('PropertyState')
-          ZipCode      : @getTermDataItemValue('PropertyZipCode')
-        MailingAddress    : @getDataItemValues(insuredData, [
+        IsQuote           : policyIsQuote
+        IsNotQuote        : not policyIsQuote
+        PolicyState       : @getPrettyPolicyState()
+        OriginatingSystem : Helpers.prettyMap(@getOriginatingSystem(), {
+            'pxClient' : 'Agent Portal'
+            'pxServer' : 'Agent Portal'
+          }, 'Unknown')
+        PropertyAddress   : @getAddressDataItems(lastTerm.DataItem, [
+            'PropertyStreetNumber'
+            'PropertyStreetName'
+            'PropertyCity'
+            'PropertyState'
+            'PropertyZipCode'
+          ])
+        MailingAddress    : @getAddressDataItems(insuredData, [
             'InsuredMailingAddressLine1'
             'InsuredMailingAddressLine2'
             'InsuredMailingAddressCity'
             'InsuredMailingAddressState'
             'InsuredMailingAddressZip'
           ])
-        PrimaryMortgagee  : @getDataItemValues(mortgageeData, [
+        PrimaryMortgagee  : @getAddressDataItems(mortgageeData, [
             'MortgageeNumber1'
             'Mortgagee1AddressLine1'
             'Mortgagee1AddressLine2'
@@ -206,17 +221,89 @@ define [
           ])
         PolicyId           : @getPolicyId()
         AgencyLocationCode : @getAgencyLocationCode()
-        TotalPremium       : @getTermDataItemValue('TotalPremium')
-        OutstandingBalance : @getOutstandingBalance()
-        PastDueBalance     : @getDataItem(accountingDataItems, 'PastDueBalance')
-        MinimumPayment     : @getDataItem(accountingDataItems, 'MinimumPaymentDue')
-        InvoiceDueDate     : @_stripTimeFromDate(invoiceDueDate)
-        PaymentAmountLast  : @getDataItem(accountingDataItems, 'PaymentAmountLast')
-        PaymentDateLast    : @_stripTimeFromDate(paymentDateLast)
 
-    getOutstandingBalance : ->
-      items = @getAccountingData().DataItem
+        # Billing
+        BillingIsPastDue   : billingIsPastDue
+        BillingIsCurrent   : not billingIsPastDue
+        TotalPremium       : Helpers.formatMoney(@getTermDataItemValue('TotalPremium'))
+        OutstandingBalance : Helpers.formatMoney(@getOutstandingBalance(accountingDataItems))
+        MinimumPayment     : Helpers.formatMoney(@getDataItem(accountingDataItems, 'MinimumPaymentDue'))
+        LastPaymentReceived: @getLastPaymentReceived(paymentAmountLast, paymentDateLast)
+        Installments       : @getPaymentPlanInstallments(paymentPlan.Installments)
+        InvoiceDueDate     : @_stripTimeFromDate(invoiceDueDate)
+        EquityDate         : @_stripTimeFromDate(equityDate)
+        PaymentAmountLast  : paymentAmountLast
+        PastDueBalance     : pastDueBalance
+        PaymentDateLast    : paymentDateLast
+        PaymentPlanType    : Helpers.prettyMap(paymentPlan.type, {
+            'invoice'        : 'Invoice'
+            'fourPay'        : 'Four Pay'
+            'fourPayInvoice' : 'Four Pay Invoice'
+            'tenPay'         : 'Ten Pay'
+            'tenPayInvoice'  : 'Ten Pay Invoice'
+          })
+
+    # Map policy state to a prettier version
+    getPrettyPolicyState : ->
+      prettyStates =
+        'ACTIVEPOLICY'     : 'Active Policy'
+        'PENDINGCANCEL'    : 'Pending Cancellation'
+        'CANCELLEDPOLICY'  : 'Cancelled Policy'
+        'NONRENEWEDPOLICY' : 'Non-Renewed Policy'
+        'PENDINGNONRENWAL' : 'Pending Non-Renewal'
+        'ACTIVEQUOTE'      : 'Active Quote'
+        'INCOMPLETEQUOTE'  : 'Incomplete Quote'
+        'EXPIREDQUOTE'     : 'Expired Quote'
+      
+      # PolicyState is stored in a few different places and ways
+      # WARNING: this can get messy
+      state = @get('state').text || @get('state')
+      policyStates = @get('document').find('PolicyState')
+
+      if @isPendingCancel()
+        state = 'PENDINGCANCEL'
+      else if policyStates?.length > 1
+        stateNode = _.find(policyStates, (node) -> $(node).text() != state)
+        state = $(stateNode).text() if stateNode
+      
+      Helpers.prettyMap state, prettyStates
+
+    getOriginatingSystem : ->
+      @getTermDataItemValue 'QuoteOriginationSystem'
+
+    # Prefer Accounting > OutstandingBalanceDue, else fall back to OutstandingBalance
+    getOutstandingBalance : (items) ->
       @getDataItem(items, 'OutstandingBalanceDue') || @getDataItem(items, 'OutstandingBalance')
+
+    # Return formatted version of last payment amount and last payment date
+    # <PaymentAmountLast> - <PaymentDateLast> if PaymentDateLast > 1900-01-01
+    getLastPaymentReceived : (amount, date) ->
+      interval = Date.parse date
+      if interval > -1
+        "#{amount} - #{date}"
+
+    # Accounting.PaymentPlan.Installments is a mess of different possible data types
+    # Try to standardize it to an array of installment objects
+    getPaymentPlanInstallments : (installments) ->
+      installments = installments?.Installment || []
+      unless _.isArray installments
+        installments = [installments]
+      _.map(installments, (item) ->
+        item.amount = Helpers.formatMoney item.amount
+        item.charges = Helpers.formatMoney item.charges
+        item.feesAndPremiums = Helpers.formatMoney item.feesAndPremiums
+        return item
+        )
+
+    # Extract data items from a list and
+    # force to lowercase for formatting purposes
+    getAddressDataItems : (list, terms) ->
+      out = {}
+      _.each(terms, ((term) ->
+        val = @getDataItem list, term
+        out[term] = val if val
+        ), this)
+      out unless _.isEmpty out
 
     # **Get <SystemOfRecord>** - used to determine IPM eligibility.
     # @return _String_
@@ -385,7 +472,7 @@ define [
       _.compose(@baseGetCustomerData, @checkNull) type
 
     getAccountingData : ->
-      accounting = @getModelProperty 'Accounting'
+      @getModelProperty 'Accounting'
 
     # **Retrieve intervals of given Term obj**
     # @param `term` _Object_ Term obj
@@ -500,6 +587,13 @@ define [
       format = format ? 'YYYY-MM-DD'
       if moment(date)?
         moment(date).format(format)
+
+    # Helper function to map all string values to lowercase
+    _toLowerCase : (val) ->
+      if _.isString val
+        val.toLowerCase()
+      else
+        val
 
     # **Get the OpPolicyTerm value** from the last Term
     # @return _String_
