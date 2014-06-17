@@ -4,9 +4,6 @@ define [
   'text!modules/PolicyQuickView/templates/tpl_servicing_tab.html'
 ], (BaseView, AgencyLocationModel, tpl_servicing_tab) ->
 
-  # PolicyQuickView
-  # ====
-  # Build container view for PolicyQuickView subviews
   class ServicingTabView extends BaseView
 
     initialize : (options) ->
@@ -14,31 +11,44 @@ define [
       @CONTROLLER = options.controller
       @POLICY = options.policy
 
-      @agency_location_model = @get_agency_location_model()
-      @agency_location_model.on 'change', @render_servicing_tab_data, this
+      @agencyLocationModel = @getAgencyLocationModel()
+      @agencyLocationModel.on 'change', @renderServicingTabData, this
       return this
 
-    get_agency_location_model : ->
+    getAgencyLocationModel : ->
       new AgencyLocationModel
         urlRoot : "#{@CONTROLLER.services.ixdirectory}organizations"
         id      : @POLICY.getAgencyLocationCode()
         auth    : @CONTROLLER.IXVOCAB_AUTH
 
-    render_servicing_tab_data : (agency_location) ->
-      data =
-        cid    : @cid
-        Agency : agency_location.toJSON()
+    renderServicingTabData : (agencyLocationModel) ->
+      servicingData = @POLICY.getServicingData()
+      viewData =
+        cid                   : @cid
+        Agency                : agencyLocationModel.toJSON()
+        PolicyStateLabelClass : @getPolicyStateLabelClass(servicingData.PolicyState)
 
-      _.extend data, @POLICY.getServicingData()
+      data = _.extend servicingData, viewData
 
       console.log data
 
       template = @Mustache.render tpl_servicing_tab, data
       @render template
 
+    getPolicyStateLabelClass : (policyState) ->
+      labelClassMap =
+        'Active Quote'        : 'info'
+        'Active Policy'       : 'success'
+        'Incomplete Quote'    : 'warning'
+        'Pending Non-Renewal' : 'warning'
+        'Pending Cancellation': 'warning'
+        'Cancelled Policy'    : 'danger'
+        'Non-Renewed Policy'  : 'danger'
+      labelClassMap[policyState] || 'default'
+
     render : (template) ->
       @$el.html template
       return this
 
-    cache_elements : ->
+    cacheElements : ->
       cid = @cid
