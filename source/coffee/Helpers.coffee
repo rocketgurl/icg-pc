@@ -69,6 +69,11 @@ define [
         stop : -> favicon.set('/favicon.ico', originalTitle)
       }
 
+    # When you need to display a prettier
+    #  set of values than the given data
+    prettyMap : (value, valueMap={}, defaultVal='') ->
+      valueMap[value] || value || defaultVal
+
     # Simple wrapper on setTimeout
     callback_delay : (ms, func) =>
       setTimeout func, ms
