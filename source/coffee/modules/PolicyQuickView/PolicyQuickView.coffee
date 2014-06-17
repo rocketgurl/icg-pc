@@ -23,8 +23,8 @@ define [
       servicing_tab = new ServicingTabView
         controller : @CONTROLLER
         policy     : @POLICY
+        el         : @tab_servicing[0]
 
-      @tab_servicing.append servicing_tab.$el
       return this
 
     cache_elements : ->
