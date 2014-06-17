@@ -5,7 +5,6 @@
 // Custom bootstrap variables go here
 $body-bg: inherit !default;
 $nav-tabs-active-link-hover-bg: #fff;
-$table-border-color: transparent;
 
 // SVG Backgrounds
 $experimental-support-for-svg: true;
@@ -59,6 +58,29 @@ $notice-bottom: darken($yellow, 3);
 $warning-text: white;
 $warning-base: $red;
 $warning-bottom: $red;
+
+// bootstrap alerts
+$alert-default: $modulegray;
+$alert-default-dark: darken($alert-default, 5%);
+$alert-info: #2b90d2;
+$alert-info-dark: darken($alert-info, 5%);
+$alert-success: $success-base;
+$alert-success-dark: darken($alert-success, 5%);
+$alert-warning: darken($yellow, 10%);
+$alert-warning-dark: darken($alert-warning, 5%);
+$alert-danger: $warning-base;
+$alert-danger-dark: darken($alert-danger, 5%);
+
+$base-border-radius: 3px;
+$btn-background: #d5cdcd;
+$btn-background-highlight: lighten($btn-background, 15%);
+$btn-border: darken($btn-background, 5%);
+
+$btn-primary-background: darken($alert-info, 15%);
+$btn-primary-background-highlight: lighten($btn-primary-background, 15%);
+
+$btn-dark-background: #6f6d6d;
+$btn-dark-background-highlight: lighten($btn-dark-background, 15%);
 
 // Core font stacks
 @mixin sans {
@@ -126,6 +148,65 @@ $warning-bottom: $red;
     @include box-shadow(inset 0 0 8px 4px $inset-shadow, inset 0 0 8px 4px $inset-shadow, 0 1px 1px 0 #eeeeee);
     border: 1px solid $border;
   }
+}
+
+// Button backgrounds
+// ------------------
+@mixin button-background($start-color, $end-color, $text-color: #fff, $text-shadow: 0 -1px 0 rgba(0,0,0,.25)) {
+  // gradientBar will set the background to a pleasing blend of these, to support IE<=9
+  @include gradient-bar($start-color, $end-color, $text-color, $text-shadow);
+  *background-color: $end-color; /* Darken IE7 buttons by default so they stand out more given they won't have borders */
+  @include reset-filter();
+
+  // in these cases the gradient won't cover the background, so we override
+  &:hover, &:focus, &:active, &.active, &.disabled, &[disabled] {
+    color: $text-color;
+    background-color: $end-color;
+    *background-color: darken($end-color, 5%);
+  }
+
+  // IE 7 + 8 can't handle box-shadow to show active, so we darken a bit ourselves
+  &:active,
+  &.active {
+    background-color: darken($end-color, 10%) \9;
+  }
+}
+
+// Gradient Bar Colors for buttons and alerts
+@mixin gradient-bar($primary-color, $secondary-color, $text-color: #fff, $text-shadow: 0 -1px 0 rgba(0,0,0,.25)) {
+  color: $text-color;
+  text-shadow: $text-shadow;
+  @include gradient-vertical($primary-color, $secondary-color);
+  border-color: $secondary-color $secondary-color darken($secondary-color, 15%);
+}
+
+@mixin gradient-vertical($start-color: #555, $end-color: #333) {
+  background-color: mix($start-color, $end-color, 60%);
+  background-image: -moz-linear-gradient(top, $start-color, $end-color); // FF 3.6+
+  background-image: -webkit-gradient(linear, 0 0, 0 100%, from($start-color), to($end-color)); // Safari 4+, Chrome 2+
+  background-image: -webkit-linear-gradient(top, $start-color, $end-color); // Safari 5.1+, Chrome 10+
+  background-image: -o-linear-gradient(top, $start-color, $end-color); // Opera 11.10
+  background-image: linear-gradient(to bottom, $start-color, $end-color); // Standard, IE10
+  background-repeat: repeat-x;
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#{ie-hex-str($start-color)}', endColorstr='#{ie-hex-str($end-color)}', GradientType=0); // IE9 and down
+}
+
+// Reset filters for IE
+@mixin reset-filter() {
+  filter: progid:DXImageTransform.Microsoft.gradient(enabled=false);
+}
+
+// Drop shadows
+@mixin box-shadow($shadow...) {
+  -webkit-box-shadow: $shadow;
+     -moz-box-shadow: $shadow;
+          box-shadow: $shadow;
+}
+
+// Opacity
+@mixin opacity($opacity) {
+  opacity: $opacity / 100;
+  filter: alpha(opacity=$opacity);
 }
 
 @mixin clearfix {
