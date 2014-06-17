@@ -336,12 +336,14 @@ define [
     # Set up a timer to periodically check value of swfObj.PercentLoaded()
     # Fire the callback when PercentLoaded() == 100
     poll_swf : (obj, callback) ->
-      if _.isFunction obj.PercentLoaded
-        load_check_interval = setInterval(( ->
+      load_check_interval = setInterval(( ->
+        if _.isFunction obj.PercentLoaded
           if obj.PercentLoaded() == 100
             clearInterval load_check_interval
             callback()
-        ), 1000)
+        else
+          clearInterval load_check_interval
+      ), 1000)
 
     # When the SWF calls ready() this is fired and passed
     # policy data along
