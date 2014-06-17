@@ -19,11 +19,90 @@
     color: $darkgray;
   }
 
+  .btn {
+    @include button-background($btn-background-highlight, $btn-background, $darkgray, 0 1px 1px rgba(255,255,255,.75));
+    border: 1px solid $btn-border;
+    *border: 0; // Remove the border to prevent IE7's black border on input:focus
+    border-bottom-color: darken($btn-border, 10%);
+    border-radius: $base-border-radius;
+    @include box-shadow(inset 0 1px 0 rgba(255,255,255,.2), 0 1px 2px rgba(0,0,0,.05));
+    @include emboss();
+    font-weight: bold;
+
+    // Hover/focus state
+    &:hover,
+    &:focus {
+      color: $darkgray;
+      text-decoration: none;
+      background-position: 0 -15px;
+
+      // transition is only when going to hover/focus, otherwise the background
+      // behind the gradient (there for IE<=9 fallback) gets mismatched
+      @include transition(background-position .1s linear);
+    }
+
+    // Active state
+    &.active,
+    &:active {
+      background-image: none;
+      outline: 0;
+      @include box-shadow(inset 0 2px 4px rgba(0,0,0,.15), 0 1px 2px rgba(0,0,0,.05));
+    }
+
+    // Disabled state
+    &.disabled,
+    &[disabled] {
+      cursor: default;
+      background-image: none;
+      @include opacity(65%);
+      @include box-shadow(none);
+    }
+  }
+
+  .btn-dark {
+    @include button-background($btn-dark-background-highlight, $btn-dark-background, #fff, 0 -1px 0 rgba(0, 0, 0, 0.85));
+  }
+
+  .btn-primary {
+    @include button-background($btn-primary-background-highlight, $btn-primary-background, #fff, 0 -1px 0 rgba(0, 0, 0, 0.85));
+  }
+
+  .alert-default {
+    @include gradient-bar($alert-default-dark, $alert-default, darken($alert-default-dark, 35%), 0 -1px 0 rgba(255, 255, 255, 0.85));
+  }
+
+  .alert-info {
+    @include gradient-bar($alert-info-dark, $alert-info, #fff, 0 -1px 0 rgba(0, 0, 0, 0.75));
+  }
+
+  .alert-success {
+    @include gradient-bar($alert-success-dark, $alert-success, #fff, 0 -1px 0 rgba(0, 0, 0, 0.75));
+  }
+
+  .alert-warning {
+    @include gradient-bar($alert-warning-dark, $alert-warning, darken($alert-warning-dark, 25%));
+  }
+
+  .alert-danger {
+    @include gradient-bar($alert-danger-dark, $alert-danger, #fff, 0 -1px 0 rgba(0, 0, 0, 0.75));
+  }
+
   .nav {
     padding-top: 10px;
     padding-left: 15px;
     padding-right: 15px;
     background-color: $modulegray;
+  }
+
+  .nav-tabs > li {
+    > a {
+      font-weight: bold;
+      color: #787878;
+    }
+
+    &.active > a {
+      color: #417505;
+    }
   }
 
   .tab-content {
@@ -32,13 +111,33 @@
   }
 
   .policy-status {
+    @include font-size(20);
     font-weight: bold;
     text-align: center;
-    text-transform: uppercase;
   }
 
-  .table .label {
-    text-align: right;
+  .section-holder,
+  .agent-support {
+    margin-bottom: 20px;
+  }
+
+  section {
+    @include clearfix();
+    padding-left: 47%;
+    padding-right: 3%;
+    padding-top: 8px;
+    padding-bottom: 8px;
+
+    > label {
+      display: block;
+      float: left;
+      margin-left: -180px;
+      padding-top: 1px;
+      padding-right: 25px;
+      width: 180px;
+      text-align: right;
+      font-weight: normal;
+    }
   }
 
   .panel-heading {
@@ -46,7 +145,7 @@
   }
 
   .agent-support {
-    margin-top: 40px;
-    padding: 0 15%;
+    margin-top: 20px;
+    text-align: center;
   }
 }
