@@ -2,8 +2,9 @@ define [
   'tab'
   'BaseView'
   'modules/PolicyQuickView/ServicingTabView'
+  'modules/PolicyQuickView/ActivityView'
   'text!modules/PolicyQuickView/templates/tpl_quickview_container.html'
-], (tab, BaseView, ServicingTabView, tpl_qv_container) ->
+], (tab, BaseView, ServicingTabView, ActivityView, tpl_qv_container) ->
 
   # PolicyQuickView
   # ====
@@ -13,23 +14,29 @@ define [
     initialize : (options) ->
       @CONTROLLER = options.controller
       @POLICY = options.policy
-      @tpl_qv_container = @Mustache.render tpl_qv_container, { cid : @cid }
+      @qvContainer = @Mustache.render tpl_qv_container, { cid : @cid }
       return this
 
     render : ->
-      @$el.html @tpl_qv_container
-      @cache_elements()
+      @$el.html @qvContainer
+      @cacheElements()
 
-      servicing_tab = new ServicingTabView
+      servicing = new ServicingTabView
         controller : @CONTROLLER
         policy     : @POLICY
-        el         : @tab_servicing[0]
+        el         : @servicingTabView[0]
+
+      activity = new ActivityView
+        policyNotes  : @POLICY.getNotes()
+        policyEvents : @POLICY.getEvents()
+        el           : @activityView[0]
 
       return this
 
-    cache_elements : ->
+    cacheElements : ->
       cid = @cid
-      @tab_servicing    = @$("#tab-servicing-#{cid}")
-      @tab_underwriting = @$("#tab-underwriting-#{cid}")
-      @tab_claims       = @$("#tab-claims-#{cid}")
+      @servicingTabView    = @$("#tab-servicing-#{cid}")
+      @underwritingTabView = @$("#tab-underwriting-#{cid}")
+      @claimsTabView       = @$("#tab-claims-#{cid}")
+      @activityView        = @$("#activity-#{cid}")
       return this

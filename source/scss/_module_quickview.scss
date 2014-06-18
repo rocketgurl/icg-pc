@@ -37,6 +37,22 @@
     }
   }
 
+  .col-left,
+  .col-right {
+    @include clearfix();
+    float: left;
+  }
+
+  .col-left {
+    width: percentage(8 / 12);
+    border-right: 1px solid #ddd;
+  }
+
+  .col-right {
+    padding: 10px 0;
+    width: percentage(4 / 12);
+  }
+
   .tab-content {
     padding: 15px 0;
     background-color: #fff;
@@ -63,10 +79,10 @@
     > label {
       display: block;
       float: left;
-      margin-left: -180px;
+      margin-left: -90%;
       padding-top: 1px;
       padding-right: 25px;
-      width: 180px;
+      width: 90%;
       text-align: right;
       font-weight: normal;
     }
@@ -80,4 +96,9 @@
     margin-top: 20px;
     text-align: center;
   }
+}
+
+// Responsive
+@media (min-width: $screen-lg-min) {
+
 }
