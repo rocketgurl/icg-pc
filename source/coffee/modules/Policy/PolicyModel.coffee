@@ -482,6 +482,12 @@ define [
     getAccountingData : ->
       @getModelProperty 'Accounting'
 
+    # **Retrieve Policy Notes**
+    # @return _Array_ Policy Notes or empty
+    getNotes : ->
+      notes = @getModelProperty 'RelatedItems Notes'
+      @_sanitizeNodeArray notes?.Note
+
     # **Retrieve intervals of given Term obj**
     # @param `term` _Object_ Term obj
     # @return _Array_ Interval objs
