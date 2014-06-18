@@ -231,7 +231,7 @@ define [
         OutstandingBalance : Helpers.formatMoney(@getOutstandingBalance(accountingDataItems))
         MinimumPayment     : Helpers.formatMoney(@getDataItem(accountingDataItems, 'MinimumPaymentDue'))
         LastPaymentReceived: @getLastPaymentReceived(paymentAmountLast, paymentDateLast)
-        Installments       : @getPaymentPlanInstallments(paymentPlan.Installments)
+        Installments       : @getPaymentPlanInstallments(paymentPlan.Installments?.Installment)
         InvoiceDueDate     : @_stripTimeFromDate(invoiceDueDate)
         EquityDate         : @_stripTimeFromDate(equityDate)
         PaymentAmountLast  : paymentAmountLast
@@ -287,9 +287,7 @@ define [
     # Accounting.PaymentPlan.Installments is a mess of different possible data types
     # Try to standardize it to an array of installment objects
     getPaymentPlanInstallments : (installments) ->
-      installments = installments?.Installment || []
-      unless _.isArray installments
-        installments = [installments]
+      installments = @_sanitizeNodeArray installments
       _.map(installments, (item) ->
         item.amount = Helpers.formatMoney item.amount
         item.charges = Helpers.formatMoney item.charges
@@ -307,7 +305,8 @@ define [
         ), this)
       out unless _.isEmpty out
 
-    #
+    # Retrieve Lat/Long coords from last policy term
+    # Return empty result if Lat/Long does not exist
     getPropertyCoords : ->
       coords =
         Latitude  : @getTermDataItemValue 'Latitude'
@@ -603,6 +602,15 @@ define [
         val.toLowerCase()
       else
         val
+
+    # Because of the quirky way the xml is parsed to json
+    # Possible data types returned can be unreliable, especially for
+    # Arrays of items. This is an attempt to sanitize the results
+    _sanitizeNodeArray : (node) ->
+      items = node || []
+      unless _.isArray items
+        items = [items]
+      items
 
     # **Get the OpPolicyTerm value** from the last Term
     # @return _String_
