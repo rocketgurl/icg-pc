@@ -219,8 +219,10 @@ define [
             'Mortgagee1AddressZip'
             'LoanNumber1'
           ])
+        PropertyCoords     : @getPropertyCoords()
         PolicyId           : @getPolicyId()
         AgencyLocationCode : @getAgencyLocationCode()
+        AgencyLocationId   : @getAgencyLocationId()
 
         # Billing
         BillingIsPastDue   : billingIsPastDue
@@ -295,8 +297,8 @@ define [
         return item
         )
 
-    # Extract data items from a list and
-    # force to lowercase for formatting purposes
+    # Extract data items from a list
+    # Return empty result if none
     getAddressDataItems : (list, terms) ->
       out = {}
       _.each(terms, ((term) ->
@@ -304,6 +306,13 @@ define [
         out[term] = val if val
         ), this)
       out unless _.isEmpty out
+
+    #
+    getPropertyCoords : ->
+      coords =
+        Latitude  : @getTermDataItemValue 'Latitude'
+        Longitude : @getTermDataItemValue 'Longitude'
+      coords if coords.Latitude and coords.Longitude
 
     # **Get <SystemOfRecord>** - used to determine IPM eligibility.
     # @return _String_
