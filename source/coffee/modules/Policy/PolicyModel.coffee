@@ -14,11 +14,14 @@ define [
     # Policy states
     # -------------
     states :
-      ACTIVE_POLICY      : 'ACTIVEPOLICY',
-      ACTIVE_QUOTE       : 'ACTIVEQUOTE',
-      CANCELLED_POLICY   : 'CANCELLEDPOLICY',
-      EXPIRED_QUOTE      : 'EXPIREDQUOTE',
-      NON_RENEWED_POLICY : 'NONRENEWEDPOLICY'
+      ACTIVE_POLICY        : 'ACTIVEPOLICY'
+      ACTIVE_QUOTE         : 'ACTIVEQUOTE'
+      PENDING_CANCELLATION : 'PENDINGCANCELLATION'
+      CANCELLED_POLICY     : 'CANCELLEDPOLICY'
+      EXPIRED_QUOTE        : 'EXPIREDQUOTE'
+      INCOMPLETE_QUOTE     : 'INCOMPLETEQUOTE'
+      PENDING_NON_RENEWAL  : 'PENDINGNONRENWAL'
+      NON_RENEWED_POLICY   : 'NONRENEWEDPOLICY'
 
     # Any products that have name conflicts
     # Where the first 3 identifiers aren't enough
@@ -248,22 +251,24 @@ define [
     # Map policy state to a prettier version
     getPrettyPolicyState : ->
       prettyStates =
-        'ACTIVEPOLICY'     : 'Active Policy'
-        'PENDINGCANCEL'    : 'Pending Cancellation'
-        'CANCELLEDPOLICY'  : 'Cancelled Policy'
-        'NONRENEWEDPOLICY' : 'Non-Renewed Policy'
-        'PENDINGNONRENWAL' : 'Pending Non-Renewal'
-        'ACTIVEQUOTE'      : 'Active Quote'
-        'INCOMPLETEQUOTE'  : 'Incomplete Quote'
-        'EXPIREDQUOTE'     : 'Expired Quote'
+        'ACTIVEPOLICY'        : 'Active Policy'
+        'PENDINGCANCELLATION' : 'Pending Cancellation'
+        'CANCELLEDPOLICY'     : 'Cancelled Policy'
+        'NONRENEWEDPOLICY'    : 'Non-Renewed Policy'
+        'PENDINGNONRENWAL'    : 'Pending Non-Renewal'
+        'ACTIVEQUOTE'         : 'Active Quote'
+        'INCOMPLETEQUOTE'     : 'Incomplete Quote'
+        'EXPIREDQUOTE'        : 'Expired Quote'
       
       # PolicyState is stored in a few different places and ways
       # WARNING: this can get messy
       state = @get('state').text || @get('state')
       policyStates = @get('document').find('PolicyState')
 
-      if @isPendingCancel()
-        state = 'PENDINGCANCEL'
+      if @isPendingCancel true
+        state = 'PENDINGCANCELLATION'
+      else if @isPendingNonRenewal()
+        state = 'PENDINGNONRENWAL'
       else if policyStates?.length > 1
         stateNode = _.find(policyStates, (node) -> $(node).text() != state)
         state = $(stateNode).text() if stateNode
@@ -390,6 +395,16 @@ define [
       return true if (bool && pending)
       pending
 
+    # **Is this policy pending non-renewal?**
+    #
+    # @return _Boolean_
+    isPendingNonRenewal : ->
+      pending = @get('json').Management?.PendingNonRenewal
+      if _.isObject pending
+        true
+      else
+        false
+
     # **Determine the cancellation effective date if there is one**
     # @return _String_ | _Null_
     getCancellationEffectiveDate : ->
@@ -487,6 +502,12 @@ define [
     getNotes : ->
       notes = @getModelProperty 'RelatedItems Notes'
       @_sanitizeNodeArray notes?.Note
+
+    # **Retrieve Policy Events**
+    # @return _Array_ Policy Events or empty
+    getEvents : ->
+      events = @getModelProperty 'EventHistory'
+      @_sanitizeNodeArray events?.Event
 
     # **Retrieve intervals of given Term obj**
     # @param `term` _Object_ Term obj
