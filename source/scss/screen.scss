@@ -2,17 +2,10 @@
 @import "base";
 @import "bootstrap";
 
-html {
-  background: $lightgray;
-}
-
-body {
-  min-width: 1000px;
-  text-rendering: optimizeLegibility;
-}
-
 // Now begin importing our partials
 @import "page";
+@import "buttons";
+@import "alerts";
 @import "modal";
 @import "header";
 @import "workspace";

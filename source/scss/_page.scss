@@ -1,14 +1,16 @@
 /* Page */
+
+html {
+  background: $lightgray;
+}
+
+body {
+  min-width: 1300px;
+  text-rendering: optimizeLegibility;
+}
+
 #page {
   @include background-image(linear-gradient(top, $blue, darken($blue, 10)));
-}
-
-.button-green {
-  @include simple-color(79, 100%, 32%);
-}
-
-.button-disabled {
-  @include simple-color(360, 0%, 93%);
 }
 
 a {
