@@ -19,10 +19,14 @@
     {{#PropertyAddress}}
     <section>
       <label>Property Address</label>
-      <a class="address-link" href="#" target="_blank">
+      {{#PropertyCoords}}
+      <a class="address-link" href="http://maps.google.com/maps?q={{Latitude}},{{Longitude}}" target="_blank">
+      {{/PropertyCoords}}
         <div>{{PropertyStreetNumber}} {{PropertyStreetName}}</div>
         <div>{{PropertyCity}}, {{PropertyState}} {{PropertyZipCode}}</div>
+      {{#PropertyCoords}}
       </a>
+      {{/PropertyCoords}}
     </section>
     {{/PropertyAddress}}
 
