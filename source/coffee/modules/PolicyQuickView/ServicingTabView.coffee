@@ -29,9 +29,6 @@ define [
         PolicyStateLabelClass : @getPolicyStateLabelClass(servicingData.PolicyState)
 
       data = _.extend servicingData, viewData
-
-      console.log data
-
       template = @Mustache.render tpl_servicing_tab, data
       @render template
 
