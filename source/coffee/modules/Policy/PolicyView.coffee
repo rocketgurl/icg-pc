@@ -68,11 +68,8 @@ define [
         @show_element @$el
 
         # If this is our first load, render the view
-        # and kick off the policy summary swf
         unless @render_state
           @render()
-          @favicon.start()
-          @embed_swf()
 
         if @current_route == 'quickview' || !@current_route?
           @show_quickview()
@@ -268,7 +265,7 @@ define [
         @resize_view @policy_swf_container
 
     # Should you ever wish to resize all the policy modules,
-    # This is here for you.
+    # This is here for you. P.S. don't do this
     resize_modules : ->
       if @policy_modules.length
         _.each @policy_modules, ((module) -> @resize_view @$(module)), this
@@ -302,6 +299,8 @@ define [
       @flash_loaded = false
 
     embed_swf : ->
+      @favicon.start()
+
       opts =
         allowScriptAccess : 'always'
         wmode : 'window'
