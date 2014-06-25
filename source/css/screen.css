@@ -742,6 +742,18 @@ textarea.input-lg, select[multiple].input-lg { height: auto; }
 
 input[type="submit"].btn-block, input[type="reset"].btn-block, input[type="button"].btn-block { width: 100%; }
 
+.fade { opacity: 0; -webkit-transition: opacity 0.15s linear; -o-transition: opacity 0.15s linear; transition: opacity 0.15s linear; }
+.fade.in { opacity: 1; }
+
+.collapse { display: none; }
+.collapse.in { display: block; }
+
+tr.collapse.in { display: table-row; }
+
+tbody.collapse.in { display: table-row-group; }
+
+.collapsing { position: relative; height: 0; overflow: hidden; -webkit-transition: height 0.35s ease; -o-transition: height 0.35s ease; transition: height 0.35s ease; }
+
 .nav { margin-bottom: 0; padding-left: 0; list-style: none; }
 .nav:before, .nav:after { content: " "; display: table; }
 .nav:after { clear: both; }
@@ -1169,7 +1181,7 @@ td.search-views-admin > a { padding: 0 5px; color: #165788; text-decoration: non
 /*
 Module: Policy
 */
-.policy-nav { width: 15.25424%; float: left; margin-right: 1.69492%; display: inline; }
+.policy-nav { width: 12%; float: left; padding-right: 15px; }
 .policy-nav > ul:before, .policy-nav > ul:after { content: " "; display: table; }
 .policy-nav > ul:after { clear: both; }
 .policy-nav li { margin: 0; border-top: white 1px solid; border-bottom: lightgrey 1px solid; }
@@ -1179,7 +1191,7 @@ Module: Policy
 .policy-nav li:first-child { border-top: 0px; }
 .policy-nav li:last-child { border-bottom: 0px; }
 
-.policy-workspace { width: 83.05085%; float: right; margin-right: 0; *margin-left: -1em; display: inline; }
+.policy-workspace { width: 88%; float: left; }
 
 .policy-workspace-error { width: 100%; float: right; margin-right: 0; *margin-left: -1em; display: inline; text-align: center; }
 
@@ -1216,7 +1228,7 @@ Module: Policy
 .qv-container .col-left:before, .qv-container .col-left:after, .qv-container .col-right:before, .qv-container .col-right:after { content: " "; display: table; }
 .qv-container .col-left:after, .qv-container .col-right:after { clear: both; }
 .qv-container .col-left { width: 66.66667%; border-right: 1px solid #ddd; }
-.qv-container .col-right { padding: 10px 0; width: 33.33333%; }
+.qv-container .col-right { padding: 10px; width: 33.33333%; }
 .qv-container .tab-content { padding: 15px 0; background-color: #fff; }
 .qv-container .policy-status { font-size: 20px; font-size: 2rem; font-weight: bold; text-align: center; }
 .qv-container .section-holder, .qv-container .agent-support { margin-bottom: 20px; }
@@ -1226,6 +1238,15 @@ Module: Policy
 .qv-container section > label { display: block; float: left; margin-left: -90%; padding-top: 1px; padding-right: 25px; width: 90%; text-align: right; font-weight: normal; }
 .qv-container .panel-heading em, .qv-container .panel-heading strong { display: inline-block; }
 .qv-container .agent-support { margin-top: 20px; text-align: center; }
+.qv-container .activity-wrapper { max-height: 350px; overflow: auto; }
+.qv-container .activity { padding: 8px; border-bottom: 1px solid #ddd; font-size: 11px; }
+.qv-container .activity:last-child { border: 0; }
+.qv-container .activity-initiator { padding-left: 0; }
+.qv-container .activity-date { text-align: right; padding-right: 0; }
+.qv-container .activity-title, .qv-container .activity-body { margin-top: 15px; }
+.qv-container .activity-title { text-transform: capitalize; font-size: 13px; }
+.qv-container .activity-title > a { display: block; }
+.qv-container .activity-body > p:last-child { margin-bottom: 0; }
 
 .ru-container, .zd-container { padding: 0 1.8%; }
 .ru-container h1, .zd-container h1, .ru-container h2, .zd-container h2 { width: 100%; float: right; margin-right: 0; *margin-left: -1em; display: inline; font-weight: bold; margin: 15px 0 0 0; }

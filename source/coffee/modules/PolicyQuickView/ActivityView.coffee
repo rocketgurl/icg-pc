@@ -1,71 +1,26 @@
 define [
+  'collapse'
   'BaseView'
   'modules/PolicyQuickView/ActivityCollection'
-], (BaseView, ActivityCollection) ->
+  'text!modules/PolicyQuickView/templates/tpl_activity_panel.html'
+], (collapse, BaseView, ActivityCollection, tpl_activity_panel) ->
 
   class ActivityView extends BaseView
 
     initialize : (options) ->
-      notes = options.policyNotes
-      evnts = options.policyEvents
-      activities = notes.concat evnts
+      activities = options.policyNotes.concat(options.policyEvents)
       @collection = new ActivityCollection activities
-      @collection.each (activity) ->
-        console.log activity.timeStamp, activity.type, activity.initiator
-      # console.log this
+      viewData =
+        cid : @cid
+        activities : @collection.toJSON()
+      
+      window.ActivityCollection = @collection
 
-    # TODO: Notes filter
-    #   auxEvents: {
-    #     'keyup .filter-typeahead input': 'lookup'
-    #   },
- 
-    #   query: '',
- 
-    #   lookup: function (e) {
-    #     var that = this;
-    #     this.query = e.currentTarget.value;
-    #     this.process(_.filter(this.options.data.attributes, function (item) {
-    #       return that.matcher(item) || item.checked === 'checked';
-    #     }));
-    #   },
- 
-    #   process: function (items) {
-    #     items = this.sorter(items);
-    #     this.draw(items);
-    #   },
- 
-    #   matcher: function (item) {
-    #     return ~item.full_name.toLowerCase().indexOf(this.query.toLowerCase());
-    #   },
- 
-    #   sorter: function (items) {
-    #     var q = this.query, checked = [], begins = [], scase = [], icase = [];
-    #     _.each(items, function (it) {
-    #       var name = it.full_name;
-    #       it.checked === 'checked' ? checked.push(it) :
-    #         name.toLowerCase().indexOf(q.toLowerCase()) === 0 ? begins.push(it) :
-    #         name.indexOf(q) !== -1 ? scase.push(it) :
-    #         icase.push(it);
-    #     });
-    #     return checked.concat(begins, scase, icase);
-    #   },
- 
-    #   highlighter: function (name, query) {
-    #     if (query.replace(/[\[\]{}()*+?,\\\^$|#]/g, '\\$&')) {
-    #       return name.replace(new RegExp('(' + query + ')', 'ig'), function ($1, match) {
-    #         return '<strong>' + match + '</strong>';
-    #       });
-    #     }
-    #   },
- 
-    #   draw: function (items) {
-    #     this.$('.filter-opts').html(this.itemTemplate({
-    #       items: items,
-    #       showLabel: true,
-    #       showPrice: false,
-    #       showCount: false,
-    #       query: this.query,
-    #       highlighter: this.highlighter
-    #     }));
-    #   }
-    # });
+      @collection.on 'sort', @render, this
+      @render viewData
+
+    render: (viewData) ->
+      console.log viewData
+      template = @Mustache.render tpl_activity_panel, viewData
+      @$el.html template
+      this

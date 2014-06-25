@@ -14,29 +14,19 @@ define [
     initialize : (options) ->
       @CONTROLLER = options.controller
       @POLICY = options.policy
-      @qvContainer = @Mustache.render tpl_qv_container, { cid : @cid }
       return this
 
     render : ->
-      @$el.html @qvContainer
-      @cacheElements()
+      @$el.html @Mustache.render tpl_qv_container, { cid : @cid }
 
       servicing = new ServicingTabView
         controller : @CONTROLLER
         policy     : @POLICY
-        el         : @servicingTabView[0]
+        el         : document.getElementById("tab-servicing-#{@cid}")
 
       activity = new ActivityView
         policyNotes  : @POLICY.getNotes()
         policyEvents : @POLICY.getEvents()
-        el           : @activityView[0]
+        el           : document.getElementById("activity-#{@cid}")
 
-      return this
-
-    cacheElements : ->
-      cid = @cid
-      @servicingTabView    = @$("#tab-servicing-#{cid}")
-      @underwritingTabView = @$("#tab-underwriting-#{cid}")
-      @claimsTabView       = @$("#tab-claims-#{cid}")
-      @activityView        = @$("#activity-#{cid}")
       return this

@@ -26,7 +26,9 @@ require
     chosen          : 'lib/chosen.jquery'
     Apparatchik     : 'lib/Apparatchik'
     favicon         : 'lib/favicon'
+    transition      : 'lib/bootstrap/transition'
     tab             : 'lib/bootstrap/tab'
+    collapse        : 'lib/bootstrap/collapse'
   priority: ['jquery', 'xml2json', 'json']
   shim:
       'jquery' :
@@ -37,6 +39,10 @@ require
       'json' :
         deps    : ['jquery']
         exports : 'JSON'
+      'underscore' :
+        exports : '_'
+      'backbone' :
+        deps    : ['json', 'underscore']
       'amplify' :
         deps    : ['jquery', 'json']
         exports : 'amplify'
@@ -57,8 +63,12 @@ require
         deps : ['jquery', 'underscore', 'moment']
       'favicon' :
         exports : 'favicon'
+      'transition' :
+        deps: ['jquery']
       'tab' :
         deps: ['jquery']
+      'collapse' :
+        deps: ['transition']
 
 require [
   'jquery',

@@ -49,7 +49,7 @@
   }
 
   .col-right {
-    padding: 10px 0;
+    padding: 10px;
     width: percentage(4 / 12);
   }
 
@@ -95,6 +95,48 @@
   .agent-support {
     margin-top: 20px;
     text-align: center;
+  }
+
+  .activity-wrapper {
+    max-height: 350px;
+    overflow: auto;
+  }
+
+  .activity {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+    font-size: 11px;
+
+    &:last-child { border: 0; }
+  }
+
+  .activity-initiator {
+    padding-left: 0;
+  }
+
+  .activity-date {
+    text-align: right;
+    padding-right: 0;
+  }
+
+  .activity-title,
+  .activity-body {
+    margin-top: 15px;
+  }
+
+  .activity-title {
+    text-transform: capitalize;
+    font-size: 13px;
+
+    > a {
+      display: block;
+    }
+  }
+
+  .activity-body {
+    > p:last-child {
+      margin-bottom: 0;
+    }
   }
 }
 

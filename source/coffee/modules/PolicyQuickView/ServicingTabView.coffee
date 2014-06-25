@@ -12,7 +12,7 @@ define [
       @POLICY = options.policy
 
       @agencyLocationModel = @getAgencyLocationModel()
-      @agencyLocationModel.on 'change', @renderServicingTabData, this
+      @agencyLocationModel.on 'change', @render, this
       return this
 
     getAgencyLocationModel : ->
@@ -20,17 +20,6 @@ define [
         urlRoot : "#{@CONTROLLER.services.ixdirectory}organizations"
         id      : @POLICY.getAgencyLocationCode()
         auth    : @CONTROLLER.IXVOCAB_AUTH
-
-    renderServicingTabData : (agencyLocationModel) ->
-      servicingData = @POLICY.getServicingData()
-      viewData =
-        cid                   : @cid
-        Agency                : agencyLocationModel.toJSON()
-        PolicyStateLabelClass : @getPolicyStateLabelClass(servicingData.PolicyState)
-
-      data = _.extend servicingData, viewData
-      template = @Mustache.render tpl_servicing_tab, data
-      @render template
 
     getPolicyStateLabelClass : (policyState) ->
       labelClassMap =
@@ -43,9 +32,13 @@ define [
         'Non-Renewed Policy'  : 'danger'
       labelClassMap[policyState] || 'default'
 
-    render : (template) ->
-      @$el.html template
-      return this
+    render : ->
+      servicingData = @POLICY.getServicingData()
+      viewData =
+        cid                   : @cid
+        Agency                : @agencyLocationModel.toJSON()
+        PolicyStateLabelClass : @getPolicyStateLabelClass(servicingData.PolicyState)
 
-    cacheElements : ->
-      cid = @cid
+      data = _.extend viewData, servicingData
+      @$el.html @Mustache.render tpl_servicing_tab, data
+      return this

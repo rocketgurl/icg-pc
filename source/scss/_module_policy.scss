@@ -2,7 +2,11 @@
 Module: Policy
 */
 .policy-nav {
-  @include span-columns(2, 12);
+  // @include span-columns(2, 12);
+  width: 12%;
+  float: left;
+  padding-right: 15px;
+  // display: inline;
   > ul {
     @include clearfix();
     @extend .list-unstyled;
@@ -36,8 +40,11 @@ Module: Policy
 }
 
 .policy-workspace {
-  @include span-columns(10 omega, 12);
+  // @include span-columns(10 omega, 12);
   // border: #ddd 1px solid;
+  width: 88%;
+  float: left;
+  // display: inline;
 }
 
 .policy-workspace-error {

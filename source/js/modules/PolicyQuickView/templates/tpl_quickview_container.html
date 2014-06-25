@@ -1,4 +1,4 @@
-<!-- Nav tabs -->
+<!-- Nav tabs panel -->
 <div id="qv-tabs-{{cid}}" class="col-left">
   <ul class="nav nav-tabs">
     <li class="active"><a href="#tab-servicing-{{cid}}" data-toggle="tab">Servicing</a></li>
@@ -9,8 +9,8 @@
   <!-- Tab panes -->
   <div class="tab-content">
     <div class="tab-pane clearfix active" id="tab-servicing-{{cid}}">
-      <div id="lh-loader-#{@cid}" class="lh-loader">
-        <h2 id="lh-spinner-#{@cid}"><span>Loading Servicing&hellip;</span></h2>
+      <div id="lh-loader-{{cid}}" class="lh-loader">
+        <h2 id="lh-spinner-{{cid}}"><span>Loading Servicing&hellip;</span></h2>
       </div>
     </div>
     <div class="tab-pane clearfix" id="tab-underwriting-{{cid}}">
@@ -26,13 +26,7 @@
   </div>
 </div>
 
-<div id="qv-activity-{{cid}}" class="col-right">
-  <div id="notes-events-{{cid}}" class="col-xs-12">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        DERP
-      </div>
-      <div>DEE DERP</div>
-    </div>
-  </div>
+<!-- Activities & Documents -->
+<div id="qv-aside-{{cid}}" class="col-right">
+  <div id="activity-{{cid}}"></div>
 </div>
