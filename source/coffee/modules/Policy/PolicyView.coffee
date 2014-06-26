@@ -132,6 +132,8 @@ define [
       resize_swf_container = _.debounce @resize_swf_container, 300
       $(window).resize resize_swf_container
 
+      @embed_swf()
+
       this
 
     # Namespace page elements
