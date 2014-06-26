@@ -105,7 +105,7 @@ define [
       if isEmpty
         rawContent = title
       else
-        rawContent = "#{title} #{_.values(content).join(' ')}"
+        rawContent = "#{title} #{_.values(contentObj).join(' ')}"
 
       data =
         raw     : rawContent
