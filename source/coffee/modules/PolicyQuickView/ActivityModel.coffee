@@ -100,7 +100,7 @@ define [
     getEventContent : ->
       contentObj = @getDataItems 'reasonCodeLabel', 'EffectiveDate'
       title      = @get 'type'
-      isEmpty    = _.isEmpty content
+      isEmpty    = _.isEmpty contentObj
 
       if isEmpty
         rawContent = title
