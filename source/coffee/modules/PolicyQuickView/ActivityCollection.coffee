@@ -19,7 +19,7 @@ define [
       
       # Default sorting / filtering options
       @options = _.defaults(options, {
-        sortProp : 'unixOffset'
+        sortProp : 'date'
         sortAsc  : false
         query : ''
       })
@@ -58,10 +58,10 @@ define [
     sortBy : (value) ->
       switch value
         when 'date_desc'
-          @options.sortProp = 'unixOffset'
+          @options.sortProp = 'date'
           @options.sortAsc = false
         when 'date_asc'
-          @options.sortProp = 'unixOffset'
+          @options.sortProp = 'date'
           @options.sortAsc = true
         when 'type_desc'
           @options.sortProp = 'type'
@@ -70,7 +70,7 @@ define [
           @options.sortProp = 'type'
           @options.sortAsc = true
         else
-          @options.sortProp = 'unixOffset'
+          @options.sortProp = 'date'
           @options.sortAsc = false
       @sort()
 

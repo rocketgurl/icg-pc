@@ -16,9 +16,9 @@ define [
     initialize : ->
       
       # put sortable properties directly on the model for easy access
-      @dateTime   = @getDateTime()
-      @unixOffset = @dateTime.valueOf()
-      @type       = @getType()
+      @dateTime = @getDateTime()
+      @date     = @dateTime.valueOf()
+      @type     = @getType()
 
       # properties used in the template
       @set
@@ -72,7 +72,6 @@ define [
       rawContent   = @get 'Content'
       splitContent = rawContent.split /\n+/
       hasBody      = splitContent.length > 1
-
       data =
         raw     : rawContent
         title   : splitContent.shift()
