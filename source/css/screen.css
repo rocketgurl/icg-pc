@@ -1675,6 +1675,7 @@ Module: Policy
 .qv-container h1, .qv-container h2 { font-weight: bold; }
 .qv-container h1 { margin: 15px 0 0 0; font-size: 24px; font-size: 2.4rem; text-shadow: 0 1px white; color: #002857; }
 .qv-container h2 { margin: 20px 0 10px 0; font-size: 18px; font-size: 1.8rem; color: dimgrey; }
+.qv-container .input-xs { height: 22px; line-height: 22px; font-size: 11px; }
 .qv-container .nav { padding-top: 10px; padding-left: 15px; padding-right: 15px; background-color: #f4f4f4; }
 .qv-container .nav-tabs > li > a { font-weight: bold; color: #787878; }
 .qv-container .nav-tabs > li.active > a { color: #417505; }
@@ -1685,6 +1686,7 @@ Module: Policy
 .qv-container .col-right { padding: 10px; width: 33.33333%; }
 .qv-container .col-right .panel-heading { padding: 5px; }
 .qv-container .col-right .panel-heading strong { line-height: 30px; }
+.qv-container .panel-subhead { padding: 5px; border-bottom: 1px solid #ddd; }
 .qv-container .tab-content { padding: 15px 0; background-color: #fff; }
 .qv-container .policy-status { font-size: 18px; font-size: 1.8rem; font-weight: bold; text-align: center; }
 .qv-container .section-holder, .qv-container .agent-support { margin-bottom: 20px; }
@@ -1693,9 +1695,8 @@ Module: Policy
 .qv-container section:after { clear: both; }
 .qv-container section > label { display: block; float: left; margin-left: -90%; padding-top: 1px; padding-right: 25px; width: 90%; text-align: right; font-weight: normal; }
 .qv-container .panel-heading em, .qv-container .panel-heading strong { display: inline-block; }
-.qv-container .panel-heading .input-group { width: 50%; }
 .qv-container .agent-support { margin-top: 20px; text-align: center; }
-.qv-container .activity-wrapper { max-height: 350px; overflow: auto; }
+.qv-container .activity-wrapper { height: 300px; overflow: auto; }
 .qv-container .activity { padding: 8px; border-bottom: 1px solid #ddd; font-size: 11px; }
 .qv-container .activity:last-child { border: 0; }
 .qv-container .activity-initiator { padding-left: 0; }

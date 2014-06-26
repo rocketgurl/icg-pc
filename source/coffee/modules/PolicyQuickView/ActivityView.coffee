@@ -8,7 +8,8 @@ define [
   class ActivityView extends BaseView
 
     events:
-      "keyup .activity-search" : 'filterCollection'
+      'keyup .activity-search' : 'filterCollection'
+      'change .activity-sort'  : 'sortCollection'
 
     initialize : (options) ->
       activities = options.policyNotes.concat(options.policyEvents)
@@ -20,12 +21,16 @@ define [
       
       window.ActivityCollection = @collection
 
-      @collection.on 'filter', @render, this
+      @collection.on 'reset', @render, this
       @render @collection
 
     filterCollection : (e) ->
       throttledFilter = _.throttle @collection.filterByQuery, 500
       throttledFilter e.currentTarget.value
+      return this
+
+    sortCollection : (e) ->
+      @collection.sortBy e.currentTarget.value
       return this
 
     render : (collection) ->

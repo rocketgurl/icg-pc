@@ -31,13 +31,23 @@
   <div id="activity-{{cid}}">
     <div class="panel panel-default note-panel">
       <div class="panel-heading clearfix">
-        <strong>Notes</strong>
-        <div class="input-group input-group-sm pull-right">
+        <strong>Recent Activity</strong>
+        <div class="input-group input-group-sm col-xs-5 pull-right">
           <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
           <input type="search" class="activity-search form-control" placeholder="Search...">
         </div>
       </div>
-      <div class="panel-subhead"></div>
+      <div class="panel-subhead clearfix">
+        <div class="input-group col-xs-3">
+          <select class="activity-sort form-control input-xs">
+            <option value="date_desc">Sort by</option>
+            <option value="date_desc">Date Desc</option>
+            <option value="date_asc">Date Asc</option>
+            <option value="type_desc">Type Desc</option>
+            <option value="type_asc">Type Asc</option>
+          </select>
+        </div>
+      </div>
       <div class="activity-wrapper"></div>
     </div>
   </div>

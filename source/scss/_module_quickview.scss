@@ -19,6 +19,12 @@
     color: $darkgray;
   }
 
+  .input-xs {
+    height: 22px;
+    line-height: 22px;
+    font-size: 11px;
+  }
+
   .nav {
     padding-top: 10px;
     padding-left: 15px;
@@ -58,6 +64,11 @@
     }
   }
 
+  .panel-subhead {
+    padding: 5px;
+    border-bottom: 1px solid #ddd;
+  }
+
   .tab-content {
     padding: 15px 0;
     background-color: #fff;
@@ -95,10 +106,6 @@
 
   .panel-heading {
     em, strong { display: inline-block; }
-
-    .input-group {
-      width: 50%;
-    }
   }
 
   .agent-support {
@@ -107,7 +114,7 @@
   }
 
   .activity-wrapper {
-    max-height: 350px;
+    height: 300px;
     overflow: auto;
   }
 

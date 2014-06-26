@@ -3,10 +3,14 @@ define [
   'modules/PolicyQuickView/ActivityModel'
 ], (Backbone, ActivityModel) ->
 
-  # A mixed, sortable, searchable collection of Notes & Events
+  # A mixed, sortable, searchable collection of Notes, Messages & Events
   class ActivityCollection extends Backbone.Collection
 
     model : ActivityModel
+
+    modelCache : null
+
+    initialized : false
 
     initialize : (models, options) ->
       _.bindAll this, 'filterByQuery'
@@ -20,11 +24,14 @@ define [
         query : ''
       })
 
-      @on 'filter', @report
+      @on 'all', @report
+
+      # Save the initial set of models for later filtering
+      @on 'reset', @cacheModels
 
     # Utility function for debugging collection results
-    report : (data) ->
-      console.log data.options, 'report'
+    report : (evt, data) ->
+      console.log evt, data
       data.each (model) ->
         console.log [
           model.unixOffset
@@ -34,16 +41,37 @@ define [
           model.toJSON()
         ]
 
-    # Bacbone 0.9.2 only triggers a 'reset' event when sorting
-    # Which is a bit generic. So, now triggering a 'sort' event
+    cacheModels : ->
+      unless @initialized
+        @modelCache = @models
+        @initialized = true
+
+    # ** HACK: Short circuit the initial silent sort **
+    # We need to hook into the reset event in order to cache 
+    # the initial set of models once they're model-ified
+    # therefore, force { silent : false }
     sort : (options) ->
+      unless @initialized
+        options = { silent : false }
       super options
 
-    # Like it says on the tin.
-    # options are to be passed to Collection.prototype.sort
-    # e.g. @reverseSort { silent: true }
-    reverseSort : ->
-      @options.sortAsc = not @options.sortAsc
+    sortBy : (value) ->
+      switch value
+        when 'date_desc'
+          @options.sortProp = 'unixOffset'
+          @options.sortAsc = false
+        when 'date_asc'
+          @options.sortProp = 'unixOffset'
+          @options.sortAsc = true
+        when 'type_desc'
+          @options.sortProp = 'type'
+          @options.sortAsc = false
+        when 'type_asc'
+          @options.sortProp = 'type'
+          @options.sortAsc = true
+        else
+          @options.sortProp = 'unixOffset'
+          @options.sortAsc = false
       @sort()
 
     # Sorts our collection by the given property
@@ -67,10 +95,11 @@ define [
         tokens = query.split /\s+/
         expr = "(?=.*#{tokens.join(')(?=.*')})"
         regex = new RegExp expr, 'i'
-        filtered = @filter (item) ->
+        filtered = _.filter(@modelCache, (item) ->
           return item if regex.test item.get('activityContent').raw
           return item if regex.test item.get('activityInitiator')
           return item if regex.test item.get('activityDate').date
           return item if regex.test item.get('activityType')
-        @trigger 'filter', new ActivityCollection(filtered, @options)
+          )
+        @reset filtered
 
