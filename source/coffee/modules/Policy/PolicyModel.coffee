@@ -497,17 +497,23 @@ define [
     getAccountingData : ->
       @getModelProperty 'Accounting'
 
+    # **Retrieve Policy Events**
+    # @return _Array_ Policy Events or empty
+    getEvents : ->
+      events = @getModelProperty 'EventHistory'
+      @_sanitizeNodeArray events?.Event
+
     # **Retrieve Policy Notes**
     # @return _Array_ Policy Notes or empty
     getNotes : ->
       notes = @getModelProperty 'RelatedItems Notes'
       @_sanitizeNodeArray notes?.Note
 
-    # **Retrieve Policy Events**
-    # @return _Array_ Policy Events or empty
-    getEvents : ->
-      events = @getModelProperty 'EventHistory'
-      @_sanitizeNodeArray events?.Event
+    # **Retrieve Policy Tasks**
+    # @return _Array_ Policy Tasks or empty
+    getTasks : ->
+      tasks = @getModelProperty 'RelatedItems Tasks'
+      @_sanitizeNodeArray tasks?.Task
 
     # **Retrieve intervals of given Term obj**
     # @param `term` _Object_ Term obj
