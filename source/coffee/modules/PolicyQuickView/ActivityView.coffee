@@ -2,25 +2,32 @@ define [
   'collapse'
   'BaseView'
   'modules/PolicyQuickView/ActivityCollection'
-  'text!modules/PolicyQuickView/templates/tpl_activity_panel.html'
-], (collapse, BaseView, ActivityCollection, tpl_activity_panel) ->
+  'text!modules/PolicyQuickView/templates/tpl_activities.html'
+], (collapse, BaseView, ActivityCollection, tpl_activities) ->
 
   class ActivityView extends BaseView
 
+    events:
+      'keyup .activity-search > input' : 'filterCollection'
+
     initialize : (options) ->
       activities = options.policyNotes.concat(options.policyEvents)
-      @collection = new ActivityCollection activities
-      viewData =
-        cid : @cid
-        activities : @collection.toJSON()
+      @collection = new ActivityCollection(activities, {
+        tasks : options.policyTasks
+      })
+
+      @viewData = { cid : @cid }
       
       window.ActivityCollection = @collection
 
-      @collection.on 'sort', @render, this
-      @render viewData
+      @collection.on 'filter', @render, this
+      @render @collection
 
-    render: (viewData) ->
-      console.log viewData
-      template = @Mustache.render tpl_activity_panel, viewData
-      @$el.html template
-      this
+    filterCollection : (e) ->
+      filterByQuery = _.throttle @collection.filterByQuery, 500
+      filterByQuery e.currentTarget.value
+
+    render : (collection) ->
+      template = @Mustache.render tpl_activities, { activities: collection.toJSON() }
+      @$('.activity-wrapper').html template
+      return this
