@@ -1,0 +1,62 @@
+{{#activities}}
+{{#activityIsNote}}
+<div class="activity" id="activity-{{cid}}">
+  <div class="activity-head clearfix">
+    <div class="col-xs-6 activity-initiator">
+      <span>{{activityType}}</span> posted by: <strong>{{activityInitiator}}</strong>
+    </div>
+    
+    {{#activityDate}}
+    <div class="col-xs-6 activity-date"><strong>{{date}}</strong> at {{time}} EST</div>
+    {{/activityDate}}
+  </div>
+
+  {{#activityContent}}
+  <div class="activity-title" title="{{Content}}">
+    {{#hasBody}}<a data-toggle="collapse" data-parent="#activity-{{cid}}" href="#activity-body-{{cid}}">{{/hasBody}}
+    {{title}}
+    {{#hasBody}}</a>{{/hasBody}}
+  </div>
+
+  {{#hasBody}}
+  <div class="activity-body collapse" id="activity-body-{{cid}}">
+    {{#body}}
+    <p>{{.}}</p>
+    {{/body}}
+  </div>
+  {{/hasBody}}
+  {{/activityContent}}
+
+</div>
+{{/activityIsNote}}
+
+{{^activityIsNote}}
+<div class="activity" id="activity-{{cid}}">
+  <div class="activity-head clearfix">
+    <div class="col-xs-6 activity-initiator">
+      <span>{{activityType}}</span> posted by: <strong>{{activityInitiator}}</strong>
+    </div>
+    
+    {{#activityDate}}
+    <div class="col-xs-6 activity-date"><strong>{{date}}</strong> at {{time}} EST</div>
+    {{/activityDate}}
+  </div>
+
+  {{#activityContent}}
+  <div class="activity-title">{{title}}</div>
+
+  {{#body}}
+  {{#reasonCodeLabel}}
+  <div>{{reasonCodeLabel}}</div>
+  {{/reasonCodeLabel}}
+
+  {{#EffectiveDate}}
+  <div>Effective on: <strong>{{EffectiveDate}}</strong></div>
+  {{/EffectiveDate}}
+  {{/body}}
+
+  {{/activityContent}}
+
+</div>
+{{/activityIsNote}}
+{{/activities}}
