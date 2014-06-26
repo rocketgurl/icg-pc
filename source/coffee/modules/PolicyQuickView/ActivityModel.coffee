@@ -9,6 +9,10 @@ define [
 
     tasksReferenced : {}
 
+    dateFormat : 'MMM DD, YYYY'
+
+    timeFormat : 'h:mm A'
+
     initialize : ->
       
       # put sortable properties directly on the model for easy access
@@ -52,8 +56,8 @@ define [
 
     # The timestamp formatted in a template-friendly way
     getPrettyDate : ->
-      date: @dateTime.format 'MMM DD, YYYY'
-      time: @dateTime.format 'h:mm A'
+      date: @dateTime.format @dateFormat
+      time: @dateTime.format @timeFormat
 
     # Return the correctly formatted content payload
     # According to the activity type
@@ -80,6 +84,7 @@ define [
       splitContent = rawContent.split /\n+/
       task         = @getReferencedTask()
       title        = "#{task.Type} #{task.Subtype}"
+      hasBody      = splitContent.length > 0
 
       # Prepend RE: to title if the task has already been referenced
       # Otherwise, save the taskRef id
@@ -89,29 +94,33 @@ define [
         @tasksReferenced[task.id] = true
 
       data =
-        raw     : [title, rawContent].join(' ')
+        raw     : "#{title}\n#{rawContent}"
         title   : title
-        body    : splitContent
-        hasBody : splitContent.length > 0
+        body    : if hasBody then splitContent else ''
+        hasBody : hasBody
 
-    # Event content is slightly different than Note & Message content
-    # In that it is necessary for the template to know if the
-    # Body content is an effective date or reasonCode
     getEventContent : ->
-      contentObj = @getDataItems 'reasonCodeLabel', 'EffectiveDate'
-      title      = @get 'type'
-      isEmpty    = _.isEmpty contentObj
+      contentObj     = @getDataItems 'reasonCodeLabel', 'EffectiveDate'
+      contentIsEmpty = _.isEmpty contentObj
+      title          = @get 'type'
 
-      if isEmpty
+      if contentIsEmpty
         rawContent = title
       else
-        rawContent = "#{title} #{_.values(contentObj).join(' ')}"
+        splitContent = _.map(contentObj, (val, key) =>
+          if key is 'EffectiveDate'
+            date = moment(val).format @dateFormat
+            "Effective on: #{date}"
+          else
+            val
+          )
+        rawContent = "#{title}\n#{splitContent.join('\n')}"
 
       data =
         raw     : rawContent
         title   : title
-        body    : contentObj
-        hasBody : not isEmpty
+        body    : if contentIsEmpty then '' else splitContent
+        hasBody : not contentIsEmpty
 
     # Returns an object mapping given DataItem name to the key
     # And the DataItem value to the value

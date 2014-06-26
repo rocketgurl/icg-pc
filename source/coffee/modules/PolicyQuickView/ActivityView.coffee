@@ -8,7 +8,7 @@ define [
   class ActivityView extends BaseView
 
     events:
-      'keyup .activity-search > input' : 'filterCollection'
+      "keyup .activity-search" : 'filterCollection'
 
     initialize : (options) ->
       activities = options.policyNotes.concat(options.policyEvents)
@@ -24,8 +24,9 @@ define [
       @render @collection
 
     filterCollection : (e) ->
-      filterByQuery = _.throttle @collection.filterByQuery, 500
-      filterByQuery e.currentTarget.value
+      throttledFilter = _.throttle @collection.filterByQuery, 500
+      throttledFilter e.currentTarget.value
+      return this
 
     render : (collection) ->
       template = @Mustache.render tpl_activities, { activities: collection.toJSON() }

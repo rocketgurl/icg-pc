@@ -95,7 +95,10 @@
 
   .panel-heading {
     em, strong { display: inline-block; }
-    .form-control { height: 30px; }
+
+    .input-group {
+      width: 50%;
+    }
   }
 
   .agent-support {
@@ -136,6 +139,7 @@
 
     > a {
       display: block;
+      text-decoration: underline;
     }
   }
 
