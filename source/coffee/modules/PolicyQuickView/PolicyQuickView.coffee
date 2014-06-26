@@ -27,6 +27,7 @@ define [
       activity = new ActivityView
         policyNotes  : @POLICY.getNotes()
         policyEvents : @POLICY.getEvents()
+        policyTasks  : @POLICY.getTasks()
         el           : document.getElementById("activity-#{@cid}")
 
       return this
