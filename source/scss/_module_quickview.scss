@@ -1,6 +1,6 @@
 .qv-container {
   background: #fff;
-  @include font-size(14);
+  @include font-size(13);
 
   h1, h2 {
     font-weight: bold;
@@ -51,6 +51,11 @@
   .col-right {
     padding: 10px;
     width: percentage(4 / 12);
+
+    .panel-heading {
+      padding: 5px;
+      strong { line-height: 30px; }
+    }
   }
 
   .tab-content {
@@ -59,7 +64,7 @@
   }
 
   .policy-status {
-    @include font-size(20);
+    @include font-size(18);
     font-weight: bold;
     text-align: center;
   }
@@ -90,6 +95,7 @@
 
   .panel-heading {
     em, strong { display: inline-block; }
+    .form-control { height: 30px; }
   }
 
   .agent-support {
