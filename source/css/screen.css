@@ -1696,7 +1696,7 @@ Module: Policy
 .qv-container section > label { display: block; float: left; margin-left: -90%; padding-top: 1px; padding-right: 25px; width: 90%; text-align: right; font-weight: normal; }
 .qv-container .panel-heading em, .qv-container .panel-heading strong { display: inline-block; }
 .qv-container .agent-support { margin-top: 20px; text-align: center; }
-.qv-container .activity-wrapper { height: 300px; overflow: auto; }
+.qv-container .activity-wrapper { max-height: 400px; overflow: auto; }
 .qv-container .activity { padding: 8px; border-bottom: 1px solid #ddd; font-size: 11px; }
 .qv-container .activity:last-child { border: 0; }
 .qv-container .activity-initiator { padding-left: 0; }

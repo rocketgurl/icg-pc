@@ -13,18 +13,20 @@ define [
 
     timeFormat : 'h:mm A'
 
+    noteTypes : ['Note', 'Message']
+
     initialize : ->
       
       # put sortable properties directly on the model for easy access
       @dateTime = @getDateTime()
-      @date     = @dateTime.valueOf()
+      @unixTime = @dateTime.valueOf()
       @type     = @getType()
 
       # properties used in the template
       @set
         'cid'               : @cid
         'activityType'      : @type
-        'activityIsNote'    : @type in ['Note', 'Message']
+        'activityIsNote'    : @type in @noteTypes
         'activityInitiator' : @getInitiator()
         'activityDate'      : @getPrettyDate()
         'activityContent'   : @getContent()

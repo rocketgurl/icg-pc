@@ -19,7 +19,7 @@ define [
       
       # Default sorting / filtering options
       @options = _.defaults(options, {
-        sortProp : 'date'
+        sortProp : 'unixTime'
         sortAsc  : false
         query : ''
       })
@@ -34,7 +34,7 @@ define [
       console.log evt, data
       data.each (model) ->
         console.log [
-          model.unixOffset
+          model.unixTime
           model.type
           model.get 'activityInitiator'
           model.cid
@@ -58,10 +58,10 @@ define [
     sortBy : (value) ->
       switch value
         when 'date_desc'
-          @options.sortProp = 'date'
+          @options.sortProp = 'unixTime'
           @options.sortAsc = false
         when 'date_asc'
-          @options.sortProp = 'date'
+          @options.sortProp = 'unixTime'
           @options.sortAsc = true
         when 'type_desc'
           @options.sortProp = 'type'
@@ -70,7 +70,7 @@ define [
           @options.sortProp = 'type'
           @options.sortAsc = true
         else
-          @options.sortProp = 'date'
+          @options.sortProp = 'unixTime'
           @options.sortAsc = false
       @sort()
 

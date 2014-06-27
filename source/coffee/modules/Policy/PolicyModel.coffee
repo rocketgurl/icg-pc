@@ -246,6 +246,7 @@ define [
             'fourPayInvoice' : 'Four Pay Invoice'
             'tenPay'         : 'Ten Pay'
             'tenPayInvoice'  : 'Ten Pay Invoice'
+            'fullPay'        : 'Full Pay'
           })
 
     # Map policy state to a prettier version
