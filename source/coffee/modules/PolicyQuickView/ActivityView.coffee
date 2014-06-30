@@ -18,9 +18,6 @@ define [
       })
 
       @viewData = { cid : @cid }
-      
-      window.ActivityCollection = @collection
-
       @collection.on 'reset', @render, this
       @render @collection
 

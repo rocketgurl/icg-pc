@@ -6,6 +6,8 @@ define [
   # A mixed, sortable, searchable collection of Notes, Messages & Events
   class ActivityCollection extends Backbone.Collection
 
+    debug : false
+
     model : ActivityModel
 
     modelCache : null
@@ -24,7 +26,7 @@ define [
         query : ''
       })
 
-      @on 'all', @report
+      @on('all', @report) if @debug
 
       # Save the initial set of models for later filtering
       @on 'reset', @cacheModels
