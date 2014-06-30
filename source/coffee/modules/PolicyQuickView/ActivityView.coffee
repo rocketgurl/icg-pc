@@ -16,10 +16,8 @@ define [
       @collection = new ActivityCollection(activities, {
         tasks : options.policyTasks
       })
-
-      @viewData = { cid : @cid }
       @collection.on 'reset', @render, this
-      @render @collection
+      @render()
 
     filterCollection : (e) ->
       throttledFilter = _.throttle @collection.filterByQuery, 500
@@ -30,7 +28,7 @@ define [
       @collection.sortBy e.currentTarget.value
       return this
 
-    render : (collection) ->
-      template = @Mustache.render tpl_activities, { activities: collection.toJSON() }
+    render : ->
+      template = @Mustache.render tpl_activities, { activities: @collection.toJSON() }
       @$('.activity-wrapper').html template
       return this
