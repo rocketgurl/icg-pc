@@ -32,13 +32,25 @@ define [
         'Non-Renewed Policy'  : 'danger'
       labelClassMap[policyState] || 'default'
 
+    getAgentSupportViewUrl : ->
+      baseUrl = @CONTROLLER.services.agentSupport
+      params =
+        policyNumber     : @POLICY.id
+        username         : @CONTROLLER.user.get('username')
+        agencyLocationId : @POLICY.getAgencyLocationId()
+
+      if baseUrl && _.every params
+        "#{baseUrl}?#{$.param(params)}"
+      else
+        ""
+
     render : ->
       servicingData = @POLICY.getServicingData()
       viewData =
         cid                   : @cid
         Agency                : @agencyLocationModel.toJSON()
         PolicyStateLabelClass : @getPolicyStateLabelClass(servicingData.PolicyState)
-
+        AgentSupportViewUrl   : @getAgentSupportViewUrl()
       data = _.extend viewData, servicingData
       @$el.html @Mustache.render tpl_servicing_tab, data
       return this

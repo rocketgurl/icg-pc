@@ -93,9 +93,11 @@
     {{/AgencyLocationCode}}
   </div>
 
+  {{#AgentSupportViewUrl}}
   <div class="agent-support">
-    <a href="#" class="btn btn-dark btn-lg">Open Agent Support View</a>
+    <a href="{{AgentSupportViewUrl}}" class="btn btn-dark btn-lg" target="_blank">Open Agent Support View</a>
   </div>
+  {{/AgentSupportViewUrl}}
 </div>
 
 {{#IsNotQuote}}
