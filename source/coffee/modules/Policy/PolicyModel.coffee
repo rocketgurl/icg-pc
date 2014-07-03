@@ -504,6 +504,12 @@ define [
       events = @getModelProperty 'EventHistory'
       @_sanitizeNodeArray events?.Event
 
+    # **Retrieve Policy Documents**
+    # @return _Array_ Policy Documents or empty
+    getDocuments : ->
+      documents = @getModelProperty 'Documents'
+      @_sanitizeNodeArray documents?.Reference
+
     # **Retrieve Policy Notes**
     # @return _Array_ Policy Notes or empty
     getNotes : ->
@@ -515,6 +521,12 @@ define [
     getTasks : ->
       tasks = @getModelProperty 'RelatedItems Tasks'
       @_sanitizeNodeArray tasks?.Task
+
+    # **Retrieve Policy Documents**
+    # @return _Array_ Policy Documents or empty
+    getAttachments : ->
+      attachments = @getModelProperty 'RelatedItems Attachments'
+      @_sanitizeNodeArray attachments?.Attachment
 
     # **Retrieve intervals of given Term obj**
     # @param `term` _Object_ Term obj

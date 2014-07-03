@@ -113,24 +113,31 @@
     text-align: center;
   }
 
-  .activity-wrapper {
+  .activity-wrapper,
+  .documents-wrapper {
     max-height: 400px;
     overflow: auto;
+    margin-bottom: 0;
+  }
+
+  .activity,
+  .document {
+    padding: 8px;
+    font-size: 11px;
   }
 
   .activity {
-    padding: 8px;
     border-bottom: 1px solid #ddd;
-    font-size: 11px;
-
     &:last-child { border: 0; }
   }
 
-  .activity-initiator {
+  .activity-initiator,
+  .document-label {
     padding-left: 0;
   }
 
-  .activity-date {
+  .activity-date,
+  .document-updated {
     text-align: right;
     padding-right: 0;
   }
@@ -153,6 +160,28 @@
   .activity-body {
     > p:last-child {
       margin-bottom: 0;
+    }
+  }
+
+  .documents-wrapper {
+    padding: 5px;
+
+    .group-toggle {
+      display: block;
+      padding: 8px 0;
+
+      .caret,
+      .glyphicon {
+        margin-right: 3px;
+      }
+
+      .caret {}
+      .glyphicon:before { content: "\e118"; }
+      
+      &.collapsed {
+        .caret {}
+        .glyphicon:before { content: "\e117"; }
+      }
     }
   }
 }

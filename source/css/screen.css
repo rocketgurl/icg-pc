@@ -1696,15 +1696,21 @@ Module: Policy
 .qv-container section > label { display: block; float: left; margin-left: -90%; padding-top: 1px; padding-right: 25px; width: 90%; text-align: right; font-weight: normal; }
 .qv-container .panel-heading em, .qv-container .panel-heading strong { display: inline-block; }
 .qv-container .agent-support { margin-top: 20px; text-align: center; }
-.qv-container .activity-wrapper { max-height: 400px; overflow: auto; }
-.qv-container .activity { padding: 8px; border-bottom: 1px solid #ddd; font-size: 11px; }
+.qv-container .activity-wrapper, .qv-container .documents-wrapper { max-height: 400px; overflow: auto; margin-bottom: 0; }
+.qv-container .activity, .qv-container .document { padding: 8px; font-size: 11px; }
+.qv-container .activity { border-bottom: 1px solid #ddd; }
 .qv-container .activity:last-child { border: 0; }
-.qv-container .activity-initiator { padding-left: 0; }
-.qv-container .activity-date { text-align: right; padding-right: 0; }
+.qv-container .activity-initiator, .qv-container .document-label { padding-left: 0; }
+.qv-container .activity-date, .qv-container .document-updated { text-align: right; padding-right: 0; }
 .qv-container .activity-title, .qv-container .activity-body { margin-top: 15px; }
 .qv-container .activity-title { text-transform: capitalize; font-size: 13px; }
 .qv-container .activity-title > a { display: block; text-decoration: underline; }
 .qv-container .activity-body > p:last-child { margin-bottom: 0; }
+.qv-container .documents-wrapper { padding: 5px; }
+.qv-container .documents-wrapper .group-toggle { display: block; padding: 8px 0; }
+.qv-container .documents-wrapper .group-toggle .caret, .qv-container .documents-wrapper .group-toggle .glyphicon { margin-right: 3px; }
+.qv-container .documents-wrapper .group-toggle .glyphicon:before { content: "\e118"; }
+.qv-container .documents-wrapper .group-toggle.collapsed .glyphicon:before { content: "\e117"; }
 
 .ru-container, .zd-container { padding: 0 1.8%; }
 .ru-container h1, .zd-container h1, .ru-container h2, .zd-container h2 { width: 100%; float: right; margin-right: 0; *margin-left: -1em; display: inline; font-weight: bold; margin: 15px 0 0 0; }
