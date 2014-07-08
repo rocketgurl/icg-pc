@@ -1,43 +1,54 @@
 define [
   'backbone'
   'moment'
-], (Backbone, moment) ->
+  'Helpers'
+], (Backbone, moment, Helpers) ->
 
   class DocumentModel extends Backbone.Model
 
     dateFormat : 'MMM DD, YYYY'
 
-    timeFormat : 'h:mm A'
+    timeFormat : 'hh:mm A'
 
     # mapping document subtype to group name for collection grouping purposes
     groups :
-      'invoice'               : 'general'
-      'policyinvoicepackage'  : 'general'
-      'declarationofcoverage' : 'general'
+      'invoice'     : 'Invoicing'
+      'endorse'     : 'Endorsement'
+      'renewal'     : 'Renewal'
+      'nonrenewal'  : 'NonRenewal'
+      'newbusiness' : 'NewBusiness'
+      'declination' : 'Declination'
 
     initialize : ->
+      @isAttachment = @has 'AttachedBy'
+      href = @get('location') || @get('href') || ''
+
       @dateTime = @getDateTime()
       @unixTime = @dateTime.valueOf()
-
       @determineDocGroup()
-
       @setCachedItems()
+
       @set
         'cid'        : @cid
         'docUpdated' : @getPrettyDate()
-        'docUrl'     : "#{@collection.policyUrl}/#{@get('location')}"
+        'docUrl'     : "#{@collection.policyUrl}/#{href}"
+
+      @set('label', @get('name')) if @isAttachment
 
     determineDocGroup : ->
-      _.some @groups, (group, key) =>
-        re = new RegExp key, 'i'
-        if re.test @get('subtype')
-          @set 'docGroup', group
-          return true
-      @set('docGroup', 'default') unless @has 'docGroup'
+      if @isAttachment
+        @set 'docGroup', 'Attachments'
+      else
+        _.some @groups, (group, key) =>
+          re = new RegExp key, 'i'
+          if re.test @get('subtype')
+            @set 'docGroup', group
+            return true
+        @set('docGroup', 'General') unless @has 'docGroup'
 
     # Get an instance of moment for future use
     getDateTime : ->
-      dateString = @get 'lastUpdated'
+      dateString = @get('lastUpdated') || @get('AttachedTimeStamp')
       moment dateString
 
     # The timestamp formatted in a template-friendly way
@@ -47,6 +58,6 @@ define [
 
     # Move "CachedItems" into the model for easy access
     setCachedItems : ->
-      items = @get 'CachedItem'
+      items = Helpers.sanitizeNodeArray @get('CachedItem')
       _.each items, (item) =>
         @set item.name, item.value

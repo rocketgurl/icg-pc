@@ -51,6 +51,7 @@
 
   .col-left {
     width: percentage(8 / 12);
+    min-height: 755px;
     border-right: 1px solid #ddd;
   }
 
@@ -115,7 +116,7 @@
 
   .activity-wrapper,
   .documents-wrapper {
-    max-height: 400px;
+    height: 288px;
     overflow: auto;
     margin-bottom: 0;
   }
@@ -169,6 +170,7 @@
     .group-toggle {
       display: block;
       padding: 8px 0;
+      text-transform: capitalize;
 
       .caret,
       .glyphicon {
@@ -183,6 +185,10 @@
         .glyphicon:before { content: "\e117"; }
       }
     }
+  }
+
+  .document-updated {
+    color: #333;
   }
 }
 

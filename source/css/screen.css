@@ -1682,7 +1682,7 @@ Module: Policy
 .qv-container .col-left, .qv-container .col-right { float: left; }
 .qv-container .col-left:before, .qv-container .col-left:after, .qv-container .col-right:before, .qv-container .col-right:after { content: " "; display: table; }
 .qv-container .col-left:after, .qv-container .col-right:after { clear: both; }
-.qv-container .col-left { width: 66.66667%; border-right: 1px solid #ddd; }
+.qv-container .col-left { width: 66.66667%; min-height: 755px; border-right: 1px solid #ddd; }
 .qv-container .col-right { padding: 10px; width: 33.33333%; }
 .qv-container .col-right .panel-heading { padding: 5px; }
 .qv-container .col-right .panel-heading strong { line-height: 30px; }
@@ -1696,7 +1696,7 @@ Module: Policy
 .qv-container section > label { display: block; float: left; margin-left: -90%; padding-top: 1px; padding-right: 25px; width: 90%; text-align: right; font-weight: normal; }
 .qv-container .panel-heading em, .qv-container .panel-heading strong { display: inline-block; }
 .qv-container .agent-support { margin-top: 20px; text-align: center; }
-.qv-container .activity-wrapper, .qv-container .documents-wrapper { max-height: 400px; overflow: auto; margin-bottom: 0; }
+.qv-container .activity-wrapper, .qv-container .documents-wrapper { height: 288px; overflow: auto; margin-bottom: 0; }
 .qv-container .activity, .qv-container .document { padding: 8px; font-size: 11px; }
 .qv-container .activity { border-bottom: 1px solid #ddd; }
 .qv-container .activity:last-child { border: 0; }
@@ -1707,10 +1707,11 @@ Module: Policy
 .qv-container .activity-title > a { display: block; text-decoration: underline; }
 .qv-container .activity-body > p:last-child { margin-bottom: 0; }
 .qv-container .documents-wrapper { padding: 5px; }
-.qv-container .documents-wrapper .group-toggle { display: block; padding: 8px 0; }
+.qv-container .documents-wrapper .group-toggle { display: block; padding: 8px 0; text-transform: capitalize; }
 .qv-container .documents-wrapper .group-toggle .caret, .qv-container .documents-wrapper .group-toggle .glyphicon { margin-right: 3px; }
 .qv-container .documents-wrapper .group-toggle .glyphicon:before { content: "\e118"; }
 .qv-container .documents-wrapper .group-toggle.collapsed .glyphicon:before { content: "\e117"; }
+.qv-container .document-updated { color: #333; }
 
 .ru-container, .zd-container { padding: 0 1.8%; }
 .ru-container h1, .zd-container h1, .ru-container h2, .zd-container h2 { width: 100%; float: right; margin-right: 0; *margin-left: -1em; display: inline; font-weight: bold; margin: 15px 0 0 0; }

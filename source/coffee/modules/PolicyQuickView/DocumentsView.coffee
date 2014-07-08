@@ -10,20 +10,21 @@ define [
     initialize : (options) ->
       policy = options.policy
       documents = policy.getDocuments()
+      attachments = policy.getAttachments()
 
-      @collection = new DocumentsCollection(documents, {
+      @collection = new DocumentsCollection(documents.concat(attachments), {
         policyUrl : "#{policy.get('urlRoot')}policies/#{policy.get('insightId')}"
       })
-      @attachments = policy.getAttachments()
 
       # @collection.on 'reset', @render, this
       @render()
 
     render : ->
-      templateData =
+      data =
         cid         : @cid
-        documents   : @collection.getGrouped()
+        docGroups   : @collection.getGrouped()
         attachments : @attachments
-      template = @Mustache.render tpl_documents, templateData
-      @$('.documents-wrapper').html template
+      console.log data
+      template = _.template tpl_documents
+      @$('.documents-wrapper').html template(data)
       return this
