@@ -102,6 +102,15 @@ define [
       else
         (new DOMParser()).parseFromString(sXML, "text/xml")
 
+    # Because of the quirky way the xml is parsed to json
+    # Possible data types returned can be unreliable, especially for
+    # Arrays of items. This is an attempt to sanitize the results
+    sanitizeNodeArray : (node) ->
+      items = node || []
+      unless _.isArray items
+        items = [items]
+      items
+
     # Determine if a number is an **integer**. Will return false on floats,
     # NaN, booleans, etc.
     # http://stackoverflow.com/questions/3885817/how-to-check-if-a-number-is-float-or-integer
