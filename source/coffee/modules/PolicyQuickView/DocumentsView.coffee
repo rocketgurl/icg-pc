@@ -16,15 +16,13 @@ define [
         policyUrl : "#{policy.get('urlRoot')}policies/#{policy.get('insightId')}"
       })
 
-      # @collection.on 'reset', @render, this
+      @collection.on 'reset', @render, this
       @render()
 
     render : ->
       data =
         cid         : @cid
         docGroups   : @collection.getGrouped()
-        attachments : @attachments
-      console.log data
       template = _.template tpl_documents
       @$('.documents-wrapper').html template(data)
       return this
