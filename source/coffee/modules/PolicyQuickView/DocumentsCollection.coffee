@@ -33,6 +33,7 @@ define [
         @initialized = true
 
     initialize : (models, options) ->
+      @options = options
       @policyUrl = options.policyUrl
 
       @on 'reset', @cacheModels
