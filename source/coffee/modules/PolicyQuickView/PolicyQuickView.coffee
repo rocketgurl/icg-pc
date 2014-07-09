@@ -23,16 +23,16 @@ define [
       servicing = new ServicingTabView
         controller : @CONTROLLER
         policy     : @POLICY
-        el         : document.getElementById("tab-servicing-#{@cid}")
+        el         : @$("#tab-servicing-#{@cid}")
 
       activities = new ActivityView
         policyNotes  : @POLICY.getNotes()
         policyEvents : @POLICY.getEvents()
         policyTasks  : @POLICY.getTasks()
-        el           : document.getElementById("activity-#{@cid}")
+        el           : @$("#activity-#{@cid}")
 
       documents = new DocumentsView
         policy          : @POLICY
-        el              : document.getElementById("documents-#{@cid}")
+        el              : @$("#documents-#{@cid}")
 
       return this
