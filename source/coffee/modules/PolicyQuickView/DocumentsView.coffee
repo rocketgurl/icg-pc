@@ -13,7 +13,8 @@ define [
       attachments = policy.getAttachments()
 
       @collection = new DocumentsCollection(documents.concat(attachments), {
-        policyUrl : "#{policy.get('urlRoot')}policies/#{policy.get('insightId')}"
+        policyInceptionDate : policy.getInceptionDate()
+        policyUrl           : "#{policy.get('urlRoot')}policies/#{policy.get('insightId')}"
       })
 
       @collection.on 'reset', @render, this
