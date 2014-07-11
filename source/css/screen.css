@@ -1682,7 +1682,7 @@ Module: Policy
 .qv-container .col-left, .qv-container .col-right { float: left; }
 .qv-container .col-left:before, .qv-container .col-left:after, .qv-container .col-right:before, .qv-container .col-right:after { content: " "; display: table; }
 .qv-container .col-left:after, .qv-container .col-right:after { clear: both; }
-.qv-container .col-left { width: 66.66667%; min-height: 755px; border-right: 1px solid #ddd; }
+.qv-container .col-left { width: 66.66667%; min-height: 800px; border-right: 1px solid #ddd; }
 .qv-container .col-right { padding: 10px; width: 33.33333%; }
 .qv-container .col-right .panel-heading { padding: 5px; }
 .qv-container .col-right .panel-heading strong { line-height: 30px; }
@@ -1705,7 +1705,7 @@ Module: Policy
 .qv-container section > label { display: block; float: left; margin-left: -90%; padding-top: 1px; padding-right: 25px; width: 90%; text-align: right; font-weight: normal; }
 .qv-container .panel-heading em, .qv-container .panel-heading strong { display: inline-block; }
 .qv-container .agent-support { margin-top: 20px; text-align: center; }
-.qv-container .activity-wrapper, .qv-container .documents-wrapper { height: 288px; overflow: auto; margin-bottom: 0; }
+.qv-container .activity-wrapper, .qv-container .documents-wrapper { height: 255px; overflow: auto; margin-bottom: 0; }
 .qv-container .activity, .qv-container .document { padding: 8px; font-size: 11px; }
 .qv-container .activity { border-bottom: 1px solid #ddd; }
 .qv-container .activity:last-child { border: 0; }
