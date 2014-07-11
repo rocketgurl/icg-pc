@@ -23,7 +23,9 @@
     u_string: 'lib/underscore.string',
     Apparatchik : 'lib/Apparatchik',
     favicon: 'lib/favicon',
-    tab: 'lib/bootstrap/tab'
+    tab: 'lib/bootstrap/tab',
+    collapse: 'lib/bootstrap/collapse',
+    button: 'lib/bootstrap/button'
   },
   shim: {
     'jquery': {
@@ -59,6 +61,12 @@
       exports: 'favicon'
     },
     'tab': {
+      deps: ['jquery']
+    },
+    'collapse': {
+      deps: ['transition']
+    },
+    'button': {
       deps: ['jquery']
     }
   },

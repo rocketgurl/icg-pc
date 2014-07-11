@@ -528,6 +528,47 @@ define [
       attachments = @getModelProperty 'RelatedItems Attachments'
       @_sanitizeNodeArray attachments?.Attachment
 
+    # **Notes field handling, post a notes ChangeSet**
+    #
+    # @param `note` _String_ Policy notes
+    # @param `callbackSuccess` _Function_ Handle successful POST
+    # @param `callbackError` _Function_ Handle error state
+    # return an object with content equivalent to the policyXML
+    #
+    postNote : (note, callbackSuccess, callbackError) ->
+      noteData =
+        CreatedTimeStamp : new Date() + ''
+        CreatedBy        : @get('module').view.controller.user.get('username')
+        Content          : $.trim note
+
+      xml = """
+        <PolicyChangeSet schemaVersion="2.1" username="#{noteData.CreatedBy}" description="Added via HTML QuickView">
+          <Note>
+            <Content><![CDATA[#{noteData.Content}]]></Content>
+          </Note>
+        </PolicyChangeSet>
+      """
+
+      # Assemble the AJAX params
+      params =
+        url         :  @url()
+        type        : 'POST'
+        dataType    : 'xml'
+        contentType : 'application/xml; schema=policychangeset.2.1'
+        context     : this
+        data        : xml
+        headers     :
+          'Authorization' : "Basic #{@get('digest')}"
+          'Accept'        : 'application/vnd.ics360.insurancepolicy.2.8+xml'
+          'X-Commit'      : true
+
+      # Post
+      jqXHR = $.ajax params
+      if _.isFunction(callbackSuccess) && _.isFunction(callbackError)
+        $.when(jqXHR).then callbackSuccess, callbackError
+
+      noteData
+
     # **Retrieve intervals of given Term obj**
     # @param `term` _Object_ Term obj
     # @return _Array_ Interval objs

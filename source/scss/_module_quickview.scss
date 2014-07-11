@@ -68,6 +68,32 @@
   .panel-subhead {
     padding: 5px;
     border-bottom: 1px solid #ddd;
+
+    .add-note-toggle {
+      display: inline-block;
+      line-height: 22px;
+
+      .glyphicon {
+        margin-right: 3px;
+        &:before { content: "\e082"; }
+      }
+
+      .add-text { display: none; }
+
+      &.collapsed {
+        .glyphicon:before { content: "\e081"; }
+        .add-text { display: inherit; }
+        .cancel-text { display: none; }
+      }
+    }
+
+    .note-text {
+      margin: 5px 0;
+    }
+
+    .attach-file {
+      line-height: 30px;
+    }
   }
 
   .tab-content {
@@ -172,16 +198,13 @@
       padding: 8px 0;
       text-transform: capitalize;
 
-      .caret,
       .glyphicon {
         margin-right: 3px;
-      }
 
-      .caret {}
-      .glyphicon:before { content: "\e118"; }
+        &:before { content: "\e118"; }
+      }
       
       &.collapsed {
-        .caret {}
         .glyphicon:before { content: "\e117"; }
       }
     }

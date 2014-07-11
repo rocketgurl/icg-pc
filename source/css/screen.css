@@ -1687,6 +1687,15 @@ Module: Policy
 .qv-container .col-right .panel-heading { padding: 5px; }
 .qv-container .col-right .panel-heading strong { line-height: 30px; }
 .qv-container .panel-subhead { padding: 5px; border-bottom: 1px solid #ddd; }
+.qv-container .panel-subhead .add-note-toggle { display: inline-block; line-height: 22px; }
+.qv-container .panel-subhead .add-note-toggle .glyphicon { margin-right: 3px; }
+.qv-container .panel-subhead .add-note-toggle .glyphicon:before { content: "\e082"; }
+.qv-container .panel-subhead .add-note-toggle .add-text { display: none; }
+.qv-container .panel-subhead .add-note-toggle.collapsed .glyphicon:before { content: "\e081"; }
+.qv-container .panel-subhead .add-note-toggle.collapsed .add-text { display: inherit; }
+.qv-container .panel-subhead .add-note-toggle.collapsed .cancel-text { display: none; }
+.qv-container .panel-subhead .note-text { margin: 5px 0; }
+.qv-container .panel-subhead .attach-file { line-height: 30px; }
 .qv-container .tab-content { padding: 15px 0; background-color: #fff; }
 .qv-container .policy-status { font-size: 18px; font-size: 1.8rem; font-weight: bold; text-align: center; }
 .qv-container .section-holder, .qv-container .agent-support { margin-bottom: 20px; }
@@ -1708,7 +1717,7 @@ Module: Policy
 .qv-container .activity-body > p:last-child { margin-bottom: 0; }
 .qv-container .documents-wrapper { padding: 5px; }
 .qv-container .documents-wrapper .group-toggle { display: block; padding: 8px 0; text-transform: capitalize; }
-.qv-container .documents-wrapper .group-toggle .caret, .qv-container .documents-wrapper .group-toggle .glyphicon { margin-right: 3px; }
+.qv-container .documents-wrapper .group-toggle .glyphicon { margin-right: 3px; }
 .qv-container .documents-wrapper .group-toggle .glyphicon:before { content: "\e118"; }
 .qv-container .documents-wrapper .group-toggle.collapsed .glyphicon:before { content: "\e117"; }
 .qv-container .document-updated { color: #333; }

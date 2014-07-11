@@ -26,13 +26,11 @@ define [
         el         : @$("#tab-servicing-#{@cid}")
 
       activities = new ActivityView
-        policyNotes  : @POLICY.getNotes()
-        policyEvents : @POLICY.getEvents()
-        policyTasks  : @POLICY.getTasks()
-        el           : @$("#activity-#{@cid}")
+        policy : @POLICY
+        el     : @$("#activity-#{@cid}")
 
       documents = new DocumentsView
-        policy          : @POLICY
-        el              : @$("#documents-#{@cid}")
+        policy : @POLICY
+        el     : @$("#documents-#{@cid}")
 
       return this

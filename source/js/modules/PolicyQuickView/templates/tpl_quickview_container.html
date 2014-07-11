@@ -38,14 +38,31 @@
         </div>
       </div>
       <div class="panel-subhead clearfix">
-        <div class="input-group col-xs-3">
-          <select class="activity-sort form-control input-xs">
-            <option value="date_desc">Sort by</option>
-            <option value="date_desc">Date Desc</option>
-            <option value="date_asc">Date Asc</option>
-            <option value="type_desc">Type Desc</option>
-            <option value="type_asc">Type Asc</option>
-          </select>
+        <div class="note-controls">
+          <div class="input-group col-xs-3 pull-right">
+            <select class="activity-sort form-control input-xs">
+              <option value="date_desc">Sort by</option>
+              <option value="date_desc">Date Desc</option>
+              <option value="date_asc">Date Asc</option>
+            </select>
+          </div>
+          <a href="#note-container-{{cid}}" data-toggle="collapse" data-parent="#activity-{{cid}}" class="add-note-toggle collapsed">
+            <span class="glyphicon glyphicon-plus-sign"></span>
+            <span class="add-text">Add a Note</span>
+            <span class="cancel-text">Cancel</span>
+          </a>
+        </div>
+        <div id="note-container-{{cid}}" class="note-container collapse clearfix">
+          <form class="add-note-form" role="form">
+            <textarea name="note-text" class="note-text form-control" rows="3"></textarea>
+            <div class="btn-group pull-right">
+              <button type="submit" class="add-note-button btn btn-sm btn-primary" data-loading-text="Saving...">Save</button>
+            </div>
+          </form>
+          <a href="#" class="attach-file">
+            <span class="glyphicon glyphicon-paperclip"></span>
+            Attach a file
+          </a>
         </div>
       </div>
       <ul class="activity-wrapper"></ul>

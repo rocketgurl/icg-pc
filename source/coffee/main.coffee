@@ -29,6 +29,7 @@ require
     transition      : 'lib/bootstrap/transition'
     tab             : 'lib/bootstrap/tab'
     collapse        : 'lib/bootstrap/collapse'
+    button          : 'lib/bootstrap/button'
   priority: ['jquery', 'xml2json', 'json']
   shim:
       'jquery' :
