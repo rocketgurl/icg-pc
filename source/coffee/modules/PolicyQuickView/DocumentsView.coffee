@@ -14,7 +14,7 @@ define [
 
       @collection = new DocumentsCollection(documents.concat(attachments), {
         policyInceptionDate : policy.getInceptionDate()
-        policyUrl           : "#{policy.get('urlRoot')}policies/#{policy.get('insightId')}"
+        policyUrl           : policy.url()
       })
 
       @collection.on 'reset', @render, this
