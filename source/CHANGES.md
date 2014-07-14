@@ -1,6 +1,17 @@
 Updates
 -------
 
+### 2.5.6
+
+- [ICS-2667](https://icg360.atlassian.net/browse/ICS-2667) Update ofcc-ak-ho3 Endorse forms for Other Structures
+- [ICS-2683](https://icg360.atlassian.net/browse/ICS-2683) Add Lapse in Coverage Surcharge to ofcc-dp3-ny
+- [ICS-2684](https://icg360.atlassian.net/browse/ICS-2684) Update fnic-ho3-la renewal forms
+- [ICS-2685](https://icg360.atlassian.net/browse/ICS-2685) Update iic-ho3-sc renewal forms
+- [ICS-2686](https://icg360.atlassian.net/browse/ICS-2686) Update ofcc-ho3-ca renewal forms
+- [ICS-2687](https://icg360.atlassian.net/browse/ICS-2687) Reason Code additions to wic-dp3-al
+- [ICS-2688](https://icg360.atlassian.net/browse/ICS-2688) Remove MultiPolicy from wic-hwo-al IPM endorse forms
+- [ICS-2689](https://icg360.atlassian.net/browse/ICS-2689) Add reason code to iic-ho3-sc
+
 ### 2.5.5
 
 - [ICS-2572](https://icg360.atlassian.net/browse/ICS-2572) Ability to change payment plan prior to new term effective date
