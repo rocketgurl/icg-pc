@@ -1,766 +1,713 @@
 .ipm-container {
-      // $container-width: 100%;
-      // $gutter-width: 1em;
-      // $grid-padding: 1.8%;
-      // @include container;
-      margin: 0;
-      background-color: #f4f4f4;
-      border: 0;
-      overflow: auto;
-      height: 100%;
+  padding: 0 1.8%;
 }
 
 .ipm-header {
-      @include sans;
-      @include font-size(18);
-      @include emboss;
-      font-weight: bold;
-      color: $blue;
-      padding: 20px 0 0 20px;
-      margin: 0;
+  @include sans;
+  @include font-size(18);
+  @include emboss;
+  font-weight: bold;
+  color: $blue;
+  padding: 20px 10px;
+  margin: 0;
 }
 
 .ipm-flash {
-      margin: 0;
-      @include border-radius(0px);
-      box-shadow: none;
-      width: 100%;
-      padding: 0;
-      margin-left: -1px;
-      position: absolute;
-
-      span {
-            display: block;
-            padding: 20px;
-      }
-
-      p {
-            line-height: 140%;
-            margin: 5px 0;
-      }
+  margin: 0;
+  @include border-radius(0px);
+  box-shadow: none;
+  width: 100%;
+  padding: 0;
+  margin-left: -1px;
+  position: absolute;
+  span {
+    display: block;
+    padding: 20px;
+  }
+  p {
+    line-height: 140%;
+    margin: 5px 0;
+  }
 }
 
 .policy-module .flash-message-container {
-      top: 0px;
-      width: 100%;
-      // height: 100%;
-      opacity: 1;
+  top: 0px;
+  width: 100%;
+  // height: 100%;
+  opacity: 1;
 }
 
 .policy-module .flash-shim {
-      padding: 20px;
+  padding: 20px;
 }
 
 .ipm-home-action-view {
-      margin: 20px 0 0 0;
-      text-align: center;
-      @include sans;
+  margin: 20px 0 0 0;
+  text-align: center;
+  @include sans;
 }
 
-.ipm-home-action-view ul {
-      width: 98%;
-      margin: 0 auto;
-      text-align: left;
+.ipm-home-action-view > ul {
+  margin: 0 auto;
+  text-align: left;
 }
 
 .ipm-home-action-view ul li {
-      @include font-size(16);
-      font-weight: bold;
-      width: 30%;
-      display: block;
-      margin: 20px 10px;
-      float: left;
+  @include font-size(16);
+  font-weight: bold;
+  width: 33.333%;
+  display: block;
+  margin: 20px 0;
+  padding: 0 10px;
+  float: left;
 }
 
 .ipm-home-action-view ul li:nth-child(4n) {
-      clear: left;
+  clear: left;
 }
 
 .ipm-home-action-view ul li ul {
-      width: 100%;
-      border: 0;
-      margin: 10px 0 5px 0;
+
+  border: 0;
+  margin: 10px 0 5px 0;
 }
 
 // We re-use these in other places in IPM views
 %ipm-action-link-li {
-      font-weight: normal;
-      width: 100%;
-      border: 0;
-      margin: 5px 0;
-      padding: 0;
+  font-weight: normal;
+  width: 100%;
+  border: 0;
+  margin: 5px 0;
+  padding: 0;
 }
 
 %ipm-action-link-li-a {
-      text-decoration: none;
-      display: block;
-      padding: 8px;
-      border-radius: 4px;
-      background: darken(#f4f4f4, 5);
-      color: $colblue;
-      @include emboss;
-      &:hover {
-            background-color: $blue;
-            color: $white;
-            @include emboss(darken($blue, 20));
-      }
+  text-decoration: none;
+  display: block;
+  padding: 8px;
+  border-radius: 4px;
+  background: darken(#f4f4f4, 5);
+  color: $colblue;
+  @include emboss;
+  &:hover {
+    background-color: $blue;
+    color: $white;
+    @include emboss(darken($blue, 20));
+  }
 }
 
 .ipm-home-action-view ul > li > ul > li {
-      @extend %ipm-action-link-li;
+  @extend %ipm-action-link-li;
 }
 
 .ipm-home-action-view ul > li > ul > li a {
-      @extend %ipm-action-link-li-a;
+  @extend %ipm-action-link-li-a;
 }
 
 .ipm-action-links li {
-      @include font-size(16);
-      @extend %ipm-action-link-li;
+  @include font-size(16);
+  @extend %ipm-action-link-li;
 }
 
 .ipm-action-links li a {
-      @extend %ipm-action-link-li-a;
+  @extend %ipm-action-link-li-a;
 }
 
 .ipm-action-links li a.disabled {
-      color: lighten($darkgray, 20);
-      &:hover {
-            background: darken(#f4f4f4, 5);
-            color: lighten($darkgray, 20);
-            @include emboss;
-      }
+  color: lighten($darkgray, 20);
+  &:hover {
+    background: darken(#f4f4f4, 5);
+    color: lighten($darkgray, 20);
+    @include emboss;
+  }
 }
 
 .columnActions .column {
-      vertical-align: top;
-      display: inline-block;
-      width: 30%;
-      margin: 20px 20px 20px 0;
+  vertical-align: top;
+  display: inline-block;
+  width: 30%;
+  margin: 20px 20px 20px 0;
 }
 
 section.policyOverview {
-      display: none;
+  display: none;
 }
 
 .content_msg {
-      @include font-size(16);
-      @include border-radius(6px);
-      box-shadow: 0 0 3px #999;
+  @include font-size(16);
+  @include border-radius(6px);
+  box-shadow: 0 0 3px #999;
+  font-weight: bold;
+  text-align: left;
+  margin: 10px 0px;
+  h3 {
+    padding: 0 10px;
+    margin: 10px 0 5px 0;
+  }
+  p {
+    padding: 0 10px 10px 10px;
+    @include font-size(14);
+    font-weight: normal;
+    b, strong {
       font-weight: bold;
-      text-align: left;
-      margin: 10px 0px;
-
-      h3 {
-            padding: 0 10px;
-            margin: 10px 0 5px 0;
-      }
-
-      p {
-            padding: 0 10px 10px 10px;
-            @include font-size(14);
-            font-weight: normal;
-
-            b, strong {
-                  font-weight: bold;
-            }
-      }
+    }
+  }
 }
 
 h2.ipm-action-header {
-      @include font-size(16);
-      color: $darkgray;
-      margin: 0 0 10px 0;
-      @include emboss;
+  @include font-size(16);
+  color: $darkgray;
+  margin: 0 0 10px 0;
+  @include emboss;
 }
 
 .ipm-loader {
-      @extend .search-loader;
-      h2 {
-            margin-left: -100px;
-      }
+  @extend .search-loader;
+  h2 {
+    margin-left: -100px;
+  }
 }
 
 .ipm-container {
-
-      #content {
-            padding: 20px !important;
+  #content {
+    padding: 20px !important;
+  }
+  #content_header {
+    padding: 0;
+    h2 {
+      @include font-size(18);
+      line-height: 140%;
+      margin: 0 0 5px 0;
+      padding: 0 0 5px 0;
+      @include emboss;
+      color: $blue;
+    }
+  }
+  .policyOverview {
+    margin: 10px 0 20px 0;
+    background: $white;
+    box-shadow: $darkgray 0px 0px 3px;
+    padding: 10px;
+    h1 {
+      @include font-size(14);
+      font-weight: bold;
+      margin: 0 0 10px 0;
+    }
+    ul li {
+      @include font-size(14);
+      display: inline-block;
+    }
+  }
+  .button {
+    @include simple-color(hue(#2b90d2), saturation(#2b90d2), lightness(#2b90d2));
+    &:disabled {
+      @include simple-color(hue(#eeeeee), saturation(#eeeeee), lightness(#eeeeee));
+      color: #aaa;
+    }
+  }
+  .policy-refresh {
+    margin-left: 10px;
+  }
+  #updatePreview {
+    float: right;
+    margin: 0;
+  }
+  #updatePreview[disabled=disabled] {
+    @include simple-color(hue(#eeeeee), saturation(#eeeeee), lightness(#eeeeee));
+    color: #ccc;
+  }
+  input[value=Confirm] {
+    @include simple-color(hue(#37a93c), saturation(#37a93c), lightness(#37a93c));
+  }
+  .form_actions {
+    margin: 10px 0 0 0;
+    a {
+      vertical-align: top;
+      display: inline-block;
+      text-decoration: none;
+      @include simple-color(hue($lightgray), saturation($lightgray), lightness($lightgray));
+    }
+  }
+  fieldset {
+    border-top: darken($lightgray, 10) 1px solid;
+    padding: 5px 0;
+    margin: 0;
+    .notesfield {
+      margin-left: 12px;
+      width: 70%;
+    }
+    h3 {
+      @include font-size(18);
+      @include emboss;
+      color: $blue;
+      font-weight: bold;
+      margin: 10px 0;
+      cursor: pointer;
+      a {
+        @include font-size(14);
+        color: $colblue;
+        font-weight: normal;
+        cursor: pointer;
+        display: none;
+        margin: 0 0 0 10px;
       }
-
-      #content_header {
-            padding: 0;
-
-            h2 {
-                  @include font-size(18);
-                  line-height: 140%;
-                  margin: 0 0 5px 0;
-                  padding: 0 0 5px 0;
-                  @include emboss;
-                  color: $blue;
-            }
-      }
-
-      .policyOverview {
-            margin: 10px 0 20px 0;
-            background: $white;
-            box-shadow: $darkgray 0px 0px 3px;
-            padding: 10px;
-
-            h1 {
-                  @include font-size(14);
-                  font-weight: bold;
-                  margin: 0 0 10px 0;
-            }
-            ul li {
-                  @include font-size(14);
-                  display: inline-block;
-            }
-      }
-
-      .button {
-            @include simple-color(hue(#2b90d2), saturation(#2b90d2), lightness(#2b90d2));
-            &:disabled {
-                  @include simple-color(hue(#eee), saturation(#eee), lightness(#eee));
-                  color: #aaa;
-            }
-      }
-
-      .policy-refresh { margin-left: 10px; }
-
-      #updatePreview {
-            float: right;
-            margin: 0;
-      }
-
-      #updatePreview[disabled=disabled] {
-            @include simple-color(hue(#eee), saturation(#eee), lightness(#eee));
-            color: #ccc;
-      }
-
-      input[value=Confirm] {
-            @include simple-color(hue(#37a93c), saturation(#37a93c), lightness(#37a93c));
-      }
-
-      div.form_actions {
-            margin: 10px 0 0 0;
-            a {
-                  vertical-align: top;
-                  margin: 2px 0 0 0;
-                  display: inline-block;
-                  text-decoration: none;
-                  @include simple-color(hue($lightgray), saturation($lightgray), lightness($lightgray));
-                  padding: 9px 12px 10px 12px !important;
-            }
-      }
-
-      fieldset {
-            border-top: darken($lightgray, 10) 1px solid;
-            padding: 5px 0;
-            margin: 0;
-
-            .notesfield {
-                margin-left: 12px;
-                width: 70%;           
-            }
-            
-            h3 {
-                  @include font-size(18);
-                  @include emboss;
-                  color: $blue;
-                  font-weight: bold;
-                  margin: 10px 0;
-                  cursor: pointer;
-                  a {
-                        @include font-size(14);
-                        color: $colblue;
-                        font-weight: normal;
-                        cursor: pointer;
-                        display: none;
-                        margin: 0 0 0 10px;
-                  }
-                  &:hover {
-                        color: $colblue;
-                        a {
-                              display: inline-block;
-                        }
-                  }
-            }
-
-            div {
-                  padding: 10px 0 10px 0;
-                  &:hover {
-                        background: $lightgray;
-                  }
-            }
-            .collapsibleFieldContainer {
-                  margin: 5px 0 0 0;
-                  padding: 0;
-                  display: none;
-                  &:hover {
-                        background: none;
-                  }
-            }
-            label {
-                  @include font-size(14);
-                  color: darken($darkgray,10);
-                  position: relative;
-                  display: inline-block;
-                  width: 250px !important;
-                  padding: 0 0 0 5px;
-                  vertical-align: top;
-                  i {
-                        @include font-size(14);
-                        color: darken($rowselect, 40);
-                        font-weight: normal;
-                        background: $rowselect;
-                        padding: 5px 8px;
-                        border-radius: 4px;
-                        position: absolute;
-                        z-index: 20;
-                        display: block;
-                        opacity: 0;
-                        left: -0.2em;
-                        top: -1.6em;
-                        @include transition-delay(0.3s);
-                        @include transition-property(opacity);
-                        @include transition-duration(0.2s);
-                  }
-                  &:hover {
-                        color: $blue;
-                        i {
-                              opacity: .8;
-                        }
-                  }
-            }
-            label.labelRequired {
-                color: #444;
-                font-weight: bold;
-                  &:after
-                  {
-                        color: #752E2E;
-                        content: ' *';
-                  }
-            }
-            label.validation_error
-            {
-                color: #a00;
-            }
-            label.noteslabel {
-                margin-left: -5px;
-            }
-        div > i {
-            margin: 0 0 0 10px;
-            padding: 5px 0 0 0;
-            @include font-size(12);
-            color: darken($darkgray, 10);
+      &:hover {
+        color: $colblue;
+        a {
+          display: inline-block;
         }
-            input.validation_error,
-            textarea.validation_error,
-            {
-                box-shadow: 0 0 5px rgba(160, 0, 0, 1);
-                background-color: lighten($red, 50);
-            }
-            select.validation_error
-            {
-                  background: #fcc;
-            }
-
-            input {
-                  vertical-align: top;
-            }
-
-            input[type=text] {
-                  @include sans;
-                  @include font-size(14);
-                  min-width: 2em;
-                  padding: 4px;
-            }
-
-
-            select {
-                  @include sans;
-                  @include font-size(14);
-            }
-
-            textarea {
-                  @include sans;
-                  @include font-size(14);
-                  padding: 5px;
-                  width: 50%;
-                  min-height: 120px;
-            }
-
-            // Nested fieldsets
-            fieldset {
-                  padding: 10px;
-                  background: $white;
-                  border: 0;
-                  margin: 15px 0;
-
-                  &:hover {
-                        legend {
-                              background: $blue;
-                        }
-                  }
-            }
-
-            legend {
-                  @include font-size(14);
-                  font-weight: bold;
-                  color: $white;
-                  padding: 5px;
-                  background: lighten($darkgray, 10);
-                  border-radius: 2px;
-                  border: 0;
-            }
       }
-
-      fieldset.defaultOpen {
-            border-top: 0px;
+    }
+    div {
+      padding: 10px 0 10px 0;
+      &:hover {
+        background: $lightgray;
       }
-
-      .defaultOpen .collapsibleFieldContainer {
-            display: block;
+    }
+    .collapsibleFieldContainer {
+      margin: 5px 0 0 0;
+      padding: 0;
+      display: none;
+      &:hover {
+        background: none;
       }
-
-      #rate_validation_override {
-            display: none;
-            margin: 20px 0;
-            padding: 10px;
-            background: adjust_hue(lighten($orange, 35), 11);
-            @include background-image(linear-gradient(adjust_hue(lighten($orange, 35), 11), lighten($orange, 35)));
-            border-radius: 6px;
-            border: lighten($orange, 30) 1px solid;
-            label {
-                  color: darken($orange, 10);
-                  @include font-size(16);
-                  font-weight: bold;
-                  width: auto !important;
-            }
+    }
+    label {
+      @include font-size(14);
+      color: darken($darkgray, 10);
+      position: relative;
+      display: inline-block;
+      width: 250px !important;
+      padding: 0 0 0 5px;
+      vertical-align: top;
+      i {
+        @include font-size(14);
+        color: darken($rowselect, 40);
+        font-weight: normal;
+        background: $rowselect;
+        padding: 5px 8px;
+        border-radius: 4px;
+        position: absolute;
+        z-index: 20;
+        display: block;
+        opacity: 0;
+        left: -0.2em;
+        top: -1.6em;
+        @include transition-delay(0.3s);
+        @include transition-property(opacity);
+        @include transition-duration(0.2s);
       }
-      .preview {
-            fieldset {
-                  label {
-                        display: block;
-                        padding: 10px 0;
-                  }
-            }
+      &:hover {
+        color: $blue;
+        i {
+          opacity: .8;
+        }
       }
-
+    }
+    label.labelRequired {
+      color: #444;
+      font-weight: bold;
+      &:after {
+        color: #752E2E;
+        content: ' *';
+      }
+    }
+    label.validation_error {
+      color: #a00;
+    }
+    label.noteslabel {
+      margin-left: -5px;
+    }
+    div > i {
+      margin: 0 0 0 10px;
+      padding: 5px 0 0 0;
+      @include font-size(12);
+      color: darken($darkgray, 10);
+    }
+    input.validation_error,
+    textarea.validation_error {
+      box-shadow: 0 0 5px rgba(160, 0, 0, 1);
+      background-color: lighten($red, 50);
+    }
+    select.validation_error {
+      background: #fcc;
+    }
+    input {
+      vertical-align: top;
+    }
+    input[type=text] {
+      @include sans;
+      @include font-size(14);
+      min-width: 2em;
+      padding: 4px;
+    }
+    select {
+      @include sans;
+      @include font-size(14);
+    }
+    textarea {
+      @include sans;
+      @include font-size(14);
+      padding: 5px;
+      width: 50%;
+      min-height: 120px;
+    }
+    // Nested fieldsets
+    fieldset {
+      padding: 10px;
+      background: $white;
+      border: 0;
+      margin: 15px 0;
+      &:hover {
+        legend {
+          background: $blue;
+        }
+      }
+    }
+    legend {
+      @include font-size(14);
+      display: inline;
+      display: inline-block;
+      width: inherit;
+      font-weight: bold;
+      color: $white;
+      padding: 5px;
+      background: lighten($darkgray, 10);
+      border-radius: 2px;
+      border: 0;
+    }
+  }
+  fieldset.defaultOpen {
+    border-top: 0px;
+  }
+  .defaultOpen .collapsibleFieldContainer {
+    display: block;
+  }
+  #rate_validation_override {
+    display: none;
+    margin: 20px 0;
+    padding: 10px;
+    background: adjust_hue(lighten($orange, 35), 11);
+    @include background-image(linear-gradient(adjust_hue(lighten($orange, 35), 11), lighten($orange, 35)));
+    border-radius: 6px;
+    border: lighten($orange, 30) 1px solid;
+    label {
+      color: darken($orange, 10);
+      @include font-size(16);
+      font-weight: bold;
+      width: auto !important;
+    }
+  }
+  .preview {
+    fieldset {
+      label {
+        display: block;
+        padding: 10px 0;
+      }
+    }
+  }
 }
 
 // Summary Data Table (Cancellation previews, etc)
 .form_actions {
-      p {
-            @include font-size(14);
-            padding: 10px 0;
-            font-weight: bold;
-            color: $darkgray;
-      }
+  p {
+    @include font-size(14);
+    padding: 10px 0;
+    font-weight: bold;
+    color: $darkgray;
+  }
 }
 
 .summary_table {
-      background: $white;
-      border: darken($lightgray, 10) 1px solid;
-      @include font-size(14);
-      tr:nth-child(even) {
-            background: lighten($lightgray, 3);
-      }
-      th {
-            font-weight: bold;
-            padding: 8px;
-      }
-      td {
-            padding: 8px;
-      }
-      caption {
-            padding: 10px;
-            @include font-size(14);
-            font-weight: bold;
-            color: $white;
-            background: darken($lightgray, 30);
-      }
+  background: $white;
+  border: darken($lightgray, 10) 1px solid;
+  @include font-size(14);
+  tr:nth-child(even) {
+    background: lighten($lightgray, 3);
+  }
+  th {
+    font-weight: bold;
+    padding: 8px;
+  }
+  td {
+    padding: 8px;
+  }
+  caption {
+    padding: 10px;
+    @include font-size(14);
+    font-weight: bold;
+    color: $white;
+    background: darken($lightgray, 30);
+  }
 }
 
 // Preview Data Table (Endorse)
-.data_table  {
-      width: 100%;
-      background: $white;
-      border: darken($lightgray, 10) 1px solid;
-      thead {
-            border-bottom: darken($lightgray, 10) 1px solid;
-            tr {
-                  background: darken($lightgray, 3);
-            }
+.data_table {
+  width: 100%;
+  background: $white;
+  border: darken($lightgray, 10) 1px solid;
+  thead {
+    border-bottom: darken($lightgray, 10) 1px solid;
+    tr {
+      background: darken($lightgray, 3);
+    }
+  }
+  th {
+    @include font-size(12);
+    font-weight: bold;
+    padding: 4px 8px;
+    text-align: center;
+    &.contains_var {
+      cursor: help;
+    }
+    &.col_group_heading {
+      background-color: fade-out(#353535, 0.95);
+      border-left: 1px solid #B8B8B8;
+      border-right: 1px solid #B8B8B8;
+      padding-top: 4px;
+      font-size: 1em;
+      vertical-align: bottom;
+    }
+    i {
+      background-color: #F3E893;
+      @include border-radius(4px);
+      color: #1f1f1f;
+      display: block;
+      font-size: 0.85em;
+      font-weight: normal;
+      opacity: 0;
+      padding: 2px 4px;
+      position: absolute;
+      z-index: 2000;
+      margin-top: 5px;
+      @include transition-delay(0.3s);
+      @include transition-property(opacity);
+      @include transition-duration(0.2s);
+    }
+    &:hover i {
+      opacity: 1;
+    }
+  }
+  td {
+    @include font-size(14);
+    padding: 8px;
+    text-align: right;
+    color: $darkgray;
+    input[type=text] {
+      @include font-size(14);
+      width: 50px;
+      padding: 1px 3px;
+      text-align: right;
+    }
+  }
+  .calculated_value,
+  .subtotal {
+    color: #000;
+    font-weight: bold;
+  }
+  tbody {
+    tr {
+      td:first-child {
+        width: 120px;
       }
-      th {
-            @include font-size(12);
-            font-weight: bold;
-            padding: 4px 8px;
-            text-align: center;
-        &.contains_var { cursor: help; }
-        &.col_group_heading {
-            background-color: fade-out(#353535, 0.95);
-            border-left: 1px solid #B8B8B8;
-            border-right: 1px solid #B8B8B8;
-            padding-top: 4px;
-            font-size: 1em;
-            vertical-align: bottom;
+      td:nth-child(-n+3) {
+        text-align: left;
+        white-space: nowrap;
+      }
+      &:hover {
+        background-color: $rowselect;
+        border-top: darken($rowselect, 10) 1px solid;
+        border-bottom: darken($rowselect, 10) 1px solid;
+        td {
+          color: darken($rowselect, 70);
         }
-        i {
-            background-color: #F3E893;
-            @include border-radius(4px);
-            color: #1f1f1f;
-            display: block;
-            font-size: 0.85em;
-            font-weight: normal;
-            opacity: 0;
-            padding: 2px 4px;
-            position: absolute;
-            z-index: 2000;
-            margin-top: 5px;
-            @include transition-delay(0.3s);
-            @include transition-property(opacity);
-            @include transition-duration(0.2s);
-        }
-        &:hover i {
-            opacity: 1;
-        }
       }
-
-      td {
-            @include font-size(14);
-            padding: 8px;
-            text-align: right;
-            color: $darkgray;
-
-            input[type=text] {
-                  @include font-size(14);
-                  width: 50px;
-                  padding: 1px 3px;
-                  text-align: right;
-            }
-      }
-      .calculated_value,
-      .subtotal {
-            color: #000;
-            font-weight: bold;
-      }
-      tbody {
-            tr {
-                  td:first-child {
-                        width: 120px;
-                  }
-                  td:nth-child(-n+3) {
-                        text-align: left;
-                        white-space: nowrap;
-                  }
-
-                  &:hover {
-                        background-color: $rowselect;
-                        border-top: darken($rowselect, 10) 1px solid;
-                        border-bottom: darken($rowselect, 10) 1px solid;
-                        td {
-                              color: darken($rowselect, 70);
-                        }
-                  }
-            }
-      }
-
-      tbody tr:last-child {
-            td {
-                  padding-bottom: 8px;
-            }
-      }
-
-      tr.dividing_row {
-            border-top: darken($lightgray, 10) 1px solid;
-
-            &:hover {
-                  background-color: transparent;
-                  border-top: darken($lightgray, 10) 1px solid;
-                  border-bottom: transparent 0px solid;
-                  color: transparent;
-            }
-      }
-      .col_hurricane,
-      .col_non_hurricane {
-            background: darken($lightgray, 1);
-      }
-      .col_group_heading {
-            background: darken($lightgray, 8);
-            padding: 8px 5px;
-      }
-      colgroup {
-            border: darken($lightgray, 10) 1px solid;
-            border-width: 0 1px 0 1px;
-      }
-      h4 {
-            font-weight: bold;
-            margin-top: 4px;
-            color: #000;
-      }
+    }
+  }
+  tbody tr:last-child {
+    td {
+      padding-bottom: 8px;
+    }
+  }
+  tr.dividing_row {
+    border-top: darken($lightgray, 10) 1px solid;
+    &:hover {
+      background-color: transparent;
+      border-top: darken($lightgray, 10) 1px solid;
+      border-bottom: transparent 0px solid;
+      color: transparent;
+    }
+  }
+  .col_hurricane,
+  .col_non_hurricane {
+    background: darken($lightgray, 1);
+  }
+  .col_group_heading {
+    background: darken($lightgray, 8);
+    padding: 8px 5px;
+  }
+  colgroup {
+    border: darken($lightgray, 10) 1px solid;
+    border-width: 0 1px 0 1px;
+  }
+  h4 {
+    font-weight: bold;
+    margin-top: 4px;
+    color: #000;
+  }
 }
 
 .datepicker {
-      background: white url('/img/icon_calendar.png') left no-repeat;
-      background-position: 5px 5px;
-      padding-left: 25px !important;
+  background: white url("/img/icon_calendar.png") left no-repeat;
+  background-position: 5px 5px;
+  padding-left: 25px !important;
 }
 
 .moneyLabel {
-      display: none;
+  display: none;
 }
 
 .moneyInput {
-      background: white url('/img/icon_usd.png') left no-repeat;
-      background-position: 0px 3px;
-      padding-left: 15px !important;
+  background: white url("/img/icon_usd.png") left no-repeat;
+  background-position: 0px 3px;
+  padding-left: 15px !important;
 }
 
-#cancellation fieldset li input,
-#nonrenewal fieldset li input {
-    @include simple-color(hue(#2b90d2), saturation(#2b90d2), lightness(#2b90d2));
-}
-
-#cancellation fieldset li input:disabled,
-#nonrenewal fieldset li input:disabled {
-    @include simple-color(hue($lightgray), saturation($lightgray), lightness($lightgray));
-    color: $darkgray;
-    font-style: italic;
+#nonrenewal,
+#cancellation {
+  fieldset li {
+    margin: 5px 0;
+    input {
+      @include simple-color(hue(#2b90d2), saturation(#2b90d2), lightness(#2b90d2));
+      &:disabled {
+        @include simple-color(hue($lightgray), saturation($lightgray), lightness($lightgray));
+        color: $darkgray;
+        font-style: italic;
+      }
+    }
+  }
 }
 
 #cancellation .table_wrapping p {
-      @include font-size(14);
-      color: $darkgray;
-      margin: 0 0 10px 0;
+  @include font-size(14);
+  color: $darkgray;
+  margin: 0 0 10px 0;
 }
 
 #cancellation .preview caption {
-      display: none;
+  display: none;
 }
 
 // Broker of Record
 .bor_input {
-      margin: 0 0 10px 0;
-
-      label {
-            margin: 0 10px 0 0;
-            @include font-size(16);
-            display: inline-block;
-            width: 320px;
-            text-align: right;
-            color: $darkgray;
-      }
-
-      .labelRequired {
-          color: #444;
-          font-weight: bold;
-            &:after
-            {
-                  color: #752E2E;
-                  content: ' *';
-            }
-      }
-
-      .agent-id-indicator {
-            color: lighten($darkgray, 20);
-            padding-left: 5px;
-            img {
-                  position: relative;
-                  top: 3px;
-            }
-      }
-
-      input[type=search] {
-            @include font-size(16);
-      }
-
-      select {
-            width: 120px;
-      }
-
-      .loading {
-            font-style: italic;
-      }
+  margin: 0 0 10px 0;
+  label {
+    margin: 0 10px 0 0;
+    @include font-size(16);
+    display: inline-block;
+    width: 320px;
+    text-align: right;
+    color: $darkgray;
+  }
+  .labelRequired {
+    color: #444;
+    font-weight: bold;
+    &:after {
+      color: #752E2E;
+      content: ' *';
+    }
+  }
+  .agent-id-indicator {
+    color: lighten($darkgray, 20);
+    padding-left: 5px;
+    img {
+      position: relative;
+      top: 3px;
+    }
+  }
+  input[type=search] {
+    @include font-size(16);
+  }
+  select {
+    width: 120px;
+  }
+  .loading {
+    font-style: italic;
+  }
 }
 
 .bor_input_alc {
-      @include font-size(16);
-      font-weight: bold;
-      color: $darkgray;
+  @include font-size(16);
+  font-weight: bold;
+  color: $darkgray;
 }
 
 img.bor-spinner {
-      margin-right: 5px;
+  margin-right: 5px;
 }
 
 // Broker of Record Preview
 %bor-notice {
-      @include font-size(14);
-      color: $notice-text;
-      line-height: 140%;
-      display: block;
-      margin: 10px 0;
-      border: darken($notice-base, 20) 1px solid;
-      border-radius: 4px;
-      padding: 10px 20px;
-      background: $notice-base;
-      strong  {
-            font-weight: bold;
-      }
+  @include font-size(14);
+  color: $notice-text;
+  line-height: 140%;
+  display: block;
+  margin: 10px 0;
+  border: darken($notice-base, 20) 1px solid;
+  border-radius: 4px;
+  padding: 10px 20px;
+  background: $notice-base;
+  strong {
+    font-weight: bold;
+  }
 }
-
 
 .bor-mailing-address,
 .bor-comparison,
 .bor-history {
-      margin: 0 0 40px 0;
-
-      h2 {
-            @include font-size(16);
-            font-weight: bold;
-            color: $darkgray;
-            margin: 0 0 10px;
-
-            span {
-                  font-weight: normal;
-            }
-      }
-
-      h3.disclaimer {
-            @extend %bor-notice;
-      }
+  margin: 0 0 40px 0;
+  h2 {
+    @include font-size(16);
+    font-weight: bold;
+    color: $darkgray;
+    margin: 0 0 10px;
+    span {
+      font-weight: normal;
+    }
+  }
+  h3.disclaimer {
+    @extend %bor-notice;
+  }
 }
 
 .bor-notification {
-      @extend %bor-notice;
-      margin-bottom: 20px;
+  @extend %bor-notice;
+  margin-bottom: 20px;
 }
 
 .bor-mailing-address {
-      p {
-            @include font-size(14);
-            margin: 10px 0;
-            color: $darkgray !important;
-            line-height: 140%;
-      }
+  p {
+    @include font-size(14);
+    margin: 10px 0;
+    color: $darkgray !important;
+    line-height: 140%;
+  }
 }
 
 .bor-comparison {
-      min-height: 1%;
-      .first {
-            @include span-columns(6, 12);
-      }
-      .second {
-            @include span-columns(6 omega, 12);
-      }
+  min-height: 1%;
+  .first {
+    @include span-columns(6, 12);
+  }
+  .second {
+    @include span-columns(6 omega, 12);
+  }
 }
 
 .bor-table {
-      @extend table.module-search;
+  @extend table.module-search;
 }
 
 .bor .form_actions {
-      margin-top: 40px !important;
+  margin-top: 40px !important;
 }

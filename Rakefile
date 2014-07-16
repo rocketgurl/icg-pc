@@ -127,6 +127,7 @@ task :coffee do
   unless ENV['COFFEE_SCRIPT_PATH'].nil?
     unless system "#{COFFEE_BUILD}"
       puts red "!!! CoffeeScript compile FAILED!"
+      exit 1
     else
       puts green "  >> CoffeeScript compile a success"
     end
@@ -144,6 +145,7 @@ task :compile do
   puts yellow "-> Compiling and moving to build directory..."
   unless system "#{RJS_BUILD}"
     puts red "  !!! Compile and move failed! Run manually with verbose mode on. !!!"
+    exit 1
   else
     puts green "  >> Compile and move was a success"
   end

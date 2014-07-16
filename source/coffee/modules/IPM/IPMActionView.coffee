@@ -449,8 +449,8 @@ define [
       #Get the Notes field value, if it exists
       #currentForm was added to ensure the correct addNotes textarea was used, as that field 
       #is included on multiple form elements
-      notes = @currentForm.find('textarea[name=addNotes]').val();
-      notes = $.trim(notes);
+      notes = @currentForm.find('textarea[name=addNotes]').val()
+      notes = $.trim(notes)
       delete @currentForm
       
       #if user does not add notes, skip this step entirely  

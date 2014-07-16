@@ -1,9 +1,11 @@
-Gemfile.lock
 .sass-cache
+.DS_Store
+Gemfile.lock
 build/*
 source/js/*.js
 source/js/modules/*.js
 source/js/modules/*/*.js
 source/js/modules/*/*/*.js
 node_modules/
-.DS_Store
+source/css/bootstrap/*
+source/css/screen.css

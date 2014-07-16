@@ -2,123 +2,138 @@
 Module: Policy
 */
 .policy-nav {
-	@include span-columns(2, 12);
-	li {
-		margin: 0;
-		border-top: $white 1px solid;
-		border-bottom: darken($lightgray, 10) 1px solid;
-		a {
-			padding: 8px 10px;
-			@include font-size(12);
-			text-decoration: none;
-			color: $darkblue;
-			display: block;			
-		}
-		a:hover {
-			color: $white;
-			background: $darkblue;
-		}
-		a.select {
-			@extend a:hover;
-			background: $darkblue url(../img/icon_arrow_right.png) 95% 50% no-repeat;
-			
-		}
-	}
-	li:first-child {
-		border-top: 0px;
-	}
-	li:last-child {
-		border-bottom: 0px;
-	}
+  width: 12%;
+  float: left;
+
+  > ul {
+    @include clearfix();
+    @extend .list-unstyled;
+  }
+  li {
+    margin: 0;
+    border-top: $white 1px solid;
+    border-bottom: darken($lightgray, 10) 1px solid;
+    a {
+      padding: 8px 10px;
+      @include font-size(12);
+      text-decoration: none;
+      color: $darkblue;
+      display: block;
+    }
+    a:hover {
+      color: $white;
+      background: $darkblue;
+    }
+    a.select {
+      @extend a:hover;
+      background: $darkblue url(../img/icon_arrow_right.png) 95% 50% no-repeat;
+    }
+  }
+  li:first-child {
+    border-top: 0px;
+  }
+  li:last-child {
+    border-bottom: 0px;
+  }
 }
 
 .policy-workspace {
-	@include span-columns(10 omega, 12);
-	// border: #ddd 1px solid;
+  width: 88%;
+  float: left;
 }
 
 .policy-workspace-error {
-	@include span-columns(12 omega, 12);
-	text-align: center;
+  @include span-columns(12 omega, 12);
+  text-align: center;
 }
 
 .policy-error {
-	width: 50%;
-	margin: 40px auto;
-	border-radius: 10px;
-	background: $red;
-	color: $white;
-	padding: 40px;
-	h1 {
-		@include font-size(20);
-		font-weight: bold;
-		margin: 0 0 40px 0;
-	}
-	h2 {
-		@include font-size(16);
-		line-height: 140%;
-		font-weight: normal;
-		margin: 0 0 20px 0;
-	}
-	button {
-		// @mixin simple-color($red, $red, $red);
-		$tmp : darken($red,10);
-		@include simple-color(hue($tmp), saturation($tmp), lightness($tmp));
-	}
+  width: 50%;
+  margin: 40px auto;
+  border-radius: 10px;
+  background: $red;
+  color: $white;
+  padding: 40px;
+  h1 {
+    @include font-size(20);
+    font-weight: bold;
+    margin: 0 0 40px 0;
+  }
+  h2 {
+    @include font-size(16);
+    line-height: 140%;
+    font-weight: normal;
+    margin: 0 0 20px 0;
+  }
+  button {
+    // @mixin simple-color($red, $red, $red);
+    $tmp: darken($red, 10);
+    @include simple-color(hue($tmp), saturation($tmp), lightness($tmp));
+  }
 }
 
 .policy-module {
-	width: 100%;
-	background: $white;
-	display: block;
-	border: #ddd 1px solid;
-	margin: 0;
-	padding: 0;
-	position: relative;
-}
-
-.policy-flash {
-	min-height: 90%;
-}
-
-.policy-swf {
-	margin: 0;
+  @include clearfix();
+  position: relative;
+  margin: 0;
+  padding: 0;
+  min-height: 600px;
+  width: 100%;
+  background: $modulegray;
+  border: #ddd 1px solid;
+  overflow: auto;
+  z-index: 1;
+  &.inactive {
+    visibility: hidden;
+    opacity: 0;
+    overflow: hidden;
+    z-index: -1;
+    margin: 0;
+    padding: 0;
+    height: 0 !important;
+    min-height: 0 !important;
+    border: 0;
+  }
+  &.policy-swf {
+    border: 0;
+    overflow: visible;
+  }
 }
 
 .policy-header {
-	background: $white;
-	border: #ddd 1px solid;
-	border-bottom: 0px;
-	width: 100%;
-	margin: 0;
-	table {
-		margin: 0;
-		width: 100%;
-		td {
-			padding: 10px;
-			border-right: $lightgray 1px solid;
-			vertical-align: top;
-		}
-		td:last-child {
-			border-right: 0;
-		}
-	}
-	h3 {
-		@include font-size(12);
-		margin: 0 0 5px 0;
-		color: $colblue;
-		vertical-align: text-top;
-	}
-	h2 {
-		@include font-size(14);
-		font-weight: bold;
-		color: $darkblue;
-		display: inline;
-		span {
-		        color: $orange;
-		        &.ipm-header-cancel-status {
-	                        color: $red;
-                        }
-		}
-	}	
+  background: $white;
+  border: #ddd 1px solid;
+  border-bottom: 0px;
+  width: 100%;
+  margin: 0;
+  table {
+    margin: 0;
+    width: 100%;
+    td {
+      padding: 10px;
+      border-right: $lightgray 1px solid;
+      vertical-align: top;
+    }
+    td:last-child {
+      border-right: 0;
+    }
+  }
+  h3 {
+    @include font-size(12);
+    margin: 0 0 5px 0;
+    color: $colblue;
+    vertical-align: text-top;
+  }
+  h2 {
+    @include font-size(14);
+    font-weight: bold;
+    color: $darkblue;
+    display: inline;
+    span {
+      color: $orange;
+      &.ipm-header-cancel-status {
+        color: $red;
+      }
+    }
+  }
 }

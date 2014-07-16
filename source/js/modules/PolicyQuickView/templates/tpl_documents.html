@@ -1,0 +1,27 @@
+
+<% _.each(docGroups, function (group, key) { %>
+<li id="<%= key %>-group-<%= cid %>">
+  <a data-toggle="collapse" data-parent="#<%= key %>-group-<%= cid %>" class="group-toggle collapsed" href="#<%= key %>-docs-<%= cid %>">
+    <span class="glyphicon"></span>
+    <strong><%= key %></strong> (<%= group.length %>)
+  </a>
+  <ul id="<%= key %>-docs-<%= cid %>" class="collapse">
+    <% _.each(group, function (doc) { %>
+    <li class="document" id="doc-<%= doc.cid %>">
+      <a href="<%= doc.docUrl %>" target="_blank" class="clearfix">
+        <div class="col-xs-6 document-label" title="<%= doc.label %>">
+          <% if (key === 'Attachments') { %>
+          <span class="glyphicon glyphicon-paperclip"></span>
+          <% } else { %>
+          <span class="glyphicon glyphicon-file"></span>
+          <% } %>
+          <%= doc.label %>
+        </div>
+        <div class="col-xs-6 document-updated"><strong><%= doc.docUpdated.date %></strong> at <%= doc.docUpdated.time %> EST</div>
+      </a>
+    </li>
+    <% }) %>
+  </ul>
+</li>
+
+<% }) %>

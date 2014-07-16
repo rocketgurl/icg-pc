@@ -522,6 +522,9 @@ define [
       # Retrieve pxClient location from ixConfig
       @services.pxclient = @config.get_pxClient(@workspace_state)
 
+      # Retrieve the base Agent Support View url
+      @services.agentSupport = @config.get_agent_support(@workspace_state)
+
     # Build the breadcrumb in the top nav
     #
     # @param `data` _Object_ env labels
