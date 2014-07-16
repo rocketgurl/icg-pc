@@ -3,30 +3,30 @@ define [
   'button'
   'BaseView'
   'modules/PolicyQuickView/ActivityCollection'
+  'modules/PolicyQuickView/AddNoteView'
   'text!modules/PolicyQuickView/templates/tpl_activities.html'
-], (collapse, button, BaseView, ActivityCollection, tpl_activities) ->
+], (collapse, button, BaseView, ActivityCollection, AddNoteView, tpl_activities) ->
 
   class ActivityView extends BaseView
 
-    events:
-      'keyup .activity-search' : 'filterCollection'
-      'change .activity-sort'  : 'sortCollection'
-      'submit .add-note-form'  : 'addNote'
+    events :
+      'keyup  .activity-search' : 'filterCollection'
+      'change .activity-sort'   : 'sortCollection'
 
     initialize : (options) ->
       @POLICY = policy = options.policy
       events  = policy.getEvents()
       notes   = policy.getNotes()
 
-      @addNoteButton = @$('.add-note-button')
-      @noteTextarea  = @$('.note-text')
-
-      # Keep callback functions' context bound to this view
-      _.bindAll this, 'addNoteSuccess', 'addNoteError'
-
       @collection = new ActivityCollection(events.concat(notes), {
         tasks : options.policy.getTasks()
       })
+
+      @addNotes = new AddNoteView
+        activityCollection  : @collection
+        attachmentsLocation : options.attachmentsLocation
+        policy              : policy
+        el                  : @$("#add-note-container-#{options.qvid}")
 
       @collection.on 'reset add', @render, this
       @render()
@@ -39,22 +39,6 @@ define [
     sortCollection : (e) ->
       @collection.sortBy e.currentTarget.value
       return this
-
-    addNote : (e) ->
-      noteValue = @noteTextarea.val() || ''
-      if noteValue
-        @addNoteButton.button 'loading'
-        @noteData = @POLICY.postNote noteValue, @addNoteSuccess, @addNoteError
-      return false
-
-    addNoteSuccess : (data, textStatus, jqXHR) ->
-      @collection.add @noteData
-      @addNoteButton.button 'reset'
-      @noteTextarea.val ''
-
-    addNoteError : (jqXHR, textStatus, errorThrown) ->
-      console.log errorThrown
-      console.log @noteData
 
     render : ->
       template = @Mustache.render tpl_activities, { activities: @collection.toJSON() }
