@@ -1,7 +1,7 @@
 define [
   'collapse'
   'BaseView'
-  'modules/PolicyQuickView/DocumentsCollection'
+  'modules/PolicyQuickView/collections/DocumentsCollection'
   'text!modules/PolicyQuickView/templates/tpl_documents.html'
 ], (collapse, BaseView, DocumentsCollection, tpl_documents) ->
 

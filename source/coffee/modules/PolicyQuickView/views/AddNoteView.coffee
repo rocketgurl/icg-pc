@@ -2,7 +2,7 @@ define [
   'collapse'
   'button'
   'BaseView'
-  'modules/PolicyQuickView/AttachmentsCollection'
+  'modules/PolicyQuickView/collections/AttachmentsCollection'
   'text!modules/PolicyQuickView/templates/tpl_attachments.html'
 ], (collapse, button, BaseView, AttachmentsCollection, tpl_attachments) ->
 
@@ -51,14 +51,14 @@ define [
       @noteTextarea.val ''
 
     addNoteError : (jqXHR, textStatus, errorThrown) ->
-      console.log errorThrown
-      console.log @noteData
+      # console.log errorThrown
+      # console.log @noteData
 
     handleIframeLoadEvent : (e) ->
       try
-        console.log 'IFRAME SUCCESS', e
+        # console.log 'IFRAME SUCCESS', e
       catch err
-        console.log 'IFRAME ERROR', err
+        # console.log 'IFRAME ERROR', err
 
     triggerFileDialog : (e) ->
       e.preventDefault()
@@ -86,7 +86,7 @@ define [
           location  : @attachmentsLocation
 
     deleteFile : (e) ->
-      console.log e
+      # console.log e
 
     renderAttachments : ->
       data = { attachments : @attachments.toJSON() }

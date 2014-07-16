@@ -1,6 +1,6 @@
 define [
   'backbone'
-  'modules/PolicyQuickView/AttachmentModel'
+  'modules/PolicyQuickView/models/AttachmentModel'
 ], (Backbone, AttachmentModel) ->
 
   class AttachmentsCollection extends Backbone.Collection

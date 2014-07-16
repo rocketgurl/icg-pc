@@ -2,8 +2,8 @@ define [
   'collapse'
   'button'
   'BaseView'
-  'modules/PolicyQuickView/ActivityCollection'
-  'modules/PolicyQuickView/AddNoteView'
+  'modules/PolicyQuickView/collections/ActivityCollection'
+  'modules/PolicyQuickView/views/AddNoteView'
   'text!modules/PolicyQuickView/templates/tpl_activities.html'
 ], (collapse, button, BaseView, ActivityCollection, AddNoteView, tpl_activities) ->
 

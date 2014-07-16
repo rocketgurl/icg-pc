@@ -1,8 +1,6 @@
 define [
-  'jquery'
-  'underscore'
   'backbone'
-], ($, _, Backbone) ->
+], (Backbone) ->
 
   # Grabs the Agency Location as an XML blob from ixDirectory.
   # Parses it to json. Surfaces some useful values for easy access

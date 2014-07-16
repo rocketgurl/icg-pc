@@ -1,17 +1,11 @@
 define [
   'backbone'
-  'modules/PolicyQuickView/DocumentModel'
+  'modules/PolicyQuickView/models/DocumentModel'
 ], (Backbone, DocumentModel) ->
 
-  # A mixed, sortable, searchable collection of Notes, Messages & Events
   class DocumentsCollection extends Backbone.Collection
 
     model : DocumentModel
-
-    sort : (options) ->
-      unless @initialized
-        options = { silent : false }
-      super options
 
     comparator : (modela, modelb) ->
       a = modela.unixTime

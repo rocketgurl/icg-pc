@@ -1,6 +1,6 @@
 define [
   'backbone'
-  'modules/PolicyQuickView/ActivityModel'
+  'modules/PolicyQuickView/models/ActivityModel'
 ], (Backbone, ActivityModel) ->
 
   # A mixed, sortable, searchable collection of Notes, Messages & Events

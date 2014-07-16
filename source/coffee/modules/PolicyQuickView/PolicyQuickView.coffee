@@ -1,15 +1,15 @@
 define [
   'tab'
   'BaseView'
-  'modules/PolicyQuickView/ServicingTabView'
-  'modules/PolicyQuickView/ActivityView'
-  'modules/PolicyQuickView/DocumentsView'
+  'modules/PolicyQuickView/views/ServicingTabView'
+  'modules/PolicyQuickView/views/ActivityView'
+  'modules/PolicyQuickView/views/DocumentsView'
   'text!modules/PolicyQuickView/templates/tpl_quickview_container.html'
 ], (tab, BaseView, ServicingTabView, ActivityView, DocumentsView, tpl_qv_container) ->
 
   # PolicyQuickView
   # ====
-  # Build container view for PolicyQuickView subviews
+  # Parent view for PolicyQuickView subviews
   class PolicyQuickView extends BaseView
 
     initialize : (options) ->

@@ -1,6 +1,6 @@
 define [
   'BaseView'
-  'modules/PolicyQuickView/AgencyLocationModel'
+  'modules/PolicyQuickView/models/AgencyLocationModel'
   'text!modules/PolicyQuickView/templates/tpl_servicing_tab.html'
 ], (BaseView, AgencyLocationModel, tpl_servicing_tab) ->
 
