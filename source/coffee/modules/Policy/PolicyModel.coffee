@@ -1,7 +1,8 @@
 define [
   'BaseModel'
   'Helpers'
-], (BaseModel, Helpers) ->
+  'mustache'
+], (BaseModel, Helpers, Mustache) ->
 
   #### Policy
   #
@@ -531,21 +532,33 @@ define [
     # **Notes field handling, post a notes ChangeSet**
     #
     # @param `note` _String_ Policy notes
+    # @param `attachments` _Array_ list of urls pointing to policy attachments
     # @param `callbackSuccess` _Function_ Handle successful POST
     # @param `callbackError` _Function_ Handle error state
     # return an object with content equivalent to the policyXML
     #
-    postNote : (note, callbackSuccess, callbackError) ->
+    postNote : (note, attachments=[], callbackSuccess, callbackError) ->
       noteData =
         CreatedTimeStamp : new Date() + ''
         CreatedBy        : @get('module').view.controller.user.get('username')
         Content          : $.trim note
+        Attachments      : attachments
 
       xml = """
-        <PolicyChangeSet schemaVersion="2.1" username="#{noteData.CreatedBy}" description="Added via HTML QuickView">
+        <PolicyChangeSet schemaVersion="2.1" username="{{CreatedBy}}" description="Added via HTML QuickView">
           <Note>
-            <Content><![CDATA[#{noteData.Content}]]></Content>
+            <Content><![CDATA[{{Content}}]]></Content>
           </Note>
+          {{#Attachments.length}}
+          <Attachments>
+            {{#Attachments}}
+            <Attachment name="{{fileName}}" contentType="{{fileType}}">
+              <Description/>
+              <Location>{{location}}{{objectKey}}</Location>
+            </Attachment>
+            {{/Attachments}}
+          </Attachments>
+          {{/Attachments.length}}
         </PolicyChangeSet>
       """
 
@@ -556,13 +569,12 @@ define [
         dataType    : 'xml'
         contentType : 'application/xml; schema=policychangeset.2.1'
         context     : this
-        data        : xml
+        data        : Mustache.render xml, noteData
         headers     :
           'Authorization' : "Basic #{@get('digest')}"
           'Accept'        : 'application/vnd.ics360.insurancepolicy.2.8+xml'
           'X-Commit'      : true
 
-      # Post
       jqXHR = $.ajax params
       if _.isFunction(callbackSuccess) && _.isFunction(callbackError)
         $.when(jqXHR).then callbackSuccess, callbackError
