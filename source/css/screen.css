@@ -1675,7 +1675,6 @@ Module: Policy
 .qv-container h1, .qv-container h2 { font-weight: bold; }
 .qv-container h1 { margin: 15px 0 0 0; font-size: 24px; font-size: 2.4rem; text-shadow: 0 1px white; color: #002857; }
 .qv-container h2 { margin: 20px 0 10px 0; font-size: 18px; font-size: 1.8rem; color: dimgrey; }
-.qv-container .input-xs { height: 22px; line-height: 22px; font-size: 11px; }
 .qv-container .nav { padding-top: 10px; padding-left: 15px; padding-right: 15px; background-color: #f4f4f4; }
 .qv-container .nav-tabs > li > a { font-weight: bold; color: #787878; }
 .qv-container .nav-tabs > li.active > a { color: #417505; }
@@ -1687,7 +1686,7 @@ Module: Policy
 .qv-container .col-right .panel-heading { padding: 5px; }
 .qv-container .col-right .panel-heading strong { line-height: 30px; }
 .qv-container .panel-subhead { padding: 5px; border-bottom: 1px solid #ddd; }
-.qv-container .panel-subhead .add-note-toggle { display: inline-block; line-height: 22px; }
+.qv-container .panel-subhead .add-note-toggle { display: inline-block; line-height: 30px; }
 .qv-container .panel-subhead .add-note-toggle .glyphicon { margin-right: 3px; }
 .qv-container .panel-subhead .add-note-toggle .glyphicon:before { content: "\e082"; }
 .qv-container .panel-subhead .add-note-toggle .add-text { display: none; }
@@ -1695,7 +1694,7 @@ Module: Policy
 .qv-container .panel-subhead .add-note-toggle.collapsed .add-text { display: inherit; }
 .qv-container .panel-subhead .add-note-toggle.collapsed .cancel-text { display: none; }
 .qv-container .panel-subhead .note-text { margin: 5px 0; }
-.qv-container .panel-subhead .attach-file { line-height: 30px; }
+.qv-container .panel-subhead .file-attach-link { line-height: 30px; }
 .qv-container .tab-content { padding: 15px 0; background-color: #fff; }
 .qv-container .policy-status { font-size: 18px; font-size: 1.8rem; font-weight: bold; text-align: center; }
 .qv-container .section-holder, .qv-container .agent-support { margin-bottom: 20px; }
@@ -1710,11 +1709,17 @@ Module: Policy
 .qv-container .activity { border-bottom: 1px solid #ddd; }
 .qv-container .activity:last-child { border: 0; }
 .qv-container .activity-initiator, .qv-container .document-label { padding-left: 0; }
+.qv-container .document-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: inline-block; padding-left: 0; }
 .qv-container .activity-date, .qv-container .document-updated { text-align: right; padding-right: 0; }
 .qv-container .activity-title, .qv-container .activity-body { margin-top: 15px; }
 .qv-container .activity-title { text-transform: capitalize; font-size: 13px; }
 .qv-container .activity-title > a { display: block; text-decoration: underline; }
 .qv-container .activity-body > p:last-child { margin-bottom: 0; }
+.qv-container .attachment-list { margin: 0; }
+.qv-container .attachment-list > li { line-height: 1; }
+.qv-container .attachment-list .glyphicon-remove { margin-right: 3px; }
+.qv-container .attachment-list .glyphicon-time { margin-left: 3px; }
+.qv-container .attachment-filename { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: inline-block; max-width: 60%; }
 .qv-container .documents-wrapper { padding: 5px; }
 .qv-container .documents-wrapper .group-toggle { display: block; padding: 8px 0; text-transform: capitalize; }
 .qv-container .documents-wrapper .group-toggle .glyphicon { margin-right: 3px; }
