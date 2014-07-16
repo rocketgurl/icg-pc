@@ -178,6 +178,14 @@ define [
     makeTimestamp : ->
       moment(new Date()).format('YYYY-MM-DDTHH:mm:ss.sssZ')
 
+
+    # Generate GUID, used as a key in localstorage or file upload or whathaveyou
+    createGUID : ->
+      # Generate primitive for GUID
+      s4 = -> (((1+Math.random())*0x10000)|0).toString(16).substring(1)
+
+      "#{s4()+s4()}-#{s4()}-#{s4()}-#{s4()}-#{s4()+s4()+s4()}".toUpperCase()
+
     # Resize an element to the approximate height of the workspace
     #
     # @param `el` _HTML Element_ element to resize
