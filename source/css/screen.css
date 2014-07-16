@@ -1681,7 +1681,7 @@ Module: Policy
 .qv-container .col-left, .qv-container .col-right { float: left; }
 .qv-container .col-left:before, .qv-container .col-left:after, .qv-container .col-right:before, .qv-container .col-right:after { content: " "; display: table; }
 .qv-container .col-left:after, .qv-container .col-right:after { clear: both; }
-.qv-container .col-left { width: 66.66667%; min-height: 800px; border-right: 1px solid #ddd; }
+.qv-container .col-left { width: 66.66667%; min-height: 810px; border-right: 1px solid #ddd; }
 .qv-container .col-right { padding: 10px; width: 33.33333%; }
 .qv-container .col-right .panel-heading { padding: 5px; }
 .qv-container .col-right .panel-heading strong { line-height: 30px; }
