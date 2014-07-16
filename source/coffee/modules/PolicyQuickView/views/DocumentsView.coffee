@@ -8,7 +8,7 @@ define [
   class DocumentsView extends BaseView
 
     initialize : (options) ->
-      policy = options.policy
+      @POLICY = policy = options.policy
       documents = policy.getDocuments()
       attachments = policy.getAttachments()
 
@@ -18,7 +18,13 @@ define [
       })
 
       @collection.on 'reset', @render, this
+      @POLICY.on 'change:version', @handlePolicyRefresh, this
       @render()
+
+    handlePolicyRefresh : ->
+      documents   = @POLICY.getDocuments()
+      attachments = @POLICY.getAttachments()
+      @collection.reset documents.concat(attachments)
 
     render : ->
       data =

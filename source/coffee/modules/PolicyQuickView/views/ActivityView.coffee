@@ -19,7 +19,7 @@ define [
       notes   = policy.getNotes()
 
       @collection = new ActivityCollection(events.concat(notes), {
-        tasks : options.policy.getTasks()
+        tasks : policy.getTasks()
       })
 
       @addNotes = new AddNoteView
@@ -29,7 +29,14 @@ define [
         el                  : @$("#add-note-container-#{options.qvid}")
 
       @collection.on 'reset add', @render, this
+      @POLICY.on 'change:version', @handlePolicyRefresh, this
       @render()
+
+    handlePolicyRefresh : ->
+      events = @POLICY.getEvents()
+      notes  = @POLICY.getNotes()
+      @collection.tasks = @POLICY.getTasks()
+      @collection.reset events.concat(notes)
 
     filterCollection : (e) ->
       throttledFilter = _.throttle @collection.filterByQuery, 500

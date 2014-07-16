@@ -7,12 +7,12 @@ define [
   class ServicingTabView extends BaseView
 
     initialize : (options) ->
-      @QuickView = options.quickview
       @CONTROLLER = options.controller
       @POLICY = options.policy
 
       @agencyLocationModel = @getAgencyLocationModel()
       @agencyLocationModel.on 'change', @render, this
+      @POLICY.on 'change:version', @render, this
       return this
 
     getAgencyLocationModel : ->
