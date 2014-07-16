@@ -19,12 +19,6 @@
     color: $darkgray;
   }
 
-  .input-xs {
-    height: 22px;
-    line-height: 22px;
-    font-size: 11px;
-  }
-
   .nav {
     padding-top: 10px;
     padding-left: 15px;
@@ -71,7 +65,7 @@
 
     .add-note-toggle {
       display: inline-block;
-      line-height: 22px;
+      line-height: 30px;
 
       .glyphicon {
         margin-right: 3px;
@@ -91,7 +85,7 @@
       margin: 5px 0;
     }
 
-    .attach-file {
+    .file-attach-link {
       line-height: 30px;
     }
   }
@@ -163,6 +157,12 @@
     padding-left: 0;
   }
 
+  .document-label {
+    @include text-overflow();
+    display: inline-block;
+    padding-left: 0;
+  }
+
   .activity-date,
   .document-updated {
     text-align: right;
@@ -188,6 +188,20 @@
     > p:last-child {
       margin-bottom: 0;
     }
+  }
+
+  .attachment-list {
+    margin: 0;
+
+    > li { line-height: 1; }
+    .glyphicon-remove { margin-right: 3px; }
+    .glyphicon-time { margin-left: 3px; }
+  }
+
+  .attachment-filename {
+    @include text-overflow();
+    display: inline-block;
+    max-width: 60%;
   }
 
   .documents-wrapper {
