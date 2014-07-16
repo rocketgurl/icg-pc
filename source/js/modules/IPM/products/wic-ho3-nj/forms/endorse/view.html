@@ -287,8 +287,30 @@
 
 
 		<div>
-			<label for="{{guid}}_WindHailDeductible" class="labelRequired">Wind Hail Deductible <i>WindHailDeductible</i></label>
-			<select id="{{guid}}_WindHailDeductible" name="WindHailDeductible" data-value="{{WindHailDeductible}}"  required >
+			<label for="{{guid}}_WindstormDeductibleOption" class="labelRequired">Wind/Hail or Named Storm Deductible? <i>WindstormDeductibleOption</i></label>
+			<select id="{{guid}}_WindstormDeductibleOption" name="WindstormDeductibleOption" data-value="{{WindstormDeductibleOption}}"  required >
+				{{#EnumsWindstormDeductibleOption}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsWindstormDeductibleOption}}
+			</select>
+		</div>
+
+
+
+		<div>
+			<label for="{{guid}}_HurricaneDeductible" >Named Storm Deductible <i>HurricaneDeductible</i></label>
+			<select id="{{guid}}_HurricaneDeductible" name="HurricaneDeductible" data-value="{{HurricaneDeductible}}"   >
+				{{#EnumsHurricaneDeductible}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsHurricaneDeductible}}
+			</select>
+		</div>
+
+
+
+		<div>
+			<label for="{{guid}}_WindHailDeductible" >Wind/Hail Deductible  <i>WindHailDeductible</i></label>
+			<select id="{{guid}}_WindHailDeductible" name="WindHailDeductible" data-value="{{WindHailDeductible}}"   >
 				{{#EnumsWindHailDeductible}}
 				<option value="{{value}}">{{label}}</option>
 				{{/EnumsWindHailDeductible}}
