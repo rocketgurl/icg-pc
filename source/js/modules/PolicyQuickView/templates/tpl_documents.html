@@ -9,7 +9,7 @@
     <% _.each(group, function (doc) { %>
     <li class="document" id="doc-<%= doc.cid %>">
       <a href="<%= doc.docUrl %>" target="_blank" class="clearfix">
-        <div class="col-xs-6 document-label">
+        <div class="col-xs-6 document-label" title="<%= doc.label %>">
           <% if (key === 'Attachments') { %>
           <span class="glyphicon glyphicon-paperclip"></span>
           <% } else { %>
