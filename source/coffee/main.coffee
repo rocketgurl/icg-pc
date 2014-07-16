@@ -43,7 +43,7 @@ require
       'underscore' :
         exports : '_'
       'backbone' :
-        deps    : ['json', 'underscore']
+        deps    : ['jquery', 'json', 'underscore']
       'amplify' :
         deps    : ['jquery', 'json']
         exports : 'amplify'

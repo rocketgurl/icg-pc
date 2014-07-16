@@ -26,7 +26,10 @@
     u_policycentral: 'underscore.policycentral',
     Apparatchik : 'lib/Apparatchik',
     favicon: 'lib/favicon',
-    tab: 'lib/bootstrap/tab'
+    transition: 'lib/bootstrap/transition',
+    tab: 'lib/bootstrap/tab',
+    collapse: 'lib/bootstrap/collapse',
+    button: 'lib/bootstrap/button'
   },
   shim: {
     'jquery': {
@@ -39,6 +42,12 @@
     'json': {
       deps: ['jquery'],
       exports: 'JSON'
+    },
+    'underscore': {
+      exports: '_'
+    },
+    'backbone': {
+      deps: ['jquery', 'json', 'underscore']
     },
     'amplify': {
       deps: ['jquery', 'json'],
@@ -61,8 +70,14 @@
     'favicon': {
       exports: 'favicon'
     },
+    'transition': {
+      deps: ['jquery']
+    },
     'tab': {
       deps: ['jquery']
+    }
+    'collapse': {
+      deps: ['transition']
     }
   },
   modules: [
@@ -84,7 +99,7 @@
   removeCombined: false,
   optimize: "uglify2",
   uglify2: {
-      warnings: true,
-      mangle: true
+    warnings: true,
+    mangle: true
   }
 })
