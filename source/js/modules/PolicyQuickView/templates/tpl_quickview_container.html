@@ -39,34 +39,45 @@
           <input type="search" class="activity-search form-control" placeholder="Search...">
         </div>
       </div>
+
       <div class="panel-subhead clearfix">
-        <div class="note-controls">
+        <div class="add-note-controls clearfix">
           <div class="input-group col-xs-3 pull-right">
-            <select class="activity-sort form-control input-xs">
+            <select class="activity-sort form-control input-sm">
               <option value="date_desc">Sort by</option>
               <option value="date_desc">Date Desc</option>
               <option value="date_asc">Date Asc</option>
             </select>
           </div>
-          <a href="#note-container-{{cid}}" data-toggle="collapse" data-parent="#activity-{{cid}}" class="add-note-toggle collapsed">
+          <a href="#add-note-container-{{cid}}" data-toggle="collapse" data-parent="#activity-{{cid}}" class="add-note-toggle collapsed">
             <span class="glyphicon glyphicon-plus-sign"></span>
             <span class="add-text">Add a Note</span>
             <span class="cancel-text">Cancel</span>
           </a>
         </div>
-        <div id="note-container-{{cid}}" class="note-container collapse clearfix">
+
+        <div id="add-note-container-{{cid}}" class="add-note-container collapse clearfix">
           <form class="add-note-form" role="form">
             <textarea name="note-text" class="note-text form-control" rows="3"></textarea>
             <div class="btn-group pull-right">
               <button type="submit" class="add-note-button btn btn-sm btn-primary" data-loading-text="Saving...">Save</button>
             </div>
           </form>
-          <!--
-          <a href="#" class="attach-file">
-            <span class="glyphicon glyphicon-paperclip"></span>
-            Attach a file
-          </a>
-          -->
+
+          <div class="attachments-container"></div>
+
+          <form class="file-attach-form" method="POST" action="{{attachmentsLocation}}?x-crippled-client=true&x-crippled-client-envelope=true" enctype="multipart/form-data" target="submit-iframe-{{cid}}">
+            <a href="#" class="file-attach-link">
+              <span class="glyphicon glyphicon-paperclip"></span>
+              <span class="">Attach a file</span>
+              <span class="hidden">Attach another file</span>
+            </a>
+
+            <input type="file" class="file-attach-input hidden" name="object-data-file">
+            <input type="hidden" name="auth-token" value="{{authToken}}">
+            <input type="hidden" name="object-key" value="">
+            <iframe class="submit-iframe hidden" name="submit-iframe-{{cid}}"></iframe>
+          </form>
         </div>
       </div>
       <ul class="activity-wrapper"></ul>
