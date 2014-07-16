@@ -8,10 +8,6 @@ define [
 
     model : DocumentModel
 
-    modelCache : null
-
-    initialized : false
-
     sort : (options) ->
       unless @initialized
         options = { silent : false }
@@ -27,28 +23,9 @@ define [
       else
         0
 
-    cacheModels : ->
-      unless @initialized
-        @modelCache = @models
-        @initialized = true
-
     initialize : (models, options) ->
       @options = options
       @policyUrl = options.policyUrl
-
-      @on 'reset', @cacheModels
-      @on 'all', @report
-      window.DocumentsCollection = this
-
-    report : (evt) ->
-      console.log evt
-      @each (model) ->
-        console.log [
-          model.unixTime
-          model.get('docGroup')
-          model.get('subtype')
-          model.id
-        ]
 
     getGrouped : ->
       _.groupBy @toJSON(), (model) ->
