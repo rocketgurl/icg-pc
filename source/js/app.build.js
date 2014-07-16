@@ -14,18 +14,19 @@
     moment: 'lib/moment',
     momentrange: 'lib/moment-range',
     xml2json: 'lib/jquery.xml2json',
+    marked: 'lib/marked',
     text: 'lib/text',
     domReady: 'lib/domReady',
     json: 'lib/json2',
     herald: 'lib/herald/herald',
     loader: 'lib/heartcode-canvasloader',
     swfobject: 'lib/swfobject',
+    chosen: 'lib/chosen.jquery',
     u_string: 'lib/underscore.string',
+    u_policycentral: 'underscore.policycentral',
     Apparatchik : 'lib/Apparatchik',
     favicon: 'lib/favicon',
-    tab: 'lib/bootstrap/tab',
-    collapse: 'lib/bootstrap/collapse',
-    button: 'lib/bootstrap/button'
+    tab: 'lib/bootstrap/tab'
   },
   shim: {
     'jquery': {
@@ -61,12 +62,6 @@
       exports: 'favicon'
     },
     'tab': {
-      deps: ['jquery']
-    },
-    'collapse': {
-      deps: ['transition']
-    },
-    'button': {
       deps: ['jquery']
     }
   },
