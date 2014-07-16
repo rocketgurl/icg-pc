@@ -18,18 +18,28 @@ define [
       return this
 
     render : ->
-      @$el.html @Mustache.render tpl_qv_container, { cid : @cid }
+      attachmentsLocation = "#{@CONTROLLER.services.ixlibrary}buckets/policy_attachments/objects/"
+      viewData =
+        cid                 : @cid
+        attachmentsLocation : attachmentsLocation
+        authToken           : "Basic #{@POLICY.get('digest')}"
+
+      @$el.html @Mustache.render tpl_qv_container, viewData
 
       servicing = new ServicingTabView
+        qvid       : @cid
         controller : @CONTROLLER
         policy     : @POLICY
         el         : @$("#tab-servicing-#{@cid}")
 
       activities = new ActivityView
-        policy : @POLICY
-        el     : @$("#activity-#{@cid}")
+        qvid                : @cid
+        policy              : @POLICY
+        attachmentsLocation : attachmentsLocation
+        el                  : @$("#activity-#{@cid}")
 
       documents = new DocumentsView
+        qvid   : @cid
         policy : @POLICY
         el     : @$("#documents-#{@cid}")
 
