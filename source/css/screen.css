@@ -1713,7 +1713,7 @@ Module: Policy
 .qv-container .activity-date, .qv-container .document-updated { text-align: right; padding-right: 0; }
 .qv-container .activity-title, .qv-container .activity-body { margin-top: 15px; }
 .qv-container .activity-title { text-transform: capitalize; font-size: 13px; }
-.qv-container .activity-title > a { display: block; text-decoration: underline; }
+.qv-container .activity-title > a { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: block; text-decoration: underline; }
 .qv-container .activity-body > p:last-child { margin-bottom: 0; }
 .qv-container .attachment-list { margin: 0; }
 .qv-container .attachment-list > li { line-height: 1; }

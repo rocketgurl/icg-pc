@@ -18,7 +18,7 @@ define [
       })
 
       @collection.on 'reset', @render, this
-      @POLICY.on 'change:version', @handlePolicyRefresh, this
+      @POLICY.on 'change:refresh change:version', @handlePolicyRefresh, this
       @render()
 
     handlePolicyRefresh : ->
