@@ -942,7 +942,7 @@ define [
         for key, val of new_attributes
           @attributes[key] = val
 
-        @trigger 'policy_response', textStatus
+        @trigger 'change:refresh', textStatus
         @Amplify.publish(view_id, 'success',
           "Policy #{@get('policyId')} refreshed!", 2000)
 
@@ -958,7 +958,7 @@ define [
     refreshFail : (view_id) ->
       view_id = view_id || @get('module').policy_view.cid
       (jqXHR, textStatus, errorThrown) =>
-        @trigger 'policy_response', textStatus
+        @trigger 'change:refresh', textStatus
         @Amplify.publish(view_id, 'warning',
           "There was an error refreshing the policy: #{jqXHR.status} (#{errorThrown})", 2000)
         return this
