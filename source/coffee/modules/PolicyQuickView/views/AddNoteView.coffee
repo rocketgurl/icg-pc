@@ -12,6 +12,7 @@ define [
 
     events :
       'click  .file-attach-link'  : 'triggerFileDialog'
+      'click  .file-delete-link'  : 'deleteFile'
       'change .file-attach-input' : 'uploadFile'
       'submit .add-note-form'     : 'addNote'
 
@@ -23,20 +24,20 @@ define [
       # Keep callback functions' context bound to this view
       _.bindAll this, 'addNoteSuccess', 'addNoteError', 'handleIframeLoadEvent'
 
-      @attachments.on 'add delete', @renderAttachments, this
+      @attachments.on 'add remove reset', @renderAttachments, this
 
-      # store jQuery ref to various page elements
+      # store jQuery refs to various DOM elements
       @cacheElements()
 
       # listen for iFrame load event and handle it
       @submitIframe.load @handleIframeLoadEvent
 
     cacheElements : ->
-      @addNoteButton        = @$('.add-note-button')
-      @noteTextarea         = @$('.note-text')
-      @fileAttachForm       = @$('.file-attach-form')
       @attachmentsContainer = @$('.attachments-container') 
+      @fileAttachForm       = @$('.file-attach-form')
+      @addNoteButton        = @$('.add-note-button')
       @submitIframe         = @$('.submit-iframe')
+      @noteTextarea         = @$('.note-text')
 
     addNote : (e) ->
       noteValue = @noteTextarea.val() || ''
@@ -46,19 +47,18 @@ define [
       return false
 
     addNoteSuccess : (data, textStatus, jqXHR) ->
-      @activityCollection.add @noteData
+      @POLICY.refresh()
+      @attachments.reset()
       @addNoteButton.button 'reset'
       @noteTextarea.val ''
 
+    # TODO: something here
     addNoteError : (jqXHR, textStatus, errorThrown) ->
       # console.log errorThrown
       # console.log @noteData
 
     handleIframeLoadEvent : (e) ->
-      try
-        # console.log 'IFRAME SUCCESS', e
-      catch err
-        # console.log 'IFRAME ERROR', err
+      @addNoteButton.button 'reset'
 
     triggerFileDialog : (e) ->
       e.preventDefault()
@@ -79,14 +79,43 @@ define [
 
         @fileAttachForm.find('input[name=object-key]').val objectKey
         @fileAttachForm.submit()
+        @addNoteButton.button 'loading'
         @attachments.add
           fileType  : fileType
           fileName  : fileName
           objectKey : objectKey
           location  : @attachmentsLocation
 
+        # HTML FileList API prevents adding duplicate files
+        # However, it's possible we will delete the file,
+        # and then change our mind, so clear the FileList
+        # by setting the value to an empty string
+        e.currentTarget.value = ''
+
     deleteFile : (e) ->
-      # console.log e
+      e.preventDefault()
+      attachmentId = e.currentTarget.id
+
+      successCallback = =>
+        attachmentModel = @attachments.getByCid e.currentTarget.id
+        @attachments.remove attachmentModel
+        @addNoteButton.button 'reset'
+
+      errorCallback = ->
+        # console.log 'err'
+
+      params =
+        url         : e.currentTarget.href
+        type        : 'DELETE'
+        contentType : 'application/xml'
+        headers     :
+          'Authorization'     : "Basic #{@POLICY.get('digest')}"
+          'x-crippled-client' : 'yes'
+          'x-rest-method'     : 'DELETE'
+
+      jqXHR = $.ajax params
+      $.when(jqXHR).then successCallback, errorCallback
+      @addNoteButton.button 'loading'
 
     renderAttachments : ->
       data = { attachments : @attachments.toJSON() }
