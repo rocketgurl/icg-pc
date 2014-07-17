@@ -18,8 +18,12 @@ define [
       events  = policy.getEvents()
       notes   = policy.getNotes()
 
+      @POLICY.on 'all', -> console.log arguments
+
       @collection = new ActivityCollection(events.concat(notes), {
-        tasks : policy.getTasks()
+        policyUrl   : policy.url()
+        attachments : policy.getAttachments()
+        tasks       : policy.getTasks()
       })
 
       @addNotes = new AddNoteView
@@ -29,13 +33,14 @@ define [
         el                  : @$("#add-note-container-#{options.qvid}")
 
       @collection.on 'reset add', @render, this
-      @POLICY.on 'change:version', @handlePolicyRefresh, this
+      @POLICY.on 'change:refresh change:version', @handlePolicyRefresh, this
       @render()
 
     handlePolicyRefresh : ->
       events = @POLICY.getEvents()
       notes  = @POLICY.getNotes()
-      @collection.tasks = @POLICY.getTasks()
+      @collection.attachments = @POLICY.getAttachments()
+      @collection.tasks       = @POLICY.getTasks()
       @collection.reset events.concat(notes)
 
     filterCollection : (e) ->

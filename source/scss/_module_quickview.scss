@@ -179,6 +179,7 @@
     font-size: 13px;
 
     > a {
+      @include text-overflow();
       display: block;
       text-decoration: underline;
     }

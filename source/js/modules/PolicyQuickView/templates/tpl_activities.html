@@ -6,7 +6,12 @@
     </div>
     
     {{#activityDate}}
-    <div class="col-xs-6 activity-date"><strong>{{date}}</strong> at {{time}} EST</div>
+    <div class="col-xs-6 activity-date">
+      {{#activityHasAttachments}}
+      <span class="glyphicon glyphicon-paperclip"></span>
+      {{/activityHasAttachments}}
+      <strong>{{date}}</strong> at {{time}} EST
+    </div>
     {{/activityDate}}
   </div>
 
@@ -22,6 +27,19 @@
     {{#body}}
     <p>{{.}}</p>
     {{/body}}
+
+    {{#attachments.length}}
+    <ul class="note-attachments">
+      {{#attachments}}
+      <li class="attachment-label" title="{{name}}">
+        <a href="{{policyUrl}}/{{href}}" target="_blank">
+          <span class="glyphicon glyphicon-paperclip"></span>
+          {{name}}
+        </a>
+      </li>
+      {{/attachments}}
+    </ul>
+    {{/attachments.length}}
   </div>
   {{/hasBody}}
   {{/activityContent}}

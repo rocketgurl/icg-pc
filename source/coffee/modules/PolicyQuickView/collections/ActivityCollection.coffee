@@ -15,7 +15,9 @@ define [
     initialize : (models, options) ->
       _.bindAll this, 'filterByQuery'
 
-      @tasks = options.tasks
+      @policyUrl   = options.policyUrl
+      @attachments = options.attachments
+      @tasks       = options.tasks
       
       # Default sorting / filtering options
       @options = _.defaults(options, {

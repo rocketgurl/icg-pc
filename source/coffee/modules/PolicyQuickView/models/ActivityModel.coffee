@@ -1,7 +1,8 @@
 define [
   'backbone'
   'moment'
-], (Backbone, moment) ->
+  'Helpers'
+], (Backbone, moment, Helpers) ->
 
   # Standardize Notes & Events models somewhat
   # So that we can easily sort in a collection
@@ -18,18 +19,21 @@ define [
     initialize : ->
       
       # put sortable properties directly on the model for easy access
-      @dateTime = @getDateTime()
-      @unixTime = @dateTime.valueOf()
-      @type     = @getType()
+      @hasAttachments = @has 'AttachmentRef'
+      @dateTime       = @getDateTime()
+      @unixTime       = @dateTime.valueOf()
+      @type           = @getType()
 
       # properties used in the template
       @set
-        'cid'               : @cid
-        'activityType'      : @type
-        'activityIsNote'    : @type in @noteTypes
-        'activityInitiator' : @getInitiator()
-        'activityDate'      : @getPrettyDate()
-        'activityContent'   : @getContent()
+        'cid'                    : @cid
+        'policyUrl'              : @collection.policyUrl
+        'activityType'           : @type
+        'activityDate'           : @getPrettyDate()
+        'activityIsNote'         : @type in @noteTypes
+        'activityContent'        : @getContent()
+        'activityInitiator'      : @getInitiator()
+        'activityHasAttachments' : @hasAttachments
 
     # Determine the type of activity
     getType : ->
@@ -73,19 +77,27 @@ define [
     getNoteContent : ->
       rawContent   = @get 'Content'
       splitContent = rawContent.split /\n+/
-      hasBody      = splitContent.length > 1
+      attachments  = @getReferencedAttachments()
+      hasBody      = splitContent.length > 1 || @hasAttachments
+
+      if splitContent.length is 1 && rawContent.length > 40
+        splitContent.push rawContent
+        hasBody = true
+
       data =
         raw     : rawContent
         title   : splitContent.shift()
-        body    : if hasBody then splitContent else ''
+        body    : if hasBody then splitContent
         hasBody : hasBody
+        attachments : attachments
 
     getMessageContent : ->
       rawContent   = @get 'Content'
       splitContent = rawContent.split /\n+/
+      attachments  = @getReferencedAttachments()
       task         = @getReferencedTask()
       title        = "#{task.Type} #{task.Subtype}"
-      hasBody      = splitContent.length > 0
+      hasBody      = splitContent.length > 0 || @hasAttachments
 
       # Prepend RE: to title if the task has already been referenced
       # Otherwise, save the taskRef id
@@ -95,10 +107,11 @@ define [
         @tasksReferenced[task.id] = true
 
       data =
-        raw     : "#{title}\n#{rawContent}"
-        title   : title
-        body    : if hasBody then splitContent else ''
-        hasBody : hasBody
+        raw         : "#{title}\n#{rawContent}"
+        title       : title
+        body        : if hasBody then splitContent else ''
+        hasBody     : hasBody
+        attachments : attachments
 
     getEventContent : ->
       contentObj     = @getDataItems 'reasonCodeLabel', 'EffectiveDate'
@@ -139,4 +152,19 @@ define [
       _.find(@collection.tasks, (task) ->
         task.id is taskId
         )
+
+    # Return an array of attachments that match the AttachmentRefs
+    getReferencedAttachments : ->
+      if @hasAttachments
+        attachmentRefs = Helpers.sanitizeNodeArray @get('AttachmentRef')
+        allAttachments = @collection.attachments
+
+        _.map(attachmentRefs, (ref) ->
+          refId = ref.idref
+          _.find(allAttachments, (attachment) ->
+            attachment.id is refId
+            )
+          )
+      else
+        []
 
