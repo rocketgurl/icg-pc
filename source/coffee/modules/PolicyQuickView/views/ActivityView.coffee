@@ -18,8 +18,6 @@ define [
       events  = policy.getEvents()
       notes   = policy.getNotes()
 
-      @POLICY.on 'all', -> console.log arguments
-
       @collection = new ActivityCollection(events.concat(notes), {
         policyUrl   : policy.url()
         attachments : policy.getAttachments()
