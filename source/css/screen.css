@@ -1695,6 +1695,10 @@ Module: Policy
 .qv-container .panel-subhead .add-note-toggle.collapsed .cancel-text { display: none; }
 .qv-container .panel-subhead .note-text { margin: 5px 0; }
 .qv-container .panel-subhead .file-attach-link { line-height: 30px; }
+.qv-container .has-toggle-state .toggle-state-default { display: inherit; }
+.qv-container .has-toggle-state .toggle-state-toggled { display: none; }
+.qv-container .has-toggle-state.toggle .toggle-state-default { display: none; }
+.qv-container .has-toggle-state.toggle .toggle-state-toggled { display: inherit; }
 .qv-container .tab-content { padding: 15px 0; background-color: #fff; }
 .qv-container .policy-status { font-size: 18px; font-size: 1.8rem; font-weight: bold; text-align: center; }
 .qv-container .section-holder, .qv-container .agent-support { margin-bottom: 20px; }
@@ -1725,6 +1729,8 @@ Module: Policy
 .qv-container .documents-wrapper .group-toggle .glyphicon { margin-right: 3px; }
 .qv-container .documents-wrapper .group-toggle .glyphicon:before { content: "\e118"; }
 .qv-container .documents-wrapper .group-toggle.collapsed .glyphicon:before { content: "\e117"; }
+.qv-container .file-upload-link, .qv-container .file-upload-disabled { display: block; width: 100px; line-height: 30px; }
+.qv-container .file-upload-disabled { color: #999; }
 .qv-container .document-updated { color: #333; }
 
 .ru-container, .zd-container { padding: 0 1.8%; }

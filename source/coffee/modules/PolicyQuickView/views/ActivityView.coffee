@@ -25,7 +25,7 @@ define [
       })
 
       @addNotes = new AddNoteView
-        activityCollection  : @collection
+        qvid                : options.qvid
         attachmentsLocation : options.attachmentsLocation
         policy              : policy
         el                  : @$("#add-note-container-#{options.qvid}")

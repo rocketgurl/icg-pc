@@ -17,12 +17,18 @@ define [
       'submit .add-note-form'     : 'addNote'
 
     initialize : (options) ->
-      @activityCollection = options.activityCollection
       @attachmentsLocation = options.attachmentsLocation
       @POLICY = policy = options.policy
+      @qvid = options.qvid
 
       # Keep callback functions' context bound to this view
-      _.bindAll this, 'addNoteSuccess', 'addNoteError', 'handleIframeLoadEvent'
+      _.bindAll(this
+        'addNoteError'
+        'addNoteSuccess'
+        'deleteFileError'
+        'deleteFileSuccess'
+        'handleIframeLoadEvent'
+        )
 
       @attachments.on 'add remove reset', @renderAttachments, this
 
@@ -30,39 +36,50 @@ define [
       @cacheElements()
 
       # listen for iFrame load event and handle it
-      @submitIframe.load @handleIframeLoadEvent
+      @attachIframe.load @handleIframeLoadEvent
 
     cacheElements : ->
-      @attachmentsContainer = @$('.attachments-container') 
+      @attachmentsContainer = @$('.attachments-container')
+      @fileAttachInput      = @$('.file-attach-input')
       @fileAttachForm       = @$('.file-attach-form')
+      @fileAttachLink       = @$('.file-attach-link')
       @addNoteButton        = @$('.add-note-button')
-      @submitIframe         = @$('.submit-iframe')
-      @noteTextarea         = @$('.note-text')
+      @attachIframe         = @$("iframe[name=attach-iframe-#{@qvid}]")
+      @noteText             = @$('.note-text')
 
     addNote : (e) ->
-      noteValue = @noteTextarea.val() || ''
+      noteValue = @noteText.val() || ''
       if noteValue
         @addNoteButton.button 'loading'
         @noteData = @POLICY.postNote noteValue, @attachments.toJSON(), @addNoteSuccess, @addNoteError
       return false
 
-    addNoteSuccess : (data, textStatus, jqXHR) ->
+    addNoteSuccess : ->
       @POLICY.refresh()
       @attachments.reset()
       @addNoteButton.button 'reset'
-      @noteTextarea.val ''
+      @noteText.val ''
 
     # TODO: something here
     addNoteError : (jqXHR, textStatus, errorThrown) ->
       # console.log errorThrown
       # console.log @noteData
 
+    deleteFileSuccess : (modelId) ->
+      =>
+        attachmentModel = @attachments.getByCid modelId
+        @attachments.remove attachmentModel
+        @addNoteButton.button 'reset'
+
+    deleteFileError : (jqXHR, textStatus, errorThrown) ->
+      # console.log 'err'
+
     handleIframeLoadEvent : (e) ->
       @addNoteButton.button 'reset'
 
     triggerFileDialog : (e) ->
+      @fileAttachInput.trigger 'click'
       e.preventDefault()
-      @$('.file-attach-input').trigger 'click'
 
     # Files posted to ixlibrary
     # In order to post a file in a cross-browser friendly way,
@@ -96,14 +113,6 @@ define [
       e.preventDefault()
       attachmentId = e.currentTarget.id
 
-      successCallback = =>
-        attachmentModel = @attachments.getByCid e.currentTarget.id
-        @attachments.remove attachmentModel
-        @addNoteButton.button 'reset'
-
-      errorCallback = ->
-        # console.log 'err'
-
       params =
         url         : e.currentTarget.href
         type        : 'DELETE'
@@ -114,10 +123,11 @@ define [
           'x-rest-method'     : 'DELETE'
 
       jqXHR = $.ajax params
-      $.when(jqXHR).then successCallback, errorCallback
+      $.when(jqXHR).then @deleteFileSuccess(e.currentTarget.id), @deleteFileError
       @addNoteButton.button 'loading'
 
     renderAttachments : ->
       data = { attachments : @attachments.toJSON() }
       @attachmentsContainer.html @Mustache.render tpl_attachments, data
+      @fileAttachLink[if data.attachments.length then 'addClass' else 'removeClass']('toggle')
       this

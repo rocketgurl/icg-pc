@@ -80,14 +80,16 @@ define [
       attachments  = @getReferencedAttachments()
       hasBody      = splitContent.length > 1 || @hasAttachments
 
+      # If content is 1 very long line, the title will be truncated
+      # And the full content will be in the body
       if splitContent.length is 1 && rawContent.length > 40
         splitContent.push rawContent
         hasBody = true
 
       data =
         raw     : rawContent
-        title   : splitContent.shift()
         body    : if hasBody then splitContent
+        title   : splitContent.shift()
         hasBody : hasBody
         attachments : attachments
 
@@ -108,8 +110,8 @@ define [
 
       data =
         raw         : "#{title}\n#{rawContent}"
-        title       : title
         body        : if hasBody then splitContent else ''
+        title       : title
         hasBody     : hasBody
         attachments : attachments
 
@@ -121,13 +123,13 @@ define [
       if contentIsEmpty
         rawContent = title
       else
-        splitContent = _.map(contentObj, (val, key) =>
+        splitContent = _.map contentObj, (val, key) =>
           if key is 'EffectiveDate'
             date = moment(val).format @dateFormat
             "Effective on: #{date}"
           else
             val
-          )
+
         rawContent = "#{title}\n#{splitContent.join('\n')}"
 
       data =
@@ -160,9 +162,8 @@ define [
         allAttachments = @collection.attachments
 
         _.map(attachmentRefs, (ref) ->
-          refId = ref.idref
           _.find(allAttachments, (attachment) ->
-            attachment.id is refId
+            attachment.id is ref.idref
             )
           )
       else
