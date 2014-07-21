@@ -90,6 +90,15 @@
     }
   }
 
+  .has-toggle-state {
+    .toggle-state-default { display: inherit; }
+    .toggle-state-toggled { display: none; }
+    &.toggle {
+      .toggle-state-default { display: none; }
+      .toggle-state-toggled { display: inherit; }
+    }
+  }
+
   .tab-content {
     padding: 15px 0;
     background-color: #fff;
@@ -223,6 +232,17 @@
         .glyphicon:before { content: "\e117"; }
       }
     }
+  }
+
+  .file-upload-link,
+  .file-upload-disabled {
+    display: block;
+    width: 100px;
+    line-height: 30px;
+  }
+
+  .file-upload-disabled {
+    color: #999;
   }
 
   .document-updated {

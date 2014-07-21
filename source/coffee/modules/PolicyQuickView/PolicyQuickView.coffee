@@ -39,8 +39,9 @@ define [
         el                  : @$("#activity-#{@cid}")
 
       documents = new DocumentsView
-        qvid   : @cid
-        policy : @POLICY
-        el     : @$("#documents-#{@cid}")
+        qvid                : @cid
+        policy              : @POLICY
+        attachmentsLocation : attachmentsLocation
+        el                  : @$("#documents-#{@cid}")
 
       return this

@@ -17,7 +17,12 @@
           <% } %>
           <%= doc.label %>
         </div>
-        <div class="col-xs-6 document-updated"><strong><%= doc.docUpdated.date %></strong> at <%= doc.docUpdated.time %> EST</div>
+        <div class="col-xs-6 document-updated">
+          <div><strong><%= doc.docUpdated.date %></strong> at <%= doc.docUpdated.time %> EST</div>
+          <% if (doc.AttachedBy) { %>
+          <div>Added by <%= doc.AttachedBy %></div>
+          <% } %>
+        </div>
       </a>
     </li>
     <% }) %>
