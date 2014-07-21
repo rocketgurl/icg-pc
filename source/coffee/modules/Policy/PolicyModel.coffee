@@ -537,7 +537,7 @@ define [
     # @param `callbackError` _Function_ Handle error state
     # return an object with content equivalent to the policyXML
     #
-    postNote : (note, attachments=[], callbackSuccess, callbackError) ->
+    postNote : (note='', attachments=[], callbackSuccess, callbackError) ->
       noteData =
         CreatedTimeStamp : new Date() + ''
         CreatedBy        : @get('module').view.controller.user.get('username')
@@ -545,10 +545,12 @@ define [
         Attachments      : attachments
 
       xml = """
-        <PolicyChangeSet schemaVersion="2.1" username="{{CreatedBy}}" description="Added via HTML QuickView">
+        <PolicyChangeSet schemaVersion="2.1" username="{{CreatedBy}}" description="Added via Policy Central">
+          {{#Content}}
           <Note>
             <Content><![CDATA[{{Content}}]]></Content>
           </Note>
+          {{/Content}}
           {{#Attachments.length}}
           <Attachments>
             {{#Attachments}}
