@@ -177,7 +177,7 @@ define [
 
     # Assemble all the policy data for HTML QuickView servicing tab into one place
     getServicingData : ->
-      lastTerm            = @getLastTerm()
+      propertyData        = if @isQuote() then @get('quoteTerm').ProtoInterval else @getLastTerm()
       insuredData         = @get 'insuredData'
       mortgageeData       = @get 'mortgageeData'
       accountingData      = @getAccountingData()
@@ -200,7 +200,7 @@ define [
             'pxClient' : 'Agent Portal'
             'pxServer' : 'Agent Portal'
           }, 'Unknown')
-        PropertyAddress   : @getAddressDataItems(lastTerm.DataItem, [
+        PropertyAddress   : @getAddressDataItems(propertyData.DataItem, [
             'PropertyStreetNumber'
             'PropertyStreetName'
             'PropertyCity'
@@ -471,6 +471,14 @@ define [
     getFirstTerm : ->
       if terms = @getTerms()
         _.first terms
+      else
+        {}
+
+    # **Return ProtoTerm of a policy Quote if it exists**
+    # @return _Obj_
+    getQuoteTerm : ->
+      if @isQuote() && protoTerm = @get('json')?.Quoting?.CurrentQuote?.ProtoTerm
+        protoTerm
       else
         {}
 
@@ -892,6 +900,7 @@ define [
           'cancelled': @isCancelled(),
           'terms': @getTerms(),
           'firstTerm': @getFirstTerm(),
+          'quoteTerm': @getQuoteTerm(),
           'lastInterval': @getLastInterval(),
           'insuredData': @getCustomerData('Insured'),
           'mortgageeData': @getCustomerData('Mortgagee'),
