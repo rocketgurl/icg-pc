@@ -21,7 +21,10 @@ define [
       @options = options
       @policyUrl = options.policyUrl
 
+    # Groups the models by the docIndex property
+    # Converts to an array to maintain order
     getGrouped : ->
-      _.groupBy @toJSON(), (model) ->
-        return model.docGroup
+      grouped = _.groupBy @toJSON(), (model) ->
+        return model.docIndex
+      _.toArray grouped
 

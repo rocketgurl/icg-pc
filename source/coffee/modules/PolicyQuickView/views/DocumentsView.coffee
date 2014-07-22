@@ -87,10 +87,16 @@ define [
           location  : @attachmentsLocation
         ]
 
+    # This template got WAAY too unwieldy trying to work
+    # around Mustache's bizarre constraints. Using Underscore's
+    # `_.template` for a **far** simpler, more robust solution.
+    # F*** "Logicless" templating in the A**!!
     render : ->
       data =
         cid         : @cid
+        qvid        : @qvid
         docGroups   : @collection.getGrouped()
-      template = _.template tpl_documents
-      @documentsWrapper.html template(data)
-      return this
+
+      docsTemplate = _.template tpl_documents
+      @documentsWrapper.html docsTemplate(data)
+      this

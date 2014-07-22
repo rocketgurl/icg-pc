@@ -14,19 +14,39 @@ define [
     # for collection grouping purposes
     # _keys_ are converted to a case insensitve RegExp
     # _values_ are the docGroup into which the model will be bucketed
+
+    # 0. Enrollment - Quote, App, Proof of Insurance, Enrollment Letter, ACH Authorization, Payment Confirmation
+    # 1. Policy Packages - Declarations, Renewals and New Business
+    # 2. Invoicing - Invoices
+    # 3. Endorsements - Endorsements
+    # 4. Payments - Payments
+    # 5. Cancellations - Pending Cancels, Cancels, Restatements, Rescission, and Nonrenewals
+    # 6. Attachments - anything attached by a user
+    # 7. General - Catchall bucket for any uncaught case
     groups :
-      'application$'          : 'Issuance'
-      'quotesheet$'           : 'Issuance'
-      'proof$'                : 'Issuance'
-      'declarations$'         : 'Issuance'
-      '_letter'               : 'Issuance'
-      'newbusinesspackage'    : 'Issuance'
-      'payment'               : 'Payments'
-      'declarationofcoverage' : 'Coverage'
-      'invoice'               : 'Invoicing'
-      'endorse'               : 'Endorsement'
-      'renewal'               : 'Renewal'
-      'nonrenewal'            : 'NonRenewal'
+      'application$' : 'Enrollment'
+      'quotesheet$'  : 'Enrollment'
+      'proof$'       : 'Enrollment'
+      '_letter$'     : 'Enrollment'
+      'newbusiness'  : 'Policy_Packages'
+      'renewal'      : 'Policy_Packages'
+      'declaration'  : 'Policy_Packages'
+      'declination'  : 'Policy_Packages'
+      'invoice'      : 'Invoicing'
+      'endorse'      : 'Endorsements'
+      'payment'      : 'Payments'
+      'nonrenew'     : 'Cancellations'
+      'cancel'       : 'Cancellations'
+
+    indices :
+      'Enrollment'      : 0
+      'Policy_Packages' : 1
+      'Invoicing'       : 2
+      'Endorsements'    : 3
+      'Payments'        : 4
+      'Cancellations'   : 5
+      'Attachments'     : 6
+      'General'         : 7
 
     initialize : ->
       @isAttachment = @has 'AttachedBy'
@@ -40,6 +60,7 @@ define [
 
       # Set the 'docGroup' property
       @determineDocGroup()
+      @determineDocIndex()
 
       # Normalize attachments to have a label property
       @normaizeAttachmentLabel() if @isAttachment
@@ -50,17 +71,11 @@ define [
     # Rules to determine how to group the documents
     # Sets a 'docGroup' property on the model. The collections sorts and groups.
     # 1. Attachments all go into the Attachments group
-    # 2. Declinations all go into the Declinations group
-    # 3. Documents timestamped before the Policy Inception all go into the Issuance group
-    # 4. All other documents use the @groups mapping
+    # 2. All other documents use the @groups mapping
     determineDocGroup : ->
       subtype = @get 'subtype'
       if @isAttachment
         @set 'docGroup', 'Attachments'
-      else if /declination/.test subtype
-        @set 'docGroup', 'Declination'
-      else if @isPriorToPolicyInception()
-        @set 'docGroup', 'Issuance'
       else
         _.some @groups, (group, key) =>
           re = new RegExp key, 'i'
@@ -68,6 +83,14 @@ define [
             @set 'docGroup', group
             return true
         @set('docGroup', 'General') unless @has 'docGroup'
+      this
+
+    # Set an index on the model, so that the group collection is orderable
+    determineDocIndex : ->
+      group = @get 'docGroup'
+      index = if group then @indices[group] else 7
+      @set 'docIndex', index
+      this
 
     # Get an instance of moment for future use
     getDateTime : ->
