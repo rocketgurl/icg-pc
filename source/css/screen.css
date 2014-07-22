@@ -1723,6 +1723,7 @@ Module: Policy
 .qv-container .attachment-list > li { line-height: 1; }
 .qv-container .attachment-list .glyphicon-remove { margin-right: 3px; }
 .qv-container .attachment-list .glyphicon-time { margin-left: 3px; }
+.qv-container .note-attachments { margin-top: 8px; }
 .qv-container .attachment-filename { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; display: inline-block; max-width: 60%; }
 .qv-container .documents-wrapper { padding: 5px; }
 .qv-container .documents-wrapper .group-toggle { display: block; padding: 8px 0; text-transform: capitalize; }

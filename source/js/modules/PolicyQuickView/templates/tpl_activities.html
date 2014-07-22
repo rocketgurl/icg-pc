@@ -27,21 +27,21 @@
     {{#body}}
     <p>{{.}}</p>
     {{/body}}
-
-    {{#attachments.length}}
-    <ul class="note-attachments">
-      {{#attachments}}
-      <li class="attachment-label" title="{{name}}">
-        <a href="{{policyUrl}}/{{href}}" target="_blank">
-          <span class="glyphicon glyphicon-paperclip"></span>
-          {{name}}
-        </a>
-      </li>
-      {{/attachments}}
-    </ul>
-    {{/attachments.length}}
   </div>
   {{/hasBody}}
+
+  {{#attachments.length}}
+  <ul class="note-attachments">
+    {{#attachments}}
+    <li class="attachment-label" title="{{name}}">
+      <a href="{{policyUrl}}/{{href}}" target="_blank">
+        <span class="glyphicon glyphicon-paperclip"></span>
+        {{name}}
+      </a>
+    </li>
+    {{/attachments}}
+  </ul>
+  {{/attachments.length}}
   {{/activityContent}}
 
 </li>

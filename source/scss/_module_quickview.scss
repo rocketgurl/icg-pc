@@ -208,6 +208,10 @@
     .glyphicon-time { margin-left: 3px; }
   }
 
+  .note-attachments {
+    margin-top: 8px;
+  }
+
   .attachment-filename {
     @include text-overflow();
     display: inline-block;

@@ -78,7 +78,7 @@ define [
       rawContent   = @get 'Content'
       splitContent = rawContent.split /\n+/
       attachments  = @getReferencedAttachments()
-      hasBody      = splitContent.length > 1 || @hasAttachments
+      hasBody      = splitContent.length > 1
 
       # If content is 1 very long line, the title will be truncated
       # And the full content will be in the body
@@ -99,7 +99,7 @@ define [
       attachments  = @getReferencedAttachments()
       task         = @getReferencedTask()
       title        = "#{task.Type} #{task.Subtype}"
-      hasBody      = splitContent.length > 0 || @hasAttachments
+      hasBody      = splitContent.length > 0
 
       # Prepend RE: to title if the task has already been referenced
       # Otherwise, save the taskRef id
