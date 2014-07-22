@@ -759,7 +759,6 @@ define [
     # Open a new window that then calls the url
     launchWindow : (url) ->
       if url?
-        console.log url
         new_window = window.open('download.html', '_blank')
         new_window.setUrl = url
 

@@ -540,10 +540,10 @@ define [
     # **Notes field handling, post a notes ChangeSet**
     #
     # @param `note` _String_ Policy notes
-    # @param `attachments` _Array_ list of urls pointing to policy attachments
+    # @param `attachments` _Array_ list of attachment objects
     # @param `callbackSuccess` _Function_ Handle successful POST
     # @param `callbackError` _Function_ Handle error state
-    # return an object with content equivalent to the policyXML
+    # return an object with content roughly equivalent to the policyXML
     #
     postNote : (note='', attachments=[], callbackSuccess, callbackError) ->
       noteData =

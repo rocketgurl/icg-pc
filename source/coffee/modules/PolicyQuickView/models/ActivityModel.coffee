@@ -12,7 +12,7 @@ define [
 
     dateFormat : 'MMM DD, YYYY'
 
-    timeFormat : 'h:mm A'
+    timeFormat : 'hh:mm A'
 
     noteTypes : ['Note', 'Message']
 
