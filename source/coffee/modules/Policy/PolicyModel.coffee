@@ -182,7 +182,7 @@ define [
       mortgageeData       = @get 'mortgageeData'
       accountingData      = @getAccountingData()
       accountingDataItems = accountingData.DataItem
-      invoiceDueDate      = @getDataItem(accountingDataItems, 'InvoiceDueDateNext') || ''
+      invoiceDueDate      = @getDataItem(accountingDataItems, 'InvoiceDueDateCurrent') || ''
       equityDate          = @getDataItem(accountingDataItems, 'EquityDate') || ''
       pastDueBalance      = Helpers.formatMoney(@getDataItem(accountingDataItems, 'PastDueBalance'))
       paymentDateLast     = @_stripTimeFromDate(@getDataItem(accountingDataItems, 'PaymentDateLast') || '')
