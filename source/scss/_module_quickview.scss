@@ -147,6 +147,13 @@
     height: 255px;
     overflow: auto;
     margin-bottom: 0;
+
+    .panel {
+      margin: 0;
+      border: initial;
+      background: initial;
+      box-shadow: initial;
+    }
   }
 
   .activity,

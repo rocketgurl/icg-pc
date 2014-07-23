@@ -1709,6 +1709,7 @@ Module: Policy
 .qv-container .panel-heading em, .qv-container .panel-heading strong { display: inline-block; }
 .qv-container .agent-support { margin-top: 20px; text-align: center; }
 .qv-container .activity-wrapper, .qv-container .documents-wrapper { height: 255px; overflow: auto; margin-bottom: 0; }
+.qv-container .activity-wrapper .panel, .qv-container .documents-wrapper .panel { margin: 0; border: initial; background: initial; box-shadow: initial; }
 .qv-container .activity, .qv-container .document { padding: 8px; font-size: 11px; }
 .qv-container .activity { border-bottom: 1px solid #ddd; }
 .qv-container .activity:last-child { border: 0; }

@@ -1,7 +1,7 @@
 
 <% _.each(docGroups, function (group, key) { %>
-<li id="<%= key %>-group-<%= cid %>">
-  <a data-toggle="collapse" data-parent="#<%= key %>-group-<%= cid %>" class="group-toggle collapsed" href="#<%= key %>-docs-<%= cid %>">
+<li id="<%= key %>-group-<%= cid %>" class="panel">
+  <a data-toggle="collapse" data-parent="#docs-wrapper-<%= qvid %>" class="group-toggle collapsed" href="#<%= key %>-docs-<%= cid %>">
     <span class="glyphicon"></span>
     <strong><%= group[0].docGroup.replace('_', ' ') %></strong> (<%= group.length %>)
   </a>
