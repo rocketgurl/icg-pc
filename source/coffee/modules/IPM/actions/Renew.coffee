@@ -89,7 +89,10 @@ define [
       # Product specific form adjustments
       @addOFCCHO3AKBehaviors() if @apparatchik.isProduct('ofcc-ho3-ak')
 
-      if @apparatchik.isProduct('wic-ho3-nj') || @apparatchik.isProduct('ofcc-ho3-nj')
+      if @apparatchik.isProduct('wic-hwo-al') ||
+         @apparatchik.isProduct('wic-ho3-al') ||
+         @apparatchik.isProduct('wic-ho3-nj') ||
+         @apparatchik.isProduct('ofcc-ho3-nj')
         @addWICALBEhaviors()
 
     # **Process Preview**
