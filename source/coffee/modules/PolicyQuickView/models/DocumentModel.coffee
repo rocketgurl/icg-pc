@@ -19,34 +19,33 @@ define [
     # 1. Policy Packages - Declarations, Renewals and New Business
     # 2. Invoicing - Invoices
     # 3. Endorsements - Endorsements
-    # 4. Payments - Payments
-    # 5. Cancellations - Pending Cancels, Cancels, Restatements, Rescission, and Nonrenewals
-    # 6. Attachments - anything attached by a user
-    # 7. General - Catchall bucket for any uncaught case
+    # 4. Cancellations - Pending Cancels, Cancels, Restatements, Rescission, and Nonrenewals
+    # 5. Attachments - anything attached by a user
+    # 6. General - Catchall bucket for any uncaught case
     groups :
-      'application$' : 'Enrollment'
-      'quotesheet$'  : 'Enrollment'
-      'proof$'       : 'Enrollment'
-      '_letter$'     : 'Enrollment'
-      'newbusiness'  : 'Policy_Packages'
-      'renewal'      : 'Policy_Packages'
-      'declaration'  : 'Policy_Packages'
-      'declination'  : 'Policy_Packages'
-      'invoice'      : 'Invoicing'
-      'endorse'      : 'Endorsements'
-      'payment'      : 'Payments'
-      'nonrenew'     : 'Cancellations'
-      'cancel'       : 'Cancellations'
+      'authorization$' : 'Enrollment'
+      'application$'   : 'Enrollment'
+      'quotesheet$'    : 'Enrollment'
+      'proof$'         : 'Enrollment'
+      '_letter$'       : 'Enrollment'
+      '_payment$'      : 'Enrollment'
+      'newbusiness'    : 'Policy_Packages'
+      'renewal'        : 'Policy_Packages'
+      'declaration'    : 'Policy_Packages'
+      'declination'    : 'Policy_Packages'
+      'invoice'        : 'Invoicing'
+      'endorse'        : 'Endorsements'
+      'nonrenew'       : 'Cancellations'
+      'cancel'         : 'Cancellations'
 
     indices :
       'Enrollment'      : 0
       'Policy_Packages' : 1
       'Invoicing'       : 2
       'Endorsements'    : 3
-      'Payments'        : 4
-      'Cancellations'   : 5
-      'Attachments'     : 6
-      'General'         : 7
+      'Cancellations'   : 4
+      'Attachments'     : 5
+      'General'         : 6
 
     initialize : ->
       @isAttachment = @has 'AttachedBy'
