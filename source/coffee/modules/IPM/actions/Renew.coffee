@@ -89,6 +89,9 @@ define [
       # Product specific form adjustments
       @addOFCCHO3AKBehaviors() if @apparatchik.isProduct('ofcc-ho3-ak')
 
+      if @apparatchik.isProduct('wic-ho3-nj') || @apparatchik.isProduct('ofcc-ho3-nj')
+        @addWICALBEhaviors()
+
     # **Process Preview**
     #
     # Same as processView() but we add an interval obj to viewData to tell the
@@ -279,6 +282,34 @@ define [
           for key, val of @coverage_calculations
             calc_val = value_a * parseFloat val
             @$el.find("input[name=#{key}]").val calc_val
+
+    ###
+    # Apparatchik!
+    # ============
+    # These are the "business logic" rules (think COBOL) which govern
+    # how fields behave based on certain conditions. Go look at the
+    # comments in /source/js/lib/Apparatchik.js to get a feel for how
+    # they work - it's real easy man.
+    #
+    # NOTE: These will start to get lengthy, you may want to move
+    # them into external files and pull in via RequireJS.
+    ###
+
+    addWICALBEhaviors : ->
+      rules = [
+        field: "WindstormDeductibleOption"
+        sideEffects: [
+          target: "HurricaneDeductible"
+          condition: "== 100"
+          effect: [@apparatchik.showElement, @apparatchik.makeRequired]
+        ,
+          target: "WindHailDeductible"
+          condition: "== 200"
+          effect: [@apparatchik.showElement, @apparatchik.makeRequired]
+        ]
+      ]
+
+      @apparatchik.applyEnumDynamics rules
 
     addOFCCHO3AKBehaviors : ->
       # ICS-2557 Set InsuranceScore to ReadOnly when PolicyTerm < 2
