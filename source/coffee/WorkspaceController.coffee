@@ -732,15 +732,19 @@ define [
     # then activate the last one in the stack.
     reassess_apps : ->
       # No stack, no need
-      if @workspace_stack.stack.length == 0
-        return false
+      return false if @workspace_stack.stack.length is 0
 
       active = _.filter @workspace_stack.stack, (view) ->
         return view.is_active()
 
-      if active.length == 0
-        last_view = _.last @workspace_stack.stack
-        @toggle_apps last_view.app.app
+      if active.length is 0
+        if @workspace_stack.stack.length > 2
+          last_view = _.last @workspace_stack.stack
+          @toggle_apps last_view.app.app
+        else
+          # Activate search tab by default
+          search_view = @workspace_stack.stack[0]
+          @toggle_apps search_view.app.app
 
     # Tell every app in the stack to commit seppuku
     teardown_workspace : ->
