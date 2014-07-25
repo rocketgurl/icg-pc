@@ -54,7 +54,8 @@ define [
       e.preventDefault()
 
     addDocument : (e) ->
-      @POLICY.postNote '', @uploads, @addDocumentSuccess, @addDocumentError
+      if @uploads.length
+        @POLICY.postNote '', @uploads, @addDocumentSuccess, @addDocumentError
 
     addDocumentSuccess : ->
       @POLICY.refresh()

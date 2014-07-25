@@ -552,42 +552,43 @@ define [
         Content          : $.trim note
         Attachments      : attachments
 
-      xml = """
-        <PolicyChangeSet schemaVersion="2.1" username="{{CreatedBy}}" description="Added via Policy Central">
-          {{#Content}}
-          <Note>
-            <Content><![CDATA[{{Content}}]]></Content>
-          </Note>
-          {{/Content}}
-          {{#Attachments.length}}
-          <Attachments>
-            {{#Attachments}}
-            <Attachment name="{{fileName}}" contentType="{{fileType}}">
-              <Description/>
-              <Location>{{location}}{{objectKey}}</Location>
-            </Attachment>
-            {{/Attachments}}
-          </Attachments>
-          {{/Attachments.length}}
-        </PolicyChangeSet>
-      """
+      if noteData.Content.length or noteData.Attachments.length
+        xml = """
+          <PolicyChangeSet schemaVersion="2.1" username="{{CreatedBy}}" description="Added via Policy Central">
+            {{#Content}}
+            <Note>
+              <Content><![CDATA[{{Content}}]]></Content>
+            </Note>
+            {{/Content}}
+            {{#Attachments.length}}
+            <Attachments>
+              {{#Attachments}}
+              <Attachment name="{{fileName}}" contentType="{{fileType}}">
+                <Description/>
+                <Location>{{location}}{{objectKey}}</Location>
+              </Attachment>
+              {{/Attachments}}
+            </Attachments>
+            {{/Attachments.length}}
+          </PolicyChangeSet>
+        """
 
-      # Assemble the AJAX params
-      params =
-        url         :  @url()
-        type        : 'POST'
-        dataType    : 'xml'
-        contentType : 'application/xml; schema=policychangeset.2.1'
-        context     : this
-        data        : Mustache.render xml, noteData
-        headers     :
-          'Authorization' : "Basic #{@get('digest')}"
-          'Accept'        : 'application/vnd.ics360.insurancepolicy.2.8+xml'
-          'X-Commit'      : true
+        # Assemble the AJAX params
+        params =
+          url         :  @url()
+          type        : 'POST'
+          dataType    : 'xml'
+          contentType : 'application/xml; schema=policychangeset.2.1'
+          context     : this
+          data        : Mustache.render xml, noteData
+          headers     :
+            'Authorization' : "Basic #{@get('digest')}"
+            'Accept'        : 'application/vnd.ics360.insurancepolicy.2.8+xml'
+            'X-Commit'      : true
 
-      jqXHR = $.ajax params
-      if _.isFunction(callbackSuccess) && _.isFunction(callbackError)
-        $.when(jqXHR).then callbackSuccess, callbackError
+        jqXHR = $.ajax params
+        if _.isFunction(callbackSuccess) && _.isFunction(callbackError)
+          $.when(jqXHR).then callbackSuccess, callbackError
 
       noteData
 
