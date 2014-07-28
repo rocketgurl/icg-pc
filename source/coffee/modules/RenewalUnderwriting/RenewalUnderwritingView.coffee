@@ -400,6 +400,10 @@ define [
       @Amplify.publish(@PolicyView.cid, 'warning', "Could not save!", 2000)
 
     processRenewalResponse : (resp) ->
+      unless resp.insuranceScore?
+        @renewalError {statusText : 'Dataset empty', status : 'pxCentral'}
+        return false
+
       resp.cid = @cid # so we can phone home to the correct view
 
       if resp.insuranceScore.disposition == ''
