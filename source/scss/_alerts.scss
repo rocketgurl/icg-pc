@@ -1,0 +1,21 @@
+// Alert overrides
+
+.alert-default {
+  @include gradient-bar($alert-default-dark, $alert-default, darken($alert-default-dark, 35%), 0 -1px 0 rgba(255, 255, 255, 0.85));
+}
+
+.alert-info {
+  @include gradient-bar($alert-info-dark, $alert-info, #fff, 0 -1px 0 rgba(0, 0, 0, 0.75));
+}
+
+.alert-success {
+  @include gradient-bar($alert-success-dark, $alert-success, #fff, 0 -1px 0 rgba(0, 0, 0, 0.75));
+}
+
+.alert-warning {
+  @include gradient-bar($alert-warning-dark, $alert-warning, #fff);
+}
+
+.alert-danger {
+  @include gradient-bar($alert-danger-dark, $alert-danger, #fff, 0 -1px 0 rgba(0, 0, 0, 0.75));
+}

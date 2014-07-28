@@ -1,154 +1,139 @@
 header.module-referrals {
-	margin: 0 0 20px 0;
-	h1 {
-		font-weight: bold;
-		color: $darkblue;
-		@include font-size(24);
-		@include emboss;
-		display: inline-block;
-		margin: 0 20px 0 0;
-	}
-	
-	.button-manage-assignees {
-		float: right;
-		@include simple-color(hue($lightgray), saturation($lightgray), lightness($lightgray));
-		position: relative;
-		top: -6px;
-	}
-	.button-manage-assignees[disabled=disabled] {
-		@include simple-color(hue(#eee), saturation(#eee), lightness(#eee));
-		color: #ccc;
-	}
+  margin: 0 0 20px 0;
+  h1 {
+    font-weight: bold;
+    color: $darkblue;
+    @include font-size(24);
+    @include emboss;
+    display: inline-block;
+    margin: 0 20px 0 0;
+  }
+  .button-manage-assignees {
+    float: right;
+    @include simple-color(hue($lightgray), saturation($lightgray), lightness($lightgray));
+    position: relative;
+    top: -6px;
+  }
+  .button-manage-assignees[disabled=disabled] {
+    @include simple-color(hue(#eeeeee), saturation(#eeeeee), lightness(#eeeeee));
+    color: #ccc;
+  }
 }
 
 .referrals-switch {
-	display: inline-block;
-	position: relative;
-	top: -2px;
-
-	li {
-		display: inline-block;
-		padding: 6px 14px 6px 14px;
-		border: $darkgray 1px solid;
-		margin: 0;
-		@include font-size(14);
-		@include background-image(linear-gradient(darken($lightgray, 45), darken($lightgray, 20)));
-		box-shadow: 0 1px 1px $white;
-		a {
-			color: $white;
-			text-decoration: none;
-			@include emboss($darkblue);
-		}
-	}
-	li:first-child {
-		border-top-left-radius: 8px;
-		border-bottom-left-radius: 8px;
-		border-right: $darkblue 1px solid;
-	}
-	li:last-child {
-		border-top-right-radius: 8px;
-		border-bottom-right-radius: 8px;
-		border-left: darken($lightgray, 30) 1px solid;
-	}
-	li.active {
-		border-color: $darkblue;
-		@include background-image(linear-gradient($colblue, $blue));
-		a {
-			color: $white;
-		}
-	}
+  display: inline-block;
+  position: relative;
+  top: -2px;
+  li {
+    display: inline-block;
+    padding: 6px 14px 6px 14px;
+    border: $darkgray 1px solid;
+    margin: 0;
+    @include font-size(14);
+    @include background-image(linear-gradient(darken($lightgray, 45), darken($lightgray, 20)));
+    box-shadow: 0 1px 1px $white;
+    a {
+      color: $white;
+      text-decoration: none;
+      @include emboss($darkblue);
+    }
+  }
+  li:first-child {
+    border-top-left-radius: 8px;
+    border-bottom-left-radius: 8px;
+    border-right: $darkblue 1px solid;
+  }
+  li:last-child {
+    border-top-right-radius: 8px;
+    border-bottom-right-radius: 8px;
+    border-left: darken($lightgray, 30) 1px solid;
+  }
+  li.active {
+    border-color: $darkblue;
+    @include background-image(linear-gradient($colblue, $blue));
+    a {
+      color: $white;
+    }
+  }
 }
 
 table.module-referrals {
-	@extend table.module-search;
+  @extend table.module-search;
 }
 
 .module-referrals.pagination {
-	@extend .module-search.pagination;
+  @extend .module-search.pagination;
 }
 
 .referrals-loader {
-	@extend .search-loader;
+  @extend .search-loader;
 }
 
 .rq-menus {
-	@extend %menu-base;
+  @extend %menu-base;
 }
 
 .rq-manage-assignees {
-	width: 640px;
-	margin: 0 25%;
-
-	p {
-		margin: 20px 20px 0 20px;
-		@include font-size(14);
-		@include sans;
-		color: $darkgray;
-	}
-
-	.menu-col {
-		margin-top: 14px;
-		margin-bottom: 14px;
-
-		h2 {
-			padding: 0 0 0 10px;
-		}
-	}
-
-	.menu-col:first-child {
-		h2 {
-			padding-left: 20px;
-		}
-		ul {
-			margin-left: 20px;
-		}
-	}
-
-	.menu-col:nth-child(2n) {
-		ul {
-			margin-right: 20px;
-		}
-	}
-
-	h2 {
-		@include font-size(16);
-	}
-
-	ul {
-		margin: 15px 10px 10px 10px;
-		display: block;
-		height: 300px;
-		overflow: auto;
-		box-shadow: inset 0 0 10px darken($lightgray, 10);
-		border: darken($lightgray, 10) 1px solid;
-	}
-
-	li {
-		margin: 0;
-		padding: 8px;
-		border-bottom: $lightgray 1px solid;
-
-		input[type=checkbox] {
-			display: inline-block;
-			margin: 0 5px 0 0;
-		}
-		label {
-			display: inline;
-			@include sans;
-			@include font-size(14);
-			color: $darkgray;
-			cursor: pointer;
-			&:hover {
-				color: darken($rowselect, 50);
-			}
-		}
-		&:hover {
-			background: lighten($rowselect, 5);
-			border-bottom: darken($rowselect, 5) 1px solid;
-		}
-	}
-
+  width: 640px;
+  margin: 0 25%;
+  p {
+    margin: 20px 20px 0 20px;
+    @include font-size(14);
+    @include sans;
+    color: $darkgray;
+  }
+  .menu-col {
+    margin-top: 14px;
+    margin-bottom: 14px;
+    h2 {
+      padding: 0 0 0 10px;
+    }
+  }
+  .menu-col:first-child {
+    h2 {
+      padding-left: 20px;
+    }
+    ul {
+      margin-left: 20px;
+    }
+  }
+  .menu-col:nth-child(2n) {
+    ul {
+      margin-right: 20px;
+    }
+  }
+  h2 {
+    @include font-size(16);
+  }
+  ul {
+    margin: 15px 10px 10px 10px;
+    display: block;
+    height: 300px;
+    overflow: auto;
+    box-shadow: inset 0 0 10px darken($lightgray, 10);
+    border: darken($lightgray, 10) 1px solid;
+  }
+  li {
+    margin: 0;
+    padding: 8px;
+    border-bottom: $lightgray 1px solid;
+    input[type=checkbox] {
+      display: inline-block;
+      margin: 0 5px 0 0;
+    }
+    label {
+      display: inline;
+      @include sans;
+      @include font-size(14);
+      color: $darkgray;
+      cursor: pointer;
+      &:hover {
+        color: darken($rowselect, 50);
+      }
+    }
+    &:hover {
+      background: lighten($rowselect, 5);
+      border-bottom: darken($rowselect, 5) 1px solid;
+    }
+  }
 }
-
-
-

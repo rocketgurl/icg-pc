@@ -31,9 +31,7 @@ define [
       @view_state   = ''
       @view_cache   = {}
       @action_cache = {}
-
-      @flash_html = ''
-      @loader     = {}
+      @loader       = {}
 
       @DEBUG  = options.DEBUG?
       @MODULE = options.MODULE || false
@@ -50,7 +48,7 @@ define [
 
       # Setup policy refresh
       @refreshPolicy = _.throttle(@refreshPolicy, 1000)
-      @MODULE.POLICY.on 'policy_response', @remove_loader, this
+      @MODULE.POLICY.on 'change:refresh', @remove_loader, this
 
       # If we're in a default state then launch home
       if _.isEmpty @view_state

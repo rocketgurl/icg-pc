@@ -1,66 +1,55 @@
 .lh-container {
-	$container-width: 100%;
-	$gutter-width: 1em;
-	$grid-padding: 1.8%;
-	@include container;
-	border: #ddd 1px solid;
-	background-color: #f4f4f4;
-	display: none;
-
-	h1, h2 {
-		@include span-columns(12 omega, 12);
-		font-weight: bold;
-		margin: 15px 0 0 0;
-	}
-
-	h1 {
-		color: $darkblue;
-		@include font-size(24);
-		@include emboss;
-		&.standalone-loss-history {
-		        margin-bottom: 20px;
-	        }
-	}
-
-	h2 {
-		color: $darkgray;
-		@include font-size(18);
-		margin: 20px 0 10px 0;
-	}
+  padding: 0 1.8%;
+  h1, h2 {
+    @include span-columns(12 omega, 12);
+    font-weight: bold;
+    margin: 15px 0 0 0;
+  }
+  h1 {
+    color: $darkblue;
+    @include font-size(24);
+    @include emboss;
+    &.standalone-loss-history {
+      margin-bottom: 20px;
+    }
+  }
+  h2 {
+    color: $darkgray;
+    @include font-size(18);
+    margin: 20px 0 10px 0;
+  }
 }
 
-
-
 .lh-loss-history-container {
-	@include span-columns(12 omega, 12);	
+  @include span-columns(12 omega, 12);
 }
 
 .lh-loss-history {
-	@extend table.module-search;
-	td {
-		width: auto;
-		a {
-			font-weight: bold;
-			color: $colblue !important;
-		}
-		&:first-child { text-align: center; }
-	}
+  @extend table.module-search;
+  td {
+    width: auto;
+    a {
+      font-weight: bold;
+      color: $colblue !important;
+    }
+    &:first-child {
+      text-align: center;
+    }
+  }
 }
-
 
 // Loader image
 .lh-loader {
-	display: none;
-	text-align: center;
-	margin: 40px 0;
-	min-height: 200px;
-	h2 {
-		@include font-size(18);
-		color: darken($lightgray, 40);
-		margin: 20px 0;
-		span {
-			display: block;
-			margin: 0 0 10px 0;
-		}
-	}
+  text-align: center;
+  margin: 40px 0;
+  min-height: 200px;
+  h2 {
+    @include font-size(18);
+    color: darken($lightgray, 40);
+    margin: 20px 0;
+    span {
+      display: block;
+      margin: 0 0 10px 0;
+    }
+  }
 }

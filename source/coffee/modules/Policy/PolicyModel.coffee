@@ -1,6 +1,8 @@
 define [
   'BaseModel'
-], (BaseModel) ->
+  'Helpers'
+  'mustache'
+], (BaseModel, Helpers, Mustache) ->
 
   #### Policy
   #
@@ -13,11 +15,14 @@ define [
     # Policy states
     # -------------
     states :
-      ACTIVE_POLICY      : 'ACTIVEPOLICY',
-      ACTIVE_QUOTE       : 'ACTIVEQUOTE',
-      CANCELLED_POLICY   : 'CANCELLEDPOLICY',
-      EXPIRED_QUOTE      : 'EXPIREDQUOTE',
-      NON_RENEWED_POLICY : 'NONRENEWEDPOLICY'
+      ACTIVE_POLICY        : 'ACTIVEPOLICY'
+      ACTIVE_QUOTE         : 'ACTIVEQUOTE'
+      PENDING_CANCELLATION : 'PENDINGCANCELLATION'
+      CANCELLED_POLICY     : 'CANCELLEDPOLICY'
+      EXPIRED_QUOTE        : 'EXPIREDQUOTE'
+      INCOMPLETE_QUOTE     : 'INCOMPLETEQUOTE'
+      PENDING_NON_RENEWAL  : 'PENDINGNONRENWAL'
+      NON_RENEWED_POLICY   : 'NONRENEWEDPOLICY'
 
     # Any products that have name conflicts
     # Where the first 3 identifiers aren't enough
@@ -122,7 +127,10 @@ define [
     getPolicyPeriod : ->
       start = @getTermItem('EffectiveDate').substr(0,10)
       end   = @getTermItem('ExpirationDate').substr(0,10)
-      @Helpers.concatStrings(start, end, ' - ')
+      if start && end
+        @Helpers.concatStrings(start, end, ' - ')
+      else
+        ''
 
     # **Return the full policy id taken from the XML**
     # @return _String_
@@ -166,6 +174,151 @@ define [
           @Helpers.concatStrings(start.substr(0,10), end.substr(0,10), ' - ')
 
       ipm_header
+
+    # Assemble all the policy data for HTML QuickView servicing tab into one place
+    getServicingData : ->
+      propertyData        = if @isQuote() then @get('quoteTerm').ProtoInterval else @getLastTerm()
+      insuredData         = @get 'insuredData'
+      mortgageeData       = @get 'mortgageeData'
+      accountingData      = @getAccountingData()
+      accountingDataItems = accountingData.DataItem
+      invoiceDueDate      = @getDataItem(accountingDataItems, 'InvoiceDueDateCurrent') || ''
+      equityDate          = @getDataItem(accountingDataItems, 'EquityDate') || ''
+      pastDueBalance      = Helpers.formatMoney(@getDataItem(accountingDataItems, 'PastDueBalance'))
+      paymentDateLast     = @_stripTimeFromDate(@getDataItem(accountingDataItems, 'PaymentDateLast') || '')
+      paymentAmountLast   = Helpers.formatMoney(@getDataItem(accountingDataItems, 'PaymentAmountLast'))
+      paymentPlan         = accountingData.PaymentPlan || {}
+      billingIsPastDue    = pastDueBalance > 0
+      policyIsQuote       = @isQuote()
+
+      data =
+        QuoteNumber       : @id
+        IsQuote           : policyIsQuote
+        IsNotQuote        : not policyIsQuote
+        PolicyState       : @getPrettyPolicyState()
+        OriginatingSystem : Helpers.prettyMap(@getOriginatingSystem(), {
+            'pxClient' : 'Agent Portal'
+            'pxServer' : 'Agent Portal'
+          }, 'Unknown')
+        PropertyAddress   : @getAddressDataItems(propertyData.DataItem, [
+            'PropertyStreetNumber'
+            'PropertyStreetName'
+            'PropertyCity'
+            'PropertyState'
+            'PropertyZipCode'
+          ])
+        MailingAddress    : @getAddressDataItems(insuredData, [
+            'InsuredMailingAddressLine1'
+            'InsuredMailingAddressLine2'
+            'InsuredMailingAddressCity'
+            'InsuredMailingAddressState'
+            'InsuredMailingAddressZip'
+          ])
+        PrimaryMortgagee  : @getAddressDataItems(mortgageeData, [
+            'MortgageeNumber1'
+            'Mortgagee1AddressLine1'
+            'Mortgagee1AddressLine2'
+            'Mortgagee1AddressCity'
+            'Mortgagee1AddressState'
+            'Mortgagee1AddressZip'
+            'LoanNumber1'
+          ])
+        PropertyCoords     : @getPropertyCoords()
+        PolicyId           : @getPolicyId()
+        AgencyLocationCode : @getAgencyLocationCode()
+        AgencyLocationId   : @getAgencyLocationId()
+
+        # Billing
+        BillingIsPastDue   : billingIsPastDue
+        BillingIsCurrent   : not billingIsPastDue
+        TotalPremium       : Helpers.formatMoney(@getTermDataItemValue('TotalPremium'))
+        OutstandingBalance : Helpers.formatMoney(@getOutstandingBalance(accountingDataItems))
+        MinimumPayment     : Helpers.formatMoney(@getDataItem(accountingDataItems, 'MinimumPaymentDue'))
+        LastPaymentReceived: @getLastPaymentReceived(paymentAmountLast, paymentDateLast)
+        Installments       : @getPaymentPlanInstallments(paymentPlan.Installments?.Installment)
+        InvoiceDueDate     : @_stripTimeFromDate(invoiceDueDate)
+        EquityDate         : @_stripTimeFromDate(equityDate)
+        PaymentAmountLast  : paymentAmountLast
+        PastDueBalance     : pastDueBalance
+        PaymentDateLast    : paymentDateLast
+        PaymentPlanType    : Helpers.prettyMap(paymentPlan.type, {
+            'invoice'        : 'Invoice'
+            'fourPay'        : 'Four Pay'
+            'fourPayInvoice' : 'Four Pay Invoice'
+            'tenPay'         : 'Ten Pay'
+            'tenPayInvoice'  : 'Ten Pay Invoice'
+            'fullPay'        : 'Full Pay'
+          })
+
+    # Map policy state to a prettier version
+    getPrettyPolicyState : ->
+      prettyStates =
+        'ACTIVEPOLICY'        : 'Active Policy'
+        'PENDINGCANCELLATION' : 'Pending Cancellation'
+        'CANCELLEDPOLICY'     : 'Cancelled Policy'
+        'NONRENEWEDPOLICY'    : 'Non-Renewed Policy'
+        'PENDINGNONRENWAL'    : 'Pending Non-Renewal'
+        'ACTIVEQUOTE'         : 'Active Quote'
+        'INCOMPLETEQUOTE'     : 'Incomplete Quote'
+        'EXPIREDQUOTE'        : 'Expired Quote'
+      
+      # PolicyState is stored in a few different places and ways
+      # WARNING: this can get messy
+      state = @get('state').text || @get('state')
+      policyStates = @get('document').find('PolicyState')
+
+      if @isPendingCancel true
+        state = 'PENDINGCANCELLATION'
+      else if @isPendingNonRenewal()
+        state = 'PENDINGNONRENWAL'
+      else if policyStates?.length > 1
+        stateNode = _.find(policyStates, (node) -> $(node).text() != state)
+        state = $(stateNode).text() if stateNode
+      
+      Helpers.prettyMap state, prettyStates
+
+    getOriginatingSystem : ->
+      @getTermDataItemValue 'QuoteOriginationSystem'
+
+    # Prefer Accounting > OutstandingBalanceDue, else fall back to OutstandingBalance
+    getOutstandingBalance : (items) ->
+      @getDataItem(items, 'OutstandingBalanceDue') || @getDataItem(items, 'OutstandingBalance')
+
+    # Return formatted version of last payment amount and last payment date
+    # <PaymentAmountLast> - <PaymentDateLast> if PaymentDateLast > 1900-01-01
+    getLastPaymentReceived : (amount, date) ->
+      interval = Date.parse date
+      if interval > -1
+        "#{amount} - #{date}"
+
+    # Accounting.PaymentPlan.Installments is a mess of different possible data types
+    # Try to standardize it to an array of installment objects
+    getPaymentPlanInstallments : (installments) ->
+      installments = @_sanitizeNodeArray installments
+      _.map(installments, (item) ->
+        item.amount = Helpers.formatMoney item.amount
+        item.charges = Helpers.formatMoney item.charges
+        item.feesAndPremiums = Helpers.formatMoney item.feesAndPremiums
+        return item
+        )
+
+    # Extract data items from a list
+    # Return empty result if none
+    getAddressDataItems : (list, terms) ->
+      out = {}
+      _.each(terms, ((term) ->
+        val = @getDataItem list, term
+        out[term] = val if val
+        ), this)
+      out unless _.isEmpty out
+
+    # Retrieve Lat/Long coords from last policy term
+    # Return empty result if Lat/Long does not exist
+    getPropertyCoords : ->
+      coords =
+        Latitude  : @getTermDataItemValue 'Latitude'
+        Longitude : @getTermDataItemValue 'Longitude'
+      coords if coords.Latitude and coords.Longitude
 
     # **Get <SystemOfRecord>** - used to determine IPM eligibility.
     # @return _String_
@@ -244,6 +397,16 @@ define [
       return true if (bool && pending)
       pending
 
+    # **Is this policy pending non-renewal?**
+    #
+    # @return _Boolean_
+    isPendingNonRenewal : ->
+      pending = @get('json').Management?.PendingNonRenewal
+      if _.isObject pending
+        true
+      else
+        false
+
     # **Determine the cancellation effective date if there is one**
     # @return _String_ | _Null_
     getCancellationEffectiveDate : ->
@@ -311,6 +474,14 @@ define [
       else
         {}
 
+    # **Return ProtoTerm of a policy Quote if it exists**
+    # @return _Obj_
+    getQuoteTerm : ->
+      if @isQuote() && protoTerm = @get('json')?.Quoting?.CurrentQuote?.ProtoTerm
+        protoTerm
+      else
+        {}
+
     # Retrieve a single value from Last Term or send empty string
     getTermItem : (item) ->
       last_term = @getLastTerm()
@@ -332,6 +503,94 @@ define [
     # getCustomerData wrapped in null check
     getCustomerData : (type) ->
       _.compose(@baseGetCustomerData, @checkNull) type
+
+    getAccountingData : ->
+      @getModelProperty 'Accounting'
+
+    # **Retrieve Policy Events**
+    # @return _Array_ Policy Events or empty
+    getEvents : ->
+      events = @getModelProperty 'EventHistory'
+      @_sanitizeNodeArray events?.Event
+
+    # **Retrieve Policy Documents**
+    # @return _Array_ Policy Documents or empty
+    getDocuments : ->
+      documents = @getModelProperty 'Documents'
+      @_sanitizeNodeArray documents?.Reference
+
+    # **Retrieve Policy Notes**
+    # @return _Array_ Policy Notes or empty
+    getNotes : ->
+      notes = @getModelProperty 'RelatedItems Notes'
+      @_sanitizeNodeArray notes?.Note
+
+    # **Retrieve Policy Tasks**
+    # @return _Array_ Policy Tasks or empty
+    getTasks : ->
+      tasks = @getModelProperty 'RelatedItems Tasks'
+      @_sanitizeNodeArray tasks?.Task
+
+    # **Retrieve Policy Documents**
+    # @return _Array_ Policy Documents or empty
+    getAttachments : ->
+      attachments = @getModelProperty 'RelatedItems Attachments'
+      @_sanitizeNodeArray attachments?.Attachment
+
+    # **Notes field handling, post a notes ChangeSet**
+    #
+    # @param `note` _String_ Policy notes
+    # @param `attachments` _Array_ list of attachment objects
+    # @param `callbackSuccess` _Function_ Handle successful POST
+    # @param `callbackError` _Function_ Handle error state
+    # return an object with content roughly equivalent to the policyXML
+    #
+    postNote : (note='', attachments=[], callbackSuccess, callbackError) ->
+      noteData =
+        CreatedTimeStamp : new Date() + ''
+        CreatedBy        : @get('module').view.controller.user.get('username')
+        Content          : $.trim note
+        Attachments      : attachments
+
+      if noteData.Content.length or noteData.Attachments.length
+        xml = """
+          <PolicyChangeSet schemaVersion="2.1" username="{{CreatedBy}}" description="Added via Policy Central">
+            {{#Content}}
+            <Note>
+              <Content><![CDATA[{{Content}}]]></Content>
+            </Note>
+            {{/Content}}
+            {{#Attachments.length}}
+            <Attachments>
+              {{#Attachments}}
+              <Attachment name="{{fileName}}" contentType="{{fileType}}">
+                <Description/>
+                <Location>{{location}}{{objectKey}}</Location>
+              </Attachment>
+              {{/Attachments}}
+            </Attachments>
+            {{/Attachments.length}}
+          </PolicyChangeSet>
+        """
+
+        # Assemble the AJAX params
+        params =
+          url         :  @url()
+          type        : 'POST'
+          dataType    : 'xml'
+          contentType : 'application/xml; schema=policychangeset.2.1'
+          context     : this
+          data        : Mustache.render xml, noteData
+          headers     :
+            'Authorization' : "Basic #{@get('digest')}"
+            'Accept'        : 'application/vnd.ics360.insurancepolicy.2.8+xml'
+            'X-Commit'      : true
+
+        jqXHR = $.ajax params
+        if _.isFunction(callbackSuccess) && _.isFunction(callbackError)
+          $.when(jqXHR).then callbackSuccess, callbackError
+
+      noteData
 
     # **Retrieve intervals of given Term obj**
     # @param `term` _Object_ Term obj
@@ -446,6 +705,22 @@ define [
       format = format ? 'YYYY-MM-DD'
       if moment(date)?
         moment(date).format(format)
+
+    # Helper function to map all string values to lowercase
+    _toLowerCase : (val) ->
+      if _.isString val
+        val.toLowerCase()
+      else
+        val
+
+    # Because of the quirky way the xml is parsed to json
+    # Possible data types returned can be unreliable, especially for
+    # Arrays of items. This is an attempt to sanitize the results
+    _sanitizeNodeArray : (node) ->
+      items = node || []
+      unless _.isArray items
+        items = [items]
+      items
 
     # **Get the OpPolicyTerm value** from the last Term
     # @return _String_
@@ -584,10 +859,13 @@ define [
 
     # Return the version number
     getPolicyVersion : ->
-      @getModelProperty('Management Version')
+      @getModelProperty 'Management Version'
 
     getAgencyLocationId : ->
-      @getModelProperty('Management AgencyLocationId')
+      @getModelProperty 'Management AgencyLocationId'
+
+    getAgencyLocationCode : ->
+      @getModelProperty 'Management AgencyLocationCode'
 
     # Return Policy data for use in overviews
     getPolicyOverview : ->
@@ -623,6 +901,7 @@ define [
           'cancelled': @isCancelled(),
           'terms': @getTerms(),
           'firstTerm': @getFirstTerm(),
+          'quoteTerm': @getQuoteTerm(),
           'lastInterval': @getLastInterval(),
           'insuredData': @getCustomerData('Insured'),
           'mortgageeData': @getCustomerData('Mortgagee'),
@@ -675,7 +954,7 @@ define [
         for key, val of new_attributes
           @attributes[key] = val
 
-        @trigger 'policy_response', textStatus
+        @trigger 'change:refresh', textStatus
         @Amplify.publish(view_id, 'success',
           "Policy #{@get('policyId')} refreshed!", 2000)
 
@@ -691,7 +970,7 @@ define [
     refreshFail : (view_id) ->
       view_id = view_id || @get('module').policy_view.cid
       (jqXHR, textStatus, errorThrown) =>
-        @trigger 'policy_response', textStatus
+        @trigger 'change:refresh', textStatus
         @Amplify.publish(view_id, 'warning',
           "There was an error refreshing the policy: #{jqXHR.status} (#{errorThrown})", 2000)
         return this

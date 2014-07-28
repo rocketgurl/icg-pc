@@ -1,7 +1,15 @@
 Updates
 -------
 
-### 2.5.6
+### 2.6.0 - Jul 29, 2014
+
+- [ICS-2374](https://icg360.atlassian.net/browse/ICS-2374) Introducing Policy Central HTML Quick View
+- [ICS-2693](https://icg360.atlassian.net/browse/ICS-2693) Update wic-ho3-nj and ofcc-ho3-nj IPM endorse/renewal forms for WindstormDeductibleOption choices
+- [ICS-2700](https://icg360.atlassian.net/browse/ICS-2700) Update ofcc-ho3-ca IPM forms for SecuritiesSpecialLimits enum
+- [ICS-2709](https://icg360.atlassian.net/browse/ICS-2709) Change DataType for InsuredMailingAddressZip in Change Customer Forms
+- [ICS-2713](https://icg360.atlassian.net/browse/ICS-2713) Update wic-al Renewal IPM forms for WindstormDeductibleOption
+
+### 2.5.6 - Jul 15, 2014
 
 - [ICS-2667](https://icg360.atlassian.net/browse/ICS-2667) Update ofcc-ak-ho3 Endorse forms for Other Structures
 - [ICS-2683](https://icg360.atlassian.net/browse/ICS-2683) Add Lapse in Coverage Surcharge to ofcc-dp3-ny
@@ -12,7 +20,7 @@ Updates
 - [ICS-2688](https://icg360.atlassian.net/browse/ICS-2688) Remove MultiPolicy from wic-hwo-al IPM endorse forms
 - [ICS-2689](https://icg360.atlassian.net/browse/ICS-2689) Add reason code to iic-ho3-sc
 
-### 2.5.5
+### 2.5.5 - Jun 10, 2014
 
 - [ICS-2572](https://icg360.atlassian.net/browse/ICS-2572) Ability to change payment plan prior to new term effective date
 - [ICS-2600](https://icg360.atlassian.net/browse/ICS-2600) Add Reason code to Change Customer forms
@@ -20,7 +28,7 @@ Updates
 - [ICS-2621](https://icg360.atlassian.net/browse/ICS-2621) Add Reason Code to ofcc-ho3-ak
 - [ICS-2623](https://icg360.atlassian.net/browse/ICS-2623) Update ofcc-ny-ho3 Endorse enums
 
-### 2.5.4
+### 2.5.4 - May 28, 2014
 
 - [ICS-2572](https://icg360.atlassian.net/browse/ICS-2572) Ability to change payment plan prior to new term effective date
 - [ICS-2582](https://icg360.atlassian.net/browse/ICS-2582) Additional interest IPM form not pulling the right variables for Additional Interests
@@ -32,7 +40,7 @@ Updates
 - [ICS-2607](https://icg360.atlassian.net/browse/ICS-2607) Update wic-al IPM Endorse forms
 - [ICS-2608](https://icg360.atlassian.net/browse/ICS-2608) Add Lapse in Coverage Surcharge to ofcc-ho3-ny
 
-### 2.5.3
+### 2.5.3 - May 14, 2014
 
 - [ICS-2521](https://icg360.atlassian.net/browse/ICS-2521) Update Favicon to show "working" state
 - [ICS-2533](https://icg360.atlassian.net/browse/ICS-2533) Non-Renewal Actions Need a Functioning Comments Box
@@ -40,7 +48,7 @@ Updates
 - [ICS-2573](https://icg360.atlassian.net/browse/ICS-2573) Add conditional logic to ofcc-ho6-sc endorse forms
 - [ICS-2575](https://icg360.atlassian.net/browse/ICS-2575) Issue with EffectiveDate greater than EffectiveDatePolicyTerm
 
-### 2.5.2
+### 2.5.2 - Apr 30, 2014
 
 - [ICS-2520](https://icg360.atlassian.net/browse/ICS-2520) Error discovered on Cancel/Reinstate Action From in Policy Central
 - [ICS-2541](https://icg360.atlassian.net/browse/ICS-2541) As a user of Policy Central, I would like to be able to refresh my policy tab so that I can ensure I have the most recent version of the policy
@@ -50,7 +58,7 @@ Updates
 - [ICS-2553](https://icg360.atlassian.net/browse/ICS-2553) Unable to process cancellation to prior term
 - [ICS-2557](https://icg360.atlassian.net/browse/ICS-2557) Add conditional logic to ofcc-ho3-ak forms
 
-### 2.5.1
+### 2.5.1 - Apr 16, 2014
 
 - [ICS-2410](https://icg360.atlassian.net/browse/ICS-2410) "Unlock Policy" should be available for quotes only
 - [ICS-2523](https://icg360.atlassian.net/browse/ICS-2523) Cancellations Should Not Allow Effective Dates prior to policy inception date
@@ -59,7 +67,7 @@ Updates
 - [ICS-2535](https://icg360.atlassian.net/browse/ICS-2535) Add enum/Reason Code to FNIC-HO3-LA endorse forms
 - [ICS-2538](https://icg360.atlassian.net/browse/ICS-2538) Update wic-nj-ho3 renew forms
 
-### 2.5.0
+### 2.5.0 - Apr 03, 2014
 
 - [ICS-2423](https://icg360.atlassian.net/browse/ICS-2423) Update fsic-la-ho3 forms
 - [ICS-2447](https://icg360.atlassian.net/browse/ICS-2447) Update fsic-la-dp3 customer change forms

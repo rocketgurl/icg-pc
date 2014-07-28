@@ -135,7 +135,10 @@ define [
       @adjustAlabamaLossTypeFields()
       @adjustAlabamaPropertyUsage()
 
-      if @apparatchik.isProduct('wic-hwo-al') || @apparatchik.isProduct('wic-ho3-al')
+      if @apparatchik.isProduct('wic-hwo-al') ||
+         @apparatchik.isProduct('wic-ho3-al') ||
+         @apparatchik.isProduct('wic-ho3-nj') ||
+         @apparatchik.isProduct('ofcc-ho3-nj')
         @addWICALBEhaviors()
 
       if @apparatchik.isProduct('fnic-ho3-la')

@@ -1,31 +1,21 @@
+// ICG base styles & mixins
 @import "base";
-@import "compass/reset";
-
-html {
-	font-size:62.5%;
-	background: $lightgray;
-}
-
-// Default Body Font Size - needed for rem support
-// http://snook.ca/archives/html_and_css/font-size-with-rem
-body {
-	@include sans;
-	min-width: 1000px;
-	text-rendering: optimizeLegibility;
-}
+@import "bootstrap";
 
 // Now begin importing our partials
 @import "page";
+@import "buttons";
+@import "alerts";
 @import "modal";
 @import "header";
 @import "workspace";
 @import "module_search";
 @import "module_policy";
+@import "module_quickview";
 @import "module_renewalunderwriting";
 @import "module_losshistory";
 @import "module_ipm";
 @import "module_zendesk";
 @import "module_referralqueue";
 @import "module_policyrep";
-@import "_herald";
-// @import "formalize";
+@import "herald";

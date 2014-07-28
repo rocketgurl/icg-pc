@@ -7,13 +7,14 @@ define [
   PolicyRepresentationView = BaseView.extend
 
     initialize : (options) ->
-      for prop in ['$el','policy','policy_view','services']
+      for prop in ['policy','policy_view','services']
         @[prop] = options[prop]
       this
 
     render : ->
       view = @getRepresentationLinks()
       @$el.html @Mustache.render tpl_policyrep_container, view
+      this
 
     # Assemble HREFs for links. Use different IDs for quotes/policies
     getRepresentationLinks : ->

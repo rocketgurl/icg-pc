@@ -522,6 +522,9 @@ define [
       # Retrieve pxClient location from ixConfig
       @services.pxclient = @config.get_pxClient(@workspace_state)
 
+      # Retrieve the base Agent Support View url
+      @services.agentSupport = @config.get_agent_support(@workspace_state)
+
     # Build the breadcrumb in the top nav
     #
     # @param `data` _Object_ env labels
@@ -646,7 +649,7 @@ define [
       if !@$workspace_admin_initial?
         @$workspace_admin_initial = @$workspace_admin.find('ul').html()
 
-      @$workspace_admin.find('ul').html("""<li>Welcome back &nbsp;<a href="#profile">#{@user.get('name')}</a></li><li><a href="/batch" target="_blank">mxDocTool</a></li><li><a href="#logout">Logout</a></li>""")
+      @$workspace_admin.find('ul').html("""<li>Welcome back &nbsp;<a href="#profile">#{@user.get('name')}</a></li><li><a href="/batch" target="_blank">Batch Wolf</a></li><li><a href="#logout">Logout</a></li>""")
 
     #### Reset Admin Links
     #
@@ -729,15 +732,19 @@ define [
     # then activate the last one in the stack.
     reassess_apps : ->
       # No stack, no need
-      if @workspace_stack.stack.length == 0
-        return false
+      return false if @workspace_stack.stack.length is 0
 
       active = _.filter @workspace_stack.stack, (view) ->
         return view.is_active()
 
-      if active.length == 0
-        last_view = _.last @workspace_stack.stack
-        @toggle_apps last_view.app.app
+      if active.length is 0
+        if @workspace_stack.stack.length > 2
+          last_view = _.last @workspace_stack.stack
+          @toggle_apps last_view.app.app
+        else
+          # Activate search tab by default
+          search_view = @workspace_stack.stack[0]
+          @toggle_apps search_view.app.app
 
     # Tell every app in the stack to commit seppuku
     teardown_workspace : ->
@@ -756,7 +763,6 @@ define [
     # Open a new window that then calls the url
     launchWindow : (url) ->
       if url?
-        console.log url
         new_window = window.open('download.html', '_blank')
         new_window.setUrl = url
 

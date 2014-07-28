@@ -1,0 +1,113 @@
+<!-- Nav tabs panel -->
+<div id="qv-tabs-{{cid}}" class="col-left">
+  <!-- // hidden until we have content in other tabs
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="#tab-servicing-{{cid}}" data-toggle="tab">Servicing</a></li>
+    <li><a href="#tab-underwriting-{{cid}}" data-toggle="tab">Underwriting</a></li>
+    <li><a href="#tab-claims-{{cid}}" data-toggle="tab">Claims</a></li>
+  </ul>
+  -->
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div class="tab-pane clearfix active" id="tab-servicing-{{cid}}">
+      <div id="lh-loader-{{cid}}" class="lh-loader">
+        <h2 id="lh-spinner-{{cid}}"><span>Loading Servicing&hellip;</span></h2>
+      </div>
+    </div>
+    <div class="tab-pane clearfix" id="tab-underwriting-{{cid}}">
+      <div class="col-xs-12">
+        <div class="alert alert-info"><strong>COMING SOON:</strong> Underwriting</div>
+      </div>
+    </div>
+    <div class="tab-pane clearfix" id="tab-claims-{{cid}}">
+      <div class="col-xs-12">
+        <div class="alert alert-info"><strong>COMING SOON:</strong> Claims</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Activities & Documents -->
+<div id="qv-aside-{{cid}}" class="col-right">
+  <div id="activity-{{cid}}">
+    <div class="panel panel-default note-panel">
+      <div class="panel-heading clearfix">
+        <strong>Recent Activity</strong>
+        <div class="input-group input-group-sm col-xs-5 pull-right">
+          <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+          <input type="search" class="activity-search form-control" placeholder="Search...">
+        </div>
+      </div>
+
+      <div class="panel-subhead clearfix">
+        <div class="add-note-controls clearfix">
+          <div class="input-group col-xs-3 pull-right">
+            <select class="activity-sort form-control input-sm">
+              <option value="date_desc">Sort by</option>
+              <option value="date_desc">Date Desc</option>
+              <option value="date_asc">Date Asc</option>
+            </select>
+          </div>
+          <a href="#add-note-container-{{cid}}" data-toggle="collapse" data-parent="#activity-{{cid}}" class="add-note-toggle collapsed">
+            <span class="glyphicon glyphicon-plus-sign"></span>
+            <span class="add-text">Add a Note</span>
+            <span class="cancel-text">Cancel</span>
+          </a>
+        </div>
+
+        <div id="add-note-container-{{cid}}" class="add-note-container collapse clearfix">
+          <form class="add-note-form" role="form">
+            <textarea name="note-text" class="note-text form-control" rows="3"></textarea>
+            <div class="btn-group pull-right">
+              <button type="submit" class="add-note-button btn btn-sm btn-primary" data-loading-text="Working...">Save</button>
+            </div>
+          </form>
+
+          <div class="attachments-container"></div>
+
+          <form class="file-attach-form" method="POST" action="{{attachmentsLocation}}?x-crippled-client=true&x-crippled-client-envelope=true" enctype="multipart/form-data" target="attach-iframe-{{cid}}">
+            <a href="#" class="file-attach-link has-toggle-state">
+              <span class="glyphicon glyphicon-paperclip"></span>
+              <span class="attach-one toggle-state-default">Attach a file</span>
+              <span class="attach-another toggle-state-toggled">Attach another file</span>
+            </a>
+
+            <input type="file" class="file-attach-input hidden" name="object-data-file">
+            <input type="hidden" name="auth-token" value="{{authToken}}">
+            <input type="hidden" name="object-key" value="">
+            <iframe class="submit-iframe hidden" name="attach-iframe-{{cid}}"></iframe>
+          </form>
+
+        </div>
+      </div>
+      <ul class="activity-wrapper"></ul>
+    </div>
+  </div>
+
+  <div id="documents-{{cid}}">
+    <div class="panel panel-default note-panel">
+      <div class="panel-heading clearfix">
+        <form class="file-upload-form" method="POST" action="{{attachmentsLocation}}?x-crippled-client=true&x-crippled-client-envelope=true" enctype="multipart/form-data" target="upload-iframe-{{cid}}">
+          <strong>Documents</strong>
+          <div class="file-upload-link-container pull-right has-toggle-state">
+            <a href="#" class="file-upload-link toggle-state-default">
+              <span class="glyphicon glyphicon-circle-arrow-up"></span>
+              Upload a File
+            </a>
+            <span class="file-upload-disabled toggle-state-toggled">
+              <span class="glyphicon glyphicon-circle-arrow-up"></span>
+              Uploading...
+            </span>
+          </div>
+
+          <input type="file" class="file-upload-input hidden" name="object-data-file">
+          <input type="hidden" name="auth-token" value="{{authToken}}">
+          <input type="hidden" name="object-key" value="">
+          <iframe class="submit-iframe hidden" name="upload-iframe-{{cid}}"></iframe>
+        </form>
+
+      </div>
+      <ul id="docs-wrapper-{{cid}}" class="documents-wrapper"></ul>
+    </div>
+  </div>
+</div>

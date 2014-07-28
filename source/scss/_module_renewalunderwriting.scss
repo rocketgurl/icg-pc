@@ -1,282 +1,264 @@
 .ru-container {
-	$container-width: 100%;
-	$gutter-width: 1em;
-	$grid-padding: 1.8%;
-	@include container;
-	border: #ddd 1px solid;
-	background-color: #f4f4f4;
-	display: none;
-
-	h1, h2 {
-		@include span-columns(12 omega, 12);
-		font-weight: bold;
-		margin: 15px 0 0 0;
-	}
-
-	h1 {
-		color: $darkblue;
-		@include font-size(24);
-		@include emboss;
-		&.standalone-loss-history {
-		        margin-bottom: 20px;
-	        }
-	}
-
-	h2 {
-		color: $darkgray;
-		@include font-size(18);
-		margin: 20px 0 10px 0;
-	}
+  padding: 0 1.8%;
+  h1, h2 {
+    @include span-columns(12 omega, 12);
+    font-weight: bold;
+    margin: 15px 0 0 0;
+  }
+  h1 {
+    color: $darkblue;
+    @include font-size(24);
+    @include emboss;
+    &.standalone-loss-history {
+      margin-bottom: 20px;
+    }
+  }
+  h2 {
+    color: $darkgray;
+    @include font-size(18);
+    margin: 20px 0 10px 0;
+  }
 }
 
 %ru-status-link {
-	color: $colblue;
-	text-decoration: none;
-	i {
-		@include font-size(16);
-	}
-	&:hover {
-		color: $blue;
-	}
+  color: $colblue;
+  text-decoration: none;
+  i {
+    @include font-size(16);
+  }
+  &:hover {
+    color: $blue;
+  }
 }
 
 .ru-status-block {
-	margin-top: 20px;
-	box-shadow: #ccc 0 0 1px 1px;
-	background: #fff;
-	@include span-columns(12 omega);
-
-	h3 {
-		font-weight: bold;
-		margin: 10px 0 8px 0;
-	}
-
-	a {
-		@extend %ru-status-link;
-	}
-
-	p {
-		margin: 10px 0 0 0;
-		padding: 10px 0 0 0;
-		border-top: $lightgray 1px solid;
-		line-height: 140%;
-		@include font-size(14);
-		color: darken($darkgray, 10);
-		font-style: italic;
-	}
-
-	.buttons {
-		text-align: right;
-		display: block;
-		padding-right: 10px;
-	}
-
-	button.confirm {
-		@include simple-color(hue(#37a93c), saturation(#37a93c), lightness(#37a93c));
-	}
-
-	button.confirm[disabled=disabled] {
-		@include simple-color(hue(#eee), saturation(#eee), lightness(#eee));
-		color: #ccc;
-	}
-
-	button.cancel {
-		@include simple-color(hue($lightgray), saturation($lightgray), lightness($lightgray));
-	}
-
-	input {
-		color: $colblue;
-		@include sans;
-		@include font-size(14);
-		font-weight: bold;
-		border: 0;
-		width: 80px;
-		cursor: pointer;
-	}
-	.loading {
-		color: darken($lightgray, 10);
-		font-style: italic;
-	}
-	.incomplete {
-		color: $warning-bottom;
-		font-style: italic;
-	}
-
+  margin-top: 20px;
+  box-shadow: #ccc 0 0 1px 1px;
+  background: #fff;
+  @include span-columns(12 omega);
+  h3 {
+    font-weight: bold;
+    margin: 10px 0 8px 0;
+  }
+  a {
+    @extend %ru-status-link;
+  }
+  p {
+    margin: 10px 0 0 0;
+    padding: 10px 0 0 0;
+    border-top: $lightgray 1px solid;
+    line-height: 140%;
+    @include font-size(14);
+    color: darken($darkgray, 10);
+    font-style: italic;
+  }
+  .buttons {
+    text-align: right;
+    display: block;
+    padding-right: 10px;
+  }
+  button.confirm {
+    @include simple-color(hue(#37a93c), saturation(#37a93c), lightness(#37a93c));
+  }
+  button.confirm[disabled=disabled] {
+    @include simple-color(hue(#eeeeee), saturation(#eeeeee), lightness(#eeeeee));
+    color: #ccc;
+  }
+  button.cancel {
+    @include simple-color(hue($lightgray), saturation($lightgray), lightness($lightgray));
+  }
+  input {
+    color: $colblue;
+    @include sans;
+    @include font-size(14);
+    font-weight: bold;
+    border: 0;
+    width: 80px;
+    cursor: pointer;
+  }
+  .loading {
+    color: darken($lightgray, 10);
+    font-style: italic;
+  }
+  .incomplete {
+    color: $warning-bottom;
+    font-style: italic;
+  }
 }
 
 .ru-status {
-	@include span-columns(6, 12);
-	ul {
-		padding: 20px;
-		@include font-size(16);
-		li {
-			display: block;
-			color: lighten($darkgray, 5);
-			padding: 0 0 12px 0;
-			&:last-child {
-				padding: 0;
-			}
-			strong {
-				padding-left: 5px;
-				font-weight: bold;
-			}
-			div {
-				display: inline-block;
-			}
-		}
-	}
+  @include span-columns(6, 12);
+  ul {
+    padding: 20px;
+    @include font-size(16);
+    li {
+      display: block;
+      color: lighten($darkgray, 5);
+      padding: 0 0 12px 0;
+      &:last-child {
+        padding: 0;
+      }
+      strong {
+        padding-left: 5px;
+        font-weight: bold;
+      }
+      div {
+        display: inline-block;
+      }
+    }
+  }
 }
 
 .ru-score {
-	display: inline-block;
-	@include font-size(12);
-	background: $rowselect;
-	margin-top: 4px;
-	padding: 4px 12px;
-	border-radius: 12px;
-	color: darken($rowselect, 50);
-	em {
-		color: darken($rowselect, 60);
-		font-weight: bold;
-	}
+  display: inline-block;
+  @include font-size(12);
+  background: $rowselect;
+  margin-top: 4px;
+  padding: 4px 12px;
+  border-radius: 12px;
+  color: darken($rowselect, 50);
+  em {
+    color: darken($rowselect, 60);
+    font-weight: bold;
+  }
 }
 
 .ru-status-table {
-	@include span-columns(6 omega, 12);
-	table {
-		width: 100%;
-		tr {
-			width: 100%;
-		}
-		tr:last-child {
-			td { margin: 0; border: 0; }
-		}
-		tr:first-child {
-			td { padding-top: 0; }
-		}
-		td {
-			margin: 0;
-			padding: 8px 8px 8px 0;
-			border-bottom: #eee 1px solid;
-			color: lighten($darkgray, 5);
-			@include font-size(16);
-			&:last-child {
-				font-weight: bold;
-				color: $darkblue;
-				text-align: right;
-			}
-		}
-	}
+  @include span-columns(6 omega, 12);
+  table {
+    width: 100%;
+    tr {
+      width: 100%;
+    }
+    tr:last-child {
+      td {
+        margin: 0;
+        border: 0;
+      }
+    }
+    tr:first-child {
+      td {
+        padding-top: 0;
+      }
+    }
+    td {
+      margin: 0;
+      padding: 8px 8px 8px 0;
+      border-bottom: #eee 1px solid;
+      color: lighten($darkgray, 5);
+      @include font-size(16);
+      &:last-child {
+        font-weight: bold;
+        color: $darkblue;
+        text-align: right;
+      }
+    }
+  }
 }
 
 .ru-table-shim {
-	padding: 20px;
+  padding: 20px;
 }
 
 .ru-block {
-	margin-top: 20px;
-	min-height: 240px;
-	box-shadow: #ccc 0 0 1px 1px;
-	background: #fff;
-	@include span-columns(4, 12);
-	@include nth-omega(4n);
+  margin-top: 20px;
+  min-height: 240px;
+  box-shadow: #ccc 0 0 1px 1px;
+  background: #fff;
+  @include span-columns(4, 12);
+  @include nth-omega(4n);
 }
 
 .ru-hybrid {
-	p { border-bottom: #ddd 1px solid; }
+  p {
+    border-bottom: #ddd 1px solid;
+  }
 }
-
 
 // Assigned To field, editable
 .assigned-to {
-	a[href=assigned_to] {
-		display: block;
-		margin: 8px 0;
-		font-weight: bold !important;
-		padding: 6px 8px;
-		border-radius: 4px;
-		background: $lightgray;
-		border: $lightgray 1px solid;
-		&:hover {
-			border: darken($rowselect, 5) 1px solid;
-			background: lighten($rowselect, 6);
-		}
-	}
-	em {
-		font-weight: normal;
-		font-style: none;
-		color: $darkgray;
-	}
+  a[href=assigned_to] {
+    display: block;
+    margin: 8px 0;
+    font-weight: bold !important;
+    padding: 6px 8px;
+    border-radius: 4px;
+    background: $lightgray;
+    border: $lightgray 1px solid;
+    &:hover {
+      border: darken($rowselect, 5) 1px solid;
+      background: lighten($rowselect, 6);
+    }
+  }
+  em {
+    font-weight: normal;
+    font-style: none;
+    color: $darkgray;
+  }
 }
 
 .ru-loss-history-container {
-	@include span-columns(12 omega, 12);	
+  @include span-columns(12 omega, 12);
 }
 
 .ru-loss-history {
-	@extend table.module-search;
-	td {
-		width: auto;
-		a {
-			font-weight: bold;
-			color: $colblue !important;
-		}
-		&:first-child { text-align: center; }
-	}
+  @extend table.module-search;
+  td {
+    width: auto;
+    a {
+      font-weight: bold;
+      color: $colblue !important;
+    }
+    &:first-child {
+      text-align: center;
+    }
+  }
 }
 
 .ru-menus {
-	@extend %menu-base;
-	margin: 5px 0 0 0;
-	.menu-close {
-		cursor: pointer;
-	}
-
-	article {
-		padding: 10px;
-	}
-
-	label {
-		&.error {
-			color: darken(red, 5);
-		}
-	}
-
-	textarea {
-		width: 300px;
-		height: 100px;
-		border: darken($lightgray, 10) 1px solid;
-		@include font-size(14);
-		@include sans;
-		color: $darkgray;
-		padding: 10px;
-		border-radius: 4px;
-	}
-
-	textarea[disabled=disabled] {
-		font-style: italic;
-		color: darken($lightgray, 10);
-	}
-
-	.nonrenewal-reasons-block {
-
-	}
-
+  @extend %menu-base;
+  margin: 5px 0 0 0;
+  .menu-close {
+    cursor: pointer;
+  }
+  article {
+    padding: 10px;
+  }
+  label {
+    &.error {
+      color: darken(red, 5);
+    }
+  }
+  textarea {
+    width: 300px;
+    height: 100px;
+    border: darken($lightgray, 10) 1px solid;
+    @include font-size(14);
+    @include sans;
+    color: $darkgray;
+    padding: 10px;
+    border-radius: 4px;
+  }
+  textarea[disabled=disabled] {
+    font-style: italic;
+    color: darken($lightgray, 10);
+  }
+  .nonrenewal-reasons-block {}
 }
 
 // Loader image
 .ru-loader {
-	display: none;
-	text-align: center;
-	margin: 40px 0;
-	min-height: 200px;
-	h2 {
-		@include font-size(18);
-		color: darken($lightgray, 40);
-		margin: 20px 0;
-		span {
-			display: block;
-			margin: 0 0 10px 0;
-		}
-	}
+  display: none;
+  text-align: center;
+  margin: 40px 0;
+  min-height: 200px;
+  h2 {
+    @include font-size(18);
+    color: darken($lightgray, 40);
+    margin: 20px 0;
+    span {
+      display: block;
+      margin: 0 0 10px 0;
+    }
+  }
 }

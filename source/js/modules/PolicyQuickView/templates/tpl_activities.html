@@ -1,0 +1,48 @@
+{{#activities}}
+<li class="activity" id="activity-{{cid}}">
+  <div class="activity-head clearfix">
+    <div class="col-xs-6 activity-initiator" title="{{activityInitiator}}">
+      <span>{{activityType}}</span> posted by: <strong>{{activityInitiator}}</strong>
+    </div>
+    
+    {{#activityDate}}
+    <div class="col-xs-6 activity-date">
+      {{#activityHasAttachments}}
+      <span class="glyphicon glyphicon-paperclip"></span>
+      {{/activityHasAttachments}}
+      <strong>{{date}}</strong> at {{time}} ET
+    </div>
+    {{/activityDate}}
+  </div>
+
+  {{#activityContent}}
+  <div class="activity-title" title="{{raw}}">
+    {{#hasBody}}<a data-toggle="collapse" data-parent="#activity-{{cid}}" href="#activity-body-{{cid}}">{{/hasBody}}
+    {{title}}
+    {{#hasBody}}</a>{{/hasBody}}
+  </div>
+
+  {{#hasBody}}
+  <div class="activity-body collapse" id="activity-body-{{cid}}">
+    {{#body}}
+    <p>{{.}}</p>
+    {{/body}}
+  </div>
+  {{/hasBody}}
+
+  {{#attachments.length}}
+  <ul class="note-attachments">
+    {{#attachments}}
+    <li class="attachment-label" title="{{name}}">
+      <a href="{{policyUrl}}/{{href}}" target="_blank">
+        <span class="glyphicon glyphicon-paperclip"></span>
+        {{name}}
+      </a>
+    </li>
+    {{/attachments}}
+  </ul>
+  {{/attachments.length}}
+  {{/activityContent}}
+
+</li>
+{{/activities}}

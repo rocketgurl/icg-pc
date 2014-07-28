@@ -69,6 +69,11 @@ define [
         stop : -> favicon.set('/favicon.ico', originalTitle)
       }
 
+    # When you need to display a prettier
+    #  set of values than the given data
+    prettyMap : (value, valueMap={}, defaultVal='') ->
+      valueMap[value] || value || defaultVal
+
     # Simple wrapper on setTimeout
     callback_delay : (ms, func) =>
       setTimeout func, ms
@@ -96,6 +101,15 @@ define [
         oXML
       else
         (new DOMParser()).parseFromString(sXML, "text/xml")
+
+    # Because of the quirky way the xml is parsed to json
+    # Possible data types returned can be unreliable, especially for
+    # Arrays of items. This is an attempt to sanitize the results
+    sanitizeNodeArray : (node) ->
+      items = node || []
+      unless _.isArray items
+        items = [items]
+      items
 
     # Determine if a number is an **integer**. Will return false on floats,
     # NaN, booleans, etc.
@@ -127,11 +141,11 @@ define [
     # @return _String_ (Float)
     #
     formatMoney : (n) ->
-      n = parseFloat(n, 10) # convert a string val from form into a Number
-      if _.isNaN(n)
-        return '0.00'
+      n = parseFloat n # convert a string val from form into a Number
+      if _.isNaN n
+        '0.00'
       else
-        n.toFixed(2)
+        n.toFixed 2
 
     # Some date strings we'll be dealing with are formatted with a full
     # timestamp like: "2011-01-15T23:00:00-04:00". The time, after the "T"
@@ -163,6 +177,14 @@ define [
     # Create an ISO timestamp
     makeTimestamp : ->
       moment(new Date()).format('YYYY-MM-DDTHH:mm:ss.sssZ')
+
+
+    # Generate GUID, used as a key in localstorage or file upload or whathaveyou
+    createGUID : ->
+      # Generate primitive for GUID
+      s4 = -> (((1+Math.random())*0x10000)|0).toString(16).substring(1)
+
+      "#{s4()+s4()}-#{s4()}-#{s4()}-#{s4()}-#{s4()+s4()+s4()}".toUpperCase()
 
     # Resize an element to the approximate height of the workspace
     #

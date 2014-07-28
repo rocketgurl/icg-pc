@@ -8,31 +8,31 @@ define [
 
     # Setup commons references to parents and this element
     initialize : (options) ->
-      [@$el, @policy, @policy_view] = [options.$el, options.policy, options.policy_view]
-      @$el.append("<div id=\"zd_shim_#{@cid}\" class=\"zd-shim\"><div id=\"zd_loader_#{@cid}\" class=\"zd-loader\"></div></div>");
+      _.bindAll this, 'fetchSuccess'
+      @policy = options.policy
+      @policy_view = options.policy_view
 
-      @fetchSuccess = _.bind(@fetchSuccess, this) # resolve a scope issue
+      @shim = $("""
+        <div id="zd_shim_#{@cid}" class="zd-shim">
+          <div id="zd_loader_#{@cid}" class="zd-loader"></div>
+        </div>
+        """)
 
+      @$el.append @shim;
+      @attach_loader()
       this
 
     # Get tickets from the ZenDesk proxy
     fetch : ->
-      @show()
       policyQuery = @policy.getPolicyId()
+
       #ICS-2486 - remove the final two digits (representing the term) so we can grab all tickets
-      policyQuery = policyQuery.substring(0, policyQuery.length-2)      
-      @fetch_tickets(policyQuery)
+      policyQuery = policyQuery.substring 0, policyQuery.length - 2
+      @fetch_tickets policyQuery
 
     render : ->
       @remove_loader()
-      @$el.find("#zd_shim_#{@cid}").html @Mustache.render tpl_zd_container, { results : @tickets.results }
-
-    show : ->
-      @$el.fadeIn 'fast', =>
-        @attach_loader()
-
-    hide : ->
-      @$el.hide()
+      @shim.html @Mustache.render tpl_zd_container, { results : @tickets.results }
 
     attach_loader : ->
       if $("#zd_loader_#{@cid}").length > 0
@@ -72,7 +72,7 @@ define [
     fetchSuccess : (data, textStatus, jqXHR) ->
       @tickets = @processResults data
       @render()
-      @policy_view.resize_workspace(@$el, null)
+      @policy_view.resize_view @$el
       @tickets
 
     fetchError : (jqXHR, textStatus, errorThrown) ->

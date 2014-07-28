@@ -1,0 +1,7 @@
+{{#attachments.length}}
+<ul class="attachment-list">
+  {{#attachments}}
+  <li class="attachment"><a id="{{cid}}" href="{{location}}{{objectKey}}" class="file-delete-link"><span class="glyphicon glyphicon-remove"></span></a> <span class="attachment-filename">{{fileName}}</span></li>
+  {{/attachments}}
+</ul>
+{{/attachments.length}}

@@ -1,12 +1,26 @@
 /* Page */
+
+html {
+  background: $lightgray;
+}
+
+body {
+  min-width: 1200px;
+  text-rendering: optimizeLegibility;
+}
+
 #page {
-	@include background-image(linear-gradient(top, $blue, darken($blue, 10)));	
+  @include background-image(linear-gradient(top, $blue, darken($blue, 10)));
 }
 
-.button-green {
-	@include simple-color (79, 100%, 32%);
+a {
+  &:hover,
+  &:focus {
+    text-decoration: inherit;
+  }
 }
 
-.button-disabled {
-	@include simple-color (360, 0%, 93%);
+ul {
+  @include clearfix();
+  @extend .list-unstyled;
 }

@@ -1,64 +1,56 @@
 #herald-container {
-	background-color: rgba(0,0,0,.25);
+  background-color: rgba(0, 0, 0, 0.25);
 }
 
 .herald-modal {
-	background-color: #fff !important;
-	color: #333 !important;
-	border: #ccc 1px solid;
-	box-shadow: #666 0 0 10px;
+  background-color: #fff !important;
+  color: #333 !important;
+  border: #ccc 1px solid;
+  box-shadow: #666 0 0 10px;
 }
 
 .herald-modal-content {
-	@include sans;
-	@include font-size(14);
-
-	h2 {
-		font-weight: bold;
-		@include font-size(20);
-		color: $blue;
-		padding: 0;
-		margin: 0 0 10px;
-	}
-
-	h3 {
-		font-weight: bold;
-		@include font-size(16);
-		color: $blue;
-		margin: 20px 0 10px 0;
-		padding: 0 0 10px 0;
-		border-bottom: #ccc 1px solid;
-	}
-
-	p {
-		margin: 10px 0;
-		line-height: 1.4em;
-	}
-
-	ul {
-		margin: 10px 0;
-		padding: 0;
-	}
-
-	li {
-		list-style-type: disc;
-		margin: 2px 2px 2px 15px;
-		line-height: 1.4em;
-	}
-
-	strong, b {
-		font-weight: bold;
-	}
-
-	em {
-		font-style: italic;
-	}
-
-	a {
-		color: $blue;
-		text-decoration: none;
-		&:hover {
-			text-decoration: underline;
-		}
-	}
+  @include sans;
+  @include font-size(14);
+  h2 {
+    font-weight: bold;
+    @include font-size(20);
+    color: $blue;
+    padding: 0;
+    margin: 0 0 10px;
+  }
+  h3 {
+    font-weight: bold;
+    @include font-size(16);
+    color: $blue;
+    margin: 20px 0 10px 0;
+    padding: 0 0 10px 0;
+    border-bottom: #ccc 1px solid;
+  }
+  p {
+    margin: 10px 0;
+    line-height: 1.4em;
+  }
+  ul {
+    margin: 10px 0;
+    padding: 0;
+  }
+  li {
+    list-style-type: disc;
+    margin: 2px 2px 2px 15px;
+    line-height: 1.4em;
+  }
+  strong, b {
+    font-weight: bold;
+  }
+  em {
+    font-style: italic;
+  }
+  a {
+    color: $blue;
+    text-decoration: none;
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
