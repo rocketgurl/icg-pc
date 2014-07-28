@@ -1,6 +1,14 @@
 Updates
 -------
 
+### 2.6.0 - Jul 29, 2014
+
+- [ICS-2374](https://icg360.atlassian.net/browse/ICS-2374) Introducing Policy Central HTML Quick View
+- [ICS-2693](https://icg360.atlassian.net/browse/ICS-2693) Update wic-ho3-nj and ofcc-ho3-nj IPM endorse/renewal forms for WindstormDeductibleOption choices
+- [ICS-2700](https://icg360.atlassian.net/browse/ICS-2700) Update ofcc-ho3-ca IPM forms for SecuritiesSpecialLimits enum
+- [ICS-2709](https://icg360.atlassian.net/browse/ICS-2709) Change DataType for InsuredMailingAddressZip in Change Customer Forms
+- [ICS-2713](https://icg360.atlassian.net/browse/ICS-2713) Update wic-al Renewal IPM forms for WindstormDeductibleOption
+
 ### 2.5.6 - Jul 15, 2014
 
 - [ICS-2667](https://icg360.atlassian.net/browse/ICS-2667) Update ofcc-ak-ho3 Endorse forms for Other Structures
