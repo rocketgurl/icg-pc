@@ -1,8 +1,7 @@
 define [
   'BaseModel'
-  'Helpers'
   'mustache'
-], (BaseModel, Helpers, Mustache) ->
+], (BaseModel, Mustache) ->
 
   #### Policy
   #
@@ -185,9 +184,9 @@ define [
       accountingDataItems = accountingData.DataItem
       invoiceDueDate      = @getDataItem(accountingDataItems, 'InvoiceDueDateCurrent') || ''
       equityDate          = @getDataItem(accountingDataItems, 'EquityDate') || ''
-      pastDueBalance      = Helpers.formatMoney(@getDataItem(accountingDataItems, 'PastDueBalance'))
+      pastDueBalance      = @Helpers.formatMoney(@getDataItem(accountingDataItems, 'PastDueBalance'))
       paymentDateLast     = @_stripTimeFromDate(@getDataItem(accountingDataItems, 'PaymentDateLast') || '')
-      paymentAmountLast   = Helpers.formatMoney(@getDataItem(accountingDataItems, 'PaymentAmountLast'))
+      paymentAmountLast   = @Helpers.formatMoney(@getDataItem(accountingDataItems, 'PaymentAmountLast'))
       paymentPlan         = accountingData.PaymentPlan || {}
       billingIsPastDue    = pastDueBalance > 0
       policyIsQuote       = @isQuote()
@@ -197,7 +196,7 @@ define [
         IsQuote           : policyIsQuote
         IsNotQuote        : not policyIsQuote
         PolicyState       : @getPrettyPolicyState()
-        OriginatingSystem : Helpers.prettyMap(@getOriginatingSystem(), {
+        OriginatingSystem : @Helpers.prettyMap(@getOriginatingSystem(), {
             'pxClient' : 'Agent Portal'
             'pxServer' : 'Agent Portal'
           }, 'Unknown')
@@ -232,9 +231,9 @@ define [
         # Billing
         BillingIsPastDue   : billingIsPastDue
         BillingIsCurrent   : not billingIsPastDue
-        TotalPremium       : Helpers.formatMoney(@getTermDataItemValue('TotalPremium'))
-        OutstandingBalance : Helpers.formatMoney(@getOutstandingBalance(accountingDataItems))
-        MinimumPayment     : Helpers.formatMoney(@getDataItem(accountingDataItems, 'MinimumPaymentDue'))
+        TotalPremium       : @Helpers.formatMoney(@getTermDataItemValue('TotalPremium'))
+        OutstandingBalance : @Helpers.formatMoney(@getOutstandingBalance(accountingDataItems))
+        MinimumPayment     : @Helpers.formatMoney(@getDataItem(accountingDataItems, 'MinimumPaymentDue'))
         LastPaymentReceived: @getLastPaymentReceived(paymentAmountLast, paymentDateLast)
         Installments       : @getPaymentPlanInstallments(paymentPlan.Installments?.Installment)
         InvoiceDueDate     : @_stripTimeFromDate(invoiceDueDate)
@@ -242,7 +241,7 @@ define [
         PaymentAmountLast  : paymentAmountLast
         PastDueBalance     : pastDueBalance
         PaymentDateLast    : paymentDateLast
-        PaymentPlanType    : Helpers.prettyMap(paymentPlan.type, {
+        PaymentPlanType    : @Helpers.prettyMap(paymentPlan.type, {
             'invoice'        : 'Invoice'
             'fourPay'        : 'Four Pay'
             'fourPayInvoice' : 'Four Pay Invoice'
@@ -276,7 +275,7 @@ define [
         stateNode = _.find(policyStates, (node) -> $(node).text() != state)
         state = $(stateNode).text() if stateNode
       
-      Helpers.prettyMap state, prettyStates
+      @Helpers.prettyMap state, prettyStates
 
     getOriginatingSystem : ->
       @getTermDataItemValue 'QuoteOriginationSystem'
@@ -296,10 +295,10 @@ define [
     # Try to standardize it to an array of installment objects
     getPaymentPlanInstallments : (installments) ->
       installments = @_sanitizeNodeArray installments
-      _.map(installments, (item) ->
-        item.amount = Helpers.formatMoney item.amount
-        item.charges = Helpers.formatMoney item.charges
-        item.feesAndPremiums = Helpers.formatMoney item.feesAndPremiums
+      _.map(installments, (item) =>
+        item.amount = @Helpers.formatMoney item.amount
+        item.charges = @Helpers.formatMoney item.charges
+        item.feesAndPremiums = @Helpers.formatMoney item.feesAndPremiums
         return item
         )
 
