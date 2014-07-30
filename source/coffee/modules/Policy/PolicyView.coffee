@@ -125,11 +125,11 @@ define [
       @messenger = new Messenger(@options.view, @cid)
 
       # Set the initial swf container size
-      @resize_swf_container()
+      # @resize_swf_container()
 
       # Attach a resize event listener to the window
-      resize_swf_container = _.debounce @resize_swf_container, 300
-      $(window).resize resize_swf_container
+      # resize_swf_container = _.debounce @resize_swf_container, 300
+      # $(window).resize resize_swf_container
 
       @embed_swf()
 
