@@ -62,7 +62,7 @@ define [
       @determineDocIndex()
 
       # Normalize attachments to have a label property
-      @normaizeAttachmentLabel() if @isAttachment
+      @normalizeAttachmentLabel() if @isAttachment
 
       # Move "CachedItems" into the model for easy access
       @setCachedItems() if @has 'CachedItem'
@@ -109,7 +109,7 @@ define [
     getHref : ->
       @get('location') || @get('href') || ''
 
-    normaizeAttachmentLabel : ->
+    normalizeAttachmentLabel : ->
       name = @get 'name'
       @set 'label', name
 
