@@ -136,7 +136,8 @@ define [
       path = if _.isString path then path.split(' ') else path
 
       # If path is empty, then we're done and return collection
-      if _.isArray(path) && path.length == 0 then return collection
+      if _.isArray(path) && path.length == 0
+        return collection
 
       property = _.first(path)
 
@@ -155,18 +156,21 @@ define [
         # we need to look for the object within this collection with
         # the matching kay.val using filter - we then pop the first object
         # out of the filtered array and send it back
-        if _.isArray(collection[property]) && !_.isUndefined key
+        if key && val
+          nodes = Helpers.sanitizeNodeArray collection[property]
 
           # Are we trying to inspect a DataItem like so?
           # DataItem[value=Mortgagee1AddressCityProper]
           # Identifier nodes also use the name / value structure
           # of DataItem
           if property == 'DataItem' || property == 'Identifier'
-            return @findDataItem collection[property], val
+            return @findDataItem nodes, val
 
-          # Make a filter obj from key : val and use it in _.where
+          # Make a query obj from key : val and use it in _.where
           # to find any objects in the collection array that match
-          collection = _.where collection[property], _.object([key],[val])
+          query = {}
+          query[key] = val
+          collection = _.where nodes, query
 
           return @findProperty _.first(collection), _.rest(path)
         else
