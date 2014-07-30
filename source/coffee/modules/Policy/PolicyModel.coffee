@@ -158,11 +158,12 @@ define [
           state   : @get('state').text || @get('state')
           period  : @getPolicyPeriod()
           carrier : @getModelProperty('Management Carrier')
+          isQuote : @isQuote()
 
-      #ICS-2446
-      pcFlag = @find?('Management Flags Flag[name=PendingCancellation]')
-      if pcFlag?
+      if @isPendingCancel true
         ipm_header.status = 'Pending Cancellation'
+      else if @isPendingNonRenewal()
+        ipm_header.status = 'Pending Non-Renewal'
      
       # ICS-1641
       if @isQuote()
