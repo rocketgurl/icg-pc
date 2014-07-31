@@ -185,8 +185,7 @@ define [
       invoiceDueDate      = @getDataItem(accountingDataItems, 'InvoiceDueDateCurrent') || ''
       equityDate          = @getDataItem(accountingDataItems, 'EquityDate') || ''
       pastDueBalance      = @Helpers.formatMoney(@getDataItem(accountingDataItems, 'PastDueBalance'))
-      paymentDateLast     = @_stripTimeFromDate(@getDataItem(accountingDataItems, 'PaymentDateLast') || '')
-      paymentAmountLast   = @Helpers.formatMoney(@getDataItem(accountingDataItems, 'PaymentAmountLast'))
+      paymentItemLast     = @getLastPaymentLineItem accountingData
       paymentPlan         = accountingData.PaymentPlan || {}
       billingIsPastDue    = pastDueBalance > 0
       policyIsQuote       = @isQuote()
@@ -234,13 +233,11 @@ define [
         TotalPremium       : @Helpers.formatMoney(@getTermDataItemValue('TotalPremium'))
         OutstandingBalance : @Helpers.formatMoney(@getOutstandingBalance(accountingDataItems))
         MinimumPayment     : @Helpers.formatMoney(@getDataItem(accountingDataItems, 'MinimumPaymentDue'))
-        LastPaymentReceived: @getLastPaymentReceived(paymentAmountLast, paymentDateLast)
+        LastPaymentReceived: @getLastPaymentReceived(paymentItemLast)
         Installments       : @getPaymentPlanInstallments(paymentPlan.Installments?.Installment)
         InvoiceDueDate     : @_stripTimeFromDate(invoiceDueDate)
         EquityDate         : @_stripTimeFromDate(equityDate)
-        PaymentAmountLast  : paymentAmountLast
         PastDueBalance     : pastDueBalance
-        PaymentDateLast    : paymentDateLast
         PaymentPlanType    : @Helpers.prettyMap(paymentPlan.type, {
             'invoice'        : 'Invoice'
             'fourPay'        : 'Four Pay'
@@ -284,12 +281,20 @@ define [
     getOutstandingBalance : (items) ->
       @getDataItem(items, 'OutstandingBalanceDue') || @getDataItem(items, 'OutstandingBalance')
 
+    getLastPaymentLineItem : (accountingData) ->
+      lineItems = @_sanitizeNodeArray accountingData?.Ledger?.LineItem
+      payments  = _.where lineItems, { type : 'PAYMENT' }
+      _.last payments
+
     # Return formatted version of last payment amount and last payment date
     # <PaymentAmountLast> - <PaymentDateLast> if PaymentDateLast > 1900-01-01
-    getLastPaymentReceived : (amount, date) ->
-      interval = Date.parse date
-      if interval > -1
-        "#{amount} - #{date}"
+    getLastPaymentReceived : (paymentItem) ->
+      if _.isObject paymentItem
+        amount = @Helpers.formatMoney paymentItem.value
+        date = @_stripTimeFromDate paymentItem.timestamp
+        unixInterval = Date.parse date
+        if unixInterval > -1
+          "#{amount} - #{date}"
 
     # Accounting.PaymentPlan.Installments is a mess of different possible data types
     # Try to standardize it to an array of installment objects
