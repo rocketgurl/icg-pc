@@ -75,7 +75,7 @@
     },
     'tab': {
       deps: ['jquery']
-    }
+    },
     'collapse': {
       deps: ['transition']
     }

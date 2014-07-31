@@ -282,8 +282,9 @@ define [
       @getDataItem(items, 'OutstandingBalanceDue') || @getDataItem(items, 'OutstandingBalance')
 
     getLastPaymentLineItem : (accountingData) ->
-      lineItems = @_sanitizeNodeArray accountingData?.Ledger?.LineItem
-      payments  = _.where lineItems, { type : 'PAYMENT' }
+      lineItems = accountingData?.Ledger?.LineItem
+      lineItems = @_sanitizeNodeArray lineItems
+      payments  = _.where(lineItems, { type : 'PAYMENT' })
       _.last payments
 
     # Return formatted version of last payment amount and last payment date
