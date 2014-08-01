@@ -33,8 +33,8 @@ define [
 
       # Initialize module
       require ["modules/#{@options.module_type}"], (Module) =>
+        console.log Module, @options.module_type
         @module = new Module(@, @app)
-        console.log @module
         @module.load() if _.has(Module.prototype, 'load')
 
       @render()
