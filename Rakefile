@@ -29,7 +29,7 @@ RJS_BUILD = "#{ENV['REQUIRE_JS_PATH']} -o #{RJS_CONFIG}"
 # CoffeeScript Compilation commands
 COFFEE_SOURCE = file_join_safe('source', 'coffee')
 COFFEE_OUTPUT = file_join_safe('source', 'js')
-COFFEE_BUILD = "#{ENV['COFFEE_SCRIPT_PATH']} -o #{COFFEE_OUTPUT} -c #{COFFEE_SOURCE}"
+COFFEE_BUILD = "#{ENV['COFFEE_PATH']} -o #{COFFEE_OUTPUT} -c #{COFFEE_SOURCE}"
 
 # Build location
 BUILD_DIR = "build"
