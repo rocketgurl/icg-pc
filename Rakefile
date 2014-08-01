@@ -29,7 +29,7 @@ RJS_BUILD = "#{ENV['REQUIRE_JS_PATH']} -o #{RJS_CONFIG}"
 # CoffeeScript Compilation commands
 COFFEE_SOURCE = file_join_safe('source', 'coffee')
 COFFEE_OUTPUT = file_join_safe('source', 'js')
-COFFEE_BUILD = "#{ENV['COFFEE_SCRIPT_PATH']} -o #{COFFEE_OUTPUT} -c #{COFFEE_SOURCE}"
+COFFEE_BUILD = "#{ENV['COFFEE_PATH']} -o #{COFFEE_OUTPUT} -c #{COFFEE_SOURCE}"
 
 # Build location
 BUILD_DIR = "build"
@@ -124,7 +124,7 @@ task :build => [:coffee, :version, :compile, :prune_build, :cleanup, :liverebel]
 
 # If CoffeeScript is present in the ENV then compile .coffee to .js
 task :coffee do
-  unless ENV['COFFEE_SCRIPT_PATH'].nil?
+  unless ENV['COFFEE_PATH'].nil?
     unless system "#{COFFEE_BUILD}"
       puts red "!!! CoffeeScript compile FAILED!"
       exit 1
