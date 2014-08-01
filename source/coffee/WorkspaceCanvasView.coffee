@@ -34,6 +34,7 @@ define [
       # Initialize module
       require ["modules/#{@options.module_type}"], (Module) =>
         @module = new Module(@, @app)
+        console.log @module
         @module.load() if _.has(Module.prototype, 'load')
 
       @render()
