@@ -127,7 +127,10 @@ task :coffee do
   puts '<<<<<<<<<<<<< I AM THAT I AM >>>>>>>>>>>>>>>>>>'
   puts 'COFFEE_SCRIPT_PATH: ', ENV['COFFEE_SCRIPT_PATH']
   puts 'COFFEE_PATH: ', ENV['COFFEE_PATH']
-  unless ENV['COFFEE_SCRIPT_PATH'].nil?
+  if ENV['COFFEE_PATH'].nil?
+    puts red "!!! COFFEE_SCRIPT_PATH is nil !!!"
+    exit 1
+  else
     unless system "#{COFFEE_BUILD}"
       puts red "!!! CoffeeScript compile FAILED!"
       exit 1
