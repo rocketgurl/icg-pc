@@ -124,9 +124,8 @@ task :build => [:coffee, :version, :compile, :prune_build, :cleanup, :liverebel]
 
 # If CoffeeScript is present in the ENV then compile .coffee to .js
 task :coffee do
-  puts '<<<<<<<<<<<<< I AM THAT I AM >>>>>>>>>>>>>>>>>>'
-  puts 'COFFEE_SCRIPT_PATH: ', ENV['COFFEE_SCRIPT_PATH']
-  puts 'COFFEE_PATH: ', ENV['COFFEE_PATH']
+  puts "'COFFEE_SCRIPT_PATH: #{ENV['COFFEE_SCRIPT_PATH']}"
+  puts "'COFFEE_PATH: #{ENV['COFFEE_PATH']}"
   if ENV['COFFEE_PATH'].nil?
     puts red "!!! COFFEE_SCRIPT_PATH is nil !!!"
     exit 1
