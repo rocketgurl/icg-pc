@@ -130,6 +130,7 @@ task :coffee do
   else
     unless system "#{COFFEE_BUILD}"
       puts red "!!! CoffeeScript compile FAILED #{$?} !!!"
+      puts red "!!! Sys command: #{COFFEE_BUILD}"
       exit 1
     else
       puts green "  >> CoffeeScript compile a success"
