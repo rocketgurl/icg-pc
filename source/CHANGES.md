@@ -1,7 +1,7 @@
 Updates
 -------
 
-### 2.6.1.1 - Aug 5, 2014
+### 2.6.1.3 - Aug 5, 2014
 
 - [ICS-2601](https://icg360.atlassian.net/browse/ICS-2601) Fixes Pending Cancel showing up inappropriately 
 - [ICS-2724](https://icg360.atlassian.net/browse/ICS-2724) Adds a header status for Pending Non-Renewal on a policy view so that it is visible on all views, not just Quick View
@@ -9,7 +9,7 @@ Updates
 - [ICS-2728](https://icg360.atlassian.net/browse/ICS-2728) Adds sanitizing functionality to Notes in Quick View - helps with URL cut and paste
 - [ICS-2735](https://icg360.atlassian.net/browse/ICS-2735) Fixes Change Disposition popup problem that was keeping users from selecting from the drop down
 
-### 2 Jul 29, 2014
+### 2.6.0 - Jul 29, 2014
 
 - [ICS-2374](https://icg360.atlassian.net/browse/ICS-2374) Introducing Policy Central HTML Quick View
 - [ICS-2693](https://icg360.atlassian.net/browse/ICS-2693) Update wic-ho3-nj and ofcc-ho3-nj IPM endorse/renewal forms for WindstormDeductibleOption choices
