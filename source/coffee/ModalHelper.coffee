@@ -26,7 +26,9 @@ define [
       else
         menu.fadeIn('fast')
 
-      @overlayTrigger container.find(className)
+      #ICS-2735 Something changed which causes the overlayTrigger
+      #to keep users from being able to change values.  Hence, no more trigger.
+      #@overlayTrigger container.find(className)
 
       menu
 
