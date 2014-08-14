@@ -6,10 +6,6 @@ Initial client side build for the new unified Insight policy management applicat
 
 The default branch is `master`. Tagged releases should be built from master once all changes have been pull requested and merged. Day to day development should happen on the `develop` branch, or for larger projects, create a separate feature branch.
 
-### Deployment
-
-Production ready assets should be delivered as a tagged release build to the DevOps team. When a git [tag](http://git-scm.com/book/en/Git-Basics-Tagging) is created and pushed to Github, a Jenkins job is triggered that, among other things, optimizes the JavaScript modules with `r.js`, minifies the various assets, and appends the tag version to the Policy Central footer. The easiest way to trigger this Jenkins job is to draft a new release [here](https://github.com/icg360/policy-central/releases). Note: you can also run this job locally via `rake build`, which will create a compiled, minified version of Policy Central with the latest version appended to the footer in a directory named `build`. Make sure you have the latest tags locally by issuing a `git pull` from the command line.
-
 ### Dependencies
 
 * __JavaScript Libraries__
@@ -60,6 +56,12 @@ compiled JavaScript files via the RequireJS rules in
 
 Everything will be dumped in `build` and version numbers (taken from
 the most recent Git tag) will be added to the compiled files.
+
+Note: you'll need to have environment variables with the path to r.js and coffeescript set somewhere like your .bash_profile. See the [Rakefile](https://github.com/icg360/policy-central/blob/master/Rakefile) for details.
+
+### Deployment
+
+Production ready assets should be delivered as a tagged release build to the DevOps team. When a git [tag](http://git-scm.com/book/en/Git-Basics-Tagging) is created and pushed to Github, a Jenkins job is triggered that, among other things, optimizes the JavaScript modules with `r.js`, minifies the various assets, and appends the tag version to the Policy Central footer. The tagged release archive name will be prefixed with `policy_central_TAGGED`. The easiest way to trigger this Jenkins job is to draft a new release [here](https://github.com/icg360/policy-central/releases).
 
 ### Special note about IPM Forms
 
