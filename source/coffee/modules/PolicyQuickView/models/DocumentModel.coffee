@@ -30,6 +30,8 @@ define [
       '_letter$'       : 'Enrollment'
       '_payment$'      : 'Enrollment'
       'newbusiness'    : 'Policy_Packages'
+      'reinstate'      : 'Policy_Packages'
+      'policyrenew'    : 'Policy_Packages'
       'renewal'        : 'Policy_Packages'
       'declaration'    : 'Policy_Packages'
       'declination'    : 'Policy_Packages'
@@ -48,6 +50,9 @@ define [
       'General'         : 6
 
     initialize : ->
+      # Move "CachedItems" into the model for easier access
+      @setCachedItems() if @has 'CachedItem'
+
       @isAttachment = @has 'AttachedBy'
       @dateTime     = @getDateTime()
       @unixTime     = @dateTime.valueOf()
@@ -64,13 +69,11 @@ define [
       # Normalize attachments to have a label property
       @normalizeAttachmentLabel() if @isAttachment
 
-      # Move "CachedItems" into the model for easy access
-      @setCachedItems() if @has 'CachedItem'
-
     # Rules to determine how to group the documents
-    # Sets a 'docGroup' property on the model. The collections sorts and groups.
+    # Sets a 'docGroup' property on the model. The collection sorts and groups.
     # 1. Attachments all go into the Attachments group
     # 2. All other documents use the @groups mapping
+    # 3. Any unmatched docs fall through to the "General" docGroup
     determineDocGroup : ->
       subtype = @get 'subtype'
       if @isAttachment
@@ -81,7 +84,8 @@ define [
           if re.test subtype
             @set 'docGroup', group
             return true
-        @set('docGroup', 'General') unless @has 'docGroup'
+        unless @has 'docGroup'
+          @set 'docGroup', 'General'
       this
 
     # Set an index on the model, so that the group collection is orderable
@@ -93,7 +97,7 @@ define [
 
     # Get an instance of moment for future use
     getDateTime : ->
-      dateString = @get('lastUpdated') || @get('AttachedTimeStamp')
+      dateString = @get('lastUpdated') || @get('sourceLastUpdated') || @get('AttachedTimeStamp')
       moment dateString
 
     isPriorToPolicyInception : ->
