@@ -560,18 +560,18 @@ define [
 
       if noteData.Content.length or noteData.Attachments.length
         xml = """
-          <PolicyChangeSet schemaVersion="2.1" username="{{CreatedBy}}" description="Added via Policy Central">
+          <PolicyChangeSet schemaVersion="2.1" username="{{{CreatedBy}}}" description="Added via Policy Central">
             {{#Content}}
             <Note>
-              <Content><![CDATA[{{Content}}]]></Content>
+              <Content><![CDATA[{{{Content}}}]]></Content>
             </Note>
             {{/Content}}
             {{#Attachments.length}}
             <Attachments>
               {{#Attachments}}
-              <Attachment name="{{fileName}}" contentType="{{fileType}}">
+              <Attachment name="{{fileName}}" contentType="{{{fileType}}}">
                 <Description/>
-                <Location>{{location}}{{objectKey}}</Location>
+                <Location>{{{location}}}{{objectKey}}</Location>
               </Attachment>
               {{/Attachments}}
             </Attachments>
