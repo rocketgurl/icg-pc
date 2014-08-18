@@ -1,13 +1,48 @@
 <!DOCTYPE html>
-<!--[if lt IE 7]> <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
-<!--[if IE 7]>    <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
-<!--[if IE 8]>    <html class="no-js lt-ie9"> <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js"> <!--<![endif]-->
+<html class="no-js" id="pc-dev">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
 
   <title>Policy Central</title>
+
+  <script>
+    // Global ENV Setting
+    window.ICS360_ENV  = 'staging';
+    window.IPM_CAPABLE = true;
+    window.USE_PROXY   = true;
+  </script>
+
+  <script>
+    (function () {
+      var logIdMap = {
+        'staging'     : 'Lp0m6ID-MIqvcb',
+        'production'  : 'hCWm6ID-YrZOqb',
+        'development' : 'aCDS6ID-Oqd2Z'
+      };
+
+      // If we're in development mode, we don't want to clutter the staging or production logs.
+      // Check for the existence of the 'pc-dev' on the <html> node. We remove this during the
+      // rake build job, which should ensure that all environments log to the correct place.
+      var envId = document.documentElement.id === 'pc-dev' ? 'development' : window.ICS360_ENV;
+
+      window.Muscula = {
+        settings: {
+          logId: logIdMap[envId],
+          suppressErrors: false
+        }
+      };
+    })();
+    (function () {
+      var m = document.createElement('script'); m.type = 'text/javascript'; m.async = true;
+      m.src = (window.location.protocol == 'https:' ? 'https:' : 'http:') +
+        '//musculahq.appspot.com/Muscula7.js';
+      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(m, s);
+      window.Muscula.run=function(){var a;eval(arguments[0]);window.Muscula.run=function(){};};
+      window.Muscula.errors=[];window.onerror=function(){window.Muscula.errors.push(arguments);
+      return window.Muscula.settings.suppressErrors===undefined;}
+    })();
+  </script>
 
   <meta name="description" content="Policy Central | Powered by Insight">
   <meta name="viewport" content="width=device-width">
@@ -77,22 +112,16 @@
     </footer>
   </div>
   <script>
-  // Global ENV Setting
-  window.ICS360_ENV  = 'staging';
-  // Something
-  window.IPM_CAPABLE = true;
-  window.USE_PROXY   = true;
-
   // SWF Handler
   var ready = function() {
     window.policyViewInitSWF();
   }
 
-  // Google Analytics
-  var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
-  (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
-      g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
-      s.parentNode.insertBefore(g,s)}(document,'script'));
+  // Google Analytics (is not in use at this time)
+  // var _gaq=[['_setAccount','UA-XXXXX-X'],['_trackPageview']];
+  // (function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];
+  //     g.src=('https:'==location.protocol?'//ssl':'//www')+'.google-analytics.com/ga.js';
+  //     s.parentNode.insertBefore(g,s)}(document,'script'));
   </script>
 
   <!-- TEMPLATE: Flash Message Container -->

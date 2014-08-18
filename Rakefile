@@ -67,6 +67,10 @@ def append_version_number(version, file)
   doc = Nokogiri::HTML(f)
   f.close
 
+  # Remove 'pc-dev' id from <html> tag
+  # Used primarily to determine which Muscula log to use
+  doc.at_css('html').remove_attribute('id')
+
   span = doc.css "#version-number"
   span.each do |s|
     s.content = "#{version}"
