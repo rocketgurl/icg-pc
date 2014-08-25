@@ -39,10 +39,15 @@ define [
       # We need to either use the policy # or the quote #
       id = @params.id if @params.id?
       id ?= @params.url if @params.url?
+      urlRoot = @view.options.controller.services.pxcentral
+
+      # path to mock policies. uncomment with care.
+      # urlRoot = '/tests/mocks/'
+      # id = 'CRU4Q-266134_quote.xml'
 
       @policy_model = new PolicyModel(
         id      : id
-        urlRoot : @view.options.controller.services.pxcentral
+        urlRoot : urlRoot
         digest  : @digest
         module  : this
         )

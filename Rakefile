@@ -29,7 +29,7 @@ RJS_BUILD = "#{ENV['REQUIRE_JS_PATH']} -o #{RJS_CONFIG}"
 # CoffeeScript Compilation commands
 COFFEE_SOURCE = file_join_safe('source', 'coffee')
 COFFEE_OUTPUT = file_join_safe('source', 'js')
-COFFEE_BUILD = "#{ENV['COFFEE_SCRIPT_PATH']} -o #{COFFEE_OUTPUT} -c #{COFFEE_SOURCE}"
+COFFEE_BUILD = "#{ENV['COFFEE_PATH']} -o #{COFFEE_OUTPUT} -c #{COFFEE_SOURCE}"
 
 # Build location
 BUILD_DIR = "build"
@@ -66,6 +66,10 @@ def append_version_number(version, file)
   f = File.open(target_file)
   doc = Nokogiri::HTML(f)
   f.close
+
+  # Remove 'pc-dev' id from <html> tag
+  # Used primarily to determine which Muscula log to use
+  doc.at_css('html').remove_attribute('id')
 
   span = doc.css "#version-number"
   span.each do |s|
@@ -124,9 +128,13 @@ task :build => [:coffee, :version, :compile, :prune_build, :cleanup, :liverebel]
 
 # If CoffeeScript is present in the ENV then compile .coffee to .js
 task :coffee do
-  unless ENV['COFFEE_SCRIPT_PATH'].nil?
+  if ENV['COFFEE_PATH'].nil?
+    puts red "!!! ENV['COFFEE_PATH'] is nil !!!"
+    exit 1
+  else
     unless system "#{COFFEE_BUILD}"
-      puts red "!!! CoffeeScript compile FAILED!"
+      puts red "!!! CoffeeScript compile FAILED #{$?} !!!"
+      puts red "!!! Sys command: #{COFFEE_BUILD}"
       exit 1
     else
       puts green "  >> CoffeeScript compile a success"

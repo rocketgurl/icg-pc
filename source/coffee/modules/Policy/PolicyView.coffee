@@ -13,8 +13,7 @@ define [
   'text!modules/Policy/templates/tpl_policy_container.html'
   'text!modules/Policy/templates/tpl_policy_error.html'
   'text!modules/Policy/templates/tpl_ipm_header.html'
-  'text!modules/Policy/templates/tpl_ipm_header_pc.html'
-], (BaseView, Messenger, Base64, swfobject, PolicyQuickView, IPMModule, ZenDeskView, PolicyRepresentationView, QuotingModule, LossHistoryView, RenewalUnderwritingView, tpl_policy_container, tpl_policy_error, tpl_ipm_header, tpl_ipm_header_pc) ->
+], (BaseView, Messenger, Base64, swfobject, PolicyQuickView, IPMModule, ZenDeskView, PolicyRepresentationView, QuotingModule, LossHistoryView, RenewalUnderwritingView, tpl_policy_container, tpl_policy_error, tpl_ipm_header) ->
   PolicyView = BaseView.extend
 
     events :
@@ -126,11 +125,11 @@ define [
       @messenger = new Messenger(@options.view, @cid)
 
       # Set the initial swf container size
-      @resize_swf_container()
+      # @resize_swf_container()
 
       # Attach a resize event listener to the window
-      resize_swf_container = _.debounce @resize_swf_container, 300
-      $(window).resize resize_swf_container
+      # resize_swf_container = _.debounce @resize_swf_container, 300
+      # $(window).resize resize_swf_container
 
       @embed_swf()
 
@@ -243,19 +242,8 @@ define [
     # If the policy_header doesn't exist then build it, otherwise
     # just make visible
     build_policy_header : ->
-      
-      #ICS-2446
       ipm_header = @model.getIpmHeader()
-      if @policy_header.html() == ""
-        if ipm_header.status?
-          @policy_header.html @Mustache.render tpl_ipm_header_pc, ipm_header
-        else
-          @policy_header.html @Mustache.render tpl_ipm_header, ipm_header
-
-      # ICS-1641
-      if @model.isQuote()
-        @policy_header.find('h3').eq(0).html('Quote #')
-
+      @policy_header.html @Mustache.render tpl_ipm_header, ipm_header
       @POLICY_HEADER_OFFSET = @policy_header.height()
 
     resize_view : (element, offset, scroll) ->

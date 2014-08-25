@@ -1,8 +1,7 @@
 define [
   'BaseModel'
-  'Helpers'
   'mustache'
-], (BaseModel, Helpers, Mustache) ->
+], (BaseModel, Mustache) ->
 
   #### Policy
   #
@@ -158,11 +157,12 @@ define [
           state   : @get('state').text || @get('state')
           period  : @getPolicyPeriod()
           carrier : @getModelProperty('Management Carrier')
+          isQuote : @isQuote()
 
-      #ICS-2446
-      pcFlag = @find?('Management Flags Flag[name=PendingCancellation]')
-      if pcFlag?
+      if @isPendingCancel true
         ipm_header.status = 'Pending Cancellation'
+      else if @isPendingNonRenewal()
+        ipm_header.status = 'Pending Non-Renewal'
      
       # ICS-1641
       if @isQuote()
@@ -184,9 +184,8 @@ define [
       accountingDataItems = accountingData.DataItem
       invoiceDueDate      = @getDataItem(accountingDataItems, 'InvoiceDueDateCurrent') || ''
       equityDate          = @getDataItem(accountingDataItems, 'EquityDate') || ''
-      pastDueBalance      = Helpers.formatMoney(@getDataItem(accountingDataItems, 'PastDueBalance'))
-      paymentDateLast     = @_stripTimeFromDate(@getDataItem(accountingDataItems, 'PaymentDateLast') || '')
-      paymentAmountLast   = Helpers.formatMoney(@getDataItem(accountingDataItems, 'PaymentAmountLast'))
+      pastDueBalance      = @Helpers.formatMoney(@getDataItem(accountingDataItems, 'PastDueBalance'))
+      paymentItemLast     = @getLastPaymentLineItem accountingData
       paymentPlan         = accountingData.PaymentPlan || {}
       billingIsPastDue    = pastDueBalance > 0
       policyIsQuote       = @isQuote()
@@ -196,7 +195,7 @@ define [
         IsQuote           : policyIsQuote
         IsNotQuote        : not policyIsQuote
         PolicyState       : @getPrettyPolicyState()
-        OriginatingSystem : Helpers.prettyMap(@getOriginatingSystem(), {
+        OriginatingSystem : @Helpers.prettyMap(@getOriginatingSystem(), {
             'pxClient' : 'Agent Portal'
             'pxServer' : 'Agent Portal'
           }, 'Unknown')
@@ -231,17 +230,15 @@ define [
         # Billing
         BillingIsPastDue   : billingIsPastDue
         BillingIsCurrent   : not billingIsPastDue
-        TotalPremium       : Helpers.formatMoney(@getTermDataItemValue('TotalPremium'))
-        OutstandingBalance : Helpers.formatMoney(@getOutstandingBalance(accountingDataItems))
-        MinimumPayment     : Helpers.formatMoney(@getDataItem(accountingDataItems, 'MinimumPaymentDue'))
-        LastPaymentReceived: @getLastPaymentReceived(paymentAmountLast, paymentDateLast)
+        TotalPremium       : @Helpers.formatMoney(@getTermDataItemValue('TotalPremium'))
+        OutstandingBalance : @Helpers.formatMoney(@getOutstandingBalance(accountingDataItems))
+        MinimumPayment     : @Helpers.formatMoney(@getDataItem(accountingDataItems, 'MinimumPaymentDue'))
+        LastPaymentReceived: @getLastPaymentReceived(paymentItemLast)
         Installments       : @getPaymentPlanInstallments(paymentPlan.Installments?.Installment)
         InvoiceDueDate     : @_stripTimeFromDate(invoiceDueDate)
         EquityDate         : @_stripTimeFromDate(equityDate)
-        PaymentAmountLast  : paymentAmountLast
         PastDueBalance     : pastDueBalance
-        PaymentDateLast    : paymentDateLast
-        PaymentPlanType    : Helpers.prettyMap(paymentPlan.type, {
+        PaymentPlanType    : @Helpers.prettyMap(paymentPlan.type, {
             'invoice'        : 'Invoice'
             'fourPay'        : 'Four Pay'
             'fourPayInvoice' : 'Four Pay Invoice'
@@ -275,7 +272,7 @@ define [
         stateNode = _.find(policyStates, (node) -> $(node).text() != state)
         state = $(stateNode).text() if stateNode
       
-      Helpers.prettyMap state, prettyStates
+      @Helpers.prettyMap state, prettyStates
 
     getOriginatingSystem : ->
       @getTermDataItemValue 'QuoteOriginationSystem'
@@ -284,21 +281,30 @@ define [
     getOutstandingBalance : (items) ->
       @getDataItem(items, 'OutstandingBalanceDue') || @getDataItem(items, 'OutstandingBalance')
 
+    getLastPaymentLineItem : (accountingData) ->
+      lineItems = accountingData?.Ledger?.LineItem
+      lineItems = @_sanitizeNodeArray lineItems
+      payments  = _.where(lineItems, { type : 'PAYMENT' })
+      _.last payments
+
     # Return formatted version of last payment amount and last payment date
     # <PaymentAmountLast> - <PaymentDateLast> if PaymentDateLast > 1900-01-01
-    getLastPaymentReceived : (amount, date) ->
-      interval = Date.parse date
-      if interval > -1
-        "#{amount} - #{date}"
+    getLastPaymentReceived : (paymentItem) ->
+      if _.isObject paymentItem
+        amount = @Helpers.formatMoney paymentItem.value
+        date = @_stripTimeFromDate paymentItem.timestamp
+        unixInterval = Date.parse date
+        if unixInterval > -1
+          "#{amount} - #{date}"
 
     # Accounting.PaymentPlan.Installments is a mess of different possible data types
     # Try to standardize it to an array of installment objects
     getPaymentPlanInstallments : (installments) ->
       installments = @_sanitizeNodeArray installments
-      _.map(installments, (item) ->
-        item.amount = Helpers.formatMoney item.amount
-        item.charges = Helpers.formatMoney item.charges
-        item.feesAndPremiums = Helpers.formatMoney item.feesAndPremiums
+      _.map(installments, (item) =>
+        item.amount = @Helpers.formatMoney item.amount
+        item.charges = @Helpers.formatMoney item.charges
+        item.feesAndPremiums = @Helpers.formatMoney item.feesAndPremiums
         return item
         )
 
@@ -554,18 +560,18 @@ define [
 
       if noteData.Content.length or noteData.Attachments.length
         xml = """
-          <PolicyChangeSet schemaVersion="2.1" username="{{CreatedBy}}" description="Added via Policy Central">
+          <PolicyChangeSet schemaVersion="2.1" username="{{{CreatedBy}}}" description="Added via Policy Central">
             {{#Content}}
             <Note>
-              <Content><![CDATA[{{Content}}]]></Content>
+              <Content><![CDATA[{{{Content}}}]]></Content>
             </Note>
             {{/Content}}
             {{#Attachments.length}}
             <Attachments>
               {{#Attachments}}
-              <Attachment name="{{fileName}}" contentType="{{fileType}}">
+              <Attachment name="{{fileName}}" contentType="{{{fileType}}}">
                 <Description/>
-                <Location>{{location}}{{objectKey}}</Location>
+                <Location>{{{location}}}{{objectKey}}</Location>
               </Attachment>
               {{/Attachments}}
             </Attachments>

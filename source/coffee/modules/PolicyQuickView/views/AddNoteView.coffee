@@ -16,6 +16,17 @@ define [
       'change .file-attach-input' : 'uploadFile'
       'submit .add-note-form'     : 'addNote'
 
+    # used to replace evil MS Word characters in the notes field
+    msCharMap :
+      '\u2013'  : '--'  # "–"
+      '\u2014'  : '--'  # "—"
+      '\u2018'  : '\''  # "‘"
+      '\u2019'  : '\''  # "’"
+      '\u201c'  : '"'   # "“"
+      '\u201d'  : '"'   # "”"
+      '\u2022'  : '*'   # "•"
+      '\u2026'  : '...' # "…"
+
     initialize : (options) ->
       @attachmentsLocation = options.attachmentsLocation
       @POLICY = policy = options.policy
@@ -47,10 +58,21 @@ define [
       @attachIframe         = @$("iframe[name=attach-iframe-#{@qvid}]")
       @noteText             = @$('.note-text')
 
+    sanitizeMSChars : (input) ->
+      output = input
+      try
+        _.each @msCharMap, (replace, search) ->
+          search = new RegExp search, 'g'
+          output = output.replace search, replace
+        output
+      catch
+        input
+
     addNote : (e) ->
       noteValue = @noteText.val() || ''
       if noteValue
         @addNoteButton.button 'loading'
+        noteValue = @sanitizeMSChars noteValue
         @noteData = @POLICY.postNote noteValue, @attachments.toJSON(), @addNoteSuccess, @addNoteError
       return false
 
