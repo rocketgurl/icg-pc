@@ -1,6 +1,15 @@
 Updates
 -------
 
+### 2.6.2 - Aug 26, 2014
+
+- [ICS-2730](https://icg360.atlassian.net/browse/ICS-2730) QuickView documents show current datetime instead of document datetime
+- [ICS-2736](https://icg360.atlassian.net/browse/ICS-2736) Quick View Notes displaying HTML codes instead of symbols
+- [ICS-2770](https://icg360.atlassian.net/browse/ICS-2770) Include Muscula in Policy Central for Stage & Prod
+- [ICS-2734](https://icg360.atlassian.net/browse/ICS-2734) Add new reason code to be used when a non-payment PCN is being rescinded for a UW PCN
+- [ICS-2766](https://icg360.atlassian.net/browse/ICS-2766) Update acic-ho3-sc IPM Endorse forms
+- [ICS-2767](https://icg360.atlassian.net/browse/ICS-2767) Update ofcc-ho3-ak IPM Endorse forms
+
 ### 2.6.1.3 - Aug 5, 2014
 
 - [ICS-2601](https://icg360.atlassian.net/browse/ICS-2601) Fixes Pending Cancel showing up inappropriately 
