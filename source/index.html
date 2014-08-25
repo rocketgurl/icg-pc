@@ -14,6 +14,7 @@
   </script>
 
   <script>
+    // Muscula Logs are loaded in this block
     (function () {
       var logIdMap = {
         'staging'     : 'Lp0m6ID-MIqvcb',
@@ -21,7 +22,6 @@
         'development' : 'aCDS6ID-Oqd2Z'
       };
 
-      // If we're in development mode, we don't want to clutter the staging or production logs.
       // Check for the existence of the 'pc-dev' on the <html> node. We remove this during the
       // rake build job, which should ensure that all environments log to the correct place.
       var envId = document.documentElement.id === 'pc-dev' ? 'development' : window.ICS360_ENV;
@@ -32,16 +32,18 @@
           suppressErrors: false
         }
       };
-    })();
-    (function () {
-      var m = document.createElement('script'); m.type = 'text/javascript'; m.async = true;
-      m.src = (window.location.protocol == 'https:' ? 'https:' : 'http:') +
-        '//musculahq.appspot.com/Muscula7.js';
-      var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(m, s);
-      window.Muscula.run=function(){var a;eval(arguments[0]);window.Muscula.run=function(){};};
-      window.Muscula.errors=[];window.onerror=function(){window.Muscula.errors.push(arguments);
-      return window.Muscula.settings.suppressErrors===undefined;}
-    })();
+
+      // Remove this check if you want to log dev errors for some reason.
+      if (envId !== 'development') {
+        var m = document.createElement('script'); m.type = 'text/javascript'; m.async = true;
+        m.src = (window.location.protocol == 'https:' ? 'https:' : 'http:') +
+          '//musculahq.appspot.com/Muscula7.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(m, s);
+        window.Muscula.run=function(){var a;eval(arguments[0]);window.Muscula.run=function(){};};
+        window.Muscula.errors=[];window.onerror=function(){window.Muscula.errors.push(arguments);
+        return window.Muscula.settings.suppressErrors===undefined;}
+      }
+    }());
   </script>
 
   <meta name="description" content="Policy Central | Powered by Insight">
