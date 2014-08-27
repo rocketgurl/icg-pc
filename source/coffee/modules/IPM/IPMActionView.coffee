@@ -245,6 +245,58 @@ define [
 
       changed
 
+    # **Mapping changed values to additional fields**
+    #
+    # See ICS-2033 & ICS-2034
+    # When changes are made to a particular set of fields, defined as keys in
+    # the `keyMap` parameter, automatically update the corresponding values.
+    # Returns an object of mapped values
+    #
+    # @param `keyMap`   _Object_ maps keys to corresponding values
+    # @param `formVals` _Object_ collection of current values in the current form
+    # @param `changes`  _Array_  [optional] list of changed form values that will be sent to the transaction request
+    # @param `combined` _Object_ [optional] certain fields combine the values of other fields
+    #
+    mapChangedValues : (keyMap, combined) ->
+      changes  = @values.changedValues
+      formVals = @values.formValues
+      mappedItems = {}
+
+      _.each changes, (change) ->
+        if (mappedKey = keyMap[change]) && formVals[change]?
+          mappedItems[mappedKey] = formVals[change]
+
+      _.each combined, (list, key) ->
+        if (_.intersection list, changes).length
+          concatVal = ''
+          _.each list, (item) ->
+            concatVal += "#{formVals[item]} " if formVals[item]
+
+          if concatVal.length
+            mappedItems[key] = concatVal.trim()
+
+      mappedItems unless _.isEmpty mappedItems
+
+    # **Commit changes that have been mapped to a separate set of dataItems**
+    #
+    # @param `changes`   _Object_ collection of changes to be committed
+    # @param `changeSet` _Object_ an instance of an IPMChangeSet with the appropriate @ACTION
+    #
+    commitMappedChanges : (changes, changeSet) ->
+      values = { formValues : changes }
+      values.formValues.changedItems = _.map changes, (val, key) ->
+        { name : key, value : val }
+
+      values.formValues.effectiveDate = '__deleteEmptyProperty'
+      values.formValues.appliedDate = '__deleteEmptyProperty'
+
+      # Assemble the ChangeSet XML and send to server
+      changeSet.commitChange(
+        changeSet.getPolicyChangeSet(values)
+        @callbackSuccess
+        @callbackError
+        )
+
     # Use the vocabTerms (model.json) to derive the policy data the form needs
     # specific to this ActionView and cache it.
     #
