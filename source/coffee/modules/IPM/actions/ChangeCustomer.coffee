@@ -139,6 +139,31 @@ define [
                  @field('PropertyZipCode').val())
       @loadValue('InsuredMailingAddressLine2', "")
 
+    # Map any changes to primary insured name or mailing address to payee fields
+    # And submit additional transaction request
+    updatePayee : ->
+      payeeMap =
+        'InsuredMailingAddressLine1' : 'OpPayeeDisbursementAddressLine1'
+        'InsuredMailingAddressLine2' : 'OpPayeeDisbursementAddressLine2'
+        'InsuredMailingAddressCity'  : 'OpPayeeDisbursementCity'
+        'InsuredMailingAddressState' : 'OpPayeeDisbursementState'
+        'InsuredMailingAddressZip'   : 'OpPayeeDisbursementZip'
+
+      # PayeeDisbursement is the Insured's full name
+      combined =
+        'OpPayeeDisbursement' : ['InsuredFirstName', 'InsuredLastName']
+
+      changes = @mapChangedValues payeeMap, combined
+
+      unless _.isEmpty changes
+        payeeChangeSet = new IPMChangeSet @MODULE.POLICY, 'change_payee', @MODULE.USER
+        @commitMappedChanges changes, payeeChangeSet
+
+    callbackSuccess : (data, status, jqXHR) =>
+      super data, status, jqXHR
+
+      @updatePayee()
+
     # **Process Form**
     # On submit we do some action specific processing and then send to the
     # TransactionRequest monster
