@@ -157,6 +157,6 @@ define [
       # Assemble the ChangeSet XML and send to server
       @ChangeSet.commitChange(
           @ChangeSet.getTransactionRequest(@values, @viewData)
-          @callbackSuccess,
+          @callbackSuccess
           @callbackError
         )
