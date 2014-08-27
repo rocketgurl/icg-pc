@@ -377,6 +377,23 @@ define [
 
     issue : ""
 
+    change_payee : """
+      <PayeeChanges>
+        <Set>
+        {{#changedItems}}
+          <DataItem name="{{name}}" value="{{{value}}}" />
+        {{/changedItems}}
+        </Set>
+      </PayeeChanges>
+      <EventHistory>
+        <Event type="PayeeChange">
+        {{#changedItems}}
+          <DataItem name="{{name}}" value="{{{value}}}" />
+        {{/changedItems}}
+        </Event>
+      </EventHistory>
+    """
+
     make_payment : """
       <Ledger>
         <LineItem value="{{paymentAmount}}" type="PAYMENT" timestamp="{{timestamp}}">
