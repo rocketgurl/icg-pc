@@ -113,11 +113,11 @@ define [
       insuredAddressFields = @$el.find(@makeId('InsuredMailingAddressLine1')).parents('fieldset').first()
 
       listener_ids = _.map(['MailingEqualPropertyAddress', 'PropertyStreetNumber',
-        'PropertyStreetName', 'PropertyAddressLine2', 'PropertyCity',
-        'PropertyState', 'PropertyZipCode'], (i) => @makeId(i))
+        'PropertyStreetName', 'PropertyAddressLine2', 'PropertyCity', 'PropertyState',
+        'PropertyZipCode'], @makeId, this)
 
       _.each listener_ids, (i) =>
-         @$el.find(i).on 'input', (e) =>
+        @$el.find(i).on 'input', (e) =>
           if mailingEqualProperty.val() == '100'
             @loadAddressFields()
 
