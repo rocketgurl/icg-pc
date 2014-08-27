@@ -478,7 +478,7 @@ define [
         jqXHR.getResponseHeader('Rate-Validation-Failed')
           return @displayRateValidationError()
 
-      if jqXHR.responseText?
+      if jqXHR.responseText? and jqXHR.status isnt 0
         regex = /\[(.*?)\]/g
         json  = regex.exec(jqXHR.responseText)
 
@@ -488,6 +488,14 @@ define [
           @errors = @errorParseJSON(jqXHR, json)
         else
           @errors = @errorParseHTML(jqXHR)
+      else if jqXHR.status is 0
+        @errors =
+          title : "Timeout Error (#{jqXHR.status})"
+          desc  : "The server request has timed out with a status of (#{jqXHR.status})"
+      else
+        @errors =
+          title : "#{status.toUpperCase()} (#{jqXHR.status})"
+          desc  : "XMLHTTPRequest status: #{error} (#{jqXHR.status})"
 
       @displayError 'warning', @errors
     
