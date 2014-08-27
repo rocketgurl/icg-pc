@@ -1,6 +1,7 @@
 define [
   'modules/IPM/IPMActionView'
-], (IPMActionView) ->
+  'modules/IPM/IPMChangeSet'
+], (IPMActionView, IPMChangeSet) ->
 
   class ChangeCustomerAction extends IPMActionView
 
