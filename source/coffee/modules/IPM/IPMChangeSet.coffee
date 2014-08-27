@@ -263,8 +263,12 @@ define [
           </Identifiers>
           <SourceVersion>{{version}}</SourceVersion>
         </Target>
+        {{#effectiveDate}}
         <EffectiveDate>{{effectiveDate}}</EffectiveDate>
+        {{/effectiveDate}}
+        {{#appliedDate}}
         <AppliedDate>{{appliedDate}}</AppliedDate>
+        {{/appliedDate}}
         <Comment>{{comment}}</Comment>
         {{>body}}
       </PolicyChangeSet>
