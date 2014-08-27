@@ -69,7 +69,7 @@ define [
 
       # Get changed form values and assemble into array suitable for templates
       dataItems = @getChangedDataItems(values, vocabTerms)
-      if !_.isEmpty(dataItems)
+      unless _.isEmpty dataItems
         context.intervalRequest = dataItems
 
       context
