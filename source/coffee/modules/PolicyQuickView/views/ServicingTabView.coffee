@@ -1,25 +1,32 @@
 define [
   'BaseView'
-  'modules/PolicyQuickView/models/AgencyLocationModel'
+  'modules/PolicyQuickView/views/ProducerView'
   'text!modules/PolicyQuickView/templates/tpl_servicing_tab.html'
-], (BaseView, AgencyLocationModel, tpl_servicing_tab) ->
+], (BaseView, ProducerView, tpl_servicing_tab) ->
 
   class ServicingTabView extends BaseView
 
     initialize : (options) ->
+      _.bindAll this, 'renderProducerView'
+
       @CONTROLLER = options.controller
       @POLICY = options.policy
 
-      @agencyLocationModel = @getAgencyLocationModel()
-      @agencyLocationModel.on 'change', @render, this
-      @POLICY.on 'change:version', @render, this
-      return this
+      @POLICY.on 'change:refresh change:version', @handlePolicyRefresh, this
+      @render()
+      @initProducerView()
 
-    getAgencyLocationModel : ->
-      new AgencyLocationModel
-        urlRoot : "#{@CONTROLLER.services.ixdirectory}organizations"
-        id      : @POLICY.getAgencyLocationCode()
-        auth    : @CONTROLLER.IXVOCAB_AUTH
+    handlePolicyRefresh : ->
+      @render()
+      @producerView.model.fetchXML()
+
+    initProducerView : ->
+      @producerView = new ProducerView
+        qvid       : @cid
+        controller : @CONTROLLER
+        policy     : @POLICY
+        el         : @$("#producer-view-#{@cid}")
+      @producerView.on 'render', @renderProducerView
 
     getPolicyStateLabelClass : (policyState) ->
       labelClassMap =
@@ -44,11 +51,13 @@ define [
       else
         ""
 
+    renderProducerView : (template) ->
+      @$("#producer-view-#{@cid}").html template
+
     render : ->
       servicingData = @POLICY.getServicingData()
       viewData =
         cid                   : @cid
-        Agency                : @agencyLocationModel.toJSON()
         PolicyStateLabelClass : @getPolicyStateLabelClass(servicingData.PolicyState)
         AgentSupportViewUrl   : @getAgentSupportViewUrl()
       data = _.extend viewData, servicingData
