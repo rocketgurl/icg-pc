@@ -18,11 +18,20 @@ define [
       resp
 
     initialize : (options) ->
+      _.bindAll this, 'syncRequest'
+      @POLICY  = options.policy
       @urlRoot = options.urlRoot
-      @fetch
+      @fetchXML()
+
+    fetchXML : ->
+      request = @fetch
         dataType : 'xml'
         headers  :
-          'Authorization' : "Basic #{options.auth}"
+          'Authorization' : "Basic #{@get('auth')}"
+      request.done @syncRequest
+
+    syncRequest : (data, status, xhr) ->
+      @trigger 'sync', this, xhr
 
     getAddressByType : (addresses, type) ->
       _.find addresses, (addr) ->
