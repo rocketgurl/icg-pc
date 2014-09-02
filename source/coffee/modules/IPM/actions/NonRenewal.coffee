@@ -9,6 +9,74 @@ define [
   #
   class NonRenewalAction extends IPMActionView
 
+    events :
+      "click input[name=nonrenew]"          : "loadSubAction"
+      "click input[name=nonrenewpending]"   : "loadSubAction"
+      "click input[name=nonrenewreinstate]" : "loadSubAction"
+      "click input[name=nonrenewrescind]"   : "loadSubAction"
+
+    # Metadata about NonRenewal types, used in views
+    TRANSACTION_TYPES =
+      'nonrenew' :
+        label  : 'NonRenewal'
+        title  : 'The police has been set for immediate non-renewal'
+        submit : 'Non-renew this policy immediately'
+      'nonrenewpending' :
+        label  : 'PendingNonRenewal'
+        title  : 'The policy has been set to pending non-renewal'
+        submit : 'Set to pending non-renewal'
+      'nonrenewreinstate' :
+        label  : 'NonRenewalReinstatement'
+        title  : 'The policy has been reinstated'
+        submit : 'Reinstate this policy'
+      'nonrenewrescind' :
+        label  : 'PendingNonRenewalRescission'
+        title  : 'The policy pending non-renewal has been rescinded'
+        submit : 'Rescind pending non-renewal'
+
+    NONRENEW_REASON_CODES : [
+      label: "Insured Request"
+      value: "1"
+    ,
+      label: "Physical Changes In The Property Insured"
+      value: "6"
+    ,
+      label: "Increase In Liability Hazards Beyond What Is Normally Accepted"
+      value: "7"
+    ,
+      label: "Increase In Property Hazards Beyond What Is Normally Accepted"
+      value: "8"
+    ,
+      label: "Overexposed In Area Where Risk Is Located"
+      value: "9"
+    ,
+      label: "Change In Occupancy Status"
+      value: "10"
+    ,
+      label: "Other Underwriting Reasons"
+      value: "11"
+    ,
+      label: "Change In Ownership"
+      value: "13"
+    ,
+      label: "Missing Required Documentation"
+      value: "14"
+    ]
+
+    REINSTATE_REASON_CODES : [
+        value: "1",
+        label: "Insured Request"
+      ,
+        value: "29",
+        label: "Underwriting reason for cancellation resolved"
+      ,
+        value: "28",
+        label: "Due to compliance or legal reasons"
+      ,
+        value: "27",
+        label: "Payment received after effective date of cancellation"
+    ]
+
     initialize : ->
       super
 
@@ -17,72 +85,6 @@ define [
         PARENT_VIEW : @PARENT_VIEW
         MODULE      : @MODULE
         })
-
-      @events =
-        "click input[name=nonrenew]" : "loadSubAction"
-        "click input[name=nonrenewpending]" : "loadSubAction"
-        "click input[name=nonrenewrescind]" : "loadSubAction"
-
-      # Metadata about Cancellation types, used in views
-      @TRANSACTION_TYPES =
-        'nonrenew' :
-          label  : 'NonRenewal'
-          title  : 'The police has been set for immediate non-renewal'
-          submit : 'Non-renew this policy immediately'
-        'nonrenewpending' :
-          label  : 'PendingNonRenewal'
-          title  : 'The policy has been set to pending non-renewal'
-          submit : 'Set to pending non-renewal'
-        'nonrenewrescind' :
-          label  : 'PendingNonRenewalRescission'
-          title  : 'The policy pending non-renewal has been rescinded'
-          submit : 'Rescind pending non-renewal'
-
-      @REASON_CODES = [
-        label: "Insured Request"
-        value: "1"
-      ,
-        label: "Physical Changes In The Property Insured"
-        value: "6"
-      ,
-        label: "Increase In Liability Hazards Beyond What Is Normally Accepted"
-        value: "7"
-      ,
-        label: "Increase In Property Hazards Beyond What Is Normally Accepted"
-        value: "8"
-      ,
-        label: "Overexposed In Area Where Risk Is Located"
-        value: "9"
-      ,
-        label: "Change In Occupancy Status"
-        value: "10"
-      ,
-        label: "Other Underwriting Reasons"
-        value: "11"
-      ,
-        label: "Change In Ownership"
-        value: "13"
-      ,
-        label: "Missing Required Documentation"
-        value: "14"
-      ]
-
-      @XML_TEMPLATE = """
-        <TransactionRequest schemaVersion="1.7" type="{{transactionType}}">
-          <Initiation>
-            <Initiator type="user">{{user}}</Initiator>
-          </Initiation>
-          <Target>
-            <Identifiers>
-              <Identifier name="InsightPolicyId" value="{{id}}"/>
-            </Identifiers>
-            <SourceVersion>{{version}}</SourceVersion>
-          </Target>
-          {{#reasonCode}}
-          <ReasonCode>{{reasonCode}}</ReasonCode>
-          {{/reasonCode}}
-        </TransactionRequest>
-      """
 
     ready : ->
       super
