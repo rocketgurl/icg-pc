@@ -189,6 +189,22 @@ define [
       $insurance_score = @$el.find('input[name=InsuranceScore]')
       $insurance_score.prop('readonly', policy_term < 3)
 
+      rules = [
+        field: 'UndergroundTanks'
+        condition: '== 100'
+        target: [
+          'UndergroundTanksStatus'
+          'UndergroundTanksAge'
+          'UndergroundTanksLocation'
+          'UndergroundTanksType'
+          'UndergroundTanksContainmentTub'
+          'FuelTankLiabilityCoverage'
+          ]
+        effect: @apparatchik.showElement
+      ]
+
+      @apparatchik.applyEnumDynamics rules
+
     addOFCCHO6SCBehaviors : ->
       $ITDI = @$el.find('select[name=IncreasedTheftDeductibleIndicator]')
       $AOPD = @$el.find('select[name=AllOtherPerilsDeductible]')
