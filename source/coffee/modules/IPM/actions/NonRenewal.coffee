@@ -16,7 +16,7 @@ define [
       "click input[name=nonrenewrescind]"   : "loadSubAction"
 
     # Metadata about NonRenewal types, used in views
-    TRANSACTION_TYPES =
+    TRANSACTION_TYPES :
       'nonrenew' :
         label  : 'NonRenewal'
         title  : 'The police has been set for immediate non-renewal'
