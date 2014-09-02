@@ -173,31 +173,123 @@ define [
     #
     processNonRenewalData : (viewData) ->
       policy = @MODULE.POLICY
-      reasonCode = policy.find('Management PendingNonRenewal reasonCode')
-      nonrenew_data = { EnumsNonRenewReason: @REASON_CODES }
+      pendingNonRenewal = policy.get('json').Management?.PendingNonRenewal
 
+      nonRenewData =
+        policyState                      : policy.getState()
+        policyStateVal                   : null
+        pendingNonRenewal                : pendingNonRenewal
+        pendingNonRenewalReasonCode      : null
+        pendingNonRenewalReasonCodeLabel : null
+        policyEffectiveDate              : policy.getEffectiveDate()
+        policyExpirationDate             : policy.getExpirationDate()
+        policyInceptionDate              : policy.getInceptionDate()
+        nonRenewalEffectiveDate          : null
+        EnumsNonRenewReason              : @NONRENEW_REASON_CODES
+        EnumsReinstateReason             : @REINSTATE_REASON_CODES
+
+      # getState() may return an object
+      if _.isObject nonRenewData.policyState
+        nonRenewData.policyStateVal = nonRenewData.policyState.text
+      else
+        nonRenewData.policyStateVal = nonRenewData.policyState
+
+      # WE MIGHT BE ABLE TO KILL ALL THIS CRAP HOPEFULLY
+      # 
       # Management > PendingNonRenewal isn't set yet without a policy refresh,
       # so this is our attempt to show the correct state
-      unless reasonCode?
-        events = policy.find('EventHistory Event')
+      # unless reasonCode?
+      #   events = policy.find('EventHistory Event')
 
-        # policy.find returns an Array of Events if there are multiple Event
-        # objects but only the one Event object if there is only one
-        lastEvent = if _.isArray(events) then _.last(events) else events
-        if lastEvent?.type is 'PendingNonRenewal'
-          getReasonCode = (item) -> item.name is 'reasonCode'
-          reasonCode = _.find(lastEvent.DataItem, getReasonCode).value
+      #   # policy.find returns an Array of Events if there are multiple Event
+      #   # objects but only the one Event object if there is only one
+      #   lastEvent = if _.isArray(events) then _.last(events) else events
+      #   if lastEvent?.type is 'PendingNonRenewal'
+      #     getReasonCode = (item) -> item.name is 'reasonCode'
+      #     reasonCode = _.find(lastEvent.DataItem, getReasonCode).value
 
-      # Toggle buttons on/off depending on
-      # reason code's existence
-      if reasonCode?
-        nonrenew_data.reasonCode = reasonCode
-        nonrenew_data.setPendingDisabled = 'disabled'
+      # Pending NonRenewal policies require additional field processing
+      if _.isObject pendingNonRenewal
+        nonRenewData = @processPendingNonRenewal nonRenewData
+
+      # Process more data based on policyState
+      nonRenewData = switch nonRenewData.policyStateVal
+        when 'ACTIVEPOLICY'
+          @processActivePolicy nonRenewData
+        when 'NONRENEWEDPOLICY'
+          @processNonRenewedPolicy nonRenewData
+        else nonRenewData
+
+      console.log nonRenewData
+
+      @viewData = _.extend viewData, nonRenewData
+
+    processPendingNonRenewal : (nonRenewData) ->
+      reasonCode = nonRenewData.pendingNonRenewal.reasonCode
+      reasonCodeCriteria = { value :  reasonCode }
+      reasonCodeObj = _.findWhere nonRenewData.EnumsNonRenewReason, reasonCodeCriteria
+      
+      if _.isObject(reasonCodeObj)
+        nonRenewData.pendingNonRenewalReasonCodeLabel = reasonCodeObj.label
+        nonRenewData.pendingNonRenewalReasonCode = reasonCode
+
+      nonRenewData.nonRenewalEffectiveDate = \
+        nonRenewData.policyExpirationDate
+
+      nonRenewData
+
+    processActivePolicy : (nonRenewData) ->
+      if _.isObject nonRenewData.pendingNonRenewal
+        data =
+          nonrenewDisabled       : ''
+          reinstateDisabled      : 'disabled'
+          setPendingDisabled     : 'disabled'
+          rescindPendingDisabled : ''
+          msg                    : not @CURRENT_SUBVIEW
+          msgType                : 'notice'
+          msgHeading             : 'This is an active policy that is pending non-renewal.'
+          msgText                : """
+            Non-renewal is effective <strong>#{nonRenewData.nonRenewalEffectiveDate}</strong> due to <strong>#{nonRenewData.pendingNonRenewalReasonCodeLabel}</strong>
+          """
       else
-        nonrenew_data.nonrenewDisabled = 'disabled'
-        nonrenew_data.rescindPendingDisabled = 'disabled'
+        data =
+          nonrenewDisabled       : ''
+          setPendingDisabled     : ''
+          reinstateDisabled      : 'disabled'
+          rescindPendingDisabled : 'disabled'
+          msg                    : false
+          msgType                : null
+          msgHeading             : null
+          msgText                : null
 
-      @viewData = _.extend(viewData, nonrenew_data)
+      _.extend nonRenewData, data
+
+    processNonRenewedPolicy : (nonRenewData) ->
+      if reasonCode = nonRenewData.policyState.reasonCode
+        reasonCodeCriteria = { value :  reasonCode }
+        reasonCodeObj = _.findWhere nonRenewData.EnumsNonRenewReason, reasonCodeCriteria
+      
+      reasonLabel = '[reason not available]'
+      if _.isObject(reasonCodeObj)
+        reasonLabel = reasonCodeObj.label
+
+      effectiveDate = '[date not available]'
+      if nonRenewData.policyState.effectiveDate
+        effectiveDate = nonRenewData.policyState.effectiveDate
+
+      data =
+        nonrenewDisabled       : 'disabled'
+        setPendingDisabled     : 'disabled'
+        rescindPendingDisabled : 'disabled'
+        reinstateDisabled      : ''
+        msg                    : not @CURRENT_SUBVIEW
+        msgType                : 'notice'
+        msgHeading             : 'This is a non-renewed policy'
+        msgText                : """
+            Non-renewal took effect <b>#{effectiveDate}</b> due to <b>#{reasonLabel}</b>
+          """
+
+      _.extend nonRenewData, data
 
     # Load a sub-view into the current space
     # These are triggered by button clicks
