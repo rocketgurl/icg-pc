@@ -246,7 +246,7 @@ define [
       @values.formValues.effectiveDate = @MODULE.POLICY.get('expirationDate')
       @values.formValues.transactionType = @TRANSACTION_TYPES[@CURRENT_SUBVIEW].label ? false
 
-      if !@values.formValues.transactionType
+      unless @values.formValues.transactionType
         msg = "There was an error determining which Transaction Type this request is."
         @PARENT_VIEW.displayMessage('error', msg, 12000)
         return false
