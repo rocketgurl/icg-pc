@@ -58,32 +58,10 @@
     </section>
     {{/PrimaryMortgagee}}
 
-    {{#Agency}}
-    <section>
+    <section id="producer-view-{{cid}}">
       <label>Producer</label>
-      <div><strong>{{Name}}</strong></div>
-      {{#MailingAddress}}
-      {{#Street1}}
-      <div><small>{{Street1}}</small></div>
-      {{/Street1}}
-      {{#Street2}}
-      <div><small>{{Street2}}</small></div>
-      {{/Street2}}
-      {{#Street3}}
-      <div><small>{{Street3}}</small></div>
-      {{/Street3}}
-      <div><small>{{City}}, {{Province}} {{PostalCode}}</small></div>
-      {{/MailingAddress}}
-      {{#PhoneNumber}}
-      <div><strong>{{PhoneNumber}}</strong></div>
-      {{/PhoneNumber}}
-      {{#EmailAddress}}
-      <div class="no-transform">
-        <a href="mailto:{{EmailAddress}}?subject={{PolicyId}}">{{EmailAddress}}</a>
-      </div>
-      {{/EmailAddress}}
+      <div>Loading producer data&hellip;</div>
     </section>
-    {{/Agency}}
 
     {{#AgencyLocationCode}}
     <section>
