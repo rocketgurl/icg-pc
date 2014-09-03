@@ -392,6 +392,21 @@ define [
 
     addFNICHO3LABehaviors : ->
       rules = [
+        field: 'OtherStructuresIndicator',
+        sideEffects: [
+          target: ['OtherStructures1Type', 'OtherStructures1Occupancy', 'OtherStructures1Coverage', 'OtherStructures1BusinessType']
+          condition: '== 1'
+          effect: @apparatchik.showElement
+        ,
+          target: ['OtherStructures2Type', 'OtherStructures2Occupancy', 'OtherStructures2Coverage', 'OtherStructures2BusinessType']
+          condition: "== 2"
+          effect: @apparatchik.showElement
+        ,
+          target: ['OtherStructures3Type', 'OtherStructures3Occupancy', 'OtherStructures3Coverage', 'OtherStructures3BusinessType']
+          condition: "== 3"
+          effect: @apparatchik.showElement
+        ]
+      ,
         field: "HeatPump"
         condition: "> 100"
         target: "CentralAir"
