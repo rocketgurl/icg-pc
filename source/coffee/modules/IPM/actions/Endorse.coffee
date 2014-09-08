@@ -189,6 +189,22 @@ define [
       $insurance_score = @$el.find('input[name=InsuranceScore]')
       $insurance_score.prop('readonly', policy_term < 3)
 
+      rules = [
+        field: 'UndergroundTanks'
+        condition: '== 100'
+        target: [
+          'UndergroundTanksStatus'
+          'UndergroundTanksAge'
+          'UndergroundTanksLocation'
+          'UndergroundTanksType'
+          'UndergroundTanksContainmentTub'
+          'FuelTankLiabilityCoverage'
+          ]
+        effect: @apparatchik.showElement
+      ]
+
+      @apparatchik.applyEnumDynamics rules
+
     addOFCCHO6SCBehaviors : ->
       $ITDI = @$el.find('select[name=IncreasedTheftDeductibleIndicator]')
       $AOPD = @$el.find('select[name=AllOtherPerilsDeductible]')
@@ -376,6 +392,24 @@ define [
 
     addFNICHO3LABehaviors : ->
       rules = [
+        field: 'OtherStructuresIndicator',
+        condition: '> 0'
+        target: [
+          'OtherStructures1Type'
+          'OtherStructures1Occupancy'
+          'OtherStructures1Coverage'
+          'OtherStructures1BusinessType'
+          'OtherStructures2Type'
+          'OtherStructures2Occupancy'
+          'OtherStructures2Coverage'
+          'OtherStructures2BusinessType'
+          'OtherStructures3Type'
+          'OtherStructures3Occupancy'
+          'OtherStructures3Coverage'
+          'OtherStructures3BusinessType'
+          ]
+        effect: @apparatchik.showElement
+      ,
         field: "HeatPump"
         condition: "> 100"
         target: "CentralAir"
