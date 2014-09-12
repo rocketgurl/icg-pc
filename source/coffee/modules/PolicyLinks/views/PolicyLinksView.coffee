@@ -15,7 +15,7 @@ define [
           policy       : policy
           relationship : 'Parent'
           policyId     : ppid
-          el           : @$('.linked-item.parent')
+          el           : @$('.linked-item.child')
 
       if cpid = policy.get 'childPolicyId'
         childLinkedItem = new PolicyLinkedItemView
@@ -23,4 +23,4 @@ define [
           policy       : policy
           relationship : 'Child'
           policyId     : cpid
-          el           : @$('.linked-item.child')
+          el           : @$('.linked-item.parent')
