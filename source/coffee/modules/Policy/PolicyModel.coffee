@@ -873,6 +873,28 @@ define [
     getAgencyLocationCode : ->
       @getModelProperty 'Management AgencyLocationCode'
 
+    getParentPolicyId : ->
+      @getIdentifier 'ParentPolicyId'
+
+    getChildPolicyId : ->
+      @getIdentifier 'ChildPolicyId'
+
+    determineParentChildRelationship : ->
+      if @get('childPolicyId') and @get('parentPolicyId')
+        @set 'parentChildRelationship', 'has-both'
+      else if @get 'childPolicyId'
+        @set 'parentChildRelationship', 'has-child'
+      else if @get 'parentPolicyId'
+        @set 'parentChildRelationship', 'has-parent'
+      else
+        @set 'parentChildRelationship', 'has-none'
+
+    hasLinks : ->
+      if @get('parentChildRelationship') is 'has-none'
+        false
+      else
+        true
+
     # Return Policy data for use in overviews
     getPolicyOverview : ->
       terms = [
