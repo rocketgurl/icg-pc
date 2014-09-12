@@ -9,9 +9,7 @@ define [
     <p>Effective {{effectiveDate}}</p>
     <p>
       {{relationship}} Policy #:
-      <a href="#" class="policy-id-link" data-policy-id="{{{policyId}}}" data-insured-last-name="{{{insuredLastName}}}" data-quote-number="{{{quoteNumber}}}">
-        {{policyId}} <span class="glyphicon glyphicon-new-window"></span>
-      </a>
+      <a href="#" class="policy-id-link">{{policyId}} <span class="glyphicon glyphicon-new-window"></span></a>
     </p>
     """
 
@@ -46,10 +44,9 @@ define [
     openPolicy : (e) ->
       e.preventDefault()
 
-      data   = $(e.currentTarget).data()
       params =
-        url   : data.quoteNumber
-        label : "#{data.insuredLastName} #{data.policyId}"
+        url   : @model.get('quoteNumber')
+        label : "#{@model.get('insuredLastName')} #{@options.policyId}"
 
       @options.controller.launch_module 'policyview', params
       @options.controller.Router.append_module 'policyview', params
