@@ -241,8 +241,9 @@ define [
 
     # If the policy_header doesn't exist then build it, otherwise
     # just make visible
-    build_policy_header : ->
+    buildPolicyHeader : ->
       ipm_header = @model.getIpmHeader()
+      ipm_header.cid = @cid
       @policy_header.html @Mustache.render tpl_ipm_header, ipm_header
       @POLICY_HEADER_OFFSET = @policy_header.height()
 
