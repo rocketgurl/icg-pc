@@ -45,6 +45,7 @@ define [
       # When the model is loaded, make sure its state is current
       @on 'change', (model) ->
         model.setModelState()
+        model.determineParentChildRelationship()
         model.get_pxServerIndex()
         model.applyFunctions()
 
@@ -158,6 +159,9 @@ define [
           period  : @getPolicyPeriod()
           carrier : @getModelProperty('Management Carrier')
           isQuote : @isQuote()
+          parentChildRelationship : @get('parentChildRelationship')
+          parentPolicyId : @get('parentPolicyId')
+          childPolicyId : @get('childPolicyId')
 
       if @isPendingCancel true
         ipm_header.status = 'Pending Cancellation'
@@ -942,6 +946,8 @@ define [
           'effectiveDate': @getEffectiveDate(),
           'expirationDate': @getExpirationDate(),
           'version': @getPolicyVersion()
+          'parentPolicyId': @getParentPolicyId()
+          'childPolicyId': @getChildPolicyId()
           )
 
     # **Grab the latest version of the Policy**
