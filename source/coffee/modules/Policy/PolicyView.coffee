@@ -11,10 +11,11 @@ define [
   'modules/Quoting/QuotingModule'
   'modules/LossHistory/LossHistoryView'
   'modules/RenewalUnderwriting/RenewalUnderwritingView'
+  'modules/PolicyLinks/views/PolicyLinksView'
   'text!modules/Policy/templates/tpl_policy_container.html'
   'text!modules/Policy/templates/tpl_policy_error.html'
   'text!modules/Policy/templates/tpl_ipm_header.html'
-], (BaseView, Messenger, Base64, swfobject, PolicyQuickView, IPMModule, ZenDeskView, PolicyRepresentationView, QuotingModule, LossHistoryView, RenewalUnderwritingView, tpl_policy_container, tpl_policy_error, tpl_ipm_header) ->
+], (popover, BaseView, Messenger, Base64, swfobject, PolicyQuickView, IPMModule, ZenDeskView, PolicyRepresentationView, QuotingModule, LossHistoryView, RenewalUnderwritingView, PolicyLinksView, tpl_policy_container, tpl_policy_error, tpl_ipm_header) ->
   PolicyView = BaseView.extend
 
     events :
@@ -120,7 +121,10 @@ define [
       # Get an array of our policy-nav actions
       @actions = _.map @policy_nav_links, (link) -> return $(link).attr('href')
 
-      @build_policy_header()
+      @buildPolicyHeader()
+
+      # Init the policy parent/child links popover
+      @initPolicyLinksPopover() if @model.hasLinks()
 
       # Register flash message pubsub for this view
       @messenger = new Messenger(@options.view, @cid)
@@ -184,6 +188,12 @@ define [
       if @controller.user.isCarrier() == true
         for action in ['renewalunderwriting', 'ipmchanges', 'servicerequests']
           @$el.find(".policy-nav a[href=#{action}]").parent('li').hide()
+
+    initPolicyLinksPopover : ->
+      linksPopover = new PolicyLinksView
+        controller : @controller
+        policy     : @model
+        el         : @policy_header.find('.parent-child-popover .popover')
 
     # Switch nav items on/off
     toggle_nav_state : (el) ->
