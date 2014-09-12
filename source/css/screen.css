@@ -1734,7 +1734,8 @@ Module: Policy
 .policy-header h2.has-none > .icg-icon:before { content: ""; }
 .policy-header .linked-item { display: none; }
 .policy-header .popover-content { font-weight: normal; }
-.policy-header .popover-content p { margin-bottom: 0; }
+.policy-header .popover-content p { margin-bottom: 5px; }
+.policy-header .popover-content p:last-child { margin-bottom: 0; }
 
 .qv-container { background: #fff; font-size: 13px; font-size: 1.3rem; }
 .qv-container h1, .qv-container h2 { font-weight: bold; }
