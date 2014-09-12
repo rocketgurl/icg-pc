@@ -128,12 +128,42 @@ Module: Policy
     @include font-size(14);
     font-weight: bold;
     color: $darkblue;
-    display: inline;
-    span {
+    margin: 0;
+    position: relative;
+    > span {
       color: $orange;
       &.ipm-header-cancel-status {
         color: $red;
       }
+    }
+    .icg-icon {
+      top: 2px;
+      margin-left: 3px;
+      font-size: 16px;
+    }
+    .popover {
+      top: 7px;
+      min-width: 270px;
+    }
+    &.has-parent:hover,
+    &.has-child:hover,
+    &.has-both:hover {
+      .popover {
+        display: block;
+      }
+    }
+    &.has-child  > .icg-icon:before { content: "\e600" }
+    &.has-parent > .icg-icon:before { content: "\e601" }
+    &.has-both   > .icg-icon:before { content: "\e602"}
+    &.has-none   > .icg-icon:before { content: ""}
+  }
+
+  .linked-item { display: none; }
+  .popover-content {
+    font-weight: normal;
+
+    p {
+      margin-bottom: 0;
     }
   }
 }
