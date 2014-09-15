@@ -192,7 +192,7 @@ define [
         error : (collection, resp) =>
           @Amplify.publish @cid, 'warning', "There was a problem with this request: #{resp.status} - #{resp.statusText}"
           @loader_ui(false)
-          favicon.stop()
+          @favicon.stop()
           @fetch_count += 1
       )
 

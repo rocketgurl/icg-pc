@@ -1,6 +1,12 @@
 Updates
 -------
 
+### 2.6.3 - Sep 9, 2014
+
+- [ICS-2754](https://icg360.atlassian.net/browse/ICS-2754) Update Agency Data Information when changing Broker of Record
+- [ICS-2796](https://icg360.atlassian.net/browse/ICS-2796) Update ofcc-ho3-ak IPM Endorse forms
+- [ICS-2798](https://icg360.atlassian.net/browse/ICS-2798) Update fnic-ho3-la IPM endorse forms
+
 ### 2.6.2 - Aug 26, 2014
 
 - [ICS-2730](https://icg360.atlassian.net/browse/ICS-2730) QuickView documents show current datetime instead of document datetime
