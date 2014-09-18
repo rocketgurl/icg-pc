@@ -786,16 +786,15 @@ define [
         out[vocab.name] = @getDataItem term, vocab.name
       out
 
-    # We favor the Op{name} version of the DataItem
+    # Grab the Data Item Value for the latest Term
     #
     # @param `name` _String_
     # @return _String_
     #
     getTermDataItemValue : (name) ->
-      doc = @get('document')
-      if doc? && !_.isEmpty('doc')
-        value = doc.find("Terms Term DataItem[name=Op#{name}]").attr('value') || doc.find("Terms Term DataItem[name=#{name}]").attr('value')
-      value
+      items = @getLastTerm().DataItem
+      items = @_sanitizeNodeArray items
+      @getDataItem items, name
 
     # **Extract the value of a named <DataItem> from a JSON collection**
     # _Alert_: Policies contain multiple versions of some fields, and we favor
