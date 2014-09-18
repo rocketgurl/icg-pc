@@ -37,8 +37,6 @@ define [
       @COLLECTION  = options.collection || false
       @PARENT_VIEW = options.view || false
 
-      ixlibrary    = options.ixlibrary || false
-
       # When the collection is populated, generate the views
       @COLLECTION.bind('reset', @renderTasks, this);
       @COLLECTION.bind('error', @tasksError, this);
@@ -49,11 +47,12 @@ define [
 
       # Create an AssigneeList model to manage the XML list
       if @MODULE != false
+        ixlibrary = @MODULE.controller.services.ixlibrary
         digest    = @MODULE.controller.user.get 'digest'
-        ixlibrary = "#{@MODULE.controller.services.ixlibrary}buckets/underwriting/objects/assignee_list.xml"
+        assigneeListUrl = "#{ixlibrary.baseURL}/buckets/#{ixlibrary.underwritingBucket}/objects/#{ixlibrary.assigneeListObjectKey}"
 
       @AssigneeList     = new ReferralAssigneesModel({ digest : digest })
-      @AssigneeList.url = ixlibrary
+      @AssigneeList.url = assigneeListUrl
       errorCallback     = _.bind @renderAssigneesError, this
       @AssigneeList.fetch
         error : errorCallback
