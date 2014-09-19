@@ -1,39 +1,51 @@
 <table>
-	<tr id="ipm_header_row">
-		<td>
-			{{#isQuote}}
-			<h3>Quote #</h3>
-			{{/isQuote}}
-			{{^isQuote}}
-			<h3>Policy #</h3>
-			{{/isQuote}}
-			<h2><span>{{id}}</span></h2>
-		</td>
-		<td>
-			<h3>Product</h3>
-			<h2>{{product}}</h2>
-		</td>
-		<td>
-			<h3>Policyholder</h3>
-			<h2>{{holder}}</h2>
-		</td>
-		<td>
-			<h3>Policy State</h3>
-			<h2>{{state}}</h2>
-		</td>
-		<td>
-			<h3>Policy Period</h3>
-			<h2>{{period}}</h2>
-		</td>
-		<td>
-			<h3>Carrier Name</h3>
-			<h2>{{carrier}}</h2>
-		</td>
-		{{#status}}
-		<td>
-			<h3>Cancel Status</h3>
-			<h2><span class="ipm-header-cancel-status">{{status}}</span></h2>
-		</td>
-		{{/status}}
-	</tr>
+  <tr id="ipm_header_row">
+    <td>
+      {{#isQuote}}
+      <h3>Quote #</h3>
+      {{/isQuote}}
+      {{^isQuote}}
+      <h3>Policy #</h3>
+      {{/isQuote}}
+      <h2 class="parent-child-popover {{parentChildRelationship}}">
+        <span>{{id}}</span><span class="icg-icon"></span>
+        <div class="popover bottom">
+          <div class="linked-item child">
+            <h3 class="popover-title">Child Transfer Policy <span class="icg-icon icg-has-parent"></span></h3>
+            <div class="popover-content"><p>Initialized &hellip;</p></div>
+          </div>
+          <div class="linked-item parent">
+            <h3 class="popover-title">Parent Transfer Policy <span class="icg-icon icg-has-child"></span></h3>
+            <div class="popover-content"><p>Initialized &hellip;</p></div>
+          </div>
+        </div>
+      </h2>
+    </td>
+    <td>
+      <h3>Product</h3>
+      <h2>{{product}}</h2>
+    </td>
+    <td>
+      <h3>Policyholder</h3>
+      <h2>{{holder}}</h2>
+    </td>
+    <td>
+      <h3>Policy State</h3>
+      <h2>{{state}}</h2>
+    </td>
+    <td>
+      <h3>Policy Period</h3>
+      <h2>{{period}}</h2>
+    </td>
+    <td>
+      <h3>Carrier Name</h3>
+      <h2>{{carrier}}</h2>
+    </td>
+    {{#status}}
+    <td>
+      <h3>Cancel Status</h3>
+      <h2><span class="ipm-header-cancel-status">{{status}}</span></h2>
+    </td>
+    {{/status}}
+  </tr>
 </table>

@@ -4,6 +4,10 @@
         <Identifier name="QuoteNumber" value="CRU4Q-411392"/>
         <Identifier name="pxServerIndex" value="411392"/>
         <Identifier name="PolicyID" value="LAP041139200"/>
+        <Identifier name="ParentInsightPolicyId" value="729848fc7da24f159979340f1323a450" />
+        <Identifier name="ParentPolicyId" value="SCB040697100" />
+        <Identifier name="ChildInsightPolicyId" value="729848fc7da24f159979340f1323a450" />
+        <Identifier name="ChildPolicyId" value="ALF041544800" />
     </Identifiers>
     <Management>
         <PolicyState>ACTIVEPOLICY</PolicyState>
