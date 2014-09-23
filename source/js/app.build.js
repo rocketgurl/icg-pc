@@ -29,7 +29,9 @@
     transition: 'lib/bootstrap/transition',
     tab: 'lib/bootstrap/tab',
     collapse: 'lib/bootstrap/collapse',
-    button: 'lib/bootstrap/button'
+    button: 'lib/bootstrap/button',
+    tooltip: 'lib/bootstrap/tooltip',
+    popover: 'lib/bootstrap/popover'
   },
   shim: {
     'jquery': {
@@ -78,6 +80,9 @@
     },
     'collapse': {
       deps: ['transition']
+    },
+    'popover': {
+      deps: ['jquery', 'tooltip']
     }
   },
   modules: [

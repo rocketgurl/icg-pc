@@ -75,11 +75,12 @@ define [
       @putSuccess = _.bind @putSuccess, this
       @putError   = _.bind @putError, this
 
-      ixlibrary = "#{@PolicyView.controller.services.ixlibrary}buckets/underwriting/objects/assignee_list.xml"
+      ixlibrary = @PolicyView.controller.services.ixlibrary
+      assigneeListUrl = "#{ixlibrary.baseURL}/buckets/#{ixlibrary.underwritingBucket}/objects/#{ixlibrary.assigneeListObjectKey}"
 
       # Get list of assignees
       @AssigneeList     = new ReferralAssigneesModel({ digest : @Policy.get 'digest' })
-      @AssigneeList.url = ixlibrary
+      @AssigneeList.url = assigneeListUrl
       
       @assigneesFetchError   = _.bind @assigneesFetchError, this
       @assigneesFetchSuccess = _.bind @assigneesFetchSuccess, this

@@ -38,7 +38,6 @@ define [
       pxcentral_base : 'pxcentral/api/rest/v1/'
       mxserver_base  : 'mxserver/api/rest/v1/'
       pxserver_base  : 'pxserver/policies'
-      ixlibrary_base : '/api/sdo/rest/v1/'
       ixdoc          : './ixdoc/api/rest/v2/'
       ixadmin        : "./config/ics/#{window.ICS360_ENV}/policycentral"
       ixvocab        : './ixvocab/api/rest/v1/'
@@ -500,9 +499,7 @@ define [
     #
     configureServices : ->
       # Set the path to pxCentral & ixLibrary to the correct instance
-      ixlibrary = @config.get_ixLibrary(@workspace_state)
-      if ixlibrary.baseURL? || ixlibrary.baseURL != undefined
-        @services.ixlibrary = "#{ixlibrary.baseURL}#{@services.ixlibrary_base}"
+      @services.ixlibrary = @config.get_ixLibrary(@workspace_state)
 
       if url = @config.get_pxCentral(@workspace_state)
         @services.pxcentral = "#{url}#{@services.pxcentral_base}"
