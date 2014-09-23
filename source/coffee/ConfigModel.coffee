@@ -62,8 +62,10 @@ define [
         node = doc.find("ConfigItem[name=#{workspace.app}] ConfigItem[name=businesses] ConfigItem[name=#{workspace.business}] ConfigItem[name=#{window.ICS360_ENV}] ConfigItem[name=popServer] ConfigItem[name=library]")
 
         config =
-          baseURL      : node.find("ConfigItem[name=baseURL]").attr('value')
-          assigneeList : node.find("ConfigItem[name=assigneeListObjectKey]").attr('value')
+          baseURL               : node.find("ConfigItem[name=baseURL]").attr('value')
+          attachmentsBucket     : node.find("ConfigItem[name=attachmentsBucket]").attr('value')
+          underwritingBucket    : node.find("ConfigItem[name=underwritingBucket]").attr('value')
+          assigneeListObjectKey : node.find("ConfigItem[name=assigneeListObjectKey]").attr('value')
 
         if config == undefined then false else config
 

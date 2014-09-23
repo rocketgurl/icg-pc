@@ -1,6 +1,19 @@
 Updates
 -------
 
+### 2.6.4 - Sep 23, 2014
+
+- [ICS-2833](https://icg360.atlassian.net/browse/ICS-2833) Update Policy Central to allow a full qualified ixLibrary URI
+- [ICS-2716](https://icg360.atlassian.net/browse/ICS-2716) Create visual linkage in Policy Central for Dovetail transferred policies
+- [ICS-2824](https://icg360.atlassian.net/browse/ICS-2824) Create fnic-ho3-al IPM Endorse forms   2 - Major - Major loss of function. DEPLOYABLE
+- [ICS-2837](https://icg360.atlassian.net/browse/ICS-2837) Update ofcc-ho3-ak IPM Endorse forms
+
+### 2.6.3 - Sep 9, 2014
+
+- [ICS-2754](https://icg360.atlassian.net/browse/ICS-2754) Update Agency Data Information when changing Broker of Record
+- [ICS-2796](https://icg360.atlassian.net/browse/ICS-2796) Update ofcc-ho3-ak IPM Endorse forms
+- [ICS-2798](https://icg360.atlassian.net/browse/ICS-2798) Update fnic-ho3-la IPM endorse forms
+
 ### 2.6.2 - Aug 26, 2014
 
 - [ICS-2730](https://icg360.atlassian.net/browse/ICS-2730) QuickView documents show current datetime instead of document datetime

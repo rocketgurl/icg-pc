@@ -18,7 +18,8 @@ define [
       return this
 
     render : ->
-      attachmentsLocation = "#{@CONTROLLER.services.ixlibrary}buckets/policy_attachments/objects/"
+      ixlibrary = @CONTROLLER.services.ixlibrary
+      attachmentsLocation = "#{ixlibrary.baseURL}/buckets/#{ixlibrary.attachmentsBucket}/objects/"
       viewData =
         cid                 : @cid
         attachmentsLocation : attachmentsLocation

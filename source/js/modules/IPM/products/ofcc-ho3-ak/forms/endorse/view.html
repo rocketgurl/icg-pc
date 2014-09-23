@@ -732,94 +732,18 @@
 
 		</fieldset>
 		<fieldset>
-				<legend id="{{guid}}_additional_other_structures">Additional Other Structures</legend>				
-
-		<div>
-			<label for="{{guid}}_OtherStructuresIndicator" class="labelRequired">Additional Other Structures - On Premises <i>OtherStructuresIndicator</i></label>
-			<select id="{{guid}}_OtherStructuresIndicator" name="OtherStructuresIndicator" data-value="{{OtherStructuresIndicator}}"  required >
-				{{#EnumsOtherStructuresIndicator}}
-				<option value="{{value}}">{{label}}</option>
-				{{/EnumsOtherStructuresIndicator}}
-			</select>
-		</div>
-
-
-
-		<div>
-			<label for="{{guid}}_OtherStructures1Type" >1st Scheduled Structure - Type <i>OtherStructures1Type</i></label>
-			<select id="{{guid}}_OtherStructures1Type" name="OtherStructures1Type" data-value="{{OtherStructures1Type}}"   >
-				{{#EnumsOtherStructures1Type}}
-				<option value="{{value}}">{{label}}</option>
-				{{/EnumsOtherStructures1Type}}
-			</select>
-		</div>
-
-
-		<div>
-			<label for="{{guid}}_OtherStructures1ConstructionYear" >1st Scheduled Structure - Year Built <i>OtherStructures1ConstructionYear</i></label>
-			<input type="text" id="{{guid}}_OtherStructures1ConstructionYear" name="OtherStructures1ConstructionYear" value="{{OtherStructures1ConstructionYear}}"  >
-		</div>
-
-
-		<div>
-			<label for="{{guid}}_OtherStructures1Occupancy" >1st Scheduled Structure - Occupancy <i>OtherStructures1Occupancy</i></label>
-			<select id="{{guid}}_OtherStructures1Occupancy" name="OtherStructures1Occupancy" data-value="{{OtherStructures1Occupancy}}"   >
-				{{#EnumsOtherStructures1Occupancy}}
-				<option value="{{value}}">{{label}}</option>
-				{{/EnumsOtherStructures1Occupancy}}
-			</select>
-		</div>
-
-
-		<div>
-			<label for="{{guid}}_OtherStructures1Coverage" >1st Scheduled Structure - Limit <i>OtherStructures1Coverage</i></label>
-			<input type="text" id="{{guid}}_OtherStructures1Coverage" name="OtherStructures1Coverage" value="{{OtherStructures1Coverage}}"  >
-		</div>
-
-		<div>
-			<label for="{{guid}}_OtherStructures1BusinessType" >1st Scheduled Structure - Business Type (if applicable) <i>OtherStructures1BusinessType</i></label>
-			<input type="text" id="{{guid}}_OtherStructures1BusinessType" name="OtherStructures1BusinessType" value="{{OtherStructures1BusinessType}}"  >
-		</div>
-
-
-		<div>
-			<label for="{{guid}}_OtherStructures2Type" >2nd Scheduled Structure - Type <i>OtherStructures2Type</i></label>
-			<select id="{{guid}}_OtherStructures2Type" name="OtherStructures2Type" data-value="{{OtherStructures2Type}}"   >
-				{{#EnumsOtherStructures2Type}}
-				<option value="{{value}}">{{label}}</option>
-				{{/EnumsOtherStructures2Type}}
-			</select>
-		</div>
-
-
-		<div>
-			<label for="{{guid}}_OtherStructures2ConstructionYear" >2nd Scheduled Structure - Year Built <i>OtherStructures2ConstructionYear</i></label>
-			<input type="text" id="{{guid}}_OtherStructures2ConstructionYear" name="OtherStructures2ConstructionYear" value="{{OtherStructures2ConstructionYear}}"  >
-		</div>
-
-
-		<div>
-			<label for="{{guid}}_OtherStructures2Occupancy" >2nd Scheduled Structure - Occupancy <i>OtherStructures2Occupancy</i></label>
-			<select id="{{guid}}_OtherStructures2Occupancy" name="OtherStructures2Occupancy" data-value="{{OtherStructures2Occupancy}}"   >
-				{{#EnumsOtherStructures2Occupancy}}
-				<option value="{{value}}">{{label}}</option>
-				{{/EnumsOtherStructures2Occupancy}}
-			</select>
-		</div>
-
-
-		<div>
-			<label for="{{guid}}_OtherStructures2Coverage" >2nd Scheduled Structure - Limit <i>OtherStructures2Coverage</i></label>
-			<input type="text" id="{{guid}}_OtherStructures2Coverage" name="OtherStructures2Coverage" value="{{OtherStructures2Coverage}}"  >
-		</div>
-
-		<div>
-			<label for="{{guid}}_OtherStructures2BusinessType" >2nd Scheduled Structure - Business Type (if applicable) <i>OtherStructures2BusinessType</i></label>
-			<input type="text" id="{{guid}}_OtherStructures2BusinessType" name="OtherStructures2BusinessType" value="{{OtherStructures2BusinessType}}"  >
-		</div>
-		</fieldset>
-		<fieldset>
 				<legend id="{{guid}}_other_structures">Other Structures</legend>				
+
+		<div>
+			<label for="{{guid}}_PoolType" class="labelRequired">Swimming Pool On Property? <i>PoolType</i></label>
+			<select id="{{guid}}_PoolType" name="PoolType" data-value="{{PoolType}}"  required >
+				{{#EnumsPoolType}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsPoolType}}
+			</select>
+		</div>
+
+
 
 		<div>
 			<label for="{{guid}}_PoolFence" >Is The Property Around Pool Fenced Or Screened? <i>PoolFence</i></label>
@@ -908,6 +832,85 @@
 				{{#EnumsOpeningProtectionType}}
 				<option value="{{value}}">{{label}}</option>
 				{{/EnumsOpeningProtectionType}}
+			</select>
+		</div>
+
+		</fieldset>
+		<fieldset>
+				<legend id="{{guid}}_liquid_fuel_tanks">Liquid Fuel Tanks</legend>				
+
+		<div>
+			<label for="{{guid}}_UndergroundTanks" class="labelRequired">Any liquid fuel tanks on the property? <i>UndergroundTanks</i></label>
+			<select id="{{guid}}_UndergroundTanks" name="UndergroundTanks" data-value="{{UndergroundTanks}}"  required >
+				{{#EnumsUndergroundTanks}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsUndergroundTanks}}
+			</select>
+		</div>
+
+
+
+		<div>
+			<label for="{{guid}}_UndergroundTanksStatus" >Status of tanks? <i>UndergroundTanksStatus</i></label>
+			<select id="{{guid}}_UndergroundTanksStatus" name="UndergroundTanksStatus" data-value="{{UndergroundTanksStatus}}"   >
+				{{#EnumsUndergroundTanksStatus}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsUndergroundTanksStatus}}
+			</select>
+		</div>
+
+
+
+		<div>
+			<label for="{{guid}}_UndergroundTanksAge" >Age of tanks? <i>UndergroundTanksAge</i></label>
+			<select id="{{guid}}_UndergroundTanksAge" name="UndergroundTanksAge" data-value="{{UndergroundTanksAge}}"   >
+				{{#EnumsUndergroundTanksAge}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsUndergroundTanksAge}}
+			</select>
+		</div>
+
+
+
+		<div>
+			<label for="{{guid}}_UndergroundTanksLocation" >Tank Location <i>UndergroundTanksLocation</i></label>
+			<select id="{{guid}}_UndergroundTanksLocation" name="UndergroundTanksLocation" data-value="{{UndergroundTanksLocation}}"   >
+				{{#EnumsUndergroundTanksLocation}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsUndergroundTanksLocation}}
+			</select>
+		</div>
+
+
+
+		<div>
+			<label for="{{guid}}_UndergroundTanksType" >Tank Type <i>UndergroundTanksType</i></label>
+			<select id="{{guid}}_UndergroundTanksType" name="UndergroundTanksType" data-value="{{UndergroundTanksType}}"   >
+				{{#EnumsUndergroundTanksType}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsUndergroundTanksType}}
+			</select>
+		</div>
+
+
+
+		<div>
+			<label for="{{guid}}_UndergroundTanksContainmentTub" >Tank in a Containment Tub <i>UndergroundTanksContainmentTub</i></label>
+			<select id="{{guid}}_UndergroundTanksContainmentTub" name="UndergroundTanksContainmentTub" data-value="{{UndergroundTanksContainmentTub}}"   >
+				{{#EnumsUndergroundTanksContainmentTub}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsUndergroundTanksContainmentTub}}
+			</select>
+		</div>
+
+
+
+		<div>
+			<label for="{{guid}}_FuelTankLiabilityCoverage" >Liquid Fuel Tank Liability Coverage <i>FuelTankLiabilityCoverage</i></label>
+			<select id="{{guid}}_FuelTankLiabilityCoverage" name="FuelTankLiabilityCoverage" data-value="{{FuelTankLiabilityCoverage}}"   >
+				{{#EnumsFuelTankLiabilityCoverage}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsFuelTankLiabilityCoverage}}
 			</select>
 		</div>
 

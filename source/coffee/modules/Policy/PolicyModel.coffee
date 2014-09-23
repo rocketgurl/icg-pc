@@ -45,6 +45,7 @@ define [
       # When the model is loaded, make sure its state is current
       @on 'change', (model) ->
         model.setModelState()
+        model.determineParentChildRelationship()
         model.get_pxServerIndex()
         model.applyFunctions()
 
@@ -158,6 +159,9 @@ define [
           period  : @getPolicyPeriod()
           carrier : @getModelProperty('Management Carrier')
           isQuote : @isQuote()
+          parentChildRelationship : @get('parentChildRelationship')
+          parentPolicyId : @get('parentPolicyId')
+          childPolicyId : @get('childPolicyId')
 
       if @isPendingCancel true
         ipm_header.status = 'Pending Cancellation'
@@ -782,16 +786,15 @@ define [
         out[vocab.name] = @getDataItem term, vocab.name
       out
 
-    # We favor the Op{name} version of the DataItem
+    # Grab the Data Item Value for the latest Term
     #
     # @param `name` _String_
     # @return _String_
     #
     getTermDataItemValue : (name) ->
-      doc = @get('document')
-      if doc? && !_.isEmpty('doc')
-        value = doc.find("Terms Term DataItem[name=Op#{name}]").attr('value') || doc.find("Terms Term DataItem[name=#{name}]").attr('value')
-      value
+      items = @getLastTerm().DataItem
+      items = @_sanitizeNodeArray items
+      @getDataItem items, name
 
     # **Extract the value of a named <DataItem> from a JSON collection**
     # _Alert_: Policies contain multiple versions of some fields, and we favor
@@ -873,6 +876,28 @@ define [
     getAgencyLocationCode : ->
       @getModelProperty 'Management AgencyLocationCode'
 
+    getParentPolicyId : ->
+      @getIdentifier 'ParentPolicyId'
+
+    getChildPolicyId : ->
+      @getIdentifier 'ChildPolicyId'
+
+    determineParentChildRelationship : ->
+      if @get('childPolicyId') and @get('parentPolicyId')
+        @set 'parentChildRelationship', 'has-both'
+      else if @get 'childPolicyId'
+        @set 'parentChildRelationship', 'has-child'
+      else if @get 'parentPolicyId'
+        @set 'parentChildRelationship', 'has-parent'
+      else
+        @set 'parentChildRelationship', 'has-none'
+
+    hasLinks : ->
+      if @get('parentChildRelationship') is 'has-none'
+        false
+      else
+        true
+
     # Return Policy data for use in overviews
     getPolicyOverview : ->
       terms = [
@@ -920,6 +945,8 @@ define [
           'effectiveDate': @getEffectiveDate(),
           'expirationDate': @getExpirationDate(),
           'version': @getPolicyVersion()
+          'parentPolicyId': @getParentPolicyId()
+          'childPolicyId': @getChildPolicyId()
           )
 
     # **Grab the latest version of the Policy**

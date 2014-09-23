@@ -141,8 +141,8 @@ define [
          @apparatchik.isProduct('ofcc-ho3-nj')
         @addWICALBEhaviors()
 
-      if @apparatchik.isProduct('fnic-ho3-la')
-        @addFNICHO3LABehaviors()
+      if @apparatchik.isProduct('fnic-ho3-la') || @apparatchik.isProduct('fnic-ho3-al')
+        @addFNICHO3Behaviors()
 
       if @apparatchik.isProduct('ofcc-ho3-ca') || @apparatchik.isProduct('ofcc-ho5-ca')
         @addOFCCCABehavhiors()
@@ -188,6 +188,22 @@ define [
       policy_term = @MODULE.POLICY.getPolicyTerm()
       $insurance_score = @$el.find('input[name=InsuranceScore]')
       $insurance_score.prop('readonly', policy_term < 3)
+
+      rules = [
+        field: 'UndergroundTanks'
+        condition: '== 100'
+        target: [
+          'UndergroundTanksStatus'
+          'UndergroundTanksAge'
+          'UndergroundTanksLocation'
+          'UndergroundTanksType'
+          'UndergroundTanksContainmentTub'
+          'FuelTankLiabilityCoverage'
+          ]
+        effect: @apparatchik.showElement
+      ]
+
+      @apparatchik.applyEnumDynamics rules
 
     addOFCCHO6SCBehaviors : ->
       $ITDI = @$el.find('select[name=IncreasedTheftDeductibleIndicator]')
@@ -374,8 +390,72 @@ define [
 
       @apparatchik.applyEnumDynamics rules
 
-    addFNICHO3LABehaviors : ->
+    addFNICHO3Behaviors : ->
       rules = [
+        field: 'OtherStructuresIndicator',
+        condition: '> 0'
+        target: [
+          'OtherStructures1Type'
+          'OtherStructures1Occupancy'
+          'OtherStructures1Coverage'
+          'OtherStructures1BusinessType'
+          'OtherStructures2Type'
+          'OtherStructures2Occupancy'
+          'OtherStructures2Coverage'
+          'OtherStructures2BusinessType'
+          'OtherStructures3Type'
+          'OtherStructures3Occupancy'
+          'OtherStructures3Coverage'
+          'OtherStructures3BusinessType'
+          ]
+        effect: @apparatchik.showElement
+      ,
+        field: 'ScheduledPersonalPropertyIndicator',
+        condition: '> 0'
+        target: [
+          'ScheduledPersonalProperty1Type'
+          'ScheduledPersonalProperty1Limit'
+          'ScheduledPersonalProperty1Description'
+          'ScheduledPersonalProperty1LossSettlement'
+          'ScheduledPersonalProperty2Type'
+          'ScheduledPersonalProperty2Limit'
+          'ScheduledPersonalProperty2Description'
+          'ScheduledPersonalProperty2LossSettlement'
+          'ScheduledPersonalProperty3Type'
+          'ScheduledPersonalProperty3Limit'
+          'ScheduledPersonalProperty3Description'
+          'ScheduledPersonalProperty3LossSettlement'
+          'ScheduledPersonalProperty4Type'
+          'ScheduledPersonalProperty4Limit'
+          'ScheduledPersonalProperty4Description'
+          'ScheduledPersonalProperty4LossSettlement'
+          'ScheduledPersonalProperty5Type'
+          'ScheduledPersonalProperty5Limit'
+          'ScheduledPersonalProperty5Description'
+          'ScheduledPersonalProperty5LossSettlement'
+          'ScheduledPersonalProperty6Type'
+          'ScheduledPersonalProperty6Limit'
+          'ScheduledPersonalProperty6Description'
+          'ScheduledPersonalProperty6LossSettlement'
+          'ScheduledPersonalProperty7Type'
+          'ScheduledPersonalProperty7Limit'
+          'ScheduledPersonalProperty7Description'
+          'ScheduledPersonalProperty7LossSettlement'
+          'ScheduledPersonalProperty8Type'
+          'ScheduledPersonalProperty8Limit'
+          'ScheduledPersonalProperty8Description'
+          'ScheduledPersonalProperty8LossSettlement'
+          'ScheduledPersonalProperty9Type'
+          'ScheduledPersonalProperty9Limit'
+          'ScheduledPersonalProperty9Description'
+          'ScheduledPersonalProperty9LossSettlement'
+          'ScheduledPersonalProperty10Type'
+          'ScheduledPersonalProperty10Limit'
+          'ScheduledPersonalProperty10Description'
+          'ScheduledPersonalProperty10LossSettlement'
+          ]
+        effect: @apparatchik.showElement
+      ,
         field: "HeatPump"
         condition: "> 100"
         target: "CentralAir"
