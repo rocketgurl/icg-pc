@@ -293,9 +293,17 @@ define [
       # Assemble the ChangeSet XML and send to server
       changeSet.commitChange(
         changeSet.getPolicyChangeSet(values)
-        @callbackSuccess
+        @callbackMappedSuccess
         @callbackError
         )
+
+    callbackMappedSuccess : (data, status, jqXHR) =>
+      msg = "#{@PARENT_VIEW.success_msg} completed successfully"
+      @PARENT_VIEW.displayMessage 'success', msg, 5000
+      @PARENT_VIEW.success_msg = false
+
+      # Load returned policy into PolicyModel
+      @resetPolicyModel data, jqXHR, true
 
     # Use the vocabTerms (model.json) to derive the policy data the form needs
     # specific to this ActionView and cache it.
