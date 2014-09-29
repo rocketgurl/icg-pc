@@ -380,16 +380,33 @@ define [
     change_payee : """
       <PayeeChanges>
         <Set>
-        {{#changedItems}}
+        {{#dataItems}}
           <DataItem name="{{name}}" value="{{{value}}}" />
-        {{/changedItems}}
+        {{/dataItems}}
         </Set>
       </PayeeChanges>
       <EventHistory>
         <Event type="PayeeChange">
-        {{#changedItems}}
+        {{#dataItems}}
           <DataItem name="{{name}}" value="{{{value}}}" />
-        {{/changedItems}}
+        {{/dataItems}}
+        </Event>
+      </EventHistory>
+    """
+
+    change_payor : """
+      <PayorChanges>
+        <Set>
+        {{#dataItems}}
+          <DataItem name="{{name}}" value="{{{value}}}" />
+        {{/dataItems}}
+        </Set>
+      </PayorChanges>
+      <EventHistory>
+        <Event type="PayorChange">
+        {{#dataItems}}
+          <DataItem name="{{name}}" value="{{{value}}}" />
+        {{/dataItems}}
         </Event>
       </EventHistory>
     """
