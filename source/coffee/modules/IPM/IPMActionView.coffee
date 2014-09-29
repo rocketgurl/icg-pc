@@ -56,6 +56,14 @@ define [
   #
   class IPMActionView extends BaseView
 
+    # A list of sections that may need additional updates in certain cases.
+    # There will need to be a corresponding method to determine what specific changes
+    # should be mapped from what field for another e.g. `@getPayeeChanges()`
+    additionalFieldSections : [
+      'Payee'
+      'Payor'
+    ]
+
     tagName : 'div'
 
     events : {}
@@ -253,11 +261,9 @@ define [
     # Returns an object of mapped values
     #
     # @param `keyMap`   _Object_ maps keys to corresponding values
-    # @param `formVals` _Object_ collection of current values in the current form
-    # @param `changes`  _Array_  [optional] list of changed form values that will be sent to the transaction request
     # @param `combined` _Object_ [optional] certain fields combine the values of other fields
     #
-    mapChangedValues : (keyMap, combined) ->
+    mapAdditionalFields : (keyMap, combined) ->
       changes  = @values.changedValues
       formVals = @values.formValues
       mappedItems = {}
@@ -277,33 +283,143 @@ define [
 
       mappedItems unless _.isEmpty mappedItems
 
+    # For each <section> listed in `@additionalFieldSections`, there should be
+    # a corresponding method called @get<section>Changes. e.g. @getPayeeChanges()
+    getAdditionalFieldChanges : ->
+      changes = {}
+      _.each @additionalFieldSections, (section) =>
+        sectionChanges = @["get#{section}Changes"]()
+        unless _.isEmpty sectionChanges
+          changes[section] = sectionChanges
+      changes
+
+    # **Generate a collection of partial templates to be rolled into a PCS**
+    #
+    # @param `changes` _Object_ changes to be rendered
+    #
+    getAdditionalFieldPartial : (changeSet, type) ->
+      changedItems =
+        dataItems : _.map changeSet, (val, key) -> { name : key, value : val }
+      template = @ChangeSet[_.underscored("change#{type}")] or ''
+      partial =
+        body : @Mustache.render template, changedItems
+
     # **Commit changes that have been mapped to a separate set of dataItems**
     #
-    # @param `changes`   _Object_ collection of changes to be committed
-    # @param `changeSet` _Object_ an instance of an IPMChangeSet with the appropriate @ACTION
+    # Unfortunately, we have to get tricky here.
+    # A policy changeset will not allow us more than 1 kind of change / event at a time.
+    # And if we attempt to post 2 changesets in parallel, we get a 409 conflict.
     #
-    commitMappedChanges : (changes, changeSet) ->
-      values = { formValues : changes }
-      values.formValues.changedItems = _.map changes, (val, key) ->
-        { name : key, value : val }
+    # @param `changes`   _Object_ collection of changes to be committed
+    #
+    commitAdditionalFieldChanges : (changes) ->
+      # `_.some` in underscore.js will evaluate to true if there are any items in the
+      # collection and will execute the predicate function on the first item returned.
 
-      values.formValues.effectiveDate = '__deleteEmptyProperty'
-      values.formValues.appliedDate = '__deleteEmptyProperty'
+      # While there are still items in the collection, we pop off the current item and
+      # pass the now smaller collection to the success callback, which then recursively
+      # re-invokes `commitAdditionalFieldChanges` until all the changes are committed and the
+      # collection is empty.
+      _.some changes, (change, type) =>
+        partial = @getAdditionalFieldPartial change, type
+        changedFields = _.keys change
 
-      # Assemble the ChangeSet XML and send to server
-      changeSet.commitChange(
-        changeSet.getPolicyChangeSet(values)
-        @callbackMappedSuccess
-        @callbackError
-        )
+        # Get necessary info for Policy ChangeSet
+        context =
+          id      : @MODULE.POLICY.get 'insightId'
+          user    : @MODULE.USER.get 'email'
+          version : @MODULE.POLICY.getValueByPath 'Management Version'
+          comment : 'posted by Policy Central IPM Module'
 
-    callbackMappedSuccess : (data, status, jqXHR) =>
-      msg = "#{@PARENT_VIEW.success_msg} completed successfully"
-      @PARENT_VIEW.displayMessage 'success', msg, 5000
-      @PARENT_VIEW.success_msg = false
+        # delete the current changeSet
+        delete changes[type]
+        
+        # Assemble the ChangeSet XML and send to server
+        @ChangeSet.commitChange(
+          @Mustache.render(@ChangeSet.policyChangeSetSkeleton, context, partial)
+          @callbackAdditionalFieldSuccess(changedFields, changes)
+          @callbackError
+          )
 
-      # Load returned policy into PolicyModel
-      @resetPolicyModel data, jqXHR, true
+        return true
+
+    # Constructs a success message and returns the callback function in a closure
+    callbackAdditionalFieldSuccess : (changedFields, changes) =>
+      msg = """
+        <p>Updates to fields:</p>
+        <ul><li>#{changedFields.join('</li><li>')}</li></ul>
+        <p>Completed successfully</p>
+      """
+
+      (data, status, jqXHR) =>
+        @PARENT_VIEW.displayMessage 'success', msg, 6000
+
+        # Refresh the PolicyModel with the returned policy
+        @resetPolicyModel data, jqXHR, true
+
+        # commit additional field changes if the changes collection is not empty
+        @commitAdditionalFieldChanges changes
+
+    # Map any changes to primary insured name or mailing address
+    # to payee fields and submit additional transaction request.
+    # This should only happen when in the 'ChangeCustomer' action
+    getPayeeChanges : ->
+      if @PARENT_VIEW.view_state is 'ChangeCustomer'
+        payeeMap =
+          'InsuredMailingAddressLine1' : 'OpPayeeDisbursementAddressLine1'
+          'InsuredMailingAddressLine2' : 'OpPayeeDisbursementAddressLine2'
+          'InsuredMailingAddressCity'  : 'OpPayeeDisbursementCity'
+          'InsuredMailingAddressState' : 'OpPayeeDisbursementState'
+          'InsuredMailingAddressZip'   : 'OpPayeeDisbursementZip'
+
+        # PayeeDisbursement is the Insured's full name
+        combined =
+          'OpPayeeDisbursement' : ['InsuredFirstName', 'InsuredLastName']
+
+        @mapAdditionalFields payeeMap, combined
+
+    # Logic to follow:
+    # - If paymentplantype is 'invoice',
+    # -- use first mortgagee information as the payor information
+    # -- and change Payor field to '100'
+    # - If paymentplantype is not 'invoice',
+    # -- use the primary insured mailing address and first named insured as the payor information
+    # -- and change Payor field to '200'
+    getPayorChanges : ->
+      payorVocab = @getPayorVocab @values.formValues.paymentPlanType
+      combined = {}
+
+      if payorVocab is 100
+        payorMap =
+          'MortgageeNumber1'       : 'OpPayorName'
+          'Mortgagee1AddressLine1' : 'OpPayorAddressLine1'
+          'Mortgagee1AddressLine2' : 'OpPayorAddressLine2'
+          'Mortgagee1AddressCity'  : 'OpPayorCity'
+          'Mortgagee1AddressState' : 'OpPayorState'
+          'Mortgagee1AddressZip'   : 'OpPayorZip'
+          'payor'                  : 'OpPayor'
+      else
+        payorMap =
+          'InsuredMailingAddressLine1' : 'OpPayorAddressLine1'
+          'InsuredMailingAddressLine2' : 'OpPayorAddressLine2'
+          'InsuredMailingAddressCity'  : 'OpPayorCity'
+          'InsuredMailingAddressState' : 'OpPayorState'
+          'InsuredMailingAddressZip'   : 'OpPayorZip'
+          'payor'                      : 'OpPayor'
+
+        combined.OpPayorName = ['InsuredFirstName', 'InsuredLastName']
+
+      @mapAdditionalFields payorMap, combined
+
+    # Get Payor vocab code based on payment plan type
+    getPayorVocab : (paymentPlanType) ->
+      unless paymentPlanType
+        paymentPlanType = @MODULE.POLICY.getPaymentPlanType()
+
+      if paymentPlanType is 'invoice'
+        100
+      else
+        200
 
     # Use the vocabTerms (model.json) to derive the policy data the form needs
     # specific to this ActionView and cache it.
@@ -443,17 +559,19 @@ define [
     # @param `jqXHR` _Object_ XHR object
     #
     callbackSuccess : (data, status, jqXHR) =>
+      # Assemble any changed payee/payor values before Policy Refresh
+      additionalFieldChanges = @getAdditionalFieldChanges()
    
       #if the ChangeSet/Transaction is successful, we want to send the Notes
       #as an additional post asyncronously and then go ahead and handle the success
       #messaging for the action
-      @postAdditionalNotes(@MODULE.POLICY);
+      @postAdditionalNotes @MODULE.POLICY
       
       #handle the message success      
       msg_text = if @PARENT_VIEW.success_msg then @PARENT_VIEW.success_msg else @PARENT_VIEW.view_state
       msg = "#{msg_text} completed successfully"
 
-      @PARENT_VIEW.displayMessage('success', msg, 12000).remove_loader()
+      @PARENT_VIEW.displayMessage('success', msg, 3000).remove_loader()
 
       # Force reset values to prevent caching of Policy versions
       @values = {}
@@ -462,6 +580,10 @@ define [
       @resetPolicyModel(data, jqXHR, true)
 
       @PARENT_VIEW.route 'Home'
+
+      # Post Payee/Payor changes in the background
+      unless _.isEmpty additionalFieldChanges
+        @commitAdditionalFieldChanges additionalFieldChanges
 
 
     # **Error handling from ChangeSet**
