@@ -26,7 +26,7 @@ define [
         title  : 'The policy has been set to pending non-renewal'
         submit : 'Set to pending non-renewal'
       'nonrenewreinstate' :
-        label  : 'NonRenewalReinstatement'
+        label  : 'NonRenewedReinstatement'
         title  : 'The policy has been reinstated'
         submit : 'Reinstate this policy'
       'nonrenewrescind' :
