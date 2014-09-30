@@ -731,7 +731,7 @@ define [
       tmp            = $('<div />').html(jqXHR.responseText)
       @errors.title   = tmp.find('h1:first').text()
       @errors.desc    = tmp.find('p')
-      @errors.details = tmp.find('ol:first')
+      @errors.details = tmp.find('ol:first').html()
 
       # If there are multiple error descriptions then combine them into one
       # string
@@ -744,7 +744,7 @@ define [
       # services incorrectly send back <ul>s so we need to check both, or
       # set details to null if neither are present.
       if @errors.details.length == 0
-        @errors.details = tmp.find('ul:first')
+        @errors.details = tmp.find('ul:first').html()
         if @errors.details.length == 0
           @errors.details = null
 
