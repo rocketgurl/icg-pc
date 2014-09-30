@@ -64,17 +64,14 @@ define [
     ]
 
     REINSTATE_REASON_CODES : [
-        value: "1",
-        label: "Insured Request"
-      ,
-        value: "29",
-        label: "Underwriting reason for cancellation resolved"
-      ,
-        value: "28",
-        label: "Due to compliance or legal reasons"
-      ,
-        value: "27",
-        label: "Payment received after effective date of cancellation"
+      value: "205",
+      label: "Loss History – Resolved"
+    ,
+      value: "206",
+      label: "Negative feedback from claims adjustor – Resolved"
+    ,
+      value: "207",
+      label: "Hazards found on a roof inspection - Resolved"
     ]
 
     initialize : ->
