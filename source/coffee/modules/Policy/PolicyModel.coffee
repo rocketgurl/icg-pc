@@ -312,6 +312,11 @@ define [
         return item
         )
 
+    getPaymentPlanType : ->
+      accountingData = @getAccountingData()
+      paymentPlan = accountingData?.PaymentPlan
+      paymentPlan.type if paymentPlan
+
     # Extract data items from a list
     # Return empty result if none
     getAddressDataItems : (list, terms) ->
