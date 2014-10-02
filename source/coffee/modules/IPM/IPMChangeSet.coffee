@@ -69,7 +69,7 @@ define [
 
       # Get changed form values and assemble into array suitable for templates
       dataItems = @getChangedDataItems(values, vocabTerms)
-      if !_.isEmpty(dataItems)
+      unless _.isEmpty dataItems
         context.intervalRequest = dataItems
 
       context
@@ -138,6 +138,10 @@ define [
       # Get data together
       change_set_data = _.extend values.formValues, context
 
+      _.each ['effectiveDate', 'appliedDate'], (val) ->
+        if change_set_data[val] is '__deleteEmptyProperty'
+          delete change_set_data[val]
+
       # Fetch XML template for this action as a partial
       partials =
         body : @[_.underscored(@ACTION)] || ''
@@ -179,22 +183,20 @@ define [
     #
     processChangeFields : (fields) ->
       for key, val of fields
-        # Process fields marked with tokens
-        if val == '__deleteEmptyProperty'
-          delete fields[key]
-
-        if val == '__setEmptyValue'
-          fields[key] = ''
-
-        if key.indexOf('Doc') != -1
-          # attempt to massage an ixLibrary URL here, see 1549 in mxadmin/model.js
-          console.log ['Context > Doc?', fields["#{key}Url"]]
-        else if key.indexOf('Date') != -1
-          if val != ""
+        if key.indexOf('Date') != -1
+          if val != "" and val != "__deleteEmptyProperty"
             fields[key] = Helpers.formatDate(
               val.replace('.000Z', 'Z'),
               'YYYY-MM-DDTHH:mm:ss.sssZ'
             )
+        else if val == '__deleteEmptyProperty'
+          delete fields[key]
+        else if val == '__setEmptyValue'
+          fields[key] = ''
+        else if key.indexOf('Doc') != -1
+          # attempt to massage an ixLibrary URL here, see 1549 in mxadmin/model.js
+          console.log ['Context > Doc?', fields["#{key}Url"]]
+
       fields
 
     # **Commit change to pxCentral**
@@ -261,8 +263,12 @@ define [
           </Identifiers>
           <SourceVersion>{{version}}</SourceVersion>
         </Target>
+        {{#effectiveDate}}
         <EffectiveDate>{{effectiveDate}}</EffectiveDate>
+        {{/effectiveDate}}
+        {{#appliedDate}}
         <AppliedDate>{{appliedDate}}</AppliedDate>
+        {{/appliedDate}}
         <Comment>{{comment}}</Comment>
         {{>body}}
       </PolicyChangeSet>
@@ -370,6 +376,40 @@ define [
     invoice : ""
 
     issue : ""
+
+    change_payee : """
+      <PayeeChanges>
+        <Set>
+        {{#dataItems}}
+          <DataItem name="{{name}}" value="{{{value}}}" />
+        {{/dataItems}}
+        </Set>
+      </PayeeChanges>
+      <EventHistory>
+        <Event type="PayeeChange">
+        {{#dataItems}}
+          <DataItem name="{{name}}" value="{{{value}}}" />
+        {{/dataItems}}
+        </Event>
+      </EventHistory>
+    """
+
+    change_payor : """
+      <PayorChanges>
+        <Set>
+        {{#dataItems}}
+          <DataItem name="{{name}}" value="{{{value}}}" />
+        {{/dataItems}}
+        </Set>
+      </PayorChanges>
+      <EventHistory>
+        <Event type="PayorChange">
+        {{#dataItems}}
+          <DataItem name="{{name}}" value="{{{value}}}" />
+        {{/dataItems}}
+        </Event>
+      </EventHistory>
+    """
 
     make_payment : """
       <Ledger>
