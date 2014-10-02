@@ -64,6 +64,8 @@ define [
     ]
 
     REINSTATE_REASON_CODES : [
+      label: "Select"
+    ,
       value: "205",
       label: "Loss History – Resolved"
     ,
