@@ -184,6 +184,10 @@ define [
         nonRenewalEffectiveDate          : null
         EnumsNonRenewReason              : @NONRENEW_REASON_CODES
         EnumsReinstateReason             : @REINSTATE_REASON_CODES
+        nonrenewDisabled                 : ''
+        setPendingDisabled               : ''
+        reinstateDisabled                : 'disabled'
+        rescindPendingDisabled           : 'disabled'
 
       # getState() may return an object
       if _.isObject nonRenewData.policyState
