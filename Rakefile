@@ -199,12 +199,3 @@ task :cleanup do
   FileUtils.mv index_clean, index_munge
   set_urlargs '', "source/js/main.js"
 end
-
-task :liverebel do
-  prefix      = File.dirname(__FILE__)
-  lr_dir      = file_join_safe(prefix, 'liverebel')
-  unless File.directory?(BUILD_DIR)
-    FileUtils.mkdir BUILD_DIR
-  end
-  FileUtils.cp_r lr_dir, BUILD_DIR
-end
