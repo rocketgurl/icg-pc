@@ -295,8 +295,10 @@ define [
     # <PaymentAmountLast> - <PaymentDateLast> if PaymentDateLast > 1900-01-01
     getLastPaymentReceived : (paymentItem) ->
       if _.isObject paymentItem
+        dataItems = @_sanitizeNodeArray paymentItem.DataItem
+        appliedDate = @getDataItem dataItems, 'appliedDate'
         amount = @Helpers.formatMoney paymentItem.value
-        date = @_stripTimeFromDate paymentItem.timestamp
+        date = @_stripTimeFromDate(appliedDate) if appliedDate
         unixInterval = Date.parse date
         if unixInterval > -1
           "#{amount} - #{date}"
