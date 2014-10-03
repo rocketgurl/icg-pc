@@ -120,11 +120,17 @@ def red(text); colorize(text, 31); end
 def green(text); colorize(text, 32); end
 def yellow(text); colorize(text, 33); end
 
+# basePath should be 'build' to run tests against the release build
+# or 'source' to test during development
+def run_unit_tests(basePath)
+  puts `./node_modules/karma/bin/karma start karma.conf.js --basePath #{basePath}`
+end
+
 # Default task runs :build
 task :default => [:build]
 
 # Build task
-task :build => [:coffee, :version, :compile, :prune_build, :cleanup, :liverebel]
+task :build => [:coffee, :version, :compile, :prune_build, :cleanup]
 
 # If CoffeeScript is present in the ENV then compile .coffee to .js
 task :coffee do
@@ -185,6 +191,14 @@ task :prune_build do
 
 end
 
+task :test_dev do
+  run_unit_tests 'source'
+end
+
+task :test_release do
+  run_unit_tests 'build'
+end
+
 # Append the latest commit hash to the footer of index.html
 task :version do
   append_version_number VERSION, "source/index.html"
@@ -198,13 +212,4 @@ task :cleanup do
   FileUtils.rm index_munge
   FileUtils.mv index_clean, index_munge
   set_urlargs '', "source/js/main.js"
-end
-
-task :liverebel do
-  prefix      = File.dirname(__FILE__)
-  lr_dir      = file_join_safe(prefix, 'liverebel')
-  unless File.directory?(BUILD_DIR)
-    FileUtils.mkdir BUILD_DIR
-  end
-  FileUtils.cp_r lr_dir, BUILD_DIR
 end
