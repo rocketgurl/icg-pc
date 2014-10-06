@@ -19,7 +19,8 @@ module.exports = function(config) {
     files: [
       { pattern: 'tests/mocks/**/*', included: false },
       { pattern: 'tests/spec/*Spec.js', included: false },
-      { pattern: 'js/**/*.js', included: false },
+      { pattern: 'js/**/*', included: false },
+      { pattern: 'ico/**/*', included: false },
       'tests/lib/equivalent-xml.js',
       'tests/test-main.js'
     ],
