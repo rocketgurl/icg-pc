@@ -30,6 +30,8 @@ require
     tab             : 'lib/bootstrap/tab'
     collapse        : 'lib/bootstrap/collapse'
     button          : 'lib/bootstrap/button'
+    tooltip         : 'lib/bootstrap/tooltip'
+    popover         : 'lib/bootstrap/popover'
   priority: ['jquery', 'xml2json', 'json']
   shim:
       'jquery' :
@@ -70,6 +72,8 @@ require
         deps: ['jquery']
       'collapse' :
         deps: ['transition']
+      'popover' :
+        deps: ['jquery', 'tooltip']
 
 require [
   'jquery',

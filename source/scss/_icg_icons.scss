@@ -1,0 +1,27 @@
+@font-face {
+  font-family: 'ICG Icons';
+  src: url(if($bootstrap-sass-asset-helper, twbs-font-path('#{$icon-font-path}icg-icons.eot'), '#{$icon-font-path}icg-icons.eot'));
+  src: url(if($bootstrap-sass-asset-helper, twbs-font-path('#{$icon-font-path}icg-icons.eot?#iefix'), '#{$icon-font-path}icg-icons.eot?#iefix')) format('embedded-opentype'),
+       url(if($bootstrap-sass-asset-helper, twbs-font-path('#{$icon-font-path}icg-icons.woff'), '#{$icon-font-path}icg-icons.woff')) format('woff'),
+       url(if($bootstrap-sass-asset-helper, twbs-font-path('#{$icon-font-path}icg-icons.ttf'), '#{$icon-font-path}icg-icons.ttf')) format('truetype'),
+       url(if($bootstrap-sass-asset-helper, twbs-font-path('#{$icon-font-path}icg-icons.svg##{$icon-font-svg-id}'), '#{$icon-font-path}icg-icons.svg##{$icon-font-svg-id}')) format('svg');
+}
+
+// Catchall baseclass
+.icg-icon {
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  font-family: 'ICG Icons';
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+// Individual icons
+.icg-has-child            { &:before { content: "\e600"; } }
+.icg-has-parent           { &:before { content: "\e601"; } }
+.icg-has-parent-and-child { &:before { content: "\e602"; } }
+

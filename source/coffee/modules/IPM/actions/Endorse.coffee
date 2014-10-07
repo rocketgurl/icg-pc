@@ -390,6 +390,7 @@ define [
 
       @apparatchik.applyEnumDynamics rules
 
+    # Rules common to both FNIC HO3 Produc
     addFNICHO3Behaviors : ->
       rules = [
         field: 'OtherStructuresIndicator',
@@ -470,17 +471,6 @@ define [
         condition: "== 100"
         target: "Cladding"
         effect: @apparatchik.showElement
-      ,
-        field: "WindstormDeductibleOption"
-        sideEffects: [
-          target: "HurricaneDeductible"
-          condition: "== 100"
-          effect: @apparatchik.showElement
-        ,
-          target: "WindHailDeductible"
-          condition: "== 200"
-          effect: @apparatchik.showElement
-        ]
       ]
       i = 0
       while ++i < 4
@@ -489,6 +479,21 @@ define [
           condition: "> 0"
           target: "HomeFeatures" + i + "SquareFeet"
           effect: @apparatchik.showElement
+
+      # Specific to HO3 LA
+      if @apparatchik.isProduct('fnic-ho3-la')
+        rules.push({
+          field: "WindstormDeductibleOption"
+          sideEffects: [
+            target: "HurricaneDeductible"
+            condition: "== 100"
+            effect: @apparatchik.showElement
+          ,
+            target: "WindHailDeductible"
+            condition: "== 200"
+            effect: @apparatchik.showElement
+          ]
+          })
 
       @apparatchik.applyEnumDynamics rules
 
