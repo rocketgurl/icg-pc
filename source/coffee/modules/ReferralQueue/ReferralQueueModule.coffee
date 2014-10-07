@@ -1,14 +1,10 @@
 define [
-  'jquery', 
-  'underscore',
-  'backbone',
-  'mustache',
-  'modules/ReferralQueue/ReferralQueueView',
-  'modules/ReferralQueue/ReferralTaskCollection',
-  'loader',
-  'Messenger',
+  'modules/ReferralQueue/ReferralQueueView'
+  'modules/ReferralQueue/ReferralTaskCollection'
+  'loader'
+  'Messenger'
   'Helpers'
-], ($, _, Backbone, Mustache, ReferralQueueView, ReferralTaskCollection, CanvasLoader, Messenger, Helpers) ->
+], (ReferralQueueView, ReferralTaskCollection, CanvasLoader, Messenger, Helpers) ->
 
   class ReferralQueue
 
@@ -29,6 +25,7 @@ define [
         module     : this
         collection : @TASKS
         view       : @view
+        el         : @view.el
         owner      : @controller.user.get 'email'
       )
 
