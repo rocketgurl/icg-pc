@@ -5,18 +5,7 @@ header.module-referrals {
     color: $darkblue;
     @include font-size(24);
     @include emboss;
-    display: inline-block;
-    margin: 0 20px 0 0;
-  }
-  .button-manage-assignees {
-    float: right;
-    @include simple-color(hue($lightgray), saturation($lightgray), lightness($lightgray));
-    position: relative;
-    top: -6px;
-  }
-  .button-manage-assignees[disabled=disabled] {
-    @include simple-color(hue(#eeeeee), saturation(#eeeeee), lightness(#eeeeee));
-    color: #ccc;
+    line-height: 1.4;
   }
 }
 
@@ -57,12 +46,16 @@ header.module-referrals {
   }
 }
 
-table.module-referrals {
-  @extend table.module-search;
-}
-
 .module-referrals.pagination {
   @extend .module-search.pagination;
+
+  .form-group {
+    margin-bottom: 0;
+  }
+
+  span {
+    top: 7px;
+  }
 }
 
 .referrals-loader {
