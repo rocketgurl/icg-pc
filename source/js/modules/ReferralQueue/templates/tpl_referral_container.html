@@ -1,58 +1,58 @@
 <header class="module-referrals clearfix" id="module-referrals-{{cid}}">
-	<h1>New Business Referral Queue</h1>
-	<div id="referrals-switch-{{cid}}" class="referrals-switch btn-group pull-left">
-		<a href="myreferrals" class="btn btn-default active">My Referrals</a>
-		<a href="allreferrals" class="btn btn-default">All Referrals</a>
-	</div>
-	<button class="btn btn-default btn-manage-assignees pull-right">Manage referral assignees</button>
+  <h1>New Business Referral Queue</h1>
+  <div id="referrals-switch-{{cid}}" class="referrals-switch btn-group pull-left">
+    <a href="myreferrals" class="btn btn-default active">My Referrals</a>
+    <a href="allreferrals" class="btn btn-default">All Referrals</a>
+  </div>
+  <button class="btn btn-default btn-manage-assignees pull-right">Manage referral assignees</button>
 </header>
 
 <div id="referrals-loader-{{cid}}" class="referrals-loader">
-	<h2 id="referrals-spinner-{{cid}}"><span>Loading Referrals&hellip;</span></h2>
+  <h2 id="referrals-spinner-{{cid}}"><span>Loading Referrals&hellip;</span></h2>
 </div>
 <div class="panel panel-default">
-	<table class="table table-striped module-referrals">
-		<thead>
-			<tr>
-				<th><a class="referrals-sort-link" href="relatedQuoteId" data-dir="asc">Policy #</a></th>
-				<th><a class="referrals-sort-link" href="insuredLastName" data-dir="asc">Last name</a></th>
-				<th><a class="referrals-sort-link" href="status" data-dir="asc">Status</a></th>
-				<th><a class="referrals-sort-link" href="Type" data-dir="asc">Type</a></th>
-				<th><a class="referrals-sort-link" href="lastUpdated" data-dir="asc">Last updated</a></th>
-				<th><a class="referrals-sort-link" href="SubmittedBy" data-dir="asc">Agent</a></th>
-				<th><a class="referrals-sort-link" href="assignedTo" data-dir="asc">Assigned to</a></th>
-			</tr>
-		</thead>
-		<tbody></tbody>
-	</table>
+  <table class="table table-striped module-referrals">
+    <thead>
+      <tr>
+        <th><a class="referrals-sort-link" href="relatedQuoteId" data-dir="asc">Policy #</a></th>
+        <th><a class="referrals-sort-link" href="insuredLastName" data-dir="asc">Last name</a></th>
+        <th><a class="referrals-sort-link" href="status" data-dir="asc">Status</a></th>
+        <th><a class="referrals-sort-link" href="Type" data-dir="asc">Type</a></th>
+        <th><a class="referrals-sort-link" href="lastUpdated" data-dir="asc">Last updated</a></th>
+        <th><a class="referrals-sort-link" href="SubmittedBy" data-dir="asc">Agent</a></th>
+        <th><a class="referrals-sort-link" href="assignedTo" data-dir="asc">Assigned to</a></th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
 </div>
 <div id="referrals-pagination-{{cid}}" class="module-referrals pagination">
-	<form class="form-horizontal col-xs-12" action="pagination" method="get" accept-charset="utf-8">
-		<div class="form-group form-group-sm">
-			<div class="col-xs-4 pagination-a">
-				<span>Items </span>
-			</div>
-			<div class="col-xs-4">
-				<label for="referrals-pagination-page-{{cid}}" class="col-xs-6 control-label">Jump to page:</label>
-				<div class="col-xs-6">
-					<select class="referrals-pagination-page form-control" name="referrals-pagination-page" id="referrals-pagination-page-{{cid}}">
-						<option value="1">1</option>
-					</select>
-				</div>
-			</div>
-			<div class="col-xs-4">
-				<label for="referrals-pagination-perpage-{{cid}}" class="col-xs-6 control-label">Result count:</label>
-				<div class="col-xs-6">
-					<select class="referrals-pagination-perpage form-control" name="referrals-pagination-perpage" id="referrals-pagination-perpage-{{cid}}">
-						<option value="25">25 per page</option>
-						<option value="50" selected>50 per page</option>
-						<option value="75">75 per page</option>
-						<option value="100">100 per page</option>
-						<option value="500">500 per page</option>
-						<option value="1000">1000 per page</option>
-					</select>
-				</div>
-			</div>
-		</div>
-	</form>
+  <form class="form-horizontal col-xs-12" action="pagination" method="get" accept-charset="utf-8">
+    <div class="form-group form-group-sm">
+      <div class="col-xs-4 pagination-a">
+        <span>Items </span>
+      </div>
+      <div class="col-xs-4">
+        <label for="referrals-pagination-page-{{cid}}" class="col-xs-6 control-label">Jump to page:</label>
+        <div class="col-xs-6">
+          <select class="referrals-pagination-page form-control" name="referrals-pagination-page" id="referrals-pagination-page-{{cid}}">
+            <option value="1">1</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-xs-4">
+        <label for="referrals-pagination-perpage-{{cid}}" class="col-xs-6 control-label">Result count:</label>
+        <div class="col-xs-6">
+          <select class="referrals-pagination-perpage form-control" name="referrals-pagination-perpage" id="referrals-pagination-perpage-{{cid}}">
+            <option value="25">25 per page</option>
+            <option value="50" selected>50 per page</option>
+            <option value="75">75 per page</option>
+            <option value="100">100 per page</option>
+            <option value="500">500 per page</option>
+            <option value="1000">1000 per page</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </form>
 </div>

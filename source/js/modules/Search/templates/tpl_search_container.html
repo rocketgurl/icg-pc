@@ -1,80 +1,80 @@
 <header class="module-search clearfix" id="module-search-{{cid}}">
-	<h1>Policy Search</h1>
-	<ul class="clearfix">
-		<li class="search-controls search-control-context" id=""><a href="">Current context: <strong>All Policies</strong> <i class="icon-caret-down"></i></a></li>
-		<li class="search-controls search-control-save" id=""><a href=""><i class="icon-plus"></i> Save view <i class="icon-caret-down"></i></a></li>
-		<li class="search-controls search-control-share" id=""><a href=""><i class="icon-bookmark"></i> Share view <i class="icon-caret-down"></i></a></li>
-		<li class="search-controls search-control-pin" id=""><a href=""><i class="icon-pushpin"></i> Pin view</a></li>
-	</ul>
+  <h1>Policy Search</h1>
+  <ul class="clearfix">
+    <li class="search-controls search-control-context" id=""><a href="">Current context: <strong>All Policies</strong> <i class="icon-caret-down"></i></a></li>
+    <li class="search-controls search-control-save" id=""><a href=""><i class="icon-plus"></i> Save view <i class="icon-caret-down"></i></a></li>
+    <li class="search-controls search-control-share" id=""><a href=""><i class="icon-bookmark"></i> Share view <i class="icon-caret-down"></i></a></li>
+    <li class="search-controls search-control-pin" id=""><a href=""><i class="icon-pushpin"></i> Pin view</a></li>
+  </ul>
 </header>
 <div id="search-filters-{{cid}}" class="module-search filters">
-	<form action="search_submit" method="get" accept-charset="utf-8" class="form-horizontal clearfix">
-		<div class="form-group form-group-sm col-xs-12">
-			<div class="col-xs-1">
-				<label for="search-query" class="control-label">Search:</label>
-			</div>
-			<div class="col-xs-2">
-				<select name="query-type" class="query-type form-control">
-					<option value="">Quotes &amp; policies</option>
-					<option value="quote">Quotes only</option>
-					<option value="policy">Policies only</option>
-				</select>
-			</div>
-			<div class="col-xs-2">
-				<input type="search" name="search-query" value="" placeholder="Enter search terms" class="form-control">
-			</div>
-			<div class="col-xs-3">
-				<a href="" class="search-control-refresh"><i class="icon-refresh"></i> Refresh results</a>
-			</div>
-		</div>
-	</form>
+  <form action="search_submit" method="get" accept-charset="utf-8" class="form-horizontal clearfix">
+    <div class="form-group form-group-sm col-xs-12">
+      <div class="col-xs-1">
+        <label for="search-query" class="control-label">Search:</label>
+      </div>
+      <div class="col-xs-2">
+        <select name="query-type" class="query-type form-control">
+          <option value="">Quotes &amp; policies</option>
+          <option value="quote">Quotes only</option>
+          <option value="policy">Policies only</option>
+        </select>
+      </div>
+      <div class="col-xs-2">
+        <input type="search" name="search-query" value="" placeholder="Enter search terms" class="form-control">
+      </div>
+      <div class="col-xs-3">
+        <a href="" class="search-control-refresh"><i class="icon-refresh"></i> Refresh results</a>
+      </div>
+    </div>
+  </form>
 </div>
 <div id="search-loader-{{cid}}" class="search-loader">
-	<h2 id="search-spinner-{{cid}}"><span>Searching Policies&hellip;</span></h2>
+  <h2 id="search-spinner-{{cid}}"><span>Searching Policies&hellip;</span></h2>
 </div>
 <div class="panel panel-default">
-	<table class="table table-striped module-search">
-		<thead>
-			<tr>
-				<th><a class="search-sort-link" href="quote-number" data-dir="asc">Quote #</a></th>
-				<th><a class="search-sort-link" href="policy-number" data-dir="asc">Policy #</a></th>
-				<th>Product</th>
-				<th><a class="search-sort-link" href="last-name" data-dir="asc">Name</a></th>
-				<th>Address</th>
-				<th><a class="search-sort-link" href="status" data-dir="asc">Status</a></th>
-				<th><a class="search-sort-link" href="effective-date" data-dir="asc">Effective</a></th>
-				<th>Renewal UW Status</th>
-			</tr>
-		</thead>
-		<tbody></tbody>
-	</table>
+  <table class="table table-striped module-search">
+    <thead>
+      <tr>
+        <th><a class="search-sort-link" href="quote-number" data-dir="asc">Quote #</a></th>
+        <th><a class="search-sort-link" href="policy-number" data-dir="asc">Policy #</a></th>
+        <th>Product</th>
+        <th><a class="search-sort-link" href="last-name" data-dir="asc">Name</a></th>
+        <th>Address</th>
+        <th><a class="search-sort-link" href="status" data-dir="asc">Status</a></th>
+        <th><a class="search-sort-link" href="effective-date" data-dir="asc">Effective</a></th>
+        <th>Renewal UW Status</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
 </div>
 <div id="search-pagination-{{cid}}" class="module-search pagination">
-	<form class="form-horizontal col-xs-12" action="pagination" method="get" accept-charset="utf-8">
-		<div class="form-group form-group-sm">
-			<div class="col-xs-4 pagination-a">
-				<span>Items </span>
-			</div>
-			<div class="col-xs-4 pagination-b">
-				<label for="search-pagination-page-{{cid}}" class="col-xs-6 control-label">Jump to page:</label>
-				<div class="col-xs-4">
-					<select class="search-pagination-page form-control" name="search-pagination-page" id="search-pagination-page-{{cid}}">
-						<option value="1">1</option>
-					</select>
-				</div>
-			</div>
-			<div class="col-xs-4 pagination-c">
-				<label for="search-pagination-perpage-{{cid}}" class="col-xs-6 control-label">Result count:</label>
-				<div class="col-xs-6">
-					<select class="search-pagination-perpage form-control" name="search-pagination-perpage" id="search-pagination-perpage-{{cid}}">
-						<option value="15" selected>15 per page</option>
-						<option value="25">25 per page</option>
-						<option value="50">50 per page</option>
-						<option value="75">75 per page</option>
-						<option value="100">100 per page</option>
-					</select>
-				</div>
-			</div>
-		</div>
-	</form>
+  <form class="form-horizontal col-xs-12" action="pagination" method="get" accept-charset="utf-8">
+    <div class="form-group form-group-sm">
+      <div class="col-xs-4 pagination-a">
+        <span>Items </span>
+      </div>
+      <div class="col-xs-4 pagination-b">
+        <label for="search-pagination-page-{{cid}}" class="col-xs-6 control-label">Jump to page:</label>
+        <div class="col-xs-4">
+          <select class="search-pagination-page form-control" name="search-pagination-page" id="search-pagination-page-{{cid}}">
+            <option value="1">1</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-xs-4 pagination-c">
+        <label for="search-pagination-perpage-{{cid}}" class="col-xs-6 control-label">Result count:</label>
+        <div class="col-xs-6">
+          <select class="search-pagination-perpage form-control" name="search-pagination-perpage" id="search-pagination-perpage-{{cid}}">
+            <option value="15" selected>15 per page</option>
+            <option value="25">25 per page</option>
+            <option value="50">50 per page</option>
+            <option value="75">75 per page</option>
+            <option value="100">100 per page</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </form>
 </div>
