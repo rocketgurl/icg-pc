@@ -69,7 +69,8 @@ define [
       query = _.extend({
           media             : 'application/xml'
           OwningUnderwriter : @email
-          perPage           : 25
+          perPage           : 50
+          status            : 'new,pending'
         }, query)
 
       @fetch(
