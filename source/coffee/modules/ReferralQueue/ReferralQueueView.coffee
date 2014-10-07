@@ -15,35 +15,31 @@ define [
     OWNER_STATE   : '' # Used for 'My Referrals' switch
 
     events :
-      "change .referrals-pagination-page" : ->
-        @paginateTasks(@COLLECTION, @PAGINATION_EL)
-      "change .referrals-pagination-perpage" : ->
-        @paginateTasks(@COLLECTION, @PAGINATION_EL)
-      "click .referrals-sort-link" : (e) ->
-        @sortTasks(e, @COLLECTION)
-      "click .referrals-switch li" : (e) ->
-        @toggleOwner(e, @COLLECTION, @PAGINATION_EL)
-      "click .button-manage-assignees" : (e) ->
-        @toggleManageAssignees(e)
-      "click .menu-confirm" : (e) ->
-        @saveAssignees(e)
-      "change input[type=checkbox]" : (e) ->
-        @toggleCheckbox(e)
-      "click .menu-cancel" : (e) ->
-        @clearAssignees(e)
+      "change .referrals-pagination-page"    : 'paginateTasks'
+      "change .referrals-pagination-perpage" : 'paginateTasks'
+      "click .referrals-sort-link"           : 'sortTasks'
+      "click .menu-confirm"                  : 'saveAssignees'
+      "click .menu-cancel"                   : 'clearAssignees'
+      "click .btn-manage-assignees"          : 'toggleManageAssignees'
+      "click .referrals-switch a"            : 'toggleOwner'
+      "change input[type=checkbox]"          : 'toggleCheckbox'
 
     initialize : (options) ->
+      _.bindAll(this
+        'renderTasks'
+        'tasksError'
+        'renderAssigneesError'
+        'assigneeSuccess'
+        'assigneeError'
+        )
+
       @MODULE      = options.module || false
       @COLLECTION  = options.collection || false
       @PARENT_VIEW = options.view || false
 
       # When the collection is populated, generate the views
-      @COLLECTION.bind('reset', @renderTasks, this);
-      @COLLECTION.bind('error', @tasksError, this);
-
-      # Setup our DOM hooks
-      @el  = @PARENT_VIEW.el
-      @$el = @PARENT_VIEW.$el
+      @COLLECTION.on 'reset', @renderTasks
+      @COLLECTION.on 'error', @tasksError
 
       # Create an AssigneeList model to manage the XML list
       if @MODULE != false
@@ -53,12 +49,11 @@ define [
 
       @AssigneeList     = new ReferralAssigneesModel({ digest : digest })
       @AssigneeList.url = assigneeListUrl
-      errorCallback     = _.bind @renderAssigneesError, this
       @AssigneeList.fetch
-        error : errorCallback
+        error : @renderAssigneesError
 
-      @AssigneeList.on 'change', @assigneeSuccess, this
-      @AssigneeList.on 'fail', @assigneeError, this
+      @AssigneeList.on 'change', @assigneeSuccess
+      @AssigneeList.on 'fail', @assigneeError
 
     render : ->
       # Setup flash module & main container
@@ -70,7 +65,7 @@ define [
       @messenger = new Messenger(@PARENT_VIEW, @cid)
 
       # Find the container to load rows into
-      @CONTAINER = @$el.find('table.module-referrals tbody')
+      @CONTAINER = @$('table.module-referrals tbody')
 
       # Cache form elements for speedy access
       @PAGINATION_EL = @cachePaginationElements()
@@ -79,8 +74,8 @@ define [
       @toggleLoader(true)
 
       # If we couldn't load assignee_list.xml then disable the button
-      if @ASSIGNEE_STATE == false
-        @$el.find('.button-manage-assignees').attr('disabled', true)
+      unless @ASSIGNEE_STATE
+        @$('.button-manage-assignees').attr('disabled', true)
 
       this
 
@@ -123,44 +118,42 @@ define [
     # Toggle the owner field on the UI and trigger collection.getReferrals()
     #
     # @param `e` _Event_
-    # @param `collection` _Object_ ReferralTaskCollection
-    # @param `elements` _Object_ Cached jQuery HTML Elements
     #
-    toggleOwner : (e, collection, elements) ->
+    toggleOwner : (e) ->
       e.preventDefault()
-      $el = $(e.currentTarget)
+      $btn = $(e.currentTarget)
 
       query =
-        perPage : elements.per_page.val() || 25
-        page    : elements.jump_to.val() || 1
+        perPage : @PAGINATION_EL.per_page.val() || 50
+        page    : @PAGINATION_EL.jump_to.val() || 1
 
-      if $el.hasClass('active')
+      if $btn.hasClass 'active'
         return
       else
-        $('.referrals-switch').find('li').removeClass('active')
-        $el.addClass('active')
+        $('.referrals-switch > a').removeClass 'active'
+        $btn.addClass 'active'
 
-        if $el.find('a').attr('href') == 'allreferrals'
+        if $btn.attr('href') is 'allreferrals'
           query.OwningUnderwriter = @OWNER_STATE =  ''
         else
           @OWNER_STATE = @options.owner
 
-        @toggleLoader(true)
-        collection.getReferrals(query)
+        @toggleLoader true
+        @COLLECTION.getReferrals query
 
     # Update the collection with values from pagination form
     #
     # @param `collection` _Object_ ReferralTaskCollection
     # @param `elements` _Object_ jQuery wrapped HTML elements
     #
-    paginateTasks : (collection, elements) ->
+    paginateTasks : ->
       query =
-          perPage           : elements.per_page.val() || 25
-          page              : elements.jump_to.val() || 1
-          OwningUnderwriter : @OWNER_STATE
+        perPage           : @PAGINATION_EL.per_page.val() || 25
+        page              : @PAGINATION_EL.jump_to.val() || 1
+        OwningUnderwriter : @OWNER_STATE
 
-      @toggleLoader(true)
-      collection.getReferrals(query)
+      @toggleLoader true
+      @COLLECTION.getReferrals query
 
     # Return an object of pagination form elements
     # @return _Object_
@@ -168,7 +161,6 @@ define [
       items    : @$el.find('.pagination-a')
       jump_to  : @$el.find('.referrals-pagination-page')
       per_page : @$el.find('.referrals-pagination-perpage')
-
 
     # Update the pagination controls with current info
     #
@@ -232,7 +224,7 @@ define [
     # @param `e` _Event_ Click event
     # @param `collection` _Object_ ReferralTaskCollection
     #
-    sortTasks : (e, collection) ->
+    sortTasks : (e) ->
       e.preventDefault()
       $el = $(e.currentTarget)
 
@@ -242,7 +234,7 @@ define [
 
       @remove_indicators() # clear the decks!
 
-      collection.sortTasks(@SORT_CACHE.sort, @SORT_CACHE.sortdir)
+      @COLLECTION.sortTasks(@SORT_CACHE.sort, @SORT_CACHE.sortdir)
 
       if $el.data('dir') is 'asc'
         $el.data('dir', 'desc')
