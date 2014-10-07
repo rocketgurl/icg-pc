@@ -1,10 +1,10 @@
 define [
-  'BaseView',
-  'Helpers',
-  'Messenger',
-  'modules/ReferralQueue/ReferralTaskView',
-  'modules/ReferralQueue/ReferralAssigneesModel',
-  'text!modules/ReferralQueue/templates/tpl_referral_container.html',
+  'BaseView'
+  'Helpers'
+  'Messenger'
+  'modules/ReferralQueue/ReferralTaskView'
+  'modules/ReferralQueue/ReferralAssigneesModel'
+  'text!modules/ReferralQueue/templates/tpl_referral_container.html'
   'text!modules/ReferralQueue/templates/tpl_manage_assignees.html'
 ], (BaseView, Helpers, Messenger, ReferralTaskView, ReferralAssigneesModel, tpl_container, tpl_menu_assignees) ->
 
