@@ -14,7 +14,7 @@ define [
 
     # Determine who this task is assigned to based on values in XML
     getAssignedTo : ->
-      switch @.get('AssignedTo')
+      switch @get 'AssignedTo'
         when "Underwriting" then "Underwriter"
         when "Agent" then @getOwningAgent()
         else ""
