@@ -17,14 +17,6 @@ header.module-referrals {
 
 .module-referrals.pagination {
   @extend .module-search.pagination;
-
-  .form-group {
-    margin-bottom: 0;
-  }
-
-  span {
-    top: 6px;
-  }
 }
 
 .referrals-loader {
