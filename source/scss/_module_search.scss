@@ -87,15 +87,15 @@ header.module-search {
 }
 
 table.module-search {
-  td.activepolicy {
-    color: $darkblue;
-  }
-  td.cancelledpolicy {
-    color: lighten($red, 10);
-  }
-  td.activequote {
-    color: darken($orange, 5);
-  }
+  th { > a, > span    { display: block; } }
+  
+  .quote-number       { min-width: 125px; }
+  .policy-number      { min-width: 90px; }
+  .effective-date     { min-width: 75px; }
+  td.activepolicy     { color: $darkblue; }
+  td.activequote      { color: darken($orange, 5); }
+  td.cancelledpolicy,
+  td.nonrenewedpolicy { color: lighten($red, 10); }
 }
 
 .module-search.pagination {

@@ -20,10 +20,10 @@
           <option value="policy">Policies only</option>
         </select>
       </div>
-      <div class="col-xs-2">
+      <div class="col-xs-3">
         <input type="search" name="search-query" value="" placeholder="Enter search terms" class="form-control">
       </div>
-      <div class="col-xs-3">
+      <div class="col-xs-2">
         <a href="" class="search-control-refresh"><i class="icon-refresh"></i> Refresh results</a>
       </div>
     </div>
@@ -36,14 +36,14 @@
   <table class="table table-striped module-search">
     <thead>
       <tr>
-        <th><a class="search-sort-link" href="quote-number" data-dir="asc">Quote #</a></th>
-        <th><a class="search-sort-link" href="policy-number" data-dir="asc">Policy #</a></th>
-        <th>Product</th>
-        <th><a class="search-sort-link" href="last-name" data-dir="asc">Name</a></th>
-        <th>Address</th>
-        <th><a class="search-sort-link" href="status" data-dir="asc">Status</a></th>
-        <th><a class="search-sort-link" href="effective-date" data-dir="asc">Effective</a></th>
-        <th>Renewal UW Status</th>
+        <th><a class="quote-number search-sort-link" href="quote-number" data-dir="asc">Quote #</a></th>
+        <th><a class="policy-number search-sort-link" href="policy-number" data-dir="asc">Policy #</a></th>
+        <th><span class="product-label">Product</span></th>
+        <th><a class="last-name search-sort-link" href="last-name" data-dir="asc">Name</a></th>
+        <th><span class="address">Address</span></th>
+        <th><a class="policy-state search-sort-link" href="policystate" data-dir="asc">Status</a></th>
+        <th><a class="effective-date search-sort-link" href="effective-date" data-dir="asc">Effective</a></th>
+        <th><span class="renewal-uw-status">Renewal UW Status</span></th>
       </tr>
     </thead>
     <tbody></tbody>
@@ -56,16 +56,16 @@
         <span>Items </span>
       </div>
       <div class="col-xs-4 pagination-b">
-        <label for="search-pagination-page-{{cid}}" class="col-xs-6 control-label">Jump to page:</label>
-        <div class="col-xs-4">
+        <label for="search-pagination-page-{{cid}}" class="col-xs-5 control-label">Jump to page:</label>
+        <div class="col-xs-3">
           <select class="search-pagination-page form-control" name="search-pagination-page" id="search-pagination-page-{{cid}}">
             <option value="1">1</option>
           </select>
         </div>
       </div>
       <div class="col-xs-4 pagination-c">
-        <label for="search-pagination-perpage-{{cid}}" class="col-xs-6 control-label">Result count:</label>
-        <div class="col-xs-6">
+        <label for="search-pagination-perpage-{{cid}}" class="col-xs-7 control-label">Result count:</label>
+        <div class="col-xs-5">
           <select class="search-pagination-perpage form-control" name="search-pagination-perpage" id="search-pagination-perpage-{{cid}}">
             <option value="15" selected>15 per page</option>
             <option value="25">25 per page</option>
