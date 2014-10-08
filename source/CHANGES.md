@@ -1,7 +1,7 @@
 Updates
 -------
 
-### 2.6.6 - Oct 7, 2014
+### 2.6.5 - Oct 7, 2014
 
 - [ICS-2033](https://icg360.atlassian.net/browse/ICS-2033) Payee fields need to be updated when insured's mailing address gets updated
 - [ICS-2034](https://icg360.atlassian.net/browse/ICS-2034) Update the payor fields on a policy when changing payment plan, customer info, or mortgagee
