@@ -89,29 +89,29 @@ define [
     error_callback : (collection, response) ->
       collection.trigger 'error', collection, response
 
+    getParams : ->
+      params = { media : 'application/xml' }
+      params.OwningUnderwriter = @owner if @owner?
+      params.OwningAgent       = @agent if @agent?
+      params.status            = @status if @status?
+      params.page              = @page
+      params.perPage           = @perPage
+      params
+
     # **Get Tasks from Server**  
     # We have the option to pass in a custom success callback to make
     # testing easier. Wrapping fetch() in this method also makes it easy
     # to override the default Backbone.sync with our custome headers.
     #
-    # @param `query` _Object_ Query params for server call 
     # @param `callback` _Function_ function to call on AJAX success  
     #
-    getReferrals : (query, callback) ->
+    getReferrals : (callback) ->
       success_callback = callback || @success_callback
       error_callback   = @error_callback
-      query            = query || {}
-
-      # Make sure we're always set for XML and have some sensible defaults
-      query = _.extend({
-          media             : 'application/xml'
-          OwningUnderwriter : @email
-          perPage           : 50
-          status            : 'new,pending'
-        }, query)
+      params           = @getParams()
 
       @fetch(
-        data        : query
+        data        : params
         dataType    : 'xml'
         contentType : 'application/xml'
         headers     :
