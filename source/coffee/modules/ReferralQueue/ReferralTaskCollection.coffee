@@ -62,9 +62,9 @@ define [
         # Grab some pagination metadata from the response
         _.extend(this, {
           criteria   : json.criteria
-          perPage    : json.itemsPerPage
-          page       : json.page
-          totalItems : json.totalItems
+          perPage    : +json.itemsPerPage
+          page       : +json.page
+          totalItems : +json.totalItems
         })
 
         return json.Task
