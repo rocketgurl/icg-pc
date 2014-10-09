@@ -11,18 +11,16 @@ define [
   ReferralQueueView = BaseView.extend
 
     PAGINATION_EL : {} # Pagination form elements
-    SORT_CACHE    : {} # Which column is sorted and direction
-    OWNER_STATE   : '' # Used for 'My Referrals' switch
 
     events :
-      "change .referrals-pagination-page"    : 'paginateTasks'
-      "change .referrals-pagination-perpage" : 'paginateTasks'
+      "change .referrals-pagination-page"    : 'updatePage'
+      "change .referrals-pagination-perpage" : 'updatePerPage'
+      "change input[name=show-all]"          : 'updateStatus'
+      "click .referrals-switch a"            : 'updateOwner'
       "click .referrals-sort-link"           : 'sortTasks'
       "click .menu-confirm"                  : 'saveAssignees'
       "click .menu-cancel"                   : 'clearAssignees'
       "click .btn-manage-assignees"          : 'toggleManageAssignees'
-      "click .referrals-switch a"            : 'toggleOwner'
-      "change input[type=checkbox]"          : 'toggleCheckbox'
 
     initialize : (options) ->
       _.bindAll(this
@@ -115,45 +113,45 @@ define [
       @Amplify.publish @cid, 'warning', "Could not load referrals: #{response.status} - #{response.statusText}"
       console.log ["tasksError", collection, response]
 
-    # Toggle the owner field on the UI and trigger collection.getReferrals()
-    #
-    # @param `e` _Event_
-    #
-    toggleOwner : (e) ->
+    # Toggle the owner buttons on the UI and trigger collection.getReferrals()
+    updateOwner : (e) ->
       e.preventDefault()
       $btn = $(e.currentTarget)
 
-      query =
-        perPage : @PAGINATION_EL.per_page.val() || 50
-        page    : @PAGINATION_EL.jump_to.val() || 1
-
-      if $btn.hasClass 'active'
-        return
-      else
+      unless $btn.hasClass 'active'
         $('.referrals-switch > a').removeClass 'active'
         $btn.addClass 'active'
 
-        if $btn.attr('href') is 'allreferrals'
-          query.OwningUnderwriter = @OWNER_STATE =  ''
+        if $btn.attr('href') is 'myreferrals'
+          @COLLECTION.owner = @COLLECTION.email
         else
-          @OWNER_STATE = @options.owner
+          @COLLECTION.owner = null
 
-        @toggleLoader true
-        @COLLECTION.getReferrals query
+        @updateReferralQueue()
 
-    # Update the collection with values from pagination form
-    #
-    # @param `collection` _Object_ ReferralTaskCollection
-    # @param `elements` _Object_ jQuery wrapped HTML elements
-    #
-    paginateTasks : ->
-      query =
-        perPage           : @PAGINATION_EL.per_page.val() || 25
-        page              : @PAGINATION_EL.jump_to.val() || 1
-        OwningUnderwriter : @OWNER_STATE
+    updatePage : (e) ->
+      page = +e.currentTarget.value
+      if page > 0
+        @COLLECTION.page = page
+        @updateReferralQueue()
 
+    updatePerPage : (e) ->
+      perPage = +e.currentTarget.value
+      if perPage > 0
+        @COLLECTION.perPage = perPage
+        @updateReferralQueue()
+
+    updateStatus : (e) ->
+      showAll = $(e.currentTarget).prop 'checked'
+      if showAll
+        @COLLECTION.status = null
+      else
+        @COLLECTION.status = @COLLECTION.statusDefault
+      @updateReferralQueue()
+
+    updateReferralQueue : ->
       @toggleLoader true
-      @COLLECTION.getReferrals query
+      @COLLECTION.getReferrals()
 
     # Return an object of pagination form elements
     # @return _Object_
