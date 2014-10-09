@@ -78,11 +78,9 @@ header.module-search {
     color: $darkgray;
     text-decoration: none;
     line-height: 2.1;
+    padding: 0 10px;
 
     &:hover { color: $blue; }
-  }
-  input[type=search] {
-    border-radius: 15px;
   }
 }
 

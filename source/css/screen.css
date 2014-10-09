@@ -948,15 +948,15 @@ th { text-align: left; }
 
 .table-striped > tbody > tr:nth-child(odd) > td, .table-striped > tbody > tr:nth-child(odd) > th { background-color: #f9f9f9; }
 
-.table-hover > tbody > tr:hover > td, .table-hover > tbody > tr:hover > th { background-color: whitesmoke; }
+.table-hover > tbody > tr:hover > td, .table-hover > tbody > tr:hover > th { background-color: rgba(255, 200, 255, 0.5); }
 
 table col[class*="col-"] { position: static; float: none; display: table-column; }
 
 table td[class*="col-"], table th[class*="col-"] { position: static; float: none; display: table-cell; }
 
-.table > thead > tr > td.active, .table > thead > tr > th.active, .table > thead > tr.active > td, .table > thead > tr.active > th, .table > tbody > tr > td.active, .table > tbody > tr > th.active, .table > tbody > tr.active > td, .table > tbody > tr.active > th, .table > tfoot > tr > td.active, .table > tfoot > tr > th.active, .table > tfoot > tr.active > td, .table > tfoot > tr.active > th { background-color: whitesmoke; }
+.table > thead > tr > td.active, .table > thead > tr > th.active, .table > thead > tr.active > td, .table > thead > tr.active > th, .table > tbody > tr > td.active, .table > tbody > tr > th.active, .table > tbody > tr.active > td, .table > tbody > tr.active > th, .table > tfoot > tr > td.active, .table > tfoot > tr > th.active, .table > tfoot > tr.active > td, .table > tfoot > tr.active > th { background-color: rgba(255, 200, 255, 0.5); }
 
-.table-hover > tbody > tr > td.active:hover, .table-hover > tbody > tr > th.active:hover, .table-hover > tbody > tr.active:hover > td, .table-hover > tbody > tr:hover > .active, .table-hover > tbody > tr.active:hover > th { background-color: #e8e8e8; }
+.table-hover > tbody > tr > td.active:hover, .table-hover > tbody > tr > th.active:hover, .table-hover > tbody > tr.active:hover > td, .table-hover > tbody > tr:hover > .active, .table-hover > tbody > tr.active:hover > th { background-color: rgba(255, 175, 255, 0.5); }
 
 .table > thead > tr > td.success, .table > thead > tr > th.success, .table > thead > tr.success > td, .table > thead > tr.success > th, .table > tbody > tr > td.success, .table > tbody > tr > th.success, .table > tbody > tr.success > td, .table > tbody > tr.success > th, .table > tfoot > tr > td.success, .table > tfoot > tr > th.success, .table > tfoot > tr.success > td, .table > tfoot > tr.success > th { background-color: #dff0d8; }
 
@@ -1736,9 +1736,8 @@ header.module-search i.icon-caret-down { color: dimgrey; }
 
 .module-search.filters { margin: 0 0 20px 0; form-display: block; }
 .module-search.filters .control-label { padding-top: 0; text-shadow: 0 1px white; font-size: 18px; font-size: 1.8rem; color: #002857; line-height: 1.7; }
-.module-search.filters a { font-size: 14px; font-size: 1.4rem; color: dimgrey; text-decoration: none; line-height: 2.1; }
+.module-search.filters a { font-size: 14px; font-size: 1.4rem; color: dimgrey; text-decoration: none; line-height: 2.1; padding: 0 10px; }
 .module-search.filters a:hover, .module-search.filters .policy-nav li a.select, .policy-nav li .module-search.filters a.select { color: #165788; }
-.module-search.filters input[type=search] { border-radius: 15px; }
 
 table.module-search th > a, .ru-loss-history th > a, .zd-loss-history th > a, .lh-loss-history th > a, .bor-table th > a, table.module-search th > span, .ru-loss-history th > span, .zd-loss-history th > span, .lh-loss-history th > span, .bor-table th > span { display: block; }
 table.module-search .quote-number, .ru-loss-history .quote-number, .zd-loss-history .quote-number, .lh-loss-history .quote-number, .bor-table .quote-number { min-width: 125px; }
@@ -2161,6 +2160,10 @@ img.bor-spinner { margin-right: 5px; }
 
 header.module-referrals { margin: 0 0 20px 0; }
 header.module-referrals h1 { float: left; margin: 0 20px 0 0; font-weight: bold; color: #002857; font-size: 24px; font-size: 2.4rem; text-shadow: 0 1px white; line-height: 1.4; }
+header.module-referrals .checkbox { padding: 0 10px; }
+
+.table .status-new { font-weight: bold; }
+.table .referral-status { text-transform: capitalize; }
 
 .rq-manage-assignees { width: 640px; margin: 0 25%; }
 .rq-manage-assignees p { margin: 20px 20px 0 20px; font-size: 14px; font-size: 1.4rem; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: dimgrey; }
