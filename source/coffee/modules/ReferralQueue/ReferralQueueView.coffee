@@ -336,11 +336,3 @@ define [
           .html("""<strong class="menu-error">Error saving: #{msg}</strong>""")
           .delay(5000)
           .fadeOut('slow')
-
-    toggleCheckbox : (e) ->
-      $cb = $(e.currentTarget)
-      if $cb.attr('checked')
-        $cb.val('true')
-      else
-        $cb.val('false')
-      $cb
