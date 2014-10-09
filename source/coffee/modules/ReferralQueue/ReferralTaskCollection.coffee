@@ -10,7 +10,44 @@ define [
 
     model : ReferralTaskModel
 
+    pageDefault : 1
+
+    perPageDefault : 50
+
+    statusDefault : 'New,Pending'
+
+    sortProp : 'lastUpdated'
+
+    sortDir : 'asc'
+
+    sortCache :
+      'relatedQuoteId'  : 'asc'
+      'insuredLastName' : 'asc'
+      'status'          : 'asc'
+      'prettySubtype'   : 'asc'
+      'lastUpdated'     : 'asc'
+      'SubmittedBy'     : 'asc'
+      'assignedTo'      : 'asc'
+
+    comparator : (a, b) ->
+      dir = if @sortDir is 'asc' then 1 else -1
+      propA = @safeLowerCase a.get(@sortProp)
+      propB = @safeLowerCase b.get(@sortProp)
+      if propA < propB
+        return dir
+      if propA > propB
+        return -dir
+      0
+
+    safeLowerCase : (val) ->
+      if _.isString val
+        val = val.toLowerCase()
+      val
+
     initialize : ->
+      @page    = @pageDefault
+      @perPage = @perPageDefault
+      @status  = @statusDefault
 
     # **Parse response**  
     # We need to get the XML from pxCentral into a nice JSON format for our
