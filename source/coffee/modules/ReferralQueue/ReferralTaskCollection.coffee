@@ -124,18 +124,17 @@ define [
       )
 
     # **Sort columns**  
-    # Set the comparator on the collection and then force a sort. This will
-    # trigger a reset on the collection and re-render it.
-    #
-    # @param `field` _String_ Column name  
-    # @param `direction` _String_ ASC || DESC 
-    #
-    sortTasks : (field, direction) ->
-      @comparator = (a, b) ->
-        dir = if direction == 'asc' then 1 else -1
-        if a.get(field) < b.get(field) 
-          return dir
-        if a.get(field) > b.get(field) 
-          return -dir
-        0
+    sortTasks : (property) ->
+      # property to sort by
+      @sortProp = property
+
+      # get the current sort direction
+      oldDir = @sortCache[property]
+      
+      # swap the direction for next time
+      @sortDir = newDir = if oldDir is 'asc' then 'desc' else 'asc'
+      @sortCache[property] = newDir
+
+      # sort the collection
       @sort()
+
