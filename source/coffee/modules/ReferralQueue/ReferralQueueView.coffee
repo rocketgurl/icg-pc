@@ -191,13 +191,13 @@ define [
       elements.items.find('span').html("Items #{start_position} - #{end_position} of #{collection.totalItems}")
 
       # Jump to pages
-      pages        = [1..Math.ceil(+collection.totalItems / elements.per_page.val())]
-      current_page = parseInt(collection.page, 10)
+      pages        = [1..Math.ceil(collection.totalItems / per_page)]
+      current_page = collection.page
       values       = _.map pages, (page) ->
-        if page == current_page
-          return $("<option value=\"#{page}\" selected>#{page}</option>")
+        if page is current_page
+          "<option value=\"#{page}\" selected>#{page}</option>"
         else
-          return $("<option value=\"#{page}\">#{page}</option>")
+          "<option value=\"#{page}\">#{page}</option>"
       elements.jump_to.html(values)
 
 
