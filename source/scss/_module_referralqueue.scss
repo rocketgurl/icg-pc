@@ -31,7 +31,16 @@ header.module-referrals {
   @extend %menu-base;
 }
 
-.table {
+.table.module-referrals {
+  .referrals-sort-link {
+    display: block;
+    
+    > .glyphicon {
+      top: 2px;
+      width: 14px;
+    }
+  }
+  .related-quote-id { min-width: 105px; }
   .status-new { font-weight: bold; }
   .referral-status { text-transform: capitalize; }
 }

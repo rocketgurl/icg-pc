@@ -2162,8 +2162,11 @@ header.module-referrals { margin: 0 0 20px 0; }
 header.module-referrals h1 { float: left; margin: 0 20px 0 0; font-weight: bold; color: #002857; font-size: 24px; font-size: 2.4rem; text-shadow: 0 1px white; line-height: 1.4; }
 header.module-referrals .checkbox { padding: 0 10px; }
 
-.table .status-new { font-weight: bold; }
-.table .referral-status { text-transform: capitalize; }
+.table.module-referrals .referrals-sort-link { display: block; }
+.table.module-referrals .referrals-sort-link > .glyphicon { top: 2px; width: 14px; }
+.table.module-referrals .related-quote-id { min-width: 105px; }
+.table.module-referrals .status-new { font-weight: bold; }
+.table.module-referrals .referral-status { text-transform: capitalize; }
 
 .rq-manage-assignees { width: 640px; margin: 0 25%; }
 .rq-manage-assignees p { margin: 20px 20px 0 20px; font-size: 14px; font-size: 1.4rem; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; color: dimgrey; }

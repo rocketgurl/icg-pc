@@ -220,42 +220,23 @@ define [
     sortTasks : (e) ->
       e.preventDefault()
       $el = $(e.currentTarget)
+      $sortIcon = $el.find '.glyphicon'
+      sortProp = $el.attr 'href'
 
-      @SORT_CACHE =
-        'sort'    : $el.attr('href')
-        'sortdir' : $el.data('dir')
+      @COLLECTION.sortTasks sortProp
+      @remove_indicators()
 
-      @remove_indicators() # clear the decks!
-
-      @COLLECTION.sortTasks(@SORT_CACHE.sort, @SORT_CACHE.sortdir)
-
-      if $el.data('dir') is 'asc'
-        $el.data('dir', 'desc')
-        @swap_indicator $el, '&#9660;'
+      if @COLLECTION.sortDir is 'asc'
+        $sortIcon.addClass 'glyphicon-chevron-down'
       else
-        $el.data('dir', 'asc')
-        @swap_indicator $el, '&#9650;'
-
-    # Switch sorting indicator symbol
-    #
-    # @param `el` _HTML Element_ table header
-    # @param `char` _String_ direction indicator
-    #
-    swap_indicator : (el, char) ->
-      text = el.html()
-      reg = /▲|▼/gi
-      if text.match('▲') or text.match('▼')
-        text = text.replace(reg, char)
-        el.html(text)
-      else
-        el.html(text + " #{char}")
+        $sortIcon.addClass 'glyphicon-chevron-up'
 
     # clear all sorting indicators
     remove_indicators : ->
-      $('.referrals-sort-link').each (index, el) ->
-        el = $(el)
-        reg = /▲|▼/gi
-        el.html(el.html().replace(reg, ''))
+      $('.referrals-sort-link').each ->
+        $icon = $(this).find '.glyphicon'
+        $icon.removeClass 'glyphicon-chevron-up'
+        $icon.removeClass 'glyphicon-chevron-down'
 
     # JSON data from AssigneeList needs some additional parsing to render
     # correctly in Mustache
