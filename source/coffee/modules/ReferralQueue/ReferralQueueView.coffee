@@ -169,12 +169,7 @@ define [
     #
     updatePagination : (collection, elements) ->
       # Items count
-      per_page = elements.per_page.val()
-
-      # Coerce strings into actual numbers via destructuring
-      [per_page, collection.totalItems, collection.page] = _.map([per_page, collection.totalItems, collection.page], (num) ->
-          parseInt(num, 10)
-        )
+      per_page = collection.perPage
 
       if per_page > collection.totalItems
         end_position   = collection.totalItems
