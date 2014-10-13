@@ -123,35 +123,26 @@ define [
         $btn.addClass 'active'
 
         if $btn.attr('href') is 'myreferrals'
-          @COLLECTION.owner = @COLLECTION.email
+          @COLLECTION.setParam 'owner', 'default'
         else
-          @COLLECTION.owner = null
-
-        @updateReferralQueue()
+          @COLLECTION.setParam 'owner', null
 
     updatePage : (e) ->
       page = +e.currentTarget.value
       if page > 0
-        @COLLECTION.page = page
-        @updateReferralQueue()
+        @COLLECTION.setParam 'page', page
 
     updatePerPage : (e) ->
       perPage = +e.currentTarget.value
       if perPage > 0
-        @COLLECTION.perPage = perPage
-        @updateReferralQueue()
+        @COLLECTION.setParam 'perPage', perPage
 
     updateStatus : (e) ->
       showAll = $(e.currentTarget).prop 'checked'
       if showAll
-        @COLLECTION.status = null
+        @COLLECTION.setParam 'status', null
       else
-        @COLLECTION.status = @COLLECTION.statusDefault
-      @updateReferralQueue()
-
-    updateReferralQueue : ->
-      @toggleLoader true
-      @COLLECTION.getReferrals()
+        @COLLECTION.setParam 'status', 'default'
 
     # Return an object of pagination form elements
     # @return _Object_
