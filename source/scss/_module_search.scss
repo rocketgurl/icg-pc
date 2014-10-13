@@ -86,6 +86,7 @@ header.module-search {
 
 table.module-search {
   th { > a, > span    { display: block; } }
+  tr { cursor: pointer; }
   
   .quote-number       { min-width: 125px; }
   .policy-number      { min-width: 90px; }

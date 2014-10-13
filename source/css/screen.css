@@ -1740,6 +1740,7 @@ header.module-search i.icon-caret-down { color: dimgrey; }
 .module-search.filters a:hover, .module-search.filters .policy-nav li a.select, .policy-nav li .module-search.filters a.select { color: #165788; }
 
 table.module-search th > a, .ru-loss-history th > a, .zd-loss-history th > a, .lh-loss-history th > a, .bor-table th > a, table.module-search th > span, .ru-loss-history th > span, .zd-loss-history th > span, .lh-loss-history th > span, .bor-table th > span { display: block; }
+table.module-search tr, .ru-loss-history tr, .zd-loss-history tr, .lh-loss-history tr, .bor-table tr { cursor: pointer; }
 table.module-search .quote-number, .ru-loss-history .quote-number, .zd-loss-history .quote-number, .lh-loss-history .quote-number, .bor-table .quote-number { min-width: 125px; }
 table.module-search .policy-number, .ru-loss-history .policy-number, .zd-loss-history .policy-number, .lh-loss-history .policy-number, .bor-table .policy-number { min-width: 90px; }
 table.module-search .effective-date, .ru-loss-history .effective-date, .zd-loss-history .effective-date, .lh-loss-history .effective-date, .bor-table .effective-date { min-width: 75px; }
