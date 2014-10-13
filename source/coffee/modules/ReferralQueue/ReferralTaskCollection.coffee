@@ -1,5 +1,5 @@
 define [
-  'BaseCollection',
+  'BaseCollection'
   'modules/ReferralQueue/ReferralTaskModel'
 ], (BaseCollection, ReferralTaskModel) ->
 
