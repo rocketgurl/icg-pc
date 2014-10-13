@@ -18,7 +18,7 @@ define [
       @TASKS        = new ReferralTaskCollection()
       @TASKS.url    = @controller.services.pxcentral + 'tasks'
       @TASKS.digest = @controller.user.get 'digest'
-      @TASKS.email  = @TASKS.owner = @controller.user.get 'email'
+      @TASKS.owner  = @TASKS.ownerDefault = @controller.user.get 'email'
 
       #Setup view
       @QUEUE_VIEW = new ReferralQueueView(
