@@ -15,20 +15,20 @@ define [
       @setPrettySubtype()
       @setPrettyLastUpdated()
 
-    # Determine who this task is assigned to based on values in XML
-    setAssignedTo : ->
-      assignedTo = @get 'AssignedTo'
-      @set 'assignedTo', switch assignedTo
-        when 'Underwriting' then @get('OwningUnderwriter') or ''
-        when 'Agent' then @get('OwningAgent') or ''
-        else ''
-
-    # Move dataItems directly model properties
+    # Move dataItems directly onto the model
     setDataItems : ->
       model = this
       dataItems = @Helpers.sanitizeNodeArray @get('DataItem')
       _.each dataItems, (item) ->
         model.set item.name, item.value
+
+    # Determine who this task is assigned to based on values in XML
+    setAssignedTo : ->
+      assignedTo = @get 'AssignedTo'
+      @set 'assignedTo', switch assignedTo
+        when 'Underwriting' then @get('OwningUnderwriter')
+        when 'Agent' then @get('OwningAgent')
+        else ''
 
     setPrettySubtype : ->
       subtype = @get 'Subtype'
