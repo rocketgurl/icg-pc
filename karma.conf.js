@@ -21,6 +21,7 @@ module.exports = function(config) {
       { pattern: 'tests/spec/*Spec.js', included: false },
       { pattern: 'js/**/*', included: false },
       { pattern: 'ico/**/*', included: false },
+      'tests/lib/jasmine.async.min.js',
       'tests/lib/equivalent-xml.js',
       'tests/test-main.js'
     ],
