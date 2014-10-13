@@ -45,9 +45,8 @@ define [
       val
 
     initialize : ->
-      @page    = @pageDefault
-      @perPage = @perPageDefault
-      @status  = @statusDefault
+      @resetDefaults()
+      @on 'update', @getReferrals
 
     # **Parse response**  
     # We need to get the XML from pxCentral into a nice JSON format for our
@@ -62,32 +61,11 @@ define [
         # Grab some pagination metadata from the response
         _.extend(this, {
           criteria   : json.criteria
-          perPage    : +json.itemsPerPage
-          page       : +json.page
           totalItems : +json.totalItems
         })
 
         return json.Task
       false
-
-    # **Success callback**  
-    # We have the option to pass in a custom success callback to make
-    # testing easier. Wrapping fetch() in this method also makes it easy
-    # to override the default Backbone.sync with our custome headers.
-    #
-    # @param `collection` _Object_ ReferralTaskCollection  
-    # @param `response` _XML_ Task XML from server 
-    #
-    success_callback : (collection, response) ->
-      # console.log [collection, response] # stub
-
-    # **Error callback**  
-    #
-    # @param `collection` _Object_ ReferralTaskCollection  
-    # @param `response` _XML_ Task XML from server 
-    #
-    error_callback : (collection, response) ->
-      collection.trigger 'error', collection, response
 
     getParams : ->
       params = { media : 'application/xml' }
@@ -98,29 +76,32 @@ define [
       params.perPage           = @perPage
       params
 
-    # **Get Tasks from Server**  
-    # We have the option to pass in a custom success callback to make
-    # testing easier. Wrapping fetch() in this method also makes it easy
-    # to override the default Backbone.sync with our custome headers.
-    #
-    # @param `callback` _Function_ function to call on AJAX success  
-    #
-    getReferrals : (callback) ->
-      success_callback = callback || @success_callback
-      error_callback   = @error_callback
-      params           = @getParams()
+    setParam : (param, value, silent) ->
+      value = if value is 'default' then @["#{param}Default"] else value
+      unless value is @[param]
+        @[param] = value
+        @trigger "update update:#{param}" unless silent
 
+    resetDefaults : ->
+      collection = this
+      params = [
+        'page'
+        'status'
+        'perPage'
+      ]
+      _.each params, (param) ->
+        collection.setParam param, 'default', true
+
+    # **Get Tasks from Server**
+    #
+    getReferrals : ->
       @fetch(
-        data        : params
+        data        : @getParams()
         dataType    : 'xml'
         contentType : 'application/xml'
         headers     :
           'Authorization'   : "Basic #{@digest}"
           'X-Authorization' : "Basic #{@digest}"
-        success : (collection, response) ->
-          success_callback.apply(this, [collection, response])
-        error : (collection, response) ->
-          error_callback.apply(this, [collection, response])
       )
 
     # **Sort columns**  
