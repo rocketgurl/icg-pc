@@ -19,8 +19,8 @@ define [
     setAssignedTo : ->
       assignedTo = @get 'AssignedTo'
       @set 'assignedTo', switch assignedTo
-        when 'Underwriting' then 'Underwriter'
-        when 'Agent' then @getOwningAgent()
+        when 'Underwriting' then @get('OwningUnderwriter') or ''
+        when 'Agent' then @get('OwningAgent') or ''
         else ''
 
     # Move dataItems directly model properties
@@ -29,9 +29,6 @@ define [
       dataItems = @Helpers.sanitizeNodeArray @get('DataItem')
       _.each dataItems, (item) ->
         model.set item.name, item.value
-
-    getOwningAgent : ->
-      @get('OwningAgent') or ''
 
     setPrettySubtype : ->
       subtype = @get 'Subtype'
