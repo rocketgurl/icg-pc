@@ -24,6 +24,7 @@ define [
 
     initialize : (options) ->
       _.bindAll(this
+        'toggleLoader'
         'renderTasks'
         'tasksError'
         'renderAssigneesError'
@@ -36,6 +37,7 @@ define [
       @PARENT_VIEW = options.view || false
 
       # When the collection is populated, generate the views
+      @COLLECTION.on 'update', => @toggleLoader true
       @COLLECTION.on 'reset', @renderTasks
       @COLLECTION.on 'error', @tasksError
 
