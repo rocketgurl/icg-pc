@@ -1,0 +1,529 @@
+<Tasks criteria="status=new,pending&amp;isAdmin=true&amp;isPolicyManager=false" itemsPerPage="50" page="1" totalItems="1354" xmlns:icslocal="com.ics360.policy.data.local">
+  <Task hasAttachments="false" href="policies/6c67d0d19dd34042aee4271bd5d72189/tasks/20858" id="20858" insuredLastName="Profitability Score" lastUpdated="2014-09-26T17:01:15.617-04:00" latestMessageSnip="Test - Profitability Score.  Hit refer button at 4:59 pm of Friday 9/26.  Then hit Refer to Underwriting button at 5:01 pm." relatedQuoteId="CRU4Q-420843" status="new">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>andyl</SubmittedBy>
+    <SubmittedTimeStamp>2014-09-26T17:01:14.697-04:00</SubmittedTimeStamp>
+    <AssignedTo>Underwriting</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="A214EA20-0B9E-85D3-AAA215FAC96655DD"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="andyl"/>
+  </Task>
+  <Task hasAttachments="false" href="policies/bf8c7da7554e4120a3d4b9a9920b8e2c/tasks/20856" id="20856" insuredLastName="Test" lastUpdated="2014-08-20T18:56:46.593-04:00" latestMessageSnip="" relatedQuoteId="CRU4Q-418951" status="new">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>andyl</SubmittedBy>
+    <SubmittedTimeStamp>2014-08-20T18:56:43.997-04:00</SubmittedTimeStamp>
+    <AssignedTo>Underwriting</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="5557CFDA-1C23-B95E-0D9DE36370C6AB76"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="andyl"/>
+  </Task>
+  <Task hasAttachments="false" href="policies/98da913951ff4028af1662f18c15c482/tasks/20853" id="20853" insuredLastName="fghfgh" lastUpdated="2014-07-31T09:14:59.333-04:00" latestMessageSnip="" relatedQuoteId="CRU4Q-417762" status="new">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>e70000t</SubmittedBy>
+    <SubmittedTimeStamp>2014-07-31T09:14:58.55-04:00</SubmittedTimeStamp>
+    <AssignedTo>Underwriting</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="A0E560CA-1C23-B95E-0DDBB75C6D81484C"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="e70000t"/>
+  </Task>
+  <Task hasAttachments="false" href="policies/9323841ce7a84f69b97f636e8b2d53eb/tasks/20851" id="20851" insuredLastName="Gerdon" lastUpdated="2014-07-16T06:40:59.04-04:00" latestMessageSnip="" relatedQuoteId="CRU4Q-416543" status="new">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>zenq</SubmittedBy>
+    <SubmittedTimeStamp>2014-07-16T06:40:58.13-04:00</SubmittedTimeStamp>
+    <AssignedTo>Underwriting</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="F8F98F46-E3F8-1601-A56BAA98F0801D24"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="zenq"/>
+  </Task>
+  <Task hasAttachments="true" href="policies/bf048ad9e5f84c9fa12fce0a5f5ba9a3/tasks/20850" id="20850" insuredLastName="Test 3" lastUpdated="2014-07-16T05:51:18.617-04:00" latestMessageSnip="Test" relatedQuoteId="CRU4Q-416719" status="new">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>zenq</SubmittedBy>
+    <SubmittedTimeStamp>2014-07-16T05:49:08.823-04:00</SubmittedTimeStamp>
+    <AssignedTo>Underwriting</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="2070E90B-215A-A7C3-C2E59D2EE1BF48DF"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="zenq"/>
+  </Task>
+  <Task hasAttachments="false" href="policies/a6b128cde9cd470dabff9c84ff9b1c9f/tasks/20849" id="20849" insuredLastName="Quote 3" lastUpdated="2014-07-14T08:27:45.267-04:00" latestMessageSnip="Test the submission time" relatedQuoteId="CRU4Q-416663" status="new">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>zenq</SubmittedBy>
+    <SubmittedTimeStamp>2014-07-14T08:27:45.187-04:00</SubmittedTimeStamp>
+    <AssignedTo>Underwriting</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="7DA43F6A-1C23-B95E-0D0E2A517A2E0BB5"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="zenq"/>
+  </Task>
+  <Task hasAttachments="true" href="policies/02e858c205a54d84aa803d8c36b93091/tasks/20846" id="20846" insuredLastName="Quote 1" lastUpdated="2014-07-14T04:59:48.16-04:00" latestMessageSnip="" relatedQuoteId="CRU4Q-416526" status="new">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>zenq</SubmittedBy>
+    <SubmittedTimeStamp>2014-07-14T04:59:47.057-04:00</SubmittedTimeStamp>
+    <AssignedTo>Underwriting</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="7DA43F6A-1C23-B95E-0D0E2A517A2E0BB5"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="zenq"/>
+  </Task>
+  <Task hasAttachments="false" href="policies/0f72fe1b7e8c4a069c021dc603db1519/tasks/20843" id="20843" insuredLastName="JOHNSON" lastUpdated="2014-07-09T06:04:08.017-04:00" latestMessageSnip="loss referral" relatedQuoteId="CRU4Q-416044" status="new">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>andyl</SubmittedBy>
+    <SubmittedTimeStamp>2014-07-09T06:04:06.963-04:00</SubmittedTimeStamp>
+    <AssignedTo>Underwriting</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="1798AEB2-1C23-B95E-0D31C54E47E67661"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="andyl"/>
+  </Task>
+  <Task hasAttachments="false" href="policies/e5bea81757b04b49b437cd1b181bdb17/tasks/20839" id="20839" insuredLastName="ZenQ" lastUpdated="2014-07-01T17:18:55.617-04:00" latestMessageSnip="test test" relatedQuoteId="CRU4Q-415700" status="new">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>andyl</SubmittedBy>
+    <SubmittedTimeStamp>2014-07-01T17:18:54.507-04:00</SubmittedTimeStamp>
+    <AssignedTo>Underwriting</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="5557CFDA-1C23-B95E-0D9DE36370C6AB76"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="andyl"/>
+  </Task>
+  <Task hasAttachments="false" href="policies/3eccfcc806f443c2a0d43d9f226daa7f/tasks/20837" id="20837" insuredLastName="Test" lastUpdated="2014-06-05T06:27:39.467-04:00" latestMessageSnip="" relatedQuoteId="CRU4Q-412758" status="new">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>andyl</SubmittedBy>
+    <SubmittedTimeStamp>2014-06-05T06:27:39.327-04:00</SubmittedTimeStamp>
+    <AssignedTo>Underwriting</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="5557CFDA-1C23-B95E-0D9DE36370C6AB76,BFC19FB4-215A-A7C3-C2172122ADCAAD2F"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="andyl"/>
+  </Task>
+  <Task hasAttachments="false" href="policies/cbcd826b45d04167ac134eb2f8dce8c2/tasks/20834" id="20834" insuredLastName="Test" lastUpdated="2014-06-05T05:03:55.95-04:00" latestMessageSnip="" relatedQuoteId="CRU4Q-414136" status="new">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>andyl</SubmittedBy>
+    <SubmittedTimeStamp>2014-06-05T05:03:55.857-04:00</SubmittedTimeStamp>
+    <AssignedTo>Underwriting</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="C4E9D9B5-1C23-B95E-0DE5E982F826CB87"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="andyl"/>
+  </Task>
+  <Task hasAttachments="false" href="policies/f45691d171654802b021b19113367eec/tasks/20831" id="20831" insuredLastName="Test HO3" lastUpdated="2014-06-05T04:47:17.25-04:00" latestMessageSnip="" relatedQuoteId="CRU4Q-415121" status="new">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>andyl</SubmittedBy>
+    <SubmittedTimeStamp>2014-06-05T04:47:16.62-04:00</SubmittedTimeStamp>
+    <AssignedTo>Underwriting</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="5557CFDA-1C23-B95E-0D9DE36370C6AB76"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="andyl"/>
+  </Task>
+  <Task hasAttachments="false" href="policies/f688219fa9524ae4ab768cf4acb4d564/tasks/20830" id="20830" insuredLastName="Test" lastUpdated="2014-06-05T03:40:07.16-04:00" latestMessageSnip="" relatedQuoteId="CRU4Q-415420" status="new">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>andyl</SubmittedBy>
+    <SubmittedTimeStamp>2014-06-05T03:40:03.01-04:00</SubmittedTimeStamp>
+    <AssignedTo>Underwriting</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="3050558C-1C23-B95E-0D8AF0486D5E8FB2,21DBD2F8-1C23-B95E-0D7165D77FEADE18,59849437-1C23-B95E-0DF6D39463EB2D32,304D3369-1C23-B95E-0D2E7D4D1AF787DB"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="andyl"/>
+  </Task>
+  <Task hasAttachments="false" href="policies/85275696affc4ea58d57d2f7af7e2019/tasks/20829" id="20829" insuredLastName="Jhonson" lastUpdated="2014-06-05T03:27:37.95-04:00" latestMessageSnip="" relatedQuoteId="CRU4Q-415419" status="new">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>andyl</SubmittedBy>
+    <SubmittedTimeStamp>2014-06-05T03:27:37.293-04:00</SubmittedTimeStamp>
+    <AssignedTo>Underwriting</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="12BFE7A4-A287-D127-10EDA786AAAE78A1"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="andyl"/>
+  </Task>
+  <Task hasAttachments="false" href="policies/c931f76bc7e64c23aee9c61fcdaa9c61/tasks/20827" id="20827" insuredLastName="Smith" lastUpdated="2014-06-04T09:42:11.757-04:00" latestMessageSnip="Testing" relatedQuoteId="CRU4Q-411888" status="new">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>andyl</SubmittedBy>
+    <SubmittedTimeStamp>2014-06-04T09:42:10.5-04:00</SubmittedTimeStamp>
+    <AssignedTo>Underwriting</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="EF7E21B0-1C23-B95E-0DBFD3B9649732F0"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="andyl"/>
+  </Task>
+  <Task hasAttachments="false" href="policies/c931f76bc7e64c23aee9c61fcdaa9c61/tasks/20826" id="20826" insuredLastName="Smith" lastUpdated="2014-06-04T09:41:57.497-04:00" latestMessageSnip="Testing" relatedQuoteId="CRU4Q-411888" status="new">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>andyl</SubmittedBy>
+    <SubmittedTimeStamp>2014-06-04T09:41:56.703-04:00</SubmittedTimeStamp>
+    <AssignedTo>Underwriting</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="EF7E21B0-1C23-B95E-0DBFD3B9649732F0"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="andyl"/>
+  </Task>
+  <Task hasAttachments="false" href="policies/e395c0fb46fe486c812eb52a21122df4/tasks/20825" id="20825" insuredLastName="zenq" lastUpdated="2014-06-04T07:40:30.76-04:00" latestMessageSnip="test" relatedQuoteId="CRU4Q-415304" status="new">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>andyl</SubmittedBy>
+    <SubmittedTimeStamp>2014-06-04T07:37:30.17-04:00</SubmittedTimeStamp>
+    <AssignedTo>Underwriting</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="226676EA-94A1-0EE0-34C88D33B7B022E7,1798AEB2-1C23-B95E-0D31C54E47E67661"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="andyl"/>
+  </Task>
+  <Task hasAttachments="false" href="policies/83ac0c9afdd248238b8d87400507d8f1/tasks/20822" id="20822" insuredLastName="McLean" lastUpdated="2014-02-21T11:06:39.657-05:00" latestMessageSnip="" relatedQuoteId="CRU4Q-385692" status="new">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>andyl</SubmittedBy>
+    <SubmittedTimeStamp>2014-02-21T11:06:39.403-05:00</SubmittedTimeStamp>
+    <AssignedTo>Underwriting</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="12BFE7A4-A287-D127-10EDA786AAAE78A1"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="andyl"/>
+  </Task>
+  <Task hasAttachments="false" href="policies/bdfdccbf830145e9b1f3211f13c84531/tasks/20821" id="20821" insuredLastName="Covers" lastUpdated="2014-02-07T14:32:48.897-05:00" latestMessageSnip="test" relatedQuoteId="CRU4Q-407869" status="new">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>andyl</SubmittedBy>
+    <SubmittedTimeStamp>2014-02-07T14:32:48.64-05:00</SubmittedTimeStamp>
+    <AssignedTo>Underwriting</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="4241EE90-1C23-B95E-0DF723B475FF0791"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="andyl"/>
+  </Task>
+  <Task hasAttachments="false" href="policies/817007f022374631a0957d6b48bb56bb/tasks/20818" id="20818" insuredLastName="HO3 Test" lastUpdated="2013-11-26T11:00:05.803-05:00" latestMessageSnip="Please let me through for the test" relatedQuoteId="CRU4Q-406859" status="new">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>andyL</SubmittedBy>
+    <SubmittedTimeStamp>2013-11-26T11:00:04.597-05:00</SubmittedTimeStamp>
+    <AssignedTo>Underwriting</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="A0B81380-215A-A7C3-C269B2FC1E67497D"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="andyL"/>
+  </Task>
+  <Task hasAttachments="true" href="policies/77bcf0bcf73847c1a60bc8891dd6c57b/tasks/20817" id="20817" insuredLastName="Socci" lastUpdated="2013-11-09T15:34:43.263-05:00" latestMessageSnip="" relatedQuoteId="CRU4Q-406808" status="new">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>a162930</SubmittedBy>
+    <SubmittedTimeStamp>2013-11-09T15:34:43.173-05:00</SubmittedTimeStamp>
+    <AssignedTo>Underwriting</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="8CFEAE00-9DCA-F2DE-9C7E12F7D1E2347B"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="a162930"/>
+    <DataItem name="OwningUnderwriter" value="ms@cru360.com"/>
+  </Task>
+  <Task hasAttachments="false" href="policies/d5df48cce21c4945a38f6ed0986b9a95/tasks/20816" id="20816" insuredLastName="Clause" lastUpdated="2013-11-09T12:29:40.137-05:00" latestMessageSnip="more importantly than the claims, this house's &quot;detached garage&quot; is more of a &quot;barn&quot; - the insured has 2 ponies in her backyard (which you can see one on Zillow if you swing aorund the side of the home and zoom in)." relatedQuoteId="CRU4Q-406791" status="new">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>ea0473k</SubmittedBy>
+    <SubmittedTimeStamp>2013-11-09T12:29:39.953-05:00</SubmittedTimeStamp>
+    <AssignedTo>Underwriting</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="22B44951-0C3F-25BD-91686B493DAECA02,68CD2BDA-E786-0162-7E37983246F26F30,4241EE90-1C23-B95E-0DF723B475FF0791"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="ea0473k"/>
+    <DataItem name="OwningUnderwriter" value="ronda.daricek@sagesure.com"/>
+  </Task>
+  <Task hasAttachments="false" href="policies/441506800edd4e86bfc1814c5e3ca7ee/tasks/20815" id="20815" insuredLastName="ESTRELLADO" lastUpdated="2013-11-08T19:02:38.46-05:00" latestMessageSnip="This is a city limit dwelling.....why brush referral" relatedQuoteId="CRU4Q-406752" status="new">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>atrevino@allstate.com</SubmittedBy>
+    <SubmittedTimeStamp>2013-11-08T19:02:38.393-05:00</SubmittedTimeStamp>
+    <AssignedTo>Underwriting</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="F05C8F7A-ACDE-A801-C4C0ABCAF989E647"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="atrevino@allstate.com"/>
+    <DataItem name="OwningUnderwriter" value="karyn.lamson@cru360.com"/>
+  </Task>
+  <Task hasAttachments="false" href="policies/f73dfdc6443345bbb606e7cbf3d70e3c/tasks/20814" id="20814" insuredLastName="CARTER" lastUpdated="2013-11-08T17:44:41.24-05:00" latestMessageSnip="THESE ARE HURRICANE CLAIMS AND ONE IS SHOWIN ZEROPAID." relatedQuoteId="CRU4Q-406723" status="new">
+    <Type>underwritingreferral</Type>
+    <Subtype>prebindreview</Subtype>
+    <SubmittedBy>amstate</SubmittedBy>
+    <SubmittedTimeStamp>2013-11-08T17:44:41.217-05:00</SubmittedTimeStamp>
+    <AssignedTo>Underwriting</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value=""/>
+    <DataItem name="DisputedLossIndices" value="2"/>
+    <DataItem name="OwningAgent" value="amstate"/>
+    <DataItem name="OwningUnderwriter" value="ck@cru360.com"/>
+  </Task>
+  <Task hasAttachments="false" href="policies/f73dfdc6443345bbb606e7cbf3d70e3c/tasks/20813" id="20813" insuredLastName="CARTER" lastUpdated="2013-11-08T17:44:30.06-05:00" latestMessageSnip="THESE ARE HURRICANE CLAIMS AND ONE IS SHOWIN ZEROPAID." relatedQuoteId="CRU4Q-406723" status="new">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>amstate</SubmittedBy>
+    <SubmittedTimeStamp>2013-11-08T17:44:29.993-05:00</SubmittedTimeStamp>
+    <AssignedTo>Underwriting</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="4241EE90-1C23-B95E-0DF723B475FF0791,774A797E-1C23-B95E-0DDD015BB268C4EF"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="amstate"/>
+    <DataItem name="OwningUnderwriter" value="mw@cru360.com"/>
+  </Task>
+  <Task hasAttachments="false" href="policies/eabe8cf5ee7f42cf85bd88b8e5cf970f/tasks/20799" id="20799" insuredLastName="Bush" lastUpdated="2013-11-08T15:40:46.96-05:00" latestMessageSnip="Trying to get an exception on this quote.  These claims happened at her last home in Atlanta, Georgia." relatedQuoteId="CRU4Q-399946" status="new">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>w10007n</SubmittedBy>
+    <SubmittedTimeStamp>2013-11-08T15:40:46.717-05:00</SubmittedTimeStamp>
+    <AssignedTo>Underwriting</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="CRUAL006-WILS-QSSR-0000000000000012"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="w10007n"/>
+    <DataItem name="OwningUnderwriter" value="ms@cru360.com"/>
+  </Task>
+  <Task hasAttachments="true" href="policies/192dbd77a96f4e57bb2eee6e4c3b90d3/tasks/20793" id="20793" insuredLastName="Nanoua" lastUpdated="2013-11-08T16:51:01.497-05:00" latestMessageSnip="Dear Agent,  For consideration, please have attached no loss statement completed and signed.  Please also state the reason for the lapse.  Thank you" relatedQuoteId="CRU4Q-406547" status="pending">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>b157311</SubmittedBy>
+    <SubmittedTimeStamp>2013-11-08T14:35:50.183-05:00</SubmittedTimeStamp>
+    <AssignedTo>Agent</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="8CFEAE00-9DCA-F2DE-9C7E12F7D1E2347B"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="b157311"/>
+    <DataItem name="OwningUnderwriter" value="ms@cru360.com"/>
+  </Task>
+  <Task hasAttachments="false" href="policies/06149821340a41428e92b35f58d1fedb/tasks/20792" id="20792" insuredLastName="CHANG" lastUpdated="2013-11-08T15:53:11.447-05:00" latestMessageSnip="Dear Agent,  Unfortunately we must have the  signed no loss letter for you to proceed through the application process.  Thanks" relatedQuoteId="CRU4Q-406530" status="pending">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>rsanchez2@allstate.com</SubmittedBy>
+    <SubmittedTimeStamp>2013-11-08T14:29:43.027-05:00</SubmittedTimeStamp>
+    <AssignedTo>Agent</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="8CFEAE00-9DCA-F2DE-9C7E12F7D1E2347B"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="rsanchez2@allstate.com"/>
+    <DataItem name="OwningUnderwriter" value="ronda.daricek@sagesure.com"/>
+  </Task>
+  <Task hasAttachments="false" href="policies/0cc75c35e78040be953f1e90e4430542/tasks/20790" id="20790" insuredLastName="ZADRA" lastUpdated="2013-11-08T14:18:55.407-05:00" latestMessageSnip="Front Porch is only 1 foot off the ground and does have a railing." relatedQuoteId="CRU4Q-406531" status="new">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>gabemoe@allstate.com</SubmittedBy>
+    <SubmittedTimeStamp>2013-11-08T14:18:55.36-05:00</SubmittedTimeStamp>
+    <AssignedTo>Underwriting</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="CFA1EE77-D533-0F78-9C1427830918718E"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="gabemoe@allstate.com"/>
+    <DataItem name="OwningUnderwriter" value="karyn.lamson@cru360.com"/>
+  </Task>
+  <Task hasAttachments="false" href="policies/ed9cbb0d2a7d4fc1807a486aa79ddffd/tasks/20791" id="20791" insuredLastName="Lee" lastUpdated="2014-10-13T11:53:49.886-04:00" relatedQuoteId="CRU4Q-404299" status="new">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>mw@cru360.com</SubmittedBy>
+    <SubmittedTimeStamp>2013-11-08T14:18:55.243-05:00</SubmittedTimeStamp>
+    <AssignedTo>Underwriting</AssignedTo>
+    <DataItem name="OwningUnderwriter" value="mw@cru360.com"/>
+  </Task>
+  <Task hasAttachments="false" href="policies/803926e5a9ff479bac17bac10a1133f6/tasks/20785" id="20785" insuredLastName="Shapiro" lastUpdated="2013-11-08T12:27:02.167-05:00" latestMessageSnip="The crawl space is closed.  I called the insured to verify.  thanks." relatedQuoteId="CRU4Q-405697" status="new">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>lschilling1@allstate.com</SubmittedBy>
+    <SubmittedTimeStamp>2013-11-08T12:27:02.103-05:00</SubmittedTimeStamp>
+    <AssignedTo>Underwriting</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="12A70993-1C23-B95E-0D2B152AF7BB1D3A"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="lschilling1@allstate.com"/>
+    <DataItem name="OwningUnderwriter" value="karyn.lamson@cru360.com"/>
+  </Task>
+  <Task hasAttachments="false" href="policies/48695d641ebc4e35bc8e6745608aeeee/tasks/20781" id="20781" insuredLastName="thomas" lastUpdated="2013-11-08T11:41:48.493-05:00" latestMessageSnip="Dear Agent,  For  conideration, please  attach photos of the fence to show it is in good repair.  Thank you" relatedQuoteId="CRU4Q-406293" status="pending">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>b160122</SubmittedBy>
+    <SubmittedTimeStamp>2013-11-08T11:03:42.417-05:00</SubmittedTimeStamp>
+    <AssignedTo>Agent</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="22B44951-0C3F-25BD-91686B493DAECA02"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="b160122"/>
+    <DataItem name="OwningUnderwriter" value="ms@cru360.com"/>
+  </Task>
+  <Task hasAttachments="false" href="policies/35eb5fd6ce2a4e6cb1060ed16a60cb48/tasks/20780" id="20780" insuredLastName="Jeanbaptiste" lastUpdated="2013-11-08T15:50:15.767-05:00" latestMessageSnip="Dear Agent,  Based on the given risk characteristics, this referral has been declined." relatedQuoteId="CRU4Q-405428" status="pending">
+    <Type>underwritingreferral</Type>
+    <Subtype>prebindreview</Subtype>
+    <SubmittedBy>kschexnaydre</SubmittedBy>
+    <SubmittedTimeStamp>2013-11-08T10:51:58.957-05:00</SubmittedTimeStamp>
+    <AssignedTo>Agent</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value=""/>
+    <DataItem name="DisputedLossIndices" value="1"/>
+    <DataItem name="OwningAgent" value="kschexnaydre"/>
+    <DataItem name="OwningUnderwriter" value="ronda.daricek@sagesure.com"/>
+  </Task>
+  <Task hasAttachments="false" href="policies/c3b9b8143d044c04b752785d1c7037de/tasks/20771" id="20771" insuredLastName="Jackson" lastUpdated="2013-11-08T08:30:18.267-05:00" latestMessageSnip="Dear Agent,  Please provide details of the 5/14/2008 and 9/1/2008 loss.  What was the damage and what type of repairs made." relatedQuoteId="CRU4Q-405422" status="pending">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>rdelatte</SubmittedBy>
+    <SubmittedTimeStamp>2013-11-07T17:26:59.947-05:00</SubmittedTimeStamp>
+    <AssignedTo>Agent</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="4241EE90-1C23-B95E-0DF723B475FF0791"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="rdelatte"/>
+    <DataItem name="OwningUnderwriter" value="mw@cru360.com"/>
+  </Task>
+  <Task hasAttachments="false" href="policies/5384011860634658a8d5f9078fcab6a9/tasks/20770" id="20770" insuredLastName="Clarke" lastUpdated="2013-11-08T08:16:50.85-05:00" latestMessageSnip="Good morning   Please provide photos and contractor agreements for 10/2012 loss repairs for further review.  Thank you " relatedQuoteId="CRU4Q-406113" status="pending">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>b157908</SubmittedBy>
+    <SubmittedTimeStamp>2013-11-07T17:22:39.773-05:00</SubmittedTimeStamp>
+    <AssignedTo>Agent</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="22B44951-0C3F-25BD-91686B493DAECA02"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="b157908"/>
+    <DataItem name="OwningUnderwriter" value="jb@cru360.com"/>
+  </Task>
+  <Task hasAttachments="false" href="policies/db1999875cef4f1c88ebaf26b3606e53/tasks/20761" id="20761" insuredLastName="LAOUDIS" lastUpdated="2013-11-07T16:13:39.917-05:00" latestMessageSnip="The jewelry item is already listed on the quote.  you should be able to proceed with the quote. thank you, Karyn" relatedQuoteId="CRU4Q-405950" status="pending">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>zanad@allstate.com</SubmittedBy>
+    <SubmittedTimeStamp>2013-11-07T15:30:15.753-05:00</SubmittedTimeStamp>
+    <AssignedTo>Agent</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="3050558C-1C23-B95E-0D8AF0486D5E8FB2"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="zanad@allstate.com"/>
+    <DataItem name="OwningUnderwriter" value="karyn.lamson@cru360.com"/>
+  </Task>
+  <Task hasAttachments="false" href="policies/494c8e39d51d44a485124c26b34ebd6f/tasks/20755" id="20755" insuredLastName="Mccarty" lastUpdated="2013-11-07T14:04:14.353-05:00" latestMessageSnip="Please provide specifics on what was damage....roof, siding, fence, etc? Thank you, Karyn" relatedQuoteId="CRU4Q-405802" status="pending">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>b122489</SubmittedBy>
+    <SubmittedTimeStamp>2013-11-07T12:50:16-05:00</SubmittedTimeStamp>
+    <AssignedTo>Agent</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="4241EE90-1C23-B95E-0DF723B475FF0791"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="b122489"/>
+    <DataItem name="OwningUnderwriter" value="karyn.lamson@cru360.com"/>
+  </Task>
+  <Task hasAttachments="false" href="policies/97baf71bade04b6da37130c23bc18d0f/tasks/20750" id="20750" insuredLastName="Wood Jr" lastUpdated="2013-11-07T15:29:59.03-05:00" latestMessageSnip="Dear Agent,  Please attached the signed/written (ACORD 37) statement of no loss for consideration.  Thanks" relatedQuoteId="CRU4Q-405735" status="pending">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>cfemp123</SubmittedBy>
+    <SubmittedTimeStamp>2013-11-07T11:37:08.317-05:00</SubmittedTimeStamp>
+    <AssignedTo>Agent</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="8CFEAE00-9DCA-F2DE-9C7E12F7D1E2347B"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="cfemp123"/>
+    <DataItem name="OwningUnderwriter" value="ronda.daricek@sagesure.com"/>
+  </Task>
+  <Task hasAttachments="false" href="policies/9b39478bd36642f2bef6c32c7e43feeb/tasks/20749" id="20749" insuredLastName="Rebaza" lastUpdated="2013-11-07T11:31:15.567-05:00" latestMessageSnip="Please provide photos and a copy of the roofing contract. Thank you, Karyn" relatedQuoteId="CRU4Q-405710" status="pending">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>b118826</SubmittedBy>
+    <SubmittedTimeStamp>2013-11-07T11:28:28.593-05:00</SubmittedTimeStamp>
+    <AssignedTo>Agent</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="22B44951-0C3F-25BD-91686B493DAECA02"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="b118826"/>
+    <DataItem name="OwningUnderwriter" value="karyn.lamson@cru360.com"/>
+  </Task>
+  <Task hasAttachments="true" href="policies/2f4165e288754d18b20d9f6eb28fea68/tasks/20731" id="20731" insuredLastName="Tisi" lastUpdated="2013-11-07T15:20:50.18-05:00" latestMessageSnip="Dear Agent,  We could not open the attachment to view your documents.  Please reply with an attachment we can open (pdf or doc).   " relatedQuoteId="CRU4Q-405224" status="pending">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>8979414</SubmittedBy>
+    <SubmittedTimeStamp>2013-11-06T16:40:14.303-05:00</SubmittedTimeStamp>
+    <AssignedTo>Agent</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="8CFEAE00-9DCA-F2DE-9C7E12F7D1E2347B,22B44951-0C3F-25BD-91686B493DAECA02,68CD2BDA-E786-0162-7E37983246F26F30"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="8979414"/>
+    <DataItem name="OwningUnderwriter" value="ronda.daricek@sagesure.com"/>
+  </Task>
+  <Task hasAttachments="false" href="policies/18f1eae635a74375a64ca376baafb65b/tasks/20720" id="20720" insuredLastName="Jacobson" lastUpdated="2013-11-06T14:38:36.48-05:00" latestMessageSnip="Dear agent,  The effective date is showing 01/31/2013, please change to 11/06/2013 or later and you will be able to proceed." relatedQuoteId="CRU4Q-288763" status="pending">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>marshawidmeier@allstate.com</SubmittedBy>
+    <SubmittedTimeStamp>2013-11-06T14:33:48.697-05:00</SubmittedTimeStamp>
+    <AssignedTo>Agent</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="5557CFDA-1C23-B95E-0D9DE36370C6AB76"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="marshawidmeier@allstate.com"/>
+    <DataItem name="OwningUnderwriter" value="stephen.goldman@cru360.com"/>
+  </Task>
+  <Task hasAttachments="false" href="policies/d8c4b0d8c581478890943c9fcff9f2e2/tasks/20709" id="20709" insuredLastName="Thomas" lastUpdated="2013-11-06T12:59:34.31-05:00" latestMessageSnip="Documentation showing the underground liquid fuel tank has been properly abandoned or disabled.   He may need to go to the town or county where he lives, they may be able to assist. Karyn" relatedQuoteId="CRU4Q-405055" status="pending">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>e01583j</SubmittedBy>
+    <SubmittedTimeStamp>2013-11-06T11:32:40.093-05:00</SubmittedTimeStamp>
+    <AssignedTo>Agent</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="17C31683-1C23-B95E-0D104E646CF1747C"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="e01583j"/>
+    <DataItem name="OwningUnderwriter" value="karyn.lamson@cru360.com"/>
+  </Task>
+  <Task hasAttachments="false" href="policies/758ae01e13a84f679487075183f74669/tasks/20689" id="20689" insuredLastName="Ledain" lastUpdated="2013-11-06T15:18:51.673-05:00" latestMessageSnip="Dear Agent,   For consideration we will need proof of the repairs, i.e. copies of paid contractors receipts and photo’s.  We will also need a signed written statement from the insured that he no longer owns the dog involved in the 11/1/2012 claim.  Thank" relatedQuoteId="CRU4Q-404723" status="pending">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>b156542</SubmittedBy>
+    <SubmittedTimeStamp>2013-11-05T15:59:29.983-05:00</SubmittedTimeStamp>
+    <AssignedTo>Agent</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="22B44951-0C3F-25BD-91686B493DAECA02,68CD2BDA-E786-0162-7E37983246F26F30"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="b156542"/>
+    <DataItem name="OwningUnderwriter" value="ronda.daricek@sagesure.com"/>
+  </Task>
+  <Task hasAttachments="false" href="policies/c79552814e184ade9f59db35094c96e8/tasks/20688" id="20688" insuredLastName="Cacioli" lastUpdated="2013-11-05T15:47:32.46-05:00" latestMessageSnip="We will need the receipts as well as photos of all repairs. Thank you, Karyn" relatedQuoteId="CRU4Q-404695" status="pending">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>v162789</SubmittedBy>
+    <SubmittedTimeStamp>2013-11-05T15:39:22.02-05:00</SubmittedTimeStamp>
+    <AssignedTo>Agent</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="22B44951-0C3F-25BD-91686B493DAECA02,68CD2BDA-E786-0162-7E37983246F26F30"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="v162789"/>
+    <DataItem name="OwningUnderwriter" value="karyn.lamson@cru360.com"/>
+  </Task>
+  <Task hasAttachments="false" href="policies/de27249879e145bb99e85b1f19fc83e9/tasks/20685" id="20685" insuredLastName="Torres" lastUpdated="2013-11-05T16:47:08.53-05:00" latestMessageSnip="Dear agent,  For consideration of an underwriting exception we would require review of the roof photos and contractor's repair records for Sandy Losses" relatedQuoteId="CRU4Q-404660" status="pending">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>a162218</SubmittedBy>
+    <SubmittedTimeStamp>2013-11-05T15:09:48.177-05:00</SubmittedTimeStamp>
+    <AssignedTo>Agent</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="22B44951-0C3F-25BD-91686B493DAECA02"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="a162218"/>
+    <DataItem name="OwningUnderwriter" value="stephen.goldman@cru360.com"/>
+  </Task>
+  <Task hasAttachments="false" href="policies/7c2dafe9b7b24169a8f118fb54f84183/tasks/20680" id="20680" insuredLastName="Waldvogel" lastUpdated="2013-11-05T14:34:13.37-05:00" latestMessageSnip="Please forward photos and a receipt for repairs. Thank you, Karyn" relatedQuoteId="CRU4Q-404590" status="pending">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>a137303</SubmittedBy>
+    <SubmittedTimeStamp>2013-11-05T14:16:49.687-05:00</SubmittedTimeStamp>
+    <AssignedTo>Agent</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="22B44951-0C3F-25BD-91686B493DAECA02"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="a137303"/>
+    <DataItem name="OwningUnderwriter" value="karyn.lamson@cru360.com"/>
+  </Task>
+  <Task hasAttachments="false" href="policies/03246e2736234aa39e5cb77720794624/tasks/20678" id="20678" insuredLastName="moreno-degarcia" lastUpdated="2013-11-06T10:17:26.257-05:00" latestMessageSnip="Dear Agent,  I do now see the loss, which is showing as :&quot;open&quot;.    We would need a letter from Tower, the company showing on the loss report, that this loss was closed without payment in order to proceed." relatedQuoteId="CRU4Q-401798" status="pending">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>moirajamieson2@allstate.com</SubmittedBy>
+    <SubmittedTimeStamp>2013-11-05T13:54:39.867-05:00</SubmittedTimeStamp>
+    <AssignedTo>Agent</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="5557CFDA-1C23-B95E-0D9DE36370C6AB76"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="moirajamieson2@allstate.com"/>
+    <DataItem name="OwningUnderwriter" value="stephen.goldman@cru360.com"/>
+  </Task>
+  <Task hasAttachments="false" href="policies/9b459148b1384657a0a530f21985d139/tasks/20675" id="20675" insuredLastName="Conklin" lastUpdated="2013-11-05T17:23:34.467-05:00" latestMessageSnip="Dear Agent,  You will need to unlock the quote and go to the &quot;Applicant Information&quot; and input the social security number.  " relatedQuoteId="CRU4Q-404437" status="pending">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>hhopkins@tayloragency.com</SubmittedBy>
+    <SubmittedTimeStamp>2013-11-05T11:39:13.493-05:00</SubmittedTimeStamp>
+    <AssignedTo>Agent</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="BFC19FB4-215A-A7C3-C2172122ADCAAD2F"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="hhopkins@tayloragency.com"/>
+    <DataItem name="OwningUnderwriter" value="ronda.daricek@sagesure.com"/>
+  </Task>
+  <Task hasAttachments="false" href="policies/c018ede9ae5040c5a0e88015c24d7650/tasks/20670" id="20670" insuredLastName="TEMPLETON" lastUpdated="2013-11-05T10:57:26.463-05:00" latestMessageSnip="Good morning   Please provide details for both of the wind losses (9/1/08 and 9/28/11), please include cause of loss, damages and what repairs were completed.  Please also verify when the roof was last fully replaced for further review.   Thank you " relatedQuoteId="CRU4Q-404364" status="pending">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>e40216n</SubmittedBy>
+    <SubmittedTimeStamp>2013-11-05T10:24:51.857-05:00</SubmittedTimeStamp>
+    <AssignedTo>Agent</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="4241EE90-1C23-B95E-0DF723B475FF0791"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="e40216n"/>
+    <DataItem name="OwningUnderwriter" value="jb@cru360.com"/>
+  </Task>
+  <Task hasAttachments="true" href="policies/85526d5b09014fa6b3e7ce5aaa5a1f15/tasks/20667" id="20667" insuredLastName="Hall" lastUpdated="2013-11-05T08:04:40.703-05:00" latestMessageSnip="the statement of no losses must include the address of the property being covered as well as the dates of the lapse.  You also need to update the effective date to today or a future date as we cannot back date to 11/3/13. Thank you, Karyn" relatedQuoteId="CRU4Q-403709" status="pending">
+    <Type>underwritingreferral</Type>
+    <Subtype>quotingeligibility</Subtype>
+    <SubmittedBy>A108193</SubmittedBy>
+    <SubmittedTimeStamp>2013-11-04T21:08:29.737-05:00</SubmittedTimeStamp>
+    <AssignedTo>Agent</AssignedTo>
+    <DataItem name="BlockingRulesetIds" value="5557CFDA-1C23-B95E-0D9DE36370C6AB76,8CFEAE00-9DCA-F2DE-9C7E12F7D1E2347B"/>
+    <DataItem name="DisputedLossIndices" value=""/>
+    <DataItem name="OwningAgent" value="A108193"/>
+    <DataItem name="OwningUnderwriter" value="karyn.lamson@cru360.com"/>
+  </Task>
+</Tasks>

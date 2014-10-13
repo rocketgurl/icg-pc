@@ -11,11 +11,17 @@ define [
       "click" : "openPolicy"
 
     initialize : (options) ->
-      @PARENT_VIEW = options.parent_view || {}
+      @PARENT_VIEW = options.parent_view
+      @setStatusClass()
       this
 
+    setStatusClass : ->
+      status = @model.get 'status'
+      if status is 'new'
+        @$el.addClass 'status-new'
+
     render : ->
-      html = @Mustache.render tpl_row, @model.getViewData()
+      html = @Mustache.render tpl_row, @model.toJSON()
       @$el.append html
 
     openPolicy : (e) ->
@@ -25,6 +31,6 @@ define [
       params =
         url : @model.get 'relatedQuoteId'
 
-      @PARENT_VIEW.MODULE.view.options.controller.launch_module('policyview', params)
-      @PARENT_VIEW.MODULE.view.options.controller.Router.append_module('policyview', params)
+      @PARENT_VIEW?.MODULE.view.options.controller.launch_module('policyview', params)
+      @PARENT_VIEW?.MODULE.view.options.controller.Router.append_module('policyview', params)
 

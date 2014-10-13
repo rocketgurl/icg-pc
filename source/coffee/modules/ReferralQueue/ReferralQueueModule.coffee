@@ -1,14 +1,10 @@
 define [
-  'jquery', 
-  'underscore',
-  'backbone',
-  'mustache',
-  'modules/ReferralQueue/ReferralQueueView',
-  'modules/ReferralQueue/ReferralTaskCollection',
-  'loader',
-  'Messenger',
+  'modules/ReferralQueue/ReferralQueueView'
+  'modules/ReferralQueue/ReferralTaskCollection'
+  'loader'
+  'Messenger'
   'Helpers'
-], ($, _, Backbone, Mustache, ReferralQueueView, ReferralTaskCollection, CanvasLoader, Messenger, Helpers) ->
+], (ReferralQueueView, ReferralTaskCollection, CanvasLoader, Messenger, Helpers) ->
 
   class ReferralQueue
 
@@ -22,13 +18,14 @@ define [
       @TASKS        = new ReferralTaskCollection()
       @TASKS.url    = @controller.services.pxcentral + 'tasks'
       @TASKS.digest = @controller.user.get 'digest'
-      @TASKS.email  = @controller.user.get 'email'
+      @TASKS.owner  = @TASKS.ownerDefault = @controller.user.get 'email'
 
       #Setup view
       @QUEUE_VIEW = new ReferralQueueView(
         module     : this
         collection : @TASKS
         view       : @view
+        el         : @view.el
         owner      : @controller.user.get 'email'
       )
 
