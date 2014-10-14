@@ -10,47 +10,42 @@ define [
   ReferralTaskModel = BaseModel.extend
 
     initialize : ->
-      @set('assignedTo', @getAssignedTo())
+      @setDataItems()
+      @setAssignedTo()
+      @setPrettySubtype()
+      @setPrettyLastUpdated()
+
+    # Move dataItems directly onto the model
+    setDataItems : ->
+      model = this
+      dataItems = @Helpers.sanitizeNodeArray @get('DataItem')
+      _.each dataItems, (item) ->
+        model.set item.name, item.value
 
     # Determine who this task is assigned to based on values in XML
-    getAssignedTo : ->
-      switch @.get('AssignedTo')
-        when "Underwriting" then "Underwriter"
-        when "Agent" then @getOwningAgent()
-        else ""
+    setAssignedTo : ->
+      assignedTo = @get 'AssignedTo'
+      @set 'assignedTo', switch assignedTo
+        when 'Underwriting' then @get('OwningUnderwriter')
+        when 'Agent' then @get('OwningAgent')
+        else ''
 
-    # Find OwningAgent within DataItem array
-    getOwningAgent : ->
-      if @get('DataItem')?
-        item = _.find(@get('DataItem'), (item) ->
-            return _.has(item, 'name') && item.name == 'OwningAgent'
-          )
-        if item?
-          item.value
-      else
-        return ''
+    setPrettySubtype : ->
+      subtype = @get 'Subtype'
+      subtypeMap =
+        'inspectionreview'   : 'Inspection Review'
+        'prebindreview'      : 'Loss History'
+        'quotingeligibility' : 'Quoting Eligibility'
+      @set 'prettySubtype', (subtypeMap[subtype] or subtype or '')
 
-    # Return an Object with all the needed fields for the table row view
-    getViewData : ->
-      attributes = _.pick(@attributes,
-          'relatedQuoteId',
-          'insuredLastName',
-          'status',
-          'Type',
-          'lastUpdated',
-          'SubmittedBy',
-          'assignedTo'
-        )
+    setPrettyLastUpdated : ->
       moment.calendar =
-        lastDay  : '[Yesterday at] LT',
-        sameDay  : '[Today at] LT',
-        nextDay  : '[Tomorrow at] LT',
-        lastWeek : '[last] dddd [at] LT',
-        nextWeek : 'dddd [at] LT',
+        lastDay  : '[Yesterday at] LT'
+        sameDay  : '[Today at] LT'
+        nextDay  : '[Tomorrow at] LT'
+        lastWeek : '[last] dddd [at] LT'
+        nextWeek : 'dddd [at] LT'
         sameElse : 'LLL'
-      attributes.lastUpdated = moment(attributes.lastUpdated).calendar()
-      attributes
-
-
+      @set 'prettyLastUpdated', moment(@get('lastUpdated')).calendar()
 
       

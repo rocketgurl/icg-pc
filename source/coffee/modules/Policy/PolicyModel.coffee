@@ -295,8 +295,10 @@ define [
     # <PaymentAmountLast> - <PaymentDateLast> if PaymentDateLast > 1900-01-01
     getLastPaymentReceived : (paymentItem) ->
       if _.isObject paymentItem
+        dataItems = @_sanitizeNodeArray paymentItem.DataItem
+        appliedDate = @getDataItem dataItems, 'appliedDate'
         amount = @Helpers.formatMoney paymentItem.value
-        date = @_stripTimeFromDate paymentItem.timestamp
+        date = @_stripTimeFromDate(appliedDate) if appliedDate
         unixInterval = Date.parse date
         if unixInterval > -1
           "#{amount} - #{date}"
@@ -311,6 +313,11 @@ define [
         item.feesAndPremiums = @Helpers.formatMoney item.feesAndPremiums
         return item
         )
+
+    getPaymentPlanType : ->
+      accountingData = @getAccountingData()
+      paymentPlan = accountingData?.PaymentPlan
+      paymentPlan.type if paymentPlan
 
     # Extract data items from a list
     # Return empty result if none

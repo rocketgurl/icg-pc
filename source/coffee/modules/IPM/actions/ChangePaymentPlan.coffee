@@ -41,6 +41,30 @@ define [
 
       @$el.find(@makeId('paymentPlanType')).val(@MODULE.POLICY.find('Accounting PaymentPlan type'))
 
+    # When payor == 100, payor = mortgagee, else payor = primary insured
+    getPayorValues : (payor) ->
+      policy = @MODULE.POLICY
+
+      if payor is 100
+        policy.getDataItemValues(policy.get('mortgageeData'), [
+          'MortgageeNumber1'
+          'Mortgagee1AddressLine1'
+          'Mortgagee1AddressLine2'
+          'Mortgagee1AddressCity'
+          'Mortgagee1AddressState'
+          'Mortgagee1AddressZip'
+        ])
+      else
+        policy.getDataItemValues(policy.get('insuredData'), [
+          'InsuredFirstName'
+          'InsuredLastName'
+          'InsuredMailingAddressLine1'
+          'InsuredMailingAddressLine2'
+          'InsuredMailingAddressCity'
+          'InsuredMailingAddressState'
+          'InsuredMailingAddressZip'
+        ])
+
     # **Process Form**
     # On submit we do some action specific processing and then send to the
     # TransactionRequest monster
@@ -48,16 +72,26 @@ define [
     submit : (e) ->
       super e
 
+      payorValues = {}
+
       values =
         startDate          : @MODULE.POLICY.get('lastInterval').StartDate ? null
         endDate            : @MODULE.POLICY.get('lastInterval').EndDate ? null
         termEffectiveDate  : @MODULE.POLICY.get('firstTerm').EffectiveDate ? null
         termExpirationDate : @MODULE.POLICY.get('firstTerm').ExpirationDate ? null
         comment            : @$el.find(@makeId('comment')).val()
+        payor              : @getPayorVocab(@values.formValues.paymentPlanType)
+        prevPayor          : @getPayorVocab(@MODULE.POLICY.getPaymentPlanType())
 
-      values.payor = if @values.formValues.paymentPlanType == 'invoice' then 100 else 200
+      # When the payor vocab code changes, we need to push some additional fields
+      # in order to assemble a policy change set in IPMActionView
+      if values.payor isnt values.prevPayor
+        payorValues = @getPayorValues values.payor
+        _.each _.keys(payorValues), (key) =>
+          @values.changedValues.push key
+        @values.changedValues.push 'payor'
 
-      @values.formValues = _.extend(@values.formValues, values)
+      @values.formValues = _.extend(@values.formValues, values, payorValues)
 
       @values.formValues.transactionType = 'AccountingChanges'
 
