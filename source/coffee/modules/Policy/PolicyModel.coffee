@@ -884,10 +884,10 @@ define [
       @getModelProperty 'Management AgencyLocationCode'
 
     getParentPolicyId : ->
-      @getIdentifier 'ParentPolicyId'
+      @getIdentifier 'ParentPolicyID'
 
     getChildPolicyId : ->
-      @getIdentifier 'ChildPolicyId'
+      @getIdentifier 'ChildPolicyID'
 
     determineParentChildRelationship : ->
       if @get('childPolicyId') and @get('parentPolicyId')
