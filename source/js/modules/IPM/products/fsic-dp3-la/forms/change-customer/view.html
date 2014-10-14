@@ -135,7 +135,7 @@
                         <legend>Name</legend>
                         <div>
                             <label for="{{guid}}_InsuredByCorporation" class="labelRequired">Insured by Corporation, Partnership, etc.? <i>InsuredByCorporation</i></label>
-                            <select id="{{guid}}_InsuredByCorporation" name="InsuredByCorporation" required>
+                            <select id="{{guid}}_InsuredByCorporation" name="InsuredByCorporation" data-value="{{InsuredByCorporation}}" required>
                                 {{#EnumsInsuredByCorporation}}
                                 <option value="{{value}}">{{label}}</option>
                                 {{/EnumsInsuredByCorporation}}
