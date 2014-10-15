@@ -932,25 +932,25 @@ define [
     setModelState : ->
       if @get('document')?.length
         @set(
-          'state': @getState(),
-          'quote': @isQuote(),
-          'pendingCancel': @isPendingCancel(),
-          'cancellationEffectiveDate': @getCancellationEffectiveDate(),
-          'cancelled': @isCancelled(),
-          'terms': @getTerms(),
-          'firstTerm': @getFirstTerm(),
-          'quoteTerm': @getQuoteTerm(),
-          'lastInterval': @getLastInterval(),
-          'insuredData': @getCustomerData('Insured'),
-          'mortgageeData': @getCustomerData('Mortgagee'),
-          'additionalInterestData': @getCustomerData('AdditionalInterest'),
-          'productName': @getProductName(),
-          'policyPrefix': @getPolicyPrefix(),
-          'insightId': @getIdentifier('InsightPolicyId'),
-          'policyId': @getPolicyId(),
-          'isIssued': @isIssued(),
-          'effectiveDate': @getEffectiveDate(),
-          'expirationDate': @getExpirationDate(),
+          'state': @getState()
+          'quote': @isQuote()
+          'pendingCancel': @isPendingCancel()
+          'cancellationEffectiveDate': @getCancellationEffectiveDate()
+          'cancelled': @isCancelled()
+          'terms': @getTerms()
+          'firstTerm': @getFirstTerm()
+          'quoteTerm': @getQuoteTerm()
+          'lastInterval': @getLastInterval()
+          'insuredData': @getCustomerData('Insured')
+          'mortgageeData': @getCustomerData('Mortgagee')
+          'additionalInterestData': @getCustomerData('AdditionalInterest')
+          'productName': @getProductName()
+          'policyPrefix': @getPolicyPrefix()
+          'insightId': @getIdentifier('InsightPolicyId')
+          'policyId': @getPolicyId()
+          'isIssued': @isIssued()
+          'effectiveDate': @getEffectiveDate()
+          'expirationDate': @getExpirationDate()
           'version': @getPolicyVersion()
           'parentPolicyId': @getParentPolicyId()
           'childPolicyId': @getChildPolicyId()
