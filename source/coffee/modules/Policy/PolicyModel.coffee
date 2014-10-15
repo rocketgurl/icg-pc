@@ -889,6 +889,12 @@ define [
     getChildPolicyId : ->
       @getIdentifier 'ChildPolicyID'
 
+    getParentInsightPolicyId : ->
+      @getIdentifier 'ParentInsightPolicyId'
+
+    getChildInsightPolicyId : ->
+      @getIdentifier 'ChildInsightPolicyId'
+
     determineParentChildRelationship : ->
       if @get('childPolicyId') and @get('parentPolicyId')
         @set 'parentChildRelationship', 'has-both'
@@ -954,6 +960,8 @@ define [
           'version': @getPolicyVersion()
           'parentPolicyId': @getParentPolicyId()
           'childPolicyId': @getChildPolicyId()
+          'parentInsightPolicyId': @getParentInsightPolicyId()
+          'childInsightPolicyId': @getChildInsightPolicyId()
           )
 
     # **Grab the latest version of the Policy**
