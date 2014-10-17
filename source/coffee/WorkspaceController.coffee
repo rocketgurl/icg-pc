@@ -251,11 +251,16 @@ define [
 
     # Need to throw a nice error message
     response_fail : (model, resp) ->
+      errMsg = ''
       if @login_view?
         @login_view.removeLoader()
-
-      @login_view.displayMessage 'warning', "Sorry, your password or username was incorrect"
-      @logger "Response fail: #{resp.status} : #{resp.statusText} - #{resp.responseText}"
+        @login_view.displayMessage 'warning', "Sorry, your password or username was incorrect"
+      else
+        errMsg += '@login_view not defined; '
+      if Muscula?
+        errMsg += "Response fail: #{resp.status} : #{resp.statusText} - #{resp.responseText}"
+        err = new Error errMsg
+        Muscula.errors.push err
 
     # On a successfull login have @user set some variables
     # and set an identity cookie to smooth logging in later.
