@@ -477,9 +477,6 @@ define [
       if $('#header').height() < 95
         $('#header').css('height', '95px')
 
-      # Setup service URLs
-      @configureServices()
-
       @launch_app app
 
       if @check_persisted_apps()
@@ -498,6 +495,9 @@ define [
 
       # Store our workplace information in localStorage
       @set_nav_state()
+
+      # Setup service URLs
+      @configureServices()
 
     # Scan config model and dynamically update services object
     # to use the correct URLs
