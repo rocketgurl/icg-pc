@@ -1,13 +1,13 @@
 {
   "name": "policy-central",
-  "version": "2.0.0",
+  "version": "2.7.0",
   "dependencies": {
     "coffee-script": "1.6.3",
     "requirejs": "2.1.8",
     "uglify-js2": "2.1.11",
     "jshint": "2.3.0",
-    "karma": "~0.12.24",
-    "karma-jasmine": "~0.1.5",
+    "karma": "~0.12.0",
+    "karma-jasmine": "~0.2.0",
     "karma-requirejs": "~0.2.2",
     "karma-phantomjs-launcher": "~0.1.4"
   }

@@ -1,64 +1,22 @@
 header.module-referrals {
   margin: 0 0 20px 0;
   h1 {
+    float: left;
+    margin: 0 20px 0 0;
     font-weight: bold;
     color: $darkblue;
     @include font-size(24);
     @include emboss;
-    display: inline-block;
-    margin: 0 20px 0 0;
+    line-height: 1.4;
   }
-  .button-manage-assignees {
-    float: right;
-    @include simple-color(hue($lightgray), saturation($lightgray), lightness($lightgray));
-    position: relative;
-    top: -6px;
-  }
-  .button-manage-assignees[disabled=disabled] {
-    @include simple-color(hue(#eeeeee), saturation(#eeeeee), lightness(#eeeeee));
-    color: #ccc;
-  }
-}
 
-.referrals-switch {
-  display: inline-block;
-  position: relative;
-  top: -2px;
-  li {
-    display: inline-block;
-    padding: 6px 14px 6px 14px;
-    border: $darkgray 1px solid;
-    margin: 0;
-    @include font-size(14);
-    @include background-image(linear-gradient(darken($lightgray, 45), darken($lightgray, 20)));
-    box-shadow: 0 1px 1px $white;
-    a {
-      color: $white;
-      text-decoration: none;
-      @include emboss($darkblue);
-    }
+  .checkbox {
+    padding: 0 10px;
   }
-  li:first-child {
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
-    border-right: $darkblue 1px solid;
-  }
-  li:last-child {
-    border-top-right-radius: 8px;
-    border-bottom-right-radius: 8px;
-    border-left: darken($lightgray, 30) 1px solid;
-  }
-  li.active {
-    border-color: $darkblue;
-    @include background-image(linear-gradient($colblue, $blue));
-    a {
-      color: $white;
-    }
-  }
-}
 
-table.module-referrals {
-  @extend table.module-search;
+  .btn-manage-assignees {
+    @extend .btn-primary;
+  }
 }
 
 .module-referrals.pagination {
@@ -71,6 +29,20 @@ table.module-referrals {
 
 .rq-menus {
   @extend %menu-base;
+}
+
+.table.module-referrals {
+  .referrals-sort-link {
+    display: block;
+    
+    > .glyphicon {
+      top: 2px;
+      width: 14px;
+    }
+  }
+  .related-quote-id { min-width: 105px; }
+  .status-new { font-weight: bold; }
+  .referral-status { text-transform: capitalize; }
 }
 
 .rq-manage-assignees {

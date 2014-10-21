@@ -1,5 +1,5 @@
 define [
-  'BaseCollection',
+  'BaseCollection'
   'modules/ReferralQueue/ReferralTaskModel'
 ], (BaseCollection, ReferralTaskModel) ->
 
@@ -10,7 +10,43 @@ define [
 
     model : ReferralTaskModel
 
+    pageDefault : 1
+
+    perPageDefault : 50
+
+    statusDefault : 'New,Pending'
+
+    sortProp : 'lastUpdated'
+
+    sortDir : 'asc'
+
+    sortCache :
+      'relatedQuoteId'  : 'asc'
+      'insuredLastName' : 'asc'
+      'status'          : 'asc'
+      'prettySubtype'   : 'asc'
+      'lastUpdated'     : 'asc'
+      'SubmittedBy'     : 'asc'
+      'assignedTo'      : 'asc'
+
+    comparator : (a, b) ->
+      dir = if @sortDir is 'asc' then 1 else -1
+      propA = @safeLowerCase a.get(@sortProp)
+      propB = @safeLowerCase b.get(@sortProp)
+      if propA < propB
+        return dir
+      if propA > propB
+        return -dir
+      0
+
+    safeLowerCase : (val) ->
+      if _.isString val
+        val = val.toLowerCase()
+      val
+
     initialize : ->
+      @resetDefaults()
+      @on 'update', @getReferrals
 
     # **Parse response**  
     # We need to get the XML from pxCentral into a nice JSON format for our
@@ -25,79 +61,61 @@ define [
         # Grab some pagination metadata from the response
         _.extend(this, {
           criteria   : json.criteria
-          perPage    : json.itemsPerPage
-          page       : json.page
-          totalItems : json.totalItems
+          totalItems : +json.totalItems
         })
 
         return json.Task
       false
 
-    # **Success callback**  
-    # We have the option to pass in a custom success callback to make
-    # testing easier. Wrapping fetch() in this method also makes it easy
-    # to override the default Backbone.sync with our custome headers.
-    #
-    # @param `collection` _Object_ ReferralTaskCollection  
-    # @param `response` _XML_ Task XML from server 
-    #
-    success_callback : (collection, response) ->
-      # console.log [collection, response] # stub
+    getParams : ->
+      params = { media : 'application/xml' }
+      params.OwningUnderwriter = @owner if @owner?
+      params.OwningAgent       = @agent if @agent?
+      params.status            = @status if @status?
+      params.page              = @page
+      params.perPage           = @perPage
+      params
 
-    # **Error callback**  
-    #
-    # @param `collection` _Object_ ReferralTaskCollection  
-    # @param `response` _XML_ Task XML from server 
-    #
-    error_callback : (collection, response) ->
-      collection.trigger 'error', collection, response
+    setParam : (param, value, silent) ->
+      value = if value is 'default' then @["#{param}Default"] else value
+      unless value is @[param]
+        @[param] = value
+        @trigger "update update:#{param}" unless silent
 
-    # **Get Tasks from Server**  
-    # We have the option to pass in a custom success callback to make
-    # testing easier. Wrapping fetch() in this method also makes it easy
-    # to override the default Backbone.sync with our custome headers.
-    #
-    # @param `query` _Object_ Query params for server call 
-    # @param `callback` _Function_ function to call on AJAX success  
-    #
-    getReferrals : (query, callback) ->
-      success_callback = callback || @success_callback
-      error_callback   = @error_callback
-      query            = query || {}
+    resetDefaults : ->
+      collection = this
+      params = [
+        'page'
+        'status'
+        'perPage'
+      ]
+      _.each params, (param) ->
+        collection.setParam param, 'default', true
 
-      # Make sure we're always set for XML and have some sensible defaults
-      query = _.extend({
-          media             : 'application/xml'
-          OwningUnderwriter : @email
-          perPage           : 25
-        }, query)
-
+    # **Get Tasks from Server**
+    #
+    getReferrals : ->
       @fetch(
-        data        : query
+        data        : @getParams()
         dataType    : 'xml'
         contentType : 'application/xml'
         headers     :
           'Authorization'   : "Basic #{@digest}"
           'X-Authorization' : "Basic #{@digest}"
-        success : (collection, response) ->
-          success_callback.apply(this, [collection, response])
-        error : (collection, response) ->
-          error_callback.apply(this, [collection, response])
       )
 
     # **Sort columns**  
-    # Set the comparator on the collection and then force a sort. This will
-    # trigger a reset on the collection and re-render it.
-    #
-    # @param `field` _String_ Column name  
-    # @param `direction` _String_ ASC || DESC 
-    #
-    sortTasks : (field, direction) ->
-      @comparator = (a, b) ->
-        dir = if direction == 'asc' then 1 else -1
-        if a.get(field) < b.get(field) 
-          return dir
-        if a.get(field) > b.get(field) 
-          return -dir
-        0
+    sortTasks : (property) ->
+      # property to sort by
+      @sortProp = property
+
+      # get the current sort direction
+      oldDir = @sortCache[property]
+      
+      # swap the direction for next time
+      @sortDir = newDir = if oldDir is 'asc' then 'desc' else 'asc'
+      @sortCache[property] = newDir
+
+      # sort the collection
       @sort()
+

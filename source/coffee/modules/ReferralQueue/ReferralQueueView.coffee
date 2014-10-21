@@ -1,49 +1,45 @@
 define [
-  'BaseView',
-  'Helpers',
-  'Messenger',
-  'modules/ReferralQueue/ReferralTaskView',
-  'modules/ReferralQueue/ReferralAssigneesModel',
-  'text!modules/ReferralQueue/templates/tpl_referral_container.html',
+  'BaseView'
+  'Helpers'
+  'Messenger'
+  'modules/ReferralQueue/ReferralTaskView'
+  'modules/ReferralQueue/ReferralAssigneesModel'
+  'text!modules/ReferralQueue/templates/tpl_referral_container.html'
   'text!modules/ReferralQueue/templates/tpl_manage_assignees.html'
 ], (BaseView, Helpers, Messenger, ReferralTaskView, ReferralAssigneesModel, tpl_container, tpl_menu_assignees) ->
 
   ReferralQueueView = BaseView.extend
 
     PAGINATION_EL : {} # Pagination form elements
-    SORT_CACHE    : {} # Which column is sorted and direction
-    OWNER_STATE   : '' # Used for 'My Referrals' switch
 
     events :
-      "change .referrals-pagination-page" : ->
-        @paginateTasks(@COLLECTION, @PAGINATION_EL)
-      "change .referrals-pagination-perpage" : ->
-        @paginateTasks(@COLLECTION, @PAGINATION_EL)
-      "click .referrals-sort-link" : (e) ->
-        @sortTasks(e, @COLLECTION)
-      "click .referrals-switch li" : (e) ->
-        @toggleOwner(e, @COLLECTION, @PAGINATION_EL)
-      "click .button-manage-assignees" : (e) ->
-        @toggleManageAssignees(e)
-      "click .menu-confirm" : (e) ->
-        @saveAssignees(e)
-      "change input[type=checkbox]" : (e) ->
-        @toggleCheckbox(e)
-      "click .menu-cancel" : (e) ->
-        @clearAssignees(e)
+      "change .referrals-pagination-page"    : 'updatePage'
+      "change .referrals-pagination-perpage" : 'updatePerPage'
+      "change input[name=show-all]"          : 'updateStatus'
+      "click .referrals-switch a"            : 'updateOwner'
+      "click .referrals-sort-link"           : 'sortTasks'
+      "click .menu-confirm"                  : 'saveAssignees'
+      "click .menu-cancel"                   : 'clearAssignees'
+      "click .btn-manage-assignees"          : 'toggleManageAssignees'
 
     initialize : (options) ->
+      _.bindAll(this
+        'toggleLoader'
+        'renderTasks'
+        'tasksError'
+        'renderAssigneesError'
+        'assigneeSuccess'
+        'assigneeError'
+        )
+
       @MODULE      = options.module || false
       @COLLECTION  = options.collection || false
       @PARENT_VIEW = options.view || false
 
       # When the collection is populated, generate the views
-      @COLLECTION.bind('reset', @renderTasks, this);
-      @COLLECTION.bind('error', @tasksError, this);
-
-      # Setup our DOM hooks
-      @el  = @PARENT_VIEW.el
-      @$el = @PARENT_VIEW.$el
+      @COLLECTION.on 'update', => @toggleLoader true
+      @COLLECTION.on 'reset', @renderTasks
+      @COLLECTION.on 'error', @tasksError
 
       # Create an AssigneeList model to manage the XML list
       if @MODULE != false
@@ -53,12 +49,11 @@ define [
 
       @AssigneeList     = new ReferralAssigneesModel({ digest : digest })
       @AssigneeList.url = assigneeListUrl
-      errorCallback     = _.bind @renderAssigneesError, this
       @AssigneeList.fetch
-        error : errorCallback
+        error : @renderAssigneesError
 
-      @AssigneeList.on 'change', @assigneeSuccess, this
-      @AssigneeList.on 'fail', @assigneeError, this
+      @AssigneeList.on 'change', @assigneeSuccess
+      @AssigneeList.on 'fail', @assigneeError
 
     render : ->
       # Setup flash module & main container
@@ -70,7 +65,7 @@ define [
       @messenger = new Messenger(@PARENT_VIEW, @cid)
 
       # Find the container to load rows into
-      @CONTAINER = @$el.find('table.module-referrals tbody')
+      @CONTAINER = @$('table.module-referrals tbody')
 
       # Cache form elements for speedy access
       @PAGINATION_EL = @cachePaginationElements()
@@ -79,8 +74,8 @@ define [
       @toggleLoader(true)
 
       # If we couldn't load assignee_list.xml then disable the button
-      if @ASSIGNEE_STATE == false
-        @$el.find('.button-manage-assignees').attr('disabled', true)
+      unless @ASSIGNEE_STATE
+        @$('.button-manage-assignees').attr('disabled', true)
 
       this
 
@@ -120,47 +115,36 @@ define [
       @Amplify.publish @cid, 'warning', "Could not load referrals: #{response.status} - #{response.statusText}"
       console.log ["tasksError", collection, response]
 
-    # Toggle the owner field on the UI and trigger collection.getReferrals()
-    #
-    # @param `e` _Event_
-    # @param `collection` _Object_ ReferralTaskCollection
-    # @param `elements` _Object_ Cached jQuery HTML Elements
-    #
-    toggleOwner : (e, collection, elements) ->
+    # Toggle the owner buttons on the UI and trigger collection.getReferrals()
+    updateOwner : (e) ->
       e.preventDefault()
-      $el = $(e.currentTarget)
+      $btn = $(e.currentTarget)
 
-      query =
-        perPage : elements.per_page.val() || 25
-        page    : elements.jump_to.val() || 1
+      unless $btn.hasClass 'active'
+        $('.referrals-switch > a').removeClass 'active'
+        $btn.addClass 'active'
 
-      if $el.hasClass('active')
-        return
-      else
-        $('.referrals-switch').find('li').removeClass('active')
-        $el.addClass('active')
-
-        if $el.find('a').attr('href') == 'allreferrals'
-          query.OwningUnderwriter = @OWNER_STATE =  ''
+        if $btn.attr('href') is 'myreferrals'
+          @COLLECTION.setParam 'owner', 'default'
         else
-          @OWNER_STATE = @options.owner
+          @COLLECTION.setParam 'owner', null
 
-        @toggleLoader(true)
-        collection.getReferrals(query)
+    updatePage : (e) ->
+      page = +e.currentTarget.value
+      if page > 0
+        @COLLECTION.setParam 'page', page
 
-    # Update the collection with values from pagination form
-    #
-    # @param `collection` _Object_ ReferralTaskCollection
-    # @param `elements` _Object_ jQuery wrapped HTML elements
-    #
-    paginateTasks : (collection, elements) ->
-      query =
-          perPage           : elements.per_page.val() || 25
-          page              : elements.jump_to.val() || 1
-          OwningUnderwriter : @OWNER_STATE
+    updatePerPage : (e) ->
+      perPage = +e.currentTarget.value
+      if perPage > 0
+        @COLLECTION.setParam 'perPage', perPage
 
-      @toggleLoader(true)
-      collection.getReferrals(query)
+    updateStatus : (e) ->
+      showAll = $(e.currentTarget).prop 'checked'
+      if showAll
+        @COLLECTION.setParam 'status', null
+      else
+        @COLLECTION.setParam 'status', 'default'
 
     # Return an object of pagination form elements
     # @return _Object_
@@ -169,7 +153,6 @@ define [
       jump_to  : @$el.find('.referrals-pagination-page')
       per_page : @$el.find('.referrals-pagination-perpage')
 
-
     # Update the pagination controls with current info
     #
     # @param `collection` _Object_ ReferralTaskCollection
@@ -177,12 +160,7 @@ define [
     #
     updatePagination : (collection, elements) ->
       # Items count
-      per_page = elements.per_page.val()
-
-      # Coerce strings into actual numbers via destructuring
-      [per_page, collection.totalItems, collection.page] = _.map([per_page, collection.totalItems, collection.page], (num) ->
-          parseInt(num, 10)
-        )
+      per_page = collection.perPage
 
       if per_page > collection.totalItems
         end_position   = collection.totalItems
@@ -199,13 +177,13 @@ define [
       elements.items.find('span').html("Items #{start_position} - #{end_position} of #{collection.totalItems}")
 
       # Jump to pages
-      pages        = [1..Math.ceil(+collection.totalItems / elements.per_page.val())]
-      current_page = parseInt(collection.page, 10)
+      pages        = [1..Math.ceil(collection.totalItems / per_page)]
+      current_page = collection.page
       values       = _.map pages, (page) ->
-        if page == current_page
-          return $("<option value=\"#{page}\" selected>#{page}</option>")
+        if page is current_page
+          "<option value=\"#{page}\" selected>#{page}</option>"
         else
-          return $("<option value=\"#{page}\">#{page}</option>")
+          "<option value=\"#{page}\">#{page}</option>"
       elements.jump_to.html(values)
 
 
@@ -232,45 +210,26 @@ define [
     # @param `e` _Event_ Click event
     # @param `collection` _Object_ ReferralTaskCollection
     #
-    sortTasks : (e, collection) ->
+    sortTasks : (e) ->
       e.preventDefault()
       $el = $(e.currentTarget)
+      $sortIcon = $el.find '.glyphicon'
+      sortProp = $el.attr 'href'
 
-      @SORT_CACHE =
-        'sort'    : $el.attr('href')
-        'sortdir' : $el.data('dir')
+      @COLLECTION.sortTasks sortProp
+      @remove_indicators()
 
-      @remove_indicators() # clear the decks!
-
-      collection.sortTasks(@SORT_CACHE.sort, @SORT_CACHE.sortdir)
-
-      if $el.data('dir') is 'asc'
-        $el.data('dir', 'desc')
-        @swap_indicator $el, '&#9660;'
+      if @COLLECTION.sortDir is 'asc'
+        $sortIcon.addClass 'glyphicon-chevron-down'
       else
-        $el.data('dir', 'asc')
-        @swap_indicator $el, '&#9650;'
-
-    # Switch sorting indicator symbol
-    #
-    # @param `el` _HTML Element_ table header
-    # @param `char` _String_ direction indicator
-    #
-    swap_indicator : (el, char) ->
-      text = el.html()
-      reg = /▲|▼/gi
-      if text.match('▲') or text.match('▼')
-        text = text.replace(reg, char)
-        el.html(text)
-      else
-        el.html(text + " #{char}")
+        $sortIcon.addClass 'glyphicon-chevron-up'
 
     # clear all sorting indicators
     remove_indicators : ->
-      $('.referrals-sort-link').each (index, el) ->
-        el = $(el)
-        reg = /▲|▼/gi
-        el.html(el.html().replace(reg, ''))
+      $('.referrals-sort-link').each ->
+        $icon = $(this).find '.glyphicon'
+        $icon.removeClass 'glyphicon-chevron-up'
+        $icon.removeClass 'glyphicon-chevron-down'
 
     # JSON data from AssigneeList needs some additional parsing to render
     # correctly in Mustache
@@ -344,11 +303,3 @@ define [
           .html("""<strong class="menu-error">Error saving: #{msg}</strong>""")
           .delay(5000)
           .fadeOut('slow')
-
-    toggleCheckbox : (e) ->
-      $cb = $(e.currentTarget)
-      if $cb.attr('checked')
-        $cb.val('true')
-      else
-        $cb.val('false')
-      $cb

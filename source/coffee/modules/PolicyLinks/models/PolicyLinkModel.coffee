@@ -8,7 +8,7 @@ define [
     dateFormat : 'MMM DD, YYYY'
 
     url : ->
-      "#{@options.urlRoot}?q=#{@options.policyId}"
+      "#{@options.urlRoot}?q=#{@searchId}"
 
     parse : (resp) ->
       unless resp.policies.length is 0
@@ -21,6 +21,10 @@ define [
 
     initialize : (options) ->
       _.bindAll this, 'syncRequest'
+      id = options.policyId
+
+      # Search the linked policy ID minus the 2-digit term
+      @searchId = id.substring 0, id.length - 2
       @options = options
 
     requestData : ->

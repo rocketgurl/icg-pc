@@ -295,8 +295,10 @@ define [
     # <PaymentAmountLast> - <PaymentDateLast> if PaymentDateLast > 1900-01-01
     getLastPaymentReceived : (paymentItem) ->
       if _.isObject paymentItem
+        dataItems = @_sanitizeNodeArray paymentItem.DataItem
+        appliedDate = @getDataItem dataItems, 'appliedDate'
         amount = @Helpers.formatMoney paymentItem.value
-        date = @_stripTimeFromDate paymentItem.timestamp
+        date = @_stripTimeFromDate(appliedDate) if appliedDate
         unixInterval = Date.parse date
         if unixInterval > -1
           "#{amount} - #{date}"
@@ -882,10 +884,16 @@ define [
       @getModelProperty 'Management AgencyLocationCode'
 
     getParentPolicyId : ->
-      @getIdentifier 'ParentPolicyId'
+      @getIdentifier 'ParentPolicyID'
 
     getChildPolicyId : ->
-      @getIdentifier 'ChildPolicyId'
+      @getIdentifier 'ChildPolicyID'
+
+    getParentInsightPolicyId : ->
+      @getIdentifier 'ParentInsightPolicyId'
+
+    getChildInsightPolicyId : ->
+      @getIdentifier 'ChildInsightPolicyId'
 
     determineParentChildRelationship : ->
       if @get('childPolicyId') and @get('parentPolicyId')
@@ -930,28 +938,30 @@ define [
     setModelState : ->
       if @get('document')?.length
         @set(
-          'state': @getState(),
-          'quote': @isQuote(),
-          'pendingCancel': @isPendingCancel(),
-          'cancellationEffectiveDate': @getCancellationEffectiveDate(),
-          'cancelled': @isCancelled(),
-          'terms': @getTerms(),
-          'firstTerm': @getFirstTerm(),
-          'quoteTerm': @getQuoteTerm(),
-          'lastInterval': @getLastInterval(),
-          'insuredData': @getCustomerData('Insured'),
-          'mortgageeData': @getCustomerData('Mortgagee'),
-          'additionalInterestData': @getCustomerData('AdditionalInterest'),
-          'productName': @getProductName(),
-          'policyPrefix': @getPolicyPrefix(),
-          'insightId': @getIdentifier('InsightPolicyId'),
-          'policyId': @getPolicyId(),
-          'isIssued': @isIssued(),
-          'effectiveDate': @getEffectiveDate(),
-          'expirationDate': @getExpirationDate(),
+          'state': @getState()
+          'quote': @isQuote()
+          'pendingCancel': @isPendingCancel()
+          'cancellationEffectiveDate': @getCancellationEffectiveDate()
+          'cancelled': @isCancelled()
+          'terms': @getTerms()
+          'firstTerm': @getFirstTerm()
+          'quoteTerm': @getQuoteTerm()
+          'lastInterval': @getLastInterval()
+          'insuredData': @getCustomerData('Insured')
+          'mortgageeData': @getCustomerData('Mortgagee')
+          'additionalInterestData': @getCustomerData('AdditionalInterest')
+          'productName': @getProductName()
+          'policyPrefix': @getPolicyPrefix()
+          'insightId': @getIdentifier('InsightPolicyId')
+          'policyId': @getPolicyId()
+          'isIssued': @isIssued()
+          'effectiveDate': @getEffectiveDate()
+          'expirationDate': @getExpirationDate()
           'version': @getPolicyVersion()
           'parentPolicyId': @getParentPolicyId()
           'childPolicyId': @getChildPolicyId()
+          'parentInsightPolicyId': @getParentInsightPolicyId()
+          'childInsightPolicyId': @getChildInsightPolicyId()
           )
 
     # **Grab the latest version of the Policy**
