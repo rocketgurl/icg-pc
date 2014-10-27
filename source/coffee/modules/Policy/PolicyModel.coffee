@@ -407,18 +407,19 @@ define [
     # @param `bool` _Boolean_ return boolean or object
     # @return _Boolean_ | _Obj_
     isPendingCancel : (bool) ->
-      pending = if @get('json').Management?.PendingCancellation?
-                  @get('json').Management.PendingCancellation
-                else
-                  false
-      return true if (bool && pending)
-      pending
+      pending = @get('json')?.Management?.PendingCancellation
+      if _.isObject pending
+        if bool
+          return true
+        else
+          return pending
+      false
 
     # **Is this policy pending non-renewal?**
     #
     # @return _Boolean_
     isPendingNonRenewal : ->
-      pending = @get('json').Management?.PendingNonRenewal
+      pending = @get('json')?.Management?.PendingNonRenewal
       if _.isObject pending
         true
       else
