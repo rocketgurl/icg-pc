@@ -184,13 +184,13 @@ define [
       propertyData        = if @isQuote() then @get('quoteTerm').ProtoInterval else @getLastTerm()
       insuredData         = @get 'insuredData'
       mortgageeData       = @get 'mortgageeData'
-      accountingData      = @getAccountingData()
+      accountingData      = @getAccountingData() or ''
       accountingDataItems = accountingData.DataItem
-      invoiceDueDate      = @getDataItem(accountingDataItems, 'InvoiceDueDateCurrent') || ''
-      equityDate          = @getDataItem(accountingDataItems, 'EquityDate') || ''
+      invoiceDueDate      = @getDataItem(accountingDataItems, 'InvoiceDueDateCurrent') or ''
+      equityDate          = @getDataItem(accountingDataItems, 'EquityDate') or ''
       pastDueBalance      = @Helpers.formatMoney(@getDataItem(accountingDataItems, 'PastDueBalance'))
       paymentItemLast     = @getLastPaymentLineItem accountingData
-      paymentPlan         = accountingData.PaymentPlan || {}
+      paymentPlan         = accountingData.PaymentPlan or {}
       billingIsPastDue    = pastDueBalance > 0
       policyIsQuote       = @isQuote()
 
