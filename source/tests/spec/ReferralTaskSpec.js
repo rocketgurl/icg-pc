@@ -11,28 +11,26 @@ define([
       url     : '/base/tests/mocks/referral_queue/tasks.xml',
       digest  : 'Y3J1NHRAY3J1MzYwLmNvbTphYmMxMjM='
     }
-
-    var async = new AsyncSpec(this);
     var tasks = new ReferralTaskCollection();
     var ReferralTaskModel = tasks.model;
     
     tasks.url = settings.url;
     tasks.digest = settings.digest;
 
-    async.beforeEach(function (done) {
-      tasks.getReferrals();
-      tasks.on('reset', function () { done(); });
-    });
+    // async.beforeEach(function (done) {
+    //   tasks.getReferrals();
+    //   tasks.on('reset', function () { done(); });
+    // });
 
-    it ('should be an instance of Backbone.Collection', function () {
-      expect(tasks).toEqual(jasmine.any(Backbone.Collection));
-    });
+    // it ('should be an instance of Backbone.Collection', function () {
+    //   expect(tasks).toEqual(jasmine.any(Backbone.Collection));
+    // });
 
-    it ('should fetch a collection of ReferralTaskModels', function () {
-      tasks.each(function (task) {
-        expect(task).toEqual(jasmine.any(ReferralTaskModel));
-      });
-    });
+    // it ('should fetch a collection of ReferralTaskModels', function () {
+    //   tasks.each(function (task) {
+    //     expect(task).toEqual(jasmine.any(ReferralTaskModel));
+    //   });
+    // });
 
     // it ('has a URL', function () {
     //   runs(function(){
