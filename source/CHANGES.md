@@ -1,6 +1,18 @@
 Updates
 -------
 
+### 2.7.0 - Oct 21, 2014
+
+- [ICS-1643](https://icg360.atlassian.net/browse/ICS-1643) Update referral tab to achieve parity with Insight Central
+- [ICS-2870](https://icg360.atlassian.net/browse/ICS-2870) Quick View Last Payment Received format and date
+- [ICS-2891](https://icg360.atlassian.net/browse/ICS-2891) Investigate InsuredByCorporation field in DP3 IPM forms
+- [ICS-2901](https://icg360.atlassian.net/browse/ICS-2901) Update ofcc-(dp1/dp2/dp3)-la IPM Endorse forms
+- [ICS-2902](https://icg360.atlassian.net/browse/ICS-2902) Update ofcc-ho3-ny IPM Endorse forms
+- [ICS-2903](https://icg360.atlassian.net/browse/ICS-2903) Update fnic-ho3-la IPM renewal forms
+- [ICS-2906](https://icg360.atlassian.net/browse/ICS-2906) Update ofcc-ho3-ak IPM Endorse forms
+- [ICS-2907](https://icg360.atlassian.net/browse/ICS-2907) Update iic-ho3-sc endorse forms
+- [ICS-2910](https://icg360.atlassian.net/browse/ICS-2910) Update fnic-ho3-al IPM endorse forms
+
 ### 2.6.5 - Oct 7, 2014
 
 - [ICS-2033](https://icg360.atlassian.net/browse/ICS-2033) Payee fields need to be updated when insured's mailing address gets updated

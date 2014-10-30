@@ -184,13 +184,13 @@ define [
       propertyData        = if @isQuote() then @get('quoteTerm').ProtoInterval else @getLastTerm()
       insuredData         = @get 'insuredData'
       mortgageeData       = @get 'mortgageeData'
-      accountingData      = @getAccountingData()
+      accountingData      = @getAccountingData() or ''
       accountingDataItems = accountingData.DataItem
-      invoiceDueDate      = @getDataItem(accountingDataItems, 'InvoiceDueDateCurrent') || ''
-      equityDate          = @getDataItem(accountingDataItems, 'EquityDate') || ''
+      invoiceDueDate      = @getDataItem(accountingDataItems, 'InvoiceDueDateCurrent') or ''
+      equityDate          = @getDataItem(accountingDataItems, 'EquityDate') or ''
       pastDueBalance      = @Helpers.formatMoney(@getDataItem(accountingDataItems, 'PastDueBalance'))
       paymentItemLast     = @getLastPaymentLineItem accountingData
-      paymentPlan         = accountingData.PaymentPlan || {}
+      paymentPlan         = accountingData.PaymentPlan or {}
       billingIsPastDue    = pastDueBalance > 0
       policyIsQuote       = @isQuote()
 
@@ -407,18 +407,19 @@ define [
     # @param `bool` _Boolean_ return boolean or object
     # @return _Boolean_ | _Obj_
     isPendingCancel : (bool) ->
-      pending = if @get('json').Management?.PendingCancellation?
-                  @get('json').Management.PendingCancellation
-                else
-                  false
-      return true if (bool && pending)
-      pending
+      pending = @get('json')?.Management?.PendingCancellation
+      if _.isObject pending
+        if bool
+          return true
+        else
+          return pending
+      false
 
     # **Is this policy pending non-renewal?**
     #
     # @return _Boolean_
     isPendingNonRenewal : ->
-      pending = @get('json').Management?.PendingNonRenewal
+      pending = @get('json')?.Management?.PendingNonRenewal
       if _.isObject pending
         true
       else
@@ -884,10 +885,16 @@ define [
       @getModelProperty 'Management AgencyLocationCode'
 
     getParentPolicyId : ->
-      @getIdentifier 'ParentPolicyId'
+      @getIdentifier 'ParentPolicyID'
 
     getChildPolicyId : ->
-      @getIdentifier 'ChildPolicyId'
+      @getIdentifier 'ChildPolicyID'
+
+    getParentInsightPolicyId : ->
+      @getIdentifier 'ParentInsightPolicyId'
+
+    getChildInsightPolicyId : ->
+      @getIdentifier 'ChildInsightPolicyId'
 
     determineParentChildRelationship : ->
       if @get('childPolicyId') and @get('parentPolicyId')
@@ -932,28 +939,30 @@ define [
     setModelState : ->
       if @get('document')?.length
         @set(
-          'state': @getState(),
-          'quote': @isQuote(),
-          'pendingCancel': @isPendingCancel(),
-          'cancellationEffectiveDate': @getCancellationEffectiveDate(),
-          'cancelled': @isCancelled(),
-          'terms': @getTerms(),
-          'firstTerm': @getFirstTerm(),
-          'quoteTerm': @getQuoteTerm(),
-          'lastInterval': @getLastInterval(),
-          'insuredData': @getCustomerData('Insured'),
-          'mortgageeData': @getCustomerData('Mortgagee'),
-          'additionalInterestData': @getCustomerData('AdditionalInterest'),
-          'productName': @getProductName(),
-          'policyPrefix': @getPolicyPrefix(),
-          'insightId': @getIdentifier('InsightPolicyId'),
-          'policyId': @getPolicyId(),
-          'isIssued': @isIssued(),
-          'effectiveDate': @getEffectiveDate(),
-          'expirationDate': @getExpirationDate(),
+          'state': @getState()
+          'quote': @isQuote()
+          'pendingCancel': @isPendingCancel()
+          'cancellationEffectiveDate': @getCancellationEffectiveDate()
+          'cancelled': @isCancelled()
+          'terms': @getTerms()
+          'firstTerm': @getFirstTerm()
+          'quoteTerm': @getQuoteTerm()
+          'lastInterval': @getLastInterval()
+          'insuredData': @getCustomerData('Insured')
+          'mortgageeData': @getCustomerData('Mortgagee')
+          'additionalInterestData': @getCustomerData('AdditionalInterest')
+          'productName': @getProductName()
+          'policyPrefix': @getPolicyPrefix()
+          'insightId': @getIdentifier('InsightPolicyId')
+          'policyId': @getPolicyId()
+          'isIssued': @isIssued()
+          'effectiveDate': @getEffectiveDate()
+          'expirationDate': @getExpirationDate()
           'version': @getPolicyVersion()
           'parentPolicyId': @getParentPolicyId()
           'childPolicyId': @getChildPolicyId()
+          'parentInsightPolicyId': @getParentInsightPolicyId()
+          'childInsightPolicyId': @getChildInsightPolicyId()
           )
 
     # **Grab the latest version of the Policy**

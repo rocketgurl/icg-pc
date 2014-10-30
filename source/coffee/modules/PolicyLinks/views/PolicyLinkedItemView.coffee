@@ -6,11 +6,11 @@ define [
   class PolicyLinksView extends BaseView
 
     receivedTemplate : """
-    <p>Effective {{effectiveDate}}</p>
     <p>
       {{relationship}} Policy #:
       <a href="#" class="policy-id-link">{{policyId}} <span class="glyphicon glyphicon-new-window"></span></a>
     </p>
+    <p><em>Effective {{effectiveDate}}</em></p>
     """
 
     retrievingTemplate : """

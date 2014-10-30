@@ -11,16 +11,18 @@ define [
 
       if ppid = policy.get 'parentPolicyId'
         parentLinkedItem = new PolicyLinkedItemView
-          controller   : controller
-          policy       : policy
-          relationship : 'Parent'
-          policyId     : ppid
-          el           : @$('.linked-item.child')
+          controller      : controller
+          policy          : policy
+          relationship    : 'Parent'
+          policyId        : ppid
+          insightPolicyId : policy.get 'parentInsightPolicyId'
+          el              : @$('.linked-item.child')
 
       if cpid = policy.get 'childPolicyId'
         childLinkedItem = new PolicyLinkedItemView
-          controller   : controller
-          policy       : policy
-          relationship : 'Child'
-          policyId     : cpid
-          el           : @$('.linked-item.parent')
+          controller      : controller
+          policy          : policy
+          relationship    : 'Child'
+          policyId        : cpid
+          insightPolicyId : policy.get 'childInsightPolicyId'
+          el              : @$('.linked-item.parent')

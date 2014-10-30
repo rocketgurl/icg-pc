@@ -26,8 +26,8 @@ define [
     setAssignedTo : ->
       assignedTo = @get 'AssignedTo'
       @set 'assignedTo', switch assignedTo
-        when 'Underwriting' then @get('OwningUnderwriter')
-        when 'Agent' then @get('OwningAgent')
+        when 'Underwriting' then @get('OwningUnderwriter') or ''
+        when 'Agent' then @get('OwningAgent') or ''
         else ''
 
     setPrettySubtype : ->
