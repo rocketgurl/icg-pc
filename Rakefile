@@ -123,7 +123,7 @@ def yellow(text); colorize(text, 33); end
 # basePath should be 'build' to run tests against the release build
 # or 'source' to test during development
 def run_unit_tests(basePath)
-  puts `./node_modules/karma/bin/karma start karma.conf.js --basePath #{basePath}`
+  puts `#{ENV['KARMA_PATH']} start karma.conf.js --basePath #{basePath}`
 end
 
 # Default task runs :build
