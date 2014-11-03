@@ -1,6 +1,11 @@
 Updates
 -------
 
+### 2.7.1 - Nov 4, 2014
+
+- [ICS-2908](https://icg360.atlassian.net/browse/ICS-2908) Update ixConfig to enable Policy Central for FedNat
+- [ICS-2915](https://icg360.atlassian.net/browse/ICS-2915) Update import renewal products
+
 ### 2.7.0 - Oct 21, 2014
 
 - [ICS-1643](https://icg360.atlassian.net/browse/ICS-1643) Update referral tab to achieve parity with Insight Central
