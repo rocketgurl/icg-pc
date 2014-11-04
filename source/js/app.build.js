@@ -31,7 +31,8 @@
     collapse: 'lib/bootstrap/collapse',
     button: 'lib/bootstrap/button',
     tooltip: 'lib/bootstrap/tooltip',
-    popover: 'lib/bootstrap/popover'
+    popover: 'lib/bootstrap/popover',
+    dropdown: 'lib/bootstrap/dropdown'
   },
   shim: {
     'jquery': {
@@ -83,6 +84,9 @@
     },
     'popover': {
       deps: ['jquery', 'tooltip']
+    },
+    'dropdown': {
+      deps: ['jquery']
     }
   },
   modules: [
