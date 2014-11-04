@@ -32,6 +32,7 @@ require
     button          : 'lib/bootstrap/button'
     tooltip         : 'lib/bootstrap/tooltip'
     popover         : 'lib/bootstrap/popover'
+    dropdown        : 'lib/bootstrap/dropdown'
   priority: ['jquery', 'xml2json', 'json']
   shim:
       'jquery' :
@@ -74,17 +75,20 @@ require
         deps: ['transition']
       'popover' :
         deps: ['jquery', 'tooltip']
+      'dropdown' :
+        deps: ['jquery']
 
 require [
-  'jquery',
-  'underscore',
-  'backbone',
-  'WorkspaceController',
-  'u_string',
-  'u_policycentral',
-  'domReady',
-  'xml2json',
+  'jquery'
+  'underscore'
+  'backbone'
+  'WorkspaceController'
+  'u_string'
+  'u_policycentral'
+  'domReady'
+  'xml2json'
   'chosen'
+  'dropdown'
 ], ($, _, Backbone, WorkspaceController, u_string, u_policycentral, domReady) ->
 
   # Setup underscore.string
