@@ -1,14 +1,11 @@
 #header {
 	color: $white;
 	@include background-image(linear-gradient(top, $blue, darken($blue, 10)));
-	overflow: hidden;
-	height: 65px;
 }
 
 #header-container {
 	@include container;
-//	@include susy-grid-background;
-	padding: 0;
+	width: auto;
 }
 
 .header-group {
@@ -19,7 +16,7 @@
 #header-logo {
 	@include span-columns(2, 12);
 	padding: 5px 0;
-	// background: url(/img/logo_header.png) no-repeat left;
+
 	img {
 		margin-right: 20px;
 	}
@@ -112,7 +109,8 @@
 
 // Main workspace navigation
 #header-workspace-nav {
-	margin-top: 50px;
+	margin-top: 10px;
+	margin-bottom: 10px;
 	ul.main-nav {
 		@include span-columns(3, 12);
 		li {
@@ -193,5 +191,16 @@
 
 			}
 		}
+	}
+}
+
+.pc-nav {
+	display: none;
+	margin-bottom: 30px;
+	background: #fff;
+
+	> .container-fluid {
+		padding-left: 1.5%;
+		padding-right: 1.5%;
 	}
 }
