@@ -57,15 +57,14 @@ define [
     #
     toggle_sub_nav : (e) ->
       e.preventDefault()
-      $a = $(e.target) # stash link
-      $li = $a.parent() # stash li
+      $a = $(e.currentTarget)
+
       @$sub_el.find('a').removeClass()
       $a.addClass('on')
 
       # Tell the Router to trigger the app
       @options.router.navigate($a.attr('href'), { trigger : true })
 
-      @hide_nav()
       @toggle_nav_slide()
 
 
