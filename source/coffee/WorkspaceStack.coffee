@@ -30,6 +30,10 @@ define ['underscore'], (_) ->
     # Remove all views from stack
     clear : -> @stack = []
 
+    has : (app_name) ->
+      _.any @stack, (item) ->
+        item.app.app is app_name
+
     # Find a view in the stack and return it
     get : (app) ->
       for index, obj of @stack
