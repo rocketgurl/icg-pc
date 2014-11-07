@@ -213,8 +213,8 @@ define [
 
       if @navigation_view?
         @navigation_view.destroy()
+        @navigation_view = null
 
-      $('#header').css('height', '65px')
       $('body').addClass('logo-background')
 
       @login_view
@@ -311,9 +311,11 @@ define [
       @reset_admin_links()
       @set_breadcrumb()
       @hide_workspace_button()
+      @hide_navigation()
 
       if @navigation_view?
         @navigation_view.destroy()
+        @navigation_view = null
         @teardown_workspace()
 
       @destroy_workspace_model()
@@ -344,10 +346,10 @@ define [
           else
             @config.set 'menu', menu
             @config.set 'menu_html', MenuHelper.generate_menu(menu)
+            @show_navigation()
 
             # Instantiate our SearchContextCollection
             # @setup_search_storage()
-
             @navigation_view = new WorkspaceNavView({
                 router     : @Router
                 controller : @
