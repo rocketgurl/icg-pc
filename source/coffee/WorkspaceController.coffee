@@ -615,7 +615,7 @@ define [
       options =
         controller  : @
         module_type : module
-        'app'       : app
+        app         : app
 
       if app.tab?
         options.template_tab = $(app.tab).html()
