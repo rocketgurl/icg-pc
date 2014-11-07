@@ -674,6 +674,14 @@ define [
       $('#header-controls span').fadeOut(400)
       @$workspace_breadcrumb.fadeOut(400)
 
+    show_navigation : ->
+      @$workspace_main_navbar.show()
+      @$workspace_nav.show()
+
+    hide_navigation : ->
+      @$workspace_main_navbar.hide()
+      @$workspace_nav.hide()
+
     #### Drop a click listener on all tabs
     #
     attach_tab_handlers : ->
