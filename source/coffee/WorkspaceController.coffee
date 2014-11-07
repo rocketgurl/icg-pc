@@ -552,7 +552,7 @@ define [
     #
     # @param `app` _Object_ application config object
     #
-    launch_app : (app) ->
+    launch_app : (app, rules=null) ->
       # If app is not saved in @workspace_state and is not the
       # workspace defined app then we need to add it to our
       # stack of saved apps
@@ -562,7 +562,7 @@ define [
         @state_add app
 
       # Determine which Module to load into the view
-      rules = new AppRules(app)
+      rules = rules or new AppRules app
       default_workspace = rules.default_workspace
 
       # Open modules defined in workspace set
