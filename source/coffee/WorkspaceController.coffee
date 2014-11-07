@@ -628,7 +628,7 @@ define [
       if !@workspace_state? || _.isEmpty(@workspace_state)
         return false
       saved_apps = @workspace_state.get 'apps'
-      if saved_apps?
+      unless _.isEmpty saved_apps
         for app in saved_apps
           @launch_app app
       return true
