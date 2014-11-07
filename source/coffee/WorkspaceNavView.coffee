@@ -9,20 +9,16 @@ define [
       "click #workspace-subnav li a" : "toggle_sub_nav"
 
     initialize : (options) ->
+      _.bindAll this, 'toggle_nav_slide'
+
       @$sub_el = $(options.sub_el)
       @$header = @options.controller.$workspace_header
       @base_height = @$header.height()
 
-      # Hide the menus
-      @$sub_el.hide()
-      @$el.hide()
-
       # Attach even handler to Workspace Button - we have to do this
       # because we can't use the built-in Backbone events, since
       # our subnav is not in $el
-      $('#header-controls').on 'click', '#button-workspace',(e) =>
-        e.preventDefault()
-        @toggle_nav_slide()
+      $('#button-workspace').off('click').on 'click', @toggle_nav_slide
 
     render : () ->
       @$el.prepend(@options.main_nav)
