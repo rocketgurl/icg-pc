@@ -111,6 +111,7 @@
 #header-workspace-nav {
 	margin-top: 10px;
 	margin-bottom: 10px;
+	display: none;
 	ul.main-nav {
 		@include span-columns(3, 12);
 		li {

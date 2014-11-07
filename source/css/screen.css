@@ -1773,7 +1773,7 @@ ul:after { clear: both; }
 #header-admin ul li:first-child { border-left: 0px; }
 #header-admin ul li:last-child { border-right: 0px; }
 
-#header-workspace-nav { margin-top: 10px; margin-bottom: 10px; }
+#header-workspace-nav { margin-top: 10px; margin-bottom: 10px; display: none; }
 #header-workspace-nav ul.main-nav { width: 23.72881%; float: left; margin-right: 1.69492%; display: inline; }
 #header-workspace-nav ul.main-nav li { font-size: 10px; font-size: 1rem; padding: 8px; }
 #header-workspace-nav ul.main-nav li a { color: white; text-decoration: none; }
