@@ -125,9 +125,12 @@ define [
       (app) ->
         saved_apps = @workspace_state.get 'apps'
         _.each saved_apps, (obj, index) =>
-          if app.app == obj.app
+          if app.app is obj.app
             saved_apps.splice index, 1
+            if app.app is @current_state.module
+              @current_state.module = null
         @workspace_state.set 'apps', saved_apps
+        @workspace_state.set 'workspace', @current_state
         @workspace_state.save()
 
     # Check to see if an app already exists in saved state
