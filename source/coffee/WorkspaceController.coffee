@@ -475,10 +475,6 @@ define [
       # race conditions (new tabs pushing onto the stack as old ones pop off)
       @teardown_workspace()
 
-      # Manually adjust CSS
-      if $('#header').height() < 95
-        $('#header').css('height', '95px')
-
       @launch_app app
 
       if @check_persisted_apps()
