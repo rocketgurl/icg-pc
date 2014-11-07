@@ -464,7 +464,7 @@ define [
                          "Sorry, you do not have access to any items in this environment."
         return
 
-      group_label = apps = menu[@current_state.business].contexts[@current_state.context].label
+      group_label = menu[@current_state.business].contexts[@current_state.context].label
       apps = menu[@current_state.business].contexts[@current_state.context].apps
 
       app = _.find apps, (app) =>
