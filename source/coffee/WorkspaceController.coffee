@@ -698,6 +698,24 @@ define [
         @workspace_stack.get($(e.target).prev().attr('href')).destroy()
         @reassess_apps()
 
+    attach_navbar_handlers : ->
+      @$workspace_main_navbar.on 'click', 'li a', (e) =>
+        $el = $(e.currentTarget)
+
+        # Allow the default behavior if [target="_blank"] is present
+        if $el.is '[target="_blank"]'
+          return true
+
+        # Launch module if [data-app="<app>"] is present
+        if app_name = $el.data 'app'
+          if @workspace_stack.has app_name
+            @toggle_apps app_name
+          else
+            rules = new AppRules { app: app_name }
+            @launch_app rules[app_name].app, rules
+
+        e.preventDefault()
+
     #### Set Active Url
     #
     # When a tab is clicked, use the app_name to find
@@ -791,6 +809,7 @@ define [
         Backbone.history.start()
         @check_cookie_identity()
         @attach_tab_handlers()
+        @attach_navbar_handlers()
 
 
   _.extend WorkspaceController, Backbone.Events
