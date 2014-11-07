@@ -368,7 +368,7 @@ define [
             # there was a previous state saved, and try to use that one.
             #
             if @check_workspace_state() is false # Check for localStorage state
-              @navigation_view.toggle_nav_slide() # open main nav
+              @navigation_view.show_nav() # open main nav
               @navigation_view.$el.find('li a span').first().trigger('click') # select first item
 
             if @current_state?
