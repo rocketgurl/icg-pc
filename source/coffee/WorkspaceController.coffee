@@ -682,10 +682,6 @@ define [
         e.preventDefault()
         app_name = $(e.target).attr('href')
 
-        # When a user clicks on a tab, that tabs URL
-        # should be rendered in the address bar
-        @set_active_url app_name
-
         # Fallback for search tabs
         if app_name is undefined
           app_name = $(e.target).parent().attr('href')
