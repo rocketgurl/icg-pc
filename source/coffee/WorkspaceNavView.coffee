@@ -28,9 +28,12 @@ define [
       @$sub_el.css 
         'min-height' : @$el.height()
 
-    destroy : () ->
+    destroy : ->
       @$el.find('.main-nav').remove()
+      @$el.hide()
       @$sub_el.empty()
+      @off()
+      @undelegateEvents()
 
     #### Toggle Main Nav
     #
