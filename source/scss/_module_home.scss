@@ -1,0 +1,13 @@
+#home {
+  .carousel-indicators {
+    bottom: -40px;
+  }
+
+  .carousel-control {
+    width: 5%;
+    background: initial;
+
+    &.left { left: -5%; }
+    &.right { right: -5%; }
+  }
+}

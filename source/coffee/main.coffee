@@ -33,6 +33,7 @@ require
     tooltip         : 'lib/bootstrap/tooltip'
     popover         : 'lib/bootstrap/popover'
     dropdown        : 'lib/bootstrap/dropdown'
+    carousel        : 'lib/bootstrap/carousel'
   priority: ['jquery', 'xml2json', 'json']
   shim:
       'jquery' :
@@ -77,6 +78,8 @@ require
         deps: ['jquery', 'tooltip']
       'dropdown' :
         deps: ['jquery']
+      'carousel' :
+        deps: ['transition']
 
 require [
   'jquery'

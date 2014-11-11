@@ -1,6 +1,8 @@
 define [
   'BaseView'
-], (BaseView) ->
+  'carousel'
+  'text!modules/Home/templates/tpl_home_container.html'
+], (BaseView, carousel, tpl_home_container) ->
 
   # Home Module
   # ====
@@ -9,7 +11,15 @@ define [
 
     initialize : ->
       @CONTROLLER = @options.controller
+
+      @renderContainer()
+      @$('#home-carousel').carousel()
       # @cacheElements()
+
+    renderContainer : ->
+      viewData =
+        cid : @cid
+      @$el.html @Mustache.render tpl_home_container, viewData
 
     cacheElements : ->
       # @renewalBatchesTable = @$("#renewal-batches-#{@cid}")
