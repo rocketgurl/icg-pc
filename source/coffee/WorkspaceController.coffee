@@ -704,7 +704,7 @@ define [
         @reassess_apps()
 
     attach_navbar_handlers : ->
-      @$workspace_main_navbar.on 'click', 'li a', (e) =>
+      @$workspace_main_navbar.on 'click', 'li > a', (e) =>
         $el = $(e.currentTarget)
 
         # Allow the default behavior if [target="_blank"] is present

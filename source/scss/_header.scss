@@ -204,4 +204,16 @@
 		padding-left: 1.5%;
 		padding-right: 1.5%;
 	}
+
+	.navbar-nav .active {
+		background: $blue;
+
+		> a {
+			color: #fff;
+
+			&:hover {
+				background: desaturate(lighten($blue, 20), 20);
+			}
+		}
+	}
 }
