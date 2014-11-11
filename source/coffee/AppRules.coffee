@@ -52,7 +52,7 @@ define [
     get_modules : (app_name) ->
       switch app_name
         when 'policies'
-          [@policy_search, @referral_queue]
+          [@policy_search, @referral_queue, @home]
         when 'renewalreview'
           [@renewalreview]
         when 'rulesets'
@@ -90,6 +90,14 @@ define [
         tab       : '#tpl-workspace-tab'
         params    :
           renewalreviewrequired : true
+
+    home :
+      required : false
+      module   : 'Home/HomeModule'
+      app :
+        app       : 'home'
+        app_label : 'Home'
+        tab       : '#tpl-workspace-tab'
 
     policy_search_params :
       required : false
