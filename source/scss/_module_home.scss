@@ -1,13 +1,53 @@
 #home {
+  h1 {
+    float: left;
+    margin-top: 0;
+    font-weight: bold;
+    color: $darkblue;
+    @include font-size(24);
+    @include emboss;
+    line-height: 1.4;
+  }
+
+  .carousel {
+    padding-bottom: 40px;
+  }
+
   .carousel-indicators {
-    bottom: -40px;
+    bottom: 0;
+
+    li {
+      border: 0;
+      background-color: #ddd;
+
+      &.active {
+        background-color: #666;
+      }
+    }
+  }
+
+  .carousel-inner {
+    border: 1px solid #ddd;
+
+    > .item {
+      > img {
+        width: 100%;
+      }
+    }
   }
 
   .carousel-control {
     width: 5%;
     background: initial;
+    text-shadow: initial;
+    color: #666;
 
     &.left { left: -5%; }
     &.right { right: -5%; }
+  }
+
+  .panel-body {
+    max-height: 500px;
+    overflow: auto;
   }
 }

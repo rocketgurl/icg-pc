@@ -1918,10 +1918,17 @@ ul:after { clear: both; }
 #test_module h2 { font-size: 24px; font-size: 2.4rem; color: #165788; margin: 0 0 20px 0; }
 #test_module p { font-size: 14px; font-size: 1.4rem; }
 
-#home .carousel-indicators { bottom: -40px; }
-#home .carousel-control { width: 5%; background: initial; }
+#home h1 { float: left; margin-top: 0; font-weight: bold; color: #002857; font-size: 24px; font-size: 2.4rem; text-shadow: 0 1px white; line-height: 1.4; }
+#home .carousel { padding-bottom: 40px; }
+#home .carousel-indicators { bottom: 0; }
+#home .carousel-indicators li { border: 0; background-color: #ddd; }
+#home .carousel-indicators li.active { background-color: #666; }
+#home .carousel-inner { border: 1px solid #ddd; }
+#home .carousel-inner > .item > img { width: 100%; }
+#home .carousel-control { width: 5%; background: initial; text-shadow: initial; color: #666; }
 #home .carousel-control.left { left: -5%; }
 #home .carousel-control.right { right: -5%; }
+#home .panel-body { max-height: 500px; overflow: auto; }
 
 /*
 Module: Search
