@@ -1,8 +1,10 @@
 define [
   'BaseView'
   'carousel'
+  'modules/Home/views/AgentPortalNoticesView'
+  'modules/Home/views/PolicyCentralNoticesView'
   'text!modules/Home/templates/tpl_home_container.html'
-], (BaseView, carousel, tpl_home_container) ->
+], (BaseView, carousel, APNoticesView, PCNoticesView, tpl_home_container) ->
 
   # Home Module
   # ====
@@ -14,7 +16,13 @@ define [
 
       @renderContainer()
       @$('#home-carousel').carousel()
-      # @cacheElements()
+
+      apUpdatesView = new APNoticesView
+        el     : @$('#ap-notices')
+        digest : @CONTROLLER.user.get('digest')
+
+      pcUpdatesView = new PCNoticesView
+        el : @$('#pc-notices')
 
     renderContainer : ->
       viewData =
