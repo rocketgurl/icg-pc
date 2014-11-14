@@ -66,6 +66,8 @@ define [
   WorkspaceController =
     Amplify               : amplify
     $workspace_header     : $('#header')
+    $workspace_el         : $('#workspace')
+    $workspace_footer     : $('#footer-main')
     $workspace_button     : $('#button-workspace')
     $workspace_breadcrumb : $('#breadcrumb')
     $workspace_admin      : $('#header-admin')
