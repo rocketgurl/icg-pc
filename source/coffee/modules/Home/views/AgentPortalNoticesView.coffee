@@ -9,5 +9,5 @@ define [
 
     initialize : ->
       @collection.digest = @options.digest
-      @collection.fetchNotices()
+      # @collection.fetch()
 
