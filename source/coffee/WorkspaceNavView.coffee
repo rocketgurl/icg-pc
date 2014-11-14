@@ -64,6 +64,7 @@ define [
 
       # Tell the Router to trigger the app
       @options.router.navigate($a.attr('href'), { trigger : true })
+      @options.controller.set_business_namespace()
 
       @toggle_nav_slide()
 

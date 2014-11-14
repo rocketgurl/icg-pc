@@ -222,6 +222,7 @@ define [
         @navigation_view.destroy()
         @navigation_view = null
 
+      $('body').removeClass()
       $('body').addClass('logo-background')
 
       @login_view
@@ -413,6 +414,7 @@ define [
                 @current_state = model.get 'workspace'
                 model.build_name()
                 @update_address()
+                @set_business_namespace()
                 true
               error : (model, resp) =>
                 # Make a new WorkspaceState as we had a problem.
@@ -646,6 +648,13 @@ define [
         if @current_state.params? and @current_state.module?
           url += "/#{@current_state.module}/#{Helpers.serialize(@current_state.params)}"
         @Router.navigate url
+
+    set_business_namespace : ->
+      if business = @current_state?.business
+        if business is 'cru'
+          $('body').addClass('is-sagesure').removeClass('is-fednat')
+        if business is 'fnic'
+          $('body').addClass('is-fednat').removeClass('is-sagesure')
 
     #### Set Admin Links
     #

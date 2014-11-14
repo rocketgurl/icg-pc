@@ -2472,3 +2472,8 @@ header.module-referrals .checkbox { padding: 0 10px; }
 .herald-modal-content em { font-style: italic; }
 .herald-modal-content a { color: #165788; text-decoration: none; }
 .herald-modal-content a:hover, .herald-modal-content .policy-nav li a.select, .policy-nav li .herald-modal-content a.select { text-decoration: underline; }
+
+.show-fednat { display: none; }
+
+.is-fednat .show-sagesure { display: none; }
+.is-fednat .show-fednat { display: inherit; }
