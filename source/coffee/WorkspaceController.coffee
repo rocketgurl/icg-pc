@@ -680,10 +680,12 @@ define [
     show_navigation : ->
       @$workspace_main_navbar.show()
       @$workspace_nav.show()
+      @resize_workspace()
 
     hide_navigation : ->
       @$workspace_main_navbar.hide()
       @$workspace_nav.hide()
+      @resize_workspace()
 
     #### Drop a click listener on all tabs
     #
@@ -722,6 +724,17 @@ define [
             @launch_app rules[app_name].app, rules
 
         e.preventDefault()
+
+    attach_window_resize_handler : ->
+      lazyResize = _.debounce _.bind(@resize_workspace, this), 500
+      $(window).on 'resize', lazyResize
+
+    resize_workspace : ->
+      headerHeight    = @$workspace_header.height()
+      footerHeight    = @$workspace_footer.height()
+      windowHeight    = window.innerHeight
+      workspaceHeight = windowHeight - headerHeight - footerHeight
+      @$workspace_el.height workspaceHeight
 
     #### Set Active Url
     #
@@ -817,7 +830,7 @@ define [
         @check_cookie_identity()
         @attach_tab_handlers()
         @attach_navbar_handlers()
-
+        @attach_window_resize_handler()
 
   _.extend WorkspaceController, Backbone.Events
 
