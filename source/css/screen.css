@@ -1972,6 +1972,13 @@ ul:after { clear: both; }
 #home .carousel-control.right { right: -5%; }
 #home .panel-body { max-height: 500px; overflow: auto; }
 
+#help-modal section { margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #ddd; }
+#help-modal section:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: 0; }
+#help-modal .pc-help-faq ul { padding: 0 20px; }
+#help-modal .pc-help-faq ul > li { margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px dotted #ddd; }
+#help-modal .pc-help-faq ul > li:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: 0; }
+#help-modal .pc-help-faq .bullet { display: block; float: left; margin-left: -20px; width: 20px; }
+
 /*
 Module: Search
 */
