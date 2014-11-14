@@ -656,7 +656,7 @@ define [
       if !@$workspace_admin_initial?
         @$workspace_admin_initial = @$workspace_admin.find('ul').html()
 
-      @$workspace_admin.find('ul').html("""<li>Welcome back &nbsp;<a href="#profile">#{@user.get('name')}</a></li><li><a href="#logout">Logout</a></li>""")
+      @$workspace_admin.find('ul').html("""<li>Welcome back &nbsp;<a href="#profile">#{@user.get('name')}</a></li><li><a href="#" data-toggle="modal" data-target="#help-modal" data-workspace="saguresure">Help</a></li><li><a href="#logout">Logout</a></li>""")
 
     #### Reset Admin Links
     #
