@@ -1,5 +1,7 @@
 #workspace {
+  overflow: auto;
   @include clearfix;
+
   nav {
     display: none;
     padding-top: 10px;
@@ -135,8 +137,10 @@
     }
   }
   article {
+    @include container;
     padding-top: 20px;
     padding-bottom: 40px;
+    width: auto;
   }
   #canvas {
     @include clearfix;
@@ -151,19 +155,14 @@
   }
 }
 
-#workspace article,
-footer {
-  @include container;
-  width: auto;
-}
-
 #footer-main {
-  padding-top: 20px;
-  padding-bottom: 20px;
-  @include divider(top);
+  border-top: #ccc 1px solid;
+  text-align: center;
   ul {
     margin: 0;
-    padding: 0;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-top: #fff 1px solid;
     color: $darkgray;
     @include font-size(11);
     li {
