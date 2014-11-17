@@ -198,8 +198,26 @@
 .pc-nav {
 	display: none;
 	margin-bottom: 0;
+	min-height: 40px;
 	background: #fff;
 	border-color: #ccc;
+
+	.navbar-nav {
+		float: none;
+		text-align: center;
+
+		> li { float: none; }
+	}
+
+	.nav {
+		> li {
+			display: inline-block;
+
+			> a {
+				padding: 11px 30px;
+			}
+		}
+	}
 
 	> .container-fluid {
 		padding-left: 1.5%;

@@ -1874,7 +1874,11 @@ ul:after { clear: both; }
 #workspace-subnav ul li ul li a { text-decoration: none; color: white; font-weight: normal; padding: 5px 5px; margin: 0 0 2px 0; display: block; }
 #workspace-subnav ul li ul li a:hover, #workspace-subnav ul .policy-nav li ul li a.select, .policy-nav #workspace-subnav ul li ul li a.select, #workspace-subnav ul li ul li a.on { background: #418bc3; -webkit-border-radius: 4px; -moz-border-radius: 4px; -ms-border-radius: 4px; -o-border-radius: 4px; border-radius: 4px; }
 
-.pc-nav { display: none; margin-bottom: 0; background: #fff; border-color: #ccc; }
+.pc-nav { display: none; margin-bottom: 0; min-height: 40px; background: #fff; border-color: #ccc; }
+.pc-nav .navbar-nav { float: none; text-align: center; }
+.pc-nav .navbar-nav > li { float: none; }
+.pc-nav .nav > li { display: inline-block; }
+.pc-nav .nav > li > a { padding: 11px 30px; }
 .pc-nav > .container-fluid { padding-left: 1.5%; padding-right: 1.5%; }
 .pc-nav .navbar-nav .active { background: #165788; }
 .pc-nav .navbar-nav .active > a { color: #fff; }
