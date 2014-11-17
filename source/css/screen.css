@@ -1971,6 +1971,7 @@ ul:after { clear: both; }
 #home .carousel-control.left { left: -5%; }
 #home .carousel-control.right { right: -5%; }
 #home .panel-body { max-height: 500px; overflow: auto; }
+#home .panel-notice { line-height: 468px; text-align: center; font-size: 40px; color: #8ebadc; }
 
 #help-modal section { margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #ddd; }
 #help-modal section:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: 0; }

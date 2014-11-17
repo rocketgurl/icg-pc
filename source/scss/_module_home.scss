@@ -49,4 +49,11 @@
     max-height: 500px;
     overflow: auto;
   }
+
+  .panel-notice {
+    line-height: 468px;
+    text-align: center;
+    font-size: 40px;
+    color: desaturate(lighten($blue, 40), 20);
+  }
 }
