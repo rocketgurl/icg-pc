@@ -236,8 +236,10 @@ define [
     toggleManageAssignees : (e) ->
       e.preventDefault()
       if @AssigneeList.get('json')?
-        assignees = @AssigneeList.parseBooleans(@AssigneeList.get('json').Assignee)
-        @Modal.attach_menu $(e.currentTarget), '.rq-menus', tpl_menu_assignees, {assignees : assignees}
+        data =
+          assignees  : @AssigneeList.getAll()
+          isSagesure : @MODULE.controller.current_status?.business is 'cru'
+        @Modal.attach_menu $(e.currentTarget), '.rq-menus', tpl_menu_assignees, data
       else
         @Amplify.publish @cid, 'warning', "Unable to load assignees from server."
 
