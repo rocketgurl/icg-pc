@@ -238,7 +238,7 @@ define [
       if @AssigneeList.get('json')?
         data =
           assignees  : @AssigneeList.getAll()
-          isSagesure : @MODULE.controller.current_status?.business is 'cru'
+          isSagesure : @MODULE.controller.current_state?.business is 'cru'
         @Modal.attach_menu $(e.currentTarget), '.rq-menus', tpl_menu_assignees, data
       else
         @Amplify.publish @cid, 'warning', "Unable to load assignees from server."
