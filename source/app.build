@@ -91,7 +91,7 @@
       deps: ['jquery']
     },
     'modal': {
-      deps: ['modal']
+      deps: ['jquery']
     },
     'carousel': {
       deps: ['jquery']
