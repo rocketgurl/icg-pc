@@ -5,6 +5,7 @@
 	<div class="menu-body">
 		<p>Uncheck the box next to an underwriter's name if you would like to take the underwriter off the automatic referral list. This is especially useful when an underwriter is on vacation or out sick.</p>
 		<form id="referral-asigness-form">
+		{{#isSagesure}}
 		<div class="menu-col">
 			<h2>New business referrals</h2>
 			<ul>
@@ -25,6 +26,18 @@
 				{{/assignees}}
 			</ul>
 		</div>
+		{{/isSagesure}}
+		{{^isSagesure}}
+		<div class="menu-col">
+			<ul>
+				{{#assignees}}
+				<li>
+					<input type="checkbox" name="active_{{identity}}" id="active_{{identity}}" value="{{active}}" {{#active}}checked="true"{{/active}}> <label for="active_{{identity}}">{{identity}}</label>
+				</li>
+				{{/assignees}}
+			</ul>
+		</div>
+		{{/isSagesure}}
 		<div class="menu-buttons">
 			<span class="menu-status"></span>
 			<button class="menu-confirm" id="menu-confirm">Confirm</button>
