@@ -1,6 +1,3 @@
-Updates
--------
-
 ### 2.7.1 - Nov 4, 2014
 
 - [ICS-2908](https://icg360.atlassian.net/browse/ICS-2908) Update ixConfig to enable Policy Central for FedNat

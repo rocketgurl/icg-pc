@@ -1,13 +1,14 @@
 define [
-  'BaseView',
-  'Helpers',
-  'Messenger',
-  'modules/Search/SearchPolicyCollection',
-  'text!modules/Search/templates/tpl_search_container.html',
-  'text!modules/Search/templates/tpl_search_menu_save.html',
-  'text!modules/Search/templates/tpl_search_menu_views.html',
+  'BaseView'
+  'Helpers'
+  'Messenger'
+  'modules/Search/SearchPolicyCollection'
+  'text!modules/Search/templates/tpl_search_container.html'
+  'text!modules/Search/templates/tpl_renewal_review_container.html'
+  'text!modules/Search/templates/tpl_search_menu_save.html'
+  'text!modules/Search/templates/tpl_search_menu_views.html'
   'text!modules/Search/templates/tpl_search_menu_share.html'
-], (BaseView, Helpers, Messenger, SearchPolicyCollection, tpl_search_container, tpl_search_menu_save, tpl_search_menu_views, tpl_search_menu_share) ->
+], (BaseView, Helpers, Messenger, SearchPolicyCollection, tpl_search_container, tpl_renewal_review_container, tpl_search_menu_save, tpl_search_menu_views, tpl_search_menu_share) ->
 
   SearchView = BaseView.extend
 
@@ -54,10 +55,13 @@ define [
       if @params.renewalreviewrequired?
         @renewal_review = true;
 
-    render : () ->
+    render : ->
+      # Switch template based on module type
+      template = if @renewal_review then tpl_renewal_review_container else tpl_search_container
+
       # Setup flash module & search container
       html = @Mustache.render $('#tpl-flash-message').html(), { cid : @cid }
-      html += @Mustache.render tpl_search_container, { cid : @cid, pagination: @policies.pagination }
+      html += @Mustache.render template, { cid : @cid, pagination: @policies.pagination }
       @$el.html html
       @controls = @$el.find('.search-controls')
 
