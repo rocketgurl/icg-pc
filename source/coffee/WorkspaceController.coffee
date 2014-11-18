@@ -66,10 +66,14 @@ define [
   WorkspaceController =
     Amplify               : amplify
     $workspace_header     : $('#header')
+    $workspace_el         : $('#workspace')
+    $workspace_footer     : $('#footer-main')
     $workspace_button     : $('#button-workspace')
     $workspace_breadcrumb : $('#breadcrumb')
     $workspace_admin      : $('#header-admin')
+    $workspace_main_navbar: $('#header-navbar')
     $workspace_canvas     : $('#canvas')
+    $workspace_nav        : $('#workspace nav')
     $workspace_tabs       : $('#workspace nav ul')
     Router                : new WorkspaceRouter()
     Cookie                : new Cookie()
@@ -125,9 +129,12 @@ define [
       (app) ->
         saved_apps = @workspace_state.get 'apps'
         _.each saved_apps, (obj, index) =>
-          if app.app == obj.app
+          if app.app is obj.app
             saved_apps.splice index, 1
+            if app.app is @current_state.module
+              @current_state.module = null
         @workspace_state.set 'apps', saved_apps
+        @workspace_state.set 'workspace', @current_state
         @workspace_state.save()
 
     # Check to see if an app already exists in saved state
@@ -213,8 +220,9 @@ define [
 
       if @navigation_view?
         @navigation_view.destroy()
+        @navigation_view = null
 
-      $('#header').css('height', '65px')
+      $('body').removeClass()
       $('body').addClass('logo-background')
 
       @login_view
@@ -311,9 +319,11 @@ define [
       @reset_admin_links()
       @set_breadcrumb()
       @hide_workspace_button()
+      @hide_navigation()
 
       if @navigation_view?
         @navigation_view.destroy()
+        @navigation_view = null
         @teardown_workspace()
 
       @destroy_workspace_model()
@@ -344,10 +354,10 @@ define [
           else
             @config.set 'menu', menu
             @config.set 'menu_html', MenuHelper.generate_menu(menu)
+            @show_navigation()
 
             # Instantiate our SearchContextCollection
             # @setup_search_storage()
-
             @navigation_view = new WorkspaceNavView({
                 router     : @Router
                 controller : @
@@ -366,7 +376,7 @@ define [
             # there was a previous state saved, and try to use that one.
             #
             if @check_workspace_state() is false # Check for localStorage state
-              @navigation_view.toggle_nav_slide() # open main nav
+              @navigation_view.show_nav() # open main nav
               @navigation_view.$el.find('li a span').first().trigger('click') # select first item
 
             if @current_state?
@@ -404,6 +414,7 @@ define [
                 @current_state = model.get 'workspace'
                 model.build_name()
                 @update_address()
+                @set_business_namespace()
                 true
               error : (model, resp) =>
                 # Make a new WorkspaceState as we had a problem.
@@ -462,7 +473,7 @@ define [
                          "Sorry, you do not have access to any items in this environment."
         return
 
-      group_label = apps = menu[@current_state.business].contexts[@current_state.context].label
+      group_label = menu[@current_state.business].contexts[@current_state.context].label
       apps = menu[@current_state.business].contexts[@current_state.context].apps
 
       app = _.find apps, (app) =>
@@ -472,10 +483,6 @@ define [
       # before loading a new one. We do this recursively to prevent
       # race conditions (new tabs pushing onto the stack as old ones pop off)
       @teardown_workspace()
-
-      # Manually adjust CSS
-      if $('#header').height() < 95
-        $('#header').css('height', '95px')
 
       @launch_app app
 
@@ -550,7 +557,7 @@ define [
     #
     # @param `app` _Object_ application config object
     #
-    launch_app : (app) ->
+    launch_app : (app, rules=null) ->
       # If app is not saved in @workspace_state and is not the
       # workspace defined app then we need to add it to our
       # stack of saved apps
@@ -560,7 +567,7 @@ define [
         @state_add app
 
       # Determine which Module to load into the view
-      rules = new AppRules(app)
+      rules = rules or new AppRules app
       default_workspace = rules.default_workspace
 
       # Open modules defined in workspace set
@@ -613,7 +620,7 @@ define [
       options =
         controller  : @
         module_type : module
-        'app'       : app
+        app         : app
 
       if app.tab?
         options.template_tab = $(app.tab).html()
@@ -626,7 +633,7 @@ define [
       if !@workspace_state? || _.isEmpty(@workspace_state)
         return false
       saved_apps = @workspace_state.get 'apps'
-      if saved_apps?
+      unless _.isEmpty saved_apps
         for app in saved_apps
           @launch_app app
       return true
@@ -642,6 +649,13 @@ define [
           url += "/#{@current_state.module}/#{Helpers.serialize(@current_state.params)}"
         @Router.navigate url
 
+    set_business_namespace : ->
+      if business = @current_state?.business
+        if business is 'cru'
+          $('body').addClass('is-sagesure').removeClass('is-fednat')
+        if business is 'fnic'
+          $('body').addClass('is-fednat').removeClass('is-sagesure')
+
     #### Set Admin Links
     #
     # Set Admin links to user profile and logout
@@ -651,7 +665,7 @@ define [
       if !@$workspace_admin_initial?
         @$workspace_admin_initial = @$workspace_admin.find('ul').html()
 
-      @$workspace_admin.find('ul').html("""<li>Welcome back &nbsp;<a href="#profile">#{@user.get('name')}</a></li><li><a href="/batch" target="_blank">Batch Wolf</a></li><li><a href="#logout">Logout</a></li>""")
+      @$workspace_admin.find('ul').html("""<li>Welcome back &nbsp;<a href="#profile">#{@user.get('name')}</a></li><li><a href="#" data-toggle="modal" data-target="#help-modal" data-workspace="saguresure">Help</a></li><li><a href="#logout">Logout</a></li>""")
 
     #### Reset Admin Links
     #
@@ -672,6 +686,16 @@ define [
       $('#header-controls span').fadeOut(400)
       @$workspace_breadcrumb.fadeOut(400)
 
+    show_navigation : ->
+      @$workspace_main_navbar.show()
+      @$workspace_nav.show()
+      @resize_workspace()
+
+    hide_navigation : ->
+      @$workspace_main_navbar.hide()
+      @$workspace_nav.hide()
+      @resize_workspace()
+
     #### Drop a click listener on all tabs
     #
     attach_tab_handlers : ->
@@ -679,10 +703,6 @@ define [
       @$workspace_tabs.on 'click', 'li a', (e) =>
         e.preventDefault()
         app_name = $(e.target).attr('href')
-
-        # When a user clicks on a tab, that tabs URL
-        # should be rendered in the address bar
-        @set_active_url app_name
 
         # Fallback for search tabs
         if app_name is undefined
@@ -695,6 +715,35 @@ define [
         e.preventDefault()
         @workspace_stack.get($(e.target).prev().attr('href')).destroy()
         @reassess_apps()
+
+    attach_navbar_handlers : ->
+      @$workspace_main_navbar.on 'click', 'li > a', (e) =>
+        $el = $(e.currentTarget)
+
+        # Allow the default behavior if [target="_blank"] is present
+        if $el.is '[target="_blank"]'
+          return true
+
+        # Launch module if [data-app="<app>"] is present
+        if app_name = $el.data 'app'
+          if @workspace_stack.has app_name
+            @toggle_apps app_name
+          else
+            rules = new AppRules { app: app_name }
+            @launch_app rules[app_name].app, rules
+
+        e.preventDefault()
+
+    attach_window_resize_handler : ->
+      lazyResize = _.debounce _.bind(@resize_workspace, this), 500
+      $(window).on 'resize', lazyResize
+
+    resize_workspace : ->
+      headerHeight    = @$workspace_header.height()
+      footerHeight    = @$workspace_footer.height()
+      windowHeight    = window.innerHeight
+      workspaceHeight = windowHeight - headerHeight - footerHeight
+      @$workspace_el.height workspaceHeight
 
     #### Set Active Url
     #
@@ -789,7 +838,8 @@ define [
         Backbone.history.start()
         @check_cookie_identity()
         @attach_tab_handlers()
-
+        @attach_navbar_handlers()
+        @attach_window_resize_handler()
 
   _.extend WorkspaceController, Backbone.Events
 

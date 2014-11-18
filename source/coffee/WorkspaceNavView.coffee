@@ -9,20 +9,16 @@ define [
       "click #workspace-subnav li a" : "toggle_sub_nav"
 
     initialize : (options) ->
+      _.bindAll this, 'toggle_nav_slide'
+
       @$sub_el = $(options.sub_el)
       @$header = @options.controller.$workspace_header
       @base_height = @$header.height()
 
-      # Hide the menus
-      @$sub_el.hide()
-      @$el.hide()
-
       # Attach even handler to Workspace Button - we have to do this
       # because we can't use the built-in Backbone events, since
       # our subnav is not in $el
-      $('#header-controls').on 'click', '#button-workspace',(e) =>
-        e.preventDefault()
-        @toggle_nav_slide()
+      $('#button-workspace').off('click').on 'click', @toggle_nav_slide
 
     render : () ->
       @$el.prepend(@options.main_nav)
@@ -32,9 +28,12 @@ define [
       @$sub_el.css 
         'min-height' : @$el.height()
 
-    destroy : () ->
+    destroy : ->
       @$el.find('.main-nav').remove()
+      @$el.hide()
       @$sub_el.empty()
+      @off()
+      @undelegateEvents()
 
     #### Toggle Main Nav
     #
@@ -58,15 +57,15 @@ define [
     #
     toggle_sub_nav : (e) ->
       e.preventDefault()
-      $a = $(e.target) # stash link
-      $li = $a.parent() # stash li
+      $a = $(e.currentTarget)
+
       @$sub_el.find('a').removeClass()
       $a.addClass('on')
 
       # Tell the Router to trigger the app
       @options.router.navigate($a.attr('href'), { trigger : true })
+      @options.controller.set_business_namespace()
 
-      @hide_nav()
       @toggle_nav_slide()
 
 
@@ -74,45 +73,27 @@ define [
     #
     # Open and close the menus
     #
-    toggle_nav_slide : () ->
-      if @$header.height() is @base_height + 30 or @$header.height() is 65
-        @$header.animate {
-          height : 230 + @base_height # totally arbitrary height
-          }, 200, 'swing', @show_nav()
+    toggle_nav_slide : (e) ->
+      e.preventDefault() if _.isObject e
 
-        # Ensure that the navigation indicates current state when opened
-        current_state = @options.controller.current_state
-        if current_state?
-          {env, business, context, app} = current_state
-          sub_nav_id = "nav-#{env}-#{business}-#{context}-#{app}"
-          @$el.find("li a[data-pc=#{business}] span").trigger('click')
-          @$sub_el.find("##{sub_nav_id}").addClass('on')
-
-      else
-        @hide_nav()
-        # determine correct close height based on presence of tabs
-        close_height = @base_height
-        if $('#workspace nav ul li').length > 0
-          close_height = @base_height + 30
-
-        @$header.animate {
-          height : close_height
-          }, 200, 'swing'
+      # Ensure that the navigation indicates current state when opened
+      if current_state = @options.controller.current_state
+        {env, business, context, app} = current_state
+        @$("li a[data-pc=#{business}] span").trigger('click')
+        @$("#nav-#{env}-#{business}-#{context}-#{app}").addClass('on')
+      @$el.slideToggle()
 
     #### Show Nav
     #
     # Slowly fade in the nav menus after opening
     #
-    show_nav : () ->
-      @$el.fadeIn('slow')
-      @$sub_el.fadeIn('slow')
+    show_nav : ->
+      @$el.slideDown()
 
     #### Hide Nav
     #
     # Switch off menus, no fade.
     #
-    hide_nav : () ->
-      @$el.hide()
-      @$sub_el.hide()
-
+    hide_nav : ->
+      @$el.slideUp()
 

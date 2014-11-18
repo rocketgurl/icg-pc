@@ -1,5 +1,15 @@
-Updates
--------
+### 2.7.2 - Nov 18, 2014
+
+- [ICS-2913](https://icg360.atlassian.net/browse/ICS-2913) - Updates wic-ho3-tx IPM endorse forms
+- [ICS-2929](https://icg360.atlassian.net/browse/ICS-2929) - a new Welcome page
+- [ICS-2932](https://icg360.atlassian.net/browse/ICS-2932) - a new top level of navigation
+– Servicing includes a link to Batch Wolf & Underwriting includes New Business Referrals and Renewal Underwriting
+– includes a link to [ixReports](https://ixreport.ics360.com/rfk/root/) and [Agency Administration](https://agencyadmin.icg360.com/)
+- [ICS-2933](https://icg360.atlassian.net/browse/ICS-2933) - a new floating footer
+- [ICS-2938](https://icg360.atlassian.net/browse/ICS-2938) - Adds Google Analytics to Policy Central
+- [ICS-2945](https://icg360.atlassian.net/browse/ICS-2945) - a new pop-up module to accommodate content such as Help, Support, and Feedback
+- [ICS-2965](https://icg360.atlassian.net/browse/ICS-2965) - Add OptionCoverageD for ofcc-ho3-ak so CoverageD calculations work
+- [ICS-2966](https://icg360.atlassian.net/browse/ICS-2966) - Updates fnic-ho3-al IPM endorse forms
 
 ### 2.7.1 - Nov 4, 2014
 
