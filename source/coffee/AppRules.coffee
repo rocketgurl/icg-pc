@@ -52,7 +52,7 @@ define [
     get_modules : (app_name) ->
       switch app_name
         when 'policies'
-          [@home, @referral_queue, @policy_search]
+          [@home, @policy_search, @referral_queue]
         when 'renewalreview'
           [@renewalreview]
         when 'rulesets'
