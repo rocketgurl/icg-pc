@@ -97,7 +97,7 @@ define [
       app :
         app       : 'home'
         app_label : 'Home'
-        tab       : '#tpl-workspace-tab-noclose'
+        tab       : '#tpl-workspace-tab-blank'
 
     policy_search_params :
       required : false
