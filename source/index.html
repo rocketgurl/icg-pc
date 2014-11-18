@@ -73,12 +73,6 @@
 
   <script src="/js/lib/modernizr.custom.53344.js"></script>
   <script data-main="./js/main.js" src="js/lib/require.js"></script>
-
-  <style type="text/css" media="screen">
-    #header-workspace-nav {
-      margin-top: 10px;
-    }
-  </style>
 </head>
 <body>
   <div id="header">
@@ -89,7 +83,6 @@
         </div>
         <div id="header-controls">
           <a href="" title="Click to change workspace" id="button-workspace" style="display: none;">Change Workspace</a>
-          <span>Workspace: </span>
           <ul id="breadcrumb" style="display: none;"></ul>
         </div>
         <div id="header-admin">
@@ -100,29 +93,114 @@
         </div>
       </div>
       <div id="header-workspace-nav" class="header-group">
-        <div id="workspace-subnav">
-        </div>
+        <div id="workspace-subnav"></div>
+      </div>
+    </div>
+
+    <div id="header-navbar" class="navbar navbar-static-top pc-nav" role="navigation">
+      <div class="container-fluid">
+        <ul class="nav navbar-nav">
+          <li><a href="#" data-app="home">Home</a></li>
+          <li><a href="#" data-app="search">Search</a></li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Servicing <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="/batch" target="_blank">Batch Wolf</a></li>
+              <!-- <li class="divider"></li> -->
+              <!-- <li><a href="#" data-app="renewal_management">Renewal Management</a></li> -->
+            </ul>
+          </li>
+          <li class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Underwriting <span class="caret"></span></a>
+            <ul class="dropdown-menu" role="menu">
+              <li><a href="#" data-app="referral_queue">New Business Referrals</a></li>
+              <li class="divider"></li>
+              <li><a href="#" data-app="renewalreview">Renewal Underwriting</a></li>
+            </ul>
+          </li>
+          <li><a href="https://agencyadmin.icg360.com/" target="_blank">Agencies</a></li>
+          <li><a href="https://ixreport.ics360.com/rfk/root/" target="_blank">Reports</a></li>
+        </ul>
       </div>
     </div>
   </div>
+
   <div id="workspace">
-    <nav>
-      <ul>
-      </ul>
-    </nav>
+    <nav><ul></ul></nav>
     <article>
       <section id="canvas">
         <div id="flash-message-controller" class="flash-message"></div>
         <div id="target"></div>
       </section>
     </article>
-    <footer id="footer-main">
-      <ul>
-        <li>&copy; <script>document.write(new Date().getFullYear())</script> Insight Catastrophe Group</li>
-        <li>Version <span id="version-number">0.0.2</span></li>
-      </ul>
-    </footer>
   </div>
+
+  <footer id="footer-main">
+    <ul>
+      <li>&copy; <script>document.write(new Date().getFullYear())</script> Insight Catastrophe Group</li>
+      <li>Version <span id="version-number">0.0.2</span></li>
+    </ul>
+  </footer>
+
+  <div class="modal fade" id="help-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h3 class="modal-title">Policy Central Help</h3>
+        </div>
+        <div class="modal-body">
+          <section class="pc-help-support">
+            <h4><span class="inline"><span class="show-sagesure">SageSure</span><span class="show-fednat">FedNat</span></span> Support</h4>
+            <p>Hours: 9am to 5pm ET</p>
+            <p>Phone: 877-304-4785 option #6</p>
+            <p>Ticket submission: <a href="https://icg360.zendesk.com/" target="_blank" rel="nofollow">https://icg360.zendesk.com/</a></p>
+          </section>
+          <section class="pc-help-feedback">
+            <h4>Got Feedback?</h4>
+            <p>Send an email to our user feedback box: <span class="inline"><a href="mailto:feedback@icg360.com?subject=Policy%20Central%20-%20SageSure%20Feedback" class="show-sagesure">feedback@icg360.com</a><a href="mailto:feedback@icg360.com?subject=Policy%20Central%20-%20FedNat%20Feedback" class="show-fednat">feedback@icg360.com</a><span></p><p>Note: <em>Please do not send bug reports or request support here as this mailbox is not regularly monitored.</em></p>
+          </section>
+          <section class="pc-help-faq">
+            <h4>FAQs</h4>
+            <ul>
+              <li>
+                <p><strong class="bullet">Q.</strong>I am used to using Insight Central - <strong>where do I find the Policy View I am used to?</strong></p>
+                <p><strong class="bullet">A.</strong>The view you are used to is called <strong>Detail View </strong>in Policy Central. You will find this option in the blue policy navigation to the left of the policy you are in.</p>
+              </li>
+              <li>
+                <p><strong class="bullet">Q.</strong>I am an underwriter - <strong>where is my Referral Queue?</strong></p>
+                <p><strong class="bullet">A.</strong>The Referral Queue can be found by clicking <strong>Underwriting in the top-level navigation</strong>. Click All Referrals to see all items in the list, otherwise My Referrals will be just those assigned to you. There is also a checkbox if you would like to see all resolved and withdrawn items.</p>
+              </li>
+              <li>
+                <p><strong class="bullet">Q.</strong>I am used to finding the Renewal Underwriting in the Search under Current Context. <strong>Where is the Referral Underwriting queue now?</strong></p>
+                <p><strong class="bullet">A.</strong>The Referral Underwriting queue can be found by clicking <strong>Underwriting in the top-level navigation</strong>.</p>
+              </li>
+              <li>
+                <p><strong class="bullet">Q.</strong>Where is Batch Wolf?</p>
+                <p><strong class="bullet">A.</strong>Batch Wolf can be found by clicking <strong>Batch Processing in the top-level navigation.</strong></p>
+              </li>
+              <li>
+                <p><strong class="bullet">Q.</strong>I can't find the other open policies I know I've opened.</p>
+                <p><strong class="bullet">A.</strong>To find all of your open policies - including a list of recently opened policies and a tool to filter any of those, click the two arrows next to the words <strong>"OPEN POLICIES" on the far left of your browser window.</strong></p>
+              </li>
+              <li>
+                <p><strong class="bullet">Q.</strong>What should I do - I just found a software bug?</p>
+                <p><strong class="bullet">A.</strong>Contact Support - the information is at the top of this page.</p>
+              </li>
+              <li>
+                <p><strong class="bullet">Q.</strong>I have a great idea for Policy Central. Who should I tell?</p>
+                <p><strong class="bullet">A.</strong>Submit your idea to the feedback link above.</p>
+              </li>
+            </ul>
+          </section>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <script>
   // SWF Handler
   var ready = function() {
@@ -146,6 +224,9 @@
   <script type="text/template" id="tpl-workspace-tab-noclose">
   <li{{{tab_class}}} id="tab-noclose"><a href="{{tab_url}}">{{tab_label}}</a></li>
   </script>
+
+  <!-- HACK: No tab -->
+  <script type="text/template" id="tpl-workspace-tab-blank"></script>
 
   <!-- TEMPLATE: Workspace Tab -->
   <script type="text/template" id="tpl-workspace-tab">
