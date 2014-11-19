@@ -742,7 +742,7 @@ define [
       headerHeight    = @$workspace_header.height()
       footerHeight    = @$workspace_footer.height()
       windowHeight    = window.innerHeight
-      workspaceHeight = windowHeight - headerHeight - footerHeight
+      workspaceHeight = windowHeight - headerHeight - footerHeight - 1
       @$workspace_el.height workspaceHeight
 
     #### Set Active Url
