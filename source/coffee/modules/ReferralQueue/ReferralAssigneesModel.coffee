@@ -97,12 +97,12 @@ define [
     json2xml : ->
       json = @get('json')
 
-      nodes = ""
+      nodes = "\n"
       for assignee in json.Assignee
-
-        assignee.new_business ?= false
-        assignee.renewals ?= false
-
-        nodes += """<Assignee identity="#{assignee.identity}" active="#{assignee.active}" new_business="#{assignee.new_business}" renewals="#{assignee.renewals}" />"""
+        nodes += "  "
+        nodes += """<Assignee identity="#{assignee.identity}" active="#{assignee.active}" """
+        nodes += """new_business="#{assignee.new_business}" """ if _.has assignee, 'new_business'
+        nodes += """renewals="#{assignee.renewals}" """ if _.has assignee, 'renewals'
+        nodes += "/>\n"
 
       "<AssigneeList>#{nodes}</AssigneeList>"
