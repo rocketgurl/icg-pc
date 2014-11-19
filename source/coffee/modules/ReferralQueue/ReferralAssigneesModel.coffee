@@ -27,7 +27,7 @@ define [
       success ?= @putSuccess
       error  ?= @putError
 
-      if typeof xml != 'string'
+      unless _.isString xml
         xml = @Helpers.XMLToString xml
 
       $.ajax
