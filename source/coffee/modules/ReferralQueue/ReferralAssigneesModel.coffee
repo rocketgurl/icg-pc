@@ -76,19 +76,14 @@ define [
     # have the new attributes (new_business & renewals) then we add them.
     parseBooleans : (arr) ->
       arr = _.map arr, (item) ->
-        # Guard rails
-        new_business = renewals = false
-        if _.has(item, 'new_business')
-          new_business = JSON.parse(item.new_business)
-        if _.has(item, 'renewals')
-          renewals = JSON.parse(item.renewals)
-
-        {
-          identity     : item.identity
-          active       : JSON.parse(item.active)
-          new_business : new_business
-          renewals     : renewals
-        }
+        out = _.clone item
+        if _.has out, 'new_business'
+          out.new_business = JSON.parse out.new_business
+        if _.has out, 'renewals'
+          out.renewals = JSON.parse out.renewals
+        if _.has out, 'active'
+          out.active = JSON.parse out.active
+        out
 
     # **Convert Assignees JSON to XML**
     #
