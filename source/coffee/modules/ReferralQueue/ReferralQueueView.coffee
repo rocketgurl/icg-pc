@@ -247,38 +247,39 @@ define [
       @ASSIGNEE_STATE = false
       @Amplify.publish 'controller', 'warning', "Warning - could not load assignees xml: #{xhr.status} - #{xhr.statusText}"
 
-    # The two lists of checkboxes are combined into one array of objects. Then
-    # map over the Assignee JSON from the model, plucking objects from our
-    # combined array with the same identity and merging in their new values.
+    # Loop through the assignee list and update the assignee objects'
+    # attributes based on the associated checkbox's state.
+    # 
+    # SageSure assignees can be assigned 'new_business' and/or 'renewals'
+    # and should be considered 'active' in case either is true.
+    # 
+    # FedNat assignees only have an 'active' attribute.
+    #
     # The updated Assignee JSON is set back to the model, which generates XML
     # and PUTs it back to the server.
-    #
     saveAssignees : (e) ->
       e.preventDefault()
       @assigneeLoader()
-      values = []
-      json   = @AssigneeList.get('json').Assignee
 
-      # Combine lists into array with some processing on identity
-      @$el.find('input[type=checkbox]').each (index, val) ->
-        name = $(val).attr('name')
-        if name.indexOf('newbiz_') > -1
-          values.push
-            identity     : name.replace /newbiz_/gi, ''
-            new_business : $(val).val()
-        else
-          values.push
-            identity : name.replace /renewal_/gi, ''
-            renewals : $(val).val()
+      assigneeList = @AssigneeList.getAll()
 
-      merged = _.map json, (assignee) ->
-        items = _.where values, { identity : assignee.identity }
-        if items.length > 1
-          _.extend assignee, items[0], items[1]
-        else
-          _.extend assignee, items[0]
+      newList = _.map assigneeList, (assignee) ->
+        newAssignee = {}
+        newAssignee.identity = assignee.identity
+        @$("input[name*='#{assignee.identity}']").each (i, input) ->
+          name = $(input).attr('name')
+          if /active_/.test name
+            newAssignee.active = input.checked
+          if /newbiz_/.test name
+            newAssignee.new_business = input.checked
+          if /renewal_/.test name
+            newAssignee.renewals = input.checked
 
-      @AssigneeList.set 'json', { Assignee : merged }
+        if _.has(newAssignee, 'new_business') or _.has(newAssignee, 'renewals')
+          newAssignee.active = newAssignee.new_business or newAssignee.renewals
+        return newAssignee
+
+      @AssigneeList.set 'json', { Assignee : newList }
       @AssigneeList.putList()
 
     # Remove the menu from DOM so it will be generated fresh erasing any
