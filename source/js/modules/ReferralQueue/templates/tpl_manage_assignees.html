@@ -4,14 +4,14 @@
 
 	<div class="menu-body">
 		<p>Uncheck the box next to an underwriter's name if you would like to take the underwriter off the automatic referral list. This is especially useful when an underwriter is on vacation or out sick.</p>
-		<form id="referral-asigness-form">
+		<form id="referral-assignees-form">
 		{{#isSagesure}}
 		<div class="menu-col">
 			<h2>New business referrals</h2>
 			<ul>
 				{{#assignees}}
 				<li>
-					<input type="checkbox" name="newbiz_{{identity}}" id="newbiz_{{identity}}" value="{{new_business}}" {{#new_business}}checked="true"{{/new_business}}> <label for="newbiz_{{identity}}">{{identity}}</label>
+					<input type="checkbox" name="newbiz_{{identity}}" id="newbiz_{{identity}}" {{#new_business}}checked{{/new_business}}> <label for="newbiz_{{identity}}">{{identity}}</label>
 				</li>
 				{{/assignees}}
 			</ul>
@@ -21,7 +21,7 @@
 			<ul>
 				{{#assignees}}
 				<li>
-					<input type="checkbox" name="renewal_{{identity}}" id="renewal_{{identity}}" value="{{renewals}}" {{#renewals}}checked="true"{{/renewals}}> <label for="renewal_{{identity}}">{{identity}}</label>
+					<input type="checkbox" name="renewal_{{identity}}" id="renewal_{{identity}}" {{#renewals}}checked{{/renewals}}> <label for="renewal_{{identity}}">{{identity}}</label>
 				</li>
 				{{/assignees}}
 			</ul>
@@ -32,7 +32,7 @@
 			<ul>
 				{{#assignees}}
 				<li>
-					<input type="checkbox" name="active_{{identity}}" id="active_{{identity}}" value="{{active}}" {{#active}}checked="true"{{/active}}> <label for="active_{{identity}}">{{identity}}</label>
+					<input type="checkbox" name="active_{{identity}}" id="active_{{identity}}" {{#active}}checked{{/active}}> <label for="active_{{identity}}">{{identity}}</label>
 				</li>
 				{{/assignees}}
 			</ul>
