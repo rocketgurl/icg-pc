@@ -18,8 +18,8 @@ define [
       @$('#home-carousel').carousel()
 
       apUpdatesView = new APNoticesView
-        el     : @$('#ap-notices')
-        digest : @CONTROLLER.user.get('digest')
+        el         : @$('#ap-notices')
+        controller : @CONTROLLER
 
       pcUpdatesView = new PCNoticesView
         el : @$('#pc-notices')
