@@ -232,9 +232,9 @@ define [
     # for valid credentials
     check_credentials : (username, password) ->
       @user = new UserModel
-        urlRoot    : @services.ixdirectory + 'identities'
-        'username' : username
-        'password' : password
+        urlRoot  : @services.ixdirectory + 'identities'
+        username : username
+        password : password
 
       # retrieve an identity document or fail
       @user.fetch(
