@@ -43,6 +43,7 @@ define [
       ixvocab        : './ixvocab/api/rest/v1/'
       zendesk        : './zendesk'
       pxclient       : '../swf/PolicySummary.swf'
+      agentportal    : './agentportal/api/rest/v2/'
 
   # Method Combinator (Decorator)
   # https://github.com/raganwald/method-combinators
