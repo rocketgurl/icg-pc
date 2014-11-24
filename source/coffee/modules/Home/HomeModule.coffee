@@ -28,7 +28,3 @@ define [
       viewData =
         cid : @cid
       @$el.html @Mustache.render tpl_home_container, viewData
-
-    cacheElements : ->
-      # @renewalBatchesTable = @$("#renewal-batches-#{@cid}")
-      # @renewalBatchesTbody = @renewalBatchesTable.find 'tbody'
