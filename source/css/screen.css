@@ -1976,6 +1976,16 @@ ul:after { clear: both; }
 #home .carousel-control.right { right: -5%; }
 #home .panel-body { max-height: 500px; overflow: auto; }
 #home .panel-notice { line-height: 110px; text-align: center; font-size: 40px; color: #8ebadc; }
+#home .notice-item:before, #home .notice-item:after { content: " "; display: table; }
+#home .notice-item:after { clear: both; }
+#home .notice-item .notice-item-content { overflow: hidden; }
+#home .notice-item .notice-item-toggle { display: none; float: right; }
+#home .notice-item .notice-item-toggle .less { display: none; }
+#home .notice-item.needs-toggle .notice-item-content { max-height: 40px; }
+#home .notice-item.needs-toggle .notice-item-toggle { display: block; }
+#home .notice-item.needs-toggle.open .notice-item-content { max-height: initial; }
+#home .notice-item.needs-toggle.open .notice-item-toggle .more { display: none; }
+#home .notice-item.needs-toggle.open .notice-item-toggle .less { display: initial; }
 
 #help-modal section { margin-bottom: 20px; padding-bottom: 10px; border-bottom: 1px solid #ddd; }
 #help-modal section:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: 0; }

@@ -56,4 +56,31 @@
     font-size: 40px;
     color: desaturate(lighten($blue, 40), 20);
   }
+
+  .notice-item {
+    @include clearfix;
+
+    .notice-item-content {
+      overflow: hidden;
+    }
+
+    .notice-item-toggle {
+      display: none;
+      float: right;
+      .less { display: none; }
+    }
+
+    &.needs-toggle {
+      .notice-item-content { max-height: 40px; }
+      .notice-item-toggle { display: block; }
+
+      &.open {
+        .notice-item-content { max-height: initial; }
+        .notice-item-toggle {
+          .more { display: none; }
+          .less { display: initial; }
+        }
+      }
+    }
+  }
 }
