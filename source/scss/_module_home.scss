@@ -48,6 +48,15 @@
   .panel-body {
     max-height: 500px;
     overflow: auto;
+
+    > ul {
+      margin-bottom: 0;
+    }
+  }
+
+  .panel-working {
+    text-align: center;
+    color: #666;
   }
 
   .panel-notice {

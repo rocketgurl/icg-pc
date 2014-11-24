@@ -1975,6 +1975,8 @@ ul:after { clear: both; }
 #home .carousel-control.left { left: -5%; }
 #home .carousel-control.right { right: -5%; }
 #home .panel-body { max-height: 500px; overflow: auto; }
+#home .panel-body > ul { margin-bottom: 0; }
+#home .panel-working { text-align: center; color: #666; }
 #home .panel-notice { line-height: 110px; text-align: center; font-size: 40px; color: #8ebadc; }
 #home .notice-item:before, #home .notice-item:after { content: " "; display: table; }
 #home .notice-item:after { clear: both; }
