@@ -746,6 +746,23 @@ define [
       workspaceHeight = windowHeight - headerHeight - footerHeight - 1
       @$workspace_el.height workspaceHeight
 
+    open_policy_nav : ->
+      @$workspace_el.addClass 'in'
+
+    close_policy_nav : ->
+      @$workspace_el.removeClass 'in'
+
+    toggle_policy_nav : ->
+      @$workspace_el[if @$workspace_el.is('.in') then 'removeClass' else 'addClass'] 'in'
+
+    attach_policy_nav_handler : ->
+      $('.nav-toggle').on 'click', (e) =>
+        @toggle_policy_nav()
+        e.preventDefault()
+
+    handle_policy_count : ->
+      @$no_policy_flag[if @workspace_stack.policyCount > 0 then 'hide' else 'show']()
+
     #### Set Active Url
     #
     # When a tab is clicked, use the app_name to find
@@ -840,6 +857,7 @@ define [
         @check_cookie_identity()
         @attach_tab_handlers()
         @attach_navbar_handlers()
+        @attach_policy_nav_handler()
         @attach_window_resize_handler()
 
   _.extend WorkspaceController, Backbone.Events
@@ -867,10 +885,12 @@ define [
 
   WorkspaceController.on "stack_add", (view) ->
     @workspace_stack.add view
+    @handle_policy_count()
 
   WorkspaceController.on "stack_remove", (view) ->
     @workspace_stack.remove(view)
     @state_remove(view.app)
+    @handle_policy_count()
 
   WorkspaceController.on "new_tab", (app_name) ->
     @toggle_apps app_name
