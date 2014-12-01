@@ -75,16 +75,6 @@ define [
                 tab_label : @app.app_label
               })
       @$tab_el.append(@tab)
-      @recalcTabContainer @tab.width()
-
-    # Manually size the width of the Tab container to accomodate tabs
-    # past the width of the browser
-    recalcTabContainer : (tab) ->
-      widths = _.map(@$tab_el.find('li'), (l) -> $(l).width())
-      w = _.reduce widths, (a, b) ->
-            a + b
-        , 0
-      @$tab_el.width((w + 40) + tab)
 
     # Put tab into active state
     activate : ->
