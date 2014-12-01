@@ -109,13 +109,10 @@ define [
     # Remove tab and view
     destroy : ->
       # Remove tab & nullify so GC can get it (?)
-      if @$tab_el?
+      if @tab?
         @$navbar_item.removeClass 'active'
-        @$tab_el.width @$tab_el.width() - @tab.width()
         @tab.remove()
         @tab = null
-        @$tab_el.find("li a[href=#{@app.app}]").parent().remove()
-        @$tab_el = null
 
       # Remove content
       @$el.html('').remove()
