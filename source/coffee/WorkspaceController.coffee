@@ -320,6 +320,7 @@ define [
       @user = null
       @reset_admin_links()
       @set_breadcrumb()
+      @close_policy_nav()
       @hide_workspace_button()
       @hide_navigation()
 
