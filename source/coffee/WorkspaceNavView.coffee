@@ -24,10 +24,6 @@ define [
       @$el.prepend(@options.main_nav)
       @$sub_el.html(@options.sub_nav)
 
-      # Set height of sub_nav to main_nav
-      @$sub_el.css 
-        'min-height' : @$el.height()
-
     destroy : ->
       @$el.find('.main-nav').remove()
       @$el.hide()
