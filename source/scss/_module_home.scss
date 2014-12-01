@@ -1,4 +1,12 @@
 #home {
+  .home-container {
+    @include clearfix;
+    margin: 0 auto;
+    padding-left: 5%;
+    padding-right: 5%;
+    max-width: 1170px;
+  }
+
   h1 {
     margin-top: 0;
     font-weight: bold;
@@ -9,11 +17,11 @@
   }
 
   .carousel {
-    padding-bottom: 40px;
+    margin-bottom: 40px;
   }
 
   .carousel-indicators {
-    bottom: 0;
+    bottom: -40px;
 
     li {
       border: 0;
