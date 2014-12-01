@@ -714,9 +714,10 @@ define [
         @toggle_apps app_name
 
       # Tab close icon
-      @$workspace_tabs.on 'click', 'li i.icon-remove-sign', (e) =>
+      @$workspace_tabs.on 'click', 'li .glyphicon-remove-circle', (e) =>
         e.preventDefault()
-        @workspace_stack.get($(e.target).prev().attr('href')).destroy()
+        policyView = $(e.currentTarget).data 'view'
+        @workspace_stack.get(policyView).destroy()
         @reassess_apps()
 
     attach_navbar_handlers : ->
