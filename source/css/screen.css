@@ -1748,6 +1748,10 @@ a:hover, .policy-nav > ul > li > a.select, a:focus { text-decoration: inherit; }
 ul:before, ul:after { content: " "; display: table; }
 ul:after { clear: both; }
 
+.scroll-wrapper { position: absolute; top: 0; right: 0; bottom: 0; left: 0; overflow: auto; padding: 15px 15px 40px; }
+
+.width-wrapper { min-width: 960px; }
+
 /* Button overrides */
 .button-green { background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzcwYTMwMCIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzQ5NmIwMCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA=='); background-size: 100%; background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #70a300), color-stop(100%, #496b00)); background-image: -webkit-linear-gradient(#70a300, #496b00); background-image: -moz-linear-gradient(#70a300, #496b00); background-image: -o-linear-gradient(#70a300, #496b00); background-image: linear-gradient(#70a300, #496b00); border: 1px solid #3f5c00; -webkit-border-radius: 3px; -moz-border-radius: 3px; -ms-border-radius: 3px; -o-border-radius: 3px; border-radius: 3px; -webkit-box-shadow: inset 0 1px 0 0 #9de109; box-shadow: inset 0 1px 0 0 #9de109; color: white; font-weight: bold; padding: 9px 12px; text-shadow: 0 1px 0 #314700; text-align: center; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; font-size: 1.4rem; }
 .button-green:hover { background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzVkODcwMyIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzNmNWMwMCIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA=='); background-size: 100%; background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #5d8703), color-stop(100%, #3f5c00)); background-image: -webkit-linear-gradient(#5d8703, #3f5c00); background-image: -moz-linear-gradient(#5d8703, #3f5c00); background-image: -o-linear-gradient(#5d8703, #3f5c00); background-image: linear-gradient(#5d8703, #3f5c00); -webkit-box-shadow: inset 0 1px 0 0 #7fb607; box-shadow: inset 0 1px 0 0 #7fb607; cursor: pointer; }
@@ -1912,7 +1916,7 @@ ul:after { clear: both; }
 #workspace > nav > ul > li.selected > a { color: #fff; }
 #workspace > nav > ul .no-policies { margin-right: 10px; padding: initial; border-radius: initial; text-align: center; font-family: serif; color: #999; }
 #workspace > nav > ul .no-policies:hover { background: initial; }
-#workspace article { position: absolute; top: 0; right: 0; left: 30px; overflow: hidden; padding-top: 15px; padding-bottom: 40px; padding-left: 15px; padding-right: 15px; }
+#workspace article { position: absolute; top: 0; right: 0; left: 30px; overflow: hidden; }
 #workspace #canvas { min-width: 1170px; }
 #workspace #canvas:before, #workspace #canvas:after { content: " "; display: table; }
 #workspace #canvas:after { clear: both; }
@@ -2074,7 +2078,7 @@ Module: Policy
 .policy-nav > ul > li:first-child { border-top: 0; }
 .policy-nav > ul > li:last-child { border-bottom: 0; }
 
-.policy-workspace { left: 155px; right: 0; overflow: auto; padding: 15px 15px 40px 15px; }
+.policy-workspace { left: 155px; right: 0; }
 
 .policy-workspace-error { width: 100%; float: right; margin-right: 0; *margin-left: -1em; display: inline; text-align: center; }
 
@@ -2085,15 +2089,13 @@ Module: Policy
 .policy-error button:hover { background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzU2MTQxZSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzM0MDcwZiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA=='); background-size: 100%; background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #56141e), color-stop(100%, #34070f)); background-image: -webkit-linear-gradient(#56141e, #34070f); background-image: -moz-linear-gradient(#56141e, #34070f); background-image: -o-linear-gradient(#56141e, #34070f); background-image: linear-gradient(#56141e, #34070f); -webkit-box-shadow: inset 0 1px 0 0 #7d1f2f; box-shadow: inset 0 1px 0 0 #7d1f2f; cursor: pointer; }
 .policy-error button:active { -webkit-box-shadow: inset 0 0 8px 4px #27060b, inset 0 0 8px 4px #27060b, 0 1px 1px 0 #eeeeee; box-shadow: inset 0 0 8px 4px #27060b, inset 0 0 8px 4px #27060b, 0 1px 1px 0 #eeeeee; border: 1px solid #34070f; }
 
-.policy-module, .policy-header { min-width: 1000px; }
-
-.policy-module { position: relative; margin: 0; padding: 0; min-height: 600px; width: 100%; background: #f4f4f4; border: #ddd 1px solid; overflow: auto; z-index: 1; }
+.policy-module { position: relative; margin: 0; padding: 0; min-height: 600px; background: #f4f4f4; border: #ddd 1px solid; overflow: auto; z-index: 1; }
 .policy-module:before, .policy-module:after { content: " "; display: table; }
 .policy-module:after { clear: both; }
 .policy-module.inactive { visibility: hidden; opacity: 0; overflow: hidden; z-index: -1; margin: 0; padding: 0; height: 0 !important; min-height: 0 !important; border: 0; }
 .policy-module.policy-swf { border: 0; overflow: visible; }
 
-.policy-header { background: white; border: #ddd 1px solid; border-bottom: 0px; width: 100%; margin: 0; }
+.policy-header { background: white; border: #ddd 1px solid; border-bottom: 0px; margin: 0; }
 .policy-header table { margin: 0; width: 100%; }
 .policy-header table td { padding: 10px; border-right: #ededed 1px solid; vertical-align: top; }
 .policy-header table td:last-child { border-right: 0; }

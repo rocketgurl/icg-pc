@@ -106,8 +106,6 @@ Module: Policy
 .policy-workspace {
   left: 155px;
   right: 0;
-  overflow: auto;
-  padding: 15px 15px 40px 15px;
 }
 
 .policy-workspace-error {
@@ -140,18 +138,12 @@ Module: Policy
   }
 }
 
-.policy-module,
-.policy-header {
-  min-width: 1000px;
-}
-
 .policy-module {
   @include clearfix();
   position: relative;
   margin: 0;
   padding: 0;
   min-height: 600px;
-  width: 100%;
   background: $modulegray;
   border: #ddd 1px solid;
   overflow: auto;
@@ -177,7 +169,6 @@ Module: Policy
   background: $white;
   border: #ddd 1px solid;
   border-bottom: 0px;
-  width: 100%;
   margin: 0;
   table {
     margin: 0;
