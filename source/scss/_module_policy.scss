@@ -1,45 +1,113 @@
 /*
 Module: Policy
 */
+
+.policy-nav,
+.policy-workspace {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  @include transition(left 500ms);
+}
+
+.workspace-canvas {
+  &.out {
+    .policy-nav {
+      left: -125px;
+      @include background-image(initial);
+
+      .nav-toggle {
+        width: 193px;
+        @include transform(translate(-72px, 2px) rotate(-90deg));
+        white-space: nowrap;
+
+        .glyphicon-expand {
+          @include transform(rotate(90deg));
+        }
+      }
+
+      > ul {
+        display: none;
+      }
+    }
+
+    .policy-workspace { left: 30px; }
+  }
+}
+
 .policy-nav {
-  width: 12%;
-  float: left;
+  left: 0;
+  padding-top: 10px;
+  width: 155px;
+  background-color: $darkblue;
+  @include box-shadow(1px 0 1px 0 rgba(0, 0, 0, .35));
+  @include background-image(linear-gradient(to right, $darkblue 0%, darken($blue, 5) 100%));
+
+  .nav-toggle {
+    position: relative;
+    margin: 0 5px;
+    padding: 5px 25px 5px 5px;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    @include transform-origin(right top);
+
+    &:hover {
+      background-color: rgba(255, 255, 255, 0.10);
+
+      .glyphicon-expand { color: #fff; }
+    }
+
+    .glyphicon-expand {
+      position: absolute;
+      top: 6px;
+      right: 5px;
+      font-size: 17px;
+      color: rgba(255, 255, 255, 0.50);
+      @include transform(rotate(180deg));
+    }
+  }
 
   > ul {
-    @include clearfix();
-    @extend .list-unstyled;
-  }
-  li {
-    margin: 0;
-    border-top: $white 1px solid;
-    border-bottom: darken($lightgray, 10) 1px solid;
-    a {
-      padding: 8px 10px;
-      @include font-size(12);
-      text-decoration: none;
-      color: $darkblue;
-      display: block;
+    margin-top: 10px;
+    padding: 10px 5px;
+    border-top: 1px solid rgba(255, 255, 255, 0.5);
+
+    > li {
+      > a {
+        display: block;
+        padding: 10px 15px 10px 5px;
+        @include font-size(12);
+        text-decoration: none;
+        color: rgba(255, 255, 255, 0.75);
+
+        &:hover {
+          background: url(../img/icon_arrow_right.png) right 50% no-repeat;
+          color: #fff;
+        }
+
+        &.select {
+          @extend a:hover;
+          font-weight: bold;
+        }
+      }
+
+      &:first-child {
+        border-top: 0;
+      }
+
+      &:last-child {
+        border-bottom: 0;
+      }
     }
-    a:hover {
-      color: $white;
-      background: $darkblue;
-    }
-    a.select {
-      @extend a:hover;
-      background: $darkblue url(../img/icon_arrow_right.png) 95% 50% no-repeat;
-    }
-  }
-  li:first-child {
-    border-top: 0px;
-  }
-  li:last-child {
-    border-bottom: 0px;
   }
 }
 
 .policy-workspace {
-  width: 88%;
-  float: left;
+  left: 155px;
+  right: 0;
+  overflow: auto;
+  padding: 15px 15px 40px 15px;
 }
 
 .policy-workspace-error {
@@ -70,6 +138,11 @@ Module: Policy
     $tmp: darken($red, 10);
     @include simple-color(hue($tmp), saturation($tmp), lightness($tmp));
   }
+}
+
+.policy-module,
+.policy-header {
+  min-width: 1000px;
 }
 
 .policy-module {

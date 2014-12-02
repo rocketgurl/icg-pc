@@ -3,38 +3,64 @@
   @include clearfix;
 
   &.in {
-    nav {
+    > nav {
       left: 0;
       > ul { display: block; }
-    }
-    article { left: 175px; }
 
-    .nav-toggle {
-      @include transform(initial);
+      .nav-toggle {
+        @include transform(initial);
 
-      .glyphicon-expand {
-        @include transform(rotate(180deg));
+        .glyphicon-expand {
+          @include transform(rotate(180deg));
+        }
       }
     }
+    article { left: 175px; }
   }
 
   nav,
   article {
     height: inherit;
-    overflow: auto;
     @include transition(left 500ms);
   }
 
-  nav {
+  > nav {
     display: none;
     position: absolute;
+    overflow-y: auto;
     top: 0;
     left: -145px;
     width: 175px;
     padding-top: 10px;
     padding-bottom: 10px;
     padding-left: 10px;
-    @include box-shadow(inset -5px 0 10px 0 rgba(0, 0, 0, .10));
+    @include box-shadow(inset -1px 0 1px 0 rgba(0, 0, 0, .35));
+
+    .nav-toggle {
+      position: relative;
+      margin-right: 5px;
+      padding: 5px 25px 5px 5px;
+      color: $darkblue;
+      font-weight: bold;
+      cursor: pointer;
+      @include transform-origin(right top);
+      @include transform(translate(-25px, 2px) rotate(-90deg));
+
+      &:hover {
+        background-color: rgba(0, 0, 0, 0.10);
+
+        .glyphicon-expand { color: $darkblue; }
+      }
+
+      .glyphicon-expand {
+        position: absolute;
+        top: 6px;
+        right: 5px;
+        font-size: 17px;
+        color: rgba(0, 0, 0, 0.50);
+        @include transform(rotate(90deg));
+      }
+    }
 
     > ul {
       margin: 0;
@@ -75,6 +101,7 @@
         > a {
           display: block;
           padding: 5px 0;
+          @include font-size(12);
           text-decoration: none;
           color: $darkgray;
         }
@@ -127,36 +154,11 @@
     top: 0;
     right: 0;
     left: 30px;
+    overflow: hidden;
     padding-top: 15px;
     padding-bottom: 40px;
     padding-left: 15px;
     padding-right: 15px;
-  }
-
-  .nav-toggle {
-    position: relative;
-    margin-right: 5px;
-    padding: 5px;
-    color: $darkblue;
-    font-weight: bold;
-    cursor: pointer;
-    @include transform-origin(right top);
-    @include transform(translate(-25px, 2px) rotate(-90deg));
-
-    &:hover {
-      background-color: rgba(0, 0, 0, 0.10);
-
-      .glyphicon-expand { color: $darkblue; }
-    }
-
-    .glyphicon-expand {
-      position: absolute;
-      top: 6px;
-      right: 5px;
-      font-size: 17px;
-      color: rgba(0, 0, 0, 0.50);
-      @include transform(rotate(90deg));
-    }
   }
 
   #canvas {
