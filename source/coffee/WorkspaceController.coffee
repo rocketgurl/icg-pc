@@ -853,7 +853,7 @@ define [
       Herald.init herald_config
 
     # Kick off the show
-    init : () ->
+    init : ->
       @setupHerald()
       @callback_delay 100, =>
         @Router.controller = this
