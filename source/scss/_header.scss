@@ -1,6 +1,9 @@
 #header {
-	color: $white;
+	position: relative;
+	z-index: 10;
 	@include background-image(linear-gradient(top, $blue, darken($blue, 10)));
+	@include box-shadow(0 2px 2px -1px rgba(0, 0, 0, 0.1));
+	color: $white;
 }
 
 #header-container {
