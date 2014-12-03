@@ -276,6 +276,17 @@
 
 
 		<div>
+			<label for="{{guid}}_WindHailDeductible" >Wind/Hail Deductible <i>WindHailDeductible</i></label>
+			<select id="{{guid}}_WindHailDeductible" name="WindHailDeductible" data-value="{{WindHailDeductible}}"   >
+				{{#EnumsWindHailDeductible}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsWindHailDeductible}}
+			</select>
+		</div>
+
+
+
+		<div>
 			<label for="{{guid}}_AllOtherPerilsDeductible" class="labelRequired">All Other Perils Deductible $ <i>AllOtherPerilsDeductible</i></label>
 			<select id="{{guid}}_AllOtherPerilsDeductible" name="AllOtherPerilsDeductible" data-value="{{AllOtherPerilsDeductible}}"  required >
 				{{#EnumsAllOtherPerilsDeductible}}
