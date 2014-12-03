@@ -75,7 +75,8 @@ define [
     $workspace_main_navbar: $('#header-navbar')
     $workspace_canvas     : $('#canvas')
     $workspace_nav        : $('#workspace nav')
-    $workspace_tabs       : $('#workspace nav ul')
+    $workspace_tabs       : $('#workspace .open-policy-tabs')
+    $no_policy_flag       : $('#workspace .no-policies')
     Router                : new WorkspaceRouter()
     Cookie                : new Cookie()
     COOKIE_NAME           : 'ics360_PolicyCentral'
@@ -226,6 +227,7 @@ define [
       $('body').removeClass()
       $('body').addClass('logo-background')
 
+      @resize_workspace()
       @login_view
 
     # Instantiate a new user and check ixDirectory
@@ -319,6 +321,7 @@ define [
       @user = null
       @reset_admin_links()
       @set_breadcrumb()
+      @close_policy_nav()
       @hide_workspace_button()
       @hide_navigation()
 
@@ -712,9 +715,10 @@ define [
         @toggle_apps app_name
 
       # Tab close icon
-      @$workspace_tabs.on 'click', 'li i.icon-remove-sign', (e) =>
+      @$workspace_tabs.on 'click', 'li .glyphicon-remove-circle', (e) =>
         e.preventDefault()
-        @workspace_stack.get($(e.target).prev().attr('href')).destroy()
+        policyView = $(e.currentTarget).data 'view'
+        @workspace_stack.get(policyView).destroy()
         @reassess_apps()
 
     attach_navbar_handlers : ->
@@ -745,6 +749,23 @@ define [
       windowHeight    = window.innerHeight
       workspaceHeight = windowHeight - headerHeight - footerHeight - 1
       @$workspace_el.height workspaceHeight
+
+    open_policy_nav : ->
+      @$workspace_el.addClass 'in'
+
+    close_policy_nav : ->
+      @$workspace_el.removeClass 'in'
+
+    toggle_policy_nav : ->
+      @$workspace_el[if @$workspace_el.is('.in') then 'removeClass' else 'addClass'] 'in'
+
+    attach_policy_nav_handler : ->
+      $('.nav-toggle').on 'click', (e) =>
+        @toggle_policy_nav()
+        e.preventDefault()
+
+    handle_policy_count : ->
+      @$no_policy_flag[if @workspace_stack.policyCount > 0 then 'hide' else 'show']()
 
     #### Set Active Url
     #
@@ -840,6 +861,7 @@ define [
         @check_cookie_identity()
         @attach_tab_handlers()
         @attach_navbar_handlers()
+        @attach_policy_nav_handler()
         @attach_window_resize_handler()
 
   _.extend WorkspaceController, Backbone.Events
@@ -867,10 +889,12 @@ define [
 
   WorkspaceController.on "stack_add", (view) ->
     @workspace_stack.add view
+    @handle_policy_count()
 
   WorkspaceController.on "stack_remove", (view) ->
     @workspace_stack.remove(view)
     @state_remove(view.app)
+    @handle_policy_count()
 
   WorkspaceController.on "new_tab", (app_name) ->
     @toggle_apps app_name

@@ -92,41 +92,47 @@
           </ul>
         </div>
       </div>
-      <div id="header-workspace-nav" class="header-group">
+      <div id="header-workspace-nav">
         <div id="workspace-subnav"></div>
       </div>
     </div>
 
     <div id="header-navbar" class="navbar navbar-static-top pc-nav" role="navigation">
-      <div class="container-fluid">
-        <ul class="nav navbar-nav">
-          <li><a href="#" data-app="home">Home</a></li>
-          <li><a href="#" data-app="search">Search</a></li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Servicing <span class="caret"></span></a>
-            <ul class="dropdown-menu" role="menu">
-              <li><a href="/batch" target="_blank">Batch Wolf</a></li>
-              <!-- <li class="divider"></li> -->
-              <!-- <li><a href="#" data-app="renewal_management">Renewal Management</a></li> -->
-            </ul>
-          </li>
-          <li class="dropdown">
-            <a href="#" class="dropdown-toggle" data-toggle="dropdown">Underwriting <span class="caret"></span></a>
-            <ul class="dropdown-menu" role="menu">
-              <li><a href="#" data-app="referral_queue">New Business Referrals</a></li>
-              <li class="divider"></li>
-              <li><a href="#" data-app="renewalreview">Renewal Underwriting</a></li>
-            </ul>
-          </li>
-          <li><a href="https://agencyadmin.icg360.com/" target="_blank">Agencies</a></li>
-          <li><a href="https://ixreport.ics360.com/rfk/root/" target="_blank">Reports</a></li>
-        </ul>
-      </div>
+      <ul class="nav navbar-nav">
+        <li><a href="#" data-app="home">Home</a></li>
+        <li><a href="#" data-app="search">Search</a></li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Servicing <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="/batch" target="_blank">Batch Wolf</a></li>
+            <!-- <li class="divider"></li> -->
+            <!-- <li><a href="#" data-app="renewal_management">Renewal Management</a></li> -->
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Underwriting <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#" data-app="referral_queue">New Business Referrals</a></li>
+            <li class="divider"></li>
+            <li><a href="#" data-app="renewalreview">Renewal Underwriting</a></li>
+          </ul>
+        </li>
+        <li><a href="https://agencyadmin.icg360.com/" target="_blank">Agencies</a></li>
+        <li><a href="https://ixreport.ics360.com/rfk/root/" target="_blank">Reports</a></li>
+      </ul>
     </div>
   </div>
 
   <div id="workspace">
-    <nav><ul></ul></nav>
+    <nav>
+      <div class="nav-toggle" role="button">
+        <span class="toggle-label">OPEN POLICIES</span>
+        <span class="glyphicon glyphicon-expand"></span>
+      </div>
+      <ul class="open-policy-tabs">
+        <li class="no-policies"><em>You Have No Open Policies</em></li>
+      </ul>
+    </nav>
     <article>
       <section id="canvas">
         <div id="flash-message-controller" class="flash-message"></div>
@@ -230,7 +236,7 @@
 
   <!-- TEMPLATE: Workspace Tab -->
   <script type="text/template" id="tpl-workspace-tab">
-  <li{{{tab_class}}}><a href="{{tab_url}}">{{tab_label}}</a><i class="icon-remove-sign" title="close this tab"></i></li>
+  <li{{{tab_class}}}><span class="glyphicon glyphicon-remove-circle" title="Close this tab" data-view="{{tab_url}}"></span><a href="{{tab_url}}">{{tab_label}}</a></li>
   </script>
 
 </body>

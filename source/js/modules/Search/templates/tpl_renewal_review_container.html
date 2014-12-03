@@ -1,52 +1,56 @@
-<header class="module-search clearfix" id="module-search-{{cid}}">
-  <h1>Renewal Underwriting</h1>
-</header>
-<div id="search-loader-{{cid}}" class="search-loader">
-  <h2 id="search-spinner-{{cid}}"><span>Searching Policies&hellip;</span></h2>
-</div>
-<div class="panel panel-default">
-  <table class="table table-striped table-hover module-search">
-    <thead>
-      <tr>
-        <th><a class="quote-number search-sort-link" href="quote-number" data-dir="asc">Quote #</a></th>
-        <th><a class="policy-number search-sort-link" href="policy-number" data-dir="asc">Policy #</a></th>
-        <th><span class="product-label">Product</span></th>
-        <th><a class="last-name search-sort-link" href="last-name" data-dir="asc">Name</a></th>
-        <th><span class="address">Address</span></th>
-        <th><a class="policy-state search-sort-link" href="policystate" data-dir="asc">Status</a></th>
-        <th><a class="effective-date search-sort-link" href="effective-date" data-dir="asc">Effective</a></th>
-        <th><span class="renewal-uw-status">Renewal UW Status</span></th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-</div>
-<div id="search-pagination-{{cid}}" class="module-search pagination">
-  <form class="form-horizontal col-xs-12" action="pagination" method="get" accept-charset="utf-8">
-    <div class="form-group form-group-sm">
-      <div class="col-xs-4 pagination-a">
-        <span>Items </span>
-      </div>
-      <div class="col-xs-4 pagination-b">
-        <label for="search-pagination-page-{{cid}}" class="col-xs-5 control-label">Jump to page:</label>
-        <div class="col-xs-3">
-          <select class="search-pagination-page form-control" name="search-pagination-page" id="search-pagination-page-{{cid}}">
-            <option value="1">1</option>
-          </select>
-        </div>
-      </div>
-      <div class="col-xs-4 pagination-c">
-        <label for="search-pagination-perpage-{{cid}}" class="col-xs-7 control-label">Result count:</label>
-        <div class="col-xs-5">
-          <select class="search-pagination-perpage form-control" name="search-pagination-perpage" id="search-pagination-perpage-{{cid}}">
-            <option value="15" selected>15 per page</option>
-            <option value="25">25 per page</option>
-            <option value="50">50 per page</option>
-            <option value="75">75 per page</option>
-            <option value="100">100 per page</option>
-          </select>
-        </div>
-      </div>
+<div class="scroll-wrapper">
+  <div class="width-wrapper">
+    <header class="module-search clearfix" id="module-search-{{cid}}">
+      <h1>Renewal Underwriting</h1>
+    </header>
+    <div id="search-loader-{{cid}}" class="search-loader">
+      <h2 id="search-spinner-{{cid}}"><span>Searching Policies&hellip;</span></h2>
     </div>
-  </form>
+    <div class="panel panel-default">
+      <table class="table table-striped table-hover module-search">
+        <thead>
+          <tr>
+            <th><a class="quote-number search-sort-link" href="quote-number" data-dir="asc">Quote #</a></th>
+            <th><a class="policy-number search-sort-link" href="policy-number" data-dir="asc">Policy #</a></th>
+            <th><span class="product-label">Product</span></th>
+            <th><a class="last-name search-sort-link" href="last-name" data-dir="asc">Name</a></th>
+            <th><span class="address">Address</span></th>
+            <th><a class="policy-state search-sort-link" href="policystate" data-dir="asc">Status</a></th>
+            <th><a class="effective-date search-sort-link" href="effective-date" data-dir="asc">Effective</a></th>
+            <th><span class="renewal-uw-status">Renewal UW Status</span></th>
+          </tr>
+        </thead>
+        <tbody></tbody>
+      </table>
+    </div>
+    <div id="search-pagination-{{cid}}" class="module-search pagination">
+      <form class="form-horizontal col-xs-12" action="pagination" method="get" accept-charset="utf-8">
+        <div class="form-group form-group-sm">
+          <div class="col-xs-4 pagination-a">
+            <span>Items </span>
+          </div>
+          <div class="col-xs-4 pagination-b">
+            <label for="search-pagination-page-{{cid}}" class="col-xs-5 control-label">Jump to page:</label>
+            <div class="col-xs-3">
+              <select class="search-pagination-page form-control" name="search-pagination-page" id="search-pagination-page-{{cid}}">
+                <option value="1">1</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-xs-4 pagination-c">
+            <label for="search-pagination-perpage-{{cid}}" class="col-xs-7 control-label">Result count:</label>
+            <div class="col-xs-5">
+              <select class="search-pagination-perpage form-control" name="search-pagination-perpage" id="search-pagination-perpage-{{cid}}">
+                <option value="15" selected>15 per page</option>
+                <option value="25">25 per page</option>
+                <option value="50">50 per page</option>
+                <option value="75">75 per page</option>
+                <option value="100">100 per page</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
 </div>

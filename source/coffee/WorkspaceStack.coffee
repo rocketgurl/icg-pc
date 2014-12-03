@@ -6,6 +6,8 @@ define ['underscore'], (_) ->
 
   class WorkspaceStack
 
+    policyCount : 0
+
     constructor : (@controller) ->
       @stack = []
 
@@ -16,11 +18,20 @@ define ['underscore'], (_) ->
       if !exists?
         @stack.push view
 
+        # increment policy count
+        if /policyview/.test view.app.app
+          @policyCount += 1
+
     # Remove a view from the stack
     remove : (view) ->
       _.each @stack, (obj, index) =>
         if view.app.app == obj.app.app
           @stack.splice index, 1
+
+          # decrement policy count
+          if /policyview/.test view.app.app
+            @policyCount -= 1
+
           # Remove params from stack if present
           if view.app.params?
             @controller.current_state.params = null

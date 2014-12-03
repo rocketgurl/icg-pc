@@ -21,6 +21,7 @@ define [
     events :
       "click .policy-nav a"        : "dispatch"
       "click .policy-error button" : "close"
+      "click .nav-toggle"          : "toggle_policy_nav"
 
     # We need to brute force the View's container to the
     # WorkspaceCanvasView's el
@@ -199,6 +200,15 @@ define [
     toggle_nav_state : (el) ->
       @policy_nav_links.removeClass 'select'
       el.addClass 'select'
+
+    open_policy_nav : ->
+      @$el.removeClass 'out'
+
+    close_policy_nav : ->
+      @$el.addClass 'out'
+
+    toggle_policy_nav : ->
+      @$el[if @$el.is('.out') then 'removeClass' else 'addClass'] 'out'
 
     # Dynamically call methods based on href of #policy-nav elements
     # Because JavaScript is dynamic like that, yo.
