@@ -499,7 +499,7 @@ define [
       data =
         business : @current_state.business
         group    : MenuHelper.check_length(group_label)
-        'app'    : app.app_label
+        app      : app.app_label
 
       # Set breadcrumb
       @set_breadcrumb(data)
