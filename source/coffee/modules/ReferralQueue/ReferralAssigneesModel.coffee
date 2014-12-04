@@ -27,7 +27,7 @@ define [
       success ?= @putSuccess
       error  ?= @putError
 
-      if typeof xml != 'string'
+      unless _.isString xml
         xml = @Helpers.XMLToString xml
 
       $.ajax
@@ -76,19 +76,14 @@ define [
     # have the new attributes (new_business & renewals) then we add them.
     parseBooleans : (arr) ->
       arr = _.map arr, (item) ->
-        # Guard rails
-        new_business = renewals = false
-        if _.has(item, 'new_business')
-          new_business = JSON.parse(item.new_business)
-        if _.has(item, 'renewals')
-          renewals = JSON.parse(item.renewals)
-
-        {
-          identity     : item.identity
-          active       : JSON.parse(item.active)
-          new_business : new_business
-          renewals     : renewals
-        }
+        out = _.clone item
+        if _.has out, 'new_business'
+          out.new_business = JSON.parse out.new_business
+        if _.has out, 'renewals'
+          out.renewals = JSON.parse out.renewals
+        if _.has out, 'active'
+          out.active = JSON.parse out.active
+        out
 
     # **Convert Assignees JSON to XML**
     #
@@ -97,12 +92,12 @@ define [
     json2xml : ->
       json = @get('json')
 
-      nodes = ""
+      nodes = "\n"
       for assignee in json.Assignee
-
-        assignee.new_business ?= false
-        assignee.renewals ?= false
-
-        nodes += """<Assignee identity="#{assignee.identity}" active="#{assignee.active}" new_business="#{assignee.new_business}" renewals="#{assignee.renewals}" />"""
+        nodes += "  "
+        nodes += """<Assignee identity="#{assignee.identity}" active="#{assignee.active}" """
+        nodes += """new_business="#{assignee.new_business}" """ if _.has assignee, 'new_business'
+        nodes += """renewals="#{assignee.renewals}" """ if _.has assignee, 'renewals'
+        nodes += "/>\n"
 
       "<AssigneeList>#{nodes}</AssigneeList>"
