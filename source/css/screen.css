@@ -2484,6 +2484,8 @@ header.module-referrals .checkbox { padding: 0 10px; }
 .rq-manage-assignees li label:hover { color: #cc00cc; }
 .rq-manage-assignees li:hover { background: #ffe5ff; border-bottom: #ffb3ff 1px solid; }
 
+.is-fednat .rq-manage-assignees .menu-col { display: block; width: auto; }
+
 .policyrep-container { padding: 0 1.8%; }
 .policyrep-container h1 { font-weight: bold; color: #002857; font-size: 24px; font-size: 2.4rem; text-shadow: 0 1px white; margin: 20px 0 0 0; }
 .policyrep-container h2 { font-weight: bold; color: dimgrey; font-size: 16px; font-size: 1.6rem; margin: 10px 0 10px 0; }
