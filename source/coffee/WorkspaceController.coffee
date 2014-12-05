@@ -118,6 +118,10 @@ define [
         if app.app != @current_state.app
           saved_apps = [app]
 
+      # If app is a policy, add it to our history stack
+      if /policyview_/.test app.app
+        @workspace_state.updateHistoryStack app
+
       @workspace_state.set 'apps', saved_apps
       @workspace_state.save()
       return true
