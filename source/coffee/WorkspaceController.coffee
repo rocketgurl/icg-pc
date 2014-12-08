@@ -76,7 +76,7 @@ define [
     $workspace_main_navbar: $('#header-navbar')
     $workspace_canvas     : $('#canvas')
     $workspace_nav        : $('#workspace nav')
-    $workspace_tabs       : $('#workspace .open-policy-tabs')
+    $workspace_tabs       : $('#workspace #open-policy-tabs')
     $no_policy_flag       : $('#workspace .no-policies')
     Router                : new WorkspaceRouter()
     Cookie                : new Cookie()
