@@ -1,26 +1,27 @@
 define [
-  'jquery',
-  'underscore',
-  'backbone',
-  'UserModel',
-  'ConfigModel',
-  'WorkspaceStack',
-  'WorkspaceStateModel',
-  'WorkspaceStateCollection',
-  'WorkspaceLoginView',
-  'WorkspaceCanvasView',
-  'WorkspaceNavView',
-  'WorkspaceRouter',
-  'modules/Search/SearchContextCollection',
-  'Messenger',
-  'base64',
-  'MenuHelper',
-  'AppRules',
-  'Helpers',
-  'Cookie',
-  'herald',
+  'jquery'
+  'underscore'
+  'backbone'
+  'UserModel'
+  'ConfigModel'
+  'WorkspaceStack'
+  'WorkspaceStateModel'
+  'WorkspaceStateCollection'
+  'WorkspaceLoginView'
+  'WorkspaceCanvasView'
+  'WorkspaceNavView'
+  'PolicyHistoryView'
+  'WorkspaceRouter'
+  'modules/Search/SearchContextCollection'
+  'Messenger'
+  'base64'
+  'MenuHelper'
+  'AppRules'
+  'Helpers'
+  'Cookie'
+  'herald'
   'marked'
-], ($, _, Backbone, UserModel, ConfigModel, WorkspaceStack, WorkspaceStateModel, WorkspaceStateCollection, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter, SearchContextCollection, Messenger, Base64, MenuHelper, AppRules, Helpers, Cookie, Herald, marked, xml2json) ->
+], ($, _, Backbone, UserModel, ConfigModel, WorkspaceStack, WorkspaceStateModel, WorkspaceStateCollection, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, PolicyHistoryView, WorkspaceRouter, SearchContextCollection, Messenger, Base64, MenuHelper, AppRules, Helpers, Cookie, Herald, marked, xml2json) ->
 
   # Global log object for debugging
   #
