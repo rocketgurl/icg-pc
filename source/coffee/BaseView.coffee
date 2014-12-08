@@ -25,11 +25,20 @@ define [
     
     # Provide Helpers to all views
     Helpers  : Helpers
-    
+
     Modal    : new ModalHelper()
 
     # give all views access to the favicon start / stop methods
     favicon  : Helpers.faviconLoader()
+
+    # Backbone to the future!
+    # Stealing a useful method from Backbone 0.9.9 until I can get this library updated
+    listenTo : (object, events, callback) ->
+      listeners = @_listeners || (@_listeners = {})
+      id = object._listenerId || (object._listenerId = _.uniqueId('l'))
+      listeners[id] = object
+      object.on events, callback || this, this
+      this
 
     # Simple logger pubsub
     logger : (msg) ->

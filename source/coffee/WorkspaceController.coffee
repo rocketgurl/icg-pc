@@ -1,26 +1,27 @@
 define [
-  'jquery',
-  'underscore',
-  'backbone',
-  'UserModel',
-  'ConfigModel',
-  'WorkspaceStack',
-  'WorkspaceStateModel',
-  'WorkspaceStateCollection',
-  'WorkspaceLoginView',
-  'WorkspaceCanvasView',
-  'WorkspaceNavView',
-  'WorkspaceRouter',
-  'modules/Search/SearchContextCollection',
-  'Messenger',
-  'base64',
-  'MenuHelper',
-  'AppRules',
-  'Helpers',
-  'Cookie',
-  'herald',
+  'jquery'
+  'underscore'
+  'backbone'
+  'UserModel'
+  'ConfigModel'
+  'WorkspaceStack'
+  'WorkspaceStateModel'
+  'WorkspaceStateCollection'
+  'WorkspaceLoginView'
+  'WorkspaceCanvasView'
+  'WorkspaceNavView'
+  'PolicyHistoryView'
+  'WorkspaceRouter'
+  'modules/Search/SearchContextCollection'
+  'Messenger'
+  'base64'
+  'MenuHelper'
+  'AppRules'
+  'Helpers'
+  'Cookie'
+  'herald'
   'marked'
-], ($, _, Backbone, UserModel, ConfigModel, WorkspaceStack, WorkspaceStateModel, WorkspaceStateCollection, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter, SearchContextCollection, Messenger, Base64, MenuHelper, AppRules, Helpers, Cookie, Herald, marked, xml2json) ->
+], ($, _, Backbone, UserModel, ConfigModel, WorkspaceStack, WorkspaceStateModel, WorkspaceStateCollection, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, PolicyHistoryView, WorkspaceRouter, SearchContextCollection, Messenger, Base64, MenuHelper, AppRules, Helpers, Cookie, Herald, marked, xml2json) ->
 
   # Global log object for debugging
   #
@@ -75,7 +76,7 @@ define [
     $workspace_main_navbar: $('#header-navbar')
     $workspace_canvas     : $('#canvas')
     $workspace_nav        : $('#workspace nav')
-    $workspace_tabs       : $('#workspace .open-policy-tabs')
+    $workspace_tabs       : $('#workspace #open-policy-tabs')
     $no_policy_flag       : $('#workspace .no-policies')
     Router                : new WorkspaceRouter()
     Cookie                : new Cookie()
@@ -85,6 +86,7 @@ define [
     Workspaces            : new WorkspaceStateCollection()
     workspace_zindex      : 30000
     workspace_stack       : {} # store a ref to WorkspaceStack here
+    policyHistoryViews  : {}
     IXVOCAB_AUTH          : 'Y29tLmljcy5hcHBzLmluc2lnaHRjZW50cmFsOjVhNWE3NGNjODBjMzUyZWVkZDVmODA4MjkzZWFjMTNk'
 
     # Simple logger
@@ -117,6 +119,10 @@ define [
         # is not the workspace defined default
         if app.app != @current_state.app
           saved_apps = [app]
+
+      # If app is a policy, add it to our history stack
+      if /policyview_/.test app.app
+        @workspace_state.updateHistoryStack app
 
       @workspace_state.set 'apps', saved_apps
       @workspace_state.save()
@@ -339,6 +345,18 @@ define [
         @workspace_state = null
         @Amplify.store('ics_policy_central', null)
 
+    handlePolicyHistory : ->
+      id = @workspace_state.id
+
+      # Instantiate a new view for each workspace_state model
+      unless _.isObject @policyHistoryViews[id]
+        @policyHistoryViews[id] = new PolicyHistoryView
+          controller     : this
+          workspaceState : @Workspaces.get id
+          el             : '#policy-history'
+
+      @policyHistoryViews[id].render()
+
     #### Get Configuration Files
     #
     # Grab ixAdmin information and load in `ConfigModel`
@@ -499,13 +517,16 @@ define [
       data =
         business : @current_state.business
         group    : MenuHelper.check_length(group_label)
-        'app'    : app.app_label
+        app      : app.app_label
 
       # Set breadcrumb
       @set_breadcrumb(data)
 
       # Store our workplace information in localStorage
       @set_nav_state()
+
+      # Initialize Policy History (Recently Viewed) handling
+      @handlePolicyHistory()
 
       # Setup service URLs
       @configureServices()
@@ -853,7 +874,7 @@ define [
       Herald.init herald_config
 
     # Kick off the show
-    init : () ->
+    init : ->
       @setupHerald()
       @callback_delay 100, =>
         @Router.controller = this

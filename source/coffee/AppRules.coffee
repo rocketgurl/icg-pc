@@ -87,7 +87,7 @@ define [
       app :
         app       : 'renewalreview'
         app_label : 'Renewal Underwriting'
-        tab       : '#tpl-workspace-tab-blank'
+        tab       : '#tpl-workspace-tab'
         params    :
           renewalreviewrequired : true
 
