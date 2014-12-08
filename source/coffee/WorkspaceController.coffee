@@ -86,6 +86,7 @@ define [
     Workspaces            : new WorkspaceStateCollection()
     workspace_zindex      : 30000
     workspace_stack       : {} # store a ref to WorkspaceStack here
+    policyHistoryViews  : {}
     IXVOCAB_AUTH          : 'Y29tLmljcy5hcHBzLmluc2lnaHRjZW50cmFsOjVhNWE3NGNjODBjMzUyZWVkZDVmODA4MjkzZWFjMTNk'
 
     # Simple logger
@@ -344,6 +345,18 @@ define [
         @workspace_state = null
         @Amplify.store('ics_policy_central', null)
 
+    handlePolicyHistory : ->
+      id = @workspace_state.id
+
+      # Instantiate a new view for each workspace_state model
+      unless _.isObject @policyHistoryViews[id]
+        @policyHistoryViews[id] = new PolicyHistoryView
+          controller     : this
+          workspaceState : @Workspaces.get id
+          el             : '#policy-history'
+
+      @policyHistoryViews[id].render()
+
     #### Get Configuration Files
     #
     # Grab ixAdmin information and load in `ConfigModel`
@@ -511,6 +524,9 @@ define [
 
       # Store our workplace information in localStorage
       @set_nav_state()
+
+      # Initialize Policy History (Recently Viewed) handling
+      @handlePolicyHistory()
 
       # Setup service URLs
       @configureServices()
