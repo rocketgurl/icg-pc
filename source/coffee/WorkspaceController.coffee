@@ -86,7 +86,7 @@ define [
     Workspaces            : new WorkspaceStateCollection()
     workspace_zindex      : 30000
     workspace_stack       : {} # store a ref to WorkspaceStack here
-    policyHistoryViews  : {}
+    policyHistoryViews    : {}
     IXVOCAB_AUTH          : 'Y29tLmljcy5hcHBzLmluc2lnaHRjZW50cmFsOjVhNWE3NGNjODBjMzUyZWVkZDVmODA4MjkzZWFjMTNk'
 
     # Simple logger
