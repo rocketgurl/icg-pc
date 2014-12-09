@@ -1,26 +1,27 @@
 define [
-  'jquery',
-  'underscore',
-  'backbone',
-  'UserModel',
-  'ConfigModel',
-  'WorkspaceStack',
-  'WorkspaceStateModel',
-  'WorkspaceStateCollection',
-  'WorkspaceLoginView',
-  'WorkspaceCanvasView',
-  'WorkspaceNavView',
-  'WorkspaceRouter',
-  'modules/Search/SearchContextCollection',
-  'Messenger',
-  'base64',
-  'MenuHelper',
-  'AppRules',
-  'Helpers',
-  'Cookie',
-  'herald',
+  'jquery'
+  'underscore'
+  'backbone'
+  'UserModel'
+  'ConfigModel'
+  'WorkspaceStack'
+  'WorkspaceStateModel'
+  'WorkspaceStateCollection'
+  'WorkspaceLoginView'
+  'WorkspaceCanvasView'
+  'WorkspaceNavView'
+  'PolicyHistoryView'
+  'WorkspaceRouter'
+  'modules/Search/SearchContextCollection'
+  'Messenger'
+  'base64'
+  'MenuHelper'
+  'AppRules'
+  'Helpers'
+  'Cookie'
+  'herald'
   'marked'
-], ($, _, Backbone, UserModel, ConfigModel, WorkspaceStack, WorkspaceStateModel, WorkspaceStateCollection, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter, SearchContextCollection, Messenger, Base64, MenuHelper, AppRules, Helpers, Cookie, Herald, marked, xml2json) ->
+], ($, _, Backbone, UserModel, ConfigModel, WorkspaceStack, WorkspaceStateModel, WorkspaceStateCollection, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, PolicyHistoryView, WorkspaceRouter, SearchContextCollection, Messenger, Base64, MenuHelper, AppRules, Helpers, Cookie, Herald, marked, xml2json) ->
 
   # Global log object for debugging
   #
@@ -43,6 +44,7 @@ define [
       ixvocab        : './ixvocab/api/rest/v1/'
       zendesk        : './zendesk'
       pxclient       : '../swf/PolicySummary.swf'
+      agentportal    : './agentportal/api/rest/v2/'
 
   # Method Combinator (Decorator)
   # https://github.com/raganwald/method-combinators
@@ -74,7 +76,8 @@ define [
     $workspace_main_navbar: $('#header-navbar')
     $workspace_canvas     : $('#canvas')
     $workspace_nav        : $('#workspace nav')
-    $workspace_tabs       : $('#workspace nav ul')
+    $workspace_tabs       : $('#workspace #open-policy-tabs')
+    $no_policy_flag       : $('#workspace .no-policies')
     Router                : new WorkspaceRouter()
     Cookie                : new Cookie()
     COOKIE_NAME           : 'ics360_PolicyCentral'
@@ -83,6 +86,7 @@ define [
     Workspaces            : new WorkspaceStateCollection()
     workspace_zindex      : 30000
     workspace_stack       : {} # store a ref to WorkspaceStack here
+    policyHistoryViews    : {}
     IXVOCAB_AUTH          : 'Y29tLmljcy5hcHBzLmluc2lnaHRjZW50cmFsOjVhNWE3NGNjODBjMzUyZWVkZDVmODA4MjkzZWFjMTNk'
 
     # Simple logger
@@ -115,6 +119,10 @@ define [
         # is not the workspace defined default
         if app.app != @current_state.app
           saved_apps = [app]
+
+      # If app is a policy, add it to our history stack
+      if /policyview_/.test app.app
+        @workspace_state.updateHistoryStack app
 
       @workspace_state.set 'apps', saved_apps
       @workspace_state.save()
@@ -225,15 +233,16 @@ define [
       $('body').removeClass()
       $('body').addClass('logo-background')
 
+      @resize_workspace()
       @login_view
 
     # Instantiate a new user and check ixDirectory
     # for valid credentials
     check_credentials : (username, password) ->
       @user = new UserModel
-        urlRoot    : @services.ixdirectory + 'identities'
-        'username' : username
-        'password' : password
+        urlRoot  : @services.ixdirectory + 'identities'
+        username : username
+        password : password
 
       # retrieve an identity document or fail
       @user.fetch(
@@ -318,6 +327,7 @@ define [
       @user = null
       @reset_admin_links()
       @set_breadcrumb()
+      @close_policy_nav()
       @hide_workspace_button()
       @hide_navigation()
 
@@ -334,6 +344,18 @@ define [
         @workspace_state.destroy()
         @workspace_state = null
         @Amplify.store('ics_policy_central', null)
+
+    handlePolicyHistory : ->
+      id = @workspace_state.id
+
+      # Instantiate a new view for each workspace_state model
+      unless _.isObject @policyHistoryViews[id]
+        @policyHistoryViews[id] = new PolicyHistoryView
+          controller     : this
+          workspaceState : @Workspaces.get id
+          el             : '#policy-history'
+
+      @policyHistoryViews[id].render()
 
     #### Get Configuration Files
     #
@@ -495,13 +517,16 @@ define [
       data =
         business : @current_state.business
         group    : MenuHelper.check_length(group_label)
-        'app'    : app.app_label
+        app      : app.app_label
 
       # Set breadcrumb
       @set_breadcrumb(data)
 
       # Store our workplace information in localStorage
       @set_nav_state()
+
+      # Initialize Policy History (Recently Viewed) handling
+      @handlePolicyHistory()
 
       # Setup service URLs
       @configureServices()
@@ -711,9 +736,10 @@ define [
         @toggle_apps app_name
 
       # Tab close icon
-      @$workspace_tabs.on 'click', 'li i.icon-remove-sign', (e) =>
+      @$workspace_tabs.on 'click', 'li .glyphicon-remove-circle', (e) =>
         e.preventDefault()
-        @workspace_stack.get($(e.target).prev().attr('href')).destroy()
+        policyView = $(e.currentTarget).data 'view'
+        @workspace_stack.get(policyView).destroy()
         @reassess_apps()
 
     attach_navbar_handlers : ->
@@ -742,8 +768,25 @@ define [
       headerHeight    = @$workspace_header.height()
       footerHeight    = @$workspace_footer.height()
       windowHeight    = window.innerHeight
-      workspaceHeight = windowHeight - headerHeight - footerHeight
+      workspaceHeight = windowHeight - headerHeight - footerHeight - 1
       @$workspace_el.height workspaceHeight
+
+    open_policy_nav : ->
+      @$workspace_el.addClass 'in'
+
+    close_policy_nav : ->
+      @$workspace_el.removeClass 'in'
+
+    toggle_policy_nav : ->
+      @$workspace_el[if @$workspace_el.is('.in') then 'removeClass' else 'addClass'] 'in'
+
+    attach_policy_nav_handler : ->
+      $('.nav-toggle').on 'click', (e) =>
+        @toggle_policy_nav()
+        e.preventDefault()
+
+    handle_policy_count : ->
+      @$no_policy_flag[if @workspace_stack.policyCount > 0 then 'hide' else 'show']()
 
     #### Set Active Url
     #
@@ -831,7 +874,7 @@ define [
       Herald.init herald_config
 
     # Kick off the show
-    init : () ->
+    init : ->
       @setupHerald()
       @callback_delay 100, =>
         @Router.controller = this
@@ -839,6 +882,7 @@ define [
         @check_cookie_identity()
         @attach_tab_handlers()
         @attach_navbar_handlers()
+        @attach_policy_nav_handler()
         @attach_window_resize_handler()
 
   _.extend WorkspaceController, Backbone.Events
@@ -866,10 +910,12 @@ define [
 
   WorkspaceController.on "stack_add", (view) ->
     @workspace_stack.add view
+    @handle_policy_count()
 
   WorkspaceController.on "stack_remove", (view) ->
     @workspace_stack.remove(view)
     @state_remove(view.app)
+    @handle_policy_count()
 
   WorkspaceController.on "new_tab", (app_name) ->
     @toggle_apps app_name

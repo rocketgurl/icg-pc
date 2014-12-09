@@ -1,24 +1,22 @@
 define [
   'backbone'
-], (Backbone) ->
+  'modules/Home/models/NoticeModel'
+], (Backbone, NoticeModel) ->
 
   class AgentPortalNoticesCollection extends Backbone.Collection
 
-    url : 'https://stage-sagesure-svc.icg360.org/cru-4/agentportal/api/rest/v2/programs/P4-CRU/notices'
+    fnicFilters : [
+      '^[aA][0-9A-Za-z]{6}$' # Allstate
+      '^[fF][0-9]{5}[nN]$'   # All IAs(FNIC)
+      '^[sS][0-9A-Za-z]{5}$' # State Farm
+    ]
+
+    model : NoticeModel
+
+    url : ->
+      "#{@baseUrl}programs/P4-CRU/notices"
 
     sync : (method, collection, options) ->
-      options.dataType = 'json'
       options.headers =
         'Authorization' : "Basic #{@digest}"
       Backbone.sync method, collection, options
-
-    parse : (response) ->
-      console.log 'RESPONSE', response
-      response
-
-    initialize : ->
-      @on 'all', -> console.log arguments
-
-    onError : =>
-      console.log 'ONERROR', arguments
-

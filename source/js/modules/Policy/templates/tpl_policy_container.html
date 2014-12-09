@@ -1,4 +1,9 @@
 <div id="policy-nav-{{cid}}" class="policy-nav">
+  <div class="nav-toggle" role="button">
+    <span class="toggle-label">POLICY NAVIGATION</span>
+    <span class="glyphicon glyphicon-expand"></span>
+  </div>
+
   <ul>
     <li><a href="quickview" class="select">Quick View</a></li>
     <li><a href="overview">Detail View</a></li>
@@ -8,22 +13,21 @@
     <li><a href="servicerequests">Service requests</a></li>
     <li><a href="policyrepresentations">Policy representations</a></li>
     <li><a href="quoting">Quoting</a></li>
-    <!--
-    <li><a href="datatransmission">Data transmission jobs</a></li>
-    <li><a href="policytransactions">Policy transaction history</a></li>
-    -->
   </ul>
 </div>
-<div class="policy-workspace" id="policy-workspace-{{cid}}">
-  <div id="policy-header-{{cid}}" class="policy-header"></div>
-  <div id="policy-quickview-{{cid}}" class="policy-module qv-container inactive"></div>
-  <div id="policy-swf-container-{{cid}}" class="policy-module policy-swf inactive" style="height: 810px">
-    <object id="policy-summary-{{cid}}"></object>
+
+<div id="policy-workspace-{{cid}}" class="policy-workspace scroll-wrapper">
+  <div class="width-wrapper">
+    <div id="policy-header-{{cid}}" class="policy-header"></div>
+    <div id="policy-quickview-{{cid}}" class="policy-module qv-container inactive"></div>
+    <div id="policy-swf-container-{{cid}}" class="policy-module policy-swf inactive" style="height: 810px">
+      <object id="policy-summary-{{cid}}"></object>
+    </div>
+    <div id="policy-ipm-{{cid}}" class="policy-module inactive"></div>
+    <div id="loss-history-{{cid}}" class="policy-module lh-container inactive"></div>
+    <div id="renewal-underwriting-{{cid}}" class="policy-module ru-container inactive"></div>
+    <div id="zendesk-{{cid}}" class="policy-module zd-container inactive"></div>
+    <div id="policyrep-{{cid}}" class="policy-module policyrep-container inactive"></div>
+    <div id="policy-quoting-{{cid}}" class="policy-module inactive"></div>
   </div>
-  <div id="policy-ipm-{{cid}}" class="policy-module inactive"></div>
-  <div id="loss-history-{{cid}}" class="policy-module lh-container inactive"></div>
-  <div id="renewal-underwriting-{{cid}}" class="policy-module ru-container inactive"></div>
-  <div id="zendesk-{{cid}}" class="policy-module zd-container inactive"></div>
-  <div id="policyrep-{{cid}}" class="policy-module policyrep-container inactive"></div>
-  <div id="policy-quoting-{{cid}}" class="policy-module inactive"></div>
 </div>

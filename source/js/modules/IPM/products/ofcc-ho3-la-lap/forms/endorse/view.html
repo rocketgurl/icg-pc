@@ -107,8 +107,8 @@
 
 
 		<div>
-			<label for="{{guid}}_PropertyHazardLocationLastUpdated" class="labelRequired">Property Hazard Location Last Updated <i>PropertyHazardLocationLastUpdated</i></label>
-			<input type="text" id="{{guid}}_PropertyHazardLocationLastUpdated" name="PropertyHazardLocationLastUpdated" value="{{PropertyHazardLocationLastUpdated}}" class="datepicker" required >
+			<label for="{{guid}}_PropertyHazardLocationLastUpdated" >Property Hazard Location Last Updated <i>PropertyHazardLocationLastUpdated</i></label>
+			<input type="text" id="{{guid}}_PropertyHazardLocationLastUpdated" name="PropertyHazardLocationLastUpdated" value="{{PropertyHazardLocationLastUpdated}}" class="datepicker"  >
 		</div>
 		</fieldset>
 		<fieldset>
@@ -135,8 +135,8 @@
 
 
 		<div>
-			<label for="{{guid}}_DistanceToFireDepartment" class="labelRequired">Miles to Primary Responding Fire Station <i>DistanceToFireDepartment</i></label>
-			<input type="text" id="{{guid}}_DistanceToFireDepartment" name="DistanceToFireDepartment" value="{{DistanceToFireDepartment}}" required >
+			<label for="{{guid}}_DistanceToFireDepartment" >Miles to Primary Responding Fire Station <i>DistanceToFireDepartment</i></label>
+			<input type="text" id="{{guid}}_DistanceToFireDepartment" name="DistanceToFireDepartment" value="{{DistanceToFireDepartment}}"  >
 		</div>
 
 
@@ -270,6 +270,17 @@
 				{{#EnumsHurricaneDeductible}}
 				<option value="{{value}}">{{label}}</option>
 				{{/EnumsHurricaneDeductible}}
+			</select>
+		</div>
+
+
+
+		<div>
+			<label for="{{guid}}_WindHailDeductible" >Wind/Hail Deductible <i>WindHailDeductible</i></label>
+			<select id="{{guid}}_WindHailDeductible" name="WindHailDeductible" data-value="{{WindHailDeductible}}"   >
+				{{#EnumsWindHailDeductible}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsWindHailDeductible}}
 			</select>
 		</div>
 

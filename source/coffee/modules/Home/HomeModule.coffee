@@ -18,8 +18,8 @@ define [
       @$('#home-carousel').carousel()
 
       apUpdatesView = new APNoticesView
-        el     : @$('#ap-notices')
-        digest : @CONTROLLER.user.get('digest')
+        el         : @$('#ap-notices')
+        controller : @CONTROLLER
 
       pcUpdatesView = new PCNoticesView
         el : @$('#pc-notices')
@@ -28,7 +28,3 @@ define [
       viewData =
         cid : @cid
       @$el.html @Mustache.render tpl_home_container, viewData
-
-    cacheElements : ->
-      # @renewalBatchesTable = @$("#renewal-batches-#{@cid}")
-      # @renewalBatchesTbody = @renewalBatchesTable.find 'tbody'

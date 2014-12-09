@@ -1,4 +1,12 @@
 #home {
+  .home-container {
+    @include clearfix;
+    margin: 0 auto;
+    padding-left: 5%;
+    padding-right: 5%;
+    max-width: 1170px;
+  }
+
   h1 {
     margin-top: 0;
     font-weight: bold;
@@ -9,11 +17,11 @@
   }
 
   .carousel {
-    padding-bottom: 40px;
+    margin-bottom: 40px;
   }
 
   .carousel-indicators {
-    bottom: 0;
+    bottom: -40px;
 
     li {
       border: 0;
@@ -48,6 +56,15 @@
   .panel-body {
     max-height: 500px;
     overflow: auto;
+
+    > ul {
+      margin-bottom: 0;
+    }
+  }
+
+  .panel-working {
+    text-align: center;
+    color: #666;
   }
 
   .panel-notice {
@@ -55,5 +72,32 @@
     text-align: center;
     font-size: 40px;
     color: desaturate(lighten($blue, 40), 20);
+  }
+
+  .notice-item {
+    @include clearfix;
+
+    .notice-item-content {
+      overflow: hidden;
+    }
+
+    .notice-item-toggle {
+      display: none;
+      float: right;
+      .less { display: none; }
+    }
+
+    &.needs-toggle {
+      .notice-item-content { max-height: 40px; }
+      .notice-item-toggle { display: block; }
+
+      &.open {
+        .notice-item-content { max-height: initial; }
+        .notice-item-toggle {
+          .more { display: none; }
+          .less { display: initial; }
+        }
+      }
+    }
   }
 }

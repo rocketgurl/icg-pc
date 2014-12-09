@@ -109,3 +109,13 @@ header.module-referrals {
     }
   }
 }
+
+// Only show 1 column for FedNat assignee list
+.is-fednat {
+  .rq-manage-assignees {
+    .menu-col {
+      display: block;
+      width: auto;
+    }  
+  }
+}

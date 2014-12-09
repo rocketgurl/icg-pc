@@ -233,6 +233,17 @@
 
 
 		<div>
+			<label for="{{guid}}_WindHailDeductible" >Wind/Hail Deductible <i>WindHailDeductible</i></label>
+			<select id="{{guid}}_WindHailDeductible" name="WindHailDeductible" data-value="{{WindHailDeductible}}"   >
+				{{#EnumsWindHailDeductible}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsWindHailDeductible}}
+			</select>
+		</div>
+
+
+
+		<div>
 			<label for="{{guid}}_AllOtherPerilsDeductible" class="labelRequired">All Other Perils Deductible $ <i>AllOtherPerilsDeductible</i></label>
 			<select id="{{guid}}_AllOtherPerilsDeductible" name="AllOtherPerilsDeductible" data-value="{{AllOtherPerilsDeductible}}"  required >
 				{{#EnumsAllOtherPerilsDeductible}}
@@ -255,6 +266,11 @@
 		</div>
 
 
+		<div>
+			<label for="{{guid}}_OtherStructures1Coverage" >1st Scheduled Structure - Limit <i>OtherStructures1Coverage</i></label>
+			<input type="text" id="{{guid}}_OtherStructures1Coverage" name="OtherStructures1Coverage" value="{{OtherStructures1Coverage}}"  >
+		</div>
+
 
 		<div>
 			<label for="{{guid}}_OtherStructures1Occupancy" >1st Scheduled Structure - Occupancy <i>OtherStructures1Occupancy</i></label>
@@ -267,8 +283,8 @@
 
 
 		<div>
-			<label for="{{guid}}_OtherStructures1Coverage" >1st Scheduled Structure - Limit <i>OtherStructures1Coverage</i></label>
-			<input type="text" id="{{guid}}_OtherStructures1Coverage" name="OtherStructures1Coverage" value="{{OtherStructures1Coverage}}"  >
+			<label for="{{guid}}_OtherStructures1Description" >1st Scheduled Structure - Description <i>OtherStructures1Description</i></label>
+			<input type="text" id="{{guid}}_OtherStructures1Description" name="OtherStructures1Description" value="{{OtherStructures1Description}}"  >
 		</div>
 
 
@@ -282,6 +298,11 @@
 		</div>
 
 
+		<div>
+			<label for="{{guid}}_OtherStructures2Coverage" >2nd Scheduled Structure - Limit <i>OtherStructures2Coverage</i></label>
+			<input type="text" id="{{guid}}_OtherStructures2Coverage" name="OtherStructures2Coverage" value="{{OtherStructures2Coverage}}"  >
+		</div>
+
 
 		<div>
 			<label for="{{guid}}_OtherStructures2Occupancy" >2nd Scheduled Structure - Occupancy <i>OtherStructures2Occupancy</i></label>
@@ -294,8 +315,8 @@
 
 
 		<div>
-			<label for="{{guid}}_OtherStructures2Coverage" >2nd Scheduled Structure - Limit <i>OtherStructures2Coverage</i></label>
-			<input type="text" id="{{guid}}_OtherStructures2Coverage" name="OtherStructures2Coverage" value="{{OtherStructures2Coverage}}"  >
+			<label for="{{guid}}_OtherStructures2Description" >2nd Scheduled Structure - Description <i>OtherStructures2Description</i></label>
+			<input type="text" id="{{guid}}_OtherStructures2Description" name="OtherStructures2Description" value="{{OtherStructures2Description}}"  >
 		</div>
 
 
@@ -309,6 +330,11 @@
 		</div>
 
 
+		<div>
+			<label for="{{guid}}_OtherStructures3Coverage" >3rd Scheduled Structure - Limit <i>OtherStructures3Coverage</i></label>
+			<input type="text" id="{{guid}}_OtherStructures3Coverage" name="OtherStructures3Coverage" value="{{OtherStructures3Coverage}}"  >
+		</div>
+
 
 		<div>
 			<label for="{{guid}}_OtherStructures3Occupancy" >3rd Scheduled Structure - Occupancy <i>OtherStructures3Occupancy</i></label>
@@ -321,8 +347,8 @@
 
 
 		<div>
-			<label for="{{guid}}_OtherStructures3Coverage" >3rd Scheduled Structure - Limit <i>OtherStructures3Coverage</i></label>
-			<input type="text" id="{{guid}}_OtherStructures3Coverage" name="OtherStructures3Coverage" value="{{OtherStructures3Coverage}}"  >
+			<label for="{{guid}}_OtherStructures3Description" >3rd Scheduled Structure - Description <i>OtherStructures3Description</i></label>
+			<input type="text" id="{{guid}}_OtherStructures3Description" name="OtherStructures3Description" value="{{OtherStructures3Description}}"  >
 		</div>
 		</fieldset>
 			</div>
@@ -614,6 +640,17 @@
 				{{#EnumsDoorType}}
 				<option value="{{value}}">{{label}}</option>
 				{{/EnumsDoorType}}
+			</select>
+		</div>
+
+
+
+		<div>
+			<label for="{{guid}}_WindMitigationForm" class="labelRequired">Completed Wind Mitigation Form? <i>WindMitigationForm</i></label>
+			<select id="{{guid}}_WindMitigationForm" name="WindMitigationForm" data-value="{{WindMitigationForm}}"  required >
+				{{#EnumsWindMitigationForm}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsWindMitigationForm}}
 			</select>
 		</div>
 
