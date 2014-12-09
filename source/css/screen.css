@@ -2523,6 +2523,8 @@ header.module-referrals .checkbox { padding: 0 10px; }
 .herald-modal-content a { color: #165788; text-decoration: none; }
 .herald-modal-content a:hover, .herald-modal-content .policy-nav > ul > li > a.select { text-decoration: underline; }
 
+.herald-content ul { padding-left: 15px; list-style: initial; }
+
 .show-fednat { display: none; }
 
 .is-fednat .show-sagesure { display: none; }
