@@ -13,7 +13,6 @@ define [
   'PolicyHistoryView'
   'WorkspaceRouter'
   'modules/Search/SearchContextCollection'
-  'modules/ReferralQueue/AssigneeListView'
   'Messenger'
   'base64'
   'MenuHelper'
@@ -22,7 +21,7 @@ define [
   'Cookie'
   'herald'
   'marked'
-], ($, _, Backbone, UserModel, ConfigModel, WorkspaceStack, WorkspaceStateModel, WorkspaceStateCollection, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, PolicyHistoryView, WorkspaceRouter, SearchContextCollection, AssigneeListView, Messenger, Base64, MenuHelper, AppRules, Helpers, Cookie, Herald, marked, xml2json) ->
+], ($, _, Backbone, UserModel, ConfigModel, WorkspaceStack, WorkspaceStateModel, WorkspaceStateCollection, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, PolicyHistoryView, WorkspaceRouter, SearchContextCollection, Messenger, Base64, MenuHelper, AppRules, Helpers, Cookie, Herald, marked, xml2json) ->
 
   # Global log object for debugging
   #
@@ -508,7 +507,6 @@ define [
       @teardown_workspace()
 
       @launch_app app
-      @initAssigneeListView()
 
       if @check_persisted_apps()
         # Is this a search? attempt to launch it
@@ -683,11 +681,6 @@ define [
         if business is 'fnic'
           $('body').addClass('is-fednat').removeClass('is-sagesure')
 
-    initAssigneeListView : ->
-      @assigneeListView = new AssigneeListView
-        controller : this
-        el         : '#assignee-list-modal'
-
     #### Set Admin Links
     #
     # Set Admin links to user profile and logout
@@ -850,7 +843,6 @@ define [
     # Tell every app in the stack to commit seppuku
     teardown_workspace : ->
       @set_breadcrumb()
-      @assigneeListView.dispose() if @assigneeListView
       _.each @workspace_stack.stack, (view, index) =>
         view.destroy()
         view = null

@@ -45,26 +45,77 @@ header.module-referrals {
   .referral-status { text-transform: capitalize; }
 }
 
-#assignee-list-modal {
-  .list-group {
-    max-height: 300px;
-    overflow-y: auto;
+.rq-manage-assignees {
+  width: 640px;
+  margin: 0 25%;
+  p {
+    margin: 20px 20px 0 20px;
+    @include font-size(14);
+    @include sans;
+    color: $darkgray;
   }
-
-  .list-status {
-    margin-right: 5px;
-    line-height: 30px;
-
-    .list-success { color: $brand-success; }
-    .list-loading { color: $brand-info; }
-    .list-error   { color: $brand-danger; }
+  .menu-col {
+    margin-top: 14px;
+    margin-bottom: 14px;
+    h2 {
+      padding: 0 0 0 10px;
+    }
+  }
+  .menu-col:first-child {
+    h2 {
+      padding-left: 20px;
+    }
+    ul {
+      margin-left: 20px;
+    }
+  }
+  .menu-col:nth-child(2n) {
+    ul {
+      margin-right: 20px;
+    }
+  }
+  h2 {
+    @include font-size(16);
+  }
+  ul {
+    margin: 15px 10px 10px 10px;
+    display: block;
+    height: 300px;
+    overflow: auto;
+    box-shadow: inset 0 0 10px darken($lightgray, 10);
+    border: darken($lightgray, 10) 1px solid;
+  }
+  li {
+    margin: 0;
+    padding: 8px;
+    border-bottom: $lightgray 1px solid;
+    input[type=checkbox] {
+      display: inline-block;
+      margin: 0 5px 0 0;
+    }
+    label {
+      display: inline;
+      @include sans;
+      @include font-size(14);
+      color: $darkgray;
+      cursor: pointer;
+      &:hover {
+        color: darken($rowselect, 50);
+      }
+    }
+    &:hover {
+      background: lighten($rowselect, 5);
+      border-bottom: darken($rowselect, 5) 1px solid;
+    }
   }
 }
 
-.is-sagesure {
-  #assignee-list-modal {
-    .modal-dialog {
-      width: 700px;
-    }
+// Only show 1 column for FedNat assignee list
+.is-fednat {
+  .rq-manage-assignees {
+    .menu-col {
+      display: block;
+      width: auto;
+    }  
   }
 }

@@ -49,11 +49,8 @@ define [
       if Backbone.View.dispose?
         Backbone.View.dispose
       else
-        @off()
-        @undelegateEvents()
-        if (@model && @model.off)
-          @model.off()
-        if (@collection && @collection.off)
-          @collection.off()
+        @undelegateEvents();
+        if (@model && @model.off) then @model.off(null, null, this)
+        if (@collection && @collection.off) then @collection.off(null, null, this)
         return this
       

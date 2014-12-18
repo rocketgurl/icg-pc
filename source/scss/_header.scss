@@ -245,26 +245,4 @@
 			}
 		}
 	}
-
-	.dropdown-menu {
-		> li {
-			> a {
-				&.disabled,
-				&[disabled] {
-					color: #ccc;
-				  pointer-events: none;
-				  cursor: default;
-
-				  &:hover {
-				  	background: transparent;
-				  }
-				}
-			}
-		}
-	}
-
-	.renewal-review { display: none; }
 }
-
-
-.is-sagesure .renewal-review { display: list-item; }
