@@ -27,7 +27,7 @@ define [
 
     updateModel : (e) ->
       target = e.currentTarget
-      if _.has target, 'checked'
+      if _.isBoolean target.checked
         if @options.type is 'active'
           @model.set 'active', target.checked
         else
