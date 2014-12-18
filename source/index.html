@@ -112,9 +112,11 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Underwriting <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="#" data-app="referral_queue">New Business Referrals</a></li>
+            <li><a href="#" data-app="referral_queue">New Business Underwriting</a></li>
             <li class="divider"></li>
-            <li><a href="#" data-app="renewalreview">Renewal Underwriting</a></li>
+            <li><a href="#" data-toggle="modal" data-target="#assignee-list-modal">Manage Referral Assignees</a></li>
+            <li class="divider renewal-review"></li>
+            <li class="renewal-review"><a href="#" data-app="renewalreview">Renewal Underwriting</a></li>
           </ul>
         </li>
         <li><a href="https://agencyadmin.icg360.com/" target="_blank">Agencies</a></li>
@@ -203,6 +205,26 @@
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Referral Assignees List Modal -->
+  <div class="modal fade" id="assignee-list-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+          <h4 class="modal-title">Manage Referral Assignees</h4>
+        </div>
+        <div class="modal-body">
+          ...
+        </div>
+        <div class="modal-footer">
+          <span class="list-status"></span>
+          <button type="button" class="btn btn-primary" id="assignee-list-confirm" disabled>Confirm</button>
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
         </div>
       </div>
     </div>
