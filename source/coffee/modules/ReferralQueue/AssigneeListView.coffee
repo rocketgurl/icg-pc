@@ -88,7 +88,7 @@ define [
       @$statusEl
         .html('<strong class="list-success">List Updated!</strong>')
         .show()
-        .delay(5000)
+        .delay(3000)
         .fadeOut('slow')
 
     assigneeError : (collection, jqXHR) ->
