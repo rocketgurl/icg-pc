@@ -65,14 +65,13 @@ define [
       @subviews.push subview
 
     render : ->
-      @$statusEl.fadeOut 'slow'
       @collection.each (model) =>
         if @isSagesure
           @initSubview model, 'new_business', @$newbizList
           @initSubview model, 'renewals', @$renewalList
         else
           @initSubview model, 'active', @$activeList
-      @assigneeSuccess()
+      @assigneeSuccess() if @collection.length
 
     saveAssignees : (e) ->
       e.preventDefault()
