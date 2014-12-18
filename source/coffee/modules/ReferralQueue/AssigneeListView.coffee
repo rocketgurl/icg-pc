@@ -61,7 +61,7 @@ define [
       subview = new AssigneeListItemView
         model : model
         type  : viewType
-      $listView.append subview.render().$el
+      $listView.append subview.$el
       @subviews.push subview
 
     render : ->

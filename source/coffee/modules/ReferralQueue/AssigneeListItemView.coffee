@@ -15,6 +15,9 @@ define [
     events :
       'change input[type=checkbox]' : 'updateModel'
 
+    initialize : ->
+      @render()
+
     render : ->
       data =
         identity  : @model.get 'identity'
