@@ -1,7 +1,4 @@
 define [
-  'jquery'
-  'underscore'
-  'backbone'
   'UserModel'
   'ConfigModel'
   'WorkspaceStack'
@@ -22,7 +19,7 @@ define [
   'Cookie'
   'herald'
   'marked'
-], ($, _, Backbone, UserModel, ConfigModel, WorkspaceStack, WorkspaceStateModel, WorkspaceStateCollection, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, PolicyHistoryView, WorkspaceRouter, SearchContextCollection, AssigneeListView, Messenger, Base64, MenuHelper, AppRules, Helpers, Cookie, Herald, marked, xml2json) ->
+], (UserModel, ConfigModel, WorkspaceStack, WorkspaceStateModel, WorkspaceStateCollection, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, PolicyHistoryView, WorkspaceRouter, SearchContextCollection, AssigneeListView, Messenger, Base64, MenuHelper, AppRules, Helpers, Cookie, Herald, marked, xml2json) ->
 
   # Global log object for debugging
   #
