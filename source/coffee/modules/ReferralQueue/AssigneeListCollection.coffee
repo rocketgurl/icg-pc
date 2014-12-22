@@ -7,6 +7,8 @@ define [
 
     model : AssigneeModel
 
+    modelCache : []
+
     url : ->
       if _.isObject (ixlibrary = @controller.services.ixlibrary)
         "#{ixlibrary.baseURL}/buckets/#{ixlibrary.underwritingBucket}/objects/#{ixlibrary.assigneeListObjectKey}"
@@ -40,6 +42,15 @@ define [
 
     initialize : ->
       _.bindAll this, 'updateSuccess', 'updateError'
+
+      # Save a version of the collection to revert to
+      @on 'reset success', @cacheModels
+
+    cacheModels : ->
+      @modelCache = @toJSON()
+
+    revertModels : ->
+      @reset @modelCache
 
     # **Convert Assignee Models to XML String**
     #
