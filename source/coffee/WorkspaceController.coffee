@@ -760,7 +760,8 @@ define [
             @toggle_apps app_name
           else
             rules = new AppRules { app: app_name }
-            @launch_app rules[app_name].app, rules
+            if rules[app_name]
+              @launch_app(rules[app_name].app, rules)
 
         e.preventDefault()
 
