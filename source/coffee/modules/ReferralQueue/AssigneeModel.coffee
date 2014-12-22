@@ -15,9 +15,9 @@ define [
 
     # Turn string representations of booleans into actual booleans.
     strToBool : (value) ->
-      if value.constructor is String
+      if _.isString value
         value.toLowerCase() is 'true'
-      else if value.constructor is Boolean
+      else if _.isBoolean value
         value
       else
         false
