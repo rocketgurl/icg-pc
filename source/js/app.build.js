@@ -6,8 +6,8 @@
   paths: {
     jquery: 'lib/jquery-1.8.2',
     jqueryui: 'lib/jquery-ui-1.9.0.custom.min',
-    underscore: 'lib/underscore',
-    backbone: 'lib/backbone-min',
+    underscore: 'lib/underscore-1.4.4',
+    backbone: 'lib/backbone-0.9.2',
     amplify: 'lib/amplify',
     mustache: 'lib/requirejs.mustache',
     base64: 'lib/base64',
@@ -52,7 +52,8 @@
       exports: '_'
     },
     'backbone': {
-      deps: ['jquery', 'json', 'underscore']
+      deps: ['jquery', 'json', 'underscore'],
+      exports: 'Backbone'
     },
     'amplify': {
       deps: ['jquery', 'json'],
