@@ -149,19 +149,20 @@ define [
     # @return _Object_
     getIpmHeader : ->
       doc = @get 'document'
-      imp_header = {}
       if doc?
         ipm_header =
           id      : @getPolicyId()
           product : @getTermDataItemValue 'ProductLabel'
           holder  : @getPolicyHolder()
-          state   : @get('state').text || @get('state')
+          state   : @get('state')?.text or @get('state') or ''
           period  : @getPolicyPeriod()
           carrier : @getModelProperty('Management Carrier')
           isQuote : @isQuote()
           parentChildRelationship : @get('parentChildRelationship')
           parentPolicyId : @get('parentPolicyId')
           childPolicyId : @get('childPolicyId')
+      else
+        ipm_header = {}
 
       if @isPendingCancel true
         ipm_header.status = 'Pending Cancellation'
@@ -176,7 +177,6 @@ define [
           start = @find('Quoting CurrentQuote ProtoTerm EffectiveDate') || ""
           end = @find('Quoting CurrentQuote ProtoTerm ExpirationDate') || ""
           @Helpers.concatStrings(start.substr(0,10), end.substr(0,10), ' - ')
-
       ipm_header
 
     # Assemble all the policy data for HTML QuickView servicing tab into one place

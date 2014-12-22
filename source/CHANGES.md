@@ -1,20 +1,27 @@
+### 3.0.1 - Dec 22, 2014
+
+- 'Manage Referral Assignees' is no longer on the Referrals page and is only in navigation
+- 'Manage Referral Assignees' links to the 'Manage Referral Assignees' list in a pop-up modal
+- 'New Business Referrals' in navigation should be 'New Business Underwriting'
+- 'Renewal Underwriting' in navigation is per program (SageSure uses, FNIC should not see)
+
 ### 3.0.0 - Dec 9, 2014
 
 This is the new generation UI for Policy Central where a new, overall Policy Central navigation, and a new vertical navigation for open policies are the highlights. Other features include:
 
- - Overall Policy Central navigation includes Home, Search, Servicing, Underwriting, Agencies, Reports
-    - Links are program specific
- - New Home page
-    - the Home page has a slide show
-    - the Home page has a way to get to Herald announcements
-    - the Home page has a way to show Agent Portal announcements
-        - also program specific
- - New Policy Navigation left navigation is collapsible, similar to Open Policy Navigation
-    - the navigation is sticky - it is always available to the user, even if the page scrolls
- - New Open Policy navigation to the left of the policy
-    - that list is collapsable
-    - there is a filter to search the open policies
-    - recently viewed policies fill the space below any open policies
+- Overall Policy Central navigation includes Home, Search, Servicing, Underwriting, Agencies, Reports
+  - Links are program specific
+- New Home page
+  - the Home page has a slide show
+  - the Home page has a way to get to Herald announcements
+  - the Home page has a way to show Agent Portal announcements
+    - also program specific
+- New Policy Navigation left navigation is collapsible, similar to Open Policy Navigation
+  - the navigation is sticky - it is always available to the user, even if the page scrolls
+- New Open Policy navigation to the left of the policy
+  - that list is collapsable
+  - there is a filter to search the open policies
+  - recently viewed policies fill the space below any open policies
 
 ### 2.7.2 - Nov 18, 2014
 
