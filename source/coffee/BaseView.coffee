@@ -50,6 +50,7 @@ define [
         Backbone.View.dispose
       else
         @off()
+        @$el.off() if @$el
         @undelegateEvents()
         if (@model && @model.off)
           @model.off()
