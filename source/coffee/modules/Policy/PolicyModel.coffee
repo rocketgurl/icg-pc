@@ -154,7 +154,7 @@ define [
           id      : @getPolicyId()
           product : @getTermDataItemValue 'ProductLabel'
           holder  : @getPolicyHolder()
-          state   : @get('state').text || @get('state')
+          state   : @get('state')?.text or @get('state') or ''
           period  : @getPolicyPeriod()
           carrier : @getModelProperty('Management Carrier')
           isQuote : @isQuote()
