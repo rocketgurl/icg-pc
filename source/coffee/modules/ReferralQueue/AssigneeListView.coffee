@@ -16,6 +16,7 @@ define [
     initialize : (options) ->
       _.bindAll(this
         'getData'
+        'resetData'
         'render'
         'assigneeLoader'
         'assigneeSuccess'
@@ -37,6 +38,9 @@ define [
       # fetch the Assignee list the first time the modal is called
       @$el.one 'show.bs.modal', @getData
 
+      # revert models back to their saved state when hiding the modal
+      @$el.on 'hidden.bs.modal', @resetData
+
     setupCollectionEventHandlers : ->
       @collection.on 'reset',   @render
       @collection.on 'request', @assigneeLoader
@@ -57,6 +61,9 @@ define [
     getData : ->
       @collection.fetch()
 
+    resetData : ->
+      @collection.revertModels()
+
     initSubview : (model, viewType, $listView) ->
       subview = new AssigneeListItemView
         model : model
@@ -64,14 +71,23 @@ define [
       $listView.append subview.$el
       @subviews.push subview
 
+    clearLists : ->
+      if @isSagesure
+        @$newbizList.empty()
+        @$renewalList.empty()
+      else
+        @$activeList.empty()
+
     render : ->
+      @clearLists()
+      @clearSubviews()
       @collection.each (model) =>
         if @isSagesure
           @initSubview model, 'new_business', @$newbizList
           @initSubview model, 'renewals', @$renewalList
         else
           @initSubview model, 'active', @$activeList
-      @assigneeSuccess() if @collection.length
+      @assigneeSuccess()
 
     saveAssignees : (e) ->
       e.preventDefault()
@@ -84,7 +100,7 @@ define [
         .show()
 
     assigneeSuccess : (collection, jqXHR) ->
-      @$confirmBtn.prop 'disabled', false
+      @$confirmBtn.prop 'disabled', @collection.length < 1
       @$statusEl
         .html('<strong class="list-success">List Updated!</strong>')
         .show()
@@ -93,19 +109,22 @@ define [
 
     assigneeError : (collection, jqXHR) ->
       @$confirmBtn.prop 'disabled', true
-      @Amplify.publish 'controller', 'warning', "Warning - could not load assignees xml: #{jqXHR.status} - #{jqXHR.statusText}"
+      @Amplify.publish 'controller', 'warning', "Warning - could not load assignees xml: #{jqXHR.status} - #{jqXHR.statusText}", 5000
       @$statusEl
         .html('<strong class="list-error">Error!</strong>')
         .show()
         .delay(5000)
         .fadeOut('slow')
 
-    dispose : ->
-      super()
-      @collection = null
+    clearSubviews : ->
       while @subviews.length > 0
         view = @subviews.shift()
         view.destroy()
         view = null
+
+    dispose : ->
+      super()
+      @collection = null
+      @clearSubviews()
 
 
