@@ -49,6 +49,7 @@ require
         exports : '_'
       'backbone' :
         deps    : ['jquery', 'json', 'underscore']
+        exports : 'Backbone'
       'amplify' :
         deps    : ['jquery', 'json']
         exports : 'amplify'
