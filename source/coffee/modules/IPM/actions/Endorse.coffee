@@ -139,13 +139,16 @@ define [
          @apparatchik.isProduct('wic-ho3-al') ||
          @apparatchik.isProduct('wic-ho3-nj') ||
          @apparatchik.isProduct('ofcc-ho3-nj')
-        @addWICALBEhaviors()
+        @addWICALBehaviors()
 
       if @apparatchik.isProduct('fnic-ho3-la') || @apparatchik.isProduct('fnic-ho3-al')
         @addFNICHO3Behaviors()
 
       if @apparatchik.isProduct('ofcc-ho3-ca') || @apparatchik.isProduct('ofcc-ho5-ca')
         @addOFCCCABehavhiors()
+
+      if @apparatchik.isProduct('wic-ho3-la')
+        @addWICHO3LABehaviors()
 
       if @apparatchik.isProduct('ofcc-ho3-ak')
         @addOFCCHO3AKBehaviors()
@@ -167,7 +170,7 @@ define [
     # them into external files and pull in via RequireJS.
     ###
 
-    addWICALBEhaviors : ->
+    addWICALBehaviors : ->
       rules = [
         field: "WindstormDeductibleOption"
         sideEffects: [
@@ -178,6 +181,22 @@ define [
           target: "WindHailDeductible"
           condition: "== 200"
           effect: [@apparatchik.showElement, @apparatchik.makeRequired]
+        ]
+      ]
+
+      @apparatchik.applyEnumDynamics rules
+
+    addWICHO3LABehaviors : ->
+      rules = [
+        field: "WindstormDeductibleOption"
+        sideEffects: [
+          target: "HurricaneDeductible"
+          condition: "== 100"
+          effect: @apparatchik.showElement
+        ,
+          target: "WindHailDeductible"
+          condition: "== 200"
+          effect: @apparatchik.showElement
         ]
       ]
 
@@ -393,7 +412,7 @@ define [
     # Rules common to both FNIC HO3 Produc
     addFNICHO3Behaviors : ->
       rules = [
-        field: 'OtherStructuresIndicator',
+        field: 'OtherStructuresIndicator'
         condition: '> 0'
         target: [
           'OtherStructures1Type'
@@ -411,7 +430,7 @@ define [
           ]
         effect: @apparatchik.showElement
       ,
-        field: 'ScheduledPersonalPropertyIndicator',
+        field: 'ScheduledPersonalPropertyIndicator'
         condition: '> 0'
         target: [
           'ScheduledPersonalProperty1Type'

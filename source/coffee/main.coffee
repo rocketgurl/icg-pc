@@ -6,8 +6,8 @@ require
   paths:
     jquery          : 'lib/jquery-1.8.2'
     jqueryui        : 'lib/jquery-ui-1.9.0.custom.min'
-    underscore      : 'lib/underscore'
-    backbone        : 'lib/backbone-min'
+    underscore      : 'lib/underscore-1.4.4'
+    backbone        : 'lib/backbone-0.9.2'
     amplify         : 'lib/amplify'
     mustache        : 'lib/requirejs.mustache'
     base64          : 'lib/base64'
@@ -32,6 +32,9 @@ require
     button          : 'lib/bootstrap/button'
     tooltip         : 'lib/bootstrap/tooltip'
     popover         : 'lib/bootstrap/popover'
+    dropdown        : 'lib/bootstrap/dropdown'
+    modal           : 'lib/bootstrap/modal'
+    carousel        : 'lib/bootstrap/carousel'
   priority: ['jquery', 'xml2json', 'json']
   shim:
       'jquery' :
@@ -46,6 +49,7 @@ require
         exports : '_'
       'backbone' :
         deps    : ['jquery', 'json', 'underscore']
+        exports : 'Backbone'
       'amplify' :
         deps    : ['jquery', 'json']
         exports : 'amplify'
@@ -74,17 +78,25 @@ require
         deps: ['transition']
       'popover' :
         deps: ['jquery', 'tooltip']
+      'dropdown' :
+        deps: ['jquery']
+      'modal' :
+        deps: ['jquery']
+      'carousel' :
+        deps: ['transition']
 
 require [
-  'jquery',
-  'underscore',
-  'backbone',
-  'WorkspaceController',
-  'u_string',
-  'u_policycentral',
-  'domReady',
-  'xml2json',
+  'jquery'
+  'underscore'
+  'backbone'
+  'WorkspaceController'
+  'u_string'
+  'u_policycentral'
+  'domReady'
+  'xml2json'
   'chosen'
+  'dropdown'
+  'modal'
 ], ($, _, Backbone, WorkspaceController, u_string, u_policycentral, domReady) ->
 
   # Setup underscore.string

@@ -1,5 +1,45 @@
-Updates
--------
+### 3.0.1 - Dec 22, 2014
+
+- 'Manage Referral Assignees' is no longer on the Referrals page and is only in navigation
+- 'Manage Referral Assignees' links to the 'Manage Referral Assignees' list in a pop-up modal
+- 'New Business Referrals' in navigation should be 'New Business Underwriting'
+- 'Renewal Underwriting' in navigation is per program (SageSure uses, FNIC should not see)
+
+### 3.0.0 - Dec 9, 2014
+
+This is the new generation UI for Policy Central where a new, overall Policy Central navigation, and a new vertical navigation for open policies are the highlights. Other features include:
+
+- Overall Policy Central navigation includes Home, Search, Servicing, Underwriting, Agencies, Reports
+  - Links are program specific
+- New Home page
+  - the Home page has a slide show
+  - the Home page has a way to get to Herald announcements
+  - the Home page has a way to show Agent Portal announcements
+    - also program specific
+- New Policy Navigation left navigation is collapsible, similar to Open Policy Navigation
+  - the navigation is sticky - it is always available to the user, even if the page scrolls
+- New Open Policy navigation to the left of the policy
+  - that list is collapsable
+  - there is a filter to search the open policies
+  - recently viewed policies fill the space below any open policies
+
+### 2.7.2 - Nov 18, 2014
+
+- [ICS-2913](https://icg360.atlassian.net/browse/ICS-2913) - Updates wic-ho3-tx IPM endorse forms
+- [ICS-2929](https://icg360.atlassian.net/browse/ICS-2929) - a new Welcome page
+- [ICS-2932](https://icg360.atlassian.net/browse/ICS-2932) - a new top level of navigation
+– Servicing includes a link to Batch Wolf & Underwriting includes New Business Referrals and Renewal Underwriting
+– includes a link to [ixReports](https://ixreport.ics360.com/rfk/root/) and [Agency Administration](https://agencyadmin.icg360.com/)
+- [ICS-2933](https://icg360.atlassian.net/browse/ICS-2933) - a new floating footer
+- [ICS-2938](https://icg360.atlassian.net/browse/ICS-2938) - Adds Google Analytics to Policy Central
+- [ICS-2945](https://icg360.atlassian.net/browse/ICS-2945) - a new pop-up module to accommodate content such as Help, Support, and Feedback
+- [ICS-2965](https://icg360.atlassian.net/browse/ICS-2965) - Add OptionCoverageD for ofcc-ho3-ak so CoverageD calculations work
+- [ICS-2966](https://icg360.atlassian.net/browse/ICS-2966) - Updates fnic-ho3-al IPM endorse forms
+
+### 2.7.1 - Nov 4, 2014
+
+- [ICS-2908](https://icg360.atlassian.net/browse/ICS-2908) Update ixConfig to enable Policy Central for FedNat
+- [ICS-2915](https://icg360.atlassian.net/browse/ICS-2915) Update import renewal products
 
 ### 2.7.0 - Oct 21, 2014
 

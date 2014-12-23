@@ -43,7 +43,7 @@ define [
 
     # Derive app name
     get_app_name : (app_name) ->
-      if app_name.indexOf '_' >= 0
+      if app_name.indexOf '_' > -1
         app_name.split('_')[0]
       else
         app_name
@@ -52,7 +52,9 @@ define [
     get_modules : (app_name) ->
       switch app_name
         when 'policies'
-          [@policy_search, @referral_queue]
+          [@policy_search, @referral_queue, @home]
+        when 'renewalreview'
+          [@renewalreview]
         when 'rulesets'
           [@policy_search, @add_app(@rulesets)]
         when 'policyview'
@@ -76,9 +78,26 @@ define [
       app : 
         app       : 'search'
         app_label : 'search'
-        tab       : '#tpl-workspace-tab-search'
+        tab       : '#tpl-workspace-tab-blank'
         params    : null
-          # renewalreviewrequired : true
+
+    renewalreview :
+      required  : false
+      module    : 'Search/SearchModule'
+      app :
+        app       : 'renewalreview'
+        app_label : 'Renewal Underwriting'
+        tab       : '#tpl-workspace-tab'
+        params    :
+          renewalreviewrequired : true
+
+    home :
+      required : false
+      module   : 'Home/HomeModule'
+      app :
+        app       : 'home'
+        app_label : 'Home'
+        tab       : '#tpl-workspace-tab-blank'
 
     policy_search_params :
       required : false
@@ -95,7 +114,7 @@ define [
       app :
         app       : 'referral_queue'
         app_label : 'Referrals'
-        tab       : '#tpl-workspace-tab-noclose'
+        tab       : '#tpl-workspace-tab-blank'
 
     default :
       required : false

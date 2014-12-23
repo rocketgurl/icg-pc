@@ -1,34 +1,35 @@
 #header {
-	color: $white;
+	position: relative;
+	z-index: 1000;
 	@include background-image(linear-gradient(top, $blue, darken($blue, 10)));
-	overflow: hidden;
-	height: 65px;
+	@include box-shadow(0 2px 2px -1px rgba(0, 0, 0, 0.1));
+	color: $white;
 }
 
 #header-container {
 	@include container;
-//	@include susy-grid-background;
-	padding: 0;
+	width: auto;
 }
 
 .header-group {
-	@include span-columns(12 omega, 12);
-	padding: 0;
+	position: relative;
+	min-height: 60px;
 }
 
 #header-logo {
-	@include span-columns(2, 12);
+	position: absolute;
+	top: 0;
+	left: 0;
 	padding: 5px 0;
-	// background: url(/img/logo_header.png) no-repeat left;
-	img {
-		margin-right: 20px;
-	}
 }
 
 #header-controls {
-	@include span-columns(6, 12);
 	@include font-size(12);
-	padding-top: 16px;
+	margin: 0 auto;
+	padding: 14px 0;
+	width: 450px;
+	text-align: center;
+
 	span {
 		color: lighten($blue, 40);
 		display: none;
@@ -79,20 +80,26 @@
 }
 
 #header-admin {
-	@include span-columns(4 omega, 12);
+	position: absolute;
+	top: 0;
+	right: 0;
 	@include font-size(12);
 	color: lighten($blue, 40);
+
 	ul {
-		padding: 24px 0 5px 0;
+		margin: 0;
+		padding: 21px 0;
 		text-align: right;
-		font-size: 0; // fixes white space issues in inline-block
+
 		li {
 			margin: 0;
 			padding: 0 10px;
-			display: inline-block;
+			float: left;
 			border-right: darken($blue, 20) 1px solid;
 			border-left: lighten($blue, 10) 1px solid;
 			@include font-size(12);
+			line-height: 18px;
+
 			a {
 				color: $white;
 				text-decoration: none;
@@ -112,7 +119,9 @@
 
 // Main workspace navigation
 #header-workspace-nav {
-	margin-top: 50px;
+	margin-top: 10px;
+	margin-bottom: 10px;
+	display: none;
 	ul.main-nav {
 		@include span-columns(3, 12);
 		li {
@@ -195,3 +204,67 @@
 		}
 	}
 }
+
+.pc-nav {
+	display: none;
+	margin-bottom: 0;
+	min-height: 40px;
+	background: #fff;
+	border-color: #ccc;
+
+	.navbar-nav {
+		float: none;
+		text-align: center;
+
+		> li { float: none; }
+	}
+
+	.nav {
+		> li {
+			display: inline-block;
+			width: 14%;
+
+			> a {
+				padding: 11px 0;
+			}
+		}
+	}
+
+	> .container-fluid {
+		padding-left: 1.5%;
+		padding-right: 1.5%;
+	}
+
+	.navbar-nav .active {
+		> a {
+			color: #fff;
+			background: $blue;
+
+			&:hover {
+				background: desaturate(lighten($blue, 20), 20);
+			}
+		}
+	}
+
+	.dropdown-menu {
+		> li {
+			> a {
+				&.disabled,
+				&[disabled] {
+					color: #ccc;
+				  pointer-events: none;
+				  cursor: default;
+
+				  &:hover {
+				  	background: transparent;
+				  }
+				}
+			}
+		}
+	}
+
+	.renewal-review { display: none; }
+}
+
+
+.is-sagesure .renewal-review { display: list-item; }

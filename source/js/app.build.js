@@ -6,8 +6,8 @@
   paths: {
     jquery: 'lib/jquery-1.8.2',
     jqueryui: 'lib/jquery-ui-1.9.0.custom.min',
-    underscore: 'lib/underscore',
-    backbone: 'lib/backbone-min',
+    underscore: 'lib/underscore-1.4.4',
+    backbone: 'lib/backbone-0.9.2',
     amplify: 'lib/amplify',
     mustache: 'lib/requirejs.mustache',
     base64: 'lib/base64',
@@ -31,7 +31,10 @@
     collapse: 'lib/bootstrap/collapse',
     button: 'lib/bootstrap/button',
     tooltip: 'lib/bootstrap/tooltip',
-    popover: 'lib/bootstrap/popover'
+    popover: 'lib/bootstrap/popover',
+    dropdown: 'lib/bootstrap/dropdown',
+    modal: 'lib/bootstrap/modal',
+    carousel: 'lib/bootstrap/carousel'
   },
   shim: {
     'jquery': {
@@ -49,7 +52,8 @@
       exports: '_'
     },
     'backbone': {
-      deps: ['jquery', 'json', 'underscore']
+      deps: ['jquery', 'json', 'underscore'],
+      exports: 'Backbone'
     },
     'amplify': {
       deps: ['jquery', 'json'],
@@ -83,6 +87,15 @@
     },
     'popover': {
       deps: ['jquery', 'tooltip']
+    },
+    'dropdown': {
+      deps: ['jquery']
+    },
+    'modal': {
+      deps: ['jquery']
+    },
+    'carousel': {
+      deps: ['jquery']
     }
   },
   modules: [

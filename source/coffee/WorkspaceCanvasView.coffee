@@ -28,6 +28,9 @@ define [
       @app   = options.app
       @el.id = @app.app # Set container id to app name
 
+      # Find navbar anchor and parent element corresponding to app
+      @$navbar_item = $(".pc-nav [data-app=#{@app.app}]").parent()
+
       # Add to the stack
       controller.trigger 'stack_add', @
 
@@ -72,21 +75,12 @@ define [
                 tab_label : @app.app_label
               })
       @$tab_el.append(@tab)
-      @recalcTabContainer @tab.width()
-
-    # Manually size the width of the Tab container to accomodate tabs
-    # past the width of the browser
-    recalcTabContainer : (tab) ->
-      widths = _.map(@$tab_el.find('li'), (l) -> $(l).width())
-      w = _.reduce widths, (a, b) ->
-            a + b
-        , 0
-      @$tab_el.width((w + 40) + tab)
 
     # Put tab into active state
     activate : ->
       @tab.addClass 'selected'
       @$el.removeClass 'inactive'
+      @$navbar_item.addClass 'active'
       if @module
         @module.trigger 'activate'
 
@@ -94,6 +88,7 @@ define [
     deactivate : ->
       @tab.removeClass 'selected'
       @$el.addClass 'inactive'
+      @$navbar_item.removeClass 'active'
       if @module
         @module.trigger 'deactivate'
 
@@ -102,14 +97,12 @@ define [
       @tab.hasClass('selected')
 
     # Remove tab and view
-    destroy : () ->
+    destroy : ->
       # Remove tab & nullify so GC can get it (?)
-      if @$tab_el?
-        @$tab_el.width @$tab_el.width() - @tab.width()
+      if @tab?
+        @$navbar_item.removeClass 'active'
         @tab.remove()
         @tab = null
-        @$tab_el.find("li a[href=#{@app.app}]").parent().remove()
-        @$tab_el = null
 
       # Remove content
       @$el.html('').remove()

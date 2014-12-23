@@ -1,47 +1,36 @@
-<!-- TEMPLATE: Referral Queue Manage Assignees -->
-<div class="rq-menus rq-manage-assignees" id="rq-assignees-{{cid}}">
-	<h2 class="menu-header">Manage referral assignees <i class="icon-remove-circle menu-close"></i></h2>
+<div class="panel panel-default">
+  <div class="panel-body">
+    Uncheck the box next to an underwriter's name if you would like to take the underwriter off the automatic referral list. This is especially useful when an underwriter is on vacation or out sick.
+  </div>
+</div>
 
-	<div class="menu-body">
-		<p>Uncheck the box next to an underwriter's name if you would like to take the underwriter off the automatic referral list. This is especially useful when an underwriter is on vacation or out sick.</p>
-		<form id="referral-asigness-form">
-		<div class="menu-col">
-			<h2>New business referrals</h2>
-			<ul>
-				{{#assignees}}
-				<li>
-					<input type="checkbox" name="newbiz_{{identity}}" id="newbiz_{{identity}}" value="{{new_business}}" {{#new_business}}checked="true"{{/new_business}}> <label for="newbiz_{{identity}}">{{identity}}</label>
-				</li>
-				{{/assignees}}
-			</ul>
-		</div>
-		<div class="menu-col">
-			<h2>Renewal referrals</h2>
-			<ul>
-				{{#assignees}}
-				<li>
-					<input type="checkbox" name="renewal_{{identity}}" id="renewal_{{identity}}" value="{{renewals}}" {{#renewals}}checked="true"{{/renewals}}> <label for="renewal_{{identity}}">{{identity}}</label>
-				</li>
-				{{/assignees}}
-			</ul>
-		</div>
-		<div class="menu-buttons">
-			<span class="menu-status"></span>
-			<button class="menu-confirm" id="menu-confirm">Confirm</button>
-			<button class="menu-cancel" id="menu-cancel">Cancel</button>
-		</div>
-		</form>
-	</div>
+<div class="row">
+  <form id="referral-assignees-form">
+    {{#isSagesure}}
+    <div id="assignee-newbiz" class="col-xs-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">New business referrals</h3>
+        </div>
+        <ul class="list-group"></ul>
+      </div>
+    </div>
 
-<!-- 	<table>
-		<tbody>
-			{{#assignees}}
-			<tr>
-				<td colspan="2" class="row-{{id}} ru-assignees-row">
-					<a href="{{id}}">{{name}}</a>
-				</td>
-			</tr>
-			{{/assignees}}
-		</tbody>
-	</table> -->
+    <div id="assignee-renewal" class="col-xs-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h3 class="panel-title">Renewal referrals</h3>
+        </div>
+        <ul class="list-group"></ul>
+      </div>
+    </div>
+    {{/isSagesure}}
+    {{^isSagesure}}
+    <div id="assignee-active" class="col-xs-12">
+      <div class="panel panel-default">
+        <ul class="list-group"></ul>
+      </div>
+    </div>
+    {{/isSagesure}}
+  </form>
 </div>

@@ -3,33 +3,25 @@ define [
   'Helpers'
   'Messenger'
   'modules/ReferralQueue/ReferralTaskView'
-  'modules/ReferralQueue/ReferralAssigneesModel'
   'text!modules/ReferralQueue/templates/tpl_referral_container.html'
-  'text!modules/ReferralQueue/templates/tpl_manage_assignees.html'
-], (BaseView, Helpers, Messenger, ReferralTaskView, ReferralAssigneesModel, tpl_container, tpl_menu_assignees) ->
+], (BaseView, Helpers, Messenger, ReferralTaskView, tpl_container) ->
 
   ReferralQueueView = BaseView.extend
 
     PAGINATION_EL : {} # Pagination form elements
 
     events :
-      "change .referrals-pagination-page"    : 'updatePage'
-      "change .referrals-pagination-perpage" : 'updatePerPage'
-      "change input[name=show-all]"          : 'updateStatus'
-      "click .referrals-switch a"            : 'updateOwner'
-      "click .referrals-sort-link"           : 'sortTasks'
-      "click .menu-confirm"                  : 'saveAssignees'
-      "click .menu-cancel"                   : 'clearAssignees'
-      "click .btn-manage-assignees"          : 'toggleManageAssignees'
+      'change .referrals-pagination-page'    : 'updatePage'
+      'change .referrals-pagination-perpage' : 'updatePerPage'
+      'change input[name=show-all]'          : 'updateStatus'
+      'click .referrals-switch a'            : 'updateOwner'
+      'click .referrals-sort-link'           : 'sortTasks'
 
     initialize : (options) ->
       _.bindAll(this
         'toggleLoader'
         'renderTasks'
         'tasksError'
-        'renderAssigneesError'
-        'assigneeSuccess'
-        'assigneeError'
         )
 
       @MODULE      = options.module || false
@@ -40,20 +32,6 @@ define [
       @COLLECTION.on 'update', => @toggleLoader true
       @COLLECTION.on 'reset', @renderTasks
       @COLLECTION.on 'error', @tasksError
-
-      # Create an AssigneeList model to manage the XML list
-      if @MODULE != false
-        ixlibrary = @MODULE.controller.services.ixlibrary
-        digest    = @MODULE.controller.user.get 'digest'
-        assigneeListUrl = "#{ixlibrary.baseURL}/buckets/#{ixlibrary.underwritingBucket}/objects/#{ixlibrary.assigneeListObjectKey}"
-
-      @AssigneeList     = new ReferralAssigneesModel({ digest : digest })
-      @AssigneeList.url = assigneeListUrl
-      @AssigneeList.fetch
-        error : @renderAssigneesError
-
-      @AssigneeList.on 'change', @assigneeSuccess
-      @AssigneeList.on 'fail', @assigneeError
 
     render : ->
       # Setup flash module & main container
@@ -70,12 +48,10 @@ define [
       # Cache form elements for speedy access
       @PAGINATION_EL = @cachePaginationElements()
 
+      @$('.launch-manage-assignees').removeClass('disabled').prop('disabled', false)
+
       # Throw up our loading image until the tasks come in
       @toggleLoader(true)
-
-      # If we couldn't load assignee_list.xml then disable the button
-      unless @ASSIGNEE_STATE
-        @$('.button-manage-assignees').attr('disabled', true)
 
       this
 
@@ -231,75 +207,3 @@ define [
         $icon.removeClass 'glyphicon-chevron-up'
         $icon.removeClass 'glyphicon-chevron-down'
 
-    # JSON data from AssigneeList needs some additional parsing to render
-    # correctly in Mustache
-    toggleManageAssignees : (e) ->
-      e.preventDefault()
-      if @AssigneeList.get('json')?
-        assignees = @AssigneeList.parseBooleans(@AssigneeList.get('json').Assignee)
-        @Modal.attach_menu $(e.currentTarget), '.rq-menus', tpl_menu_assignees, {assignees : assignees}
-      else
-        @Amplify.publish @cid, 'warning', "Unable to load assignees from server."
-
-    renderAssigneesError : (model, xhr, options) ->
-      @ASSIGNEE_STATE = false
-      @Amplify.publish 'controller', 'warning', "Warning - could not load assignees xml: #{xhr.status} - #{xhr.statusText}"
-
-    # The two lists of checkboxes are combined into one array of objects. Then
-    # map over the Assignee JSON from the model, plucking objects from our
-    # combined array with the same identity and merging in their new values.
-    # The updated Assignee JSON is set back to the model, which generates XML
-    # and PUTs it back to the server.
-    #
-    saveAssignees : (e) ->
-      e.preventDefault()
-      @assigneeLoader()
-      values = []
-      json   = @AssigneeList.get('json').Assignee
-
-      # Combine lists into array with some processing on identity
-      @$el.find('input[type=checkbox]').each (index, val) ->
-        name = $(val).attr('name')
-        if name.indexOf('newbiz_') > -1
-          values.push
-            identity     : name.replace /newbiz_/gi, ''
-            new_business : $(val).val()
-        else
-          values.push
-            identity : name.replace /renewal_/gi, ''
-            renewals : $(val).val()
-
-      merged = _.map json, (assignee) ->
-        items = _.where values, { identity : assignee.identity }
-        if items.length > 1
-          _.extend assignee, items[0], items[1]
-        else
-          _.extend assignee, items[0]
-
-      @AssigneeList.set 'json', { Assignee : merged }
-      @AssigneeList.putList()
-
-    # Remove the menu from DOM so it will be generated fresh erasing any
-    # changes from the user
-    clearAssignees : (e) ->
-      e.preventDefault()
-      @Modal.removeMenu()
-
-    assigneeLoader : ->
-      @$el.find('.menu-status')
-          .show()
-          .html('<strong class="menu-loading">Saving changes&hellip;</strong>')
-
-    assigneeSuccess : (model) ->
-      @$el.find('.menu-status')
-          .show()
-          .html('<strong class="menu-success">Assignee List saved!</strong>')
-          .delay(2000)
-          .fadeOut('slow')
-
-    assigneeError : (msg) ->
-      @$el.find('.menu-status')
-          .show()
-          .html("""<strong class="menu-error">Error saving: #{msg}</strong>""")
-          .delay(5000)
-          .fadeOut('slow')

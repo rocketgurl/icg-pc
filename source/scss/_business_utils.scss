@@ -1,0 +1,9 @@
+// Utilities to show/hide SageSure/FedNat specific items
+.show-fednat {
+  display: none;
+}
+
+.is-fednat {
+  .show-sagesure { display: none; }
+  .show-fednat   { display: inherit; }
+}

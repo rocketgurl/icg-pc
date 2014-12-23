@@ -1,26 +1,25 @@
 define [
-  'jquery',
-  'underscore',
-  'backbone',
-  'UserModel',
-  'ConfigModel',
-  'WorkspaceStack',
-  'WorkspaceStateModel',
-  'WorkspaceStateCollection',
-  'WorkspaceLoginView',
-  'WorkspaceCanvasView',
-  'WorkspaceNavView',
-  'WorkspaceRouter',
-  'modules/Search/SearchContextCollection',
-  'Messenger',
-  'base64',
-  'MenuHelper',
-  'AppRules',
-  'Helpers',
-  'Cookie',
-  'herald',
+  'UserModel'
+  'ConfigModel'
+  'WorkspaceStack'
+  'WorkspaceStateModel'
+  'WorkspaceStateCollection'
+  'WorkspaceLoginView'
+  'WorkspaceCanvasView'
+  'WorkspaceNavView'
+  'PolicyHistoryView'
+  'WorkspaceRouter'
+  'modules/Search/SearchContextCollection'
+  'modules/ReferralQueue/AssigneeListView'
+  'Messenger'
+  'base64'
+  'MenuHelper'
+  'AppRules'
+  'Helpers'
+  'Cookie'
+  'herald'
   'marked'
-], ($, _, Backbone, UserModel, ConfigModel, WorkspaceStack, WorkspaceStateModel, WorkspaceStateCollection, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, WorkspaceRouter, SearchContextCollection, Messenger, Base64, MenuHelper, AppRules, Helpers, Cookie, Herald, marked, xml2json) ->
+], (UserModel, ConfigModel, WorkspaceStack, WorkspaceStateModel, WorkspaceStateCollection, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, PolicyHistoryView, WorkspaceRouter, SearchContextCollection, AssigneeListView, Messenger, Base64, MenuHelper, AppRules, Helpers, Cookie, Herald, marked, xml2json) ->
 
   # Global log object for debugging
   #
@@ -43,6 +42,7 @@ define [
       ixvocab        : './ixvocab/api/rest/v1/'
       zendesk        : './zendesk'
       pxclient       : '../swf/PolicySummary.swf'
+      agentportal    : './agentportal/api/rest/v2/'
 
   # Method Combinator (Decorator)
   # https://github.com/raganwald/method-combinators
@@ -66,11 +66,16 @@ define [
   WorkspaceController =
     Amplify               : amplify
     $workspace_header     : $('#header')
+    $workspace_el         : $('#workspace')
+    $workspace_footer     : $('#footer-main')
     $workspace_button     : $('#button-workspace')
     $workspace_breadcrumb : $('#breadcrumb')
     $workspace_admin      : $('#header-admin')
+    $workspace_main_navbar: $('#header-navbar')
     $workspace_canvas     : $('#canvas')
-    $workspace_tabs       : $('#workspace nav ul')
+    $workspace_nav        : $('#workspace nav')
+    $workspace_tabs       : $('#workspace #open-policy-tabs')
+    $no_policy_flag       : $('#workspace .no-policies')
     Router                : new WorkspaceRouter()
     Cookie                : new Cookie()
     COOKIE_NAME           : 'ics360_PolicyCentral'
@@ -79,6 +84,7 @@ define [
     Workspaces            : new WorkspaceStateCollection()
     workspace_zindex      : 30000
     workspace_stack       : {} # store a ref to WorkspaceStack here
+    policyHistoryViews    : {}
     IXVOCAB_AUTH          : 'Y29tLmljcy5hcHBzLmluc2lnaHRjZW50cmFsOjVhNWE3NGNjODBjMzUyZWVkZDVmODA4MjkzZWFjMTNk'
 
     # Simple logger
@@ -112,6 +118,10 @@ define [
         if app.app != @current_state.app
           saved_apps = [app]
 
+      # If app is a policy, add it to our history stack
+      if /policyview_/.test app.app
+        @workspace_state.updateHistoryStack app
+
       @workspace_state.set 'apps', saved_apps
       @workspace_state.save()
       return true
@@ -125,9 +135,12 @@ define [
       (app) ->
         saved_apps = @workspace_state.get 'apps'
         _.each saved_apps, (obj, index) =>
-          if app.app == obj.app
+          if app.app is obj.app
             saved_apps.splice index, 1
+            if app.app is @current_state.module
+              @current_state.module = null
         @workspace_state.set 'apps', saved_apps
+        @workspace_state.set 'workspace', @current_state
         @workspace_state.save()
 
     # Check to see if an app already exists in saved state
@@ -213,19 +226,21 @@ define [
 
       if @navigation_view?
         @navigation_view.destroy()
+        @navigation_view = null
 
-      $('#header').css('height', '65px')
+      $('body').removeClass()
       $('body').addClass('logo-background')
 
+      @resize_workspace()
       @login_view
 
     # Instantiate a new user and check ixDirectory
     # for valid credentials
     check_credentials : (username, password) ->
       @user = new UserModel
-        urlRoot    : @services.ixdirectory + 'identities'
-        'username' : username
-        'password' : password
+        urlRoot  : @services.ixdirectory + 'identities'
+        username : username
+        password : password
 
       # retrieve an identity document or fail
       @user.fetch(
@@ -310,10 +325,13 @@ define [
       @user = null
       @reset_admin_links()
       @set_breadcrumb()
+      @close_policy_nav()
       @hide_workspace_button()
+      @hide_navigation()
 
       if @navigation_view?
         @navigation_view.destroy()
+        @navigation_view = null
         @teardown_workspace()
 
       @destroy_workspace_model()
@@ -324,6 +342,18 @@ define [
         @workspace_state.destroy()
         @workspace_state = null
         @Amplify.store('ics_policy_central', null)
+
+    handlePolicyHistory : ->
+      id = @workspace_state.id
+
+      # Instantiate a new view for each workspace_state model
+      unless _.isObject @policyHistoryViews[id]
+        @policyHistoryViews[id] = new PolicyHistoryView
+          controller     : this
+          workspaceState : @Workspaces.get id
+          el             : '#policy-history'
+
+      @policyHistoryViews[id].render()
 
     #### Get Configuration Files
     #
@@ -344,10 +374,10 @@ define [
           else
             @config.set 'menu', menu
             @config.set 'menu_html', MenuHelper.generate_menu(menu)
+            @show_navigation()
 
             # Instantiate our SearchContextCollection
             # @setup_search_storage()
-
             @navigation_view = new WorkspaceNavView({
                 router     : @Router
                 controller : @
@@ -366,7 +396,7 @@ define [
             # there was a previous state saved, and try to use that one.
             #
             if @check_workspace_state() is false # Check for localStorage state
-              @navigation_view.toggle_nav_slide() # open main nav
+              @navigation_view.show_nav() # open main nav
               @navigation_view.$el.find('li a span').first().trigger('click') # select first item
 
             if @current_state?
@@ -404,6 +434,7 @@ define [
                 @current_state = model.get 'workspace'
                 model.build_name()
                 @update_address()
+                @set_business_namespace()
                 true
               error : (model, resp) =>
                 # Make a new WorkspaceState as we had a problem.
@@ -462,7 +493,7 @@ define [
                          "Sorry, you do not have access to any items in this environment."
         return
 
-      group_label = apps = menu[@current_state.business].contexts[@current_state.context].label
+      group_label = menu[@current_state.business].contexts[@current_state.context].label
       apps = menu[@current_state.business].contexts[@current_state.context].apps
 
       app = _.find apps, (app) =>
@@ -473,11 +504,8 @@ define [
       # race conditions (new tabs pushing onto the stack as old ones pop off)
       @teardown_workspace()
 
-      # Manually adjust CSS
-      if $('#header').height() < 95
-        $('#header').css('height', '95px')
-
       @launch_app app
+      @initAssigneeListView()
 
       if @check_persisted_apps()
         # Is this a search? attempt to launch it
@@ -488,13 +516,16 @@ define [
       data =
         business : @current_state.business
         group    : MenuHelper.check_length(group_label)
-        'app'    : app.app_label
+        app      : app.app_label
 
       # Set breadcrumb
       @set_breadcrumb(data)
 
       # Store our workplace information in localStorage
       @set_nav_state()
+
+      # Initialize Policy History (Recently Viewed) handling
+      @handlePolicyHistory()
 
       # Setup service URLs
       @configureServices()
@@ -550,7 +581,7 @@ define [
     #
     # @param `app` _Object_ application config object
     #
-    launch_app : (app) ->
+    launch_app : (app, rules=null) ->
       # If app is not saved in @workspace_state and is not the
       # workspace defined app then we need to add it to our
       # stack of saved apps
@@ -560,7 +591,7 @@ define [
         @state_add app
 
       # Determine which Module to load into the view
-      rules = new AppRules(app)
+      rules = rules or new AppRules app
       default_workspace = rules.default_workspace
 
       # Open modules defined in workspace set
@@ -613,7 +644,7 @@ define [
       options =
         controller  : @
         module_type : module
-        'app'       : app
+        app         : app
 
       if app.tab?
         options.template_tab = $(app.tab).html()
@@ -626,7 +657,7 @@ define [
       if !@workspace_state? || _.isEmpty(@workspace_state)
         return false
       saved_apps = @workspace_state.get 'apps'
-      if saved_apps?
+      unless _.isEmpty saved_apps
         for app in saved_apps
           @launch_app app
       return true
@@ -642,6 +673,18 @@ define [
           url += "/#{@current_state.module}/#{Helpers.serialize(@current_state.params)}"
         @Router.navigate url
 
+    set_business_namespace : ->
+      if business = @current_state?.business
+        if business is 'cru'
+          $('body').addClass('is-sagesure').removeClass('is-fednat')
+        if business is 'fnic'
+          $('body').addClass('is-fednat').removeClass('is-sagesure')
+
+    initAssigneeListView : ->
+      @assigneeListView = new AssigneeListView
+        controller : this
+        el         : '#assignee-list-modal'
+
     #### Set Admin Links
     #
     # Set Admin links to user profile and logout
@@ -651,7 +694,7 @@ define [
       if !@$workspace_admin_initial?
         @$workspace_admin_initial = @$workspace_admin.find('ul').html()
 
-      @$workspace_admin.find('ul').html("""<li>Welcome back &nbsp;<a href="#profile">#{@user.get('name')}</a></li><li><a href="/batch" target="_blank">Batch Wolf</a></li><li><a href="#logout">Logout</a></li>""")
+      @$workspace_admin.find('ul').html("""<li>Welcome back &nbsp;<a href="#profile">#{@user.get('name')}</a></li><li><a href="#" data-toggle="modal" data-target="#help-modal" data-workspace="saguresure">Help</a></li><li><a href="#logout">Logout</a></li>""")
 
     #### Reset Admin Links
     #
@@ -672,6 +715,16 @@ define [
       $('#header-controls span').fadeOut(400)
       @$workspace_breadcrumb.fadeOut(400)
 
+    show_navigation : ->
+      @$workspace_main_navbar.show()
+      @$workspace_nav.show()
+      @resize_workspace()
+
+    hide_navigation : ->
+      @$workspace_main_navbar.hide()
+      @$workspace_nav.hide()
+      @resize_workspace()
+
     #### Drop a click listener on all tabs
     #
     attach_tab_handlers : ->
@@ -680,10 +733,6 @@ define [
         e.preventDefault()
         app_name = $(e.target).attr('href')
 
-        # When a user clicks on a tab, that tabs URL
-        # should be rendered in the address bar
-        @set_active_url app_name
-
         # Fallback for search tabs
         if app_name is undefined
           app_name = $(e.target).parent().attr('href')
@@ -691,10 +740,58 @@ define [
         @toggle_apps app_name
 
       # Tab close icon
-      @$workspace_tabs.on 'click', 'li i.icon-remove-sign', (e) =>
+      @$workspace_tabs.on 'click', 'li .glyphicon-remove-circle', (e) =>
         e.preventDefault()
-        @workspace_stack.get($(e.target).prev().attr('href')).destroy()
+        policyView = $(e.currentTarget).data 'view'
+        @workspace_stack.get(policyView).destroy()
         @reassess_apps()
+
+    attach_navbar_handlers : ->
+      @$workspace_main_navbar.on 'click', 'li > a', (e) =>
+        $el = $(e.currentTarget)
+
+        # Allow the default behavior if [target="_blank"] is present
+        if $el.is '[target="_blank"]'
+          return true
+
+        # Launch module if [data-app="<app>"] is present
+        if app_name = $el.data 'app'
+          if @workspace_stack.has app_name
+            @toggle_apps app_name
+          else
+            rules = new AppRules { app: app_name }
+            if rules[app_name]
+              @launch_app(rules[app_name].app, rules)
+
+        e.preventDefault()
+
+    attach_window_resize_handler : ->
+      lazyResize = _.debounce _.bind(@resize_workspace, this), 500
+      $(window).on 'resize', lazyResize
+
+    resize_workspace : ->
+      headerHeight    = @$workspace_header.height()
+      footerHeight    = @$workspace_footer.height()
+      windowHeight    = window.innerHeight
+      workspaceHeight = windowHeight - headerHeight - footerHeight - 1
+      @$workspace_el.height workspaceHeight
+
+    open_policy_nav : ->
+      @$workspace_el.addClass 'in'
+
+    close_policy_nav : ->
+      @$workspace_el.removeClass 'in'
+
+    toggle_policy_nav : ->
+      @$workspace_el[if @$workspace_el.is('.in') then 'removeClass' else 'addClass'] 'in'
+
+    attach_policy_nav_handler : ->
+      $('.nav-toggle').on 'click', (e) =>
+        @toggle_policy_nav()
+        e.preventDefault()
+
+    handle_policy_count : ->
+      @$no_policy_flag[if @workspace_stack.policyCount > 0 then 'hide' else 'show']()
 
     #### Set Active Url
     #
@@ -751,6 +848,7 @@ define [
     # Tell every app in the stack to commit seppuku
     teardown_workspace : ->
       @set_breadcrumb()
+      @assigneeListView.dispose() if @assigneeListView
       _.each @workspace_stack.stack, (view, index) =>
         view.destroy()
         view = null
@@ -782,14 +880,16 @@ define [
       Herald.init herald_config
 
     # Kick off the show
-    init : () ->
+    init : ->
       @setupHerald()
       @callback_delay 100, =>
         @Router.controller = this
         Backbone.history.start()
         @check_cookie_identity()
         @attach_tab_handlers()
-
+        @attach_navbar_handlers()
+        @attach_policy_nav_handler()
+        @attach_window_resize_handler()
 
   _.extend WorkspaceController, Backbone.Events
 
@@ -816,10 +916,12 @@ define [
 
   WorkspaceController.on "stack_add", (view) ->
     @workspace_stack.add view
+    @handle_policy_count()
 
   WorkspaceController.on "stack_remove", (view) ->
     @workspace_stack.remove(view)
     @state_remove(view.app)
+    @handle_policy_count()
 
   WorkspaceController.on "new_tab", (app_name) ->
     @toggle_apps app_name
