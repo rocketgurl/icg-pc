@@ -1945,19 +1945,19 @@ ul:after { clear: both; }
 #workspace { position: relative; }
 #workspace:before, #workspace:after { content: " "; display: table; }
 #workspace:after { clear: both; }
-#workspace.in > nav { left: 0; }
-#workspace.in > nav > ul { display: block; }
-#workspace.in > nav .nav-toggle { -webkit-transform: initial; -moz-transform: initial; -ms-transform: initial; -o-transform: initial; transform: initial; }
-#workspace.in > nav .nav-toggle .glyphicon-expand { -webkit-transform: rotate(180deg); -moz-transform: rotate(180deg); -ms-transform: rotate(180deg); -o-transform: rotate(180deg); transform: rotate(180deg); }
-#workspace.in > nav #policy-history { display: block; }
-#workspace.in article { left: 175px; }
+#workspace.out > nav { left: -145px; }
+#workspace.out > nav > ul { display: none; }
+#workspace.out > nav .nav-toggle { -webkit-transform: translate(-25px, 2px) rotate(-90deg); -moz-transform: translate(-25px, 2px) rotate(-90deg); -ms-transform: translate(-25px, 2px) rotate(-90deg); -o-transform: translate(-25px, 2px) rotate(-90deg); transform: translate(-25px, 2px) rotate(-90deg); }
+#workspace.out > nav .nav-toggle .glyphicon-expand { -webkit-transform: rotate(90deg); -moz-transform: rotate(90deg); -ms-transform: rotate(90deg); -o-transform: rotate(90deg); transform: rotate(90deg); }
+#workspace.out > nav #policy-history { display: none; }
+#workspace.out article { left: 30px; }
 #workspace nav, #workspace article { height: inherit; -webkit-transition: left 500ms; -o-transition: left 500ms; transition: left 500ms; }
-#workspace > nav { display: none; position: absolute; overflow-y: auto; top: 0; left: -145px; width: 175px; padding-top: 10px; padding-bottom: 10px; padding-left: 10px; -webkit-box-shadow: inset -1px 0 1px 0 rgba(0, 0, 0, 0.35); box-shadow: inset -1px 0 1px 0 rgba(0, 0, 0, 0.35); }
-#workspace > nav .nav-toggle { position: relative; margin-right: 5px; padding: 5px 25px 5px 5px; color: #002857; font-weight: bold; cursor: pointer; -webkit-transform-origin: right top; -moz-transform-origin: right top; -ms-transform-origin: right top; transform-origin: right top; -webkit-transform: translate(-25px, 2px) rotate(-90deg); -moz-transform: translate(-25px, 2px) rotate(-90deg); -ms-transform: translate(-25px, 2px) rotate(-90deg); -o-transform: translate(-25px, 2px) rotate(-90deg); transform: translate(-25px, 2px) rotate(-90deg); }
+#workspace > nav { display: none; position: absolute; overflow-y: auto; top: 0; left: 0; width: 175px; padding-top: 10px; padding-bottom: 10px; padding-left: 10px; -webkit-box-shadow: inset -1px 0 1px 0 rgba(0, 0, 0, 0.35); box-shadow: inset -1px 0 1px 0 rgba(0, 0, 0, 0.35); }
+#workspace > nav .nav-toggle { position: relative; margin-right: 5px; padding: 5px 25px 5px 5px; color: #002857; font-weight: bold; cursor: pointer; -webkit-transform-origin: right top; -moz-transform-origin: right top; -ms-transform-origin: right top; transform-origin: right top; }
 #workspace > nav .nav-toggle:hover { background-color: rgba(0, 0, 0, 0.1); }
 #workspace > nav .nav-toggle:hover .glyphicon-expand { color: #002857; }
-#workspace > nav .nav-toggle .glyphicon-expand { position: absolute; top: 6px; right: 5px; font-size: 17px; color: rgba(0, 0, 0, 0.5); -webkit-transform: rotate(90deg); -moz-transform: rotate(90deg); -ms-transform: rotate(90deg); -o-transform: rotate(90deg); transform: rotate(90deg); }
-#workspace > nav > ul { margin: 0; display: none; overflow-y: auto; padding-left: 10px; }
+#workspace > nav .nav-toggle .glyphicon-expand { position: absolute; top: 6px; right: 5px; font-size: 17px; color: rgba(0, 0, 0, 0.5); -webkit-transform: rotate(180deg); -moz-transform: rotate(180deg); -ms-transform: rotate(180deg); -o-transform: rotate(180deg); transform: rotate(180deg); }
+#workspace > nav > ul { margin: 0; display: block; overflow-y: auto; padding-left: 10px; }
 #workspace > nav > ul > li { margin: 5px 0; padding-left: 24px; padding-right: 10px; border-top-left-radius: 4px; border-bottom-left-radius: 4px; }
 #workspace > nav > ul > li:hover { background: rgba(0, 0, 0, 0.1); }
 #workspace > nav > ul > li:hover .glyphicon { display: inline-block; }
@@ -1975,14 +1975,14 @@ ul:after { clear: both; }
 #workspace > nav > ul .no-policies:hover { background: initial; }
 #workspace #open-policy-tabs, #workspace #policy-history, #workspace #policy-history > ul { position: absolute; right: 0; left: 0; border-top: 1px solid #ccc; }
 #workspace #open-policy-tabs { top: 48px; bottom: 40%; }
-#workspace #policy-history { display: none; top: 60%; bottom: 0; }
+#workspace #policy-history { display: block; top: 60%; bottom: 0; }
 #workspace #policy-history h4 { text-align: center; font-family: serif; font-style: italic; font-size: 16px; font-size: 1.6rem; color: #838383; }
 #workspace #policy-history > ul { top: 37px; bottom: 0; overflow-y: auto; margin: 0; padding: 0 10px; }
 #workspace #policy-history > ul > li { margin: 5px 0; border-radius: 4px; }
 #workspace #policy-history > ul > li:hover { background: rgba(0, 0, 0, 0.1); }
 #workspace #policy-history > ul > li:hover > a { color: dimgrey; }
 #workspace #policy-history > ul > li > a { display: block; padding: 5px 10px; font-size: 12px; font-size: 1.2rem; text-decoration: none; color: #9c9c9c; }
-#workspace article { position: absolute; top: 0; right: 0; left: 30px; overflow: hidden; }
+#workspace article { position: absolute; top: 0; right: 0; left: 175px; overflow: hidden; }
 #workspace #canvas { min-width: 1170px; }
 #workspace #canvas:before, #workspace #canvas:after { content: " "; display: table; }
 #workspace #canvas:after { clear: both; }
@@ -2048,7 +2048,7 @@ ul:after { clear: both; }
 #home .carousel-indicators li.active { background-color: #666; }
 #home .carousel-inner { border: 1px solid #ddd; }
 #home .carousel-inner > .item > img { width: 100%; }
-#home .carousel-control { width: 5%; background: initial; text-shadow: initial; color: #666; }
+#home .carousel-control { width: 5%; background-image: none; text-shadow: none; color: #666; }
 #home .carousel-control.left { left: -5%; }
 #home .carousel-control.right { right: -5%; }
 #home .panel-body { max-height: 500px; overflow: auto; }
@@ -2155,10 +2155,12 @@ Module: Policy
 .policy-error button:hover { background-image: url('data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4gPHN2ZyB2ZXJzaW9uPSIxLjEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGRlZnM+PGxpbmVhckdyYWRpZW50IGlkPSJncmFkIiBncmFkaWVudFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIgeDE9IjUwJSIgeTE9IjAlIiB4Mj0iNTAlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iIzU2MTQxZSIvPjxzdG9wIG9mZnNldD0iMTAwJSIgc3RvcC1jb2xvcj0iIzM0MDcwZiIvPjwvbGluZWFyR3JhZGllbnQ+PC9kZWZzPjxyZWN0IHg9IjAiIHk9IjAiIHdpZHRoPSIxMDAlIiBoZWlnaHQ9IjEwMCUiIGZpbGw9InVybCgjZ3JhZCkiIC8+PC9zdmc+IA=='); background-size: 100%; background-image: -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(0%, #56141e), color-stop(100%, #34070f)); background-image: -webkit-linear-gradient(#56141e, #34070f); background-image: -moz-linear-gradient(#56141e, #34070f); background-image: -o-linear-gradient(#56141e, #34070f); background-image: linear-gradient(#56141e, #34070f); -webkit-box-shadow: inset 0 1px 0 0 #7d1f2f; box-shadow: inset 0 1px 0 0 #7d1f2f; cursor: pointer; }
 .policy-error button:active { -webkit-box-shadow: inset 0 0 8px 4px #27060b, inset 0 0 8px 4px #27060b, 0 1px 1px 0 #eeeeee; box-shadow: inset 0 0 8px 4px #27060b, inset 0 0 8px 4px #27060b, 0 1px 1px 0 #eeeeee; border: 1px solid #34070f; }
 
+.inactive .policy-module { visibility: hidden; opacity: 0; z-index: -1; margin: 0; padding: 0; height: 0 !important; min-height: 0 !important; overflow: hidden !important; border: 0; }
+
 .policy-module { position: relative; margin: 0; padding: 0; min-height: 600px; background: #f4f4f4; border: #ddd 1px solid; overflow: auto; z-index: 1; }
 .policy-module:before, .policy-module:after { content: " "; display: table; }
 .policy-module:after { clear: both; }
-.policy-module.inactive { visibility: hidden; opacity: 0; overflow: hidden; z-index: -1; margin: 0; padding: 0; height: 0 !important; min-height: 0 !important; border: 0; }
+.policy-module.inactive { visibility: hidden; opacity: 0; z-index: -1; margin: 0; padding: 0; height: 0 !important; min-height: 0 !important; overflow: hidden !important; border: 0; }
 .policy-module.policy-swf { border: 0; overflow: visible; }
 
 .policy-header { background: white; border: #ddd 1px solid; border-bottom: 0px; margin: 0; }
