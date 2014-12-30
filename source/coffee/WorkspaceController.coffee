@@ -777,13 +777,13 @@ define [
       @$workspace_el.height workspaceHeight
 
     open_policy_nav : ->
-      @$workspace_el.addClass 'in'
+      @$workspace_el.removeClass 'out'
 
     close_policy_nav : ->
-      @$workspace_el.removeClass 'in'
+      @$workspace_el.addClass 'out'
 
     toggle_policy_nav : ->
-      @$workspace_el[if @$workspace_el.is('.in') then 'removeClass' else 'addClass'] 'in'
+      @$workspace_el[if @$workspace_el.is('.out') then 'removeClass' else 'addClass'] 'out'
 
     attach_policy_nav_handler : ->
       $('.nav-toggle').on 'click', (e) =>

@@ -45,8 +45,8 @@
 
   .carousel-control {
     width: 5%;
-    background: initial;
-    text-shadow: initial;
+    background-image: none;
+    text-shadow: none;
     color: #666;
 
     &.left { left: -5%; }
