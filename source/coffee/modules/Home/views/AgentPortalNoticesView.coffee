@@ -24,8 +24,8 @@ define [
     initialize : ->
       _.bindAll this, 'renderNotices'
       @$noticeList = @$('.panel-body > ul')
-      @collection.digest = @options.controller.IXVOCAB_AUTH
-      @collection.baseUrl = @options.controller.services.agentportal
+      @collection.digest = @options.controller.APP_PC_AUTH
+      @collection.url = @options.controller.services.agentPortalNotices
       @collection.on 'reset', @renderNotices
       @collection.fetch()
 
