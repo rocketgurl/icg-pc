@@ -85,6 +85,7 @@ define [
     workspace_zindex      : 30000
     workspace_stack       : {} # store a ref to WorkspaceStack here
     policyHistoryViews    : {}
+    APP_PC_AUTH           : 'Y29tLmljcy5hcHBzLnBvbGljeWNlbnRyYWw6N2FjZmU5NTAxNDlkYWQ4M2ZlNDdhZTdjZDdkODA2Mzg='
     IXVOCAB_AUTH          : 'Y29tLmljcy5hcHBzLmluc2lnaHRjZW50cmFsOjVhNWE3NGNjODBjMzUyZWVkZDVmODA4MjkzZWFjMTNk'
 
     # Simple logger
