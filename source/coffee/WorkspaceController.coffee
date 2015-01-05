@@ -559,6 +559,8 @@ define [
       # Retrieve the base Agent Support View url
       @services.agentSupport = @config.get_agent_support(@workspace_state)
 
+      @services.agentPortalNotices = @config.get_agent_portal_notices(@workspace_state)
+
     # Build the breadcrumb in the top nav
     #
     # @param `data` _Object_ env labels
