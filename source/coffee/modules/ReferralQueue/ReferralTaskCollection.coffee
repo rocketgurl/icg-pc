@@ -20,6 +20,10 @@ define [
 
     sortDir : 'asc'
 
+    url : ->
+      params = decodeURIComponent $.param @getParams()
+      "#{@baseURL}?media=application%2Fxml&#{params}"
+
     sortCache :
       'relatedQuoteId'  : 'asc'
       'insuredLastName' : 'asc'
@@ -68,12 +72,12 @@ define [
       false
 
     getParams : ->
-      params = { media : 'application/xml' }
-      params.OwningUnderwriter = @owner if @owner?
-      params.OwningAgent       = @agent if @agent?
+      params =
+        page    : @page
+        perPage : @perPage
+      params.OwningUnderwriter = @owner  if @owner?
+      params.OwningAgent       = @agent  if @agent?
       params.status            = @status if @status?
-      params.page              = @page
-      params.perPage           = @perPage
       params
 
     setParam : (param, value, silent) ->
@@ -96,7 +100,6 @@ define [
     #
     getReferrals : ->
       @fetch(
-        data        : @getParams()
         dataType    : 'xml'
         contentType : 'application/xml'
         headers     :
