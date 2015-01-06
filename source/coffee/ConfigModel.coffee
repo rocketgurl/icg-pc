@@ -89,17 +89,20 @@ define [
     get_agent_portal_notices :
       check_workspace \
       (workspace) ->
-        doc = @get('document')
-        url = doc.find("ConfigItem[name=#{workspace.app}] ConfigItem[name=businesses] ConfigItem[name=#{workspace.business}] ConfigItem[name=#{window.ICS360_ENV}] ConfigItem[name=agentPortalNoticesURL]").attr('value')
+        # doc = @get('document')
+        # url = doc.find("ConfigItem[name=#{workspace.app}] ConfigItem[name=businesses] ConfigItem[name=#{workspace.business}] ConfigItem[name=#{window.ICS360_ENV}] ConfigItem[name=agentPortalNoticesURL]").attr('value')
 
         # if url == undefined then false else url
 
+        config = {}
         if workspace.business is 'cru'
-          'https://stage-sagesure-svc.icg360.org/cru-4/agentportal/api/rest/v2/programs/P4-CRU/notices'
+          config.baseURL = '/agentportal/'
+          config.program = 'P4-CRU'
         else if workspace.business is 'fnic'
-          'https://stage-fnic-svc.icg360.org/fnic-1/agentportal/api/rest/v2/programs/P4-CRU/notices'
-        else
-          false
+          config.baseURL = '/agentportal-fnic/'
+          config.program = 'P1-FNIC'
+
+        if _.isEmpty config then false else config
 
     # Retrieve URL of pxClient from ixConfig - pxClient is stored on S3
     get_pxClient :
