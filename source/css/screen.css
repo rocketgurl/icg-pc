@@ -2556,7 +2556,7 @@ header.module-referrals h1 { float: left; margin: 0 20px 0 0; font-weight: bold;
 header.module-referrals .checkbox { padding: 0 10px; }
 
 .table.module-referrals tbody > tr { cursor: pointer; }
-.table.module-referrals .label { font-size: inherit; font-weight: normal; }
+.table.module-referrals .label-success { font-size: inherit; font-weight: normal; }
 .table.module-referrals .referrals-sort-link { display: block; }
 .table.module-referrals .referrals-sort-link > .glyphicon { top: 2px; width: 14px; }
 .table.module-referrals .related-quote-id { min-width: 105px; }
