@@ -89,7 +89,6 @@ define [
     tasksError : (collection, response) ->
       @toggleLoader()
       @Amplify.publish @cid, 'warning', "Could not load referrals: #{response.status} - #{response.statusText}"
-      console.log ["tasksError", collection, response]
 
     # Toggle the owner buttons on the UI and trigger collection.getReferrals()
     updateOwner : (e) ->
