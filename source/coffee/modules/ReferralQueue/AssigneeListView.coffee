@@ -87,7 +87,8 @@ define [
           @initSubview model, 'renewals', @$renewalList
         else
           @initSubview model, 'active', @$activeList
-      @assigneeSuccess()
+      @$statusEl.empty()
+      @$confirmBtn.prop 'disabled', @collection.length < 1
 
     saveAssignees : (e) ->
       e.preventDefault()
@@ -106,6 +107,7 @@ define [
         .show()
         .delay(3000)
         .fadeOut('slow')
+      @$el.modal('hide')
 
     assigneeError : (collection, jqXHR) ->
       @$confirmBtn.prop 'disabled', true
