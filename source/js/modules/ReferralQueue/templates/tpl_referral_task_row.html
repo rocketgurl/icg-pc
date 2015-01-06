@@ -1,7 +1,12 @@
+<td>{{#Rush}}<span class="label label-warning">Rush!</span>{{/Rush}}</td>
 <td><a href="{{href}}">{{relatedQuoteId}}</a></td>
 <td><a href="{{href}}">{{insuredLastName}}</a></td>
 <td class="referral-status">{{status}}</td>
 <td>{{prettySubtype}}</td>
 <td>{{prettyLastUpdated}}</td>
-<td>{{SubmittedBy}}</td>
-<td>{{assignedTo}}</td>
+<td{{#assignedToAgent}} title="Assigned to Agent"{{/assignedToAgent}}>{{#OwningAgent}}
+  <span{{#assignedToAgent}} class="label label-success"{{/assignedToAgent}}>{{OwningAgent}}</span>
+{{/OwningAgent}}</td>
+<td{{#assignedToUnderwriting}} title="Assigned to Underwriting"{{/assignedToUnderwriting}}>{{#OwningUnderwriter}}
+  <span{{#assignedToUnderwriting}} class="label label-success"{{/assignedToUnderwriting}}>{{OwningUnderwriter}}</span>
+{{/OwningUnderwriter}}</td>
