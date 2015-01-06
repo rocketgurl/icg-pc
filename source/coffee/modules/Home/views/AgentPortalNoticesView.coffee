@@ -16,16 +16,15 @@ define [
     </li>
     """)
 
-    collection : new APNoticesCollection()
-
     events :
       'click .notice-item-toggle > a' : 'toggleNoticeItem'
 
     initialize : ->
       _.bindAll this, 'renderNotices'
       @$noticeList = @$('.panel-body > ul')
+      @collection = new APNoticesCollection()
       @collection.digest = @options.controller.APP_PC_AUTH
-      @collection.url = @options.controller.services.agentPortalNotices
+      @collection.config = @options.controller.services.agentPortalNotices
       @collection.on 'reset', @renderNotices
       @collection.fetch()
 
