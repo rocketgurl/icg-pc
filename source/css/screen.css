@@ -1473,6 +1473,30 @@ tbody.collapse.in { display: table-row-group; }
 .navbar-inverse .btn-link:hover, .navbar-inverse .btn-link:focus { color: white; }
 .navbar-inverse .btn-link[disabled]:hover, .navbar-inverse .btn-link[disabled]:focus, fieldset[disabled] .navbar-inverse .btn-link:hover, fieldset[disabled] .navbar-inverse .btn-link:focus { color: #444444; }
 
+.label { display: inline; padding: .2em .6em .3em; font-size: 75%; font-weight: bold; line-height: 1; color: white; text-align: center; white-space: nowrap; vertical-align: baseline; border-radius: .25em; }
+.label:empty { display: none; }
+.btn .label { position: relative; top: -1px; }
+
+a.label:hover, .policy-nav > ul > li > a.label.select, a.label:focus { color: white; text-decoration: none; cursor: pointer; }
+
+.label-default { background-color: #777777; }
+.label-default[href]:hover, .label-default[href]:focus { background-color: #5e5e5e; }
+
+.label-primary { background-color: #428bca; }
+.label-primary[href]:hover, .label-primary[href]:focus { background-color: #3071a9; }
+
+.label-success { background-color: #5cb85c; }
+.label-success[href]:hover, .label-success[href]:focus { background-color: #449d44; }
+
+.label-info { background-color: #5bc0de; }
+.label-info[href]:hover, .label-info[href]:focus { background-color: #31b0d5; }
+
+.label-warning { background-color: #f0ad4e; }
+.label-warning[href]:hover, .label-warning[href]:focus { background-color: #ec971f; }
+
+.label-danger { background-color: #d9534f; }
+.label-danger[href]:hover, .label-danger[href]:focus { background-color: #c9302c; }
+
 .alert { padding: 15px; margin-bottom: 20px; border: 1px solid transparent; border-radius: 4px; }
 .alert h4 { margin-top: 0; color: inherit; }
 .alert .alert-link { font-weight: bold; }
@@ -2531,6 +2555,8 @@ header.module-referrals { margin: 0 0 20px 0; }
 header.module-referrals h1 { float: left; margin: 0 20px 0 0; font-weight: bold; color: #002857; font-size: 24px; font-size: 2.4rem; text-shadow: 0 1px white; line-height: 1.4; }
 header.module-referrals .checkbox { padding: 0 10px; }
 
+.table.module-referrals tbody > tr { cursor: pointer; }
+.table.module-referrals .label { font-size: inherit; font-weight: normal; }
 .table.module-referrals .referrals-sort-link { display: block; }
 .table.module-referrals .referrals-sort-link > .glyphicon { top: 2px; width: 14px; }
 .table.module-referrals .related-quote-id { min-width: 105px; }

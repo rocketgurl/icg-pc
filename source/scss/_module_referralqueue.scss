@@ -32,6 +32,13 @@ header.module-referrals {
 }
 
 .table.module-referrals {
+  tbody {
+    > tr { cursor: pointer; }
+  }
+  .label {
+    font-size: inherit;
+    font-weight: normal;
+  }
   .referrals-sort-link {
     display: block;
     
