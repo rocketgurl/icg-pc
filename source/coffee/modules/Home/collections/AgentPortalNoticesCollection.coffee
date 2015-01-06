@@ -7,6 +7,9 @@ define [
 
     model : NoticeModel
 
+    url : ->
+      "#{@config.baseURL}programs/#{@config.program}/notices"
+
     sync : (method, collection, options) ->
       options.headers =
         'Authorization' : "Basic #{@digest}"
