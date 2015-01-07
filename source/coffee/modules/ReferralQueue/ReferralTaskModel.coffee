@@ -11,8 +11,6 @@ define [
 
     parse : (data) ->
       data                        = @setDataItems data
-      data.assignedToUnderwriting = data.AssignedTo is 'Underwriting'
-      data.assignedToAgent        = data.AssignedTo is 'Agent'
       data.OwningAgent            = data.OwningAgent or ''
       data.OwningUnderwriter      = data.OwningUnderwriter or ''
       data.prettySubtype          = @setPrettySubtype data.Subtype 
