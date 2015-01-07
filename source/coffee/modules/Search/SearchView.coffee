@@ -168,8 +168,8 @@ define [
           'Authorization'   : "Basic #{digest}"
         success : (collection, resp) =>
           #check for empty requests
-          if collection.models.length == 0
-            @loader_ui(false)
+          if collection.length is 0
+            @loader_ui false
             @favicon.stop()
             @Amplify.publish @cid, 'notice', "No policies found when searching for #{query.q}", 3000
             return
@@ -184,10 +184,12 @@ define [
           @params = 
             q : query.q
 
-          @params = _.extend @params, @get_search_options()
-          @module.app.params = @params
-          @controller.set_active_url @module.app.app # Ensure the correct URL
-          @setContextLabel()
+          # ***TARGETING THE FOLLOWING LINES TO KILL***
+          # 
+          # @params = _.extend @params, @get_search_options()
+          # @module.app.params = @params
+          # @controller.set_active_url @module.app.app # Ensure the correct URL
+          # @setContextLabel()
 
           # Need to let the footer know that we changed height
           @module.trigger 'workspace.rendered'
