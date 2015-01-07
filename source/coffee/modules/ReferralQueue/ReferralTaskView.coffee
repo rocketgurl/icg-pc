@@ -30,9 +30,11 @@ define [
     openPolicy : (e) ->
       e.preventDefault()
       $el = $(e.currentTarget)
+      id = @model.get('relatedPolicyId') or @model.get('relatedQuoteId')
 
       params =
         url : @model.get 'relatedQuoteId'
+        label : "#{@model.get('insuredLastName')} #{id}"
 
       @PARENT_VIEW?.MODULE.view.options.controller.launch_module('policyview', params)
       @PARENT_VIEW?.MODULE.view.options.controller.Router.append_module('policyview', params)
