@@ -2560,7 +2560,7 @@ header.module-referrals .checkbox { padding: 0 10px; }
 .table.module-referrals .referrals-sort-link { display: block; }
 .table.module-referrals .referrals-sort-link > .glyphicon { top: 2px; width: 14px; }
 .table.module-referrals .related-quote-id { min-width: 105px; }
-.table.module-referrals .status-new { font-weight: bold; }
+.table.module-referrals .assigned-to-underwriting { font-weight: bold; }
 .table.module-referrals .referral-status { text-transform: capitalize; }
 
 #assignee-list-modal .list-group { max-height: 300px; overflow-y: auto; }

@@ -51,18 +51,17 @@ define [
 
     # Open a new PolicyView tab with the current policy
     open_policy : (e) ->
-      e.preventDefault()
-      $el = $(e.currentTarget)
+      e.preventDefault() if _.isObject e
 
-      identifiers = @model.get('identifiers')
-      last_name = @model.get('insured').lastName || ""
+      identifiers = @model.get 'identifiers'
+      last_name = @model.get('insured').lastName or ''
 
       # Setup the params object to launch policy view with
-      policyLabel = identifiers.policyId || identifiers.quoteNumber
+      policyLabel = identifiers.policyId or identifiers.quoteNumber
       
       params =
         url     : identifiers.quoteNumber
-        label : last_name + " " + policyLabel
+        label : "#{last_name} #{policyLabel}"
 
       @module.view.options.controller.launch_module 'policyview', params
       @module.view.options.controller.Router.append_module 'policyview', params
