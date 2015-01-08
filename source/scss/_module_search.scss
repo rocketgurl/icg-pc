@@ -63,9 +63,9 @@ header.module-search {
 
 .module-search.filters {
   margin: 0 0 20px 0;
-  form: {
-    display: block;
-  };
+
+  form { display: block; }
+
   .control-label {
     padding-top: 0;
     @include emboss;

@@ -2114,7 +2114,8 @@ header.module-search ul li.search-controls:first-child { border-left: 0px; }
 header.module-search ul li.search-controls:last-child { border-right: 0px; }
 header.module-search i.icon-caret-down { color: dimgrey; }
 
-.module-search.filters { margin: 0 0 20px 0; form-display: block; }
+.module-search.filters { margin: 0 0 20px 0; }
+.module-search.filters form { display: block; }
 .module-search.filters .control-label { padding-top: 0; text-shadow: 0 1px white; font-size: 18px; font-size: 1.8rem; color: #002857; line-height: 1.7; }
 .module-search.filters a { font-size: 14px; font-size: 1.4rem; color: dimgrey; text-decoration: none; line-height: 2.1; padding: 0 10px; }
 .module-search.filters a:hover, .module-search.filters .policy-nav > ul > li > a.select { color: #165788; }
