@@ -378,7 +378,6 @@ define [
             @show_navigation()
 
             # Instantiate our SearchContextCollection
-            # @setup_search_storage()
             @navigation_view = new WorkspaceNavView({
                 router     : @Router
                 controller : @
