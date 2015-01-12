@@ -124,9 +124,9 @@ define [
     # Return an object of pagination form elements
     # @return _Object_
     cachePaginationElements : ->
-      items    : @$el.find('.pagination-a')
-      jump_to  : @$el.find('.referrals-pagination-page')
-      per_page : @$el.find('.referrals-pagination-perpage')
+      items    : @$('.pagination-a')
+      jump_to  : @$('.referrals-pagination-page')
+      per_page : @$('.referrals-pagination-perpage')
 
     # Update the pagination controls with current info
     #
