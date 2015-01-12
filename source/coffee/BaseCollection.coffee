@@ -1,9 +1,7 @@
 define [
-  'jquery', 
-  'underscore',
-  'backbone',
+  'backbone'
   'amplify'
-], ($, _, Backbone, amplify) ->
+], (Backbone, amplify) ->
 
   BaseCollection = Backbone.Collection.extend
 

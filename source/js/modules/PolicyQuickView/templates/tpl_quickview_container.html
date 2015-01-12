@@ -1,12 +1,12 @@
 <!-- Nav tabs panel -->
 <div id="qv-tabs-{{cid}}" class="col-left">
-  <!-- // hidden until we have content in other tabs
+
   <ul class="nav nav-tabs">
     <li class="active"><a href="#tab-servicing-{{cid}}" data-toggle="tab">Servicing</a></li>
     <li><a href="#tab-underwriting-{{cid}}" data-toggle="tab">Underwriting</a></li>
-    <li><a href="#tab-claims-{{cid}}" data-toggle="tab">Claims</a></li>
+    <!-- <li><a href="#tab-claims-{{cid}}" data-toggle="tab">Claims</a></li> -->
   </ul>
-  -->
+ 
   <!-- Tab panes -->
   <div class="tab-content">
     <div class="tab-pane clearfix active" id="tab-servicing-{{cid}}">
@@ -15,8 +15,8 @@
       </div>
     </div>
     <div class="tab-pane clearfix" id="tab-underwriting-{{cid}}">
-      <div class="col-xs-12">
-        <div class="alert alert-info"><strong>COMING SOON:</strong> Underwriting</div>
+      <div id="lh-loader-{{cid}}" class="lh-loader">
+        <h2 id="lh-spinner-{{cid}}"><span>Loading Underwriting&hellip;</span></h2>
       </div>
     </div>
     <div class="tab-pane clearfix" id="tab-claims-{{cid}}">

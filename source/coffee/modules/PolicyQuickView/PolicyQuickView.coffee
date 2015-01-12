@@ -2,10 +2,11 @@ define [
   'tab'
   'BaseView'
   'modules/PolicyQuickView/views/ServicingTabView'
+  'modules/PolicyQuickView/views/UnderwritingTabView'
   'modules/PolicyQuickView/views/ActivityView'
   'modules/PolicyQuickView/views/DocumentsView'
   'text!modules/PolicyQuickView/templates/tpl_quickview_container.html'
-], (tab, BaseView, ServicingTabView, ActivityView, DocumentsView, tpl_qv_container) ->
+], (tab, BaseView, ServicingTabView, UnderwritingTabView, ActivityView, DocumentsView, tpl_qv_container) ->
 
   # PolicyQuickView
   # ====
@@ -32,6 +33,12 @@ define [
         controller : @CONTROLLER
         policy     : @POLICY
         el         : @$("#tab-servicing-#{@cid}")
+
+      underwriting = new UnderwritingTabView
+        qvid       : @cid
+        controller : @CONTROLLER
+        policy     : @POLICY
+        el         : @$("#tab-underwriting-#{@cid}")
 
       activities = new ActivityView
         qvid                : @cid
