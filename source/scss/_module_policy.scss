@@ -138,6 +138,18 @@ Module: Policy
   }
 }
 
+.inactive .policy-module {
+  visibility: hidden;
+  opacity: 0;
+  z-index: -1;
+  margin: 0;
+  padding: 0;
+  height: 0 !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  border: 0;
+}
+
 .policy-module {
   @include clearfix();
   position: relative;
@@ -151,12 +163,12 @@ Module: Policy
   &.inactive {
     visibility: hidden;
     opacity: 0;
-    overflow: hidden;
     z-index: -1;
     margin: 0;
     padding: 0;
     height: 0 !important;
     min-height: 0 !important;
+    overflow: hidden !important;
     border: 0;
   }
   &.policy-swf {

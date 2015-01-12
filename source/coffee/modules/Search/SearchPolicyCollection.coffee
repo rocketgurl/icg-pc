@@ -27,14 +27,16 @@ define [
       @container.$el.find('table.module-search tbody').html('')
       @views = []
       @populate()
+      if @length is 1
+        @views[0].open_policy()
 
     # Load table with policy views
     populate : ->
-      @.each (model) =>
-        @views.push new SearchPolicyView(
-            model     : model
-            container : @container
-          )
+      @each (model) =>
+        searchPolicyView = new SearchPolicyView
+          model     : model
+          container : @container
+        @views.push searchPolicyView
 
     # Build and display pagination control information
     render_pagination : ->

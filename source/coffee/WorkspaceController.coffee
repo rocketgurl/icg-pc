@@ -85,6 +85,7 @@ define [
     workspace_zindex      : 30000
     workspace_stack       : {} # store a ref to WorkspaceStack here
     policyHistoryViews    : {}
+    APP_PC_AUTH           : 'Y29tLmljcy5hcHBzLnBvbGljeWNlbnRyYWw6N2FjZmU5NTAxNDlkYWQ4M2ZlNDdhZTdjZDdkODA2Mzg='
     IXVOCAB_AUTH          : 'Y29tLmljcy5hcHBzLmluc2lnaHRjZW50cmFsOjVhNWE3NGNjODBjMzUyZWVkZDVmODA4MjkzZWFjMTNk'
 
     # Simple logger
@@ -377,7 +378,6 @@ define [
             @show_navigation()
 
             # Instantiate our SearchContextCollection
-            # @setup_search_storage()
             @navigation_view = new WorkspaceNavView({
                 router     : @Router
                 controller : @
@@ -557,6 +557,8 @@ define [
 
       # Retrieve the base Agent Support View url
       @services.agentSupport = @config.get_agent_support(@workspace_state)
+
+      @services.agentPortalNotices = @config.get_agent_portal_notices(@workspace_state)
 
     # Build the breadcrumb in the top nav
     #
@@ -777,13 +779,13 @@ define [
       @$workspace_el.height workspaceHeight
 
     open_policy_nav : ->
-      @$workspace_el.addClass 'in'
+      @$workspace_el.removeClass 'out'
 
     close_policy_nav : ->
-      @$workspace_el.removeClass 'in'
+      @$workspace_el.addClass 'out'
 
     toggle_policy_nav : ->
-      @$workspace_el[if @$workspace_el.is('.in') then 'removeClass' else 'addClass'] 'in'
+      @$workspace_el[if @$workspace_el.is('.out') then 'removeClass' else 'addClass'] 'out'
 
     attach_policy_nav_handler : ->
       $('.nav-toggle').on 'click', (e) =>

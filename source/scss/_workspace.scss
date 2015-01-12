@@ -2,22 +2,22 @@
   position: relative;
   @include clearfix;
 
-  &.in {
+  &.out {
     > nav {
-      left: 0;
-      > ul { display: block; }
+      left: -145px;
+      > ul { display: none; }
 
       .nav-toggle {
-        @include transform(initial);
+        @include transform(translate(-25px, 2px) rotate(-90deg));
 
         .glyphicon-expand {
-          @include transform(rotate(180deg));
+          @include transform(rotate(90deg));
         }
       }
 
-      #policy-history { display: block; }
+      #policy-history { display: none; }
     }
-    article { left: 175px; }
+    article { left: 30px; }
   }
 
   nav,
@@ -31,7 +31,7 @@
     position: absolute;
     overflow-y: auto;
     top: 0;
-    left: -145px;
+    left: 0;
     width: 175px;
     padding-top: 10px;
     padding-bottom: 10px;
@@ -46,7 +46,6 @@
       font-weight: bold;
       cursor: pointer;
       @include transform-origin(right top);
-      @include transform(translate(-25px, 2px) rotate(-90deg));
 
       &:hover {
         background-color: rgba(0, 0, 0, 0.10);
@@ -60,13 +59,13 @@
         right: 5px;
         font-size: 17px;
         color: rgba(0, 0, 0, 0.50);
-        @include transform(rotate(90deg));
+        @include transform(rotate(180deg));
       }
     }
 
     > ul {
       margin: 0;
-      display: none;
+      display: block;
       overflow-y: auto;
       padding-left: 10px;
 
@@ -168,7 +167,7 @@
   }
 
   #policy-history {
-    display: none;
+    display: block;
     top: 60%;
     bottom: 0;
 
@@ -212,7 +211,7 @@
     position: absolute;
     top: 0;
     right: 0;
-    left: 30px;
+    left: 175px;
     overflow: hidden;
   }
 

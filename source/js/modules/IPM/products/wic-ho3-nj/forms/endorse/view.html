@@ -1020,6 +1020,17 @@
 
 
 		<div>
+			<label for="{{guid}}_EarthquakeMasonryVeneerExclusion" >Exclude Masonry Veneer Coverage? <i>EarthquakeMasonryVeneerExclusion</i></label>
+			<select id="{{guid}}_EarthquakeMasonryVeneerExclusion" name="EarthquakeMasonryVeneerExclusion" data-value="{{EarthquakeMasonryVeneerExclusion}}"   >
+				{{#EnumsEarthquakeMasonryVeneerExclusion}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsEarthquakeMasonryVeneerExclusion}}
+			</select>
+		</div>
+
+
+
+		<div>
 			<label for="{{guid}}_LossAssessmentCoverage" class="labelRequired">Loss Assessment Coverage <i>LossAssessmentCoverage</i></label>
 			<select id="{{guid}}_LossAssessmentCoverage" name="LossAssessmentCoverage" data-value="{{LossAssessmentCoverage}}"  required >
 				{{#EnumsLossAssessmentCoverage}}

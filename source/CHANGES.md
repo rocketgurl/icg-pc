@@ -1,3 +1,23 @@
+### 3.0.2 - Jan 13, 2015
+
+- [ICS-3046](https://icg360.atlassian.net/browse/ICS-3046)
+    - corrected label on the policy nav not swiveling into place on IE10
+    - fixed gradient transparency on the slideshow on IE10
+    - tests on IE11 look good, too
+
+
+- [ICS-2951](https://icg360.atlassian.net/browse/ICS-2951)
+    - Help page with Support info, FAQ, and feedback
+    - content driven by user role
+
+
+- [ICS-2953](https://icg360.atlassian.net/browse/ICS-2953)
+    - Notices content driven by user role
+
+
+- [ICS-3086](https://icg360.atlassian.net/browse/ICS-3086)
+    - Added EarthquakeMasonryVeneerExclusion on ofcc-ho3-nj and wic-ho3-nj endorse IPM forms
+
 ### 3.0.1 - Dec 22, 2014
 
 - 'Manage Referral Assignees' is no longer on the Referrals page and is only in navigation

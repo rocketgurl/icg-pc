@@ -70,9 +70,18 @@ define [
       }
 
     # When you need to display a prettier
-    #  set of values than the given data
+    # set of values than the given data
     prettyMap : (value, valueMap={}, defaultVal='') ->
       valueMap[value] || value || defaultVal
+
+    # coerce a string like 'true' to it's proper Boolean type
+    strToBool : (value) ->
+      if _.isString value
+        value.toLowerCase() is 'true'
+      else if _.isBoolean value
+        value
+      else
+        false
 
     # Simple wrapper on setTimeout
     callback_delay : (ms, func) =>

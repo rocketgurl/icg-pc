@@ -12,13 +12,16 @@ define [
 
     initialize : (options) ->
       @PARENT_VIEW = options.parent_view
-      @setStatusClass()
+      @setAssignedTo()
       this
 
-    setStatusClass : ->
-      status = @model.get 'status'
-      if status is 'new'
-        @$el.addClass 'status-new'
+    setAssignedTo : ->
+      if @model.get('AssignedTo') is 'Underwriting'
+        @$el
+          .addClass 'assigned-to-underwriting'
+          .attr 'title', 'Assigned to Underwriting'
+      else
+        @$el.attr 'title', 'Assigned to Agent'
 
     render : ->
       html = @Mustache.render tpl_row, @model.toJSON()
@@ -27,9 +30,11 @@ define [
     openPolicy : (e) ->
       e.preventDefault()
       $el = $(e.currentTarget)
+      id = @model.get('relatedPolicyId') or @model.get('relatedQuoteId')
 
       params =
         url : @model.get 'relatedQuoteId'
+        label : "#{@model.get('insuredLastName')} #{id}"
 
       @PARENT_VIEW?.MODULE.view.options.controller.launch_module('policyview', params)
       @PARENT_VIEW?.MODULE.view.options.controller.Router.append_module('policyview', params)
