@@ -20,6 +20,7 @@ define [
 
     sortDir : 'asc'
 
+    # Decode the URI component, because encoded email addresses appear to break the API
     url : ->
       params = decodeURIComponent $.param @getParams()
       "#{@baseURL}?media=application%2Fxml&#{params}"
