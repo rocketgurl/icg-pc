@@ -147,15 +147,14 @@ define [
       @viewDataPrevious = _.deepClone @viewData
       @viewData.preview = @Endorse.parseIntervals(@values)
 
-      preview_values = @extractEventValues(@MODULE.POLICY, @viewData)
-      preview_labels = @determinePreviewLabel(@values.formValues, @viewData)
-      @viewData = _.extend(@viewData, preview_values, preview_labels)
-
-      reasonCode = @values.formValues.reasonCode
-      reason = _.first(_.filter(@REASON_CODES, (item) -> item.value == reasonCode))
+      @extendPreviewData @values.formValues, @viewData
       
-      if !_.isUndefined(reason) && _.has reason, 'label'
-        @viewData.preview.ReasonCode = reasonCode + " - " + reason.label
+      allReasonCodes = @NONRENEW_REASON_CODES.concat @REINSTATE_REASON_CODES
+      reasonCode     = @values.formValues.reasonCode
+      reasonCodeObj  = _.find allReasonCodes, (rc) -> rc.value is reasonCode
+      
+      if !_.isUndefined(reasonCodeObj) and _.has reasonCodeObj, 'label'
+        @viewData.preview.ReasonCode = "#{reasonCode} - #{reasonCodeObj.label}"
       else
         @viewData.preview.ReasonCode = reasonCode
 
@@ -186,7 +185,7 @@ define [
         nonRenewalEffectiveDate          : null
         EnumsNonRenewReason              : @NONRENEW_REASON_CODES
         EnumsReinstateReason             : @REINSTATE_REASON_CODES
-        nonrenewDisabled                 : ''
+        nonrenewDisabled                 : 'disabled'
         setPendingDisabled               : ''
         reinstateDisabled                : 'disabled'
         rescindPendingDisabled           : 'disabled'
@@ -223,8 +222,6 @@ define [
           @processNonRenewedPolicy nonRenewData
         else nonRenewData
 
-      console.log nonRenewData
-
       @viewData = _.extend viewData, nonRenewData
 
     processPendingNonRenewal : (nonRenewData) ->
@@ -256,7 +253,7 @@ define [
           """
       else
         data =
-          nonrenewDisabled       : ''
+          nonrenewDisabled       : 'disabled'
           setPendingDisabled     : ''
           reinstateDisabled      : 'disabled'
           rescindPendingDisabled : 'disabled'
@@ -319,7 +316,6 @@ define [
 
     # On error we need to get out of the sub-view.
     callbackError : (jqXHR, status, error) =>
-
       if _.has this, 'viewDataPrevious'
         @viewData = _.deepClone @viewDataPrevious
 
@@ -369,42 +365,26 @@ define [
           options
         )
 
-    # Parse most recent Event object from Policy and use it to build
-    # values for the NonRenewal preview
-    #
-    # @param `policy` _Object_ Policy
-    # @param `viewData` _object_ model.json values
-    # @return _Object_ updated viewData
-    #
-    extractEventValues : (policy, viewData) ->
-      # Find the most recent Cancellation/PendingCancellation in the Policy.
-      # Most recent is last in the XML, so we flip the array with reverse()
-      events = policy.get('json').EventHistory.Event.reverse()
-      actionsMap =
-        'RescindPendingNonRenewal': 'Rescind Pending Non-Renewal'
-        'PendingNonRenewal': 'Pending Non-Renewal'
-        'NonRenewal': 'Non-Renewal'
-
-      nonrenewal = _.find(events, (event) ->
-          _.indexOf(_.keys(actionsMap), event.type) >= 0
-        )
-
-      viewData.preview.Action = actionsMap[nonrenewal.type]
-      viewData
-
-    # Determine the preview label
+    # Add Preview Label and a nicely formatted Action to viewData.preview
     #
     # @param `formValues` _Object_ @values.formValues
     # @param `viewData` _object_ model.json values
     # @return _Object_ updated viewData
     #
-    determinePreviewLabel : (formValues, viewData) ->
+    extendPreviewData : (formValues, viewData) ->
       # Labels for buttons
-      preview_labels =
-        'NonRenewal'                 : 'The policy has been set for immediate non-renewal'
-        'PendingNonRenewal'          : 'The policy has been set to pending non-renewal'
+      labels =
+        'NonRenewal'                  : 'The policy has been set for immediate non-renewal'
+        'PendingNonRenewal'           : 'The policy has been set to pending non-renewal'
         'PendingNonRenewalRescission' : 'The policy pending non-renewal has been rescinded'
+        'NonRenewedReinstatement'     : 'The non-renewed policy has been reinstated'
 
-      viewData.preview.PreviewLabel = preview_labels[formValues.transactionType]
+      actions =
+        'NonRenewal'                  : 'Non-Renewal'
+        'PendingNonRenewal'           : 'Pending Non-Renewal'
+        'PendingNonRenewalRescission' : 'Rescind Pending Non-Renewal'
+        'NonRenewedReinstatement'     : 'Non-Renewed Reinstatement'
 
+      viewData.preview.PreviewLabel = labels[formValues.transactionType]
+      viewData.preview.Action = actions[formValues.transactionType]
       viewData
