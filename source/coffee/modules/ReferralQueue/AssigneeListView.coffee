@@ -36,7 +36,7 @@ define [
       @setupCollectionEventHandlers()
       
       # fetch the Assignee list the first time the modal is called
-      @$el.one 'show.bs.modal', @getData
+      @$el.on 'show.bs.modal', @getData
 
       # revert models back to their saved state when hiding the modal
       @$el.on 'hidden.bs.modal', @resetData
@@ -62,7 +62,9 @@ define [
       @collection.fetch()
 
     resetData : ->
-      @collection.revertModels()
+      @clearLists()
+      @clearSubviews()
+      # @collection.revertModels()
 
     initSubview : (model, viewType, $listView) ->
       subview = new AssigneeListItemView
@@ -79,15 +81,14 @@ define [
         @$activeList.empty()
 
     render : ->
-      @clearLists()
-      @clearSubviews()
       @collection.each (model) =>
         if @isSagesure
           @initSubview model, 'new_business', @$newbizList
           @initSubview model, 'renewals', @$renewalList
         else
           @initSubview model, 'active', @$activeList
-      @assigneeSuccess()
+      @$statusEl.empty()
+      @$confirmBtn.prop 'disabled', @collection.length < 1
 
     saveAssignees : (e) ->
       e.preventDefault()
@@ -106,6 +107,7 @@ define [
         .show()
         .delay(3000)
         .fadeOut('slow')
+      @$el.modal('hide')
 
     assigneeError : (collection, jqXHR) ->
       @$confirmBtn.prop 'disabled', true

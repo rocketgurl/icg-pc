@@ -9,36 +9,30 @@ define [
   #
   ReferralTaskModel = BaseModel.extend
 
-    initialize : ->
-      @setDataItems()
-      @setAssignedTo()
-      @setPrettySubtype()
-      @setPrettyLastUpdated()
+    parse : (data) ->
+      data                        = @setDataItems data
+      data.OwningAgent            = data.OwningAgent or ''
+      data.OwningUnderwriter      = data.OwningUnderwriter or ''
+      data.prettySubtype          = @setPrettySubtype data.Subtype 
+      data.prettyLastUpdated      = @setPrettyLastUpdated data.lastUpdated
+      data.Rush                   = @Helpers.strToBool data.Rush
+      data
 
     # Move dataItems directly onto the model
-    setDataItems : ->
-      model = this
-      dataItems = @Helpers.sanitizeNodeArray @get('DataItem')
+    setDataItems : (data) ->
+      dataItems = @Helpers.sanitizeNodeArray data.DataItem
       _.each dataItems, (item) ->
-        model.set item.name, item.value
+        data[item.name] = item.value
+      data
 
-    # Determine who this task is assigned to based on values in XML
-    setAssignedTo : ->
-      assignedTo = @get 'AssignedTo'
-      @set 'assignedTo', switch assignedTo
-        when 'Underwriting' then @get('OwningUnderwriter') or ''
-        when 'Agent' then @get('OwningAgent') or ''
-        else ''
-
-    setPrettySubtype : ->
-      subtype = @get 'Subtype'
+    setPrettySubtype : (subtype) ->
       subtypeMap =
         'inspectionreview'   : 'Inspection Review'
         'prebindreview'      : 'Loss History'
         'quotingeligibility' : 'Quoting Eligibility'
-      @set 'prettySubtype', (subtypeMap[subtype] or subtype or '')
+      @Helpers.prettyMap subtype, subtypeMap
 
-    setPrettyLastUpdated : ->
+    setPrettyLastUpdated : (lastUpdated) ->
       moment.calendar =
         lastDay  : '[Yesterday at] LT'
         sameDay  : '[Today at] LT'
@@ -46,6 +40,6 @@ define [
         lastWeek : '[last] dddd [at] LT'
         nextWeek : 'dddd [at] LT'
         sameElse : 'LLL'
-      @set 'prettyLastUpdated', moment(@get('lastUpdated')).calendar()
+      moment(lastUpdated).calendar()
 
       

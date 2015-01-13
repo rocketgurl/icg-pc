@@ -182,6 +182,15 @@ define [
           condition: "== 200"
           effect: [@apparatchik.showElement, @apparatchik.makeRequired]
         ]
+      ,
+        field: "EarthquakeCoverage"
+        condition: "== 100"
+        target: [
+          "EarthquakeDeductible"
+          "EarthquakeLossAssessmentCoverage"
+          "EarthquakeMasonryVeneerExclusion"
+          ]
+        effect: @apparatchik.showElement
       ]
 
       @apparatchik.applyEnumDynamics rules

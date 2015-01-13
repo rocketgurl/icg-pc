@@ -19,7 +19,7 @@ define [
         contentType : 'application/xml'
         headers     :
           'Accept'        : 'application/xml'
-          'Authorization' : "Basic #{@controller.user.get('digest')}"
+          'Authorization' : "Basic #{@controller.IXVOCAB_AUTH}"
       Backbone.sync method, collection, options
       @trigger 'request', this
 

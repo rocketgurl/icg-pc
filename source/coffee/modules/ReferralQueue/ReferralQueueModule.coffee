@@ -15,10 +15,10 @@ define [
       @controller = @view.options.controller
 
       # Setup collection
-      @TASKS        = new ReferralTaskCollection()
-      @TASKS.url    = @controller.services.pxcentral + 'tasks'
-      @TASKS.digest = @controller.user.get 'digest'
-      @TASKS.owner  = @TASKS.ownerDefault = @controller.user.get 'email'
+      @TASKS         = new ReferralTaskCollection()
+      @TASKS.baseURL = @controller.services.pxcentral + 'tasks'
+      @TASKS.digest  = @controller.user.get 'digest'
+      @TASKS.owner   = @TASKS.ownerDefault = @controller.user.get 'email'
 
       #Setup view
       @QUEUE_VIEW = new ReferralQueueView(

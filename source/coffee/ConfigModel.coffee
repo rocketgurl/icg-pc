@@ -86,6 +86,24 @@ define [
 
         if url == undefined then false else url
 
+    get_agent_portal_notices :
+      check_workspace \
+      (workspace) ->
+        # doc = @get('document')
+        # url = doc.find("ConfigItem[name=#{workspace.app}] ConfigItem[name=businesses] ConfigItem[name=#{workspace.business}] ConfigItem[name=#{window.ICS360_ENV}] ConfigItem[name=agentPortalNoticesURL]").attr('value')
+
+        # if url == undefined then false else url
+
+        config = {}
+        if workspace.business is 'cru'
+          config.baseURL = '/agentportal/'
+          config.program = 'P4-CRU'
+        else if workspace.business is 'fnic'
+          config.baseURL = '/agentportal-fnic/'
+          config.program = 'P1-FNIC'
+
+        if _.isEmpty config then false else config
+
     # Retrieve URL of pxClient from ixConfig - pxClient is stored on S3
     get_pxClient :
       check_workspace \
