@@ -32,10 +32,10 @@
 
       <fieldset>
         <ul>
-          <li><input name="nonrenew" type="submit" value="Non-Renew" {{nonrenewDisabled}}></li>
-          <li><input name="nonrenewpending" type="submit" value="Set pending non-renew" {{setPendingDisabled}}></li>
-          <li><input name="nonrenewreinstate" type="submit" value="Reinstate" {{reinstateDisabled}}></li>
-          <li><input name="nonrenewrescind" type="submit" value="Rescind pending non-renew" {{rescindPendingDisabled}}></li>
+          <li><input class="load-subaction" name="nonrenew" type="submit" value="Non-Renew" {{nonrenewDisabled}}></li>
+          <li><input class="load-subaction" name="nonrenewpending" type="submit" value="Set pending non-renew" {{setPendingDisabled}}></li>
+          <li><input class="load-subaction" name="nonrenewreinstate" type="submit" value="Reinstate" {{reinstateDisabled}}></li>
+          <li><input class="load-subaction" name="nonrenewrescind" type="submit" value="Rescind pending non-renew" {{rescindPendingDisabled}}></li>
         </ul>
       </fieldset>
       <div class="form_actions">
@@ -76,10 +76,12 @@
                 <th scope="row">Action</th>
                 <td>{{Action}}</td>
               </tr>
+              {{#ReasonCode}}
               <tr>
                 <th scope="row">Reason</th>
                 <td>{{ReasonCode}}</td>
               </tr>
+              {{/ReasonCode}}
             </tbody>
           </table>
         </div>
