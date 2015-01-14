@@ -10,10 +10,7 @@ define [
   class NonRenewalAction extends IPMActionView
 
     events :
-      "click input[name=nonrenew]"          : "loadSubAction"
-      "click input[name=nonrenewpending]"   : "loadSubAction"
-      "click input[name=nonrenewreinstate]" : "loadSubAction"
-      "click input[name=nonrenewrescind]"   : "loadSubAction"
+      'click .load-subaction' : 'loadSubAction'
 
     # Metadata about NonRenewal types, used in views
     TRANSACTION_TYPES :
