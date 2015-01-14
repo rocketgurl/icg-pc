@@ -248,13 +248,10 @@ define [
       _.extend nonRenewData, data
 
     processNonRenewedPolicy : (nonRenewData) ->
-      if reasonCode = nonRenewData.policyState.reasonCode
-        reasonCodeCriteria = { value :  reasonCode }
-        reasonCodeObj = _.findWhere nonRenewData.EnumsNonRenewReason, reasonCodeCriteria
-      
       reasonLabel = '[reason not available]'
-      if _.isObject(reasonCodeObj)
-        reasonLabel = reasonCodeObj.label
+      if reasonCode = nonRenewData.policyState.reasonCode
+        if label = @REASON_CODES[reasonCode]
+          reasonLabel = label
 
       effectiveDate = '[date not available]'
       if nonRenewData.policyState.effectiveDate
