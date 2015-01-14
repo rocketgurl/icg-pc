@@ -347,27 +347,3 @@ define [
           @callbackError,
           options
         )
-
-    # Add Preview Label and a nicely formatted Action to viewData.preview
-    #
-    # @param `formValues` _Object_ @values.formValues
-    # @param `viewData` _object_ model.json values
-    # @return _Object_ updated viewData
-    #
-    extendPreviewData : (formValues, viewData) ->
-      # Labels for buttons
-      labels =
-        'NonRenewal'                  : 'The policy has been set for immediate non-renewal'
-        'PendingNonRenewal'           : 'The policy has been set to pending non-renewal'
-        'PendingNonRenewalRescission' : 'The policy pending non-renewal has been rescinded'
-        'NonRenewedReinstatement'     : 'The non-renewed policy has been reinstated'
-
-      actions =
-        'NonRenewal'                  : 'Non-Renewal'
-        'PendingNonRenewal'           : 'Pending Non-Renewal'
-        'PendingNonRenewalRescission' : 'Rescind Pending Non-Renewal'
-        'NonRenewedReinstatement'     : 'Non-Renewed Reinstatement'
-
-      viewData.preview.PreviewLabel = labels[formValues.transactionType]
-      viewData.preview.Action = actions[formValues.transactionType]
-      viewData
