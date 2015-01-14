@@ -31,47 +31,31 @@ define [
         title  : 'The policy pending non-renewal has been rescinded'
         submit : 'Rescind pending non-renewal'
 
-    NONRENEW_REASON_CODES : [
-      label: "Insured Request"
-      value: "1"
-    ,
-      label: "Physical Changes In The Property Insured"
-      value: "6"
-    ,
-      label: "Increase In Liability Hazards Beyond What Is Normally Accepted"
-      value: "7"
-    ,
-      label: "Increase In Property Hazards Beyond What Is Normally Accepted"
-      value: "8"
-    ,
-      label: "Overexposed In Area Where Risk Is Located"
-      value: "9"
-    ,
-      label: "Change In Occupancy Status"
-      value: "10"
-    ,
-      label: "Other Underwriting Reasons"
-      value: "11"
-    ,
-      label: "Change In Ownership"
-      value: "13"
-    ,
-      label: "Missing Required Documentation"
-      value: "14"
-    ]
+    REASON_CODES :
+      1   : "Insured Request"
+      6   : "Physical Changes In The Property Insured"
+      7   : "Increase In Liability Hazards Beyond What Is Normally Accepted"
+      8   : "Increase In Property Hazards Beyond What Is Normally Accepted"
+      9   : "Overexposed In Area Where Risk Is Located"
+      10  : "Change In Occupancy Status"
+      11  : "Other Underwriting Reasons"
+      13  : "Change In Ownership"
+      14  : "Missing Required Documentation"
+      205 : "Loss History – Resolved"
+      206 : "Negative feedback from claims adjustor – Resolved"
+      207 : "Hazards found on a roof inspection - Resolved"
 
-    REINSTATE_REASON_CODES : [
-      label: "Select"
-    ,
-      value: "205",
-      label: "Loss History – Resolved"
-    ,
-      value: "206",
-      label: "Negative feedback from claims adjustor – Resolved"
-    ,
-      value: "207",
-      label: "Hazards found on a roof inspection - Resolved"
-    ]
+    PREVIEW_LABELS :
+      'NonRenewal'                  : 'The policy has been set for immediate non-renewal'
+      'PendingNonRenewal'           : 'The policy has been set to pending non-renewal'
+      'PendingNonRenewalRescission' : 'The policy pending non-renewal has been rescinded'
+      'NonRenewedReinstatement'     : 'The non-renewed policy has been reinstated'
+
+    PREVIEW_ACTIONS :
+      'NonRenewal'                  : 'Non-Renewal'
+      'PendingNonRenewal'           : 'Pending Non-Renewal'
+      'PendingNonRenewalRescission' : 'Rescind Pending Non-Renewal'
+      'NonRenewedReinstatement'     : 'Non-Renewed Reinstatement'
 
     initialize : ->
       super
