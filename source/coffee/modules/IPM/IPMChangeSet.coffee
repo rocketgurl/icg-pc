@@ -326,7 +326,7 @@ define [
     """
 
     non_renewal : """
-      <ReasonCode>{{reasonCode}}</ReasonCode>
+      {{#reasonCode}}<ReasonCode>{{reasonCode}}</ReasonCode>{{/reasonCode}}
       <Comment>{{comment}}</Comment>
     """
 
