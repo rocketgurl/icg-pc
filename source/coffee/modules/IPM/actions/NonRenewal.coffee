@@ -180,8 +180,6 @@ define [
         policyExpirationDate             : policy.getExpirationDate()
         policyInceptionDate              : policy.getInceptionDate()
         nonRenewalEffectiveDate          : null
-        EnumsNonRenewReason              : @NONRENEW_REASON_CODES
-        EnumsReinstateReason             : @REINSTATE_REASON_CODES
         nonrenewDisabled                 : 'disabled'
         setPendingDisabled               : ''
         reinstateDisabled                : 'disabled'
