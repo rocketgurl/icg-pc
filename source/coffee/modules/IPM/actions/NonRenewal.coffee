@@ -208,13 +208,11 @@ define [
       @viewData = _.extend viewData, nonRenewData
 
     processPendingNonRenewal : (nonRenewData) ->
-      reasonCode = nonRenewData.pendingNonRenewal.reasonCode
-      reasonCodeCriteria = { value :  reasonCode }
-      reasonCodeObj = _.findWhere nonRenewData.EnumsNonRenewReason, reasonCodeCriteria
-      
-      if _.isObject(reasonCodeObj)
-        nonRenewData.pendingNonRenewalReasonCodeLabel = reasonCodeObj.label
-        nonRenewData.pendingNonRenewalReasonCode = reasonCode
+      reasonLabel = '[reason not available]'
+      if reasonCode = nonRenewData.pendingNonRenewal.reasonCode
+        if label = @REASON_CODES[reasonCode]
+          nonRenewData.pendingNonRenewalReasonCodeLabel = label
+          nonRenewData.pendingNonRenewalReasonCode = reasonCode
 
       nonRenewData.nonRenewalEffectiveDate = \
         nonRenewData.policyExpirationDate
