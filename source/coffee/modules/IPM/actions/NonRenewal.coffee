@@ -139,26 +139,24 @@ define [
     # in the callbackPreview()
     #
     processPreview : (vocabTerms, view) =>
-      @processViewData(vocabTerms, view, true)
-
+      @processViewData vocabTerms, view, true
       @viewDataPrevious = _.deepClone @viewData
-      @viewData.preview = @Endorse.parseIntervals(@values)
 
-      @extendPreviewData @values.formValues, @viewData
-      
-      allReasonCodes = @NONRENEW_REASON_CODES.concat @REINSTATE_REASON_CODES
-      reasonCode     = @values.formValues.reasonCode
-      reasonCodeObj  = _.find allReasonCodes, (rc) -> rc.value is reasonCode
-      
-      if !_.isUndefined(reasonCodeObj) and _.has reasonCodeObj, 'label'
-        @viewData.preview.ReasonCode = "#{reasonCode} - #{reasonCodeObj.label}"
+      transactionType = @values.formValues.transactionType
+      reasonCode      = @values.formValues.reasonCode
+      reasonCodeLabel = @REASON_CODES[reasonCode]
+
+      @viewData.preview              = @Endorse.parseIntervals @values
+      @viewData.preview.PreviewLabel = @Helpers.prettyMap @PREVIEW_LABELS[transactionType]
+      @viewData.preview.Action       = @Helpers.prettyMap @PREVIEW_ACTIONS[transactionType]
+      @viewData.preview.submitLabel  = @TRANSACTION_TYPES[@CURRENT_SUBVIEW].submit ? 'Submit'
+
+      if reasonCodeLabel
+        @viewData.preview.ReasonCode = "#{reasonCode} - #{reasonCodeLabel}"
       else
         @viewData.preview.ReasonCode = reasonCode
 
-      # Get submitLabel
-      @viewData.preview.submitLabel = @TRANSACTION_TYPES[@CURRENT_SUBVIEW].submit ? ''
-
-      @trigger("loaded", this, @postProcessSubView)
+      @trigger 'loaded', this, @postProcessSubView
 
     # Inspect the Policy to determine which buttons on the view to
     # enable/disable and which labels to display
