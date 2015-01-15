@@ -16,7 +16,7 @@ define [
     TRANSACTION_TYPES :
       'nonrenew' :
         label  : 'NonRenewal'
-        title  : 'The police has been set for immediate non-renewal'
+        title  : 'The policy has been set for immediate non-renewal'
         submit : 'Non-renew this policy immediately'
       'nonrenewpending' :
         label  : 'PendingNonRenewal'
