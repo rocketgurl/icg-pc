@@ -983,6 +983,61 @@
 		</div>
 
 
+
+		<div>
+			<label for="{{guid}}_EarthquakeCoverage" class="labelRequired">Earthquake <i>EarthquakeCoverage</i></label>
+			<select id="{{guid}}_EarthquakeCoverage" name="EarthquakeCoverage" data-value="{{EarthquakeCoverage}}"  required >
+				{{#EnumsEarthquakeCoverage}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsEarthquakeCoverage}}
+			</select>
+		</div>
+
+
+
+		<div>
+			<label for="{{guid}}_EarthquakeDeductible" >Earthquake Deductible % <i>EarthquakeDeductible</i></label>
+			<select id="{{guid}}_EarthquakeDeductible" name="EarthquakeDeductible" data-value="{{EarthquakeDeductible}}"   >
+				{{#EnumsEarthquakeDeductible}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsEarthquakeDeductible}}
+			</select>
+		</div>
+
+
+
+		<div>
+			<label for="{{guid}}_EarthquakeLossAssessmentCoverage" >Earthquake Loss Assessment <i>EarthquakeLossAssessmentCoverage</i></label>
+			<select id="{{guid}}_EarthquakeLossAssessmentCoverage" name="EarthquakeLossAssessmentCoverage" data-value="{{EarthquakeLossAssessmentCoverage}}"   >
+				{{#EnumsEarthquakeLossAssessmentCoverage}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsEarthquakeLossAssessmentCoverage}}
+			</select>
+		</div>
+
+
+
+		<div>
+			<label for="{{guid}}_EarthquakeMasonryVeneerExclusion" >Exclude Masonry Veneer Coverage? <i>EarthquakeMasonryVeneerExclusion</i></label>
+			<select id="{{guid}}_EarthquakeMasonryVeneerExclusion" name="EarthquakeMasonryVeneerExclusion" data-value="{{EarthquakeMasonryVeneerExclusion}}"   >
+				{{#EnumsEarthquakeMasonryVeneerExclusion}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsEarthquakeMasonryVeneerExclusion}}
+			</select>
+		</div>
+
+
+
+		<div>
+			<label for="{{guid}}_AdditionalAmountsOfInsurance" class="labelRequired">Dwelling Additional Amounts Of Insurance <i>AdditionalAmountsOfInsurance</i></label>
+			<select id="{{guid}}_AdditionalAmountsOfInsurance" name="AdditionalAmountsOfInsurance" data-value="{{AdditionalAmountsOfInsurance}}"  required >
+				{{#EnumsAdditionalAmountsOfInsurance}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsAdditionalAmountsOfInsurance}}
+			</select>
+		</div>
+
+
 			</div>
 		</fieldset>
 
