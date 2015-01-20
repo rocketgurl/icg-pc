@@ -66,6 +66,7 @@ define [
     applyFunctions : (model, options) ->
       @find = _.partial @findProperty, @get('json')
       @findInLastTerm = _.partial @findProperty, @getLastTerm()
+      @findInQuoteTerm = _.partial @findProperty, @getQuoteTerm()
 
     # Is the argument null or undefined?
     #
