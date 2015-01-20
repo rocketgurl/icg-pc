@@ -320,16 +320,6 @@ define [
       paymentPlan = accountingData?.PaymentPlan
       paymentPlan.type if paymentPlan
 
-    # Extract data items from a list
-    # Return empty result if none
-    getAddressDataItems : (list, terms) ->
-      out = {}
-      _.each(terms, ((term) ->
-        val = @getDataItem list, term
-        out[term] = val if val
-        ), this)
-      out unless _.isEmpty out
-
     # Retrieve Lat/Long coords from last policy term
     # Return empty result if Lat/Long does not exist
     getPropertyCoords : ->
@@ -838,9 +828,11 @@ define [
     #
     getDataItemValues : (list, terms) ->
       out = {}
-      for term in terms
-        out[term] = @getDataItem list, term
-      out
+      _.each(terms, ((term) ->
+        val = @getDataItem list, term
+        out[term] = val if val
+        ), this)
+      out unless _.isEmpty out
 
     # Check vocabTerms for enumerations fields and append to the viewData
     # object with a default field added.
