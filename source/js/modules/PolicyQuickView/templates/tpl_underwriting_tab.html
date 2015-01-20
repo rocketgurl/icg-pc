@@ -1,182 +1,80 @@
-<div {{#IsQuote}}class="col-xs-12"{{/IsQuote}}{{#IsNotQuote}}class="col-xs-6"{{/IsNotQuote}}>
-  <div class="alert alert-{{PolicyStateLabelClass}} policy-status">{{PolicyState}}</div>
+<div class="col-xs-12">
+  <div class="alert alert-info policy-status">Property &amp; Coverage</div>
   
   <div class="section-holder">
-    {{#OriginatingSystem}}
     <section>
-      <label>Originating System</label>
-      <div>{{OriginatingSystem}}</div>
+      <ul>
+        <li>
+          <label>Dwelling Coverage</label>
+          <div>${{CoverageA}}&nbsp;</div>
+        </li>
+        <li>
+          <label>Hurricane Deductible</label>
+          <div>{{HurricaneDeductible}}&nbsp;</div>
+        </li>
+        <li>
+          <label>Wind/Hail Deductible</label>
+          <div>{{WindHailDeductible}}&nbsp;</div>
+        </li>
+        <li>
+          <label>All Other Perils Deductible</label>
+          <div>{{AllOtherPerilsDeductible}}&nbsp;</div>
+        </li>
+      </ul>
     </section>
-    {{/OriginatingSystem}}
 
-    {{#QuoteNumber}}
     <section>
-      <label>Quote #</label>
-      <div>{{QuoteNumber}}</div>
+      <ul>
+        <li>
+          <label>Hazard Location</label>
+          <div>{{PropertyHazardLocation}}&nbsp;</div>
+        </li>
+        <li>
+          <label>Total Living Area</label>
+          <div>{{FloorArea}} sf&nbsp;</div>
+        </li>
+        <li>
+          <label>Year of Construction</label>
+          <div>{{ConstructionYear}}&nbsp;</div>
+        </li>
+        <li>
+          <label>Age of Roof</label>
+          <div>{{RoofAge}}&nbsp;</div>
+        </li>
+        <li>
+          <label>Roof Covering</label>
+          <div>{{RoofCoveringType}}&nbsp;</div>
+        </li>
+        <li>
+          <label>Roof Geometry</label>
+          <div>{{RoofGeometryType}}&nbsp;</div>
+        </li>
+      </ul>
     </section>
-    {{/QuoteNumber}}
 
-    {{#PropertyAddress}}
     <section>
-      <label>Property Address</label>
-      {{#PropertyCoords}}
-      <a class="address-link" href="http://maps.google.com/maps?q={{Latitude}},{{Longitude}}" target="_blank">
-      {{/PropertyCoords}}
-        <div>{{PropertyStreetNumber}} {{PropertyStreetName}}</div>
-        <div>{{PropertyCity}}, {{PropertyState}} {{PropertyZipCode}}</div>
-      {{#PropertyCoords}}
-      </a>
-      {{/PropertyCoords}}
+      <ul>
+        <li>
+          <label>Usage</label>
+          <div>{{PropertyUsage}}&nbsp;</div>
+        </li>
+        <li>
+          <label>StructureType</label>
+          <div>{{StructureType}}&nbsp;</div>
+        </li>
+        <li>
+          <label>Protection Class</label>
+          <div>{{ProtectionClass}}&nbsp;</div>
+        </li>
+      </ul>
     </section>
-    {{/PropertyAddress}}
 
-    {{#MailingAddress}}
     <section>
-      <label>Mailing Address</label>
-      <div>{{InsuredMailingAddressLine1}}</div>
-      {{#InsuredMailingAddressLine2}}
-      <div>{{InsuredMailingAddressLine2}}</div>
-      {{/InsuredMailingAddressLine2}}
-      <div>{{InsuredMailingAddressCity}}, {{InsuredMailingAddressState}} {{InsuredMailingAddressZip}}</div>
+      <label>Insurance Score Range&nbsp;</label>
+      <div>{{InsuranceScoreRange}}&nbsp;</div>
     </section>
-    {{/MailingAddress}}
-
-    {{#PrimaryMortgagee}}
-    <section>
-      <label>Primary Mortgagee</label>
-      <div><strong>{{MortgageeNumber1}}</strong></div>
-      {{#Mortgagee1AddressLine1}}
-      <div><small>{{Mortgagee1AddressLine1}}</small></div>
-      {{/Mortgagee1AddressLine1}}
-      {{#Mortgagee1AddressLine2}}
-      <div><small>{{Mortgagee1AddressLine2}}</small></div>
-      {{/Mortgagee1AddressLine2}}
-      <div><small>{{Mortgagee1AddressCity}}, {{Mortgagee1AddressState}} {{Mortgagee1AddressZip}}</small></div>
-      {{#LoanNumber1}}
-      <div><strong>{{LoanNumber1}}</strong></div>
-      {{/LoanNumber1}}
-    </section>
-    {{/PrimaryMortgagee}}
-
-    <section id="producer-view-{{cid}}">
-      <label>Producer</label>
-      <div>Loading producer data&hellip;</div>
-    </section>
-
-    {{#AgencyLocationCode}}
-    <section>
-      <label>ALC</label>
-      <div>{{AgencyLocationCode}}</div>
-    </section>
-    {{/AgencyLocationCode}}
-  </div>
-
-  {{#AgentSupportViewUrl}}
-  <div class="agent-support">
-    <a href="{{AgentSupportViewUrl}}" class="btn btn-dark btn-lg" target="_blank">Open Agent Support View</a>
-  </div>
-  {{/AgentSupportViewUrl}}
-</div>
-
-{{#IsNotQuote}}
-<div class="col-xs-6">
-  {{#BillingIsCurrent}}
-  <div class="alert alert-success policy-status">Billing: Current</div>
-  {{/BillingIsCurrent}}
-  {{#BillingIsPastDue}}
-  <div class="alert alert-danger policy-status">Billing: Past Due</div>
-  {{/BillingIsPastDue}}
-
-  <div class="section-holder">
     
-    {{#TotalPremium}}
-    <section>
-      <label>Total Premium</label>
-      <div>${{TotalPremium}}</div>
-    </section>
-    {{/TotalPremium}}
-
-    {{#OutstandingBalance}}
-    <section>
-      <label>Outstanding Balance</label>
-      <div>${{OutstandingBalance}}</div>
-    </section>
-    {{/OutstandingBalance}}
-
-    {{#PastDueBalance}}
-    <section>
-      <label>Past Due Balance</label>
-      <div>${{PastDueBalance}}</div>
-    </section>
-    {{/PastDueBalance}}
-
-    {{#MinimumPayment}}
-    <section>
-      <label>Minimum Payment</label>
-      <div>${{MinimumPayment}}</div>
-    </section>
-    {{/MinimumPayment}}
-
-    {{#InvoiceDueDate}}
-    <section>
-      <label>Invoice Due Date</label>
-      <div>{{InvoiceDueDate}}</div>
-    </section>
-    {{/InvoiceDueDate}}
-
-    {{#EquityDate}}
-    <section>
-      <label>Equity Date</label>
-      <div>{{EquityDate}}</div>
-    </section>
-    {{/EquityDate}}
-
-    {{#LastPaymentReceived}}
-    <section>
-      <label>Last Payment Received</label>
-      <div>${{LastPaymentReceived}}</div>
-    </section>
-    {{/LastPaymentReceived}}
-
-    {{#PaymentPlanType}}
-    <section>
-      <label>Payment Plan</label>
-      <div>{{PaymentPlanType}}</div>
-    </section>
-    {{/PaymentPlanType}}
   </div>
-
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <strong>Installment Schedule</strong>
-      <em>(Payments shown include all installment fees)</em>
-    </div>
-
-    <table class="table table-hover">
-      <thead>
-        <tr>
-          <th>Invoice Date</th>
-          <th>Due Date</th>
-          <th>Amount</th>
-        </tr>
-      </thead>
-
-      <tbody>
-
-        {{#Installments}}
-        {{#number}}
-        <tr>
-          <td>{{invoiceDate}}</td>
-          <td>{{dueDate}}</td>
-          <td>${{amount}}</td>
-        </tr>
-        {{/number}}
-        {{/Installments}}
-
-      </tbody>
-    </table>
-  </div>
-
 </div>
-{{/IsNotQuote}}
+
 
