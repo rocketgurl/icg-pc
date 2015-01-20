@@ -25,6 +25,7 @@ define [
         cid                 : @cid
         attachmentsLocation : attachmentsLocation
         authToken           : "Basic #{@POLICY.get('digest')}"
+        isQuote             : @POLICY.isQuote()
 
       @$el.html @Mustache.render tpl_qv_container, viewData
 
