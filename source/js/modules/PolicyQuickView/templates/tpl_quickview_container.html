@@ -2,9 +2,13 @@
 <div id="qv-tabs-{{cid}}" class="col-left">
 
   <ul class="nav nav-tabs">
-    <li class="active"><a href="#tab-servicing-{{cid}}" data-toggle="tab">Servicing</a></li>
-    <li><a href="#tab-underwriting-{{cid}}" data-toggle="tab">Underwriting</a></li>
-    <!-- <li><a href="#tab-claims-{{cid}}" data-toggle="tab">Claims</a></li> -->
+    {{#isQuote}}
+    <li class="active"><a href="#tab-servicing-{{cid}}" data-toggle="tab">Quote Information</a></li>
+    {{/isQuote}}
+    {{^isQuote}}
+    <li class="active"><a href="#tab-servicing-{{cid}}" data-toggle="tab">Policy Information</a></li>
+    {{/isQuote}}
+    <li><a href="#tab-underwriting-{{cid}}" data-toggle="tab">Property &amp; Coverage</a></li>
   </ul>
  
   <!-- Tab panes -->
