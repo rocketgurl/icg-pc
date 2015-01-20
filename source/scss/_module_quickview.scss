@@ -122,7 +122,11 @@
     padding-top: 8px;
     padding-bottom: 8px;
 
-    > label {
+    > ul > li {
+      padding: 5px 0;
+    }
+
+    label {
       display: block;
       float: left;
       margin-left: -90%;
