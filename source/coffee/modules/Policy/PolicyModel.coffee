@@ -252,6 +252,29 @@ define [
             'fullPay'        : 'Full Pay'
           })
 
+    getUnderwritingData : ->
+      if @isQuote()
+        dataItems = @findInQuoteTerm('ProtoInterval')?.DataItem
+      else
+        dataItems = @getLastTerm()?.DataItem
+
+      @getDataItemValues(@_sanitizeNodeArray(dataItems), [
+          'CoverageA'
+          'HurricaneDeductible'
+          'WindHailDeductible'
+          'AllOtherPerilsDeductible'
+          'PropertyHazardLocation'
+          'FloorArea'
+          'ConstructionYear'
+          'RoofAge'
+          'RoofCoveringType'
+          'RoofGeometryType'
+          'PropertyUsage'
+          'StructureType'
+          'ProtectionClass'
+          'InsuranceScoreRange'
+        ])
+
     # Map policy state to a prettier version
     getPrettyPolicyState : ->
       prettyStates =
