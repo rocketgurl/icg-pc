@@ -204,21 +204,21 @@ define [
             'pxClient' : 'Agent Portal'
             'pxServer' : 'Agent Portal'
           }, 'Unknown')
-        PropertyAddress   : @getAddressDataItems(propertyData.DataItem, [
+        PropertyAddress   : @getDataItemValues(propertyData.DataItem, [
             'PropertyStreetNumber'
             'PropertyStreetName'
             'PropertyCity'
             'PropertyState'
             'PropertyZipCode'
           ])
-        MailingAddress    : @getAddressDataItems(insuredData, [
+        MailingAddress    : @getDataItemValues(insuredData, [
             'InsuredMailingAddressLine1'
             'InsuredMailingAddressLine2'
             'InsuredMailingAddressCity'
             'InsuredMailingAddressState'
             'InsuredMailingAddressZip'
           ])
-        PrimaryMortgagee  : @getAddressDataItems(mortgageeData, [
+        PrimaryMortgagee  : @getDataItemValues(mortgageeData, [
             'MortgageeNumber1'
             'Mortgagee1AddressLine1'
             'Mortgagee1AddressLine2'
