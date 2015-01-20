@@ -1,1 +1,1 @@
-{"terms":[]}
+{"terms":[{"name":"ReinstateReason","label":"Reason Code","enumerations":[{"value":"205","label":"Loss History – Resolved"},{"value":"206","label":"Negative feedback from claims adjustor – Resolved"},{"value":"207","label":"Hazards found on a roof inspection - Resolved"}]}]}

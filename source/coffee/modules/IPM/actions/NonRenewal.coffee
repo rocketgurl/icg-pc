@@ -9,6 +9,54 @@ define [
   #
   class NonRenewalAction extends IPMActionView
 
+    events :
+      'click .load-subaction' : 'loadSubAction'
+
+    # Metadata about NonRenewal types, used in views
+    TRANSACTION_TYPES :
+      'nonrenew' :
+        label  : 'NonRenewal'
+        title  : 'The policy has been set for immediate non-renewal'
+        submit : 'Non-renew this policy immediately'
+      'nonrenewpending' :
+        label  : 'PendingNonRenewal'
+        title  : 'The policy has been set to pending non-renewal'
+        submit : 'Set to pending non-renewal'
+      'nonrenewreinstate' :
+        label  : 'NonRenewedReinstatement'
+        title  : 'The policy has been reinstated'
+        submit : 'Reinstate this policy'
+      'nonrenewrescind' :
+        label  : 'PendingNonRenewalRescission'
+        title  : 'The policy pending non-renewal has been rescinded'
+        submit : 'Rescind pending non-renewal'
+
+    REASON_CODES :
+      1   : "Insured Request"
+      6   : "Physical Changes In The Property Insured"
+      7   : "Increase In Liability Hazards Beyond What Is Normally Accepted"
+      8   : "Increase In Property Hazards Beyond What Is Normally Accepted"
+      9   : "Overexposed In Area Where Risk Is Located"
+      10  : "Change In Occupancy Status"
+      11  : "Other Underwriting Reasons"
+      13  : "Change In Ownership"
+      14  : "Missing Required Documentation"
+      205 : "Loss History – Resolved"
+      206 : "Negative feedback from claims adjustor – Resolved"
+      207 : "Hazards found on a roof inspection - Resolved"
+
+    PREVIEW_LABELS :
+      'NonRenewal'                  : 'The policy has been set for immediate non-renewal'
+      'PendingNonRenewal'           : 'The policy has been set to pending non-renewal'
+      'PendingNonRenewalRescission' : 'The policy pending non-renewal has been rescinded'
+      'NonRenewedReinstatement'     : 'The non-renewed policy has been reinstated'
+
+    PREVIEW_ACTIONS :
+      'NonRenewal'                  : 'Non-Renewal'
+      'PendingNonRenewal'           : 'Pending Non-Renewal'
+      'PendingNonRenewalRescission' : 'Rescind Pending Non-Renewal'
+      'NonRenewedReinstatement'     : 'Non-Renewed Reinstatement'
+
     initialize : ->
       super
 
@@ -17,72 +65,6 @@ define [
         PARENT_VIEW : @PARENT_VIEW
         MODULE      : @MODULE
         })
-
-      @events =
-        "click input[name=nonrenew]" : "loadSubAction"
-        "click input[name=nonrenewpending]" : "loadSubAction"
-        "click input[name=nonrenewrescind]" : "loadSubAction"
-
-      # Metadata about Cancellation types, used in views
-      @TRANSACTION_TYPES =
-        'nonrenew' :
-          label  : 'NonRenewal'
-          title  : 'The policy has been set for immediate non-renewal'
-          submit : 'Non-renew this policy immediately'
-        'nonrenewpending' :
-          label  : 'PendingNonRenewal'
-          title  : 'The policy has been set to pending non-renewal'
-          submit : 'Set to pending non-renewal'
-        'nonrenewrescind' :
-          label  : 'PendingNonRenewalRescission'
-          title  : 'The policy pending non-renewal has been rescinded'
-          submit : 'Rescind pending non-renewal'
-
-      @REASON_CODES = [
-        label: "Insured Request"
-        value: "1"
-      ,
-        label: "Physical Changes In The Property Insured"
-        value: "6"
-      ,
-        label: "Increase In Liability Hazards Beyond What Is Normally Accepted"
-        value: "7"
-      ,
-        label: "Increase In Property Hazards Beyond What Is Normally Accepted"
-        value: "8"
-      ,
-        label: "Overexposed In Area Where Risk Is Located"
-        value: "9"
-      ,
-        label: "Change In Occupancy Status"
-        value: "10"
-      ,
-        label: "Other Underwriting Reasons"
-        value: "11"
-      ,
-        label: "Change In Ownership"
-        value: "13"
-      ,
-        label: "Missing Required Documentation"
-        value: "14"
-      ]
-
-      @XML_TEMPLATE = """
-        <TransactionRequest schemaVersion="1.7" type="{{transactionType}}">
-          <Initiation>
-            <Initiator type="user">{{user}}</Initiator>
-          </Initiation>
-          <Target>
-            <Identifiers>
-              <Identifier name="InsightPolicyId" value="{{id}}"/>
-            </Identifiers>
-            <SourceVersion>{{version}}</SourceVersion>
-          </Target>
-          {{#reasonCode}}
-          <ReasonCode>{{reasonCode}}</ReasonCode>
-          {{/reasonCode}}
-        </TransactionRequest>
-      """
 
     ready : ->
       super
@@ -141,27 +123,24 @@ define [
     # in the callbackPreview()
     #
     processPreview : (vocabTerms, view) =>
-      @processViewData(vocabTerms, view, true)
-
+      @processViewData vocabTerms, view, true
       @viewDataPrevious = _.deepClone @viewData
-      @viewData.preview = @Endorse.parseIntervals(@values)
 
-      preview_values = @extractEventValues(@MODULE.POLICY, @viewData)
-      preview_labels = @determinePreviewLabel(@values.formValues, @viewData)
-      @viewData = _.extend(@viewData, preview_values, preview_labels)
+      transactionType = @values.formValues.transactionType
+      reasonCode      = @values.formValues.reasonCode
+      reasonCodeLabel = @REASON_CODES[reasonCode]
 
-      reasonCode = @values.formValues.reasonCode
-      reason = _.first(_.filter(@REASON_CODES, (item) -> item.value == reasonCode))
-      
-      if !_.isUndefined(reason) && _.has reason, 'label'
-        @viewData.preview.ReasonCode = reasonCode + " - " + reason.label
+      @viewData.preview              = @Endorse.parseIntervals @values
+      @viewData.preview.PreviewLabel = @Helpers.prettyMap @PREVIEW_LABELS[transactionType]
+      @viewData.preview.Action       = @Helpers.prettyMap @PREVIEW_ACTIONS[transactionType]
+      @viewData.preview.submitLabel  = @TRANSACTION_TYPES[@CURRENT_SUBVIEW].submit ? 'Submit'
+
+      if reasonCodeLabel
+        @viewData.preview.ReasonCode = "#{reasonCode} - #{reasonCodeLabel}"
       else
         @viewData.preview.ReasonCode = reasonCode
 
-      # Get submitLabel
-      @viewData.preview.submitLabel = @TRANSACTION_TYPES[@CURRENT_SUBVIEW].submit ? ''
-
-      @trigger("loaded", this, @postProcessSubView)
+      @trigger 'loaded', this, @postProcessSubView
 
     # Inspect the Policy to determine which buttons on the view to
     # enable/disable and which labels to display
@@ -171,31 +150,104 @@ define [
     #
     processNonRenewalData : (viewData) ->
       policy = @MODULE.POLICY
-      reasonCode = policy.find('Management PendingNonRenewal reasonCode')
-      nonrenew_data = { EnumsNonRenewReason: @REASON_CODES }
+      pendingNonRenewal = policy.get('json').Management?.PendingNonRenewal
 
-      # Management > PendingNonRenewal isn't set yet without a policy refresh,
-      # so this is our attempt to show the correct state
-      unless reasonCode?
-        events = policy.find('EventHistory Event')
+      nonRenewData =
+        policyState                      : policy.getState()
+        policyStateVal                   : null
+        pendingNonRenewal                : pendingNonRenewal
+        pendingNonRenewalReasonCode      : null
+        pendingNonRenewalReasonCodeLabel : null
+        policyEffectiveDate              : policy.getEffectiveDate()
+        policyExpirationDate             : policy.getExpirationDate()
+        policyInceptionDate              : policy.getInceptionDate()
+        nonRenewalEffectiveDate          : null
+        nonrenewDisabled                 : 'disabled'
+        setPendingDisabled               : ''
+        reinstateDisabled                : 'disabled'
+        rescindPendingDisabled           : 'disabled'
 
-        # policy.find returns an Array of Events if there are multiple Event
-        # objects but only the one Event object if there is only one
-        lastEvent = if _.isArray(events) then _.last(events) else events
-        if lastEvent?.type is 'PendingNonRenewal'
-          getReasonCode = (item) -> item.name is 'reasonCode'
-          reasonCode = _.find(lastEvent.DataItem, getReasonCode).value
-
-      # Toggle buttons on/off depending on
-      # reason code's existence
-      if reasonCode?
-        nonrenew_data.reasonCode = reasonCode
-        nonrenew_data.setPendingDisabled = 'disabled'
+      # getState() may return an object
+      if _.isObject nonRenewData.policyState
+        nonRenewData.policyStateVal = nonRenewData.policyState.text
       else
-        nonrenew_data.nonrenewDisabled = 'disabled'
-        nonrenew_data.rescindPendingDisabled = 'disabled'
+        nonRenewData.policyStateVal = nonRenewData.policyState
 
-      @viewData = _.extend(viewData, nonrenew_data)
+      # Pending NonRenewal policies require additional field processing
+      if _.isObject pendingNonRenewal
+        nonRenewData = @processPendingNonRenewal nonRenewData
+
+      # Process more data based on policyState
+      nonRenewData = switch nonRenewData.policyStateVal
+        when 'ACTIVEPOLICY'
+          @processActivePolicy nonRenewData
+        when 'NONRENEWEDPOLICY'
+          @processNonRenewedPolicy nonRenewData
+        else nonRenewData
+
+      @viewData = _.extend viewData, nonRenewData
+
+    processPendingNonRenewal : (nonRenewData) ->
+      reasonLabel = '[reason not available]'
+      if reasonCode = nonRenewData.pendingNonRenewal.reasonCode
+        if label = @REASON_CODES[reasonCode]
+          nonRenewData.pendingNonRenewalReasonCodeLabel = label
+          nonRenewData.pendingNonRenewalReasonCode = reasonCode
+
+      nonRenewData.nonRenewalEffectiveDate = \
+        nonRenewData.policyExpirationDate
+
+      nonRenewData
+
+    processActivePolicy : (nonRenewData) ->
+      if _.isObject nonRenewData.pendingNonRenewal
+        data =
+          nonrenewDisabled       : ''
+          reinstateDisabled      : 'disabled'
+          setPendingDisabled     : 'disabled'
+          rescindPendingDisabled : ''
+          msg                    : not @CURRENT_SUBVIEW
+          msgType                : 'notice'
+          msgHeading             : 'This is an active policy that is pending non-renewal.'
+          msgText                : """
+            Non-renewal is effective <strong>#{nonRenewData.nonRenewalEffectiveDate}</strong> due to <strong>#{nonRenewData.pendingNonRenewalReasonCodeLabel}</strong>
+          """
+      else
+        data =
+          nonrenewDisabled       : 'disabled'
+          setPendingDisabled     : ''
+          reinstateDisabled      : 'disabled'
+          rescindPendingDisabled : 'disabled'
+          msg                    : false
+          msgType                : null
+          msgHeading             : null
+          msgText                : null
+
+      _.extend nonRenewData, data
+
+    processNonRenewedPolicy : (nonRenewData) ->
+      reasonLabel = '[reason not available]'
+      if reasonCode = nonRenewData.policyState.reasonCode
+        if label = @REASON_CODES[reasonCode]
+          reasonLabel = label
+
+      effectiveDate = '[date not available]'
+      if nonRenewData.policyState.effectiveDate
+        effectiveDate = nonRenewData.policyState.effectiveDate
+
+      data =
+        nonrenewDisabled       : 'disabled'
+        setPendingDisabled     : 'disabled'
+        rescindPendingDisabled : 'disabled'
+        reinstateDisabled      : ''
+        msg                    : not @CURRENT_SUBVIEW
+        msgType                : 'notice'
+        msgHeading             : 'This is a non-renewed policy'
+        msgText                : """
+            Non-renewal took effect <b>#{effectiveDate}</b> due to <b>#{reasonLabel}</b>
+          """
+
+      _.extend nonRenewData, data
 
     # Load a sub-view into the current space
     # These are triggered by button clicks
@@ -222,7 +274,6 @@ define [
 
     # On error we need to get out of the sub-view.
     callbackError : (jqXHR, status, error) =>
-
       if _.has this, 'viewDataPrevious'
         @viewData = _.deepClone @viewDataPrevious
 
@@ -244,7 +295,7 @@ define [
       @values.formValues.effectiveDate = @MODULE.POLICY.get('expirationDate')
       @values.formValues.transactionType = @TRANSACTION_TYPES[@CURRENT_SUBVIEW].label ? false
 
-      if !@values.formValues.transactionType
+      unless @values.formValues.transactionType
         msg = "There was an error determining which Transaction Type this request is."
         @PARENT_VIEW.displayMessage('error', msg, 12000)
         return false
@@ -271,43 +322,3 @@ define [
           @callbackError,
           options
         )
-
-    # Parse most recent Event object from Policy and use it to build
-    # values for the NonRenewal preview
-    #
-    # @param `policy` _Object_ Policy
-    # @param `viewData` _object_ model.json values
-    # @return _Object_ updated viewData
-    #
-    extractEventValues : (policy, viewData) ->
-      # Find the most recent Cancellation/PendingCancellation in the Policy.
-      # Most recent is last in the XML, so we flip the array with reverse()
-      events = policy.get('json').EventHistory.Event.reverse()
-      actionsMap =
-        'RescindPendingNonRenewal': 'Rescind Pending Non-Renewal'
-        'PendingNonRenewal': 'Pending Non-Renewal'
-        'NonRenewal': 'Non-Renewal'
-
-      nonrenewal = _.find(events, (event) ->
-          _.indexOf(_.keys(actionsMap), event.type) >= 0
-        )
-
-      viewData.preview.Action = actionsMap[nonrenewal.type]
-      viewData
-
-    # Determine the preview label
-    #
-    # @param `formValues` _Object_ @values.formValues
-    # @param `viewData` _object_ model.json values
-    # @return _Object_ updated viewData
-    #
-    determinePreviewLabel : (formValues, viewData) ->
-      # Labels for buttons
-      preview_labels =
-        'NonRenewal'                 : 'The policy has been set for immediate non-renewal'
-        'PendingNonRenewal'          : 'The policy has been set to pending non-renewal'
-        'PendingNonRenewalRescission' : 'The policy pending non-renewal has been rescinded'
-
-      viewData.preview.PreviewLabel = preview_labels[formValues.transactionType]
-
-      viewData
