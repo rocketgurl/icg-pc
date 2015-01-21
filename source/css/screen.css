@@ -2240,7 +2240,8 @@ Module: Policy
 .qv-container section { padding-left: 47%; padding-right: 3%; padding-top: 8px; padding-bottom: 8px; }
 .qv-container section:before, .qv-container section:after { content: " "; display: table; }
 .qv-container section:after { clear: both; }
-.qv-container section > label { display: block; float: left; margin-left: -90%; padding-top: 1px; padding-right: 25px; width: 90%; text-align: right; }
+.qv-container section > ul > li { padding: 5px 0; }
+.qv-container section label { display: block; float: left; margin-left: -90%; padding-top: 1px; padding-right: 25px; width: 90%; text-align: right; }
 .qv-container .panel-heading em, .qv-container .panel-heading strong { display: inline-block; }
 .qv-container .agent-support { margin-top: 20px; text-align: center; }
 .qv-container .activity-wrapper, .qv-container .documents-wrapper { height: 255px; overflow: auto; margin-bottom: 0; }
