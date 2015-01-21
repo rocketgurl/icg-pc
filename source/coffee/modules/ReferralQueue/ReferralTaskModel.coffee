@@ -9,13 +9,14 @@ define [
   #
   ReferralTaskModel = BaseModel.extend
 
-    parse : (data) ->
-      data                        = @setDataItems data
-      data.OwningAgent            = data.OwningAgent or ''
-      data.OwningUnderwriter      = data.OwningUnderwriter or ''
-      data.prettySubtype          = @setPrettySubtype data.Subtype 
-      data.prettyLastUpdated      = @setPrettyLastUpdated data.lastUpdated
-      data.Rush                   = @Helpers.strToBool data.Rush
+    parse : (resp) ->
+      data                   = @setDataItems resp
+      data.CarrierId         = data.CarrierId or data.carrierId or '--'
+      data.OwningAgent       = data.OwningAgent or ''
+      data.OwningUnderwriter = data.OwningUnderwriter or ''
+      data.prettySubtype     = @setPrettySubtype data.Subtype
+      data.prettyLastUpdated = @setPrettyLastUpdated data.lastUpdated
+      data.Rush              = @Helpers.strToBool data.Rush
       data
 
     # Move dataItems directly onto the model
