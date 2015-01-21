@@ -33,7 +33,7 @@ define([
     });
 
     describe('SearchPolicyModel.prototype.parse', function () {
-      var td;
+      var data;
       var model;
 
       beforeEach(function () {
