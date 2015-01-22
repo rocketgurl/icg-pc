@@ -85,6 +85,10 @@ header.module-search {
 }
 
 table.module-search {
+  > thead > tr > th {
+    vertical-align: top;
+  }
+
   th { > a, > span    { display: block; } }
   tr { cursor: pointer; }
   
