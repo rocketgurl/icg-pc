@@ -16,6 +16,7 @@ define [
       'change input[name=show-all]'          : 'updateStatus'
       'click .referrals-switch a'            : 'updateOwner'
       'click .referrals-sort-link'           : 'sortTasks'
+      'click .referrals-refresh'             : 'refreshTasks'
 
     initialize : (options) ->
       _.bindAll(this
@@ -80,6 +81,10 @@ define [
       # Need to let the footer know that we changed height
       if _.has(@MODULE, 'trigger')
         @MODULE.trigger 'workspace.rendered'
+
+    refreshTasks : ->
+      @toggleLoader true
+      @COLLECTION.getReferrals()
 
     # Handle server errors from the Tasks Collection
     #
