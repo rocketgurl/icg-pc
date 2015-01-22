@@ -156,6 +156,14 @@ define [
       else
         n.toFixed 2
 
+    # Add commas to numbers
+    formatLocaleNum : (n) ->
+      n = parseFloat n
+      if _.isNaN n
+        '0'
+      else
+        n.toLocaleString()
+
     # Some date strings we'll be dealing with are formatted with a full
     # timestamp like: "2011-01-15T23:00:00-04:00". The time, after the "T"
     # can sometimes cause weird rounding issues with the day. To safegaurd

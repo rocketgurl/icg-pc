@@ -6,6 +6,15 @@ define [
   #
   SearchPolicyModel = BaseModel.extend
 
-    initialize : ->
+    parse : (resp) ->
+      data = @normalizeCarrierId resp
+      data
+
+    normalizeCarrierId : (data) ->
+      if data.carrierId
+        data.CarrierId = data.carrierId
+      unless data.CarrierId
+        data.CarrierId = '--'
+      data
 
   SearchPolicyModel

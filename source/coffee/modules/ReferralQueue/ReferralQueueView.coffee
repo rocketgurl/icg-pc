@@ -16,6 +16,7 @@ define [
       'change input[name=show-all]'          : 'updateStatus'
       'click .referrals-switch a'            : 'updateOwner'
       'click .referrals-sort-link'           : 'sortTasks'
+      'click .referrals-refresh'             : 'refreshTasks'
 
     initialize : (options) ->
       _.bindAll(this
@@ -81,6 +82,10 @@ define [
       if _.has(@MODULE, 'trigger')
         @MODULE.trigger 'workspace.rendered'
 
+    refreshTasks : ->
+      @toggleLoader true
+      @COLLECTION.getReferrals()
+
     # Handle server errors from the Tasks Collection
     #
     # @param `collection` _Object_ ReferralTaskCollection
@@ -124,9 +129,9 @@ define [
     # Return an object of pagination form elements
     # @return _Object_
     cachePaginationElements : ->
-      items    : @$el.find('.pagination-a')
-      jump_to  : @$el.find('.referrals-pagination-page')
-      per_page : @$el.find('.referrals-pagination-perpage')
+      items    : @$('.pagination-a')
+      jump_to  : @$('.referrals-pagination-page')
+      per_page : @$('.referrals-pagination-perpage')
 
     # Update the pagination controls with current info
     #

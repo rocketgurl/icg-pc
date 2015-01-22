@@ -6,7 +6,7 @@
         <a href="myreferrals" class="btn btn-default active">My Referrals</a>
         <a href="allreferrals" class="btn btn-default">All Referrals</a>
       </div>
-      <button data-toggle="modal" data-target="#assignee-list-modal" class="btn btn-primary pull-right">Manage Referral Assignees</button>
+      <button class="btn btn-primary pull-right referrals-refresh">Refresh <span class="glyphicon glyphicon-refresh"></span></button>
       <div class="checkbox pull-right">
         <label>
           <input name="show-all" type="checkbox"> Show resolved &amp; withdrawn
@@ -22,6 +22,7 @@
         <thead>
           <tr>
             <th><a class="related-quote-id referrals-sort-link" href="relatedQuoteId">Policy Number <span class="glyphicon"></span></a></th>
+            <th><a class="carrier-id referrals-sort-link" href="CarrierId">Carrier ID <span class="glyphicon"></span></a></th>
             <th><a class="insured-last-name referrals-sort-link" href="insuredLastName">Last name <span class="glyphicon"></span></a></th>
             <th><a class="referral-status referrals-sort-link" href="status">Status <span class="glyphicon"></span></a></th>
             <th><a class="referral-subtype referrals-sort-link" href="prettySubtype">Type <span class="glyphicon"></span></a></th>
