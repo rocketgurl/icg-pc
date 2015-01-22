@@ -22,8 +22,7 @@ define [
 
     # Decode the URI component, because encoded email addresses appear to break the API
     url : ->
-      params = decodeURIComponent $.param @getParams()
-      "#{@baseURL}?media=application%2Fxml&#{params}"
+      "#{@baseURL}"
 
     sortCache :
       'relatedQuoteId'  : 'asc'
@@ -76,6 +75,7 @@ define [
       params =
         page    : @page
         perPage : @perPage
+        media   : 'application/xml'
       params.OwningUnderwriter = @owner  if @owner?
       params.OwningAgent       = @agent  if @agent?
       params.status            = @status if @status?
@@ -101,6 +101,7 @@ define [
     #
     getReferrals : ->
       @fetch(
+        data        : @getParams()
         dataType    : 'xml'
         contentType : 'application/xml'
         headers     :
