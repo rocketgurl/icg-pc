@@ -66,6 +66,7 @@ define [
     applyFunctions : (model, options) ->
       @find = _.partial @findProperty, @get('json')
       @findInLastTerm = _.partial @findProperty, @getLastTerm()
+      @findInQuoteTerm = _.partial @findProperty, @getQuoteTerm()
 
     # Is the argument null or undefined?
     #
@@ -203,21 +204,21 @@ define [
             'pxClient' : 'Agent Portal'
             'pxServer' : 'Agent Portal'
           }, 'Unknown')
-        PropertyAddress   : @getAddressDataItems(propertyData.DataItem, [
+        PropertyAddress   : @getDataItemValues(propertyData.DataItem, [
             'PropertyStreetNumber'
             'PropertyStreetName'
             'PropertyCity'
             'PropertyState'
             'PropertyZipCode'
           ])
-        MailingAddress    : @getAddressDataItems(insuredData, [
+        MailingAddress    : @getDataItemValues(insuredData, [
             'InsuredMailingAddressLine1'
             'InsuredMailingAddressLine2'
             'InsuredMailingAddressCity'
             'InsuredMailingAddressState'
             'InsuredMailingAddressZip'
           ])
-        PrimaryMortgagee  : @getAddressDataItems(mortgageeData, [
+        PrimaryMortgagee  : @getDataItemValues(mortgageeData, [
             'MortgageeNumber1'
             'Mortgagee1AddressLine1'
             'Mortgagee1AddressLine2'
@@ -250,6 +251,29 @@ define [
             'tenPayInvoice'  : 'Ten Pay Invoice'
             'fullPay'        : 'Full Pay'
           })
+
+    getUnderwritingData : ->
+      if @isQuote()
+        dataItems = @findInQuoteTerm('ProtoInterval')?.DataItem
+      else
+        dataItems = @getLastTerm()?.DataItem
+
+      @getDataItemValues(@_sanitizeNodeArray(dataItems), [
+          'CoverageA'
+          'HurricaneDeductible'
+          'WindHailDeductible'
+          'AllOtherPerilsDeductible'
+          'PropertyHazardLocation'
+          'FloorArea'
+          'ConstructionYear'
+          'RoofAge'
+          'RoofCoveringType'
+          'RoofGeometryType'
+          'PropertyUsage'
+          'StructureType'
+          'ProtectionClass'
+          'InsuranceScoreRange'
+        ])
 
     # Map policy state to a prettier version
     getPrettyPolicyState : ->
@@ -318,16 +342,6 @@ define [
       accountingData = @getAccountingData()
       paymentPlan = accountingData?.PaymentPlan
       paymentPlan.type if paymentPlan
-
-    # Extract data items from a list
-    # Return empty result if none
-    getAddressDataItems : (list, terms) ->
-      out = {}
-      _.each(terms, ((term) ->
-        val = @getDataItem list, term
-        out[term] = val if val
-        ), this)
-      out unless _.isEmpty out
 
     # Retrieve Lat/Long coords from last policy term
     # Return empty result if Lat/Long does not exist
@@ -837,9 +851,11 @@ define [
     #
     getDataItemValues : (list, terms) ->
       out = {}
-      for term in terms
-        out[term] = @getDataItem list, term
-      out
+      _.each(terms, ((term) ->
+        val = @getDataItem list, term
+        out[term] = val if val
+        ), this)
+      out unless _.isEmpty out
 
     # Check vocabTerms for enumerations fields and append to the viewData
     # object with a default field added.

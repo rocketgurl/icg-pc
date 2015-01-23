@@ -2076,7 +2076,6 @@ ul:after { clear: both; }
 #home .carousel-control.left { left: -5%; }
 #home .carousel-control.right { right: -5%; }
 #home .panel-body { max-height: 500px; overflow: auto; }
-#home .panel-body > ul { margin-bottom: 0; }
 #home .panel-working { text-align: center; color: #666; }
 #home .panel-notice { line-height: 110px; text-align: center; font-size: 40px; color: #8ebadc; }
 #home .notice-item:before, #home .notice-item:after { content: " "; display: table; }
@@ -2114,11 +2113,13 @@ header.module-search ul li.search-controls:first-child { border-left: 0px; }
 header.module-search ul li.search-controls:last-child { border-right: 0px; }
 header.module-search i.icon-caret-down { color: dimgrey; }
 
-.module-search.filters { margin: 0 0 20px 0; form-display: block; }
+.module-search.filters { margin: 0 0 20px 0; }
+.module-search.filters form { display: block; }
 .module-search.filters .control-label { padding-top: 0; text-shadow: 0 1px white; font-size: 18px; font-size: 1.8rem; color: #002857; line-height: 1.7; }
 .module-search.filters a { font-size: 14px; font-size: 1.4rem; color: dimgrey; text-decoration: none; line-height: 2.1; padding: 0 10px; }
 .module-search.filters a:hover, .module-search.filters .policy-nav > ul > li > a.select { color: #165788; }
 
+table.module-search > thead > tr > th, .ru-loss-history > thead > tr > th, .zd-loss-history > thead > tr > th, .lh-loss-history > thead > tr > th, .bor-table > thead > tr > th { vertical-align: top; }
 table.module-search th > a, .ru-loss-history th > a, .zd-loss-history th > a, .lh-loss-history th > a, .bor-table th > a, table.module-search th > span, .ru-loss-history th > span, .zd-loss-history th > span, .lh-loss-history th > span, .bor-table th > span { display: block; }
 table.module-search tr, .ru-loss-history tr, .zd-loss-history tr, .lh-loss-history tr, .bor-table tr { cursor: pointer; }
 table.module-search .quote-number, .ru-loss-history .quote-number, .zd-loss-history .quote-number, .lh-loss-history .quote-number, .bor-table .quote-number { min-width: 125px; }
@@ -2240,7 +2241,8 @@ Module: Policy
 .qv-container section { padding-left: 47%; padding-right: 3%; padding-top: 8px; padding-bottom: 8px; }
 .qv-container section:before, .qv-container section:after { content: " "; display: table; }
 .qv-container section:after { clear: both; }
-.qv-container section > label { display: block; float: left; margin-left: -90%; padding-top: 1px; padding-right: 25px; width: 90%; text-align: right; }
+.qv-container section > ul > li { padding: 5px 0; }
+.qv-container section label { display: block; float: left; margin-left: -90%; padding-top: 1px; padding-right: 25px; width: 90%; text-align: right; }
 .qv-container .panel-heading em, .qv-container .panel-heading strong { display: inline-block; }
 .qv-container .agent-support { margin-top: 20px; text-align: center; }
 .qv-container .activity-wrapper, .qv-container .documents-wrapper { height: 255px; overflow: auto; margin-bottom: 0; }
@@ -2555,6 +2557,7 @@ header.module-referrals { margin: 0 0 20px 0; }
 header.module-referrals h1 { float: left; margin: 0 20px 0 0; font-weight: bold; color: #002857; font-size: 24px; font-size: 2.4rem; text-shadow: 0 1px white; line-height: 1.4; }
 header.module-referrals .checkbox { padding: 0 10px; }
 
+.table.module-referrals > thead > tr > th { vertical-align: top; }
 .table.module-referrals tbody > tr { cursor: pointer; }
 .table.module-referrals .label-success { font-size: inherit; font-weight: normal; }
 .table.module-referrals .referrals-sort-link { display: block; }

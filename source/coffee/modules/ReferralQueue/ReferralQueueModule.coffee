@@ -18,7 +18,7 @@ define [
       @TASKS         = new ReferralTaskCollection()
       @TASKS.baseURL = @controller.services.pxcentral + 'tasks'
       @TASKS.digest  = @controller.user.get 'digest'
-      @TASKS.owner   = @TASKS.ownerDefault = @controller.user.get 'email'
+      @TASKS.owner   = @TASKS.ownerDefault = @controller.user.get 'username'
 
       #Setup view
       @QUEUE_VIEW = new ReferralQueueView(
@@ -26,7 +26,6 @@ define [
         collection : @TASKS
         view       : @view
         el         : @view.el
-        owner      : @controller.user.get 'email'
       )
 
     # Remove loader graphic. This will cause the CanvasView to trigger our

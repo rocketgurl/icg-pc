@@ -1,0 +1,3032 @@
+<InsurancePolicy schemaVersion="2.9" variant="multiterm" xmlns:icslocal="com.ics360.policy.data.local">
+  <Identifiers>
+    <Identifier name="InsightPolicyId" value="600ca8b9cfa64d51a290ddba4595afb5"/>
+    <Identifier name="QuoteNumber" value="CRU4Q-415448"/>
+    <Identifier name="pxServerIndex" value="415448"/>
+    <Identifier name="PolicyID" value="ALF041544800"/>
+  </Identifiers>
+  <Management>
+    <PolicyState effectiveDate="2015-06-06" reasonCode="7">NONRENEWEDPOLICY</PolicyState>
+    <ProgramAdministrator>cru</ProgramAdministrator>
+    <Carrier>Wilshire Insurance Company</Carrier>
+    <CarrierId>WIC</CarrierId>
+    <CarrierGroupId>IAT</CarrierGroupId>
+    <Program>P4-CRU</Program>
+    <SystemOfRecord>mxServer</SystemOfRecord>
+    <AgencyLocationCode>E00011T</AgencyLocationCode>
+    <BindingAgencyLocationCode>E00011T</BindingAgencyLocationCode>
+    <CreatedByAgencyLocationCode>E00011T</CreatedByAgencyLocationCode>
+    <Version>4</Version>
+    <Archived>false</Archived>
+    <AgentId>andyL</AgentId>
+    <AgencyId>crunyprogramagency01</AgencyId>
+    <AgencyLocationId>e00011t</AgencyLocationId>
+    <DataItem name="PolicyProcessingVendorId" value="insight"/>
+    <DataItem name="PolicyProcessingVendorInstance" value="ics-3"/>
+    <DataItem name="PolicyProcessingVendorId" value="insight"/>
+    <DataItem name="PolicyProcessingVendorInstance" value="ics-3"/>
+    <Flags>
+      <Flag name="ReviewLock" value="true"/>
+      <Flag name="locked" value="true"/>
+    </Flags>
+  </Management>
+  <Customers>
+    <Customer type="Insured">
+      <DataItem name="AdditionalInsured1AddressCity" value=""/>
+      <DataItem name="AdditionalInsured1AddressLine1" value=""/>
+      <DataItem name="AdditionalInsured1AddressLine2" value=""/>
+      <DataItem name="AdditionalInsured1AddressState" value=""/>
+      <DataItem name="AdditionalInsured1AddressZip" value=""/>
+      <DataItem name="AdditionalInsured1FirstName" value=""/>
+      <DataItem name="AdditionalInsured1LastName" value=""/>
+      <DataItem name="AdditionalInsured1ReferenceNumber" value=""/>
+      <DataItem name="AdditionalInsured1Type" value="0"/>
+      <DataItem name="AdditionalInsured2AddressCity" value=""/>
+      <DataItem name="AdditionalInsured2AddressLine1" value=""/>
+      <DataItem name="AdditionalInsured2AddressLine2" value=""/>
+      <DataItem name="AdditionalInsured2AddressState" value=""/>
+      <DataItem name="AdditionalInsured2AddressZip" value=""/>
+      <DataItem name="AdditionalInsured2FirstName" value=""/>
+      <DataItem name="AdditionalInsured2LastName" value=""/>
+      <DataItem name="AdditionalInsured2ReferenceNumber" value=""/>
+      <DataItem name="AdditionalInsured2Type" value="0"/>
+      <DataItem name="AdditionalInsured3AddressCity" value=""/>
+      <DataItem name="AdditionalInsured3AddressLine1" value=""/>
+      <DataItem name="AdditionalInsured3AddressLine2" value=""/>
+      <DataItem name="AdditionalInsured3AddressState" value=""/>
+      <DataItem name="AdditionalInsured3AddressZip" value=""/>
+      <DataItem name="AdditionalInsured3FirstName" value=""/>
+      <DataItem name="AdditionalInsured3LastName" value=""/>
+      <DataItem name="AdditionalInsured3ReferenceNumber" value=""/>
+      <DataItem name="AdditionalInsured3Type" value="0"/>
+      <DataItem name="AdditionalInsuredIndicator" value="0"/>
+      <DataItem name="Insured1BirthDate" value=""/>
+      <DataItem name="Insured1BirthDateAPlus" value=""/>
+      <DataItem name="Insured1SSN" value="741243543"/>
+      <DataItem name="Insured1SSNDisplay" value="741243543"/>
+      <DataItem name="Insured1SSNRequiredIndicator" value="200"/>
+      <DataItem name="Insured2BirthDate" value=""/>
+      <DataItem name="Insured2FirstName" value=""/>
+      <DataItem name="Insured2FirstNameProper" value=""/>
+      <DataItem name="Insured2LastName" value=""/>
+      <DataItem name="Insured2LastNameProper" value=""/>
+      <DataItem name="Insured2MiddleName" value=""/>
+      <DataItem name="Insured2SSN" value=""/>
+      <DataItem name="Insured3FirstName" value=""/>
+      <DataItem name="Insured3FirstNameProper" value=""/>
+      <DataItem name="Insured3LastName" value=""/>
+      <DataItem name="Insured3LastNameProper" value=""/>
+      <DataItem name="InsuredAge" value=""/>
+      <DataItem name="InsuredByCorporation" value="200"/>
+      <DataItem name="InsuredEmailAddress" value=""/>
+      <DataItem name="InsuredFaxNumber" value=""/>
+      <DataItem name="InsuredFirstName" value="Chris"/>
+      <DataItem name="InsuredFirstNameProper" value="CHRIS"/>
+      <DataItem name="InsuredLastName" value="Test"/>
+      <DataItem name="InsuredLastNameProper" value="TEST"/>
+      <DataItem name="InsuredMailingAddressCity" value="Mobile"/>
+      <DataItem name="InsuredMailingAddressCountry" value="USA"/>
+      <DataItem name="InsuredMailingAddressLine1" value="4140 Meadow Green Ct"/>
+      <DataItem name="InsuredMailingAddressLine2" value=""/>
+      <DataItem name="InsuredMailingAddressState" value="AL"/>
+      <DataItem name="InsuredMailingAddressZip" value="36619"/>
+      <DataItem name="InsuredMaritalStatus" value="100"/>
+      <DataItem name="InsuredMiddleName" value=""/>
+      <DataItem name="InsuredMiddleNameProper" value=""/>
+      <DataItem name="InsuredName" value="Chris Test"/>
+      <DataItem name="InsuredNameProper" value="CHRIS TEST"/>
+      <DataItem name="InsuredPhoneNumber" value="3217593923"/>
+      <DataItem name="OpAdditionalInsured1AddressCity" value=""/>
+      <DataItem name="OpAdditionalInsured1AddressLine1" value=""/>
+      <DataItem name="OpAdditionalInsured1AddressLine2" value=""/>
+      <DataItem name="OpAdditionalInsured1AddressState" value=""/>
+      <DataItem name="OpAdditionalInsured1AddressZip" value=""/>
+      <DataItem name="OpAdditionalInsured1FirstName" value=""/>
+      <DataItem name="OpAdditionalInsured1LastName" value=""/>
+      <DataItem name="OpAdditionalInsured1ReferenceNumber" value=""/>
+      <DataItem name="OpAdditionalInsured1Type" value="0"/>
+      <DataItem name="OpAdditionalInsured2AddressCity" value=""/>
+      <DataItem name="OpAdditionalInsured2AddressLine1" value=""/>
+      <DataItem name="OpAdditionalInsured2AddressLine2" value=""/>
+      <DataItem name="OpAdditionalInsured2AddressState" value=""/>
+      <DataItem name="OpAdditionalInsured2AddressZip" value=""/>
+      <DataItem name="OpAdditionalInsured2FirstName" value=""/>
+      <DataItem name="OpAdditionalInsured2LastName" value=""/>
+      <DataItem name="OpAdditionalInsured2ReferenceNumber" value=""/>
+      <DataItem name="OpAdditionalInsured2Type" value="0"/>
+      <DataItem name="OpAdditionalInsured3AddressCity" value=""/>
+      <DataItem name="OpAdditionalInsured3AddressLine1" value=""/>
+      <DataItem name="OpAdditionalInsured3AddressLine2" value=""/>
+      <DataItem name="OpAdditionalInsured3AddressState" value=""/>
+      <DataItem name="OpAdditionalInsured3AddressZip" value=""/>
+      <DataItem name="OpAdditionalInsured3FirstName" value=""/>
+      <DataItem name="OpAdditionalInsured3LastName" value=""/>
+      <DataItem name="OpAdditionalInsured3ReferenceNumber" value=""/>
+      <DataItem name="OpAdditionalInsured3Type" value="0"/>
+      <DataItem name="OpAdditionalInsuredIndicator" value="0"/>
+      <DataItem name="OpInsured1BirthDate" value=""/>
+      <DataItem name="OpInsured1SSNRequiredIndicator" value="200"/>
+      <DataItem name="OpInsured2FirstName" value=""/>
+      <DataItem name="OpInsured2LastName" value=""/>
+      <DataItem name="OpInsured3FirstName" value=""/>
+      <DataItem name="OpInsured3LastName" value=""/>
+      <DataItem name="OpInsured4FirstName" value=""/>
+      <DataItem name="OpInsured4LastName" value=""/>
+      <DataItem name="OpInsuredByCorporation" value="200"/>
+      <DataItem name="OpInsuredEmailAddress" value=""/>
+      <DataItem name="OpInsuredFaxNumber" value=""/>
+      <DataItem name="OpInsuredFirstName" value="CHRIS"/>
+      <DataItem name="OpInsuredLastName" value="TEST"/>
+      <DataItem name="OpInsuredMailingAddressCity" value="MOBILE"/>
+      <DataItem name="OpInsuredMailingAddressCountry" value="USA"/>
+      <DataItem name="OpInsuredMailingAddressLine1" value="4140 MEADOW GREEN CT"/>
+      <DataItem name="OpInsuredMailingAddressLine2" value=""/>
+      <DataItem name="OpInsuredMailingAddressState" value="AL"/>
+      <DataItem name="OpInsuredMailingAddressZip" value="36619"/>
+      <DataItem name="OpInsuredMaritalStatus" value="100"/>
+      <DataItem name="OpInsuredMiddleName" value=""/>
+      <DataItem name="OpInsuredName" value="CHRIS TEST"/>
+      <DataItem name="OpInsuredPhoneNumber" value="(321)759-3923"/>
+    </Customer>
+    <Customer type="Mortgagee">
+      <DataItem name="LoanNumber1" value="123456789"/>
+      <DataItem name="LoanNumber2" value=""/>
+      <DataItem name="LoanNumber3" value=""/>
+      <DataItem name="Mortgagee1AddedByUser" value="200"/>
+      <DataItem name="Mortgagee1AddressCity" value="Newark"/>
+      <DataItem name="Mortgagee1AddressCityProper" value="NEWARK"/>
+      <DataItem name="Mortgagee1AddressLine1" value="900 Broad St. "/>
+      <DataItem name="Mortgagee1AddressLine1Proper" value="900 BROAD ST. "/>
+      <DataItem name="Mortgagee1AddressLine2" value=""/>
+      <DataItem name="Mortgagee1AddressLine2Proper" value=""/>
+      <DataItem name="Mortgagee1AddressState" value="NJ"/>
+      <DataItem name="Mortgagee1AddressZip" value="07102"/>
+      <DataItem name="Mortgagee1Clause1" value=""/>
+      <DataItem name="Mortgagee1Clause2" value=""/>
+      <DataItem name="Mortgagee2AddedByUser" value="200"/>
+      <DataItem name="Mortgagee2AddressCity" value=""/>
+      <DataItem name="Mortgagee2AddressCityProper" value=""/>
+      <DataItem name="Mortgagee2AddressLine1" value=""/>
+      <DataItem name="Mortgagee2AddressLine1Proper" value=""/>
+      <DataItem name="Mortgagee2AddressLine2" value=""/>
+      <DataItem name="Mortgagee2AddressLine2Proper" value=""/>
+      <DataItem name="Mortgagee2AddressState" value=""/>
+      <DataItem name="Mortgagee2AddressZip" value=""/>
+      <DataItem name="Mortgagee2Clause1" value=""/>
+      <DataItem name="Mortgagee2Clause2" value=""/>
+      <DataItem name="Mortgagee3AddedByUser" value="200"/>
+      <DataItem name="Mortgagee3AddressCity" value=""/>
+      <DataItem name="Mortgagee3AddressCityProper" value=""/>
+      <DataItem name="Mortgagee3AddressLine1" value=""/>
+      <DataItem name="Mortgagee3AddressLine1Proper" value=""/>
+      <DataItem name="Mortgagee3AddressLine2" value=""/>
+      <DataItem name="Mortgagee3AddressLine2Proper" value=""/>
+      <DataItem name="Mortgagee3AddressState" value=""/>
+      <DataItem name="Mortgagee3AddressZip" value=""/>
+      <DataItem name="Mortgagee3Clause1" value=""/>
+      <DataItem name="Mortgagee3Clause2" value=""/>
+      <DataItem name="MortgageeNumber1" value="Citi National Bank of NJ"/>
+      <DataItem name="MortgageeNumber1Proper" value="CITI NATIONAL BANK OF NJ"/>
+      <DataItem name="MortgageeNumber2" value=""/>
+      <DataItem name="MortgageeNumber2Proper" value=""/>
+      <DataItem name="MortgageeNumber3" value=""/>
+      <DataItem name="MortgageeNumber3Proper" value=""/>
+      <DataItem name="OpLoanNumber1" value="123456789"/>
+      <DataItem name="OpLoanNumber2" value=""/>
+      <DataItem name="OpLoanNumber3" value=""/>
+      <DataItem name="OpMortgagee1AddressCity" value="NEWARK"/>
+      <DataItem name="OpMortgagee1AddressLine1" value="900 BROAD ST. "/>
+      <DataItem name="OpMortgagee1AddressLine2" value=""/>
+      <DataItem name="OpMortgagee1AddressState" value="NJ"/>
+      <DataItem name="OpMortgagee1AddressZip" value="07102"/>
+      <DataItem name="OpMortgagee2AddressCity" value=""/>
+      <DataItem name="OpMortgagee2AddressLine1" value=""/>
+      <DataItem name="OpMortgagee2AddressLine2" value=""/>
+      <DataItem name="OpMortgagee2AddressState" value=""/>
+      <DataItem name="OpMortgagee2AddressZip" value=""/>
+      <DataItem name="OpMortgagee3AddressCity" value=""/>
+      <DataItem name="OpMortgagee3AddressLine1" value=""/>
+      <DataItem name="OpMortgagee3AddressLine2" value=""/>
+      <DataItem name="OpMortgagee3AddressState" value=""/>
+      <DataItem name="OpMortgagee3AddressZip" value=""/>
+      <DataItem name="OpMortgageeNumber1" value="CITI NATIONAL BANK OF NJ"/>
+      <DataItem name="OpMortgageeNumber2" value=""/>
+      <DataItem name="OpMortgageeNumber3" value=""/>
+    </Customer>
+    <Customer type="AdditionalInterest">
+      <DataItem name="AdditionalInterest1AddressCity" value=""/>
+      <DataItem name="AdditionalInterest1AddressLine1" value=""/>
+      <DataItem name="AdditionalInterest1AddressLine2" value=""/>
+      <DataItem name="AdditionalInterest1AddressState" value=""/>
+      <DataItem name="AdditionalInterest1AddressZip" value=""/>
+      <DataItem name="AdditionalInterest1Name" value=""/>
+      <DataItem name="AdditionalInterest1NameProper" value=""/>
+      <DataItem name="AdditionalInterest1ReferenceNumber" value=""/>
+      <DataItem name="AdditionalInterest1Type" value="0"/>
+      <DataItem name="AdditionalInterest2AddressCity" value=""/>
+      <DataItem name="AdditionalInterest2AddressLine1" value=""/>
+      <DataItem name="AdditionalInterest2AddressLine2" value=""/>
+      <DataItem name="AdditionalInterest2AddressState" value=""/>
+      <DataItem name="AdditionalInterest2AddressZip" value=""/>
+      <DataItem name="AdditionalInterest2Name" value=""/>
+      <DataItem name="AdditionalInterest2NameProper" value=""/>
+      <DataItem name="AdditionalInterest2ReferenceNumber" value=""/>
+      <DataItem name="AdditionalInterest2Type" value="0"/>
+      <DataItem name="AdditionalInterest3AddressCity" value=""/>
+      <DataItem name="AdditionalInterest3AddressLine1" value=""/>
+      <DataItem name="AdditionalInterest3AddressLine2" value=""/>
+      <DataItem name="AdditionalInterest3AddressState" value=""/>
+      <DataItem name="AdditionalInterest3AddressZip" value=""/>
+      <DataItem name="AdditionalInterest3Name" value=""/>
+      <DataItem name="AdditionalInterest3ReferenceNumber" value=""/>
+      <DataItem name="AdditionalInterest3Type" value="0"/>
+      <DataItem name="AdditionalInterestIndicator" value="0"/>
+      <DataItem name="OpAdditionalInterest1AddressCity" value=""/>
+      <DataItem name="OpAdditionalInterest1AddressLine1" value=""/>
+      <DataItem name="OpAdditionalInterest1AddressLine2" value=""/>
+      <DataItem name="OpAdditionalInterest1AddressState" value=""/>
+      <DataItem name="OpAdditionalInterest1AddressZip" value=""/>
+      <DataItem name="OpAdditionalInterest1FirstName" value=""/>
+      <DataItem name="OpAdditionalInterest1LastName" value=""/>
+      <DataItem name="OpAdditionalInterest1Name" value=""/>
+      <DataItem name="OpAdditionalInterest1ReferenceNumber" value=""/>
+      <DataItem name="OpAdditionalInterest1Type" value="0"/>
+      <DataItem name="OpAdditionalInterest2AddressCity" value=""/>
+      <DataItem name="OpAdditionalInterest2AddressLine1" value=""/>
+      <DataItem name="OpAdditionalInterest2AddressLine2" value=""/>
+      <DataItem name="OpAdditionalInterest2AddressState" value=""/>
+      <DataItem name="OpAdditionalInterest2AddressZip" value=""/>
+      <DataItem name="OpAdditionalInterest2FirstName" value=""/>
+      <DataItem name="OpAdditionalInterest2LastName" value=""/>
+      <DataItem name="OpAdditionalInterest2Name" value=""/>
+      <DataItem name="OpAdditionalInterest2ReferenceNumber" value=""/>
+      <DataItem name="OpAdditionalInterest2Type" value="0"/>
+      <DataItem name="OpAdditionalInterestIndicator" value="0"/>
+    </Customer>
+  </Customers>
+  <Terms>
+    <Term>
+      <EffectiveDate>2014-06-06T00:00:00-04:00</EffectiveDate>
+      <ExpirationDate>2015-06-06T00:00:00-04:00</ExpirationDate>
+      <AgencyLocationCode>E00011T</AgencyLocationCode>
+      <ProductRef href="products/4AA7AADE926EEF1F5421713627500473" idref="4AA7AADE926EEF1F5421713627500473" version="CFC37C4054AE812F47978B7F087C4261">
+        <CachedItem name="Label" value="DP3SL AL"/>
+      </ProductRef>
+      <DataItem name="OpAAL" value=""/>
+      <DataItem name="OpACVLossSettlementDwelling" value="10000"/>
+      <DataItem name="OpACVLossSettlementRoof" value="200"/>
+      <DataItem name="OpAOPDeductibleAmount" value="2500"/>
+      <DataItem name="OpAbsenteeLandlord" value="100"/>
+      <DataItem name="OpAdditionalAmountsOfInsurance" value="0"/>
+      <DataItem name="OpAdditionalMortgageeIndicator" value="200"/>
+      <DataItem name="OpAdditionalResidence1AddressCity" value=""/>
+      <DataItem name="OpAdditionalResidence1AddressLine1" value=""/>
+      <DataItem name="OpAdditionalResidence1AddressLine2" value=""/>
+      <DataItem name="OpAdditionalResidence1AddressState" value=""/>
+      <DataItem name="OpAdditionalResidence1AddressZip" value=""/>
+      <DataItem name="OpAdditionalResidencesRented" value="0"/>
+      <DataItem name="OpAddressValidated" value="100"/>
+      <DataItem name="OpAdjacentPropertyCondition" value="200"/>
+      <DataItem name="OpAdjoiningTownhouseDamage" value="200"/>
+      <DataItem name="OpAgencyAffiliation" value=""/>
+      <DataItem name="OpAgencyID" value="crunyprogramagency01"/>
+      <DataItem name="OpAgencyLocationCode" value="E00011T"/>
+      <DataItem name="OpAgencyLocationID" value="e00011t"/>
+      <DataItem name="OpAgencyLocationName" value="Product Development"/>
+      <DataItem name="OpAgencyName" value="SageSure CRU4 Test Agency"/>
+      <DataItem name="OpAgentAddressLine2" value=""/>
+      <DataItem name="OpAgentCity" value="New York"/>
+      <DataItem name="OpAgentEmailAddress" value=""/>
+      <DataItem name="OpAgentID" value="andyl"/>
+      <DataItem name="OpAgentName" value="Andy Levens"/>
+      <DataItem name="OpAgentPhoneNumber" value="GFDGFFH"/>
+      <DataItem name="OpAgentState" value="NY"/>
+      <DataItem name="OpAgentStreetName" value="30th fl"/>
+      <DataItem name="OpAgentStreetNumber" value="747 3rd Ave"/>
+      <DataItem name="OpAgentZipCode" value="10017"/>
+      <DataItem name="OpAllOtherPerilsDeductible" value="25"/>
+      <DataItem name="OpAllWeatherAccess" value="100"/>
+      <DataItem name="OpApplicantFirstName" value=""/>
+      <DataItem name="OpApplicantLastName" value=""/>
+      <DataItem name="OpAssumedPolicy" value=""/>
+      <DataItem name="OpAssumptionDate" value=""/>
+      <DataItem name="OpAttractiveNuisanceLiabilityCoverage" value="200"/>
+      <DataItem name="OpAttractiveNuisanceLiabilityCoveragePremium" value="0"/>
+      <DataItem name="OpAttractiveNuisanceLiabilityExclusion" value="100"/>
+      <DataItem name="OpAutoPolicyCarrier" value=""/>
+      <DataItem name="OpAutoPolicyNumber" value=""/>
+      <DataItem name="OpBCEquivalent" value=""/>
+      <DataItem name="OpBasement" value="0"/>
+      <DataItem name="OpBasementPercentComplete" value="0"/>
+      <DataItem name="OpBcegCode" value=""/>
+      <DataItem name="OpBeneficiary" value=""/>
+      <DataItem name="OpBlanketOffPremisesAddressCity" value=""/>
+      <DataItem name="OpBlanketOffPremisesAddressLine1" value=""/>
+      <DataItem name="OpBlanketOffPremisesAddressLine2" value=""/>
+      <DataItem name="OpBlanketOffPremisesAddressState" value=""/>
+      <DataItem name="OpBlanketOffPremisesAddressZip" value=""/>
+      <DataItem name="OpBoundDate" value="06/06/2014"/>
+      <DataItem name="OpBuildingAdditionsOtherResidences" value="200"/>
+      <DataItem name="OpBuildingAdditionsOtherResidencesAddressCity" value=""/>
+      <DataItem name="OpBuildingAdditionsOtherResidencesAddressLine1" value=""/>
+      <DataItem name="OpBuildingAdditionsOtherResidencesAddressLine2" value=""/>
+      <DataItem name="OpBuildingAdditionsOtherResidencesAddressState" value=""/>
+      <DataItem name="OpBuildingAdditionsOtherResidencesAddressZip" value=""/>
+      <DataItem name="OpBuildingAdditionsOtherResidencesLimit" value="0"/>
+      <DataItem name="OpBuildingNotOriginallyDwelling" value="200"/>
+      <DataItem name="OpBuildingNumber" value="1"/>
+      <DataItem name="OpBurglarAlarm" value="1"/>
+      <DataItem name="OpBusinessInterruptionPreparedness" value="0"/>
+      <DataItem name="OpBusinessInterruptionRedundancy" value="0"/>
+      <DataItem name="OpBusinessPropertyLimit" value="2500"/>
+      <DataItem name="OpCATReinsuranceLoadFactor" value="0"/>
+      <DataItem name="OpCalculatedCostPerSquareFoot" value="0"/>
+      <DataItem name="OpCalculatedTIV" value="256700"/>
+      <DataItem name="OpCancellationDate" value=""/>
+      <DataItem name="OpCancellationReason" value=""/>
+      <DataItem name="OpCarrierAddress" value="PO Box 12999"/>
+      <DataItem name="OpCarrierCity" value="Tallahassee"/>
+      <DataItem name="OpCarrierClaimPhoneNumber" value="(800)780-8423"/>
+      <DataItem name="OpCarrierGroupID" value="IAT"/>
+      <DataItem name="OpCarrierID" value="WIC"/>
+      <DataItem name="OpCarrierName" value="Wilshire Insurance Company"/>
+      <DataItem name="OpCarrierPresident" value="Steve Stephano"/>
+      <DataItem name="OpCarrierSecretary" value="Michael Blinson"/>
+      <DataItem name="OpCarrierState" value="FL"/>
+      <DataItem name="OpCarrierStatement" value="The Contract is registered and delivered as surplus line coverage under the Alabama Surplus Line Insurance Law."/>
+      <DataItem name="OpCarrierZip" value="32317-2999"/>
+      <DataItem name="OpCentralAir" value="200"/>
+      <DataItem name="OpChildCare" value="200"/>
+      <DataItem name="OpCladding" value="900"/>
+      <DataItem name="OpClientTraffic" value="200"/>
+      <DataItem name="OpCommissionNewBusinessRate" value="0.1"/>
+      <DataItem name="OpCommissionRenewalRate" value="0.1"/>
+      <DataItem name="OpCompetitivePremium" value=""/>
+      <DataItem name="OpCompetitivePremiumCarrier" value=""/>
+      <DataItem name="OpCondemnedArea" value="200"/>
+      <DataItem name="OpConditionRatingPoints" value="2"/>
+      <DataItem name="OpCondoRentedOthers" value=""/>
+      <DataItem name="OpConsentContactEmailAddress" value="email@test.com"/>
+      <DataItem name="OpConsentContactName" value="Test Name"/>
+      <DataItem name="OpConsentContactPhoneNumber" value="3214567890"/>
+      <DataItem name="OpConsentContactType" value="100"/>
+      <DataItem name="OpConsentProducerAffirmation" value="100"/>
+      <DataItem name="OpConstructionQuality" value="0"/>
+      <DataItem name="OpConstructionScheme" value="100"/>
+      <DataItem name="OpConstructionType" value="100"/>
+      <DataItem name="OpConstructionYear" value="2014"/>
+      <DataItem name="OpConstructionYearRoof" value="2014"/>
+      <DataItem name="OpCoverageA" value="151000"/>
+      <DataItem name="OpCoverageALimit" value="151000"/>
+      <DataItem name="OpCoverageAPremium" value="1480"/>
+      <DataItem name="OpCoverageB" value="0"/>
+      <DataItem name="OpCoverageBLimit" value="0"/>
+      <DataItem name="OpCoverageBPremium" value="0"/>
+      <DataItem name="OpCoverageC" value="75500"/>
+      <DataItem name="OpCoverageCLimit" value="75500"/>
+      <DataItem name="OpCoverageCPremium" value="0"/>
+      <DataItem name="OpCoverageD" value="30200"/>
+      <DataItem name="OpCoverageDLimit" value="30200"/>
+      <DataItem name="OpCoverageDPremium" value="0"/>
+      <DataItem name="OpCoverageL" value="100000"/>
+      <DataItem name="OpCoverageLLimit" value="100000"/>
+      <DataItem name="OpCoverageLPremium" value="0"/>
+      <DataItem name="OpCoverageM" value="1000"/>
+      <DataItem name="OpCoverageMLimit" value="1000"/>
+      <DataItem name="OpCoverageMPremium" value="Included"/>
+      <DataItem name="OpCurrentBalanceDue" value="0"/>
+      <DataItem name="OpDeclinationContactName1" value=""/>
+      <DataItem name="OpDeclinationContactName2" value=""/>
+      <DataItem name="OpDeclinationContactName3" value=""/>
+      <DataItem name="OpDeclinationDateOfContact1" value="2014-06-07"/>
+      <DataItem name="OpDeclinationDateOfContact2" value="2014-06-06"/>
+      <DataItem name="OpDeclinationDateOfContact3" value="2014-06-06"/>
+      <DataItem name="OpDeclinationDiligentEffort" value="100"/>
+      <DataItem name="OpDeclinationInsurer1" value="Test"/>
+      <DataItem name="OpDeclinationInsurer2" value="Test"/>
+      <DataItem name="OpDeclinationInsurer3" value="Test"/>
+      <DataItem name="OpDeclinationReasonCode1" value="100"/>
+      <DataItem name="OpDeclinationReasonCode2" value="100"/>
+      <DataItem name="OpDeclinationReasonCode3" value="100"/>
+      <DataItem name="OpDeclinationSubmissionChannel1" value="100"/>
+      <DataItem name="OpDeclinationSubmissionChannel2" value="100"/>
+      <DataItem name="OpDeclinationSubmissionChannel3" value="100"/>
+      <DataItem name="OpDeductibleAmount" value="10570"/>
+      <DataItem name="OpDeductibleMinimum" value="0"/>
+      <DataItem name="OpDeductiblePercent" value="0"/>
+      <DataItem name="OpDeductibleType" value="100"/>
+      <DataItem name="OpDeluxeEndorsementOption" value=""/>
+      <DataItem name="OpDeluxeEndorsementOptionPremium" value="0"/>
+      <DataItem name="OpDesignCode" value="0"/>
+      <DataItem name="OpDesignExposure" value=""/>
+      <DataItem name="OpDistanceFireHydrant" value="1000"/>
+      <DataItem name="OpDistanceFireStation" value="5"/>
+      <DataItem name="OpDistanceToCoast" value="15.5"/>
+      <DataItem name="OpDistanceToCoastSecondary" value="8.4"/>
+      <DataItem name="OpDistanceToFireDepartment" value="4.03"/>
+      <DataItem name="OpDistanceToSinkhole" value=""/>
+      <DataItem name="OpDivingBoardSlide" value=""/>
+      <DataItem name="OpDivingBoardSlideLiabilityCoverage" value="200"/>
+      <DataItem name="OpDivingBoardSlideLiabilityCoveragePremium" value="0"/>
+      <DataItem name="OpDivingBoardSlideLiabilityExclusion" value="100"/>
+      <DataItem name="OpDivingBoardSlideWellMaintained" value=""/>
+      <DataItem name="OpDoorType" value="0"/>
+      <DataItem name="OpDwellingFoundation" value="100"/>
+      <DataItem name="OpEIFS" value="200"/>
+      <DataItem name="OpEarthquakeCoverage" value="200"/>
+      <DataItem name="OpEarthquakeCoveragePremium" value="0"/>
+      <DataItem name="OpEarthquakeDeductible" value=""/>
+      <DataItem name="OpEarthquakeLossAssessmentCoverage" value=""/>
+      <DataItem name="OpEarthquakeSiteLimit" value="0"/>
+      <DataItem name="OpEffectiveDate" value="06/06/2014"/>
+      <DataItem name="OpEffectiveDatePolicyTerm" value="06/06/2014"/>
+      <DataItem name="OpElectricalAmperage" value="175"/>
+      <DataItem name="OpElevation" value="135.56"/>
+      <DataItem name="OpExcessFloodPolicyLimit" value=""/>
+      <DataItem name="OpExoticAnimal" value="200"/>
+      <DataItem name="OpExpirationDate" value="06/06/2015"/>
+      <DataItem name="OpExpirationDatePolicyTerm" value="2015-06-06T00:00:00.000-04:00"/>
+      <DataItem name="OpExternalOrnamentation" value="0"/>
+      <DataItem name="OpFRCALetterRequired" value="100"/>
+      <DataItem name="OpFarming" value="200"/>
+      <DataItem name="OpFireAlarm" value="1"/>
+      <DataItem name="OpFirstRowBuilding" value="200"/>
+      <DataItem name="OpFloodDrivenMissileExposure" value="0"/>
+      <DataItem name="OpFloodZone" value="200"/>
+      <DataItem name="OpFloorArea" value="1600"/>
+      <DataItem name="OpForeclosure" value="200"/>
+      <DataItem name="OpFormAdditionalExclusion" value="HC02212020610 - Additional Exclusions"/>
+      <DataItem name="OpFormHomeDayCare" value="HO04961000 - No Coverage For Home Day Care Business"/>
+      <DataItem name="OpFormHurricaneDeductible" value="HC02417011010 - Named Storm Deductible - Alabama"/>
+      <DataItem name="OpFormIdentityFraud" value="HC02531010610 - Identity Theft Exp and Resolution Services"/>
+      <DataItem name="OpFormIncidentalBusinessOccupancy" value="HO04421000 - Permitted Occupancies"/>
+      <DataItem name="OpFormLeadFuelLiability" value="HC02213010610 - Escaped Liquid Fuel and Lead Liability Exclusion"/>
+      <DataItem name="OpFormLossAssessment" value="HO04351000 - Incr Loss Assessment"/>
+      <DataItem name="OpFormMold" value="HC02530010610 - Limited Fungi Section I and II Exclusion"/>
+      <DataItem name="OpFormOrdinanceLaw" value="HO04771000 - Incr Law and Ordinance"/>
+      <DataItem name="OpFormPersonalInjury" value="HO24821000 - Personal Injury"/>
+      <DataItem name="OpFormPoolEnclosure" value="HC02213060610 - Swimming Pool and/or Patio Enclosure Exclusion"/>
+      <DataItem name="OpFormReplacementCostContents" value="HO04901000 - Replacement Cost on Contents"/>
+      <DataItem name="OpFormShortRateProvision" value="HC02213050610 - Short-rate Calculation Condition"/>
+      <DataItem name="OpFormSpecialLimitsContents" value="HO04651000 - Cov C Incr Special Limits"/>
+      <DataItem name="OpFormSpecialProvision" value="HO01010508 - Special Provisions"/>
+      <DataItem name="OpFormStandardPolicy" value="HO03001010 - Homeowner Policy"/>
+      <DataItem name="OpFormWaterBackup" value="HO04951000 - Water and Sewer Back Up"/>
+      <DataItem name="OpFormWaterDamage" value="HO16101000 - Water Exclusion"/>
+      <DataItem name="OpFormWindPaint" value="HC02213040610 - Windstorm Exterior Paint or Waterproofing Exclusion"/>
+      <DataItem name="OpFoundationBasementPercentage" value="0"/>
+      <DataItem name="OpFoundationSlabPercentage" value="10000"/>
+      <DataItem name="OpFoundationType" value="100"/>
+      <DataItem name="OpFourPayAmountDue" value="798"/>
+      <DataItem name="OpFourPayRemainingBalance" value="907"/>
+      <DataItem name="OpFourPayTotalBalance" value="1705"/>
+      <DataItem name="OpFullBathQuality" value="100"/>
+      <DataItem name="OpFullPayAmountDue" value="1677"/>
+      <DataItem name="OpFullPayRemainingBalance" value="0"/>
+      <DataItem name="OpFullPayTotalBalance" value="1677"/>
+      <DataItem name="OpFunctionalReplacementCost" value="200"/>
+      <DataItem name="OpFutureBalanceDue" value="0"/>
+      <DataItem name="OpGarageType" value="1"/>
+      <DataItem name="OpGatedCommunity" value="200"/>
+      <DataItem name="OpGatedCommunityPhoneNumber" value=""/>
+      <DataItem name="OpGeocodePrecision" value=""/>
+      <DataItem name="OpGolfCartCoverage" value=""/>
+      <DataItem name="OpGrandSubtotal" value="1482"/>
+      <DataItem name="OpGrandSubtotalCat" value="759"/>
+      <DataItem name="OpGrandSubtotalNonCat" value="723"/>
+      <DataItem name="OpGrantor" value=""/>
+      <DataItem name="OpHalfBathQuality" value="100"/>
+      <DataItem name="OpHandrailWalkwayLiability" value="200"/>
+      <DataItem name="OpHeatPump" value="100"/>
+      <DataItem name="OpHeatingThermoControlled" value="100"/>
+      <DataItem name="OpHighestMatchLevelFound" value=""/>
+      <DataItem name="OpHomeFeatures" value="0"/>
+      <DataItem name="OpHomeFeatures1" value="0"/>
+      <DataItem name="OpHomeFeatures1SquareFeet" value="0"/>
+      <DataItem name="OpHomeFeatures2" value="0"/>
+      <DataItem name="OpHomeFeatures2SquareFeet" value="0"/>
+      <DataItem name="OpHomeFeatures3" value="0"/>
+      <DataItem name="OpHomeFeatures3SquareFeet" value="0"/>
+      <DataItem name="OpHomeStyle" value="300"/>
+      <DataItem name="OpHurricaneDeductible" value="0"/>
+      <DataItem name="OpHurricaneDeductible2" value="500"/>
+      <DataItem name="OpHurricaneDeductibleAmount" value="0"/>
+      <DataItem name="OpHurricaneDeductibleAmount2" value="7550"/>
+      <DataItem name="OpHurricanePremiumDollarAdjustment" value="0"/>
+      <DataItem name="OpHurricanePremiumFactorAdjustment" value="1"/>
+      <DataItem name="OpHurricaneSiteDeductible" value="0"/>
+      <DataItem name="OpHurricaneSiteLimit" value="0"/>
+      <DataItem name="OpIdentityFraudCoverage" value="0"/>
+      <DataItem name="OpIdentityFraudCoveragePremium" value="0"/>
+      <DataItem name="OpIdentityFraudIncreaseLimit" value="0"/>
+      <DataItem name="OpIdentityFraudTotalLimit" value="0"/>
+      <DataItem name="OpImmovablePoolLadder" value=""/>
+      <DataItem name="OpIncidentalBusinessOccupancy" value="200"/>
+      <DataItem name="OpIncidentalBusinessOccupancyDescription" value=""/>
+      <DataItem name="OpIncidentalBusinessOccupancyType" value=""/>
+      <DataItem name="OpIncludesWind" value="100"/>
+      <DataItem name="OpIncreasedOrdinanceLimit" value="1000"/>
+      <DataItem name="OpInsightPolicyID" value="ALF041544800"/>
+      <DataItem name="OpInspectionAccountNumber" value="601200"/>
+      <DataItem name="OpInspectionBrushSupplement" value="200"/>
+      <DataItem name="OpInspectionCompany" value="Millennium"/>
+      <DataItem name="OpInspectionEarthquakeSupplement" value="200"/>
+      <DataItem name="OpInspectionFee" value="30"/>
+      <DataItem name="OpInspectionMechanicalSupplement" value="200"/>
+      <DataItem name="OpInspectionMoldSupplement" value="200"/>
+      <DataItem name="OpInspectionRoofSupplement" value="200"/>
+      <DataItem name="OpInspectionSinkholeSupplement" value="200"/>
+      <DataItem name="OpInspectionType" value="100"/>
+      <DataItem name="OpInspectionWoodStoveSupplement" value="200"/>
+      <DataItem name="OpInsuranceFraud" value="200"/>
+      <DataItem name="OpInsuranceScore" value="690"/>
+      <DataItem name="OpInsuranceScoreAdjusted" value="550"/>
+      <DataItem name="OpInsuranceScoreRange" value="No Hit - Fair"/>
+      <DataItem name="OpInsuranceScoreRangeEstimate" value=""/>
+      <DataItem name="OpInsuranceScoreRangeEstimateIndicator" value="200"/>
+      <DataItem name="OpInsuranceScoreReasonCode1" value=""/>
+      <DataItem name="OpInsuranceScoreReasonCode2" value=""/>
+      <DataItem name="OpInsuranceScoreReasonCode3" value=""/>
+      <DataItem name="OpInsuranceScoreReasonCode4" value=""/>
+      <DataItem name="OpInsuranceScoreStatusRetrieved" value="200"/>
+      <DataItem name="OpInvoiceAmountDue" value="1677"/>
+      <DataItem name="OpInvoiceDate" value="2014-06-06T09:31:00.775-04:00"/>
+      <DataItem name="OpInvoiceDueDate" value="2014-06-06T09:31:00.775-04:00"/>
+      <DataItem name="OpInvoiceRemainingBalance" value="0"/>
+      <DataItem name="OpInvoiceTotalBalance" value="1677"/>
+      <DataItem name="OpKeroseneHeater" value="200"/>
+      <DataItem name="OpKeroseneHeaterAge" value=""/>
+      <DataItem name="OpKeroseneHeaterSupplementalHeatOnly" value=""/>
+      <DataItem name="OpKitchenQuality" value="100"/>
+      <DataItem name="OpLapseInCoverage" value=""/>
+      <DataItem name="OpLapseInCoveragePeriod" value=""/>
+      <DataItem name="OpLatitude" value="30.604873"/>
+      <DataItem name="OpLeadExclusion" value="100"/>
+      <DataItem name="OpLocationNumber" value="1"/>
+      <DataItem name="OpLogCabin" value="200"/>
+      <DataItem name="OpLongitude" value="-88.218666"/>
+      <DataItem name="OpLossAmount1" value=""/>
+      <DataItem name="OpLossAmount10" value=""/>
+      <DataItem name="OpLossAmount2" value=""/>
+      <DataItem name="OpLossAmount3" value=""/>
+      <DataItem name="OpLossAmount4" value=""/>
+      <DataItem name="OpLossAmount5" value=""/>
+      <DataItem name="OpLossAmount6" value=""/>
+      <DataItem name="OpLossAmount7" value=""/>
+      <DataItem name="OpLossAmount8" value=""/>
+      <DataItem name="OpLossAmount9" value=""/>
+      <DataItem name="OpLossAssessmentCoverage" value="1000"/>
+      <DataItem name="OpLossAssessmentIncreaseLimit" value="0"/>
+      <DataItem name="OpLossAssessmentIncreasedLimitsPremium" value="2"/>
+      <DataItem name="OpLossAssessmentTotalLimit" value="1000"/>
+      <DataItem name="OpLossCatIndicator1" value=""/>
+      <DataItem name="OpLossCatIndicator10" value=""/>
+      <DataItem name="OpLossCatIndicator2" value=""/>
+      <DataItem name="OpLossCatIndicator3" value=""/>
+      <DataItem name="OpLossCatIndicator4" value=""/>
+      <DataItem name="OpLossCatIndicator5" value=""/>
+      <DataItem name="OpLossCatIndicator6" value=""/>
+      <DataItem name="OpLossCatIndicator7" value=""/>
+      <DataItem name="OpLossCatIndicator8" value=""/>
+      <DataItem name="OpLossCatIndicator9" value=""/>
+      <DataItem name="OpLossDate1" value=""/>
+      <DataItem name="OpLossDate10" value=""/>
+      <DataItem name="OpLossDate2" value=""/>
+      <DataItem name="OpLossDate3" value=""/>
+      <DataItem name="OpLossDate4" value=""/>
+      <DataItem name="OpLossDate5" value=""/>
+      <DataItem name="OpLossDate6" value=""/>
+      <DataItem name="OpLossDate7" value=""/>
+      <DataItem name="OpLossDate8" value=""/>
+      <DataItem name="OpLossDate9" value=""/>
+      <DataItem name="OpLossDescription1" value=""/>
+      <DataItem name="OpLossDescription10" value=""/>
+      <DataItem name="OpLossDescription2" value=""/>
+      <DataItem name="OpLossDescription3" value=""/>
+      <DataItem name="OpLossDescription4" value=""/>
+      <DataItem name="OpLossDescription5" value=""/>
+      <DataItem name="OpLossDescription6" value=""/>
+      <DataItem name="OpLossDescription7" value=""/>
+      <DataItem name="OpLossDescription8" value=""/>
+      <DataItem name="OpLossDescription9" value=""/>
+      <DataItem name="OpLossFreeCatFactor" value="1"/>
+      <DataItem name="OpLossFreeFactor" value="1"/>
+      <DataItem name="OpLossType1" value=""/>
+      <DataItem name="OpLossType10" value=""/>
+      <DataItem name="OpLossType2" value=""/>
+      <DataItem name="OpLossType3" value=""/>
+      <DataItem name="OpLossType4" value=""/>
+      <DataItem name="OpLossType5" value=""/>
+      <DataItem name="OpLossType6" value=""/>
+      <DataItem name="OpLossType7" value=""/>
+      <DataItem name="OpLossType8" value=""/>
+      <DataItem name="OpLossType9" value=""/>
+      <DataItem name="OpMailingEqualPropertyAddress" value="100"/>
+      <DataItem name="OpMarginOnPremium" value=""/>
+      <DataItem name="OpMasonryVeneerPercentage" value=""/>
+      <DataItem name="OpMatchLogID" value=""/>
+      <DataItem name="OpMechanicalElectricalEquipmentGroundLevel" value="0"/>
+      <DataItem name="OpMechanicalElectricalEquipmentSide" value="0"/>
+      <DataItem name="OpModifiedOtherInsurance" value=""/>
+      <DataItem name="OpMoldLimit" value="0"/>
+      <DataItem name="OpMonthsRented" value="0"/>
+      <DataItem name="OpMonthsUnoccupied" value="0"/>
+      <DataItem name="OpMultiLayeredRoofing" value="200"/>
+      <DataItem name="OpMultiPolicy" value="200"/>
+      <DataItem name="OpMultiPolicyPremium" value="0"/>
+      <DataItem name="OpMunicipalityTaxCodeCity" value="0157"/>
+      <DataItem name="OpMunicipalityTaxCodeCounty" value="97"/>
+      <DataItem name="OpNFIPContentsPolicyLimit" value=""/>
+      <DataItem name="OpNFIPPolicyCarrier" value=""/>
+      <DataItem name="OpNFIPPolicyEffectiveDate" value=""/>
+      <DataItem name="OpNFIPPolicyExpirationDate" value=""/>
+      <DataItem name="OpNFIPPolicyLimit" value=""/>
+      <DataItem name="OpNFIPPolicyNumber" value=""/>
+      <DataItem name="OpNYFireInsuranceFee" value=""/>
+      <DataItem name="OpNameOtherMember" value=""/>
+      <DataItem name="OpNamedInsuredIndicator" value="0"/>
+      <DataItem name="OpNeighboringHomes" value="200"/>
+      <DataItem name="OpNominalExpenses" value="0"/>
+      <DataItem name="OpNonCatLosses" value="517"/>
+      <DataItem name="OpNonDomesticatedAnimals" value="200"/>
+      <DataItem name="OpNonHurricanePremiumDollarAdjustment" value="0"/>
+      <DataItem name="OpNonHurricanePremiumFactorAdjustment" value="1"/>
+      <DataItem name="OpNumberFamilies" value="1"/>
+      <DataItem name="OpNumberOfAtriumDoors" value="0"/>
+      <DataItem name="OpNumberOfAtriumWindows" value="0"/>
+      <DataItem name="OpNumberOfAttractiveNuisances" value="0"/>
+      <DataItem name="OpNumberOfBuildings" value="1"/>
+      <DataItem name="OpNumberOfClaims" value="0"/>
+      <DataItem name="OpNumberOfFireplaces" value="0"/>
+      <DataItem name="OpNumberOfFullBaths" value="1"/>
+      <DataItem name="OpNumberOfHalfBaths" value="0"/>
+      <DataItem name="OpNumberOfKitchens" value="1"/>
+      <DataItem name="OpNumberOfSolarPanels" value="0"/>
+      <DataItem name="OpNumberOfStories" value="100"/>
+      <DataItem name="OpNumberOfUnits" value="100"/>
+      <DataItem name="OpOccupancyScheme" value="100"/>
+      <DataItem name="OpOccupancyType" value="100"/>
+      <DataItem name="OpOffPremisesTheftBuyback" value="200"/>
+      <DataItem name="OpOpeningProtectionType" value="1"/>
+      <DataItem name="OpOptionCoverageB" value="0"/>
+      <DataItem name="OpOptionCoverageC" value="5000"/>
+      <DataItem name="OpOptionCoverageD" value="2000"/>
+      <DataItem name="OpOrdinanceOrLawIncreasedLimit" value="0"/>
+      <DataItem name="OpOrdinanceOrLawLimit" value="15100"/>
+      <DataItem name="OpOtherInsuredLocationOccupancy" value="200"/>
+      <DataItem name="OpOtherInsuredLocationsOccupied" value=""/>
+      <DataItem name="OpOtherStructures1BusinessType" value=""/>
+      <DataItem name="OpOtherStructures1Coverage" value=""/>
+      <DataItem name="OpOtherStructures1Occupancy" value=""/>
+      <DataItem name="OpOtherStructures1Type" value=""/>
+      <DataItem name="OpOtherStructures2BusinessType" value=""/>
+      <DataItem name="OpOtherStructures2Coverage" value=""/>
+      <DataItem name="OpOtherStructures2Occupancy" value=""/>
+      <DataItem name="OpOtherStructures2Type" value=""/>
+      <DataItem name="OpOtherStructures3BusinessType" value=""/>
+      <DataItem name="OpOtherStructures3Coverage" value=""/>
+      <DataItem name="OpOtherStructures3Occupancy" value=""/>
+      <DataItem name="OpOtherStructures3Type" value=""/>
+      <DataItem name="OpOtherStructuresIndicator" value="0"/>
+      <DataItem name="OpOutdatedElectricalMaterials" value="200"/>
+      <DataItem name="OpOutstandingBalanceDue" value="0"/>
+      <DataItem name="OpPastDueBalance" value="0"/>
+      <DataItem name="OpPatchedRoof" value="200"/>
+      <DataItem name="OpPayeeDisbursement" value="CHRIS TEST"/>
+      <DataItem name="OpPayeeDisbursementAddressLine1" value="4140 Meadow Green Ct"/>
+      <DataItem name="OpPayeeDisbursementAddressLine2" value=""/>
+      <DataItem name="OpPayeeDisbursementCity" value="Mobile"/>
+      <DataItem name="OpPayeeDisbursementState" value="AL"/>
+      <DataItem name="OpPayeeDisbursementZip" value="36619"/>
+      <DataItem name="OpPaymentPlanSetupFee" value="0"/>
+      <DataItem name="OpPaymentPlanType" value="invoice"/>
+      <DataItem name="OpPayor" value="100"/>
+      <DataItem name="OpPayorAddressLine1" value="900 BROAD ST. "/>
+      <DataItem name="OpPayorAddressLine2" value=""/>
+      <DataItem name="OpPayorCity" value="NEWARK"/>
+      <DataItem name="OpPayorName" value="CITI NATIONAL BANK OF NJ"/>
+      <DataItem name="OpPayorOtherAddressLine1" value=""/>
+      <DataItem name="OpPayorOtherAddressLine2" value=""/>
+      <DataItem name="OpPayorOtherCity" value=""/>
+      <DataItem name="OpPayorOtherName" value=""/>
+      <DataItem name="OpPayorOtherState" value=""/>
+      <DataItem name="OpPayorOtherZip" value=""/>
+      <DataItem name="OpPayorState" value="NJ"/>
+      <DataItem name="OpPayorZip" value="07102"/>
+      <DataItem name="OpPendingACHForm" value="200"/>
+      <DataItem name="OpPendingACHFormDueDate" value=""/>
+      <DataItem name="OpPendingAlarmCertificate" value="200"/>
+      <DataItem name="OpPendingAlarmCertificateDueDate" value=""/>
+      <DataItem name="OpPendingApplication" value="100"/>
+      <DataItem name="OpPendingApplicationDueDate" value="06/21/2014"/>
+      <DataItem name="OpPendingAppraisal" value="200"/>
+      <DataItem name="OpPendingAppraisalDueDate" value=""/>
+      <DataItem name="OpPendingDiligenceCertificate" value="200"/>
+      <DataItem name="OpPendingFloodPolicy" value="200"/>
+      <DataItem name="OpPendingFloodPolicyDueDate" value=""/>
+      <DataItem name="OpPendingFuelTankReceipt" value="200"/>
+      <DataItem name="OpPendingFuelTankReceiptDueDate" value=""/>
+      <DataItem name="OpPendingInspection" value="100"/>
+      <DataItem name="OpPendingInspectionDueDate" value="06/27/2014"/>
+      <DataItem name="OpPercentageComplete" value="1.0"/>
+      <DataItem name="OpPercentageExpenses" value="0"/>
+      <DataItem name="OpPermittedIncidentalOccupanciesLiabilityPremium" value="0"/>
+      <DataItem name="OpPersonalInjuryCoverage" value="200"/>
+      <DataItem name="OpPersonalInjuryCoveragePremium" value="0"/>
+      <DataItem name="OpPersonalInjuryIncreaseLimit" value="0"/>
+      <DataItem name="OpPersonalInjuryTotalLimit" value="0"/>
+      <DataItem name="OpPersonalPropertyOtherResidences" value="200"/>
+      <DataItem name="OpPersonalPropertyOtherResidencesAddressCity" value=""/>
+      <DataItem name="OpPersonalPropertyOtherResidencesAddressLine1" value=""/>
+      <DataItem name="OpPersonalPropertyOtherResidencesAddressLine2" value=""/>
+      <DataItem name="OpPersonalPropertyOtherResidencesAddressState" value=""/>
+      <DataItem name="OpPersonalPropertyOtherResidencesAddressZip" value=""/>
+      <DataItem name="OpPersonalPropertyOtherResidencesLimit" value="0"/>
+      <DataItem name="OpPersonalPropertyReplacementCost" value="100"/>
+      <DataItem name="OpPets" value="200"/>
+      <DataItem name="OpPolicyBillPlan" value=""/>
+      <DataItem name="OpPolicyBlanketDeductible" value="0"/>
+      <DataItem name="OpPolicyBlanketLimit" value="0"/>
+      <DataItem name="OpPolicyFee" value="70"/>
+      <DataItem name="OpPolicyFeeProRata" value="0"/>
+      <DataItem name="OpPolicyNumber" value="ALF041544800"/>
+      <DataItem name="OpPolicyTerm" value="1"/>
+      <DataItem name="OpPolicyType" value="HO3"/>
+      <DataItem name="OpPoolFence" value=""/>
+      <DataItem name="OpPoolLiabilityCoverage" value="200"/>
+      <DataItem name="OpPoolLiabilityExclusion" value="100"/>
+      <DataItem name="OpPoolType" value="1"/>
+      <DataItem name="OpPremiumFHCF" value=""/>
+      <DataItem name="OpPreviousDamage" value="200"/>
+      <DataItem name="OpPreviousDamageRoof" value="200"/>
+      <DataItem name="OpPrimeTimeDiscount" value="200"/>
+      <DataItem name="OpPrimeTimePremium" value="0"/>
+      <DataItem name="OpPriorCarrier" value="New Home"/>
+      <DataItem name="OpPriorCarrierNumber" value="1"/>
+      <DataItem name="OpPriorExpirationDate" value=""/>
+      <DataItem name="OpPriorInsurance" value="200"/>
+      <DataItem name="OpProducerCode" value="e00011t"/>
+      <DataItem name="OpProductID" value="CRU4Q-415448"/>
+      <DataItem name="OpProductLabel" value="DP3SL AL"/>
+      <DataItem name="OpProductVersion" value=""/>
+      <DataItem name="OpProgram" value="WIC"/>
+      <DataItem name="OpPropertyAddressLine2" value=""/>
+      <DataItem name="OpPropertyCity" value="MOBILE"/>
+      <DataItem name="OpPropertyCounty" value="MOBILE"/>
+      <DataItem name="OpPropertyForSale" value="200"/>
+      <DataItem name="OpPropertyHazardLocation" value="Moderate"/>
+      <DataItem name="OpPropertyHazardLocationLastUpdated" value="06/06/2014"/>
+      <DataItem name="OpPropertyManagerAddressCity" value=""/>
+      <DataItem name="OpPropertyManagerAddressLatitude" value="999"/>
+      <DataItem name="OpPropertyManagerAddressLine1" value=""/>
+      <DataItem name="OpPropertyManagerAddressLine2" value=""/>
+      <DataItem name="OpPropertyManagerAddressLongitude" value="999"/>
+      <DataItem name="OpPropertyManagerAddressState" value=""/>
+      <DataItem name="OpPropertyManagerAddressZip" value=""/>
+      <DataItem name="OpPropertyManagerDistanceToRisk" value="999"/>
+      <DataItem name="OpPropertyManagerType" value=""/>
+      <DataItem name="OpPropertyOccupancy" value="100"/>
+      <DataItem name="OpPropertyOver5Acres" value="200"/>
+      <DataItem name="OpPropertyState" value="AL"/>
+      <DataItem name="OpPropertyStreetName" value="MEADOW GREEN CT"/>
+      <DataItem name="OpPropertyStreetNumber" value="4140"/>
+      <DataItem name="OpPropertyTerritory" value="1"/>
+      <DataItem name="OpPropertyUsage" value="100"/>
+      <DataItem name="OpPropertyZipCode" value="36619"/>
+      <DataItem name="OpPropertyZipCodePlusFour" value="3676"/>
+      <DataItem name="OpProtectionClass" value="5"/>
+      <DataItem name="OpProtectionClassSplitA" value="5"/>
+      <DataItem name="OpProtectionClassSplitB" value="9"/>
+      <DataItem name="OpQuoteCreatedDate" value="06/05/2014"/>
+      <DataItem name="OpQuoteExpirationDateTime" value="06/06/2015"/>
+      <DataItem name="OpQuoteNumber" value="CRU4Q-415448"/>
+      <DataItem name="OpQuoteOriginationSystem" value="pxClient"/>
+      <DataItem name="OpRatingLastStatusChangeTimestamp" value=""/>
+      <DataItem name="OpReinsuranceLoadFactor" value="0"/>
+      <DataItem name="OpRenovationYearDwelling" value=""/>
+      <DataItem name="OpRenovationYearFurnace" value="2014"/>
+      <DataItem name="OpRenovationYearPlumbing" value="2014"/>
+      <DataItem name="OpRenovationYearWiring" value="2014"/>
+      <DataItem name="OpRented2Weeks" value="200"/>
+      <DataItem name="OpReplacementCostBuilding" value="150785"/>
+      <DataItem name="OpReplacementCostEstimateNumber" value="ESTIMATE-0005508"/>
+      <DataItem name="OpReplacementCostLossSettlementOS" value="200"/>
+      <DataItem name="OpResidenceEmployees" value="200"/>
+      <DataItem name="OpResidenceHeldInTrust" value="200"/>
+      <DataItem name="OpRolloverPolicyNumber" value=""/>
+      <DataItem name="OpRoofAge" value="0"/>
+      <DataItem name="OpRoofCoveringAttachmentType" value=""/>
+      <DataItem name="OpRoofCoveringType" value="502"/>
+      <DataItem name="OpRoofDeckAttachmentType" value=""/>
+      <DataItem name="OpRoofDeckMaterialType" value=""/>
+      <DataItem name="OpRoofEquipment" value="0"/>
+      <DataItem name="OpRoofGeometryType" value="100"/>
+      <DataItem name="OpRoofMaintenance" value="0"/>
+      <DataItem name="OpRoofParapets" value="0"/>
+      <DataItem name="OpRoofWallConnectionType" value=""/>
+      <DataItem name="OpScreenedEnclosureLimit" value=""/>
+      <DataItem name="OpSeasonalOccupancy" value="200"/>
+      <DataItem name="OpSecondaryWaterResistance" value=""/>
+      <DataItem name="OpSecurityWatchman" value=""/>
+      <DataItem name="OpShortTermRental" value="200"/>
+      <DataItem name="OpSingleOccupancy" value="200"/>
+      <DataItem name="OpSinkholeDeductible" value=""/>
+      <DataItem name="OpSinkholeLossCoverage" value=""/>
+      <DataItem name="OpSiteAccess" value="200"/>
+      <DataItem name="OpSkateboardRamp" value="200"/>
+      <DataItem name="OpSolarPanelUsage" value="0"/>
+      <DataItem name="OpSpecialCoverageA" value=""/>
+      <DataItem name="OpSprinklers" value="1"/>
+      <DataItem name="OpSquareFootUnderRoof" value="1600"/>
+      <DataItem name="OpSquareFootUnderRoofFLA" value="1600"/>
+      <DataItem name="OpSquareFootageUnderRoof" value="1600"/>
+      <DataItem name="OpStormSurgeProtection" value="0"/>
+      <DataItem name="OpStructureType" value="100"/>
+      <DataItem name="OpStructuresOverWater" value="200"/>
+      <DataItem name="OpStructuresRentedToOthersLimit" value=""/>
+      <DataItem name="OpStudentOccupancy" value="200"/>
+      <DataItem name="OpSurplusLinesRateStatus" value="PENDING REVIEW"/>
+      <DataItem name="OpSurplusLinesTax" value="95"/>
+      <DataItem name="OpTIV" value="256700"/>
+      <DataItem name="OpTenPayAmountDue" value="501"/>
+      <DataItem name="OpTenPayRemainingBalance" value="1240"/>
+      <DataItem name="OpTenPayTotalBalance" value="1741"/>
+      <DataItem name="OpTerrainExposure" value=""/>
+      <DataItem name="OpTheftCoverage" value="200"/>
+      <DataItem name="OpTier" value="16"/>
+      <DataItem name="OpTotalFees" value="195"/>
+      <DataItem name="OpTotalFloodPolicyLimit" value=""/>
+      <DataItem name="OpTotalOptionalPremium" value="2"/>
+      <DataItem name="OpTotalPremium" value="1677"/>
+      <DataItem name="OpTotalPremiumAdjustment" value="0"/>
+      <DataItem name="OpTownHouseStructureType" value=""/>
+      <DataItem name="OpTrampoline" value="200"/>
+      <DataItem name="OpTrustName" value=""/>
+      <DataItem name="OpTrustee" value=""/>
+      <DataItem name="OpTrusteeOccupancy" value="0"/>
+      <DataItem name="OpTwoPayAmountDue" value="1094"/>
+      <DataItem name="OpTwoPayRemainingBalance" value="599"/>
+      <DataItem name="OpTwoPayTotalBalance" value="1693"/>
+      <DataItem name="OpUndergroundTanks" value="200"/>
+      <DataItem name="OpUndergroundTanksStatus" value="0"/>
+      <DataItem name="OpUniqueFeatures" value="200"/>
+      <DataItem name="OpUnlockedPoolGate" value=""/>
+      <DataItem name="OpVisibleFromRoad" value="100"/>
+      <DataItem name="OpWSApproved" value=""/>
+      <DataItem name="OpWSSeparateFlue" value=""/>
+      <DataItem name="OpWSSupplementalHeatOnly" value=""/>
+      <DataItem name="OpWSVentedChimney" value=""/>
+      <DataItem name="OpWaterBackupCoverage" value="0"/>
+      <DataItem name="OpWaterBackupDeductible" value="0"/>
+      <DataItem name="OpWaterBackupIncreaseLimit" value="0"/>
+      <DataItem name="OpWaterBackupPremium" value="0"/>
+      <DataItem name="OpWaterBackupTotalLimit" value="0"/>
+      <DataItem name="OpWaterVulnerabilityContents" value="0"/>
+      <DataItem name="OpWindBorneDebrisRegion" value=""/>
+      <DataItem name="OpWindDrivenMissileExposure" value="0"/>
+      <DataItem name="OpWindHailDeductible" value="700"/>
+      <DataItem name="OpWindSpeedDesign" value=""/>
+      <DataItem name="OpWindSpeedLocation" value=""/>
+      <DataItem name="OpWindVulnerabilityContents" value="0"/>
+      <DataItem name="OpWindstormDeductibleOption" value="200"/>
+      <DataItem name="OpWoodStove" value="200"/>
+      <DataItem name="OpXWindPolicyCarrier" value=""/>
+      <DataItem name="OpXWindPolicyCoverageA" value=""/>
+      <DataItem name="OpXWindPolicyEffectiveDate" value=""/>
+      <DataItem name="OpXWindPolicyExpirationDate" value=""/>
+      <Intervals>
+        <Interval>
+          <StartDate>2014-06-06T00:00:00-04:00</StartDate>
+          <EndDate>2015-06-06T00:00:00-04:00</EndDate>
+          <DataItem name="AALDivPremium" value=""/>
+          <DataItem name="AALDivPremiumResolved" value=""/>
+          <DataItem name="AALFormatted" value=""/>
+          <DataItem name="AALResolved" value=""/>
+          <DataItem name="ACVLossSettlementDwelling" value="10000"/>
+          <DataItem name="ACVLossSettlementDwellingFactor" value="1"/>
+          <DataItem name="ACVLossSettlementRoof" value="200"/>
+          <DataItem name="ACVLossSettlementRoofFactor" value="1"/>
+          <DataItem name="ACVLossSettlementRoofFactorCat" value="1"/>
+          <DataItem name="AOPDeductibleAmount" value="2500"/>
+          <DataItem name="AbsenteeLandlord" value="100"/>
+          <DataItem name="AdditionalAmountsOfInsurance" value="0"/>
+          <DataItem name="AdditionalAmountsOfInsuranceFactorCat" value="1"/>
+          <DataItem name="AdditionalCoverageAFactor" value="1"/>
+          <DataItem name="AdditionalMortgageeIndicator" value="200"/>
+          <DataItem name="AdditionalResidence1AddressCity" value=""/>
+          <DataItem name="AdditionalResidence1AddressLine1" value=""/>
+          <DataItem name="AdditionalResidence1AddressLine2" value=""/>
+          <DataItem name="AdditionalResidence1AddressState" value=""/>
+          <DataItem name="AdditionalResidence1AddressZip" value=""/>
+          <DataItem name="AdditionalResidencesRented" value="0"/>
+          <DataItem name="AdditionalResidencesRentedToOthersPremium" value="0"/>
+          <DataItem name="AddressValidated" value="100"/>
+          <DataItem name="AddressValidatedDisplay" value="100"/>
+          <DataItem name="AdjacentPropertyCondition" value="200"/>
+          <DataItem name="AdjoiningTownhouseDamage" value="200"/>
+          <DataItem name="AdjustedEarthquakeBasePremium" value="0"/>
+          <DataItem name="AgentAddressLine2" value=""/>
+          <DataItem name="AgentCity" value="New York"/>
+          <DataItem name="AgentCounty" value=""/>
+          <DataItem name="AgentEmailAddress" value=""/>
+          <DataItem name="AgentFaxNumber" value=""/>
+          <DataItem name="AgentID" value="andyL"/>
+          <DataItem name="AgentName" value="SageSure CRU4 Test Agency"/>
+          <DataItem name="AgentPhoneNumber" value="9888988987"/>
+          <DataItem name="AgentState" value="NY"/>
+          <DataItem name="AgentStreetName" value="30th fl"/>
+          <DataItem name="AgentStreetNumber" value="747 3rd Ave"/>
+          <DataItem name="AgentZipCode" value="10017"/>
+          <DataItem name="AgentZipCodePlusFour" value=" "/>
+          <DataItem name="AllOtherPerilsDeductible" value="25"/>
+          <DataItem name="AllOtherPerilsDeductibleResolved" value=""/>
+          <DataItem name="AllWeatherAccess" value="100"/>
+          <DataItem name="ApplicantFirstName" value=""/>
+          <DataItem name="ApplicantLastName" value=""/>
+          <DataItem name="AttractiveNuisanceLiabilityCoverage" value="200"/>
+          <DataItem name="AttractiveNuisanceLiabilityCoveragePremium" value="0"/>
+          <DataItem name="AttractiveNuisanceWellMaintained" value=""/>
+          <DataItem name="AutoPolicyCarrier" value=""/>
+          <DataItem name="AutoPolicyNumber" value=""/>
+          <DataItem name="BarrierIsland" value="4.03"/>
+          <DataItem name="BarrierIslandRetrieved" value=""/>
+          <DataItem name="BaseClassPremium" value="1529"/>
+          <DataItem name="BaseClassPremiumCat" value="680"/>
+          <DataItem name="BaseLossCostNC" value="523"/>
+          <DataItem name="BaseNonCatLossRatio" value="0.715"/>
+          <DataItem name="BasePremiumCat" value="921"/>
+          <DataItem name="Basement" value="0"/>
+          <DataItem name="BasementPercentComplete" value="0"/>
+          <DataItem name="BasicPremium" value="1934"/>
+          <DataItem name="Beneficiary" value=""/>
+          <DataItem name="BestCoverageBPremium" value="-10"/>
+          <DataItem name="BestCoverageBPremiumCat" value="-55"/>
+          <DataItem name="BestGrandSubtotalCat" value="569"/>
+          <DataItem name="BestGrandSubtotalNonCat" value="466"/>
+          <DataItem name="BestLossOfUseIncreasedLimitsPremium" value="0"/>
+          <DataItem name="BestLossOfUseIncreasedLimitsPremiumCat" value="0"/>
+          <DataItem name="BestOtherStructuresIncreasedLimitPremium" value="-10"/>
+          <DataItem name="BestOtherStructuresIncreasedLimitPremiumCat" value="-55"/>
+          <DataItem name="BestPersonalPropertyIncreaseLimitPremium" value="69"/>
+          <DataItem name="BestPersonalPropertyIncreaseLimitPremiumCat" value="74"/>
+          <DataItem name="BestSubtotalA" value="211"/>
+          <DataItem name="BestSubtotalACat" value="19"/>
+          <DataItem name="BestSurplusLinesTax" value="68"/>
+          <DataItem name="BestTier" value="1"/>
+          <DataItem name="BestTierFactorCat" value="0.91"/>
+          <DataItem name="BestTierFactorNonCat" value="0.465"/>
+          <DataItem name="BestTierPremium" value="1203"/>
+          <DataItem name="BestTotalBasePremium" value="255"/>
+          <DataItem name="BestTotalBasePremiumCat" value="550"/>
+          <DataItem name="BestTotalFees" value="168"/>
+          <DataItem name="BlanketOffPremisesAddressCity" value=""/>
+          <DataItem name="BlanketOffPremisesAddressLine1" value=""/>
+          <DataItem name="BlanketOffPremisesAddressLine2" value=""/>
+          <DataItem name="BlanketOffPremisesAddressState" value=""/>
+          <DataItem name="BlanketOffPremisesAddressZip" value=""/>
+          <DataItem name="BlanketOffPremisesOtherStructuresPremium" value="0"/>
+          <DataItem name="BuildingAdditionsOtherResidences" value="200"/>
+          <DataItem name="BuildingAdditionsOtherResidencesAddressCity" value=""/>
+          <DataItem name="BuildingAdditionsOtherResidencesAddressLine1" value=""/>
+          <DataItem name="BuildingAdditionsOtherResidencesAddressLine2" value=""/>
+          <DataItem name="BuildingAdditionsOtherResidencesAddressState" value=""/>
+          <DataItem name="BuildingAdditionsOtherResidencesAddressZip" value=""/>
+          <DataItem name="BuildingAdditionsOtherResidencesLimit" value="0"/>
+          <DataItem name="BuildingAdditionsPremium" value="0"/>
+          <DataItem name="BuildingNotOriginallyDwelling" value="200"/>
+          <DataItem name="BuildingNumber" value="1"/>
+          <DataItem name="BurglarAlarm" value="1"/>
+          <DataItem name="BusinessInterruptionPreparedness" value="0"/>
+          <DataItem name="BusinessInterruptionRedundancy" value="0"/>
+          <DataItem name="BusinessPropertyIncreasedLimitsPremium" value="0"/>
+          <DataItem name="BusinessPropertyLimit" value="2500"/>
+          <DataItem name="CATReinsuranceLoadFactor" value="0"/>
+          <DataItem name="CalcAALDivPremiumResolved" value=""/>
+          <DataItem name="CalcMailingAddressCity" value="MOBILE"/>
+          <DataItem name="CalcMailingAddressCountry" value="USA"/>
+          <DataItem name="CalcMailingAddressLine1" value="4140 MEADOW GREEN CT"/>
+          <DataItem name="CalcMailingAddressLine2" value=""/>
+          <DataItem name="CalcMailingAddressState" value="AL"/>
+          <DataItem name="CalcMailingAddressZip" value="36619"/>
+          <DataItem name="CalcPMLDivPremiumResolved" value=""/>
+          <DataItem name="CalcProfitDivPremiumResolved" value=""/>
+          <DataItem name="CalculatedCostPerSquareFoot" value="0"/>
+          <DataItem name="CalculatedExpirationDate" value="2015-06-06T00:00:00.000-04:00"/>
+          <DataItem name="CalculatedTIV" value="256700"/>
+          <DataItem name="CalculatedTIVResolved" value=""/>
+          <DataItem name="CapacityAvailable" value="100"/>
+          <DataItem name="CapacityAvailableProducer" value=""/>
+          <DataItem name="CarrierAddressLine1" value="PO Box 12999"/>
+          <DataItem name="CarrierAddressLine2" value=""/>
+          <DataItem name="CarrierCity" value="Tallahassee"/>
+          <DataItem name="CarrierEmailAddress" value="Wilshire@sagesure.com"/>
+          <DataItem name="CarrierFaxNumber" value="(800)482-6176"/>
+          <DataItem name="CarrierID" value="WIC"/>
+          <DataItem name="CarrierNAICNumber" value="13234"/>
+          <DataItem name="CarrierName" value="Wilshire Insurance Company"/>
+          <DataItem name="CarrierPhoneNumber" value="(800)481-0643"/>
+          <DataItem name="CarrierState" value="FL"/>
+          <DataItem name="CarrierZipCode" value="32317"/>
+          <DataItem name="CarrierZipCodePlusFour" value="2999"/>
+          <DataItem name="CatCostsTotalResolved" value=""/>
+          <DataItem name="CentralAir" value="200"/>
+          <DataItem name="ChildCare" value="200"/>
+          <DataItem name="Cladding" value="900"/>
+          <DataItem name="ClientTraffic" value="200"/>
+          <DataItem name="CompetitivePremium" value=""/>
+          <DataItem name="CompetitivePremiumCarrier" value=""/>
+          <DataItem name="CondemnedArea" value="200"/>
+          <DataItem name="ConditionRatingFactor" value="0.9083"/>
+          <DataItem name="ConditionRatingPoints" value="2"/>
+          <DataItem name="ConditionRatingPointsCat" value="1"/>
+          <DataItem name="ConsentContactEmailAddress" value="email@test.com"/>
+          <DataItem name="ConsentContactName" value="Test Name"/>
+          <DataItem name="ConsentContactPhoneNumber" value="3214567890"/>
+          <DataItem name="ConsentContactType" value="100"/>
+          <DataItem name="ConsentProducerAffirmation" value="100"/>
+          <DataItem name="ConstructionOccupancyFactor" value="1"/>
+          <DataItem name="ConstructionQuality" value="0"/>
+          <DataItem name="ConstructionScheme" value="100"/>
+          <DataItem name="ConstructionType" value="100"/>
+          <DataItem name="ConstructionTypePoints" value="1"/>
+          <DataItem name="ConstructionTypeResolved" value=""/>
+          <DataItem name="ConstructionYear" value="2014"/>
+          <DataItem name="ConstructionYearBand" value="2"/>
+          <DataItem name="ConstructionYearBandResolved" value="1"/>
+          <DataItem name="ConstructionYearPoints" value="1"/>
+          <DataItem name="ConstructionYearResolved" value=""/>
+          <DataItem name="ConstructionYearRetrieved" value=""/>
+          <DataItem name="ConstructionYearRoof" value="2014"/>
+          <DataItem name="ConstructionYearRoofPoints" value="0"/>
+          <DataItem name="ConstructionYearRoofResolved" value=""/>
+          <DataItem name="CoverageA" value="151000"/>
+          <DataItem name="CoverageADisplay" value="151000"/>
+          <DataItem name="CoverageALimit" value="151000"/>
+          <DataItem name="CoverageAResolved" value=""/>
+          <DataItem name="CoverageB" value="0"/>
+          <DataItem name="CoverageBLimit" value="0"/>
+          <DataItem name="CoverageBPremium" value="-21"/>
+          <DataItem name="CoverageBPremiumCat" value="-73"/>
+          <DataItem name="CoverageBResolved" value=""/>
+          <DataItem name="CoverageC" value="75500"/>
+          <DataItem name="CoverageCLimit" value="75500"/>
+          <DataItem name="CoverageCResolved" value=""/>
+          <DataItem name="CoverageD" value="30200"/>
+          <DataItem name="CoverageDLimit" value="30200"/>
+          <DataItem name="CoverageDResolved" value=""/>
+          <DataItem name="CoverageL" value="100000"/>
+          <DataItem name="CoverageLMIncreasedPremium" value="0"/>
+          <DataItem name="CoverageM" value="1000"/>
+          <DataItem name="DeclinationContactName1" value=""/>
+          <DataItem name="DeclinationContactName2" value=""/>
+          <DataItem name="DeclinationContactName3" value=""/>
+          <DataItem name="DeclinationDateOfContact1" value="2014-06-07"/>
+          <DataItem name="DeclinationDateOfContact2" value="2014-06-06"/>
+          <DataItem name="DeclinationDateOfContact3" value="2014-06-06"/>
+          <DataItem name="DeclinationDiligentEffort" value="100"/>
+          <DataItem name="DeclinationInsurer1" value="Test"/>
+          <DataItem name="DeclinationInsurer2" value="Test"/>
+          <DataItem name="DeclinationInsurer3" value="Test"/>
+          <DataItem name="DeclinationReasonCode1" value="100"/>
+          <DataItem name="DeclinationReasonCode2" value="100"/>
+          <DataItem name="DeclinationReasonCode3" value="100"/>
+          <DataItem name="DeclinationSubmissionChannel1" value="100"/>
+          <DataItem name="DeclinationSubmissionChannel2" value="100"/>
+          <DataItem name="DeclinationSubmissionChannel3" value="100"/>
+          <DataItem name="DeductibleAmount" value="10570"/>
+          <DataItem name="DeductibleFactor" value="-0.31"/>
+          <DataItem name="DeductibleFactorCoverageGroup" value="2"/>
+          <DataItem name="DeductibleMinimum" value="0"/>
+          <DataItem name="DeductibleOptionsPremium" value="-600"/>
+          <DataItem name="DeductiblePercent" value="0"/>
+          <DataItem name="DeductiblePremium" value="1334.46"/>
+          <DataItem name="DeductibleType" value="100"/>
+          <DataItem name="DesignCode" value="0"/>
+          <DataItem name="DisplayAAL" value="N/A"/>
+          <DataItem name="DisplayAttractiveNuisanceLiabilityCoveragePremium" value="0"/>
+          <DataItem name="DisplayAutoPolicyDiscount" value="0"/>
+          <DataItem name="DisplayBuildingAdditionsPremium" value="0"/>
+          <DataItem name="DisplayBusinessPropertyIncreasedLimitsPremium" value="0"/>
+          <DataItem name="DisplayByPerilPremiumSpacer" value="-----"/>
+          <DataItem name="DisplayCoverageBPremium" value="-94"/>
+          <DataItem name="DisplayCoverageLMIncreasedPremium" value="0"/>
+          <DataItem name="DisplayDiscountAndSurchargeLabel" value=""/>
+          <DataItem name="DisplayDiscountAndSurchargeSpacer" value="-----"/>
+          <DataItem name="DisplayDivingBoardSlideLiabilityCoveragePremium" value="0"/>
+          <DataItem name="DisplayEarthquakePremium" value="0"/>
+          <DataItem name="DisplayGolfCartPremium" value="0"/>
+          <DataItem name="DisplayGrandSubtotal" value="$1,482"/>
+          <DataItem name="DisplayGrandSubtotalCat" value="$759"/>
+          <DataItem name="DisplayGrandSubtotalNonCat" value="$723"/>
+          <DataItem name="DisplayIdentityFraudCoveragePremium" value="0"/>
+          <DataItem name="DisplayInspectionFee" value="30"/>
+          <DataItem name="DisplayInsuranceScoreRange" value="No Hit - Fair"/>
+          <DataItem name="DisplayInsuranceScoreRangeEstimate" value="No Range Specified"/>
+          <DataItem name="DisplayInsuranceScoreRangeSpacer" value="-----"/>
+          <DataItem name="DisplayLossAssessmentIncreasedLimitsPremium" value="2"/>
+          <DataItem name="DisplayLossOfUseIncreasedLimitsPremiumCat" value="0"/>
+          <DataItem name="DisplayModifiedOtherInsurancePremium" value="0"/>
+          <DataItem name="DisplayOtherStructuresIncreasedLimitPremiumCat" value=""/>
+          <DataItem name="DisplayOtherStructuresRentedToOthersLiabilityPremium" value="0"/>
+          <DataItem name="DisplayPermittedIncidentalOccupanciesLiabilityPremium" value="0"/>
+          <DataItem name="DisplayPersonalInjuryCoveragePremium" value="0"/>
+          <DataItem name="DisplayPersonalPropertyIncreaseLimitPremium" value="141"/>
+          <DataItem name="DisplayPersonalPropertyOtherResidencesPremium" value="0"/>
+          <DataItem name="DisplayPolicyFee" value="70"/>
+          <DataItem name="DisplayPrimeTimeDiscount" value="0"/>
+          <DataItem name="DisplayProductType" value="Select (Wind/Hail)"/>
+          <DataItem name="DisplayQuoteStatus" value="PENDING REVIEW"/>
+          <DataItem name="DisplaySurplusLinesTax" value="95"/>
+          <DataItem name="DisplayTheftCoveragePremium" value="78"/>
+          <DataItem name="DisplayTotalBasePremium" value="$1,256"/>
+          <DataItem name="DisplayTotalBasePremiumNoDiscounts" value="$1,256"/>
+          <DataItem name="DisplayTotalFees" value="195"/>
+          <DataItem name="DisplayWaterBackupPremium" value="0"/>
+          <DataItem name="DistanceFireHydrant" value="1000"/>
+          <DataItem name="DistanceFireStation" value="5"/>
+          <DataItem name="DistanceToCoast" value="15.5"/>
+          <DataItem name="DistanceToCoastGroupCat" value="61"/>
+          <DataItem name="DistanceToCoastRMS" value="4.7501"/>
+          <DataItem name="DistanceToCoastRetrieved" value="15.5"/>
+          <DataItem name="DistanceToCoastSecondary" value="8.4"/>
+          <DataItem name="DistanceToCoastSecondaryGroupCat" value="54"/>
+          <DataItem name="DistanceToCoastSecondaryRetrieved" value="8.4"/>
+          <DataItem name="DistanceToFireDepartment" value="4.03"/>
+          <DataItem name="DistanceToFireDepartmentRetrieved" value="4.03"/>
+          <DataItem name="DivingBoardSlide" value=""/>
+          <DataItem name="DivingBoardSlideLiabilityCoverage" value="200"/>
+          <DataItem name="DivingBoardSlideLiabilityCoveragePremium" value="0"/>
+          <DataItem name="DivingBoardSlideWellMaintained" value=""/>
+          <DataItem name="DoorType" value="0"/>
+          <DataItem name="EIFS" value="200"/>
+          <DataItem name="EarthquakeBasePremium" value="0"/>
+          <DataItem name="EarthquakeConstructionFactor" value="4"/>
+          <DataItem name="EarthquakeCoverage" value="200"/>
+          <DataItem name="EarthquakeCoveragePremium" value="0"/>
+          <DataItem name="EarthquakeDeductible" value=""/>
+          <DataItem name="EarthquakeDeductibleFactor" value="0"/>
+          <DataItem name="EarthquakeDeductibleOptions" value="0"/>
+          <DataItem name="EarthquakeIncreasedCoverageB" value="0"/>
+          <DataItem name="EarthquakeIncreasedCoverageC" value="0"/>
+          <DataItem name="EarthquakeIncreasedCoverageD" value="0"/>
+          <DataItem name="EarthquakeLossAssessmentCoverage" value=""/>
+          <DataItem name="EarthquakeLossAssessmentCoverage" value="0"/>
+          <DataItem name="EarthquakeLossAssessmentCoverageMactor" value="0"/>
+          <DataItem name="EarthquakeSiteLimit" value="0"/>
+          <DataItem name="EffectiveDate" value="06/06/2014"/>
+          <DataItem name="EffectiveDateResolved" value=""/>
+          <DataItem name="ElectricalAmperage" value="175"/>
+          <DataItem name="Elevation" value="135.56"/>
+          <DataItem name="ElevationRMS" value="135.56"/>
+          <DataItem name="ExcessFloodPolicyLimit" value=""/>
+          <DataItem name="ExoticAnimal" value="200"/>
+          <DataItem name="ExpensesTotalResolved" value=""/>
+          <DataItem name="ExpirationDate" value="06/06/2015"/>
+          <DataItem name="ExternalOrnamentation" value="0"/>
+          <DataItem name="Farming" value="200"/>
+          <DataItem name="FinishedSpace" value=""/>
+          <DataItem name="FireAlarm" value="1"/>
+          <DataItem name="FirstRowBuilding" value="200"/>
+          <DataItem name="FloodDrivenMissileExposure" value="0"/>
+          <DataItem name="FloodZone" value="200"/>
+          <DataItem name="FloodZoneRetrieved" value="200"/>
+          <DataItem name="FloodZoneUW" value=""/>
+          <DataItem name="FloorArea" value="1600"/>
+          <DataItem name="FoamSeal" value="0"/>
+          <DataItem name="Foreclosure" value="200"/>
+          <DataItem name="FormFactor" value="1"/>
+          <DataItem name="FormFactorCat" value="1"/>
+          <DataItem name="FormatTotalPremium" value="$1,677"/>
+          <DataItem name="FormattedEffectiveDate" value="2014-06-06T00:00:00.000-04:00"/>
+          <DataItem name="FormattedExpirationDate" value="06/06/2015"/>
+          <DataItem name="FoundationBasementPercentage" value="0"/>
+          <DataItem name="FoundationSlabPercentage" value="10000"/>
+          <DataItem name="FoundationType" value="100"/>
+          <DataItem name="FourPayAmountDue" value="798"/>
+          <DataItem name="FourPayInstallmentAmount" value="302"/>
+          <DataItem name="FourPayRemainingBalance" value="907"/>
+          <DataItem name="FourPayTotalBalance" value="1705"/>
+          <DataItem name="FullBathQuality" value="100"/>
+          <DataItem name="FullPayAmountDue" value="1677"/>
+          <DataItem name="FullPayRemainingBalance" value="0"/>
+          <DataItem name="FullPayTotalBalance" value="1677"/>
+          <DataItem name="FunctionalReplacementCost" value="200"/>
+          <DataItem name="GarageType" value="1"/>
+          <DataItem name="GatedCommunity" value="200"/>
+          <DataItem name="GatedCommunityPhoneNumber" value=""/>
+          <DataItem name="GeocodeMatchLevel" value="Street"/>
+          <DataItem name="GrandSubtotal" value="1482"/>
+          <DataItem name="GrandSubtotalCat" value="759"/>
+          <DataItem name="GrandSubtotalCatResolved" value=""/>
+          <DataItem name="GrandSubtotalCatUnadjusted" value="759"/>
+          <DataItem name="GrandSubtotalCatUnadjustedResolved" value=""/>
+          <DataItem name="GrandSubtotalNonCat" value="723"/>
+          <DataItem name="GrandSubtotalNonCatResolved" value=""/>
+          <DataItem name="GrandSubtotalResolved" value=""/>
+          <DataItem name="Grantor" value=""/>
+          <DataItem name="HalfBathQuality" value="100"/>
+          <DataItem name="HandrailWalkwayLiability" value="200"/>
+          <DataItem name="HasLossDiscrepancies" value="200"/>
+          <DataItem name="HeatPump" value="100"/>
+          <DataItem name="HeatingThermoControlled" value="100"/>
+          <DataItem name="HigherCoverage" value="155000"/>
+          <DataItem name="HigherCoverageCat" value="155000"/>
+          <DataItem name="HomeAge" value="0"/>
+          <DataItem name="HomeFeatures" value="0"/>
+          <DataItem name="HomeFeatures1" value="0"/>
+          <DataItem name="HomeFeatures1SquareFeet" value="0"/>
+          <DataItem name="HomeFeatures2" value="0"/>
+          <DataItem name="HomeFeatures2SquareFeet" value="0"/>
+          <DataItem name="HomeFeatures3" value="0"/>
+          <DataItem name="HomeFeatures3SquareFeet" value="0"/>
+          <DataItem name="HomeStyle" value="300"/>
+          <DataItem name="HomeUpdated" value="200"/>
+          <DataItem name="HurricaneCoverageIncluded" value="100"/>
+          <DataItem name="HurricaneDeductible" value="0"/>
+          <DataItem name="HurricaneDeductibleAmount" value="2500"/>
+          <DataItem name="HurricaneDeductibleFactorCat" value="0.93"/>
+          <DataItem name="HurricaneDeductibleResolved" value=""/>
+          <DataItem name="HurricanePremium" value="759"/>
+          <DataItem name="HurricanePremiumFactorAdjustment" value="1"/>
+          <DataItem name="HurricanePremiumFactorAdjustmentResolved" value="1"/>
+          <DataItem name="HurricaneSiteDeductible" value="0"/>
+          <DataItem name="HurricaneSiteLimit" value="0"/>
+          <DataItem name="IdentityFraudCoverage" value="0"/>
+          <DataItem name="IdentityFraudCoveragePremium" value="0"/>
+          <DataItem name="ImmovablePoolLadder" value=""/>
+          <DataItem name="IncidentalBusinessOccupancy" value="200"/>
+          <DataItem name="IncidentalBusinessOccupancyDescription" value=""/>
+          <DataItem name="IncidentalBusinessOccupancyPremium" value="0"/>
+          <DataItem name="IncidentalBusinessOccupancyType" value=""/>
+          <DataItem name="IncludesWind" value="100"/>
+          <DataItem name="IncreasedOrdinanceLimit" value="1000"/>
+          <DataItem name="IncreasedOrdinanceLimitFactor" value="1"/>
+          <DataItem name="IncreasedOrdinanceLimitFactorCat" value="1"/>
+          <DataItem name="InflationGuardCoverage" value="0"/>
+          <DataItem name="InspectionCompany" value="Millennium"/>
+          <DataItem name="InspectionFee" value="30"/>
+          <DataItem name="InspectionType" value="100"/>
+          <DataItem name="InstallmentFee" value="6"/>
+          <DataItem name="InsuranceFraud" value="200"/>
+          <DataItem name="InsuranceScore" value="690"/>
+          <DataItem name="InsuranceScoreAdjusted" value="550"/>
+          <DataItem name="InsuranceScorePoints" value="14"/>
+          <DataItem name="InsuranceScorePointsCat" value="14"/>
+          <DataItem name="InsuranceScoreRangeEstimate" value=""/>
+          <DataItem name="InsuranceScoreRangeEstimateIndicator" value="200"/>
+          <DataItem name="InsuranceScoreReasonCode1" value=""/>
+          <DataItem name="InsuranceScoreReasonCode1UW" value=""/>
+          <DataItem name="InsuranceScoreReasonCode2" value=""/>
+          <DataItem name="InsuranceScoreReasonCode2UW" value=""/>
+          <DataItem name="InsuranceScoreReasonCode3" value=""/>
+          <DataItem name="InsuranceScoreReasonCode3UW" value=""/>
+          <DataItem name="InsuranceScoreReasonCode4" value=""/>
+          <DataItem name="InsuranceScoreReasonCode4UW" value=""/>
+          <DataItem name="InsuranceScoreRetrieved" value=""/>
+          <DataItem name="InsuranceScoreRetrievedIndicator" value="false"/>
+          <DataItem name="InsuranceScoreStatusRetrieved" value="200"/>
+          <DataItem name="InsuranceScoreStatusUW" value=""/>
+          <DataItem name="InsuranceScoreUW" value=""/>
+          <DataItem name="InsuranceScoreValid" value=""/>
+          <DataItem name="InvoiceAmountDue" value="1677"/>
+          <DataItem name="InvoiceRemainingBalance" value="0"/>
+          <DataItem name="InvoiceTotalBalance" value="1677"/>
+          <DataItem name="KFInterpolationRange" value="5000"/>
+          <DataItem name="KFInterpolationRangeCat" value="5000"/>
+          <DataItem name="KeroseneHeater" value="200"/>
+          <DataItem name="KeroseneHeaterAge" value=""/>
+          <DataItem name="KeroseneHeaterSupplementalHeatOnly" value=""/>
+          <DataItem name="KeyFactor" value="1.228"/>
+          <DataItem name="KeyFactorCat" value="1.355"/>
+          <DataItem name="KitchenQuality" value="100"/>
+          <DataItem name="LapseInCoverage" value="0"/>
+          <DataItem name="LapseInCoverageCat" value="1"/>
+          <DataItem name="LapseInCoverageNonCat" value="2"/>
+          <DataItem name="LapseInCoveragePeriod" value="1"/>
+          <DataItem name="Latitude" value="30.604873"/>
+          <DataItem name="LatitudeRMS" value="30.604714"/>
+          <DataItem name="LatitudeRetrieved" value="30.604873"/>
+          <DataItem name="LeadExclusion" value="100"/>
+          <DataItem name="LiabilityHazardPoints" value="0"/>
+          <DataItem name="LimitedTotalCredits" value="0.61"/>
+          <DataItem name="LimitedTotalCreditsNoDiscounts" value="0.61"/>
+          <DataItem name="LocationNumber" value="1"/>
+          <DataItem name="LogCabin" value="200"/>
+          <DataItem name="Longitude" value="-88.218666"/>
+          <DataItem name="LongitudeRMS" value="-88.218727"/>
+          <DataItem name="LongitudeRetrieved" value="-88.218666"/>
+          <DataItem name="Loss10IsReconciled" value="200"/>
+          <DataItem name="Loss1IsReconciled" value="200"/>
+          <DataItem name="Loss2IsReconciled" value="200"/>
+          <DataItem name="Loss3IsReconciled" value="200"/>
+          <DataItem name="Loss4IsReconciled" value="200"/>
+          <DataItem name="Loss5IsReconciled" value="200"/>
+          <DataItem name="Loss6IsReconciled" value="200"/>
+          <DataItem name="Loss7IsReconciled" value="200"/>
+          <DataItem name="Loss8IsReconciled" value="200"/>
+          <DataItem name="Loss9IsReconciled" value="200"/>
+          <DataItem name="LossAPlusCode1" value=""/>
+          <DataItem name="LossAPlusCode10" value=""/>
+          <DataItem name="LossAPlusCode2" value=""/>
+          <DataItem name="LossAPlusCode3" value=""/>
+          <DataItem name="LossAPlusCode4" value=""/>
+          <DataItem name="LossAPlusCode5" value=""/>
+          <DataItem name="LossAPlusCode6" value=""/>
+          <DataItem name="LossAPlusCode7" value=""/>
+          <DataItem name="LossAPlusCode8" value=""/>
+          <DataItem name="LossAPlusCode9" value=""/>
+          <DataItem name="LossAmount1" value=""/>
+          <DataItem name="LossAmount10" value=""/>
+          <DataItem name="LossAmount10Applied" value=""/>
+          <DataItem name="LossAmount10Reconciled" value=""/>
+          <DataItem name="LossAmount10Retrieved" value=""/>
+          <DataItem name="LossAmount1Applied" value=""/>
+          <DataItem name="LossAmount1Reconciled" value=""/>
+          <DataItem name="LossAmount1Retrieved" value=""/>
+          <DataItem name="LossAmount2" value=""/>
+          <DataItem name="LossAmount2Applied" value=""/>
+          <DataItem name="LossAmount2Reconciled" value=""/>
+          <DataItem name="LossAmount2Retrieved" value=""/>
+          <DataItem name="LossAmount3" value=""/>
+          <DataItem name="LossAmount3Applied" value=""/>
+          <DataItem name="LossAmount3Reconciled" value=""/>
+          <DataItem name="LossAmount3Retrieved" value=""/>
+          <DataItem name="LossAmount4" value=""/>
+          <DataItem name="LossAmount4Applied" value=""/>
+          <DataItem name="LossAmount4Reconciled" value=""/>
+          <DataItem name="LossAmount4Retrieved" value=""/>
+          <DataItem name="LossAmount5" value=""/>
+          <DataItem name="LossAmount5Applied" value=""/>
+          <DataItem name="LossAmount5Reconciled" value=""/>
+          <DataItem name="LossAmount5Retrieved" value=""/>
+          <DataItem name="LossAmount6" value=""/>
+          <DataItem name="LossAmount6Applied" value=""/>
+          <DataItem name="LossAmount6Reconciled" value=""/>
+          <DataItem name="LossAmount6Retrieved" value=""/>
+          <DataItem name="LossAmount7" value=""/>
+          <DataItem name="LossAmount7Applied" value=""/>
+          <DataItem name="LossAmount7Reconciled" value=""/>
+          <DataItem name="LossAmount7Retrieved" value=""/>
+          <DataItem name="LossAmount8" value=""/>
+          <DataItem name="LossAmount8Applied" value=""/>
+          <DataItem name="LossAmount8Reconciled" value=""/>
+          <DataItem name="LossAmount8Retrieved" value=""/>
+          <DataItem name="LossAmount9" value=""/>
+          <DataItem name="LossAmount9Applied" value=""/>
+          <DataItem name="LossAmount9Reconciled" value=""/>
+          <DataItem name="LossAmount9Retrieved" value=""/>
+          <DataItem name="LossAmountPercentTolerance" value="0.20"/>
+          <DataItem name="LossAmountTolerance" value="2000"/>
+          <DataItem name="LossAssessmentCoverage" value="1000"/>
+          <DataItem name="LossAssessmentIncreasedLimitsPremium" value="2"/>
+          <DataItem name="LossCarrier1" value=""/>
+          <DataItem name="LossCarrier10" value=""/>
+          <DataItem name="LossCarrier2" value=""/>
+          <DataItem name="LossCarrier3" value=""/>
+          <DataItem name="LossCarrier4" value=""/>
+          <DataItem name="LossCarrier5" value=""/>
+          <DataItem name="LossCarrier6" value=""/>
+          <DataItem name="LossCarrier7" value=""/>
+          <DataItem name="LossCarrier8" value=""/>
+          <DataItem name="LossCarrier9" value=""/>
+          <DataItem name="LossCaseNumber1" value=""/>
+          <DataItem name="LossCaseNumber10" value=""/>
+          <DataItem name="LossCaseNumber2" value=""/>
+          <DataItem name="LossCaseNumber3" value=""/>
+          <DataItem name="LossCaseNumber4" value=""/>
+          <DataItem name="LossCaseNumber5" value=""/>
+          <DataItem name="LossCaseNumber6" value=""/>
+          <DataItem name="LossCaseNumber7" value=""/>
+          <DataItem name="LossCaseNumber8" value=""/>
+          <DataItem name="LossCaseNumber9" value=""/>
+          <DataItem name="LossCatIndicator1" value=""/>
+          <DataItem name="LossCatIndicator10" value=""/>
+          <DataItem name="LossCatIndicator10Applied" value=""/>
+          <DataItem name="LossCatIndicator10Reconciled" value=""/>
+          <DataItem name="LossCatIndicator10Retrieved" value=""/>
+          <DataItem name="LossCatIndicator1Applied" value=""/>
+          <DataItem name="LossCatIndicator1Reconciled" value=""/>
+          <DataItem name="LossCatIndicator1Retrieved" value=""/>
+          <DataItem name="LossCatIndicator2" value=""/>
+          <DataItem name="LossCatIndicator2Applied" value=""/>
+          <DataItem name="LossCatIndicator2Reconciled" value=""/>
+          <DataItem name="LossCatIndicator2Retrieved" value=""/>
+          <DataItem name="LossCatIndicator3" value=""/>
+          <DataItem name="LossCatIndicator3Applied" value=""/>
+          <DataItem name="LossCatIndicator3Reconciled" value=""/>
+          <DataItem name="LossCatIndicator3Retrieved" value=""/>
+          <DataItem name="LossCatIndicator4" value=""/>
+          <DataItem name="LossCatIndicator4Applied" value=""/>
+          <DataItem name="LossCatIndicator4Reconciled" value=""/>
+          <DataItem name="LossCatIndicator4Retrieved" value=""/>
+          <DataItem name="LossCatIndicator5" value=""/>
+          <DataItem name="LossCatIndicator5Applied" value=""/>
+          <DataItem name="LossCatIndicator5Reconciled" value=""/>
+          <DataItem name="LossCatIndicator5Retrieved" value=""/>
+          <DataItem name="LossCatIndicator6" value=""/>
+          <DataItem name="LossCatIndicator6Applied" value=""/>
+          <DataItem name="LossCatIndicator6Reconciled" value=""/>
+          <DataItem name="LossCatIndicator6Retrieved" value=""/>
+          <DataItem name="LossCatIndicator7" value=""/>
+          <DataItem name="LossCatIndicator7Applied" value=""/>
+          <DataItem name="LossCatIndicator7Reconciled" value=""/>
+          <DataItem name="LossCatIndicator7Retrieved" value=""/>
+          <DataItem name="LossCatIndicator8" value=""/>
+          <DataItem name="LossCatIndicator8Applied" value=""/>
+          <DataItem name="LossCatIndicator8Reconciled" value=""/>
+          <DataItem name="LossCatIndicator8Retrieved" value=""/>
+          <DataItem name="LossCatIndicator9" value=""/>
+          <DataItem name="LossCatIndicator9Applied" value=""/>
+          <DataItem name="LossCatIndicator9Reconciled" value=""/>
+          <DataItem name="LossCatIndicator9Retrieved" value=""/>
+          <DataItem name="LossClaimStatus1" value=""/>
+          <DataItem name="LossClaimStatus10" value=""/>
+          <DataItem name="LossClaimStatus2" value=""/>
+          <DataItem name="LossClaimStatus3" value=""/>
+          <DataItem name="LossClaimStatus4" value=""/>
+          <DataItem name="LossClaimStatus5" value=""/>
+          <DataItem name="LossClaimStatus6" value=""/>
+          <DataItem name="LossClaimStatus7" value=""/>
+          <DataItem name="LossClaimStatus8" value=""/>
+          <DataItem name="LossClaimStatus9" value=""/>
+          <DataItem name="LossDate1" value=""/>
+          <DataItem name="LossDate10" value=""/>
+          <DataItem name="LossDate10Applied" value=""/>
+          <DataItem name="LossDate10Reconciled" value=""/>
+          <DataItem name="LossDate10Retrieved" value=""/>
+          <DataItem name="LossDate1Applied" value=""/>
+          <DataItem name="LossDate1Reconciled" value=""/>
+          <DataItem name="LossDate1Retrieved" value=""/>
+          <DataItem name="LossDate2" value=""/>
+          <DataItem name="LossDate2Applied" value=""/>
+          <DataItem name="LossDate2Reconciled" value=""/>
+          <DataItem name="LossDate2Retrieved" value=""/>
+          <DataItem name="LossDate3" value=""/>
+          <DataItem name="LossDate3Applied" value=""/>
+          <DataItem name="LossDate3Reconciled" value=""/>
+          <DataItem name="LossDate3Retrieved" value=""/>
+          <DataItem name="LossDate4" value=""/>
+          <DataItem name="LossDate4Applied" value=""/>
+          <DataItem name="LossDate4Reconciled" value=""/>
+          <DataItem name="LossDate4Retrieved" value=""/>
+          <DataItem name="LossDate5" value=""/>
+          <DataItem name="LossDate5Applied" value=""/>
+          <DataItem name="LossDate5Reconciled" value=""/>
+          <DataItem name="LossDate5Retrieved" value=""/>
+          <DataItem name="LossDate6" value=""/>
+          <DataItem name="LossDate6Applied" value=""/>
+          <DataItem name="LossDate6Reconciled" value=""/>
+          <DataItem name="LossDate6Retrieved" value=""/>
+          <DataItem name="LossDate7" value=""/>
+          <DataItem name="LossDate7Applied" value=""/>
+          <DataItem name="LossDate7Reconciled" value=""/>
+          <DataItem name="LossDate7Retrieved" value=""/>
+          <DataItem name="LossDate8" value=""/>
+          <DataItem name="LossDate8Applied" value=""/>
+          <DataItem name="LossDate8Reconciled" value=""/>
+          <DataItem name="LossDate8Retrieved" value=""/>
+          <DataItem name="LossDate9" value=""/>
+          <DataItem name="LossDate9Applied" value=""/>
+          <DataItem name="LossDate9Reconciled" value=""/>
+          <DataItem name="LossDate9Retrieved" value=""/>
+          <DataItem name="LossDateTolerance" value="120"/>
+          <DataItem name="LossDescription1" value=""/>
+          <DataItem name="LossDescription10" value=""/>
+          <DataItem name="LossDescription10Reconciled" value=""/>
+          <DataItem name="LossDescription10Retrieved" value=""/>
+          <DataItem name="LossDescription1Reconciled" value=""/>
+          <DataItem name="LossDescription1Retrieved" value=""/>
+          <DataItem name="LossDescription2" value=""/>
+          <DataItem name="LossDescription2Reconciled" value=""/>
+          <DataItem name="LossDescription2Retrieved" value=""/>
+          <DataItem name="LossDescription3" value=""/>
+          <DataItem name="LossDescription3Reconciled" value=""/>
+          <DataItem name="LossDescription3Retrieved" value=""/>
+          <DataItem name="LossDescription4" value=""/>
+          <DataItem name="LossDescription4Reconciled" value=""/>
+          <DataItem name="LossDescription4Retrieved" value=""/>
+          <DataItem name="LossDescription5" value=""/>
+          <DataItem name="LossDescription5Reconciled" value=""/>
+          <DataItem name="LossDescription5Retrieved" value=""/>
+          <DataItem name="LossDescription6" value=""/>
+          <DataItem name="LossDescription6Reconciled" value=""/>
+          <DataItem name="LossDescription6Retrieved" value=""/>
+          <DataItem name="LossDescription7" value=""/>
+          <DataItem name="LossDescription7Reconciled" value=""/>
+          <DataItem name="LossDescription7Retrieved" value=""/>
+          <DataItem name="LossDescription8" value=""/>
+          <DataItem name="LossDescription8Reconciled" value=""/>
+          <DataItem name="LossDescription8Retrieved" value=""/>
+          <DataItem name="LossDescription9" value=""/>
+          <DataItem name="LossDescription9Reconciled" value=""/>
+          <DataItem name="LossDescription9Retrieved" value=""/>
+          <DataItem name="LossHistoryPoints" value="0"/>
+          <DataItem name="LossHistoryPointsCat" value="0"/>
+          <DataItem name="LossLocation1" value=""/>
+          <DataItem name="LossLocation10" value=""/>
+          <DataItem name="LossLocation2" value=""/>
+          <DataItem name="LossLocation3" value=""/>
+          <DataItem name="LossLocation4" value=""/>
+          <DataItem name="LossLocation5" value=""/>
+          <DataItem name="LossLocation6" value=""/>
+          <DataItem name="LossLocation7" value=""/>
+          <DataItem name="LossLocation8" value=""/>
+          <DataItem name="LossLocation9" value=""/>
+          <DataItem name="LossMatchType1" value=""/>
+          <DataItem name="LossMatchType10" value=""/>
+          <DataItem name="LossMatchType2" value=""/>
+          <DataItem name="LossMatchType3" value=""/>
+          <DataItem name="LossMatchType4" value=""/>
+          <DataItem name="LossMatchType5" value=""/>
+          <DataItem name="LossMatchType6" value=""/>
+          <DataItem name="LossMatchType7" value=""/>
+          <DataItem name="LossMatchType8" value=""/>
+          <DataItem name="LossMatchType9" value=""/>
+          <DataItem name="LossOfUseIncreasedLimitsPremium" value="0"/>
+          <DataItem name="LossOfUseIncreasedLimitsPremiumCat" value="0"/>
+          <DataItem name="LossPolicyNumber1" value=""/>
+          <DataItem name="LossPolicyNumber10" value=""/>
+          <DataItem name="LossPolicyNumber2" value=""/>
+          <DataItem name="LossPolicyNumber3" value=""/>
+          <DataItem name="LossPolicyNumber4" value=""/>
+          <DataItem name="LossPolicyNumber5" value=""/>
+          <DataItem name="LossPolicyNumber6" value=""/>
+          <DataItem name="LossPolicyNumber7" value=""/>
+          <DataItem name="LossPolicyNumber8" value=""/>
+          <DataItem name="LossPolicyNumber9" value=""/>
+          <DataItem name="LossRatingFactor" value="0.91"/>
+          <DataItem name="LossRatingFactorCat" value="1"/>
+          <DataItem name="LossRatingFactorPoints" value="0"/>
+          <DataItem name="LossRatingFactorPointsA" value="0"/>
+          <DataItem name="LossRatingFactorPointsACat" value="0"/>
+          <DataItem name="LossRatingFactorPointsB" value="0"/>
+          <DataItem name="LossRatingFactorPointsBCat" value="0"/>
+          <DataItem name="LossRatingFactorPointsC" value="0"/>
+          <DataItem name="LossRatingFactorPointsCCat" value="0"/>
+          <DataItem name="LossRatingFactorPointsCat" value="0"/>
+          <DataItem name="LossRatingFactorPointsD" value="0"/>
+          <DataItem name="LossRatingFactorPointsDCat" value="0"/>
+          <DataItem name="LossRatingFactorPointsE" value="0"/>
+          <DataItem name="LossRatingFactorPointsECat" value="0"/>
+          <DataItem name="LossRatingFactorPointsF" value="0"/>
+          <DataItem name="LossRatingFactorPointsFCat" value="0"/>
+          <DataItem name="LossType1" value=""/>
+          <DataItem name="LossType10" value=""/>
+          <DataItem name="LossType10A" value="0"/>
+          <DataItem name="LossType10Applied" value=""/>
+          <DataItem name="LossType10B" value="0"/>
+          <DataItem name="LossType10C" value="0"/>
+          <DataItem name="LossType10D" value="0"/>
+          <DataItem name="LossType10E" value="0"/>
+          <DataItem name="LossType10F" value="0"/>
+          <DataItem name="LossType10Reconciled" value=""/>
+          <DataItem name="LossType10Retrieved" value=""/>
+          <DataItem name="LossType1A" value="0"/>
+          <DataItem name="LossType1Applied" value=""/>
+          <DataItem name="LossType1B" value="0"/>
+          <DataItem name="LossType1C" value="0"/>
+          <DataItem name="LossType1D" value="0"/>
+          <DataItem name="LossType1E" value="0"/>
+          <DataItem name="LossType1F" value="0"/>
+          <DataItem name="LossType1Reconciled" value=""/>
+          <DataItem name="LossType1Retrieved" value=""/>
+          <DataItem name="LossType2" value=""/>
+          <DataItem name="LossType2A" value="0"/>
+          <DataItem name="LossType2Applied" value=""/>
+          <DataItem name="LossType2B" value="0"/>
+          <DataItem name="LossType2C" value="0"/>
+          <DataItem name="LossType2D" value="0"/>
+          <DataItem name="LossType2E" value="0"/>
+          <DataItem name="LossType2F" value="0"/>
+          <DataItem name="LossType2Reconciled" value=""/>
+          <DataItem name="LossType2Retrieved" value=""/>
+          <DataItem name="LossType3" value=""/>
+          <DataItem name="LossType3A" value="0"/>
+          <DataItem name="LossType3Applied" value=""/>
+          <DataItem name="LossType3B" value="0"/>
+          <DataItem name="LossType3C" value="0"/>
+          <DataItem name="LossType3D" value="0"/>
+          <DataItem name="LossType3E" value="0"/>
+          <DataItem name="LossType3F" value="0"/>
+          <DataItem name="LossType3Reconciled" value=""/>
+          <DataItem name="LossType3Retrieved" value=""/>
+          <DataItem name="LossType4" value=""/>
+          <DataItem name="LossType4A" value="0"/>
+          <DataItem name="LossType4Applied" value=""/>
+          <DataItem name="LossType4B" value="0"/>
+          <DataItem name="LossType4C" value="0"/>
+          <DataItem name="LossType4D" value="0"/>
+          <DataItem name="LossType4E" value="0"/>
+          <DataItem name="LossType4F" value="0"/>
+          <DataItem name="LossType4Reconciled" value=""/>
+          <DataItem name="LossType4Retrieved" value=""/>
+          <DataItem name="LossType5" value=""/>
+          <DataItem name="LossType5A" value="0"/>
+          <DataItem name="LossType5Applied" value=""/>
+          <DataItem name="LossType5B" value="0"/>
+          <DataItem name="LossType5C" value="0"/>
+          <DataItem name="LossType5D" value="0"/>
+          <DataItem name="LossType5E" value="0"/>
+          <DataItem name="LossType5F" value="0"/>
+          <DataItem name="LossType5Reconciled" value=""/>
+          <DataItem name="LossType5Retrieved" value=""/>
+          <DataItem name="LossType6" value=""/>
+          <DataItem name="LossType6A" value="0"/>
+          <DataItem name="LossType6Applied" value=""/>
+          <DataItem name="LossType6B" value="0"/>
+          <DataItem name="LossType6C" value="0"/>
+          <DataItem name="LossType6D" value="0"/>
+          <DataItem name="LossType6E" value="0"/>
+          <DataItem name="LossType6F" value="0"/>
+          <DataItem name="LossType6Reconciled" value=""/>
+          <DataItem name="LossType6Retrieved" value=""/>
+          <DataItem name="LossType7" value=""/>
+          <DataItem name="LossType7A" value="0"/>
+          <DataItem name="LossType7Applied" value=""/>
+          <DataItem name="LossType7B" value="0"/>
+          <DataItem name="LossType7C" value="0"/>
+          <DataItem name="LossType7D" value="0"/>
+          <DataItem name="LossType7E" value="0"/>
+          <DataItem name="LossType7F" value="0"/>
+          <DataItem name="LossType7Reconciled" value=""/>
+          <DataItem name="LossType7Retrieved" value=""/>
+          <DataItem name="LossType8" value=""/>
+          <DataItem name="LossType8A" value="0"/>
+          <DataItem name="LossType8Applied" value=""/>
+          <DataItem name="LossType8B" value="0"/>
+          <DataItem name="LossType8C" value="0"/>
+          <DataItem name="LossType8D" value="0"/>
+          <DataItem name="LossType8E" value="0"/>
+          <DataItem name="LossType8F" value="0"/>
+          <DataItem name="LossType8Reconciled" value=""/>
+          <DataItem name="LossType8Retrieved" value=""/>
+          <DataItem name="LossType9" value=""/>
+          <DataItem name="LossType9A" value="0"/>
+          <DataItem name="LossType9Applied" value=""/>
+          <DataItem name="LossType9B" value="0"/>
+          <DataItem name="LossType9C" value="0"/>
+          <DataItem name="LossType9D" value="0"/>
+          <DataItem name="LossType9E" value="0"/>
+          <DataItem name="LossType9F" value="0"/>
+          <DataItem name="LossType9Reconciled" value=""/>
+          <DataItem name="LossType9Retrieved" value=""/>
+          <DataItem name="LossTypeGroup1" value="0"/>
+          <DataItem name="LossTypeGroup10" value="0"/>
+          <DataItem name="LossTypeGroup2" value="0"/>
+          <DataItem name="LossTypeGroup3" value="0"/>
+          <DataItem name="LossTypeGroup4" value="0"/>
+          <DataItem name="LossTypeGroup5" value="0"/>
+          <DataItem name="LossTypeGroup6" value="0"/>
+          <DataItem name="LossTypeGroup7" value="0"/>
+          <DataItem name="LossTypeGroup8" value="0"/>
+          <DataItem name="LossTypeGroup9" value="0"/>
+          <DataItem name="LowerCoverage" value="150000"/>
+          <DataItem name="LowerCoverageCat" value="150000"/>
+          <DataItem name="LowerKeyFactor" value="1.224"/>
+          <DataItem name="LowerKeyFactorCat" value="1.347"/>
+          <DataItem name="MailingEqualPropertyAddress" value="100"/>
+          <DataItem name="MarginOnPremium" value=""/>
+          <DataItem name="MasonryVeneerPercentage" value=""/>
+          <DataItem name="MaximumEffectiveDate" value="10/04/2014"/>
+          <DataItem name="MechanicalBreakdownCoverage" value="200"/>
+          <DataItem name="MechanicalBreakdownCoveragePremium" value="0"/>
+          <DataItem name="MechanicalElectricalEquipmentGroundLevel" value="0"/>
+          <DataItem name="MechanicalElectricalEquipmentSide" value="0"/>
+          <DataItem name="MinAALDivPremiumRatio" value="0.18"/>
+          <DataItem name="MinimumEffectiveDate" value="06/06/2014"/>
+          <DataItem name="MoldLimit" value="0"/>
+          <DataItem name="MonthsRented" value="0"/>
+          <DataItem name="MonthsUnoccupied" value="0"/>
+          <DataItem name="MultiLayeredRoofing" value="200"/>
+          <DataItem name="MultiPolicy" value="200"/>
+          <DataItem name="MultiPolicyFactor" value="1"/>
+          <DataItem name="MunicipalityTaxCodeCity" value="0157"/>
+          <DataItem name="MunicipalityTaxCodeCounty" value="97"/>
+          <DataItem name="NFIPContentsPolicyLimit" value=""/>
+          <DataItem name="NFIPPolicyCarrier" value=""/>
+          <DataItem name="NFIPPolicyCarrierProper" value=""/>
+          <DataItem name="NFIPPolicyEffectiveDate" value=""/>
+          <DataItem name="NFIPPolicyExpirationDate" value=""/>
+          <DataItem name="NFIPPolicyLimit" value=""/>
+          <DataItem name="NFIPPolicyNumber" value=""/>
+          <DataItem name="NameOtherMember" value=""/>
+          <DataItem name="NameOtherMemberProper" value=""/>
+          <DataItem name="NamedInsuredIndicator" value="0"/>
+          <DataItem name="NeighboringHomes" value="200"/>
+          <DataItem name="NewHomeFactor" value="0.61"/>
+          <DataItem name="NewHomeFactorCat" value="0.575"/>
+          <DataItem name="NoInsuranceScoreDisplayText" value="No Hit Retrieved"/>
+          <DataItem name="NominalExpenses" value="0"/>
+          <DataItem name="NonCATLossPctOfTIV" value="0.002014"/>
+          <DataItem name="NonCatCostsTotalResolved" value=""/>
+          <DataItem name="NonCatLosses" value="517"/>
+          <DataItem name="NonDomesticatedAnimals" value="200"/>
+          <DataItem name="NonHurricanePremium" value="723"/>
+          <DataItem name="NumberFamilies" value="1"/>
+          <DataItem name="NumberOfAtriumDoors" value="0"/>
+          <DataItem name="NumberOfAtriumWindows" value="0"/>
+          <DataItem name="NumberOfAttractiveNuisances" value="0"/>
+          <DataItem name="NumberOfBuildings" value="1"/>
+          <DataItem name="NumberOfClaims" value="0"/>
+          <DataItem name="NumberOfClaimsA" value="0"/>
+          <DataItem name="NumberOfClaimsB" value="0"/>
+          <DataItem name="NumberOfClaimsC" value="0"/>
+          <DataItem name="NumberOfClaimsD" value="0"/>
+          <DataItem name="NumberOfClaimsE" value="0"/>
+          <DataItem name="NumberOfClaimsF" value="0"/>
+          <DataItem name="NumberOfFireplaces" value="0"/>
+          <DataItem name="NumberOfFullBaths" value="1"/>
+          <DataItem name="NumberOfHalfBaths" value="0"/>
+          <DataItem name="NumberOfKitchens" value="1"/>
+          <DataItem name="NumberOfMortgagees" value="1"/>
+          <DataItem name="NumberOfSolarPanels" value="0"/>
+          <DataItem name="NumberOfStories" value="100"/>
+          <DataItem name="NumberOfStoriesFactorCat" value="0.9"/>
+          <DataItem name="NumberOfStoriesPoints" value="0"/>
+          <DataItem name="NumberOfStoriesResolved" value=""/>
+          <DataItem name="NumberOfStoriesRetrieved" value=""/>
+          <DataItem name="NumberOfUnits" value="100"/>
+          <DataItem name="OccupancyPoints" value="0"/>
+          <DataItem name="OccupancyPoints1" value="-3"/>
+          <DataItem name="OccupancyPoints2" value="0"/>
+          <DataItem name="OccupancyPoints3" value="0"/>
+          <DataItem name="OccupancyPoints4" value="0"/>
+          <DataItem name="OccupancyPoints5" value="3"/>
+          <DataItem name="OccupancyPoints6" value="0"/>
+          <DataItem name="OccupancyPointsCat" value="0"/>
+          <DataItem name="OccupancyPointsCat1" value="-3"/>
+          <DataItem name="OccupancyPointsCat2" value="0"/>
+          <DataItem name="OccupancyPointsCat3" value="0"/>
+          <DataItem name="OccupancyPointsCat4" value="0"/>
+          <DataItem name="OccupancyPointsCat5" value="3"/>
+          <DataItem name="OccupancyScheme" value="100"/>
+          <DataItem name="OccupancyType" value="100"/>
+          <DataItem name="OffPremisesTheftBuyback" value="200"/>
+          <DataItem name="OpAAL" value=""/>
+          <DataItem name="OpACVLossSettlementDwelling" value="10000"/>
+          <DataItem name="OpACVLossSettlementRoof" value="200"/>
+          <DataItem name="OpAOPDeductibleAmount" value="2500"/>
+          <DataItem name="OpAbsenteeLandlord" value="100"/>
+          <DataItem name="OpAdditionalAmountsOfInsurance" value="0"/>
+          <DataItem name="OpAdditionalMortgageeIndicator" value="200"/>
+          <DataItem name="OpAdditionalResidence1AddressCity" value=""/>
+          <DataItem name="OpAdditionalResidence1AddressLine1" value=""/>
+          <DataItem name="OpAdditionalResidence1AddressLine2" value=""/>
+          <DataItem name="OpAdditionalResidence1AddressState" value=""/>
+          <DataItem name="OpAdditionalResidence1AddressZip" value=""/>
+          <DataItem name="OpAdditionalResidencesRented" value="0"/>
+          <DataItem name="OpAddressValidated" value="100"/>
+          <DataItem name="OpAdjacentPropertyCondition" value="200"/>
+          <DataItem name="OpAdjoiningTownhouseDamage" value="200"/>
+          <DataItem name="OpAgencyAffiliation" value=""/>
+          <DataItem name="OpAgencyID" value="crunyprogramagency01"/>
+          <DataItem name="OpAgencyLocationCode" value="E00011T"/>
+          <DataItem name="OpAgencyLocationID" value="e00011t"/>
+          <DataItem name="OpAgencyLocationName" value="Product Development"/>
+          <DataItem name="OpAgencyName" value="SageSure CRU4 Test Agency"/>
+          <DataItem name="OpAgentAddressLine2" value=""/>
+          <DataItem name="OpAgentCity" value="New York"/>
+          <DataItem name="OpAgentEmailAddress" value=""/>
+          <DataItem name="OpAgentID" value="andyl"/>
+          <DataItem name="OpAgentName" value="Andy Levens"/>
+          <DataItem name="OpAgentPhoneNumber" value="GFDGFFH"/>
+          <DataItem name="OpAgentState" value="NY"/>
+          <DataItem name="OpAgentStreetName" value="30th fl"/>
+          <DataItem name="OpAgentStreetNumber" value="747 3rd Ave"/>
+          <DataItem name="OpAgentZipCode" value="10017"/>
+          <DataItem name="OpAllOtherPerilsDeductible" value="25"/>
+          <DataItem name="OpAllWeatherAccess" value="100"/>
+          <DataItem name="OpApplicantFirstName" value=""/>
+          <DataItem name="OpApplicantLastName" value=""/>
+          <DataItem name="OpAssumedPolicy" value=""/>
+          <DataItem name="OpAssumptionDate" value=""/>
+          <DataItem name="OpAttractiveNuisanceLiabilityCoverage" value="200"/>
+          <DataItem name="OpAttractiveNuisanceLiabilityCoveragePremium" value="0"/>
+          <DataItem name="OpAttractiveNuisanceLiabilityExclusion" value="100"/>
+          <DataItem name="OpAutoPolicyCarrier" value=""/>
+          <DataItem name="OpAutoPolicyNumber" value=""/>
+          <DataItem name="OpBCEquivalent" value=""/>
+          <DataItem name="OpBasement" value="0"/>
+          <DataItem name="OpBasementPercentComplete" value="0"/>
+          <DataItem name="OpBcegCode" value=""/>
+          <DataItem name="OpBeneficiary" value=""/>
+          <DataItem name="OpBlanketOffPremisesAddressCity" value=""/>
+          <DataItem name="OpBlanketOffPremisesAddressLine1" value=""/>
+          <DataItem name="OpBlanketOffPremisesAddressLine2" value=""/>
+          <DataItem name="OpBlanketOffPremisesAddressState" value=""/>
+          <DataItem name="OpBlanketOffPremisesAddressZip" value=""/>
+          <DataItem name="OpBoundDate" value="06/06/2014"/>
+          <DataItem name="OpBuildingAdditionsOtherResidences" value="200"/>
+          <DataItem name="OpBuildingAdditionsOtherResidencesAddressCity" value=""/>
+          <DataItem name="OpBuildingAdditionsOtherResidencesAddressLine1" value=""/>
+          <DataItem name="OpBuildingAdditionsOtherResidencesAddressLine2" value=""/>
+          <DataItem name="OpBuildingAdditionsOtherResidencesAddressState" value=""/>
+          <DataItem name="OpBuildingAdditionsOtherResidencesAddressZip" value=""/>
+          <DataItem name="OpBuildingAdditionsOtherResidencesLimit" value="0"/>
+          <DataItem name="OpBuildingNotOriginallyDwelling" value="200"/>
+          <DataItem name="OpBuildingNumber" value="1"/>
+          <DataItem name="OpBurglarAlarm" value="1"/>
+          <DataItem name="OpBusinessInterruptionPreparedness" value="0"/>
+          <DataItem name="OpBusinessInterruptionRedundancy" value="0"/>
+          <DataItem name="OpBusinessPropertyLimit" value="2500"/>
+          <DataItem name="OpCATReinsuranceLoadFactor" value="0"/>
+          <DataItem name="OpCalculatedCostPerSquareFoot" value="0"/>
+          <DataItem name="OpCalculatedTIV" value="256700"/>
+          <DataItem name="OpCancellationDate" value=""/>
+          <DataItem name="OpCancellationReason" value=""/>
+          <DataItem name="OpCarrierAddress" value="PO Box 12999"/>
+          <DataItem name="OpCarrierCity" value="Tallahassee"/>
+          <DataItem name="OpCarrierClaimPhoneNumber" value="(800)780-8423"/>
+          <DataItem name="OpCarrierGroupID" value="IAT"/>
+          <DataItem name="OpCarrierID" value="WIC"/>
+          <DataItem name="OpCarrierName" value="Wilshire Insurance Company"/>
+          <DataItem name="OpCarrierPresident" value="Steve Stephano"/>
+          <DataItem name="OpCarrierSecretary" value="Michael Blinson"/>
+          <DataItem name="OpCarrierState" value="FL"/>
+          <DataItem name="OpCarrierStatement" value="The Contract is registered and delivered as surplus line coverage under the Alabama Surplus Line Insurance Law."/>
+          <DataItem name="OpCarrierZip" value="32317-2999"/>
+          <DataItem name="OpCentralAir" value="200"/>
+          <DataItem name="OpChildCare" value="200"/>
+          <DataItem name="OpCladding" value="900"/>
+          <DataItem name="OpClientTraffic" value="200"/>
+          <DataItem name="OpCommissionNewBusinessRate" value="0.1"/>
+          <DataItem name="OpCommissionRenewalRate" value="0.1"/>
+          <DataItem name="OpCompetitivePremium" value=""/>
+          <DataItem name="OpCompetitivePremiumCarrier" value=""/>
+          <DataItem name="OpCondemnedArea" value="200"/>
+          <DataItem name="OpConditionRatingPoints" value="2"/>
+          <DataItem name="OpCondoRentedOthers" value=""/>
+          <DataItem name="OpConsentContactEmailAddress" value="email@test.com"/>
+          <DataItem name="OpConsentContactName" value="Test Name"/>
+          <DataItem name="OpConsentContactPhoneNumber" value="3214567890"/>
+          <DataItem name="OpConsentContactType" value="100"/>
+          <DataItem name="OpConsentProducerAffirmation" value="100"/>
+          <DataItem name="OpConstructionQuality" value="0"/>
+          <DataItem name="OpConstructionScheme" value="100"/>
+          <DataItem name="OpConstructionType" value="100"/>
+          <DataItem name="OpConstructionYear" value="2014"/>
+          <DataItem name="OpConstructionYearRoof" value="2014"/>
+          <DataItem name="OpCoverageA" value="151000"/>
+          <DataItem name="OpCoverageALimit" value="151000"/>
+          <DataItem name="OpCoverageAPremium" value="1480"/>
+          <DataItem name="OpCoverageB" value="0"/>
+          <DataItem name="OpCoverageBLimit" value="0"/>
+          <DataItem name="OpCoverageBPremium" value="0"/>
+          <DataItem name="OpCoverageC" value="75500"/>
+          <DataItem name="OpCoverageCLimit" value="75500"/>
+          <DataItem name="OpCoverageCPremium" value="0"/>
+          <DataItem name="OpCoverageD" value="30200"/>
+          <DataItem name="OpCoverageDLimit" value="30200"/>
+          <DataItem name="OpCoverageDPremium" value="0"/>
+          <DataItem name="OpCoverageL" value="100000"/>
+          <DataItem name="OpCoverageLLimit" value="100000"/>
+          <DataItem name="OpCoverageLPremium" value="0"/>
+          <DataItem name="OpCoverageM" value="1000"/>
+          <DataItem name="OpCoverageMLimit" value="1000"/>
+          <DataItem name="OpCoverageMPremium" value="Included"/>
+          <DataItem name="OpCurrentBalanceDue" value="0"/>
+          <DataItem name="OpDeclinationContactName1" value=""/>
+          <DataItem name="OpDeclinationContactName2" value=""/>
+          <DataItem name="OpDeclinationContactName3" value=""/>
+          <DataItem name="OpDeclinationDateOfContact1" value="2014-06-07"/>
+          <DataItem name="OpDeclinationDateOfContact2" value="2014-06-06"/>
+          <DataItem name="OpDeclinationDateOfContact3" value="2014-06-06"/>
+          <DataItem name="OpDeclinationDiligentEffort" value="100"/>
+          <DataItem name="OpDeclinationInsurer1" value="Test"/>
+          <DataItem name="OpDeclinationInsurer2" value="Test"/>
+          <DataItem name="OpDeclinationInsurer3" value="Test"/>
+          <DataItem name="OpDeclinationReasonCode1" value="100"/>
+          <DataItem name="OpDeclinationReasonCode2" value="100"/>
+          <DataItem name="OpDeclinationReasonCode3" value="100"/>
+          <DataItem name="OpDeclinationSubmissionChannel1" value="100"/>
+          <DataItem name="OpDeclinationSubmissionChannel2" value="100"/>
+          <DataItem name="OpDeclinationSubmissionChannel3" value="100"/>
+          <DataItem name="OpDeductibleAmount" value="10570"/>
+          <DataItem name="OpDeductibleMinimum" value="0"/>
+          <DataItem name="OpDeductiblePercent" value="0"/>
+          <DataItem name="OpDeductibleType" value="100"/>
+          <DataItem name="OpDeluxeEndorsementOption" value=""/>
+          <DataItem name="OpDeluxeEndorsementOptionPremium" value="0"/>
+          <DataItem name="OpDesignCode" value="0"/>
+          <DataItem name="OpDesignExposure" value=""/>
+          <DataItem name="OpDistanceFireHydrant" value="1000"/>
+          <DataItem name="OpDistanceFireStation" value="5"/>
+          <DataItem name="OpDistanceToCoast" value="15.5"/>
+          <DataItem name="OpDistanceToCoastSecondary" value="8.4"/>
+          <DataItem name="OpDistanceToFireDepartment" value="4.03"/>
+          <DataItem name="OpDistanceToSinkhole" value=""/>
+          <DataItem name="OpDivingBoardSlide" value=""/>
+          <DataItem name="OpDivingBoardSlideLiabilityCoverage" value="200"/>
+          <DataItem name="OpDivingBoardSlideLiabilityCoveragePremium" value="0"/>
+          <DataItem name="OpDivingBoardSlideLiabilityExclusion" value="100"/>
+          <DataItem name="OpDivingBoardSlideWellMaintained" value=""/>
+          <DataItem name="OpDoorType" value="0"/>
+          <DataItem name="OpDwellingFoundation" value="100"/>
+          <DataItem name="OpEIFS" value="200"/>
+          <DataItem name="OpEarthquakeCoverage" value="200"/>
+          <DataItem name="OpEarthquakeCoveragePremium" value="0"/>
+          <DataItem name="OpEarthquakeDeductible" value=""/>
+          <DataItem name="OpEarthquakeLossAssessmentCoverage" value=""/>
+          <DataItem name="OpEarthquakeSiteLimit" value="0"/>
+          <DataItem name="OpEffectiveDate" value="06/06/2014"/>
+          <DataItem name="OpEffectiveDatePolicyTerm" value="06/06/2014"/>
+          <DataItem name="OpElectricalAmperage" value="175"/>
+          <DataItem name="OpElevation" value="135.56"/>
+          <DataItem name="OpExcessFloodPolicyLimit" value=""/>
+          <DataItem name="OpExoticAnimal" value="200"/>
+          <DataItem name="OpExpirationDate" value="06/06/2015"/>
+          <DataItem name="OpExpirationDatePolicyTerm" value="2015-06-06T00:00:00.000-04:00"/>
+          <DataItem name="OpExternalOrnamentation" value="0"/>
+          <DataItem name="OpFRCALetterRequired" value="100"/>
+          <DataItem name="OpFarming" value="200"/>
+          <DataItem name="OpFireAlarm" value="1"/>
+          <DataItem name="OpFirstRowBuilding" value="200"/>
+          <DataItem name="OpFloodDrivenMissileExposure" value="0"/>
+          <DataItem name="OpFloodZone" value="200"/>
+          <DataItem name="OpFloorArea" value="1600"/>
+          <DataItem name="OpForeclosure" value="200"/>
+          <DataItem name="OpFormAdditionalExclusion" value="HC02212020610 - Additional Exclusions"/>
+          <DataItem name="OpFormHomeDayCare" value="HO04961000 - No Coverage For Home Day Care Business"/>
+          <DataItem name="OpFormHurricaneDeductible" value="HC02417011010 - Named Storm Deductible - Alabama"/>
+          <DataItem name="OpFormIdentityFraud" value="HC02531010610 - Identity Theft Exp and Resolution Services"/>
+          <DataItem name="OpFormIncidentalBusinessOccupancy" value="HO04421000 - Permitted Occupancies"/>
+          <DataItem name="OpFormLeadFuelLiability" value="HC02213010610 - Escaped Liquid Fuel and Lead Liability Exclusion"/>
+          <DataItem name="OpFormLossAssessment" value="HO04351000 - Incr Loss Assessment"/>
+          <DataItem name="OpFormMold" value="HC02530010610 - Limited Fungi Section I and II Exclusion"/>
+          <DataItem name="OpFormOrdinanceLaw" value="HO04771000 - Incr Law and Ordinance"/>
+          <DataItem name="OpFormPersonalInjury" value="HO24821000 - Personal Injury"/>
+          <DataItem name="OpFormPoolEnclosure" value="HC02213060610 - Swimming Pool and/or Patio Enclosure Exclusion"/>
+          <DataItem name="OpFormReplacementCostContents" value="HO04901000 - Replacement Cost on Contents"/>
+          <DataItem name="OpFormShortRateProvision" value="HC02213050610 - Short-rate Calculation Condition"/>
+          <DataItem name="OpFormSpecialLimitsContents" value="HO04651000 - Cov C Incr Special Limits"/>
+          <DataItem name="OpFormSpecialProvision" value="HO01010508 - Special Provisions"/>
+          <DataItem name="OpFormStandardPolicy" value="HO03001010 - Homeowner Policy"/>
+          <DataItem name="OpFormWaterBackup" value="HO04951000 - Water and Sewer Back Up"/>
+          <DataItem name="OpFormWaterDamage" value="HO16101000 - Water Exclusion"/>
+          <DataItem name="OpFormWindPaint" value="HC02213040610 - Windstorm Exterior Paint or Waterproofing Exclusion"/>
+          <DataItem name="OpFoundationBasementPercentage" value="0"/>
+          <DataItem name="OpFoundationSlabPercentage" value="10000"/>
+          <DataItem name="OpFoundationType" value="100"/>
+          <DataItem name="OpFourPayAmountDue" value="798"/>
+          <DataItem name="OpFourPayRemainingBalance" value="907"/>
+          <DataItem name="OpFourPayTotalBalance" value="1705"/>
+          <DataItem name="OpFullBathQuality" value="100"/>
+          <DataItem name="OpFullPayAmountDue" value="1677"/>
+          <DataItem name="OpFullPayRemainingBalance" value="0"/>
+          <DataItem name="OpFullPayTotalBalance" value="1677"/>
+          <DataItem name="OpFunctionalReplacementCost" value="200"/>
+          <DataItem name="OpFutureBalanceDue" value="0"/>
+          <DataItem name="OpGarageType" value="1"/>
+          <DataItem name="OpGatedCommunity" value="200"/>
+          <DataItem name="OpGatedCommunityPhoneNumber" value=""/>
+          <DataItem name="OpGeocodePrecision" value=""/>
+          <DataItem name="OpGolfCartCoverage" value=""/>
+          <DataItem name="OpGrandSubtotal" value="1482"/>
+          <DataItem name="OpGrandSubtotalCat" value="759"/>
+          <DataItem name="OpGrandSubtotalNonCat" value="723"/>
+          <DataItem name="OpGrantor" value=""/>
+          <DataItem name="OpHalfBathQuality" value="100"/>
+          <DataItem name="OpHandrailWalkwayLiability" value="200"/>
+          <DataItem name="OpHeatPump" value="100"/>
+          <DataItem name="OpHeatingThermoControlled" value="100"/>
+          <DataItem name="OpHighestMatchLevelFound" value=""/>
+          <DataItem name="OpHomeFeatures" value="0"/>
+          <DataItem name="OpHomeFeatures1" value="0"/>
+          <DataItem name="OpHomeFeatures1SquareFeet" value="0"/>
+          <DataItem name="OpHomeFeatures2" value="0"/>
+          <DataItem name="OpHomeFeatures2SquareFeet" value="0"/>
+          <DataItem name="OpHomeFeatures3" value="0"/>
+          <DataItem name="OpHomeFeatures3SquareFeet" value="0"/>
+          <DataItem name="OpHomeStyle" value="300"/>
+          <DataItem name="OpHurricaneDeductible" value="0"/>
+          <DataItem name="OpHurricaneDeductible2" value="500"/>
+          <DataItem name="OpHurricaneDeductibleAmount" value="0"/>
+          <DataItem name="OpHurricaneDeductibleAmount2" value="7550"/>
+          <DataItem name="OpHurricanePremiumDollarAdjustment" value="0"/>
+          <DataItem name="OpHurricanePremiumFactorAdjustment" value="1"/>
+          <DataItem name="OpHurricaneSiteDeductible" value="0"/>
+          <DataItem name="OpHurricaneSiteLimit" value="0"/>
+          <DataItem name="OpIdentityFraudCoverage" value="0"/>
+          <DataItem name="OpIdentityFraudCoveragePremium" value="0"/>
+          <DataItem name="OpIdentityFraudIncreaseLimit" value="0"/>
+          <DataItem name="OpIdentityFraudTotalLimit" value="0"/>
+          <DataItem name="OpImmovablePoolLadder" value=""/>
+          <DataItem name="OpIncidentalBusinessOccupancy" value="200"/>
+          <DataItem name="OpIncidentalBusinessOccupancyDescription" value=""/>
+          <DataItem name="OpIncidentalBusinessOccupancyType" value=""/>
+          <DataItem name="OpIncludesWind" value="100"/>
+          <DataItem name="OpIncreasedOrdinanceLimit" value="1000"/>
+          <DataItem name="OpInsightPolicyID" value="ALF041544800"/>
+          <DataItem name="OpInspectionAccountNumber" value="601200"/>
+          <DataItem name="OpInspectionBrushSupplement" value="200"/>
+          <DataItem name="OpInspectionCompany" value="Millennium"/>
+          <DataItem name="OpInspectionEarthquakeSupplement" value="200"/>
+          <DataItem name="OpInspectionFee" value="30"/>
+          <DataItem name="OpInspectionMechanicalSupplement" value="200"/>
+          <DataItem name="OpInspectionMoldSupplement" value="200"/>
+          <DataItem name="OpInspectionRoofSupplement" value="200"/>
+          <DataItem name="OpInspectionSinkholeSupplement" value="200"/>
+          <DataItem name="OpInspectionType" value="100"/>
+          <DataItem name="OpInspectionWoodStoveSupplement" value="200"/>
+          <DataItem name="OpInsuranceFraud" value="200"/>
+          <DataItem name="OpInsuranceScore" value="690"/>
+          <DataItem name="OpInsuranceScoreAdjusted" value="550"/>
+          <DataItem name="OpInsuranceScoreRange" value="No Hit - Fair"/>
+          <DataItem name="OpInsuranceScoreRangeEstimate" value=""/>
+          <DataItem name="OpInsuranceScoreRangeEstimateIndicator" value="200"/>
+          <DataItem name="OpInsuranceScoreReasonCode1" value=""/>
+          <DataItem name="OpInsuranceScoreReasonCode2" value=""/>
+          <DataItem name="OpInsuranceScoreReasonCode3" value=""/>
+          <DataItem name="OpInsuranceScoreReasonCode4" value=""/>
+          <DataItem name="OpInsuranceScoreStatusRetrieved" value="200"/>
+          <DataItem name="OpInvoiceAmountDue" value="1677"/>
+          <DataItem name="OpInvoiceDate" value="2014-06-06T09:31:00.775-04:00"/>
+          <DataItem name="OpInvoiceDueDate" value="2014-06-06T09:31:00.775-04:00"/>
+          <DataItem name="OpInvoiceRemainingBalance" value="0"/>
+          <DataItem name="OpInvoiceTotalBalance" value="1677"/>
+          <DataItem name="OpKeroseneHeater" value="200"/>
+          <DataItem name="OpKeroseneHeaterAge" value=""/>
+          <DataItem name="OpKeroseneHeaterSupplementalHeatOnly" value=""/>
+          <DataItem name="OpKitchenQuality" value="100"/>
+          <DataItem name="OpLapseInCoverage" value=""/>
+          <DataItem name="OpLapseInCoveragePeriod" value=""/>
+          <DataItem name="OpLatitude" value="30.604873"/>
+          <DataItem name="OpLeadExclusion" value="100"/>
+          <DataItem name="OpLocationNumber" value="1"/>
+          <DataItem name="OpLogCabin" value="200"/>
+          <DataItem name="OpLongitude" value="-88.218666"/>
+          <DataItem name="OpLossAmount1" value=""/>
+          <DataItem name="OpLossAmount10" value=""/>
+          <DataItem name="OpLossAmount2" value=""/>
+          <DataItem name="OpLossAmount3" value=""/>
+          <DataItem name="OpLossAmount4" value=""/>
+          <DataItem name="OpLossAmount5" value=""/>
+          <DataItem name="OpLossAmount6" value=""/>
+          <DataItem name="OpLossAmount7" value=""/>
+          <DataItem name="OpLossAmount8" value=""/>
+          <DataItem name="OpLossAmount9" value=""/>
+          <DataItem name="OpLossAssessmentCoverage" value="1000"/>
+          <DataItem name="OpLossAssessmentIncreaseLimit" value="0"/>
+          <DataItem name="OpLossAssessmentIncreasedLimitsPremium" value="2"/>
+          <DataItem name="OpLossAssessmentTotalLimit" value="1000"/>
+          <DataItem name="OpLossCatIndicator1" value=""/>
+          <DataItem name="OpLossCatIndicator10" value=""/>
+          <DataItem name="OpLossCatIndicator2" value=""/>
+          <DataItem name="OpLossCatIndicator3" value=""/>
+          <DataItem name="OpLossCatIndicator4" value=""/>
+          <DataItem name="OpLossCatIndicator5" value=""/>
+          <DataItem name="OpLossCatIndicator6" value=""/>
+          <DataItem name="OpLossCatIndicator7" value=""/>
+          <DataItem name="OpLossCatIndicator8" value=""/>
+          <DataItem name="OpLossCatIndicator9" value=""/>
+          <DataItem name="OpLossDate1" value=""/>
+          <DataItem name="OpLossDate10" value=""/>
+          <DataItem name="OpLossDate2" value=""/>
+          <DataItem name="OpLossDate3" value=""/>
+          <DataItem name="OpLossDate4" value=""/>
+          <DataItem name="OpLossDate5" value=""/>
+          <DataItem name="OpLossDate6" value=""/>
+          <DataItem name="OpLossDate7" value=""/>
+          <DataItem name="OpLossDate8" value=""/>
+          <DataItem name="OpLossDate9" value=""/>
+          <DataItem name="OpLossDescription1" value=""/>
+          <DataItem name="OpLossDescription10" value=""/>
+          <DataItem name="OpLossDescription2" value=""/>
+          <DataItem name="OpLossDescription3" value=""/>
+          <DataItem name="OpLossDescription4" value=""/>
+          <DataItem name="OpLossDescription5" value=""/>
+          <DataItem name="OpLossDescription6" value=""/>
+          <DataItem name="OpLossDescription7" value=""/>
+          <DataItem name="OpLossDescription8" value=""/>
+          <DataItem name="OpLossDescription9" value=""/>
+          <DataItem name="OpLossFreeCatFactor" value="1"/>
+          <DataItem name="OpLossFreeFactor" value="1"/>
+          <DataItem name="OpLossType1" value=""/>
+          <DataItem name="OpLossType10" value=""/>
+          <DataItem name="OpLossType2" value=""/>
+          <DataItem name="OpLossType3" value=""/>
+          <DataItem name="OpLossType4" value=""/>
+          <DataItem name="OpLossType5" value=""/>
+          <DataItem name="OpLossType6" value=""/>
+          <DataItem name="OpLossType7" value=""/>
+          <DataItem name="OpLossType8" value=""/>
+          <DataItem name="OpLossType9" value=""/>
+          <DataItem name="OpMailingEqualPropertyAddress" value="100"/>
+          <DataItem name="OpMarginOnPremium" value=""/>
+          <DataItem name="OpMasonryVeneerPercentage" value=""/>
+          <DataItem name="OpMatchLogID" value=""/>
+          <DataItem name="OpMechanicalElectricalEquipmentGroundLevel" value="0"/>
+          <DataItem name="OpMechanicalElectricalEquipmentSide" value="0"/>
+          <DataItem name="OpModifiedOtherInsurance" value=""/>
+          <DataItem name="OpMoldLimit" value="0"/>
+          <DataItem name="OpMonthsRented" value="0"/>
+          <DataItem name="OpMonthsUnoccupied" value="0"/>
+          <DataItem name="OpMultiLayeredRoofing" value="200"/>
+          <DataItem name="OpMultiPolicy" value="200"/>
+          <DataItem name="OpMultiPolicyPremium" value="0"/>
+          <DataItem name="OpMunicipalityTaxCodeCity" value="0157"/>
+          <DataItem name="OpMunicipalityTaxCodeCounty" value="97"/>
+          <DataItem name="OpNFIPContentsPolicyLimit" value=""/>
+          <DataItem name="OpNFIPPolicyCarrier" value=""/>
+          <DataItem name="OpNFIPPolicyEffectiveDate" value=""/>
+          <DataItem name="OpNFIPPolicyExpirationDate" value=""/>
+          <DataItem name="OpNFIPPolicyLimit" value=""/>
+          <DataItem name="OpNFIPPolicyNumber" value=""/>
+          <DataItem name="OpNYFireInsuranceFee" value=""/>
+          <DataItem name="OpNameOtherMember" value=""/>
+          <DataItem name="OpNamedInsuredIndicator" value="0"/>
+          <DataItem name="OpNeighboringHomes" value="200"/>
+          <DataItem name="OpNominalExpenses" value="0"/>
+          <DataItem name="OpNonCatLosses" value="517"/>
+          <DataItem name="OpNonDomesticatedAnimals" value="200"/>
+          <DataItem name="OpNonHurricanePremiumDollarAdjustment" value="0"/>
+          <DataItem name="OpNonHurricanePremiumFactorAdjustment" value="1"/>
+          <DataItem name="OpNumberFamilies" value="1"/>
+          <DataItem name="OpNumberOfAtriumDoors" value="0"/>
+          <DataItem name="OpNumberOfAtriumWindows" value="0"/>
+          <DataItem name="OpNumberOfAttractiveNuisances" value="0"/>
+          <DataItem name="OpNumberOfBuildings" value="1"/>
+          <DataItem name="OpNumberOfClaims" value="0"/>
+          <DataItem name="OpNumberOfFireplaces" value="0"/>
+          <DataItem name="OpNumberOfFullBaths" value="1"/>
+          <DataItem name="OpNumberOfHalfBaths" value="0"/>
+          <DataItem name="OpNumberOfKitchens" value="1"/>
+          <DataItem name="OpNumberOfSolarPanels" value="0"/>
+          <DataItem name="OpNumberOfStories" value="100"/>
+          <DataItem name="OpNumberOfUnits" value="100"/>
+          <DataItem name="OpOccupancyScheme" value="100"/>
+          <DataItem name="OpOccupancyType" value="100"/>
+          <DataItem name="OpOffPremisesTheftBuyback" value="200"/>
+          <DataItem name="OpOpeningProtectionType" value="1"/>
+          <DataItem name="OpOptionCoverageB" value="0"/>
+          <DataItem name="OpOptionCoverageC" value="5000"/>
+          <DataItem name="OpOptionCoverageD" value="2000"/>
+          <DataItem name="OpOrdinanceOrLawIncreasedLimit" value="0"/>
+          <DataItem name="OpOrdinanceOrLawLimit" value="15100"/>
+          <DataItem name="OpOtherInsuredLocationOccupancy" value="200"/>
+          <DataItem name="OpOtherInsuredLocationsOccupied" value=""/>
+          <DataItem name="OpOtherStructures1BusinessType" value=""/>
+          <DataItem name="OpOtherStructures1Coverage" value=""/>
+          <DataItem name="OpOtherStructures1Occupancy" value=""/>
+          <DataItem name="OpOtherStructures1Type" value=""/>
+          <DataItem name="OpOtherStructures2BusinessType" value=""/>
+          <DataItem name="OpOtherStructures2Coverage" value=""/>
+          <DataItem name="OpOtherStructures2Occupancy" value=""/>
+          <DataItem name="OpOtherStructures2Type" value=""/>
+          <DataItem name="OpOtherStructures3BusinessType" value=""/>
+          <DataItem name="OpOtherStructures3Coverage" value=""/>
+          <DataItem name="OpOtherStructures3Occupancy" value=""/>
+          <DataItem name="OpOtherStructures3Type" value=""/>
+          <DataItem name="OpOtherStructuresIndicator" value="0"/>
+          <DataItem name="OpOutdatedElectricalMaterials" value="200"/>
+          <DataItem name="OpOutstandingBalanceDue" value="0"/>
+          <DataItem name="OpPastDueBalance" value="0"/>
+          <DataItem name="OpPatchedRoof" value="200"/>
+          <DataItem name="OpPayeeDisbursement" value="CHRIS TEST"/>
+          <DataItem name="OpPayeeDisbursementAddressLine1" value="4140 Meadow Green Ct"/>
+          <DataItem name="OpPayeeDisbursementAddressLine2" value=""/>
+          <DataItem name="OpPayeeDisbursementCity" value="Mobile"/>
+          <DataItem name="OpPayeeDisbursementState" value="AL"/>
+          <DataItem name="OpPayeeDisbursementZip" value="36619"/>
+          <DataItem name="OpPaymentPlanSetupFee" value="0"/>
+          <DataItem name="OpPaymentPlanType" value="invoice"/>
+          <DataItem name="OpPayor" value="100"/>
+          <DataItem name="OpPayorAddressLine1" value="900 BROAD ST. "/>
+          <DataItem name="OpPayorAddressLine2" value=""/>
+          <DataItem name="OpPayorCity" value="NEWARK"/>
+          <DataItem name="OpPayorName" value="CITI NATIONAL BANK OF NJ"/>
+          <DataItem name="OpPayorOtherAddressLine1" value=""/>
+          <DataItem name="OpPayorOtherAddressLine2" value=""/>
+          <DataItem name="OpPayorOtherCity" value=""/>
+          <DataItem name="OpPayorOtherName" value=""/>
+          <DataItem name="OpPayorOtherState" value=""/>
+          <DataItem name="OpPayorOtherZip" value=""/>
+          <DataItem name="OpPayorState" value="NJ"/>
+          <DataItem name="OpPayorZip" value="07102"/>
+          <DataItem name="OpPendingACHForm" value="200"/>
+          <DataItem name="OpPendingACHFormDueDate" value=""/>
+          <DataItem name="OpPendingAlarmCertificate" value="200"/>
+          <DataItem name="OpPendingAlarmCertificateDueDate" value=""/>
+          <DataItem name="OpPendingApplication" value="100"/>
+          <DataItem name="OpPendingApplicationDueDate" value="06/21/2014"/>
+          <DataItem name="OpPendingAppraisal" value="200"/>
+          <DataItem name="OpPendingAppraisalDueDate" value=""/>
+          <DataItem name="OpPendingDiligenceCertificate" value="200"/>
+          <DataItem name="OpPendingFloodPolicy" value="200"/>
+          <DataItem name="OpPendingFloodPolicyDueDate" value=""/>
+          <DataItem name="OpPendingFuelTankReceipt" value="200"/>
+          <DataItem name="OpPendingFuelTankReceiptDueDate" value=""/>
+          <DataItem name="OpPendingInspection" value="100"/>
+          <DataItem name="OpPendingInspectionDueDate" value="06/27/2014"/>
+          <DataItem name="OpPercentageComplete" value="1.0"/>
+          <DataItem name="OpPercentageExpenses" value="0"/>
+          <DataItem name="OpPermittedIncidentalOccupanciesLiabilityPremium" value="0"/>
+          <DataItem name="OpPersonalInjuryCoverage" value="200"/>
+          <DataItem name="OpPersonalInjuryCoveragePremium" value="0"/>
+          <DataItem name="OpPersonalInjuryIncreaseLimit" value="0"/>
+          <DataItem name="OpPersonalInjuryTotalLimit" value="0"/>
+          <DataItem name="OpPersonalPropertyOtherResidences" value="200"/>
+          <DataItem name="OpPersonalPropertyOtherResidencesAddressCity" value=""/>
+          <DataItem name="OpPersonalPropertyOtherResidencesAddressLine1" value=""/>
+          <DataItem name="OpPersonalPropertyOtherResidencesAddressLine2" value=""/>
+          <DataItem name="OpPersonalPropertyOtherResidencesAddressState" value=""/>
+          <DataItem name="OpPersonalPropertyOtherResidencesAddressZip" value=""/>
+          <DataItem name="OpPersonalPropertyOtherResidencesLimit" value="0"/>
+          <DataItem name="OpPersonalPropertyReplacementCost" value="100"/>
+          <DataItem name="OpPets" value="200"/>
+          <DataItem name="OpPolicyBillPlan" value=""/>
+          <DataItem name="OpPolicyBlanketDeductible" value="0"/>
+          <DataItem name="OpPolicyBlanketLimit" value="0"/>
+          <DataItem name="OpPolicyFee" value="70"/>
+          <DataItem name="OpPolicyFeeProRata" value="0"/>
+          <DataItem name="OpPolicyNumber" value="ALF041544800"/>
+          <DataItem name="OpPolicyTerm" value="1"/>
+          <DataItem name="OpPolicyType" value="HO3"/>
+          <DataItem name="OpPoolFence" value=""/>
+          <DataItem name="OpPoolLiabilityCoverage" value="200"/>
+          <DataItem name="OpPoolLiabilityExclusion" value="100"/>
+          <DataItem name="OpPoolType" value="1"/>
+          <DataItem name="OpPremiumFHCF" value=""/>
+          <DataItem name="OpPreviousDamage" value="200"/>
+          <DataItem name="OpPreviousDamageRoof" value="200"/>
+          <DataItem name="OpPrimeTimeDiscount" value="200"/>
+          <DataItem name="OpPrimeTimePremium" value="0"/>
+          <DataItem name="OpPriorCarrier" value="New Home"/>
+          <DataItem name="OpPriorCarrierNumber" value="1"/>
+          <DataItem name="OpPriorExpirationDate" value=""/>
+          <DataItem name="OpPriorInsurance" value="200"/>
+          <DataItem name="OpProducerCode" value="e00011t"/>
+          <DataItem name="OpProductID" value="CRU4Q-415448"/>
+          <DataItem name="OpProductLabel" value="DP3SL AL"/>
+          <DataItem name="OpProductVersion" value=""/>
+          <DataItem name="OpProgram" value="WIC"/>
+          <DataItem name="OpPropertyAddressLine2" value=""/>
+          <DataItem name="OpPropertyCity" value="MOBILE"/>
+          <DataItem name="OpPropertyCounty" value="MOBILE"/>
+          <DataItem name="OpPropertyForSale" value="200"/>
+          <DataItem name="OpPropertyHazardLocation" value="Moderate"/>
+          <DataItem name="OpPropertyHazardLocationLastUpdated" value="06/06/2014"/>
+          <DataItem name="OpPropertyManagerAddressCity" value=""/>
+          <DataItem name="OpPropertyManagerAddressLatitude" value="999"/>
+          <DataItem name="OpPropertyManagerAddressLine1" value=""/>
+          <DataItem name="OpPropertyManagerAddressLine2" value=""/>
+          <DataItem name="OpPropertyManagerAddressLongitude" value="999"/>
+          <DataItem name="OpPropertyManagerAddressState" value=""/>
+          <DataItem name="OpPropertyManagerAddressZip" value=""/>
+          <DataItem name="OpPropertyManagerDistanceToRisk" value="999"/>
+          <DataItem name="OpPropertyManagerType" value=""/>
+          <DataItem name="OpPropertyOccupancy" value="100"/>
+          <DataItem name="OpPropertyOver5Acres" value="200"/>
+          <DataItem name="OpPropertyState" value="AL"/>
+          <DataItem name="OpPropertyStreetName" value="MEADOW GREEN CT"/>
+          <DataItem name="OpPropertyStreetNumber" value="4140"/>
+          <DataItem name="OpPropertyTerritory" value="1"/>
+          <DataItem name="OpPropertyUsage" value="100"/>
+          <DataItem name="OpPropertyZipCode" value="36619"/>
+          <DataItem name="OpPropertyZipCodePlusFour" value="3676"/>
+          <DataItem name="OpProtectionClass" value="5"/>
+          <DataItem name="OpProtectionClassSplitA" value="5"/>
+          <DataItem name="OpProtectionClassSplitB" value="9"/>
+          <DataItem name="OpQuoteCreatedDate" value="06/05/2014"/>
+          <DataItem name="OpQuoteExpirationDateTime" value="06/06/2015"/>
+          <DataItem name="OpQuoteNumber" value="CRU4Q-415448"/>
+          <DataItem name="OpQuoteOriginationSystem" value="pxClient"/>
+          <DataItem name="OpRatingLastStatusChangeTimestamp" value=""/>
+          <DataItem name="OpReinsuranceLoadFactor" value="0"/>
+          <DataItem name="OpRenovationYearDwelling" value=""/>
+          <DataItem name="OpRenovationYearFurnace" value="2014"/>
+          <DataItem name="OpRenovationYearPlumbing" value="2014"/>
+          <DataItem name="OpRenovationYearWiring" value="2014"/>
+          <DataItem name="OpRented2Weeks" value="200"/>
+          <DataItem name="OpReplacementCostBuilding" value="150785"/>
+          <DataItem name="OpReplacementCostEstimateNumber" value="ESTIMATE-0005508"/>
+          <DataItem name="OpReplacementCostLossSettlementOS" value="200"/>
+          <DataItem name="OpResidenceEmployees" value="200"/>
+          <DataItem name="OpResidenceHeldInTrust" value="200"/>
+          <DataItem name="OpRolloverPolicyNumber" value=""/>
+          <DataItem name="OpRoofAge" value="0"/>
+          <DataItem name="OpRoofCoveringAttachmentType" value=""/>
+          <DataItem name="OpRoofCoveringType" value="502"/>
+          <DataItem name="OpRoofDeckAttachmentType" value=""/>
+          <DataItem name="OpRoofDeckMaterialType" value=""/>
+          <DataItem name="OpRoofEquipment" value="0"/>
+          <DataItem name="OpRoofGeometryType" value="100"/>
+          <DataItem name="OpRoofMaintenance" value="0"/>
+          <DataItem name="OpRoofParapets" value="0"/>
+          <DataItem name="OpRoofWallConnectionType" value=""/>
+          <DataItem name="OpScreenedEnclosureLimit" value=""/>
+          <DataItem name="OpSeasonalOccupancy" value="200"/>
+          <DataItem name="OpSecondaryWaterResistance" value=""/>
+          <DataItem name="OpSecurityWatchman" value=""/>
+          <DataItem name="OpShortTermRental" value="200"/>
+          <DataItem name="OpSingleOccupancy" value="200"/>
+          <DataItem name="OpSinkholeDeductible" value=""/>
+          <DataItem name="OpSinkholeLossCoverage" value=""/>
+          <DataItem name="OpSiteAccess" value="200"/>
+          <DataItem name="OpSkateboardRamp" value="200"/>
+          <DataItem name="OpSolarPanelUsage" value="0"/>
+          <DataItem name="OpSpecialCoverageA" value=""/>
+          <DataItem name="OpSprinklers" value="1"/>
+          <DataItem name="OpSquareFootUnderRoof" value="1600"/>
+          <DataItem name="OpSquareFootUnderRoofFLA" value="1600"/>
+          <DataItem name="OpSquareFootageUnderRoof" value="1600"/>
+          <DataItem name="OpStormSurgeProtection" value="0"/>
+          <DataItem name="OpStructureType" value="100"/>
+          <DataItem name="OpStructuresOverWater" value="200"/>
+          <DataItem name="OpStructuresRentedToOthersLimit" value=""/>
+          <DataItem name="OpStudentOccupancy" value="200"/>
+          <DataItem name="OpSurplusLinesRateStatus" value="PENDING REVIEW"/>
+          <DataItem name="OpSurplusLinesTax" value="95"/>
+          <DataItem name="OpTIV" value="256700"/>
+          <DataItem name="OpTenPayAmountDue" value="501"/>
+          <DataItem name="OpTenPayRemainingBalance" value="1240"/>
+          <DataItem name="OpTenPayTotalBalance" value="1741"/>
+          <DataItem name="OpTerrainExposure" value=""/>
+          <DataItem name="OpTheftCoverage" value="200"/>
+          <DataItem name="OpTier" value="16"/>
+          <DataItem name="OpTotalFees" value="195"/>
+          <DataItem name="OpTotalFloodPolicyLimit" value=""/>
+          <DataItem name="OpTotalOptionalPremium" value="2"/>
+          <DataItem name="OpTotalPremium" value="1677"/>
+          <DataItem name="OpTotalPremiumAdjustment" value="0"/>
+          <DataItem name="OpTownHouseStructureType" value=""/>
+          <DataItem name="OpTrampoline" value="200"/>
+          <DataItem name="OpTrustName" value=""/>
+          <DataItem name="OpTrustee" value=""/>
+          <DataItem name="OpTrusteeOccupancy" value="0"/>
+          <DataItem name="OpTwoPayAmountDue" value="1094"/>
+          <DataItem name="OpTwoPayRemainingBalance" value="599"/>
+          <DataItem name="OpTwoPayTotalBalance" value="1693"/>
+          <DataItem name="OpUndergroundTanks" value="200"/>
+          <DataItem name="OpUndergroundTanksStatus" value="0"/>
+          <DataItem name="OpUniqueFeatures" value="200"/>
+          <DataItem name="OpUnlockedPoolGate" value=""/>
+          <DataItem name="OpVisibleFromRoad" value="100"/>
+          <DataItem name="OpWSApproved" value=""/>
+          <DataItem name="OpWSSeparateFlue" value=""/>
+          <DataItem name="OpWSSupplementalHeatOnly" value=""/>
+          <DataItem name="OpWSVentedChimney" value=""/>
+          <DataItem name="OpWaterBackupCoverage" value="0"/>
+          <DataItem name="OpWaterBackupDeductible" value="0"/>
+          <DataItem name="OpWaterBackupIncreaseLimit" value="0"/>
+          <DataItem name="OpWaterBackupPremium" value="0"/>
+          <DataItem name="OpWaterBackupTotalLimit" value="0"/>
+          <DataItem name="OpWaterVulnerabilityContents" value="0"/>
+          <DataItem name="OpWindBorneDebrisRegion" value=""/>
+          <DataItem name="OpWindDrivenMissileExposure" value="0"/>
+          <DataItem name="OpWindHailDeductible" value="700"/>
+          <DataItem name="OpWindSpeedDesign" value=""/>
+          <DataItem name="OpWindSpeedLocation" value=""/>
+          <DataItem name="OpWindVulnerabilityContents" value="0"/>
+          <DataItem name="OpWindstormDeductibleOption" value="200"/>
+          <DataItem name="OpWoodStove" value="200"/>
+          <DataItem name="OpXWindPolicyCarrier" value=""/>
+          <DataItem name="OpXWindPolicyCoverageA" value=""/>
+          <DataItem name="OpXWindPolicyEffectiveDate" value=""/>
+          <DataItem name="OpXWindPolicyExpirationDate" value=""/>
+          <DataItem name="OpeningProtectionPoints" value="1"/>
+          <DataItem name="OpeningProtectionType" value="1"/>
+          <DataItem name="OpeningProtectionTypeFactorCat" value="1"/>
+          <DataItem name="OpeningProtectionTypeResolved" value=""/>
+          <DataItem name="OptionCoverageB" value="0"/>
+          <DataItem name="OptionCoverageC" value="5000"/>
+          <DataItem name="OptionCoverageD" value="2000"/>
+          <DataItem name="OrderInspectionAccountNumber" value="601200"/>
+          <DataItem name="OtherInsuredLocationOccupancy" value="200"/>
+          <DataItem name="OtherInsuredLocationPremium" value="0"/>
+          <DataItem name="OtherStructures1BusinessType" value=""/>
+          <DataItem name="OtherStructures1Coverage" value=""/>
+          <DataItem name="OtherStructures1IncreasePremium" value="0"/>
+          <DataItem name="OtherStructures1IncreasePremiumCat" value="0"/>
+          <DataItem name="OtherStructures1Occupancy" value=""/>
+          <DataItem name="OtherStructures1Type" value=""/>
+          <DataItem name="OtherStructures2BusinessType" value=""/>
+          <DataItem name="OtherStructures2Coverage" value=""/>
+          <DataItem name="OtherStructures2IncreasePremium" value="0"/>
+          <DataItem name="OtherStructures2IncreasePremiumCat" value="0"/>
+          <DataItem name="OtherStructures2Occupancy" value=""/>
+          <DataItem name="OtherStructures2Type" value=""/>
+          <DataItem name="OtherStructures3BusinessType" value=""/>
+          <DataItem name="OtherStructures3Coverage" value=""/>
+          <DataItem name="OtherStructures3IncreasePremium" value="0"/>
+          <DataItem name="OtherStructures3IncreasePremiumCat" value="0"/>
+          <DataItem name="OtherStructures3Occupancy" value=""/>
+          <DataItem name="OtherStructures3Type" value=""/>
+          <DataItem name="OtherStructuresAdjusted" value="15100.0"/>
+          <DataItem name="OtherStructuresAdjustedCat" value="15100.0"/>
+          <DataItem name="OtherStructuresIncreasedLimitPremium" value="-21"/>
+          <DataItem name="OtherStructuresIncreasedLimitPremiumCat" value="-73"/>
+          <DataItem name="OtherStructuresIndicator" value="0"/>
+          <DataItem name="OtherStructuresRentedToOthersLiabilityPremium" value="0"/>
+          <DataItem name="OutdatedElectricalMaterials" value="200"/>
+          <DataItem name="PMLResolved" value=""/>
+          <DataItem name="PatchedRoof" value="200"/>
+          <DataItem name="Payment1PolicyID" value="ALF041544800"/>
+          <DataItem name="PaymentAddressCity" value="Tallahassee"/>
+          <DataItem name="PaymentAddressLine1" value="PO Box 12999"/>
+          <DataItem name="PaymentAddressLine2" value=""/>
+          <DataItem name="PaymentAddressState" value="FL"/>
+          <DataItem name="PaymentAddressZip" value="32317-2999"/>
+          <DataItem name="PaymentCarrierName" value="Wilshire Insurance Company"/>
+          <DataItem name="PaymentPlanSetupFee" value="10"/>
+          <DataItem name="PaymentPlanType" value="invoice"/>
+          <DataItem name="PercentageExpenses" value="0"/>
+          <DataItem name="PermittedIncidentalOccupancies1LiabilityPremium" value="0"/>
+          <DataItem name="PermittedIncidentalOccupancies2LiabilityPremium" value="0"/>
+          <DataItem name="PermittedIncidentalOccupancies3LiabilityPremium" value="0"/>
+          <DataItem name="PermittedIncidentalOccupanciesLiabilityPremium" value="0"/>
+          <DataItem name="PersonalInjuryCoverage" value="200"/>
+          <DataItem name="PersonalInjuryCoveragePremium" value="0"/>
+          <DataItem name="PersonalPropertyAdjusted" value="75500"/>
+          <DataItem name="PersonalPropertyIncreaseLimitPremium" value="141"/>
+          <DataItem name="PersonalPropertyIncreaseLimitPremiumCat" value="99"/>
+          <DataItem name="PersonalPropertyOtherResidences" value="200"/>
+          <DataItem name="PersonalPropertyOtherResidencesAddressCity" value=""/>
+          <DataItem name="PersonalPropertyOtherResidencesAddressLine1" value=""/>
+          <DataItem name="PersonalPropertyOtherResidencesAddressLine2" value=""/>
+          <DataItem name="PersonalPropertyOtherResidencesAddressState" value=""/>
+          <DataItem name="PersonalPropertyOtherResidencesAddressZip" value=""/>
+          <DataItem name="PersonalPropertyOtherResidencesAdjusted" value="7550.0"/>
+          <DataItem name="PersonalPropertyOtherResidencesLimit" value="0"/>
+          <DataItem name="PersonalPropertyOtherResidencesPremium" value="0"/>
+          <DataItem name="PersonalPropertyReplacementCost" value="100"/>
+          <DataItem name="PersonalPropertyReplacementCostFactorCat" value="1.075"/>
+          <DataItem name="PersonalPropertyReplacementCostPremium" value="193"/>
+          <DataItem name="Pets" value="200"/>
+          <DataItem name="PlumbingMaterial" value=""/>
+          <DataItem name="PolicyBlanketDeductible" value="0"/>
+          <DataItem name="PolicyBlanketLimit" value="0"/>
+          <DataItem name="PolicyFee" value="70"/>
+          <DataItem name="PolicyID" value="ALF041544800"/>
+          <DataItem name="PolicyNumber" value="0"/>
+          <DataItem name="PolicyType" value="HO3"/>
+          <DataItem name="PoolFence" value=""/>
+          <DataItem name="PoolLiabilityCoverage" value="200"/>
+          <DataItem name="PoolType" value="1"/>
+          <DataItem name="PoolWellMaintained" value=""/>
+          <DataItem name="PrecisionCode" value=""/>
+          <DataItem name="PrecisionDesc" value=""/>
+          <DataItem name="PreferredAALDivPremiumRatio" value="0.16"/>
+          <DataItem name="Premium" value="1677"/>
+          <DataItem name="PremiumAdjustmentDataHash" value=""/>
+          <DataItem name="PremiumFHCF" value="0"/>
+          <DataItem name="PreviousDamage" value="200"/>
+          <DataItem name="PreviousDamageRoof" value="200"/>
+          <DataItem name="PrimeTimeDiscount" value="200"/>
+          <DataItem name="PrimeTimeFactor" value="1"/>
+          <DataItem name="PriorCarrierNumber" value="1"/>
+          <DataItem name="PriorCarrierOther" value=""/>
+          <DataItem name="PriorExpirationDate" value=""/>
+          <DataItem name="PriorInsurance" value="200"/>
+          <DataItem name="Product" value="1300"/>
+          <DataItem name="ProfitResolved" value=""/>
+          <DataItem name="PropertyAddressLine2" value=""/>
+          <DataItem name="PropertyAddressPoints" value="1"/>
+          <DataItem name="PropertyCity" value="Mobile"/>
+          <DataItem name="PropertyCityResolved" value=""/>
+          <DataItem name="PropertyCounty" value="Mobile"/>
+          <DataItem name="PropertyCountyResolved" value=""/>
+          <DataItem name="PropertyForSale" value="200"/>
+          <DataItem name="PropertyHazardLocation" value="Moderate"/>
+          <DataItem name="PropertyHazardLocationLastUpdated" value=""/>
+          <DataItem name="PropertyManagerAddressCity" value=""/>
+          <DataItem name="PropertyManagerAddressLatitude" value="999"/>
+          <DataItem name="PropertyManagerAddressLine1" value=""/>
+          <DataItem name="PropertyManagerAddressLine2" value=""/>
+          <DataItem name="PropertyManagerAddressLongitude" value="999"/>
+          <DataItem name="PropertyManagerAddressState" value=""/>
+          <DataItem name="PropertyManagerAddressZip" value=""/>
+          <DataItem name="PropertyManagerDistanceToRisk" value="999"/>
+          <DataItem name="PropertyManagerType" value=""/>
+          <DataItem name="PropertyOccupancy" value="100"/>
+          <DataItem name="PropertyOver5Acres" value="200"/>
+          <DataItem name="PropertyState" value="AL"/>
+          <DataItem name="PropertyStateResolved" value=""/>
+          <DataItem name="PropertyStreetAddress" value="4140 Meadow Green Ct"/>
+          <DataItem name="PropertyStreetName" value="Meadow Green Ct"/>
+          <DataItem name="PropertyStreetNameResolved" value=""/>
+          <DataItem name="PropertyStreetNumber" value="4140"/>
+          <DataItem name="PropertyStreetNumberResolved" value=""/>
+          <DataItem name="PropertyTerritory" value="1"/>
+          <DataItem name="PropertyTerritoryRetrieved" value="1"/>
+          <DataItem name="PropertyUsage" value="100"/>
+          <DataItem name="PropertyZipCode" value="36619"/>
+          <DataItem name="PropertyZipCodePlusFour" value="3676"/>
+          <DataItem name="PropertyZipCodeResolved" value=""/>
+          <DataItem name="PropertyZoneCat" value="13"/>
+          <DataItem name="ProtectionClass" value="5"/>
+          <DataItem name="ProtectionClassSplitA" value="5"/>
+          <DataItem name="ProtectionClassSplitB" value="9"/>
+          <DataItem name="ProtectionConstructionFactor" value="1.03"/>
+          <DataItem name="ProtectionConstructionFactorCat" value="1"/>
+          <DataItem name="ProtectiveDevicesFactor" value="1"/>
+          <DataItem name="ProtectiveDevicesFactorCat" value="1"/>
+          <DataItem name="ProximityFactorCat" value="1.581"/>
+          <DataItem name="ProximityFactorSecondaryCat" value="0.955"/>
+          <DataItem name="QuoteCreatedDate" value="06/05/2014"/>
+          <DataItem name="QuoteCreatedTimeStamp" value="2014-06-05T11:47:41.000-04:00"/>
+          <DataItem name="QuoteOriginationSystem" value="pxClient"/>
+          <DataItem name="RFDCommunityUW" value="1"/>
+          <DataItem name="RFDIDRetrieved" value="RM010970100"/>
+          <DataItem name="ReinsuranceCostCatResolved" value=""/>
+          <DataItem name="ReinsuranceLoadFactor" value="0"/>
+          <DataItem name="RenovatedRoofFactor" value="1"/>
+          <DataItem name="RenovatedRoofFactorCat" value="1"/>
+          <DataItem name="RenovationYearDwelling" value=""/>
+          <DataItem name="RenovationYearFurnace" value="2014"/>
+          <DataItem name="RenovationYearPlumbing" value="2014"/>
+          <DataItem name="RenovationYearWiring" value="2014"/>
+          <DataItem name="Rented2Weeks" value="200"/>
+          <DataItem name="ReplacementCostBuilding" value="150785"/>
+          <DataItem name="ReplacementCostEstimateNumber" value="ESTIMATE-0005508"/>
+          <DataItem name="ReplacementCostLossSettlementOS" value="200"/>
+          <DataItem name="ReplacementCostValidated" value="100"/>
+          <DataItem name="ResidenceBusinessType" value=""/>
+          <DataItem name="ResidenceEmployees" value="200"/>
+          <DataItem name="ResidenceEmployeesPremium" value="0"/>
+          <DataItem name="ResidenceHeldInTrust" value="200"/>
+          <DataItem name="ResolutionRulesetEvaluation" value=""/>
+          <DataItem name="ResolutionRulesetLabel" value=""/>
+          <DataItem name="ResolvedRulesetIds" value=""/>
+          <DataItem name="RespondingFireDistrict" value="Mobile Fd"/>
+          <DataItem name="RespondingFireDistrictRetrieved" value="Mobile Fd"/>
+          <DataItem name="RiskAnalysisIDResolved" value=""/>
+          <DataItem name="RiskCharacteristicChangeIndicator" value="1"/>
+          <DataItem name="RiskCharacteristicPoints" value="9"/>
+          <DataItem name="RoofAge" value="0"/>
+          <DataItem name="RoofAgeAdjusted" value="-12"/>
+          <DataItem name="RoofCoveringAttachmentType" value=""/>
+          <DataItem name="RoofCoveringPoints" value="1"/>
+          <DataItem name="RoofCoveringType" value="502"/>
+          <DataItem name="RoofCoveringTypeFactorCat" value="1"/>
+          <DataItem name="RoofCoveringTypeRating" value=""/>
+          <DataItem name="RoofCoveringTypeResolved" value=""/>
+          <DataItem name="RoofDeckAttachmentType" value=""/>
+          <DataItem name="RoofDeckAttachmentTypeFactorCat" value="0.95"/>
+          <DataItem name="RoofDeckAttachmentTypeResolved" value=""/>
+          <DataItem name="RoofDeckPoints" value="0"/>
+          <DataItem name="RoofEquipment" value="0"/>
+          <DataItem name="RoofGeometryPoints" value="1"/>
+          <DataItem name="RoofGeometryType" value="100"/>
+          <DataItem name="RoofGeometryTypeFactorCat" value="1"/>
+          <DataItem name="RoofGeometryTypeResolved" value=""/>
+          <DataItem name="RoofMaintenance" value="0"/>
+          <DataItem name="RoofParapets" value="0"/>
+          <DataItem name="RoofWallConnectionPoints" value="0"/>
+          <DataItem name="RoofWallConnectionType" value=""/>
+          <DataItem name="RoofWallConnectionTypeFactorCat" value="0.95"/>
+          <DataItem name="RoofWallConnectionTypeResolved" value=""/>
+          <DataItem name="RuleLossAmount10Retrieved" value=""/>
+          <DataItem name="RuleLossAmount1Retrieved" value=""/>
+          <DataItem name="RuleLossAmount2Retrieved" value=""/>
+          <DataItem name="RuleLossAmount3Retrieved" value=""/>
+          <DataItem name="RuleLossAmount4Retrieved" value=""/>
+          <DataItem name="RuleLossAmount5Retrieved" value=""/>
+          <DataItem name="RuleLossAmount6Retrieved" value=""/>
+          <DataItem name="RuleLossAmount7Retrieved" value=""/>
+          <DataItem name="RuleLossAmount8Retrieved" value=""/>
+          <DataItem name="RuleLossAmount9Retrieved" value=""/>
+          <DataItem name="RuleLossClaimStatus1" value=""/>
+          <DataItem name="RuleLossClaimStatus10" value=""/>
+          <DataItem name="RuleLossClaimStatus2" value=""/>
+          <DataItem name="RuleLossClaimStatus3" value=""/>
+          <DataItem name="RuleLossClaimStatus4" value=""/>
+          <DataItem name="RuleLossClaimStatus5" value=""/>
+          <DataItem name="RuleLossClaimStatus6" value=""/>
+          <DataItem name="RuleLossClaimStatus7" value=""/>
+          <DataItem name="RuleLossClaimStatus8" value=""/>
+          <DataItem name="RuleLossClaimStatus9" value=""/>
+          <DataItem name="RuleLossDate10Retrieved" value=""/>
+          <DataItem name="RuleLossDate1Retrieved" value=""/>
+          <DataItem name="RuleLossDate2Retrieved" value=""/>
+          <DataItem name="RuleLossDate3Retrieved" value=""/>
+          <DataItem name="RuleLossDate4Retrieved" value=""/>
+          <DataItem name="RuleLossDate5Retrieved" value=""/>
+          <DataItem name="RuleLossDate6Retrieved" value=""/>
+          <DataItem name="RuleLossDate7Retrieved" value=""/>
+          <DataItem name="RuleLossDate8Retrieved" value=""/>
+          <DataItem name="RuleLossDate9Retrieved" value=""/>
+          <DataItem name="ScoringAnalysisIDResolved" value=""/>
+          <DataItem name="ScreenedPoolEnclosure" value=""/>
+          <DataItem name="SeasonalSecondaryPoints" value="0"/>
+          <DataItem name="ShortTermRental" value="200"/>
+          <DataItem name="SingleOccupancy" value="200"/>
+          <DataItem name="SiteAccess" value="200"/>
+          <DataItem name="SkateboardRamp" value="200"/>
+          <DataItem name="SolarPanelUsage" value="0"/>
+          <DataItem name="SpecialComputerCoverage" value="200"/>
+          <DataItem name="Sprinklers" value="1"/>
+          <DataItem name="SquareFootUnderRoof" value="1600"/>
+          <DataItem name="SquareFootUnderRoofFLA" value="1600"/>
+          <DataItem name="SquareFootUnderRoofResolved" value=""/>
+          <DataItem name="SquareFootUnderRoofRetrieved" value=""/>
+          <DataItem name="SquareFootageBand" value="2"/>
+          <DataItem name="SquareFootageBandResolved" value="1"/>
+          <DataItem name="SquareFootagePoints" value="1"/>
+          <DataItem name="SquareFootageUnderRoof" value="1600"/>
+          <DataItem name="StormSurgeProtection" value="0"/>
+          <DataItem name="StructureType" value="100"/>
+          <DataItem name="StructureTypePoints" value="1"/>
+          <DataItem name="StructureTypeResolved" value=""/>
+          <DataItem name="StructuresRentedToOthers1LiabilityPremium" value="0"/>
+          <DataItem name="StructuresRentedToOthers2LiabilityPremium" value="0"/>
+          <DataItem name="StructuresRentedToOthers3LiabilityPremium" value="0"/>
+          <DataItem name="StudentOccupancy" value="200"/>
+          <DataItem name="SubtotalA" value="200"/>
+          <DataItem name="SubtotalACat" value="26"/>
+          <DataItem name="SubtotalANC" value="200"/>
+          <DataItem name="SubtotalB" value="0"/>
+          <DataItem name="SubtotalBCat" value="0"/>
+          <DataItem name="SubtotalBNC" value="0"/>
+          <DataItem name="SubtotalC" value="0"/>
+          <DataItem name="SubtotalCCat" value="0"/>
+          <DataItem name="SubtotalCNC" value="0"/>
+          <DataItem name="SurplusLinesTax" value="95"/>
+          <DataItem name="TIV" value="256700"/>
+          <DataItem name="TIVPoints" value="0"/>
+          <DataItem name="TenPayAmountDue" value="501"/>
+          <DataItem name="TenPayInstallmentAmount" value="138"/>
+          <DataItem name="TenPayRemainingBalance" value="1240"/>
+          <DataItem name="TenPayTotalBalance" value="1741"/>
+          <DataItem name="TermGrandSubtotalAdjustment" value="0"/>
+          <DataItem name="TermGrandSubtotalAdjustmentUW" value="0"/>
+          <DataItem name="TheftCoverage" value="200"/>
+          <DataItem name="TheftCoveragePremium" value="78"/>
+          <DataItem name="Tier" value="16"/>
+          <DataItem name="TierCat" value="15"/>
+          <DataItem name="TierFactorCat" value="1.213"/>
+          <DataItem name="TierFactorNonCat" value="0.955"/>
+          <DataItem name="TotalBasePremium" value="523"/>
+          <DataItem name="TotalBasePremiumCat" value="733"/>
+          <DataItem name="TotalBasePremiumCatUnadjusted" value="733"/>
+          <DataItem name="TotalBasePremiumNoDiscounts" value="523"/>
+          <DataItem name="TotalBasePremiumUnadjusted" value="523"/>
+          <DataItem name="TotalCredits" value="0.61"/>
+          <DataItem name="TotalCreditsNoDiscounts" value="0.61"/>
+          <DataItem name="TotalFees" value="195"/>
+          <DataItem name="TotalFeesResolved" value=""/>
+          <DataItem name="TotalFloodPolicyLimit" value=""/>
+          <DataItem name="TotalPremium" value="1677"/>
+          <DataItem name="TotalPremiumChangeIndicator" value="0"/>
+          <DataItem name="TotalPremiumDisplayLabel" value="Premium As Low As:"/>
+          <DataItem name="TotalPremiumDisplayValue" value="$1,203"/>
+          <DataItem name="TotalPremiumResolved" value=""/>
+          <DataItem name="TownHouseStructureType" value="100"/>
+          <DataItem name="TownhousePoints" value="0"/>
+          <DataItem name="TownhouseRowhouseFactor" value="1"/>
+          <DataItem name="Trampoline" value="200"/>
+          <DataItem name="TreeProximityExposure" value="200"/>
+          <DataItem name="TrustName" value=""/>
+          <DataItem name="TrustNameProper" value=""/>
+          <DataItem name="Trustee" value=""/>
+          <DataItem name="TrusteeOccupancy" value="0"/>
+          <DataItem name="TwoPayAmountDue" value="1094"/>
+          <DataItem name="TwoPayRemainingBalance" value="599"/>
+          <DataItem name="TwoPayTotalBalance" value="1693"/>
+          <DataItem name="UndergroundTanks" value="200"/>
+          <DataItem name="UndergroundTanksStatus" value="0"/>
+          <DataItem name="UniqueFeatures" value="200"/>
+          <DataItem name="UnlockedPoolGate" value=""/>
+          <DataItem name="UpperKeyFactor" value="1.246"/>
+          <DataItem name="UpperKeyFactorCat" value="1.389"/>
+          <DataItem name="VacancyCoverage" value="200"/>
+          <DataItem name="VacancyCoveragePremium" value="0"/>
+          <DataItem name="VisibleFromRoad" value="100"/>
+          <DataItem name="WSApproved" value=""/>
+          <DataItem name="WSSeparateFlue" value=""/>
+          <DataItem name="WSSupplementalHeatOnly" value=""/>
+          <DataItem name="WSVentedChimney" value=""/>
+          <DataItem name="WaterBackupCoverage" value="0"/>
+          <DataItem name="WaterBackupPremium" value="0"/>
+          <DataItem name="WaterVulnerabilityContents" value="0"/>
+          <DataItem name="WindDrivenMissileExposure" value="0"/>
+          <DataItem name="WindHailDeductible" value="700"/>
+          <DataItem name="WindHailDeductibleFactorCat" value="0.93"/>
+          <DataItem name="WindHailDeductibleFactorNonCat" value="0.74"/>
+          <DataItem name="WindHailDeductiblePoints" value="1"/>
+          <DataItem name="WindHailDeductibleResolved" value=""/>
+          <DataItem name="WindVulnerabilityContents" value="0"/>
+          <DataItem name="WindstormDeductibleOption" value="200"/>
+          <DataItem name="WoodStove" value="200"/>
+          <DataItem name="WoodStovePoints" value="0"/>
+          <DataItem name="XWindPolicyCarrier" value=""/>
+          <DataItem name="XWindPolicyCoverageA" value=""/>
+          <DataItem name="XWindPolicyEffectiveDate" value=""/>
+          <DataItem name="XWindPolicyExpirationDate" value=""/>
+          <DataItem name="YearBuiltFactorCat" value="1"/>
+          <DataItem name="requirewsseparateflue" value=""/>
+          <DataItem name="requirewsventedchimney" value=""/>
+          <DataItem name="txtScoringFrameworkVersionResolved" value=""/>
+        </Interval>
+      </Intervals>
+    </Term>
+  </Terms>
+  <Accounting>
+    <DataItem name="CurrentBalanceDue" value="0.00"/>
+    <DataItem name="CurrentPaymentDue" value="1900-01-01T00:00:00.000-05:00"/>
+    <DataItem name="CurrentPaymentDueDate" value="1900-01-01T00:00:00.000-05:00"/>
+    <DataItem name="EquityDate" value="2014-08-20T00:00:00.000-04:00"/>
+    <DataItem name="FourPayAmountDue" value="798.0"/>
+    <DataItem name="FourPayRemainingBalance" value="889.0"/>
+    <DataItem name="FourPayTotalBalance" value="1687.0"/>
+    <DataItem name="FullPayAmountDue" value="1677.0"/>
+    <DataItem name="FullPayRemainingBalance" value="0.0"/>
+    <DataItem name="FullPayTotalBalance" value="1677.0"/>
+    <DataItem name="InvoiceAmountCurrent" value="0.00"/>
+    <DataItem name="InvoiceAmountNext" value=""/>
+    <DataItem name="InvoiceDateCurrent" value=""/>
+    <DataItem name="InvoiceDateDueCurrent" value=""/>
+    <DataItem name="InvoiceDateDueNext" value="2014-08-09T00:00:00.000-04:00"/>
+    <DataItem name="InvoiceDateNext" value="2014-07-26T00:00:00.000-04:00"/>
+    <DataItem name="InvoiceDueDateCurrent" value=""/>
+    <DataItem name="InvoiceDueDateNext" value="2014-08-09T00:00:00.000-04:00"/>
+    <DataItem name="MinimumPaymentDue" value="0.00"/>
+    <DataItem name="OutstandingBalance" value="1177.00"/>
+    <DataItem name="OutstandingBalanceDue" value="1177.00"/>
+    <DataItem name="PastDueBalance" value="0.00"/>
+    <DataItem name="PastDueDate" value="1900-01-01T00:00:00.000-05:00"/>
+    <DataItem name="PaymentAmountLast" value="0.00"/>
+    <DataItem name="PaymentDateLast" value="2014-07-26T00:00:00.000-04:00"/>
+    <DataItem name="PaymentsSinceInvoice" value="0.00"/>
+    <DataItem name="RenewalsPaid" value="0"/>
+    <DataItem name="TenPayAmountDue" value="501.0"/>
+    <DataItem name="TenPayRemainingBalance" value="1186.0"/>
+    <DataItem name="TenPayTotalBalance" value="1687.0"/>
+    <DataItem name="TwoPayAmountDue" value="1094"/>
+    <DataItem name="TwoPayRemainingBalance" value="593.0"/>
+    <DataItem name="TwoPayTotalBalance" value="1687.0"/>
+    <PaymentPlan type="invoice">
+      <Installments>
+        <Installment amount="1677.0" charges="0.0" dueDate="2014-06-06" feesAndPremiums="1677.0" invoiceDate="2014-05-23" number="1"/>
+      </Installments>
+    </PaymentPlan>
+    <Payor>
+      <DataItem lastUpdated="2014-06-06T09:31:40.559-04:00" lastUpdatedBy="com.cru.apps.pxgateway" name="OpPayor" value="100"/>
+      <DataItem lastUpdated="2014-06-06T09:31:40.559-04:00" lastUpdatedBy="com.cru.apps.pxgateway" name="OpPayorAddressLine1" value="900 BROAD ST. "/>
+      <DataItem lastUpdated="2014-06-06T09:31:40.559-04:00" lastUpdatedBy="com.cru.apps.pxgateway" name="OpPayorAddressLine2" value=""/>
+      <DataItem lastUpdated="2014-06-06T09:31:40.559-04:00" lastUpdatedBy="com.cru.apps.pxgateway" name="OpPayorCity" value="NEWARK"/>
+      <DataItem lastUpdated="2014-06-06T09:31:40.559-04:00" lastUpdatedBy="com.cru.apps.pxgateway" name="OpPayorName" value="CITI NATIONAL BANK OF NJ"/>
+      <DataItem lastUpdated="2014-06-06T09:31:40.559-04:00" lastUpdatedBy="com.cru.apps.pxgateway" name="OpPayorOtherAddressLine1" value=""/>
+      <DataItem lastUpdated="2014-06-06T09:31:40.559-04:00" lastUpdatedBy="com.cru.apps.pxgateway" name="OpPayorOtherAddressLine2" value=""/>
+      <DataItem lastUpdated="2014-06-06T09:31:40.559-04:00" lastUpdatedBy="com.cru.apps.pxgateway" name="OpPayorOtherCity" value=""/>
+      <DataItem lastUpdated="2014-06-06T09:31:40.559-04:00" lastUpdatedBy="com.cru.apps.pxgateway" name="OpPayorOtherName" value=""/>
+      <DataItem lastUpdated="2014-06-06T09:31:40.559-04:00" lastUpdatedBy="com.cru.apps.pxgateway" name="OpPayorOtherState" value=""/>
+      <DataItem lastUpdated="2014-06-06T09:31:40.559-04:00" lastUpdatedBy="com.cru.apps.pxgateway" name="OpPayorOtherZip" value=""/>
+      <DataItem lastUpdated="2014-06-06T09:31:40.559-04:00" lastUpdatedBy="com.cru.apps.pxgateway" name="OpPayorState" value="NJ"/>
+      <DataItem lastUpdated="2014-06-06T09:31:40.559-04:00" lastUpdatedBy="com.cru.apps.pxgateway" name="OpPayorZip" value="07102"/>
+    </Payor>
+    <Payee>
+      <DataItem lastUpdated="2014-06-06T09:31:40.559-04:00" lastUpdatedBy="com.cru.apps.pxgateway" name="OpPayeeDisbursement" value="CHRIS TEST"/>
+      <DataItem lastUpdated="2014-06-06T09:31:40.559-04:00" lastUpdatedBy="com.cru.apps.pxgateway" name="OpPayeeDisbursementAddressLine1" value="4140 Meadow Green Ct"/>
+      <DataItem lastUpdated="2014-06-06T09:31:40.559-04:00" lastUpdatedBy="com.cru.apps.pxgateway" name="OpPayeeDisbursementAddressLine2" value=""/>
+      <DataItem lastUpdated="2014-06-06T09:31:40.559-04:00" lastUpdatedBy="com.cru.apps.pxgateway" name="OpPayeeDisbursementCity" value="Mobile"/>
+      <DataItem lastUpdated="2014-06-06T09:31:40.559-04:00" lastUpdatedBy="com.cru.apps.pxgateway" name="OpPayeeDisbursementState" value="AL"/>
+      <DataItem lastUpdated="2014-06-06T09:31:40.559-04:00" lastUpdatedBy="com.cru.apps.pxgateway" name="OpPayeeDisbursementZip" value="36619"/>
+    </Payee>
+    <Ledger>
+      <LineItem timestamp="2014-06-06T09:31:40.559-04:00" type="POLICY_ISSUED_NEW_BUSINESS" value="1677.0">
+        <Memo>Premium for Bound Policy</Memo>
+        <DataItem name="policyVersion" value="1"/>
+        <DataItem name="appliedDate" value="2014-06-06"/>
+      </LineItem>
+      <LineItem timestamp="2014-07-25T13:54:01.309-04:00" type="PAYMENT" value="-500.0">
+        <Memo/>
+        <DataItem name="Reference" value=""/>
+        <DataItem name="PaymentMethod" value="200"/>
+        <DataItem name="appliedDate" value="2014-07-25T00:00:00.000-04:00"/>
+        <DataItem name="policyVersion" value="2"/>
+      </LineItem>
+    </Ledger>
+  </Accounting>
+  <Meta>
+    <DataItem name="createdTimestamp" value="2014-06-05T11:47:41"/>
+  </Meta>
+  <RelatedItems>
+    <Notes/>
+    <Attachments/>
+    <Tasks/>
+  </RelatedItems>
+  <Documents>
+    <Reference id="CRUALDP_LETTER" lastUpdated="2014-06-06T09:31:35-04:00" location="documents/CRUALDP_LETTER" subtype="CRUALDP_LETTER" type="document">
+      <CachedItem name="label" value="Enrollment Package Letter"/>
+      <CachedItem name="templateID" value="CRUALDP_LETTER"/>
+    </Reference>
+    <Reference id="CRUALDP_QUOTESHEET" lastUpdated="2014-06-06T09:31:35-04:00" location="documents/CRUALDP_QUOTESHEET" subtype="CRUALDP_QUOTESHEET" type="document">
+      <CachedItem name="label" value="Quote Sheet"/>
+      <CachedItem name="templateID" value="CRUALDP_QUOTESHEET"/>
+    </Reference>
+    <Reference id="CRUALDP_APPLICATION" lastUpdated="2014-06-06T09:31:35-04:00" location="documents/CRUALDP_APPLICATION" subtype="CRUALDP_APPLICATION" type="document">
+      <CachedItem name="label" value="Application"/>
+      <CachedItem name="templateID" value="CRUALDP_APPLICATION"/>
+    </Reference>
+    <Reference id="CRUALDP_PROOF" lastUpdated="2014-06-06T09:31:35-04:00" location="documents/CRUALDP_PROOF" subtype="CRUALDP_PROOF" type="document">
+      <CachedItem name="label" value="Proof of Insurance"/>
+      <CachedItem name="templateID" value="CRUALDP_PROOF"/>
+    </Reference>
+    <Reference id="PendingNonrenewInsuredAL-2014-07-25T14-02-45.323-04-00" lastUpdated="2014-07-25T14:02:45.323-04:00" location="documents/PendingNonrenewInsuredAL-2014-07-25T14-02-45.323-04-00" subtype="PendingNonrenewInsuredAL" type="document">
+      <CachedItem name="label" value="Pending Nonrenew Insured AL"/>
+      <CachedItem name="templateID" value="PendingNonrenewInsuredAL"/>
+    </Reference>
+    <Reference id="PendingNonrenewMortgageeAL-2014-07-25T14-02-45.323-04-00" lastUpdated="2014-07-25T14:02:45.323-04:00" location="documents/PendingNonrenewMortgageeAL-2014-07-25T14-02-45.323-04-00" subtype="PendingNonrenewMortgageeAL" type="document">
+      <CachedItem name="label" value="Pending Nonrenew Mortgagee AL"/>
+      <CachedItem name="templateID" value="PendingNonrenewMortgageeAL"/>
+    </Reference>
+    <Reference id="PendingNonrenewMortgagee2AL-2014-07-25T14-02-45.323-04-00" lastUpdated="2014-07-25T14:02:45.323-04:00" location="documents/PendingNonrenewMortgagee2AL-2014-07-25T14-02-45.323-04-00" subtype="PendingNonrenewMortgagee2AL" type="document">
+      <CachedItem name="label" value="Pending Nonrenew Mortgagee2AL"/>
+      <CachedItem name="templateID" value="PendingNonrenewMortgagee2AL"/>
+    </Reference>
+    <Reference id="PendingNonrenewMortgagee3AL-2014-07-25T14-02-45.323-04-00" lastUpdated="2014-07-25T14:02:45.323-04:00" location="documents/PendingNonrenewMortgagee3AL-2014-07-25T14-02-45.323-04-00" subtype="PendingNonrenewMortgagee3AL" type="document">
+      <CachedItem name="label" value="Pending Nonrenew Mortgagee3AL"/>
+      <CachedItem name="templateID" value="PendingNonrenewMortgagee3AL"/>
+    </Reference>
+    <Reference id="PendingNonrenewOtherInterestAL-2014-07-25T14-02-45.323-04-00" lastUpdated="2014-07-25T14:02:45.323-04:00" location="documents/PendingNonrenewOtherInterestAL-2014-07-25T14-02-45.323-04-00" subtype="PendingNonrenewOtherInterestAL" type="document">
+      <CachedItem name="label" value="Pending Nonrenew Other Interest AL"/>
+      <CachedItem name="templateID" value="PendingNonrenewOtherInterestAL"/>
+    </Reference>
+    <Reference id="PendingNonrenewOtherInterest2AL-2014-07-25T14-02-45.323-04-00" lastUpdated="2014-07-25T14:02:45.323-04:00" location="documents/PendingNonrenewOtherInterest2AL-2014-07-25T14-02-45.323-04-00" subtype="PendingNonrenewOtherInterest2AL" type="document">
+      <CachedItem name="label" value="Pending Nonrenew Other Interest2AL"/>
+      <CachedItem name="templateID" value="PendingNonrenewOtherInterest2AL"/>
+    </Reference>
+    <Reference id="PendingNonrenewOtherInterest3AL-2014-07-25T14-02-45.323-04-00" lastUpdated="2014-07-25T14:02:45.323-04:00" location="documents/PendingNonrenewOtherInterest3AL-2014-07-25T14-02-45.323-04-00" subtype="PendingNonrenewOtherInterest3AL" type="document">
+      <CachedItem name="label" value="Pending Nonrenew Other Interest3AL"/>
+      <CachedItem name="templateID" value="PendingNonrenewOtherInterest3AL"/>
+    </Reference>
+  </Documents>
+  <Claims/>
+  <RiskAnalyses>
+    <Reference id="1814713" location="https://stage-services.icg360.org/cxserver/api/rest/v3/risks/1805975/analyses/1814713" type="RiskAnalysis">
+      <CachedItem name="AnalysisPackageId" value="86"/>
+      <CachedItem name="AnalysisRunDate" value="2014-06-06T09:35:35-04:00"/>
+      <CachedItem name="AnalysisRunUser" value="com.cru.apps.pxpower"/>
+      <CachedItem name="ScoringScenarioId" value="116"/>
+    </Reference>
+  </RiskAnalyses>
+  <Inspections/>
+  <Profiles>
+    <Reference id="5390911dc295a" location="https://stage-sagesure-svc.icg360.org/cru-4/ixprofiler/api/rest/v2/profiles/5390911dc295a" type="Profile">
+      <CachedItem name="createdTimestamp" value="2014-06-05T11:47:59.033-04:00"/>
+      <CachedItem name="templateName" value="RMALwithRMS"/>
+    </Reference>
+    <Reference id="5390bc3165267" location="https://stage-sagesure-svc.icg360.org/cru-4/ixprofiler/api/rest/v2/profiles/5390bc3165267" type="Profile">
+      <CachedItem name="createdTimestamp" value="2014-06-05T14:51:49.331-04:00"/>
+      <CachedItem name="templateName" value="RMALwithRMS"/>
+    </Reference>
+    <Reference id="5390bc3165267" location="https://stage-sagesure-svc.icg360.org/cru-4/ixprofiler/api/rest/v2/profiles/5390bc3165267" type="Profile">
+      <CachedItem name="createdTimestamp" value="2014-06-05T14:51:49.331-04:00"/>
+      <CachedItem name="templateName" value="RMALwithRMS"/>
+    </Reference>
+    <Reference id="5390e1d0321ef" location="https://stage-sagesure-svc.icg360.org/cru-4/ixprofiler/api/rest/v2/profiles/5390e1d0321ef" type="Profile">
+      <CachedItem name="createdTimestamp" value="2014-06-05T17:32:18.783-04:00"/>
+      <CachedItem name="templateName" value="RMALwithRMS"/>
+    </Reference>
+    <Reference id="5390e1dd7089f" location="https://stage-sagesure-svc.icg360.org/cru-4/ixprofiler/api/rest/v2/profiles/5390e1dd7089f" type="Profile">
+      <CachedItem name="createdTimestamp" value="2014-06-05T17:32:30.391-04:00"/>
+      <CachedItem name="templateName" value="RMALwithRMS"/>
+    </Reference>
+    <Reference id="53910f222d093" location="https://stage-sagesure-svc.icg360.org/cru-4/ixprofiler/api/rest/v2/profiles/53910f222d093" type="Profile">
+      <CachedItem name="createdTimestamp" value="2014-06-05T20:45:35.758-04:00"/>
+      <CachedItem name="templateName" value="FICO"/>
+    </Reference>
+    <Reference id="53910f60a7544" location="https://stage-sagesure-svc.icg360.org/cru-4/ixprofiler/api/rest/v2/profiles/53910f60a7544" type="Profile">
+      <CachedItem name="createdTimestamp" value="2014-06-05T20:46:41.091-04:00"/>
+      <CachedItem name="templateName" value="MSB"/>
+    </Reference>
+    <Reference id="5391c24e3b007" location="https://stage-sagesure-svc.icg360.org/cru-4/ixprofiler/api/rest/v2/profiles/5391c24e3b007" type="Profile">
+      <CachedItem name="createdTimestamp" value="2014-06-06T09:30:02.087-04:00"/>
+      <CachedItem name="templateName" value="Mortgagees"/>
+    </Reference>
+    <Reference id="5391c2727c2ee" location="https://stage-sagesure-svc.icg360.org/cru-4/ixprofiler/api/rest/v2/profiles/5391c2727c2ee" type="Profile">
+      <CachedItem name="createdTimestamp" value="2014-06-06T09:30:42.422-04:00"/>
+      <CachedItem name="templateName" value="LossHistory"/>
+    </Reference>
+  </Profiles>
+  <WorkflowJobs>
+    <Reference id="3A85460D-3BC3-46E0-9438-A4F9827014A2" location="https://stage-sagesure-svc.icg360.org/cru-4/pxpower/api/rest/v1/jobs/3A85460D-3BC3-46E0-9438-A4F9827014A2" type="WorkflowJob">
+      <CachedItem name="WorkflowId" value="Policy_Risk_Score"/>
+    </Reference>
+    <Reference id="189CE3A0-AB6C-4937-8C25-8C6919AC2F65" location="https://stage-sagesure-svc.icg360.org/cru-4/pxpower/api/rest/v1/jobs/189CE3A0-AB6C-4937-8C25-8C6919AC2F65" type="WorkflowJob">
+      <CachedItem name="createdTimestamp" value="2014-06-06T09:31:16Z"/>
+      <CachedItem name="WorkflowId" value="PostBind_MSB"/>
+    </Reference>
+  </WorkflowJobs>
+  <OtherReferences>
+    <Reference id="BAF07DE2-7EED-E311-85FB-00155D6F5A1B" location="https://stage-sagesure-svc.icg360.org/cru-4/mxserver/api/rest/v1/registrations/BAF07DE2-7EED-E311-85FB-00155D6F5A1B" type="Registration">
+      <CachedItem name="type" value="NewPolicy"/>
+      <CachedItem name="state" value="PENDING"/>
+      <CachedItem name="workflowMessage" value="Registering new policy with mxServer."/>
+      <CachedItem name="createdTimestamp" value="2014-06-06T09:31:40.559-04:00"/>
+    </Reference>
+    <Reference id="3F6259A7-2414-E411-85FB-00155D6F5A1B" location="https://stage-sagesure-svc.icg360.org/cru-4/mxserver/api/rest/v1/registrations/3F6259A7-2414-E411-85FB-00155D6F5A1B" type="Registration">
+      <CachedItem name="type" value="NewPolicy"/>
+      <CachedItem name="state" value="PENDING"/>
+      <CachedItem name="workflowMessage" value="posted by Policy Central IPM Module"/>
+      <CachedItem name="createdTimestamp" value="2014-07-25T13:54:01.309-04:00"/>
+      <CachedItem name="PostDate" value="2014-07-25T13:54:01.309-04:00"/>
+      <CachedItem name="EffectiveDate" value="2014-07-25"/>
+      <CachedItem name="AppliedDate" value="2014-07-25"/>
+      <CachedItem name="policyVersion" value="2"/>
+    </Reference>
+    <Reference id="C7430FDE-2514-E411-85FB-00155D6F5A1B" location="https://stage-sagesure-svc.icg360.org/cru-4/mxserver/api/rest/v1/registrations/C7430FDE-2514-E411-85FB-00155D6F5A1B" type="Registration">
+      <CachedItem name="type" value="NewPolicy"/>
+      <CachedItem name="state" value="PENDING"/>
+      <CachedItem name="workflowMessage" value="TransactionRequest: PENDING_NON_RENEWAL"/>
+      <CachedItem name="createdTimestamp" value="2014-07-25T14:02:45.119-04:00"/>
+      <CachedItem name="PostDate" value="2014-07-25T14:02:45.119-04:00"/>
+      <CachedItem name="EffectiveDate" value="2015-06-06"/>
+      <CachedItem name="AppliedDate" value="2014-07-25"/>
+      <CachedItem name="ReasonCode" value="7"/>
+      <CachedItem name="policyVersion" value="3"/>
+    </Reference>
+    <Reference id="F82EFF3A-2614-E411-85FB-00155D6F5A1B" location="https://stage-sagesure-svc.icg360.org/cru-4/mxserver/api/rest/v1/registrations/F82EFF3A-2614-E411-85FB-00155D6F5A1B" type="Registration">
+      <CachedItem name="type" value="NewPolicy"/>
+      <CachedItem name="state" value="PENDING"/>
+      <CachedItem name="workflowMessage" value="TransactionRequest: NON_RENEWAL"/>
+      <CachedItem name="createdTimestamp" value="2014-07-25T14:05:27.814-04:00"/>
+      <CachedItem name="PostDate" value="2014-07-25T14:05:27.814-04:00"/>
+      <CachedItem name="EffectiveDate" value="2015-06-06"/>
+      <CachedItem name="AppliedDate" value="2014-07-25"/>
+      <CachedItem name="ReasonCode" value="7"/>
+      <CachedItem name="policyVersion" value="4"/>
+    </Reference>
+    <Reference id="CRU4Q-R97112" location="https://stage-sagesure-svc.icg360.org/cru-4/pxgateway/api/rest/v2/registrations/CRU4Q-R97112" type="Registration">
+      <CachedItem name="adminUrl" value="https://stage-sagesure-svc.icg360.org/cru-4/pxgateway/api/rest/v2/registrations/CRU4Q-R97112"/>
+      <CachedItem name="createdTimestamp" value="2014-06-06T09:31:43.393-04:00"/>
+      <CachedItem name="destinationRegistrationId" value="BAF07DE2-7EED-E311-85FB-00155D6F5A1B"/>
+      <CachedItem name="messagesError" value="null"/>
+      <CachedItem name="messagesInfo" value="null"/>
+      <CachedItem name="messagesWarning" value="null"/>
+      <CachedItem name="state" value="PENDING"/>
+      <CachedItem name="status" value="Accepted"/>
+      <CachedItem name="type" value="NewPolicy"/>
+      <CachedItem name="updatedTimestamp" value="2014-06-06T09:31:55.506-04:00"/>
+      <CachedItem name="workflowMessage" value="Accepted by vendor"/>
+    </Reference>
+  </OtherReferences>
+  <EventHistory>
+    <Event timeStamp="2014-06-06T09:31:00-04:00" type="Bound">
+      <Initiator type="user">andyL</Initiator>
+      <Handler type="system">pxserver</Handler>
+      <DataItem name="producerCode" value="e00011t"/>
+      <DataItem name="percentageComplete" value="1.0"/>
+      <DataItem name="policyVersion" value="1"/>
+    </Event>
+    <Event timeStamp="2014-07-25T13:54:01.309-04:00" type="Payment">
+      <Initiator type="user">ctn@ics360.com</Initiator>
+      <Handler type="system">mxServer</Handler>
+      <DataItem name="AppliedDate" value="2014-07-25T00:00:00.000-04:00"/>
+      <DataItem name="AppliedDate" value="2014-07-25"/>
+      <DataItem name="EffectiveDate" value="2014-07-25"/>
+      <DataItem name="PaymentAmount" value="500"/>
+      <DataItem name="PaymentBatch" value=""/>
+      <DataItem name="PaymentMethod" value="200"/>
+      <DataItem name="PaymentReference" value=""/>
+      <DataItem name="policyVersion" value="2"/>
+      <DataItem name="PostDate" value="2014-07-25T13:54:01.309-04:00"/>
+      <DataItem name="PostmarkDate" value=""/>
+    </Event>
+    <Event timeStamp="2014-07-25T14:02:45.119-04:00" type="PendingNonRenewal">
+      <Initiator type="user">ctn@ics360.com</Initiator>
+      <Handler type="system">mxServer 1.34.0; Windows Server 2008 R2 6.1; Sun Microsystems Inc. 1.6.0_45</Handler>
+      <Description/>
+      <DataItem name="AppliedDate" value="2014-07-25"/>
+      <DataItem name="EffectiveDate" value="2015-06-06"/>
+      <DataItem name="policyVersion" value="3"/>
+      <DataItem name="PostDate" value="2014-07-25T14:02:45.119-04:00"/>
+      <DataItem name="reasonCode" value="7"/>
+      <DataItem name="reasonCodeLabel" value="Increase In Liability Hazards Beyond What Is Normally Accepted"/>
+    </Event>
+    <Event timeStamp="2014-07-25T14:05:27.814-04:00" type="NonRenewal">
+      <Initiator type="user">ctn@ics360.com</Initiator>
+      <Handler type="system">mxServer 1.34.0; Windows Server 2008 R2 6.1; Sun Microsystems Inc. 1.6.0_45</Handler>
+      <Description/>
+      <DataItem name="AppliedDate" value="2014-07-25"/>
+      <DataItem name="EffectiveDate" value="2015-06-06"/>
+      <DataItem name="policyVersion" value="4"/>
+      <DataItem name="PostDate" value="2014-07-25T14:05:27.814-04:00"/>
+      <DataItem name="reasonCode" value="7"/>
+      <DataItem name="reasonCodeLabel" value="Increase In Liability Hazards Beyond What Is Normally Accepted"/>
+    </Event>
+  </EventHistory>
+  <RevisionHistory>
+    <Revision timeStamp="2014-06-06T09:31:40.559-04:00" type="Created" version="1">
+      <Initiator type="user">com.cru.apps.pxgateway</Initiator>
+      <Handler type="system">mxServer 1.34.0; Windows Server 2008 R2 6.1; Sun Microsystems Inc. 1.6.0_45</Handler>
+      <Description>Registering new policy with mxServer.</Description>
+    </Revision>
+    <Revision timeStamp="2014-07-25T13:54:01.309-04:00" type="Changed" version="2">
+      <Initiator type="user">ctn@ics360.com</Initiator>
+      <Handler type="system">mxServer 1.34.0; Windows Server 2008 R2 6.1; Sun Microsystems Inc. 1.6.0_45</Handler>
+      <Description>posted by Policy Central IPM Module</Description>
+    </Revision>
+    <Revision timeStamp="2014-07-25T14:02:45.119-04:00" type="PendingNonRenewal" version="3">
+      <Initiator type="user">ctn@ics360.com</Initiator>
+      <Handler type="system">mxServer 1.34.0; Windows Server 2008 R2 6.1; Sun Microsystems Inc. 1.6.0_45</Handler>
+      <Description/>
+    </Revision>
+    <Revision timeStamp="2014-07-25T14:05:27.814-04:00" type="NonRenewal" version="4">
+      <Initiator type="user">ctn@ics360.com</Initiator>
+      <Handler type="system">mxServer 1.34.0; Windows Server 2008 R2 6.1; Sun Microsystems Inc. 1.6.0_45</Handler>
+      <Description/>
+    </Revision>
+  </RevisionHistory>
+</InsurancePolicy>

@@ -1,11 +1,6 @@
 define [
-  'jquery', 
-  'underscore',
-  'backbone',
-  'mustache',
-  'modules/Search/SearchView',
-  'loader'
-], ($, _, Backbone, Mustache, SearchView, CanvasLoader) ->
+  'modules/Search/SearchView'
+], (SearchView) ->
 
   class SearchModule
 
@@ -18,25 +13,17 @@ define [
     # @param `params` _Object_ Applications specific params
     #
     constructor : (@view, @app, @params) ->
-      # Bind events
-      _.extend @, Backbone.Events    
+      _.extend @, Backbone.Events
      
     # Any bootstrapping should happen here. When done remove the loader image.
     # view.remove_loader will callback Module.render()
     #
-    load: () ->
-      if @view.options.controller.SEARCH == undefined
-        @view.options.controller.setup_search_storage()
-      @callback_delay 200, =>
-        @view.remove_loader(true)
-        # Make sure the controller can handle multiple search data
+    load: ->
+      setTimeout (=> @view.remove_loader true), 200
         
-
     # Do whatever rendering animation needs to happen here
-    render : () ->
-      @search_view = new SearchView({view : @view, module : @})
-      @search_view.render()
-
-    # Simple delay fund if we need it.
-    callback_delay : (ms, func) ->
-      setTimeout func, ms
+    render : ->
+      @search_view = new SearchView
+        el         : @view.$el
+        controller : @view.controller
+        module     : @

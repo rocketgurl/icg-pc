@@ -1,3 +1,28 @@
+### 3.0.3 - Jan 27, 2015
+
+**Non-Renewals workflow**
+
+- Non-renewed policy has the option to Reinstate
+- Non-renewed policy does not have the option to Set Pending Non-Renew
+- Non-Renewal Workflow matches the documented outline
+
+**New Business and Underwriting Referral Queues**
+
+- Ability to Refresh each list
+- Manage Referral Assignees is in Underwriting navigation
+
+**QuickView - Property and Coverage**
+
+- New QuickView page with Property and Coverage information
+
+**Search Results to include Carrier ID**
+
+- A new column should be added to the search results that includes CarrierID
+
+**Underwriting Referrals to include Carrier ID**
+
+- A new column should be added to the queue for CarrierID
+
 ### 3.0.2 - Jan 13, 2015
 
 - [ICS-3046](https://icg360.atlassian.net/browse/ICS-3046)

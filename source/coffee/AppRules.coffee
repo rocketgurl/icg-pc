@@ -52,7 +52,7 @@ define [
     get_modules : (app_name) ->
       switch app_name
         when 'policies'
-          [@policy_search, @referral_queue, @home]
+          [@policy_search, @renewalreview, @referral_queue, @home]
         when 'renewalreview'
           [@renewalreview]
         when 'rulesets'
@@ -87,7 +87,7 @@ define [
       app :
         app       : 'renewalreview'
         app_label : 'Renewal Underwriting'
-        tab       : '#tpl-workspace-tab'
+        tab       : '#tpl-workspace-tab-blank'
         params    :
           renewalreviewrequired : true
 
