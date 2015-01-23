@@ -66,6 +66,8 @@ define [
       102 : 'Three family dwelling'
       103 : 'Four family dwelling'
       105 : 'Single Family (attached)/Row or Townhouse'
+      200 : 'Condo'
+      300 : 'Apartment'
 
     initialize : (options) ->
       @POLICY = options.policy
