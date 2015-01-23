@@ -46,7 +46,7 @@ define [
       502 : 'Architectural Shingles'
       600 : 'Concrete/Clay Tiles'
       700 : 'Wood Shingles'
-      710 : 'Wook Shake'
+      701 : 'Wood Shake'
       800 : 'Rubber/Bituminous'
 
     enumsRoofGeometryType :
