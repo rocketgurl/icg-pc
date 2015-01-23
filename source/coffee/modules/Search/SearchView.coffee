@@ -9,8 +9,6 @@ define [
 
   class SearchView extends BaseView
 
-    sort_cache : {} # Store sorting states
-
     events :
       'change input[name=search-query]'   : 'updateQuery'
       'change .search-pagination-page'    : 'updatePage'
@@ -18,7 +16,7 @@ define [
       'change .search-pagination-perpage' : 'updatePerPage'
       'change .query-type'                : 'updatePolicyState'
       'submit .filters form'              : 'search'
-      'click .search-sort-link'           : 'sortBy'
+      'click .search-sort-link'           : 'searchSorted'
 
     initialize : (options) ->
       _.bindAll(this
@@ -84,6 +82,21 @@ define [
       e.preventDefault() if _.isObject e
       @collection.fetch()
 
+    searchSorted : (e) ->
+      e.preventDefault()
+      $el = $(e.currentTarget)
+      $sortIcon = $el.find '.glyphicon'
+      sortProp = $el.attr 'href'
+
+      @collection.sortBy sortProp
+      @search()
+
+      @removeIndicators()
+      if @collection.sortDir is 'asc'
+        $sortIcon.addClass 'glyphicon-chevron-up'
+      else
+        $sortIcon.addClass 'glyphicon-chevron-down'
+
     updatePage : (e) ->
       page = +e.currentTarget.value
       if page > 0
@@ -127,45 +140,11 @@ define [
         else
           "<option value=\"#{page}\">#{page}</option>"
 
-    # Assemble search options from various inputs and explicitly
-    # passed values (options) to return as an object for @fetch
-    #
-    get_search_options : (options) ->
-      perpage               = @$el.find('.search-pagination-perpage').val() ? 15
-      page                  = @$el.find('.search-pagination-page').val() ? 1
-      policystate           = @$el.find('.query-type').val() ? ''
-      q                     = @$el.find('input[type=search]').val() ? ''
-
-      query =
-        q           : _.trim q
-        perpage     : perpage
-        page        : page
-        policystate : policystate
-
-      if @renewal_review?
-        if query.q? && query.q != ''
-          delete query.renewalreviewrequired
-        else
-          query.renewalreviewrequired = true
-
-      # Combine any sorting directives with the query
-      if !_.isEmpty(@sort_cache)
-        query[key] = value for key, value of @sort_cache
-
-      # We have to be explicit to save IE from itself
-      if options?
-        query[key] = value for key, value of options
-
-      # Make sure we keep track of all params
-      @params[key] = value for key, value of query
-
-      query
-
     callbackRequest : (collection) ->
-      @loader_ui true
+      @toggleLoader true
 
     callbackSuccess : (collection) ->
-      @loader_ui false
+      @toggleLoader false
 
       # check for empty response
       if collection.length is 0
@@ -177,71 +156,31 @@ define [
       @module.trigger 'workspace.rendered'
 
     callbackError : (collection, resp) ->
-      @loader_ui false
+      @toggleLoader false
       @Amplify.publish @cid, 'warning', "There was a problem with this request: #{resp.status} - #{resp.statusText}"
 
     callbackInvalid : (collection, msg) ->
-      @loader_ui false
+      @toggleLoader false
       @Amplify.publish @cid, 'notice', msg, 30000
 
     # Place a loading animation on top of the content
-    loader_ui : (bool) ->
+    toggleLoader : (bool) ->
       if bool and !@loader?
-        if $('html').hasClass('lt-ie9') is false
-          @loader = @Helpers.loader("search-spinner-#{@cid}", 100, '#ffffff')
-          @loader.setDensity(70)
-          @loader.setFPS(48)
+        @loader = @Helpers.loader("search-spinner-#{@cid}", 100, '#ffffff')
+        @loader.setDensity(70)
+        @loader.setFPS(48)
         $("#search-loader-#{@cid}").show()
         @favicon.start()
       else
-        if @loader? and $('html').hasClass('lt-ie9') is false
-          @loader.kill()
-          @loader = null
+        @loader.kill()
+        @loader = null
         $("#search-loader-#{@cid}").hide()
         @favicon.stop()
 
-    # Handling sorting state on columns
-    #
-    # @param _options_ Object : setting silent prevent fetch()
-    #
-    sortBy : (e, options) ->
-
-      options ?= {}
-
-      e.preventDefault()
-      $el = $(e.currentTarget)
-      
-      @sort_cache =
-        'sort'    : $el.attr('href')
-        'sortdir' : $el.data('dir')
-
-      if !_.has(options, 'silent')
-        @fetch(@get_search_options(@sort_cache))
-
-      @remove_indicators() # clear the decks!
-
-      if $el.data('dir') is 'asc'
-        $el.data('dir', 'desc')
-        @swap_indicator $el, '&#9650;'
-      else
-        $el.data('dir', 'asc')
-        @swap_indicator $el, '&#9660;'
-
-    # Switch sorting indicator symbol
-    swap_indicator : (el, char) ->
-      text = el.html()
-      reg = /▲|▼/gi
-      if text.match('▲') or text.match('▼')
-        text = text.replace(reg, char)
-        el.html(text)
-      else
-        el.html(text + " #{char}")
-
     # clear all sorting indicators
-    remove_indicators : ->
-      $('.search-sort-link').each (index, el) ->
-        el = $(el)
-        reg = /▲|▼/gi
-        el.html(el.html().replace(reg, ''))
-
+    removeIndicators : ->
+      @$('.search-sort-link').each ->
+        $icon = $(this).find '.glyphicon'
+        $icon.removeClass 'glyphicon-chevron-up'
+        $icon.removeClass 'glyphicon-chevron-down'
 
