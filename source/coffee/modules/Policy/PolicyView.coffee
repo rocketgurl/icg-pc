@@ -315,7 +315,7 @@ define [
 
       opts =
         allowScriptAccess : 'always'
-        wmode : 'window'
+        wmode : 'opaque'
 
       swfobject.embedSWF(
         @services.pxclient
