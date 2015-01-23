@@ -32,6 +32,9 @@ header.module-referrals {
 }
 
 .table.module-referrals {
+  > thead > tr > th {
+    vertical-align: top;
+  }
   tbody {
     > tr { cursor: pointer; }
   }

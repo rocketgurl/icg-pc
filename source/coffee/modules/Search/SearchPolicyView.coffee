@@ -10,13 +10,9 @@ define [
     events :
       "click" : "open_policy"
 
-    # We need to brute force the View's container to the
-    # WorkspaceCanvasView's el
     initialize : (options) ->
-      @data   = options.model.attributes
-      @parent = options.container.$el
-      @target = @parent.find('table.module-search tbody')
-      @module = options.model.collection.container.module
+      @data       = options.model.toJSON()
+      @controller = options.controller
       @el.id  = "#{@data.identifiers.policyId}-#{@cid}"
       @render()
 
@@ -41,7 +37,8 @@ define [
         @data.insured.Address += "#{@data.insured.address.city}, "
 
       @$el.html @Mustache.render tpl_search_policy_row, @data
-      @target.append @$el
+      @options.$target_el.append @$el
+      this
 
     # Remove view and deref what we can for GC
     destroy : ->
@@ -63,5 +60,5 @@ define [
         url     : identifiers.quoteNumber
         label : "#{last_name} #{policyLabel}"
 
-      @module.view.options.controller.launch_module 'policyview', params
-      @module.view.options.controller.Router.append_module 'policyview', params
+      @controller.launch_module 'policyview', params
+      @controller.Router.append_module 'policyview', params
