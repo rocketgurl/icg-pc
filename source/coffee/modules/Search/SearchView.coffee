@@ -167,13 +167,14 @@ define [
     toggleLoader : (bool) ->
       if bool and !@loader?
         @loader = @Helpers.loader("search-spinner-#{@cid}", 100, '#ffffff')
-        @loader.setDensity(70)
-        @loader.setFPS(48)
+        @loader.setDensity 70
+        @loader.setFPS 48
         $("#search-loader-#{@cid}").show()
         @favicon.start()
       else
-        @loader.kill()
-        @loader = null
+        if @loader?
+          @loader.kill()
+          @loader = null
         $("#search-loader-#{@cid}").hide()
         @favicon.stop()
 

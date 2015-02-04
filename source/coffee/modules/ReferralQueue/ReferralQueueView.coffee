@@ -25,9 +25,10 @@ define [
         'tasksError'
         )
 
-      @MODULE      = options.module || false
-      @COLLECTION  = options.collection || false
-      @PARENT_VIEW = options.view || false
+      @MODULE                = options.module || false
+      @COLLECTION            = options.collection || false
+      @COLLECTION.controller = options.module.controller
+      @PARENT_VIEW           = options.view || false
 
       # When the collection is populated, generate the views
       @COLLECTION.on 'update', => @toggleLoader true
@@ -52,7 +53,7 @@ define [
       @$('.launch-manage-assignees').removeClass('disabled').prop('disabled', false)
 
       # Throw up our loading image until the tasks come in
-      @toggleLoader(true)
+      @toggleLoader true
 
       this
 
@@ -174,13 +175,12 @@ define [
         return false
 
       if bool and !@loader?
-        if $('html').hasClass('lt-ie9') is false
-          @loader = Helpers.loader("referrals-spinner-#{@cid}", 100, '#ffffff')
-          @loader.setDensity(70)
-          @loader.setFPS(48)
+        @loader = Helpers.loader("referrals-spinner-#{@cid}", 100, '#ffffff')
+        @loader.setDensity 70
+        @loader.setFPS 48
         $("#referrals-loader-#{@cid}").show()
       else
-        if @loader? and $('html').hasClass('lt-ie9') is false
+        if @loader?
           @loader.kill()
           @loader = null
         $("#referrals-loader-#{@cid}").hide()
