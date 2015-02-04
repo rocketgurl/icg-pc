@@ -17,11 +17,11 @@
 
       #policy-history { display: none; }
     }
-    article { left: 30px; }
+    > article { left: 30px; }
   }
 
-  nav,
-  article {
+  > nav,
+  > article {
     height: inherit;
     @include transition(left 500ms);
   }
@@ -207,7 +207,7 @@
     }
   }
 
-  article {
+  > article {
     position: absolute;
     top: 0;
     right: 0;
