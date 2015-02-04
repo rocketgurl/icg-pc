@@ -54,3 +54,8 @@
 .btn-primary {
   @include button-background($btn-primary-background-highlight, $btn-primary-background, #fff, 0 -1px 0 rgba(0, 0, 0, 0.85));
 }
+
+.btn-danger {
+  @include button-background($btn-danger-background-highlight, $btn-danger-background, #fff, 0 -1px 0 rgba(0, 0, 0, 0.85));
+}
+
