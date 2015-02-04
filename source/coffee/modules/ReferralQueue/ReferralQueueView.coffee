@@ -17,6 +17,7 @@ define [
       'click .referrals-switch a'            : 'updateOwner'
       'click .referrals-sort-link'           : 'sortTasks'
       'click .referrals-refresh'             : 'refreshTasks'
+      'click .abort'                         : 'abortRequest'
 
     initialize : (options) ->
       _.bindAll(this
@@ -87,14 +88,21 @@ define [
       @toggleLoader true
       @COLLECTION.getReferrals()
 
+    abortRequest : ->
+      if jqXHR = @COLLECTION.jqXHR
+        jqXHR.abort()
+
     # Handle server errors from the Tasks Collection
     #
     # @param `collection` _Object_ ReferralTaskCollection
     # @param `response` _jqXHR_ Response object
     #
     tasksError : (collection, response) ->
-      @toggleLoader()
-      @Amplify.publish @cid, 'warning', "Could not load referrals: #{response.status} - #{response.statusText}"
+      @toggleLoader false
+      if response?.statusText is 'abort'
+        @Amplify.publish @cid, 'notice', "Request aborted.", 3000
+      else
+        @Amplify.publish @cid, 'warning', "Could not load referrals: #{response.status} - #{response.statusText}"
 
     # Toggle the owner buttons on the UI and trigger collection.getReferrals()
     updateOwner : (e) ->
