@@ -385,15 +385,16 @@ define [
       @flash_loaded = true # set state
 
     show_quickview : ->
-      if @policy_qv_container.html() == ''
-        pqv = new PolicyQuickView({
-            controller : @controller
-            policy     : @model
-            el         : @policy_qv_container[0]
-          })
-        pqv.render()
+      if _.isObject @model.get 'json'
+        if @policy_qv_container.html() == ''
+          pqv = new PolicyQuickView({
+              controller : @controller
+              policy     : @model
+              el         : @policy_qv_container[0]
+            })
+          pqv.render()
 
-      @show_element @policy_qv_container
+        @show_element @policy_qv_container
 
     teardown_quickview : ->
       @hide_element @policy_qv_container
