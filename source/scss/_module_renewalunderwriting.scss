@@ -201,20 +201,6 @@
   @include span-columns(12 omega, 12);
 }
 
-.ru-loss-history {
-  @extend table.module-search;
-  td {
-    width: auto;
-    a {
-      font-weight: bold;
-      color: $colblue !important;
-    }
-    &:first-child {
-      text-align: center;
-    }
-  }
-}
-
 .ru-menus {
   @extend %menu-base;
   margin: 5px 0 0 0;
