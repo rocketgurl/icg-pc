@@ -320,6 +320,10 @@ define [
         @PARENT_VIEW.displayMessage('error', msg, 12000)
         return false
 
+      if @values.formValues.transactionType = 'PendingCancellationRescission'
+        if @viewData.cancellationEffectiveDate
+          @values.formValues.effectiveDate = @viewData.cancellationEffectiveDate
+
       # Derive intervals from the form values and policy, we use
       # this in the Preview, comparing it against what comes back
       # from the server
