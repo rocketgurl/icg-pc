@@ -403,14 +403,14 @@ define [
               viewData.preview[_.classify(item.name)] = \
                 "$#{@Helpers.formatMoney(item.value)}"
             else
-              viewData.preview[_.classify(data.name)] = item.value
+              viewData.preview[_.classify(item.name)] = item.value
               
               # Effective date for Pending Cancellation Rescission should be equal to
               # Pending Cancellation Effective Date and extracting the date from the event
               # appears to be the way we have to go, since the <PendingCancellation> node
               # has been removed in the policy preview
               if item.name is 'EffectiveDate' and cancelEvent.type is 'RescindPendingCancellation'
-                viewData.cancellationEffectiveDate = data.value
+                viewData.cancellationEffectiveDate = item.value
 
       viewData
 
