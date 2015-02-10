@@ -313,12 +313,6 @@ define [
       if @values.formValues.comment == ''
         @values.formValues.comment = '__deleteEmptyProperty'
 
-      transaction_types =
-        'cancel'         : 'Cancellation'
-        'cancel_pending' : 'PendingCancellation'
-        'reinstate'      : 'Reinstatement'
-        'rescind'        : 'PendingCancellationRescission'
-
       @values.formValues.transactionType = @TRANSACTION_TYPES[@CURRENT_SUBVIEW].label ? false
 
       if !@values.formValues.transactionType
