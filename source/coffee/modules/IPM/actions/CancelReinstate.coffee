@@ -420,7 +420,7 @@ define [
 
       viewData.preview.PreviewLabel = preview_labels[formValues.transactionType]
 
-      if formValues.transactionType == "PendingCancellation" || formValues.transactionType == "Resinstatement"
+      if formValues.transactionType == "PendingCancellation" || formValues.transactionType == "Reinstatement"
         viewData.preview.Undo = true
 
       viewData
