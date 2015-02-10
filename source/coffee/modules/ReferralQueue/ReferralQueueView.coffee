@@ -17,6 +17,7 @@ define [
       'click .referrals-switch a'            : 'updateOwner'
       'click .referrals-sort-link'           : 'sortTasks'
       'click .referrals-refresh'             : 'refreshTasks'
+      'click .abort'                         : 'abortRequest'
 
     initialize : (options) ->
       _.bindAll(this
@@ -25,9 +26,10 @@ define [
         'tasksError'
         )
 
-      @MODULE      = options.module || false
-      @COLLECTION  = options.collection || false
-      @PARENT_VIEW = options.view || false
+      @MODULE                = options.module || false
+      @COLLECTION            = options.collection || false
+      @COLLECTION.controller = options.module.controller
+      @PARENT_VIEW           = options.view || false
 
       # When the collection is populated, generate the views
       @COLLECTION.on 'update', => @toggleLoader true
@@ -52,7 +54,7 @@ define [
       @$('.launch-manage-assignees').removeClass('disabled').prop('disabled', false)
 
       # Throw up our loading image until the tasks come in
-      @toggleLoader(true)
+      @toggleLoader true
 
       this
 
@@ -86,14 +88,21 @@ define [
       @toggleLoader true
       @COLLECTION.getReferrals()
 
+    abortRequest : ->
+      if jqXHR = @COLLECTION.jqXHR
+        jqXHR.abort()
+
     # Handle server errors from the Tasks Collection
     #
     # @param `collection` _Object_ ReferralTaskCollection
     # @param `response` _jqXHR_ Response object
     #
     tasksError : (collection, response) ->
-      @toggleLoader()
-      @Amplify.publish @cid, 'warning', "Could not load referrals: #{response.status} - #{response.statusText}"
+      @toggleLoader false
+      if response?.statusText is 'abort'
+        @Amplify.publish @cid, 'notice', "Request aborted.", 3000
+      else
+        @Amplify.publish @cid, 'warning', "Could not load referrals: #{response.status} - #{response.statusText}"
 
     # Toggle the owner buttons on the UI and trigger collection.getReferrals()
     updateOwner : (e) ->
@@ -174,13 +183,12 @@ define [
         return false
 
       if bool and !@loader?
-        if $('html').hasClass('lt-ie9') is false
-          @loader = Helpers.loader("referrals-spinner-#{@cid}", 100, '#ffffff')
-          @loader.setDensity(70)
-          @loader.setFPS(48)
+        @loader = Helpers.loader("referrals-spinner-#{@cid}", 100, '#ffffff')
+        @loader.setDensity 70
+        @loader.setFPS 48
         $("#referrals-loader-#{@cid}").show()
       else
-        if @loader? and $('html').hasClass('lt-ie9') is false
+        if @loader?
           @loader.kill()
           @loader = null
         $("#referrals-loader-#{@cid}").hide()

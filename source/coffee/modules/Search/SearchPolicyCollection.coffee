@@ -35,8 +35,8 @@ define [
           data    : @getParams()
           headers :
             'Authorization' : "Basic #{@controller.user.get('digest')}"
-        Backbone.sync method, collection, options
-        @trigger 'request', this
+        @jqXHR = Backbone.sync method, collection, options
+        @trigger 'request', this, @jqXHR
       else
         @trigger 'invalid', this, 'Search query length must be at least 2 characters'
 

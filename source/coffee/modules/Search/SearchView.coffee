@@ -16,7 +16,8 @@ define [
       'change .search-pagination-perpage' : 'updatePerPage'
       'change .query-type'                : 'updatePolicyState'
       'submit .filters form'              : 'search'
-      'click .search-sort-link'           : 'searchSorted'
+      'click  .search-sort-link'          : 'searchSorted'
+      'click  .abort'                     : 'abortRequest'
 
     initialize : (options) ->
       _.bindAll(this
@@ -81,6 +82,10 @@ define [
     search : (e) ->
       e.preventDefault() if _.isObject e
       @collection.fetch()
+
+    abortRequest : ->
+      if jqXHR = @collection.jqXHR
+        jqXHR.abort()
 
     searchSorted : (e) ->
       e.preventDefault()
@@ -155,9 +160,13 @@ define [
       @renderPagination collection
       @module.trigger 'workspace.rendered'
 
-    callbackError : (collection, resp) ->
+    # Error callback handles aborted requests, in addition to errors
+    callbackError : (collection, response) ->
       @toggleLoader false
-      @Amplify.publish @cid, 'warning', "There was a problem with this request: #{resp.status} - #{resp.statusText}"
+      if response?.statusText is 'abort'
+        @Amplify.publish @cid, 'notice', "Request aborted.", 3000
+      else
+        @Amplify.publish @cid, 'warning', "There was a problem with this request: #{response.status} - #{response.statusText}"
 
     callbackInvalid : (collection, msg) ->
       @toggleLoader false
@@ -167,13 +176,14 @@ define [
     toggleLoader : (bool) ->
       if bool and !@loader?
         @loader = @Helpers.loader("search-spinner-#{@cid}", 100, '#ffffff')
-        @loader.setDensity(70)
-        @loader.setFPS(48)
+        @loader.setDensity 70
+        @loader.setFPS 48
         $("#search-loader-#{@cid}").show()
         @favicon.start()
       else
-        @loader.kill()
-        @loader = null
+        if @loader?
+          @loader.kill()
+          @loader = null
         $("#search-loader-#{@cid}").hide()
         @favicon.stop()
 

@@ -10,7 +10,10 @@
     </header>
 
     <div id="search-loader-{{cid}}" class="search-loader">
-      <h2 id="search-spinner-{{cid}}"><span>Loading Policies&hellip;</span></h2>
+      <h2 id="search-spinner-{{cid}}">
+        <span>Loading Policies&hellip;</span>
+        <button class="abort btn btn-sm btn-danger">Cancel Request <span class="glyphicon glyphicon-remove-circle"></span></button>
+      </h2>
     </div>
 
     <div class="panel panel-default">
@@ -23,7 +26,7 @@
             <th><span class="product-label">Product</span></th>
             <th><a class="last-name search-sort-link" href="last-name">Name  <span class="glyphicon"></span></a></th>
             <th><span class="address">Address</span></th>
-            <th><a class="policy-state search-sort-link" href="policystate">Status  <span class="glyphicon"></span></a></th>
+            <th><a class="policy-state search-sort-link" href="policy-state">Status  <span class="glyphicon"></span></a></th>
             <th><a class="effective-date search-sort-link" href="effective-date">Effective  <span class="glyphicon"></span></a></th>
             <th><span class="renewal-uw-status">Renewal UW Status</span></th>
           </tr>

@@ -168,9 +168,14 @@ td.search-views-admin > a {
     color: darken($white, 10);
     @include sans;
     @include font-size(24);
-    span {
+    
+    > span {
       display: block;
       margin: 0 0 20px 0;
+    }
+
+    .abort {
+      margin-bottom: 20px;
     }
   }
 }

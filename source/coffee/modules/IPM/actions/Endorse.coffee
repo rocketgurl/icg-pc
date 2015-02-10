@@ -586,25 +586,22 @@ define [
     # WBC should be set to "Policy Limits" with the value of Coverage A.
     #
     adjustHO3VAWaterBackupCoverage : ->
-      if @MODULE.POLICY.getProductName() != 'ofcc-ho3-va'
+      unless @MODULE.POLICY.getProductName() is 'ofcc-ho3-va'
         return false
 
-      $wb_coverage = @$el.find("##{@cid}_WaterBackupCoverage")
+      $wbCoverage = @$("##{@cid}_WaterBackupCoverage")
+      $optPolicyLimits = $wbCoverage.find 'option[value="CoverageA"]'
 
       # if Coverage_A value == WaterBackupCoverage value then set WBC value
       # to Coverage A and 'select' it.
-      if parseInt($wb_coverage.val(), 10) == parseInt(@coverage_a.val(), 10)
-        $wb_coverage.find('option[value="33"]').attr('value', @coverage_a.val())
-        $wb_coverage.val @coverage_a.val()
+      if $wbCoverage.val() is @coverage_a.val()
+        $wbCoverage.val @coverage_a.val()
 
-      # Anytime WaterBackupCoverage changes check it against Coverage A
-      # If WaterBackupCoverage is set to Policy Limits then it's val must
-      # always be that of Coverage A. So when Coverage A changes, change the
-      # val of WaterBackupCoverage.
-      $wb_coverage.on 'change', =>
-        $wb_selected = $wb_coverage.find('option:selected')
-        if $wb_selected.text() == 'Policy Limits'
-          $wb_selected.attr 'value', @coverage_a.val()
+      # Anytime Coverage A changes, set the 'Policy Limits' <option>
+      # val equal to Coverage A
+      $optPolicyLimits.val @coverage_a.val()
+      @coverage_a.on 'change', =>
+        $optPolicyLimits.val @coverage_a.val()
 
     # ICS-1400 - AL Forms Passing Blank Loss Type Data
     # In AL Renew forms we need to ensure that any Loss History fields that

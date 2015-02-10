@@ -84,6 +84,9 @@ $btn-primary-background-highlight: lighten($btn-primary-background, 15%);
 $btn-dark-background: #6f6d6d;
 $btn-dark-background-highlight: lighten($btn-dark-background, 15%);
 
+$btn-danger-background: $alert-danger;
+$btn-danger-background-highlight: lighten($btn-danger-background, 15%);
+
 // Core font stacks
 @mixin sans {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;

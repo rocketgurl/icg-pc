@@ -1,3 +1,11 @@
+### 3.0.4 - Feb 10, 2015
+
+- Correct a problem in IE 11 where dropdown menus were not displaying completely in Manage Referral Assignees
+- Correct a content display problem with Renewal Underwriting
+- Complete updates to SC and ofcc-ho3-va IPM forms
+- Properly line the content in Loss History
+- Added a Cancel Search button to clear requests that take longer than expected
+
 ### 3.0.3 - Jan 27, 2015
 
 **Non-Renewals workflow**

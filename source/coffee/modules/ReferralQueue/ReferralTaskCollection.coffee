@@ -24,6 +24,16 @@ define [
     url : ->
       "#{@baseURL}"
 
+    sync : (method, collection, options) ->
+      options = _.extend options,
+        dataType    : 'xml'
+        contentType : 'application/xml'
+        headers     :
+          'Accept'        : 'application/xml'
+          'Authorization' : "Basic #{@controller.IXVOCAB_AUTH}"
+      @jqXHR = Backbone.sync method, collection, options
+      @trigger 'request', this, @jqXHR
+
     sortCache :
       'relatedQuoteId'  : 'asc'
       'insuredLastName' : 'asc'
@@ -100,14 +110,7 @@ define [
     # **Get Tasks from Server**
     #
     getReferrals : ->
-      @fetch(
-        data        : @getParams()
-        dataType    : 'xml'
-        contentType : 'application/xml'
-        headers     :
-          'Authorization'   : "Basic #{@digest}"
-          'X-Authorization' : "Basic #{@digest}"
-      )
+      @fetch { data : @getParams() }
 
     # **Sort columns**  
     sortTasks : (property) ->
