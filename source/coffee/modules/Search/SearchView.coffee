@@ -14,10 +14,14 @@ define [
       'change .search-pagination-page'    : 'updatePage'
       'change .search-pagination-perpage' : 'updatePerPage'
       'change .search-pagination-perpage' : 'updatePerPage'
-      'change .query-type'                : 'updatePolicyState'
+      'change .policy-state-input'        : 'updatePolicyState'
       'submit .filters form'              : 'search'
       'click  .search-sort-link'          : 'searchSorted'
       'click  .abort'                     : 'abortRequest'
+
+    policyState :
+      'policy' : true
+      'quote'  : true
 
     initialize : (options) ->
       _.bindAll(this
@@ -51,9 +55,10 @@ define [
       @collection.on 'invalid', @callbackInvalid
 
     cacheElements : ->
-      @$itemsEl   = @$('.pagination-a span')
-      @$pageEl    = @$('.search-pagination-page')
-      @$perPageEl = @$('.search-pagination-perpage')
+      @$policyStateInputs  = @$('.policy-state-input')
+      @$itemsEl            = @$('.pagination-a span')
+      @$pageEl             = @$('.search-pagination-page')
+      @$perPageEl          = @$('.search-pagination-perpage')
       @$searchResultsTable = @$('table.module-search tbody')
 
     render : ->
@@ -114,11 +119,23 @@ define [
         @collection.setParam 'perPage', perPage
         @search()
 
-    updatePolicyState : (e) ->
-      @collection.setParam 'policystate', e.currentTarget.value
-
     updateQuery : (e) ->
       @collection.setParam 'q', e.currentTarget.value
+
+    updatePolicyState : (e) ->
+      $input = $(e.currentTarget)
+      @policyState[$input.attr('name')] = $input.prop 'checked'
+      @collection.setParam 'policyState', @determinePolicyState()
+
+    determinePolicyState : ->
+      p = @policyState.policy
+      q = @policyState.quote
+      if p and not q
+        'policy'
+      else if q and not p
+        'quote'
+      else
+        'default'
 
     renderPagination : (collection) ->
       currentPage = collection.page
