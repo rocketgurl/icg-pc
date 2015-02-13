@@ -12,7 +12,7 @@ define [
 
     perPageDefault : 50
 
-    policystateDefault : null
+    policyStateDefault : null
 
     sortPropDefault : null
 
@@ -45,7 +45,7 @@ define [
       @page        = response.page
       @perPage     = response.perPage
       @totalItems  = response.totalItems
-      @policystate = response.policystate if response.policystate
+      @policyState = response.policystate if response.policystate
       response.policies
 
     getParams : ->
@@ -53,7 +53,7 @@ define [
         page    : @page or @pageDefault
         perPage : @perPage or @perPageDefault
       params.q           = @q or ''
-      params.policystate = @policystate if @policystate
+      params.policystate = @policyState if @policyState
       params.sort        = @sortProp    if @sortProp
       params.sortdir     = @sortDir     if @sortDir
       if params.q?.length
