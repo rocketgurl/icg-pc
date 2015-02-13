@@ -7,10 +7,10 @@
     <div id="search-filters-{{cid}}" class="module-search filters">
       <form id="search-form" action="search_submit" method="get" accept-charset="utf-8" class="form-inline">
         <div class="form-group form-group-sm">
-          <select name="query-type" class="query-type form-control">
-            <option value="">Quotes &amp; policies</option>
-            <option value="quote">Quotes only</option>
-            <option value="policy">Policies only</option>
+          <select name="searchby" class="search-by form-control">
+            <option value="default">Search all fields</option>
+            <option value="quote-policy-number">Quote/Policy number</option>
+            <option value="property-address">Property street address</option>
           </select>
         </div>
         <div class="form-group form-group-sm">
