@@ -18,6 +18,8 @@ define [
 
     sortDirDefault : null
 
+    searchByDefault : null
+
     sortCache :
       'quote-number'   : 'desc'
       'policy-number'  : 'desc'
@@ -53,6 +55,7 @@ define [
         page    : @page or @pageDefault
         perPage : @perPage or @perPageDefault
       params.q           = @q or ''
+      params.searchby    = @searchBy    if @searchBy
       params.policystate = @policyState if @policyState
       params.sort        = @sortProp    if @sortProp
       params.sortdir     = @sortDir     if @sortDir

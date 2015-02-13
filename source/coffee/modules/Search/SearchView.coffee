@@ -14,6 +14,7 @@ define [
       'change .search-pagination-page'    : 'updatePage'
       'change .search-pagination-perpage' : 'updatePerPage'
       'change .search-pagination-perpage' : 'updatePerPage'
+      'change .search-by'                 : 'updateSearchBy'
       'change .policy-state-input'        : 'updatePolicyState'
       'submit .filters form'              : 'search'
       'click  .search-sort-link'          : 'searchSorted'
@@ -121,6 +122,9 @@ define [
 
     updateQuery : (e) ->
       @collection.setParam 'q', e.currentTarget.value
+
+    updateSearchBy : (e) ->
+      @collection.setParam 'searchBy', e.currentTarget.value
 
     updatePolicyState : (e) ->
       $input = $(e.currentTarget)
