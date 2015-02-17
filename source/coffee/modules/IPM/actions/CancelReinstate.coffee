@@ -320,7 +320,7 @@ define [
         @PARENT_VIEW.displayMessage('error', msg, 12000)
         return false
 
-      if @values.formValues.transactionType = 'PendingCancellationRescission'
+      if @values.formValues.transactionType is 'PendingCancellationRescission'
         if @viewData.cancellationEffectiveDate
           @values.formValues.effectiveDate = @viewData.cancellationEffectiveDate
 
