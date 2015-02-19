@@ -26,6 +26,7 @@ define [
 
     sync : (method, collection, options) ->
       options = _.extend options,
+        cache       : false # force non-cached request for IE
         dataType    : 'xml'
         contentType : 'application/xml'
         headers     :
