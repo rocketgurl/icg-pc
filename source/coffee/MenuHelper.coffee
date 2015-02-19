@@ -331,4 +331,18 @@ define [
         return label.substr(0, 25) + '&hellip;'
       label
 
+    # ** constructs the workspace routes from the menu data **
+    # Generates a list of routes we can pass to the Router
+    # to launch a Workspace context (e.g. SageSure or FedNat)
+    getWorkspaceRoutes : (data) ->
+      routes = []
+      _.each data, (item) ->
+        _.each item.contexts, (context) ->
+          _.each context.apps, (app) ->
+            try
+              routes.push "#workspace/#{app.env}/#{app.business}/#{app.context.context}/#{app.app}"
+            catch err
+              Muscula.errors.push err
+      routes
+
   MenuHelper
