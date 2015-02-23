@@ -125,8 +125,19 @@
 
 
 		<div>
-			<label for="{{guid}}_ProtectionClass" class="labelRequired">Protection Class <i>ProtectionClass</i></label>
-			<select id="{{guid}}_ProtectionClass" name="ProtectionClass" data-value="{{ProtectionClass}}"  required >
+			<label for="{{guid}}_ProtectionClassRating" >Protection Class (New) <i>ProtectionClassRating</i></label>
+			<select id="{{guid}}_ProtectionClassRating" name="ProtectionClassRating" data-value="{{ProtectionClassRating}}"   >
+				{{#EnumsProtectionClassRating}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsProtectionClassRating}}
+			</select>
+		</div>
+
+
+
+		<div>
+			<label for="{{guid}}_ProtectionClass" >Protection Class (Old) <i>ProtectionClass</i></label>
+			<select id="{{guid}}_ProtectionClass" name="ProtectionClass" data-value="{{ProtectionClass}}"   >
 				{{#EnumsProtectionClass}}
 				<option value="{{value}}">{{label}}</option>
 				{{/EnumsProtectionClass}}
