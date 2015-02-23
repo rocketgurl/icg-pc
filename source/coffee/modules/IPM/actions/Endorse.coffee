@@ -120,7 +120,6 @@ define [
       @coverage_a.bind 'input', (e) =>
         @triggerAllCoverageCalculations()
         @deriveCoverageACalculations()
-        @adjustHO3VAWaterBackupCoverage()
 
       # Find any custom calculations tucked away in data attrs for later
       # use in calculations
@@ -592,15 +591,16 @@ define [
       $wbCoverage = @$("##{@cid}_WaterBackupCoverage")
       $optPolicyLimits = $wbCoverage.find 'option[value="CoverageA"]'
 
-      # if Coverage_A value == WaterBackupCoverage value then set WBC value
-      # to Coverage A and 'select' it.
-      if $wbCoverage.val() is @coverage_a.val()
-        $wbCoverage.val @coverage_a.val()
-
-      # Anytime Coverage A changes, set the 'Policy Limits' <option>
-      # val equal to Coverage A
+      # First, set the 'Policy Limits' <option> val equal to CoverageA
       $optPolicyLimits.val @coverage_a.val()
-      @coverage_a.on 'change', =>
+
+      # Now that we've updated the 'Policy Limits' <option>
+      # Make sure WB Coverage has the right option selected
+      $wbCoverage.val $wbCoverage.data('value')
+
+      # Anytime Coverage A changes, update the 'Policy Limits' <option>
+      # val equal to Coverage A
+      @coverage_a.on 'input', =>
         $optPolicyLimits.val @coverage_a.val()
 
     # ICS-1400 - AL Forms Passing Blank Loss Type Data

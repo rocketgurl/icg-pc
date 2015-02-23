@@ -313,18 +313,16 @@ define [
       if @values.formValues.comment == ''
         @values.formValues.comment = '__deleteEmptyProperty'
 
-      transaction_types =
-        'cancel'         : 'Cancellation'
-        'cancel_pending' : 'PendingCancellation'
-        'reinstate'      : 'Reinstatement'
-        'rescind'        : 'PendingCancellationRescission'
-
       @values.formValues.transactionType = @TRANSACTION_TYPES[@CURRENT_SUBVIEW].label ? false
 
       if !@values.formValues.transactionType
         msg = "There was an error determining which Transaction Type this request is."
         @PARENT_VIEW.displayMessage('error', msg, 12000)
         return false
+
+      if @values.formValues.transactionType is 'PendingCancellationRescission'
+        if @viewData.cancellationEffectiveDate
+          @values.formValues.effectiveDate = @viewData.cancellationEffectiveDate
 
       # Derive intervals from the form values and policy, we use
       # this in the Preview, comparing it against what comes back
@@ -366,46 +364,53 @@ define [
     # @return _Object_ updated viewData
     #
     extractEventValues : (policy, viewData) ->
+      eventsMap =
+        'RescindPendingCancellation'    : 'Pending Cancellation Rescission'
+        'Reinstatement'                 : 'Reinstatement'
+        'PendingCancellation'           : 'Pending Cancellation'
+        'Cancellation'                  : 'Cancellation'
+
       # Find the most recent Cancellation/PendingCancellation in the Policy.
       # Most recent is last in the XML, so we flip the array with reverse()
       events = policy.get('json').EventHistory.Event.reverse()
-      cancellation = _.find(events, (event) ->
-          event.type == 'Cancel' || event.type == 'PendingCancellation'
-        )
 
-      viewData.preview.Action = \
-        if cancellation.type == "Cancel"
-          "Cancellation"
-        else
-          "Pending Cancellation"
+      if cancelEvent = _.find(events, (event) -> eventsMap[event.type]?)
+        viewData.preview.Action = eventsMap[cancelEvent.type]
 
-      data_whitelist = [
-        'AppliedDate',
-        'reasonCode',
-        'reasonCodeLabel',
-        'EffectiveDate',
-        'ChangeInPremium',
-        'ChangeInTax',
-        'CancelAmount',
-        'ChangeInFee'
-      ]
+        data_whitelist = [
+          'AppliedDate'
+          'reasonCode'
+          'reasonCodeLabel'
+          'EffectiveDate'
+          'ChangeInPremium'
+          'ChangeInTax'
+          'CancelAmount'
+          'ChangeInFee'
+        ]
 
-      data_money = [
-        'ChangeInPremium',
-        'ChangeInTax',
-        'CancelAmount',
-        'ChangeInFee'
-      ]
+        data_money = [
+          'ChangeInPremium'
+          'ChangeInTax'
+          'CancelAmount'
+          'ChangeInFee'
+        ]
 
-      # Loop through whitelisted data items and drop properly formatted
-      # values into the preview object
-      for data in cancellation.DataItem
-        if _.contains(data_whitelist, data.name)
-          if _.contains(data_money, data.name)
-            viewData.preview[_.classify(data.name)] = \
-              "$#{@Helpers.formatMoney(data.value)}"
-          else
-            viewData.preview[_.classify(data.name)] = data.value
+        # Loop through whitelisted data items and drop properly formatted
+        # values into the preview object
+        for item in cancelEvent.DataItem
+          if _.contains(data_whitelist, item.name)
+            if _.contains(data_money, item.name)
+              viewData.preview[_.classify(item.name)] = \
+                "$#{@Helpers.formatMoney(item.value)}"
+            else
+              viewData.preview[_.classify(item.name)] = item.value
+              
+              # Effective date for Pending Cancellation Rescission should be equal to
+              # Pending Cancellation Effective Date and extracting the date from the event
+              # appears to be the way we have to go, since the <PendingCancellation> node
+              # has been removed in the policy preview
+              if item.name is 'EffectiveDate' and cancelEvent.type is 'RescindPendingCancellation'
+                viewData.cancellationEffectiveDate = item.value
 
       viewData
 
@@ -426,7 +431,7 @@ define [
 
       viewData.preview.PreviewLabel = preview_labels[formValues.transactionType]
 
-      if formValues.transactionType == "PendingCancellation" || formValues.transactionType == "Resinstatement"
+      if formValues.transactionType == "PendingCancellation" || formValues.transactionType == "Reinstatement"
         viewData.preview.Undo = true
 
       viewData

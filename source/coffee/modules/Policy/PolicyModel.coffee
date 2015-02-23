@@ -303,7 +303,11 @@ define [
       @Helpers.prettyMap state, prettyStates
 
     getOriginatingSystem : ->
-      @getTermDataItemValue 'QuoteOriginationSystem'
+      if @isQuote()
+        dataItems = @findInQuoteTerm('ProtoInterval')?.DataItem
+      else
+        dataItems = @getLastTerm()?.DataItem
+      @getDataItem @_sanitizeNodeArray(dataItems), 'QuoteOriginationSystem'
 
     # Prefer Accounting > OutstandingBalanceDue, else fall back to OutstandingBalance
     getOutstandingBalance : (items) ->

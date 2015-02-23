@@ -396,8 +396,18 @@ define [
             # there was a previous state saved, and try to use that one.
             #
             if @check_workspace_state() is false # Check for localStorage state
-              @navigation_view.show_nav() # open main nav
-              @navigation_view.$el.find('li a span').first().trigger('click') # select first item
+              workspaceRoutes = MenuHelper.getWorkspaceRoutes menu
+
+              # attempt to launch the workspace immediately if user has access to
+              # only 1 context, as is the case for the vast majority of users
+              if workspaceRoutes.length is 1
+                @Router.navigate(workspaceRoutes[0], { trigger : true })
+                @set_business_namespace()
+
+              # Otherwise, toggle the workspace nav
+              else
+                @navigation_view.show_nav() # open main nav
+                @navigation_view.$el.find('li a span').first().trigger('click') # select first item
 
             if @current_state?
               @trigger 'launch'
