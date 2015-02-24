@@ -100,7 +100,7 @@ define [
     tasksError : (collection, response) ->
       @toggleLoader false
       if response?.statusText is 'abort'
-        @Amplify.publish @cid, 'notice', "Request aborted.", 3000
+        @Amplify.publish @cid, 'notice', "Request cancelled.", 3000
       else
         @Amplify.publish @cid, 'warning', "Could not load referrals: #{response.status} - #{response.statusText}"
 

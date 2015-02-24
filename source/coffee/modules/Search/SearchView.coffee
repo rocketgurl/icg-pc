@@ -164,7 +164,7 @@ define [
     callbackError : (collection, response) ->
       @toggleLoader false
       if response?.statusText is 'abort'
-        @Amplify.publish @cid, 'notice', "Request aborted.", 3000
+        @Amplify.publish @cid, 'notice', "Request canceled.", 3000
       else
         @Amplify.publish @cid, 'warning', "There was a problem with this request: #{response.status} - #{response.statusText}"
 
