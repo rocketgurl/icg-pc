@@ -163,10 +163,21 @@ define [
     # Error callback handles aborted requests, in addition to errors
     callbackError : (collection, response) ->
       @toggleLoader false
-      if response?.statusText is 'abort'
+      response = response or {}
+      if response.statusText is 'abort'
         @Amplify.publish @cid, 'notice', "Request canceled.", 3000
+      else if response.statusText is 'timeout'
+        @Amplify.publish(@cid
+          'warning'
+          'Your search has timed out waiting for service. Please try again later.'
+          5000
+          )
       else
-        @Amplify.publish @cid, 'warning', "There was a problem with this request: #{response.status} - #{response.statusText}"
+        @Amplify.publish(@cid
+          'warning'
+          "There was a problem with this request: #{response.status} - #{response.statusText}"
+          5000
+          )
 
     callbackInvalid : (collection, msg) ->
       @toggleLoader false
