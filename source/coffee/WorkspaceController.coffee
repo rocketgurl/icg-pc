@@ -88,6 +88,13 @@ define [
     APP_PC_AUTH           : 'Y29tLmljcy5hcHBzLnBvbGljeWNlbnRyYWw6N2FjZmU5NTAxNDlkYWQ4M2ZlNDdhZTdjZDdkODA2Mzg='
     IXVOCAB_AUTH          : 'Y29tLmljcy5hcHBzLmluc2lnaHRjZW50cmFsOjVhNWE3NGNjODBjMzUyZWVkZDVmODA4MjkzZWFjMTNk'
 
+    # function to support document opening from pxClient flash module
+    launchAttachmentWindow : (url, params) ->
+      console.log "calling #{url}"
+      document.getElementById('urlfield').value = url
+      document.getElementById('paramsfield').value = params
+      document.getElementById('ieform').submit()
+
     # Simple logger
     logger : (msg) ->
       @Amplify.publish 'log', msg
@@ -563,7 +570,7 @@ define [
         @services[node] = @config.get_universal_service(@workspace_state, node)
 
       # Retrieve pxClient location from ixConfig
-      @services.pxclient = @config.get_pxClient(@workspace_state)
+      # @services.pxclient = @config.get_pxClient(@workspace_state)
 
       # Retrieve the base Agent Support View url
       @services.agentSupport = @config.get_agent_support(@workspace_state)
