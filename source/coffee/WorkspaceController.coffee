@@ -273,7 +273,7 @@ define [
         @login_view.displayMessage 'warning', "Sorry, your password or username was incorrect"
       else
         errMsg += '@login_view not defined; '
-      if Muscula?
+      if Muscula?.errors?
         errMsg += "Response fail: #{resp.status} : #{resp.statusText} - #{resp.responseText}"
         err = new Error errMsg
         Muscula.errors.push err
