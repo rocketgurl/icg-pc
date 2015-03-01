@@ -795,7 +795,10 @@ define [
       @$workspace_el.addClass 'out'
 
     toggle_policy_nav : ->
-      @$workspace_el[if @$workspace_el.is('.out') then 'removeClass' else 'addClass'] 'out'
+      if @$workspace_el.is('.out')
+        @open_policy_nav()
+      else
+        @close_policy_nav()
 
     attach_policy_nav_handler : ->
       $('.nav-toggle').on 'click', (e) =>
