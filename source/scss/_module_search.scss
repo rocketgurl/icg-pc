@@ -1,9 +1,15 @@
 /*
 Module: Search
 */
-#search-form.form-inline {
-  .checkbox {
-    margin-left: 7px;
+#search-form {
+  &.form-inline {
+    .checkbox {
+      margin-left: 7px;
+    }
+  }
+
+  input[type=search] {
+    min-width: 220px;
   }
 }
 

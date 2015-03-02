@@ -2193,6 +2193,7 @@ ul:after { clear: both; }
 Module: Search
 */
 #search-form.form-inline .checkbox, #search-form.navbar-form .checkbox { margin-left: 7px; }
+#search-form input[type=search] { min-width: 220px; }
 
 header.module-search { padding-bottom: 20px; }
 header.module-search h1 { float: left; margin: 0 20px 0 0; font-weight: bold; color: #002857; font-size: 24px; font-size: 2.4rem; text-shadow: 0 1px white; line-height: 1.4; }
