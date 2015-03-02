@@ -1,3 +1,11 @@
+### 3.0.5 - Feb 23, 2015
+
+- fixes the wrong effective date used on Pending Cancel Rescission
+- fixes the inconsistent color on Cancel Request in Search
+- removes Change Workspace for users with only one workspace
+- adds Originating System in Quick View for Quotes and Policies where it was missing
+- IPM forms populate Policy Limits Enum for Water Backup upon loading
+
 ### 3.0.4 - Feb 10, 2015
 
 - Correct a problem in IE 11 where dropdown menus were not displaying completely in Manage Referral Assignees

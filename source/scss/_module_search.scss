@@ -8,7 +8,7 @@ Module: Search
 }
 
 header.module-search {
-  margin: 0 0 20px 0;
+  padding-bottom: 20px;
   h1 {
     float: left;
     margin: 0 20px 0 0;
@@ -68,7 +68,7 @@ header.module-search {
 }
 
 .module-search.filters {
-  margin: 0 0 20px 0;
+  padding-bottom: 20px;
 
   form { display: block; }
 
@@ -90,21 +90,32 @@ header.module-search {
   }
 }
 
-table.module-search {
-  > thead > tr > th {
+table.module-search,
+.div-table.module-search {
+  > thead > tr > th,
+  > .thead > .tr > .th {
     vertical-align: top;
   }
 
-  th { > a, > span    { display: block; } }
-  tr { cursor: pointer; }
+  th,
+  .th {
+    > a,
+    > span {
+      display: block;
+    }
+  }
+  tr,
+  .tr {
+    cursor: pointer;
+  }
   
-  .quote-number       { min-width: 125px; }
-  .policy-number      { min-width: 90px; }
-  .effective-date     { min-width: 75px; }
-  td.activepolicy     { color: $darkblue; }
-  td.activequote      { color: darken($orange, 5); }
-  td.cancelledpolicy,
-  td.nonrenewedpolicy { color: lighten($red, 10); }
+  // .quote-number       { min-width: 125px; }
+  // .policy-number      { min-width: 90px; }
+  // .effective-date     { min-width: 75px; }
+  .activepolicy     { color: $darkblue; }
+  .activequote      { color: darken($orange, 5); }
+  .cancelledpolicy,
+  .nonrenewedpolicy { color: lighten($red, 10); }
 }
 
 .module-search.pagination {

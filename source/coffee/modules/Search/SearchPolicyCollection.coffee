@@ -34,6 +34,7 @@ define [
     sync : (method, collection, options) ->
       if @isValid()
         options = _.extend options,
+          cache   : false
           data    : @getParams()
           headers :
             'Authorization' : "Basic #{@controller.user.get('digest')}"
