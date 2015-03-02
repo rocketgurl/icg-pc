@@ -90,7 +90,6 @@ define [
 
     # function to support document opening from pxClient flash module
     launchAttachmentWindow : (url, params) ->
-      console.log "calling #{url}"
       document.getElementById('urlfield').value = url
       document.getElementById('paramsfield').value = params
       document.getElementById('ieform').submit()
@@ -570,7 +569,7 @@ define [
         @services[node] = @config.get_universal_service(@workspace_state, node)
 
       # Retrieve pxClient location from ixConfig
-      # @services.pxclient = @config.get_pxClient(@workspace_state)
+      @services.pxclient = @config.get_pxClient(@workspace_state)
 
       # Retrieve the base Agent Support View url
       @services.agentSupport = @config.get_agent_support(@workspace_state)
