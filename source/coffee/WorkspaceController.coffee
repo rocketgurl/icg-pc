@@ -88,6 +88,12 @@ define [
     APP_PC_AUTH           : 'Y29tLmljcy5hcHBzLnBvbGljeWNlbnRyYWw6N2FjZmU5NTAxNDlkYWQ4M2ZlNDdhZTdjZDdkODA2Mzg='
     IXVOCAB_AUTH          : 'Y29tLmljcy5hcHBzLmluc2lnaHRjZW50cmFsOjVhNWE3NGNjODBjMzUyZWVkZDVmODA4MjkzZWFjMTNk'
 
+    # function to support document opening from pxClient flash module
+    launchAttachmentWindow : (url, params) ->
+      document.getElementById('urlfield').value = url
+      document.getElementById('paramsfield').value = params
+      document.getElementById('ieform').submit()
+
     # Simple logger
     logger : (msg) ->
       @Amplify.publish 'log', msg
