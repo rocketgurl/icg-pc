@@ -51,10 +51,15 @@ define [
       @collection.on 'invalid', @callbackInvalid
 
     cacheElements : ->
-      @$itemsEl   = @$('.pagination-a span')
-      @$pageEl    = @$('.search-pagination-page')
-      @$perPageEl = @$('.search-pagination-perpage')
-      @$searchResultsTable = @$('table.module-search tbody')
+      @$searchHeader       = @$('header.module-search')
+      @$searchFiltersEl    = @$('.module-search.filters')
+      @$paginationEl       = @$('.module-search.pagination')
+      @$itemsEl            = @$('.pagination-a span')
+      @$pageEl             = @$('.search-pagination-page')
+      @$perPageEl          = @$('.search-pagination-perpage')
+      @$searchResultsTable = @$('.div-table.module-search')
+      @$searchResultsThead = @$searchResultsTable.find '.thead'
+      @$searchResultsTbody = @$searchResultsTable.find '.tbody'
 
     render : ->
       template = if @params.renewalreviewrequired then tpl_renewal_review_container else tpl_search_container
@@ -65,16 +70,31 @@ define [
       # Cache useful DOM elements for later
       @cacheElements()
 
+      @setTbodyMaxHeight()
+      @attachWindowResizeHandler()
+
       # Register flash message pubsub for this view
       @messenger = new Messenger @, @cid
 
+    attachWindowResizeHandler : ->
+      lazyResize = _.debounce _.bind(@setTbodyMaxHeight, this), 500
+      $(window).on 'resize', lazyResize
+
+    setTbodyMaxHeight : ->
+      workspaceHeight    = @controller.$workspace_el.height()
+      headerHeight       = @$searchHeader.outerHeight()
+      searchFilterHeight = @$searchFiltersEl.outerHeight()
+      searchHeaderHeight = @$searchResultsThead.outerHeight()
+      tbodyMaxHeight     = workspaceHeight - (headerHeight + searchFilterHeight + searchHeaderHeight)
+      @$searchResultsTbody.css 'max-height', tbodyMaxHeight
+
     renderPolicies : (collection) ->
-      @$searchResultsTable.empty()
+      @$searchResultsTbody.empty()
       @searchPolicyViews = collection.map (model) =>
         new SearchPolicyView
           model       : model
           controller  : @controller
-          $target_el  : @$searchResultsTable
+          $target_el  : @$searchResultsTbody
 
       if collection.length is 1
         @searchPolicyViews[0].open_policy()
