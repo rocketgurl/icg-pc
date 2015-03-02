@@ -58,6 +58,7 @@ define [
     cacheElements : ->
       @$searchHeader       = @$('header.module-search')
       @$searchFiltersEl    = @$('.module-search.filters')
+      @$searchInput        = @$searchFiltersEl.find 'input[type=search]'
       @$paginationEl       = @$('.module-search.pagination')
       @$itemsEl            = @$('.pagination-a span')
       @$pageEl             = @$('.search-pagination-page')
@@ -143,12 +144,23 @@ define [
       @collection.setParam 'q', e.currentTarget.value
 
     updateSearchBy : (e) ->
-      @collection.setParam 'searchBy', e.currentTarget.value
+      value = e.currentTarget.value
+      console.log @$searchInput
+      @$searchInput.attr 'placeholder', @getSearchPlaceholder value
+      @collection.setParam 'searchBy', value
 
     updatePolicyState : (e) ->
       $input = $(e.currentTarget)
       @policyState[$input.attr('name')] = $input.prop 'checked'
       @collection.setParam 'policyState', @determinePolicyState()
+
+    getSearchPlaceholder : (value) ->
+      if value is 'property-address'
+        'Enter street number and name'
+      else if value is 'quote-policy-number'
+        'Enter Quote or Policy number'
+      else
+        'Enter search terms'
 
     determinePolicyState : ->
       p = @policyState.policy
