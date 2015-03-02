@@ -14,10 +14,15 @@ define [
       'change .search-pagination-page'    : 'updatePage'
       'change .search-pagination-perpage' : 'updatePerPage'
       'change .search-pagination-perpage' : 'updatePerPage'
-      'change .query-type'                : 'updatePolicyState'
+      'change .search-by'                 : 'updateSearchBy'
+      'change .policy-state-input'        : 'updatePolicyState'
       'submit .filters form'              : 'search'
       'click  .search-sort-link'          : 'searchSorted'
       'click  .abort'                     : 'abortRequest'
+
+    policyState :
+      'policy' : true
+      'quote'  : true
 
     initialize : (options) ->
       _.bindAll(this
@@ -53,6 +58,7 @@ define [
     cacheElements : ->
       @$searchHeader       = @$('header.module-search')
       @$searchFiltersEl    = @$('.module-search.filters')
+      @$searchInput        = @$searchFiltersEl.find 'input[type=search]'
       @$paginationEl       = @$('.module-search.pagination')
       @$itemsEl            = @$('.pagination-a span')
       @$pageEl             = @$('.search-pagination-page')
@@ -134,11 +140,37 @@ define [
         @collection.setParam 'perPage', perPage
         @search()
 
-    updatePolicyState : (e) ->
-      @collection.setParam 'policystate', e.currentTarget.value
-
     updateQuery : (e) ->
       @collection.setParam 'q', e.currentTarget.value
+
+    updateSearchBy : (e) ->
+      value = e.currentTarget.value
+      console.log @$searchInput
+      @$searchInput.attr 'placeholder', @getSearchPlaceholder value
+      @collection.setParam 'searchBy', value
+
+    updatePolicyState : (e) ->
+      $input = $(e.currentTarget)
+      @policyState[$input.attr('name')] = $input.prop 'checked'
+      @collection.setParam 'policyState', @determinePolicyState()
+
+    getSearchPlaceholder : (value) ->
+      if value is 'property-address'
+        'Enter street number and name'
+      else if value is 'quote-policy-number'
+        'Enter Quote or Policy number'
+      else
+        'Enter search terms'
+
+    determinePolicyState : ->
+      p = @policyState.policy
+      q = @policyState.quote
+      if p and not q
+        'policy'
+      else if q and not p
+        'quote'
+      else
+        'default'
 
     renderPagination : (collection) ->
       currentPage = collection.page

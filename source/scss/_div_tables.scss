@@ -28,6 +28,10 @@
     border-top: 1px solid $table-border-color;
   }
 
+  .tr:first-child {
+    border-top: 0;
+  }
+
   .th,
   .td {
     position: relative;
