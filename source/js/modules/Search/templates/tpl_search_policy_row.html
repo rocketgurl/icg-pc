@@ -1,9 +1,9 @@
-<td><a href="{{href}}">{{identifiers.quoteNumber}}</a></td>
-<td><a href="{{href}}">{{identifiers.policyId}}</a></td>
-<td>{{CarrierId}}</td>
-<td>{{productLabel}}</td>
-<td>{{insured.lastName}}</td>
-<td>{{insured.Address}} {{insured.address.state}} {{insured.address.zip}}</td>
-<td{{#policyStateClass}} class="{{policyStateClass}}"{{/policyStateClass}}>{{policyState}}</td>
-<td>{{effectiveDate}}</td>
-<td>{{renewalReviewRequired}}</td>
+<div class="td" title="{{identifiers.quoteNumber}}"><a href="{{href}}">{{identifiers.quoteNumber}}</a></div>
+<div class="td" title="{{identifiers.policyId}}"><a href="{{href}}">{{identifiers.policyId}}</a></div>
+<div class="td" title="{{CarrierId}}">{{CarrierId}}</div>
+<div class="td" title="{{productLabel}}">{{productLabel}}</div>
+<div class="td" title="{{insured.lastName}}">{{insured.lastName}}</div>
+<div class="td" title="{{insured.Address}} {{insured.address.state}} {{insured.address.zip}}">{{insured.Address}} {{insured.address.state}} {{insured.address.zip}}</div>
+<div class="td{{#policyStateClass}} {{policyStateClass}}{{/policyStateClass}}" title="{{policyState}}">{{policyState}}</div>
+<div class="td" title="{{effectiveDate}}">{{effectiveDate}}</div>
+<div class="td" title="{{renewalReviewRequired}}">{{renewalReviewRequired}}</div>

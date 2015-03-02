@@ -5,7 +5,7 @@ define [
 
   SearchPolicyView = BaseView.extend
 
-    tagName : 'tr'
+    className : 'tr'
 
     events :
       "click" : "open_policy"

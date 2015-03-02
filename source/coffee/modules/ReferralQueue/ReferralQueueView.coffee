@@ -36,20 +36,38 @@ define [
       @COLLECTION.on 'reset', @renderTasks
       @COLLECTION.on 'error', @tasksError
 
+    cacheElements : ->
+      @$header       = @$('header.module-referrals')
+      @$table        = @$('.div-table.module-referrals')
+      @$tHead        = @$table.find '.thead'
+      @$tBody        = @$table.find '.tbody'
+      @CONTAINER     = @$tBody
+      @PAGINATION_EL = @cachePaginationElements()
+
+    attachWindowResizeHandler : ->
+      lazyResize = _.debounce _.bind(@setTbodyMaxHeight, this), 500
+      $(window).on 'resize', lazyResize
+
+    setTbodyMaxHeight : ->
+      workspaceHeight    = @MODULE.controller.$workspace_el.height()
+      headerHeight       = @$header.outerHeight()
+      theadHeight        = @$tHead.outerHeight()
+      tbodyMaxHeight     = workspaceHeight - (headerHeight + theadHeight)
+      @$tBody.css 'max-height', tbodyMaxHeight
+
     render : ->
       # Setup flash module & main container
       html = @Mustache.render $('#tpl-flash-message').html(), { cid : @cid }
       html += @Mustache.render tpl_container, { cid : @cid, pagination: {} }
       @$el.html html
 
+      @cacheElements()
+
+      @setTbodyMaxHeight()
+      @attachWindowResizeHandler()
+
       # Setup Flash Messenger
       @messenger = new Messenger(@PARENT_VIEW, @cid)
-
-      # Find the container to load rows into
-      @CONTAINER = @$('table.module-referrals tbody')
-
-      # Cache form elements for speedy access
-      @PAGINATION_EL = @cachePaginationElements()
 
       @$('.launch-manage-assignees').removeClass('disabled').prop('disabled', false)
 

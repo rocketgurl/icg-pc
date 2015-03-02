@@ -7,10 +7,10 @@
     <div id="search-filters-{{cid}}" class="module-search filters">
       <form id="search-form" action="search_submit" method="get" accept-charset="utf-8" class="form-inline">
         <div class="form-group form-group-sm">
-          <select name="query-type" class="query-type form-control">
-            <option value="">Quotes &amp; policies</option>
-            <option value="quote">Quotes only</option>
-            <option value="policy">Policies only</option>
+          <select name="searchby" class="search-by form-control">
+            <option value="default">Search all fields</option>
+            <option value="quote-policy-number">Quote/Policy number</option>
+            <option value="property-address">Property street address</option>
           </select>
         </div>
         <div class="form-group form-group-sm">
@@ -20,6 +20,16 @@
               <button type="submit" class="btn btn-default">Search</button>
             </span>
           </div>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input name="policy" type="checkbox" class="policy-state-input" checked> Policies
+          </label>
+        </div>
+        <div class="checkbox">
+          <label>
+            <input name="quote" type="checkbox" class="policy-state-input" checked> Quotes
+          </label>
         </div>
       </form>
     </div>
@@ -32,23 +42,24 @@
     </div>
 
     <div class="panel panel-default">
-      <table class="table table-striped table-hover module-search">
-        <thead>
-          <tr>
-            <th><a class="quote-number search-sort-link" href="quote-number">Quote # <span class="glyphicon"></span></a></th>
-            <th><a class="policy-number search-sort-link" href="policy-number">Policy # <span class="glyphicon"></span></a></th>
-            <th><a class="carrier-id search-sort-link" href="carrier-id">Carrier ID <span class="glyphicon"></span></a></th>
-            <th><span class="product-label">Product</span></th>
-            <th><a class="last-name search-sort-link" href="last-name">Name <span class="glyphicon"></span></a></th>
-            <th><span class="address">Address</span></th>
-            <th><a class="policy-state search-sort-link" href="policy-state">Status <span class="glyphicon"></span></a></th>
-            <th><a class="effective-date search-sort-link" href="effective-date">Effective <span class="glyphicon"></span></a></th>
-            <th><span class="renewal-uw-status">Renewal UW Status</span></th>
-          </tr>
-        </thead>
-        <tbody></tbody>
-      </table>
+      <div class="div-table table-striped table-hover table-scrollable table-9-columns module-search">
+        <div class="thead">
+          <div class="tr">
+            <div class="th"><a class="quote-number search-sort-link" href="quote-number">Quote # <span class="glyphicon"></span></a></div>
+            <div class="th"><a class="policy-number search-sort-link" href="policy-number">Policy # <span class="glyphicon"></span></a></div>
+            <div class="th"><a class="carrier-id search-sort-link" href="carrier-id">Carrier ID <span class="glyphicon"></span></a></div>
+            <div class="th"><span class="product-label">Product</span></div>
+            <div class="th"><a class="last-name search-sort-link" href="last-name">Name <span class="glyphicon"></span></a></div>
+            <div class="th"><span class="address">Address</span></div>
+            <div class="th"><a class="policy-state search-sort-link" href="policy-state">Status <span class="glyphicon"></span></a></div>
+            <div class="th"><a class="effective-date search-sort-link" href="effective-date">Effective <span class="glyphicon"></span></a></div>
+            <div class="th"><span class="renewal-uw-status">Renewal UW Status</span></div>
+          </div>
+        </div>
+        <div class="tbody"></div>
+      </div>
     </div>
+
     <div id="search-pagination-{{cid}}" class="module-search pagination">
       <form class="form-horizontal col-xs-12" action="pagination" method="get" accept-charset="utf-8">
         <div class="form-group form-group-sm">
