@@ -282,7 +282,7 @@ define [
         'PENDINGCANCELLATION' : 'Pending Cancellation'
         'CANCELLEDPOLICY'     : 'Cancelled Policy'
         'NONRENEWEDPOLICY'    : 'Non-Renewed Policy'
-        'PENDINGNONRENWAL'    : 'Pending Non-Renewal'
+        'PENDINGNONRENEWAL'   : 'Pending Non-Renewal'
         'ACTIVEQUOTE'         : 'Active Quote'
         'INCOMPLETEQUOTE'     : 'Incomplete Quote'
         'EXPIREDQUOTE'        : 'Expired Quote'
@@ -295,7 +295,7 @@ define [
       if @isPendingCancel true
         state = 'PENDINGCANCELLATION'
       else if @isPendingNonRenewal()
-        state = 'PENDINGNONRENWAL'
+        state = 'PENDINGNONRENEWAL'
       else if policyStates?.length > 1
         stateNode = _.find(policyStates, (node) -> $(node).text() != state)
         state = $(stateNode).text() if stateNode
