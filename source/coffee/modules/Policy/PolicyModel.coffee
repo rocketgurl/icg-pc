@@ -425,6 +425,9 @@ define [
       text = if typeof state == 'object' then state.text else state
       text == @states.ACTIVE_QUOTE or text == @states.EXPIRED_QUOTE
 
+    isFNIC : ->
+      'fnic' is @find('Management ProgramAdministrator')
+
     # **Is this policy pending cancellation?**
     # User can specify a boolean return (bool = true) or
     # will get back the pending cancel object
