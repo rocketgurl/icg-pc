@@ -126,9 +126,9 @@ define [
     # **Build a policy period date range for use in IPM header**
     # @return _String_
     getPolicyPeriod : ->
-      start = @getTermItem('EffectiveDate').substr(0,10)
-      end   = @getTermItem('ExpirationDate').substr(0,10)
-      if start && end
+      start = @getTermItem('EffectiveDate').substr(0, 10)
+      end   = @getTermItem('ExpirationDate').substr(0, 10)
+      if start and end
         @Helpers.concatStrings(start, end, ' - ')
       else
         ''
@@ -149,35 +149,42 @@ define [
     # **Build an object containing information for the IPM header**
     # @return _Object_
     getIpmHeader : ->
-      doc = @get 'document'
-      if doc?
+      ipm_header = {}
+      policyState = @get('state')?.text or @get('state') or ''
+      if @get('document')?
         ipm_header =
-          id      : @getPolicyId()
-          product : @getTermDataItemValue 'ProductLabel'
-          holder  : @getPolicyHolder()
-          state   : @get('state')?.text or @get('state') or ''
-          period  : @getPolicyPeriod()
-          carrier : @getModelProperty('Management Carrier')
-          isQuote : @isQuote()
+          id                      : @getPolicyId()
+          product                 : @getTermDataItemValue 'ProductLabel'
+          holder                  : @getPolicyHolder()
+          state                   : policyState
+          stateClass              : ''
+          period                  : @getPolicyPeriod()
+          carrier                 : @getModelProperty('Management Carrier')
           parentChildRelationship : @get('parentChildRelationship')
-          parentPolicyId : @get('parentPolicyId')
-          childPolicyId : @get('childPolicyId')
-      else
-        ipm_header = {}
+          parentPolicyId          : @get('parentPolicyId')
+          childPolicyId           : @get('childPolicyId')
 
       if @isPendingCancel true
-        ipm_header.status = 'Pending Cancellation'
+        ipm_header.state      = 'PENDING CANCELLATION'
+        ipm_header.stateClass = 'alert-warning'
       else if @isPendingNonRenewal()
-        ipm_header.status = 'Pending Non-Renewal'
+        ipm_header.state      = 'PENDING NON-RENEWAL'
+        ipm_header.stateClass = 'alert-warning'
+      else if policyState is 'CANCELLEDPOLICY'
+        ipm_header.state      = 'CANCELLED POLICY'
+        ipm_header.stateClass = 'alert-danger'
+      else if policyState is 'NONRENEWEDPOLICY'
+        ipm_header.state      = 'NON-RENEWED POLICY'
+        ipm_header.stateClass = 'alert-danger'
      
       # ICS-1641
       if @isQuote()
-        ipm_header.id = @find('Identifiers Identifier[name=QuoteNumber]')
-        ipm_header.product = @find('Quoting CurrentQuote ProtoTerm ProtoInterval DataItem[name=OpPolicyType]')
-        ipm_header.period = do =>
-          start = @find('Quoting CurrentQuote ProtoTerm EffectiveDate') || ""
-          end = @find('Quoting CurrentQuote ProtoTerm ExpirationDate') || ""
-          @Helpers.concatStrings(start.substr(0,10), end.substr(0,10), ' - ')
+        start = (@findInQuoteTerm('EffectiveDate') or '').substr(0, 10)
+        end   = (@findInQuoteTerm('ExpirationDate') or '').substr(0, 10)
+        ipm_header.id = @id
+        ipm_header.period = @Helpers.concatStrings(start, end, ' - ')
+        ipm_header.isQuote = true
+        ipm_header.product = @findInQuoteTerm('ProtoInterval DataItem[name=OpPolicyType]')
       ipm_header
 
     # Assemble all the policy data for HTML QuickView servicing tab into one place
@@ -282,7 +289,7 @@ define [
         'PENDINGCANCELLATION' : 'Pending Cancellation'
         'CANCELLEDPOLICY'     : 'Cancelled Policy'
         'NONRENEWEDPOLICY'    : 'Non-Renewed Policy'
-        'PENDINGNONRENWAL'    : 'Pending Non-Renewal'
+        'PENDINGNONRENEWAL'   : 'Pending Non-Renewal'
         'ACTIVEQUOTE'         : 'Active Quote'
         'INCOMPLETEQUOTE'     : 'Incomplete Quote'
         'EXPIREDQUOTE'        : 'Expired Quote'
@@ -295,7 +302,7 @@ define [
       if @isPendingCancel true
         state = 'PENDINGCANCELLATION'
       else if @isPendingNonRenewal()
-        state = 'PENDINGNONRENWAL'
+        state = 'PENDINGNONRENEWAL'
       else if policyStates?.length > 1
         stateNode = _.find(policyStates, (node) -> $(node).text() != state)
         state = $(stateNode).text() if stateNode

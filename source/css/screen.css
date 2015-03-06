@@ -2297,6 +2297,11 @@ Module: Policy
 .policy-header h2.has-parent > .icg-icon:before { content: "\e601"; }
 .policy-header h2.has-both > .icg-icon:before { content: "\e602"; }
 .policy-header h2.has-none > .icg-icon:before { content: ""; }
+.policy-header .alert-warning > h3, .policy-header .alert-danger > h3 { text-shadow: initial; }
+.policy-header .alert-danger > h3 { color: rgba(255, 255, 255, 0.7); font-weight: normal; }
+.policy-header .alert-danger > h2 { color: #fff; }
+.policy-header .alert-warning > h3 { color: rgba(85, 34, 0, 0.8); }
+.policy-header .alert-warning > h2 { color: #fff; }
 .policy-header .linked-item { display: none; }
 .policy-header .popover-content { font-weight: normal; }
 .policy-header .popover-content p:last-child { margin-bottom: 5px; }

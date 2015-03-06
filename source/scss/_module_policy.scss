@@ -234,6 +234,34 @@ Module: Policy
     &.has-none   > .icg-icon:before { content: ""}
   }
 
+  .alert-warning,
+  .alert-danger {
+    > h3 {
+      text-shadow: initial;
+    }
+  }
+
+  .alert-danger {
+    > h3 {
+      color: rgba(255, 255, 255, 0.7);
+      font-weight: normal;
+    }
+
+    > h2 {
+      color: #fff;
+    }
+  }
+
+  .alert-warning {
+    > h3 {
+      color: rgba(85, 34, 00, 0.8);
+    }
+
+    > h2 {
+      color: #fff;
+    }
+  }
+
   .linked-item { display: none; }
   .popover-content {
     font-weight: normal;

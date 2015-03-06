@@ -29,7 +29,7 @@
       <h3>Policyholder</h3>
       <h2>{{holder}}</h2>
     </td>
-    <td>
+    <td class="{{stateClass}}">
       <h3>Policy State</h3>
       <h2>{{state}}</h2>
     </td>
@@ -41,11 +41,5 @@
       <h3>Carrier Name</h3>
       <h2>{{carrier}}</h2>
     </td>
-    {{#status}}
-    <td>
-      <h3>Cancel Status</h3>
-      <h2><span class="ipm-header-cancel-status">{{status}}</span></h2>
-    </td>
-    {{/status}}
   </tr>
 </table>
