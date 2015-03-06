@@ -145,7 +145,6 @@ define [
 
     updateSearchBy : (e) ->
       value = e.currentTarget.value
-      console.log @$searchInput
       @$searchInput.attr 'placeholder', @getSearchPlaceholder value
       @collection.setParam 'searchBy', value
 
