@@ -262,6 +262,8 @@ define [
     getUnderwritingData : ->
       if @isQuote()
         dataItems = @findInQuoteTerm('ProtoInterval')?.DataItem
+      else if @isFNIC()
+        dataItems = @findInLastTerm('Intervals Interval')?.DataItem
       else
         dataItems = @getLastTerm()?.DataItem
 
