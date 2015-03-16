@@ -88,6 +88,12 @@ define [
     APP_PC_AUTH           : 'Y29tLmljcy5hcHBzLnBvbGljeWNlbnRyYWw6N2FjZmU5NTAxNDlkYWQ4M2ZlNDdhZTdjZDdkODA2Mzg='
     IXVOCAB_AUTH          : 'Y29tLmljcy5hcHBzLmluc2lnaHRjZW50cmFsOjVhNWE3NGNjODBjMzUyZWVkZDVmODA4MjkzZWFjMTNk'
 
+    # function to support document opening from pxClient flash module
+    launchAttachmentWindow : (url, params) ->
+      document.getElementById('urlfield').value = url
+      document.getElementById('paramsfield').value = params
+      document.getElementById('ieform').submit()
+
     # Simple logger
     logger : (msg) ->
       @Amplify.publish 'log', msg
@@ -273,7 +279,7 @@ define [
         @login_view.displayMessage 'warning', "Sorry, your password or username was incorrect"
       else
         errMsg += '@login_view not defined; '
-      if Muscula?
+      if Muscula?.errors?
         errMsg += "Response fail: #{resp.status} : #{resp.statusText} - #{resp.responseText}"
         err = new Error errMsg
         Muscula.errors.push err
@@ -795,7 +801,10 @@ define [
       @$workspace_el.addClass 'out'
 
     toggle_policy_nav : ->
-      @$workspace_el[if @$workspace_el.is('.out') then 'removeClass' else 'addClass'] 'out'
+      if @$workspace_el.is('.out')
+        @open_policy_nav()
+      else
+        @close_policy_nav()
 
     attach_policy_nav_handler : ->
       $('.nav-toggle').on 'click', (e) =>

@@ -1,3 +1,14 @@
+### 3.0.6 - Mar 17, 2015
+
+- Download attachments when using IE
+- Display application documents and attachments in FNIC Quick View
+- Retain column headings while scrolling through long lists
+- Updates to various IPM forms
+- Update HomeStyle enums in IPM forms
+- Modify workspace to open attachments
+- Add Cancel Status in the Vitals Bar so that users are aware of the potential loss of a policy
+- Change the timeout error for search results so it's more descriptive
+
 ### 3.0.5 - Feb 23, 2015
 
 - fixes the wrong effective date used on Pending Cancel Rescission

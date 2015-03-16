@@ -14,10 +14,15 @@ define [
       'change .search-pagination-page'    : 'updatePage'
       'change .search-pagination-perpage' : 'updatePerPage'
       'change .search-pagination-perpage' : 'updatePerPage'
-      'change .query-type'                : 'updatePolicyState'
+      'change .search-by'                 : 'updateSearchBy'
+      'change .policy-state-input'        : 'updatePolicyState'
       'submit .filters form'              : 'search'
       'click  .search-sort-link'          : 'searchSorted'
       'click  .abort'                     : 'abortRequest'
+
+    policyState :
+      'policy' : true
+      'quote'  : true
 
     initialize : (options) ->
       _.bindAll(this
@@ -51,10 +56,16 @@ define [
       @collection.on 'invalid', @callbackInvalid
 
     cacheElements : ->
-      @$itemsEl   = @$('.pagination-a span')
-      @$pageEl    = @$('.search-pagination-page')
-      @$perPageEl = @$('.search-pagination-perpage')
-      @$searchResultsTable = @$('table.module-search tbody')
+      @$searchHeader       = @$('header.module-search')
+      @$searchFiltersEl    = @$('.module-search.filters')
+      @$searchInput        = @$searchFiltersEl.find 'input[type=search]'
+      @$paginationEl       = @$('.module-search.pagination')
+      @$itemsEl            = @$('.pagination-a span')
+      @$pageEl             = @$('.search-pagination-page')
+      @$perPageEl          = @$('.search-pagination-perpage')
+      @$searchResultsTable = @$('.div-table.module-search')
+      @$searchResultsThead = @$searchResultsTable.find '.thead'
+      @$searchResultsTbody = @$searchResultsTable.find '.tbody'
 
     render : ->
       template = if @params.renewalreviewrequired then tpl_renewal_review_container else tpl_search_container
@@ -65,16 +76,31 @@ define [
       # Cache useful DOM elements for later
       @cacheElements()
 
+      @setTbodyMaxHeight()
+      @attachWindowResizeHandler()
+
       # Register flash message pubsub for this view
       @messenger = new Messenger @, @cid
 
+    attachWindowResizeHandler : ->
+      lazyResize = _.debounce _.bind(@setTbodyMaxHeight, this), 500
+      $(window).on 'resize', lazyResize
+
+    setTbodyMaxHeight : ->
+      workspaceHeight    = @controller.$workspace_el.height()
+      headerHeight       = @$searchHeader.outerHeight()
+      searchFilterHeight = @$searchFiltersEl.outerHeight()
+      searchHeaderHeight = @$searchResultsThead.outerHeight()
+      tbodyMaxHeight     = workspaceHeight - (headerHeight + searchFilterHeight + searchHeaderHeight)
+      @$searchResultsTbody.css 'max-height', tbodyMaxHeight
+
     renderPolicies : (collection) ->
-      @$searchResultsTable.empty()
+      @$searchResultsTbody.empty()
       @searchPolicyViews = collection.map (model) =>
         new SearchPolicyView
           model       : model
           controller  : @controller
-          $target_el  : @$searchResultsTable
+          $target_el  : @$searchResultsTbody
 
       if collection.length is 1
         @searchPolicyViews[0].open_policy()
@@ -114,11 +140,36 @@ define [
         @collection.setParam 'perPage', perPage
         @search()
 
-    updatePolicyState : (e) ->
-      @collection.setParam 'policystate', e.currentTarget.value
-
     updateQuery : (e) ->
       @collection.setParam 'q', e.currentTarget.value
+
+    updateSearchBy : (e) ->
+      value = e.currentTarget.value
+      @$searchInput.attr 'placeholder', @getSearchPlaceholder value
+      @collection.setParam 'searchBy', value
+
+    updatePolicyState : (e) ->
+      $input = $(e.currentTarget)
+      @policyState[$input.attr('name')] = $input.prop 'checked'
+      @collection.setParam 'policyState', @determinePolicyState()
+
+    getSearchPlaceholder : (value) ->
+      if value is 'property-address'
+        'Enter street number and name'
+      else if value is 'quote-policy-number'
+        'Enter Quote or Policy number'
+      else
+        'Enter search terms'
+
+    determinePolicyState : ->
+      p = @policyState.policy
+      q = @policyState.quote
+      if p and not q
+        'policy'
+      else if q and not p
+        'quote'
+      else
+        'default'
 
     renderPagination : (collection) ->
       currentPage = collection.page
@@ -163,10 +214,21 @@ define [
     # Error callback handles aborted requests, in addition to errors
     callbackError : (collection, response) ->
       @toggleLoader false
-      if response?.statusText is 'abort'
-        @Amplify.publish @cid, 'notice', "Request aborted.", 3000
+      response = response or {}
+      if response.statusText is 'abort'
+        @Amplify.publish @cid, 'notice', "Request canceled.", 3000
+      else if response.statusText is 'timeout'
+        @Amplify.publish(@cid
+          'warning'
+          'Your search has timed out waiting for service. Please try again later.'
+          5000
+          )
       else
-        @Amplify.publish @cid, 'warning', "There was a problem with this request: #{response.status} - #{response.statusText}"
+        @Amplify.publish(@cid
+          'warning'
+          "There was a problem with this request: #{response.status} - #{response.statusText}"
+          5000
+          )
 
     callbackInvalid : (collection, msg) ->
       @toggleLoader false

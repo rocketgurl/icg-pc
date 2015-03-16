@@ -1,0 +1,33 @@
+<!-- Product: OFCC HO3 Texas -->
+<form action="unlock_policy" method="get" accept-charset="utf-8">
+	<div id="content">
+		<div id="content_header">
+			<h2>Unlock {{policyId}}</h2>
+		</div>
+		<div class="content_body">
+			{{#policyOverview}}
+			<section class="policyOverview">
+				<h1>Policy Overview</h1>
+				<ul>
+					<li>{{InsuredFirstName}} {{InsuredMiddleName}} {{InsuredLastName}}</li>
+					<li>{{InsuredMailingAddressLine1}}</li>
+					<li>{{InsuredMailingAddressLine2}}</li>
+					<li>{{InsuredMailingAddressCity}}, {{InsuredMailingAddressState}} {{InsuredMailingAddressZip}}</li>
+				</ul>
+			</section>
+			{{/policyOverview}}
+			<fieldset class="columnActions">
+				<div class="column">
+					<section class="ipm-action-links unlock-links">
+						<ul>
+							<li><a name="unlock">Click to unlock {{policyId}}</a>
+						</ul>
+					</section>
+				</div>
+			</fieldset>
+			<div class="form_actions">
+				<a href="home">Nevermind, go back</a>
+			</div>
+		</div>
+	</div>
+</form>

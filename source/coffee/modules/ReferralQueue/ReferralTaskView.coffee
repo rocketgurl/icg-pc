@@ -5,7 +5,7 @@ define [
 
   ReferralTaskView = BaseView.extend
 
-    tagName : 'tr'
+    className : 'tr'
 
     events :
       "click" : "openPolicy"

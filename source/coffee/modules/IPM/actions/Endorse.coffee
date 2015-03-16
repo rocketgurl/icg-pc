@@ -359,8 +359,6 @@ define [
               $parent = @wrapField "EarthquakeCoverage"
               if ($parent.val() == '100')
                 $el.val('1500')
-              else
-                $el.val(false)
             ]
         ]
       ,

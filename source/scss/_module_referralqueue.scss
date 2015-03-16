@@ -1,5 +1,6 @@
 header.module-referrals {
-  margin: 0 0 20px 0;
+  padding-bottom: 20px;
+
   h1 {
     float: left;
     margin: 0 20px 0 0;
@@ -31,12 +32,12 @@ header.module-referrals {
   @extend %menu-base;
 }
 
-.table.module-referrals {
-  > thead > tr > th {
+.div-table.module-referrals {
+  > .thead > .tr > .th {
     vertical-align: top;
   }
-  tbody {
-    > tr { cursor: pointer; }
+  .tbody {
+    > .tr { cursor: pointer; }
   }
   .label-success {
     font-size: inherit;
@@ -50,7 +51,6 @@ header.module-referrals {
       width: 14px;
     }
   }
-  .related-quote-id { min-width: 105px; }
   .assigned-to-underwriting { font-weight: bold; }
   .referral-status { text-transform: capitalize; }
 }

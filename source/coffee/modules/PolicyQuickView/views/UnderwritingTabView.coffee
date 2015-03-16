@@ -76,7 +76,8 @@ define [
 
     getUnderwritingData : ->
       data = @POLICY.getUnderwritingData()
-      @mapDataItemValues data
+      if _.isObject data
+        @mapDataItemValues data
 
     mapDataItemValues : (data) ->
       data.CoverageA                = @Helpers.formatLocaleNum data.CoverageA
