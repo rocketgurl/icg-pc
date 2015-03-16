@@ -46,6 +46,9 @@ define [
       # Special param to enable fetching of all policies requiring renewal underwriting
       if @params.renewalreviewrequired
         @collection.renewalreviewrequired = true
+      else
+        # For regular search, default to quote-policy number
+        @collection.setParam 'searchBy', 'quote-policy-number'
 
       @render()
 
