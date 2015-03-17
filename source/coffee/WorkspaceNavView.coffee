@@ -61,9 +61,6 @@ define [
       $a = $(e.currentTarget)
       @$sub_el.find('a').removeClass()
       $a.addClass 'on'
-
-      @options.controller.set_business_namespace()
-
       @toggle_nav_slide()
 
 

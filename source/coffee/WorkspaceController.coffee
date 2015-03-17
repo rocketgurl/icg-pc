@@ -408,7 +408,6 @@ define [
               # only 1 context, as is the case for the vast majority of users
               if workspaceRoutes.length is 1
                 @Router.navigate(workspaceRoutes[0], { trigger : true })
-                @set_business_namespace()
 
               # Otherwise, toggle the workspace nav
               else
@@ -450,7 +449,6 @@ define [
                 @current_state = model.get 'workspace'
                 model.build_name()
                 @update_address()
-                @set_business_namespace()
                 true
               error : (model, resp) =>
                 # Make a new WorkspaceState as we had a problem.
@@ -536,6 +534,8 @@ define [
 
       # Set breadcrumb
       @set_breadcrumb(data)
+
+      @set_business_namespace()
 
       # Store our workplace information in localStorage
       @set_nav_state()
