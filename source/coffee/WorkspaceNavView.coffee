@@ -20,9 +20,15 @@ define [
       # our subnav is not in $el
       $('#button-workspace').off('click').on 'click', @toggle_nav_slide
 
-    render : () ->
+    render : ->
       @$el.prepend(@options.main_nav)
       @$sub_el.html(@options.sub_nav)
+
+      # Ensure that the navigation indicates current state when first opened
+      if current_state = @options.controller.current_state
+        {env, business, context, app} = current_state
+        @$("li a[data-pc=#{business}]").trigger('click')
+        @$("#nav-#{env}-#{business}-#{context}-#{app}").addClass('on')
 
     destroy : ->
       @$el.find('.main-nav').remove()
@@ -71,12 +77,6 @@ define [
     #
     toggle_nav_slide : (e) ->
       e.preventDefault() if _.isObject e
-
-      # Ensure that the navigation indicates current state when opened
-      if current_state = @options.controller.current_state
-        {env, business, context, app} = current_state
-        @$("li a[data-pc=#{business}] span").trigger('click')
-        @$("#nav-#{env}-#{business}-#{context}-#{app}").addClass('on')
       @$el.slideToggle()
 
     #### Show Nav
