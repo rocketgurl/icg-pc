@@ -696,10 +696,7 @@ define [
 
     set_business_namespace : ->
       if business = @current_state?.business
-        if business is 'cru'
-          $('body').addClass('is-sagesure').removeClass('is-fednat')
-        if business is 'fnic'
-          $('body').addClass('is-fednat').removeClass('is-sagesure')
+        $('body').removeClass().addClass("is-#{business}")
 
     initAssigneeListView : ->
       @assigneeListView = new AssigneeListView
