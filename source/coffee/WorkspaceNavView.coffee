@@ -58,14 +58,10 @@ define [
     # Toggle on/off main & subnav items
     #
     toggle_sub_nav : (e) ->
-      e.preventDefault()
       $a = $(e.currentTarget)
-
       @$sub_el.find('a').removeClass()
-      $a.addClass('on')
+      $a.addClass 'on'
 
-      # Tell the Router to trigger the app
-      @options.router.navigate($a.attr('href'), { trigger : true })
       @options.controller.set_business_namespace()
 
       @toggle_nav_slide()
