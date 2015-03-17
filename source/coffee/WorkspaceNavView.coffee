@@ -5,7 +5,7 @@ define [
   WorkspaceNavView = BaseView.extend
 
     events :
-      "click li a"                   : "toggle_main_nav"
+      "click .main-nav > li > a"     : "toggle_main_nav"
       "click #workspace-subnav li a" : "toggle_sub_nav"
 
     initialize : (options) ->
