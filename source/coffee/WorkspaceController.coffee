@@ -157,9 +157,10 @@ define [
     state_exists :
       valid_workspace \
       (app) ->
-        saved_apps = @workspace_state.get 'apps'
-        _.find saved_apps, (saved) =>
-          saved.app is app.app
+        if _.isObject app
+          saved_apps = @workspace_state.get 'apps'
+          _.find saved_apps, (saved) =>
+            saved.app is app.app
 
 
     # Try and keep the localStorage version of app state
@@ -603,7 +604,9 @@ define [
       # If app is not saved in @workspace_state and is not the
       # workspace defined app then we need to add it to our
       # stack of saved apps
-      if @state_exists(app)?
+      if _.isUndefined app
+        return false
+      else if @state_exists(app)?
         @toggle_apps app.app
       else
         @state_add app
