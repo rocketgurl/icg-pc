@@ -44,7 +44,7 @@ define [
     toggle_main_nav : (e) ->
       e.preventDefault()
 
-      $a = $(e.target).parent() # stash link
+      $a = $(e.currentTarget)
       $li = $a.parent() # stash li
       $li.addClass('open')
       $li.siblings().removeClass 'open' # Toggle all main nav items off
