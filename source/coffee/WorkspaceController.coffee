@@ -433,38 +433,58 @@ define [
     # Attempt to setup and launch workspace based on localStorage
     #
     check_workspace_state : ->
-      # Hit localStorage directly with Amplify
-      if !_.isFunction(@Amplify.store)
-        @check_workspace_state()
       raw_storage = @Amplify.store('ics_policy_central')
-      # If already a PC2 object then add a model with its ID and fetch()
-      # otherwise create a new model (which will get a new GUID)
-      if raw_storage?
-        raw_id = _.keys(raw_storage)[0]
-        if raw_id?
-          workspaces = @Workspaces.add(
-              id : raw_id
-            )
-          @workspace_state = workspaces.get(raw_id)
-          @workspace_state.fetch(
-              success : (model, resp) =>
-                @current_state = model.get 'workspace'
-                model.build_name()
-                @update_address()
-                true
-              error : (model, resp) =>
-                # Make a new WorkspaceState as we had a problem.
-                @Amplify.publish 'controller',
-                                 'notice',
-                                 "We had an issue with your saved state. Not major, but we're starting from scratch."
-                @workspace_state = @Workspaces.create()
-                true
-            )
-          true
+      console.log raw_storage
+
+      storage = @workspaceStateCollection
+      @current_state = @current_state or {}
+
+      if storage.length
+        console.log 'COLLECTION LENGTH', storage.length
+        @workspace_state = storage.retrieve @current_state
+        unless _.isObject @workspace_state
+          console.log ' 111 NO STATE RETRIEVED !!!'
+          @workspace_state = storage.first()
+          @current_state = @workspace_state.get 'workspace'
+        console.log storage.toJSON()
+        console.log 'current_state', @current_state
+        console.log 'workspace_state', @workspace_state
+        @navigation_view.setState()
+        true
       else
-        # If no localStorage data then make a stub object
+        console.log 'COLLECTION EMPTY'
         @workspace_state = {}
         false
+
+      # If already a PC2 object then add a model with its ID and fetch()
+      # otherwise create a new model (which will get a new GUID)
+      # if @workspaceStateCollection.length
+      #   @workspace_state = @workspaceStateCollection.retrieve state
+
+      #   if raw_id?
+      #     # workspaces = @workspaceStateCollection.add(
+      #     #     id : raw_id
+      #     #   )
+      #     # @workspace_state = workspaces.get(raw_id)
+      #     # @workspace_state.fetch(
+      #     #     success : (model, resp) =>
+      #     #       # @current_state = model.get 'workspace'
+      #     #       # model.build_name()
+      #     #       # @update_address()
+      #     #       true
+      #     #     error : (model, resp) =>
+      #     #       # Make a new WorkspaceState as we had a problem.
+      #     #       @Amplify.publish 'controller',
+      #     #                        'notice',
+      #     #                        "We had an issue with your saved state. Not major, but we're starting from scratch."
+      #     #       @workspace_state = @workspaceStateCollection.create()
+      #     #       true
+      #     #   )
+      #     true
+      # else
+      #   # If no localStorage data then make a stub object
+      #   @workspace_state = @workspaceStateCollection.create state
+      #   false
 
 
     #### Setup Search Storage
