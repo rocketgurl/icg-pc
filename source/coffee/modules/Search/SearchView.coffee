@@ -46,9 +46,11 @@ define [
       # Special param to enable fetching of all policies requiring renewal underwriting
       if @params.renewalreviewrequired
         @collection.renewalreviewrequired = true
-      else
-        # For regular search, default to quote-policy number
-        @collection.setParam 'searchBy', 'quote-policy-number'
+
+      # NOT DEFAULTING TO QUOTE_POLICY_NUMBER UNTIL SEARCH IS FIXED IN PROD
+      # else
+      #   # For regular search, default to quote-policy number
+      #   @collection.setParam 'searchBy', 'quote-policy-number'
 
       @render()
 
@@ -207,7 +209,7 @@ define [
 
       # check for empty response
       if collection.length is 0
-        @Amplify.publish @cid, 'notice', "No policies found when searching for #{collection.q}", 3000
+        @Amplify.publish @cid, 'notice', "No results found when searching for \"#{collection.q}\"", 3000
         return
 
       @renderPolicies collection
