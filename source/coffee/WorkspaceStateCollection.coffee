@@ -1,20 +1,17 @@
 define [
-  'BaseCollection',
-  'WorkspaceStateModel',
-  'WorkspaceController'
-], (BaseCollection, WorkspaceStateModel, WorkspaceController) ->
+  'BaseCollection'
+  'WorkspaceStateModel'
+], (BaseCollection, WorkspaceStateModel) ->
 
   #### Manage multiple Workspaces
   #
   WorkspaceStateCollection = BaseCollection.extend
 
-    model: WorkspaceStateModel
+    model : WorkspaceStateModel
 
     # Return model by name, which is generated from current_state obj
-    retrieve : (current_state) ->
-      if !current_state?
-        return false
-      @where({
-        name : "#{current_state.business}_#{current_state.context}_#{current_state.env}"
-        })
-
+    retrieve : (state) ->
+      unless _.isEmpty state
+        @find (model) ->
+          name = "#{state.business}_#{state.context}_#{state.env}"
+          name is model.get 'name'
