@@ -180,10 +180,10 @@ define [
 
         # Get the current workspace, if not present, then
         # we need to create a new workspace for the current_state
-        @workspace_state = @Workspaces.retrieve @current_state
+        @workspace_state = @workspaceStateCollection.retrieve @current_state
 
         if @workspace_state is undefined or _.isEmpty(@workspace_state)
-          @workspace_state = @Workspaces.create({ workspace : @current_state })
+          @workspace_state = @workspaceStateCollection.create({ workspace : @current_state })
 
         if _.isArray @workspace_state
           @workspace_state = @workspace_state[0]
