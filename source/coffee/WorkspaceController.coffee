@@ -388,7 +388,6 @@ define [
 
             # Instantiate our SearchContextCollection
             @navigation_view = new WorkspaceNavView({
-                router     : @Router
                 controller : @
                 el         : '#header-workspace-nav'
                 sub_el     : '#workspace-subnav'
