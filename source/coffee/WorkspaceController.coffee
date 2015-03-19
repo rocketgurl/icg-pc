@@ -412,11 +412,11 @@ define [
                 @Router.navigate(workspaceRoutes[0], { trigger : true })
 
               # Otherwise, toggle the workspace nav
-              else
+              else if _.isEmpty @current_state
                 @navigation_view.show_nav() # open main nav
-                @navigation_view.$el.find('li a span').first().trigger('click') # select first item
 
-            if @current_state?
+            unless _.isEmpty @current_state
+              console.log 'CURRENT STATE', @current_state
               @trigger 'launch'
 
         # Try to throw a useful error message when possible.
