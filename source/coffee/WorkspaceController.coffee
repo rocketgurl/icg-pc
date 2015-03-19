@@ -57,6 +57,8 @@ define [
       else
         false
 
+  storedStates = _.values amplify.store('ics_policy_central')
+
   #### Orchestrate the Workspace
   #
   # This controller wires together different views/models
@@ -64,29 +66,29 @@ define [
   # a switchboard operator.
   #
   WorkspaceController =
-    Amplify               : amplify
-    $workspace_header     : $('#header')
-    $workspace_el         : $('#workspace')
-    $workspace_footer     : $('#footer-main')
-    $workspace_button     : $('#button-workspace')
-    $workspace_breadcrumb : $('#breadcrumb')
-    $workspace_admin      : $('#header-admin')
-    $workspace_main_navbar: $('#header-navbar')
-    $workspace_canvas     : $('#canvas')
-    $workspace_nav        : $('#workspace nav')
-    $workspace_tabs       : $('#workspace #open-policy-tabs')
-    $no_policy_flag       : $('#workspace .no-policies')
-    Router                : new WorkspaceRouter()
-    Cookie                : new Cookie()
-    COOKIE_NAME           : 'ics360_PolicyCentral'
-    services              : ics360.services
-    global_flash          : new Messenger($('#canvas'), 'controller')
-    Workspaces            : new WorkspaceStateCollection()
-    workspace_zindex      : 30000
-    workspace_stack       : {} # store a ref to WorkspaceStack here
-    policyHistoryViews    : {}
-    APP_PC_AUTH           : 'Y29tLmljcy5hcHBzLnBvbGljeWNlbnRyYWw6N2FjZmU5NTAxNDlkYWQ4M2ZlNDdhZTdjZDdkODA2Mzg='
-    IXVOCAB_AUTH          : 'Y29tLmljcy5hcHBzLmluc2lnaHRjZW50cmFsOjVhNWE3NGNjODBjMzUyZWVkZDVmODA4MjkzZWFjMTNk'
+    Amplify                  : amplify
+    $workspace_header        : $('#header')
+    $workspace_el            : $('#workspace')
+    $workspace_footer        : $('#footer-main')
+    $workspace_button        : $('#button-workspace')
+    $workspace_breadcrumb    : $('#breadcrumb')
+    $workspace_admin         : $('#header-admin')
+    $workspace_main_navbar   : $('#header-navbar')
+    $workspace_canvas        : $('#canvas')
+    $workspace_nav           : $('#workspace nav')
+    $workspace_tabs          : $('#workspace #open-policy-tabs')
+    $no_policy_flag          : $('#workspace .no-policies')
+    Router                   : new WorkspaceRouter()
+    Cookie                   : new Cookie()
+    COOKIE_NAME              : 'ics360_PolicyCentral'
+    services                 : ics360.services
+    global_flash             : new Messenger($('#canvas'), 'controller')
+    workspaceStateCollection : new WorkspaceStateCollection storedStates
+    workspace_zindex         : 30000
+    workspace_stack          : {} # store a ref to WorkspaceStack here
+    policyHistoryViews       : {}
+    APP_PC_AUTH              : 'Y29tLmljcy5hcHBzLnBvbGljeWNlbnRyYWw6N2FjZmU5NTAxNDlkYWQ4M2ZlNDdhZTdjZDdkODA2Mzg='
+    IXVOCAB_AUTH             : 'Y29tLmljcy5hcHBzLmluc2lnaHRjZW50cmFsOjVhNWE3NGNjODBjMzUyZWVkZDVmODA4MjkzZWFjMTNk'
 
     # function to support document opening from pxClient flash module
     launchAttachmentWindow : (url, params) ->
