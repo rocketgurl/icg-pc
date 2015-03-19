@@ -354,16 +354,16 @@ define [
         @Amplify.store('ics_policy_central', null)
 
     handlePolicyHistory : ->
-      id = @workspace_state.id
+      if id = @workspace_state.id
 
-      # Instantiate a new view for each workspace_state model
-      unless _.isObject @policyHistoryViews[id]
-        @policyHistoryViews[id] = new PolicyHistoryView
-          controller     : this
-          workspaceState : @Workspaces.get id
-          el             : '#policy-history'
+        # Instantiate a new view for each workspace_state model
+        unless _.isObject @policyHistoryViews[id]
+          @policyHistoryViews[id] = new PolicyHistoryView
+            controller     : this
+            workspaceState : @workspaceStateCollection.get id
+            el             : '#policy-history'
 
-      @policyHistoryViews[id].render()
+        @policyHistoryViews[id].render()
 
     #### Get Configuration Files
     #
