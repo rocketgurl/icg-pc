@@ -41,6 +41,29 @@ define [
         serialized += "/#{key}:#{encodeURI(value)}"
       serialized
 
+    deparam : (query) ->
+      params = {}
+      decode = (val) ->
+        if val?
+          decodeURIComponent val
+        else
+          null
+
+      # remove preceding non-querystring,
+      # correct spaces, and split into pairs
+      query = query
+        .substring(query.indexOf('?') + 1)
+        .replace(/\+/g, ' ')
+        .split('&')
+
+      _.each query, (pair) ->
+        pair = pair.split '='
+        key = decode(pair[0])
+        val = decode(pair[1])
+        params[key] = val if key
+
+      params
+
     # Convenience method to create Canvas loader.
     # Returns loader object so it's easy to kill.
     loader : (id, diameter, color) ->
