@@ -162,39 +162,36 @@ define [
           _.find saved_apps, (saved) =>
             saved.app is app.app
 
+    setBaseRoute : ->
+      {env, business, context, app} = @current_state
+      @baseRoute = "workspace/#{env}/#{business}/#{context}/#{app}"
+
+    set_current_state : (env, business, context, app, module, params) ->
+      @current_state =
+        'env'      : env
+        'business' : business
+        'context'  : context
+        'app'      : app
+        'module'   : module ? null
+        'params'   : params ? null
 
     # Try and keep the localStorage version of app state
     # persisted across requests
-    set_nav_state : ->
+    set_workspace_state : ->
       if @current_state? and @workspace_state?
-
-        if @current_state is undefined
-          return false
-
         # If this is a string, then deserialize it
-        params = @current_state.params ? null
+        params = @current_state.params
         if _.isString(params)
-          params = Helpers.unserialize params
+          @current_state.params = Helpers.unserialize params
 
         # Get the current workspace, if not present, then
         # we need to create a new workspace for the current_state
         @workspace_state = @workspaceStateCollection.retrieve @current_state
-
-        if @workspace_state is undefined or _.isEmpty(@workspace_state)
-          @workspace_state = @workspaceStateCollection.create({ workspace : @current_state })
-
-        if _.isArray @workspace_state
-          @workspace_state = @workspace_state[0]
-
-        @workspace_state.set 'workspace', {
-          env      : @current_state.env
-          business : @current_state.business
-          context  : @current_state.context
-          app      : @current_state.app
-          module   : @current_state.module ? null
-          params   : params
-        }
+        if _.isEmpty @workspace_state
+          @workspace_state = @workspaceStateCollection.create
+            workspace : @current_state
         @workspace_state.save()
+        @navigation_view.setState()
 
     # Check for an identity cookie and check server for
     # validity. If no cookie present then just build the
