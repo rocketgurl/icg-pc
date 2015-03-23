@@ -31,9 +31,6 @@ define [
     isValid : ->
       @q?.length > 1 or @renewalreviewrequired
 
-    initialize : ->
-      @searchBy = 'quote-policy-number'
-
     sync : (method, collection, options) ->
       if @isValid()
         options = _.extend options,
