@@ -913,7 +913,6 @@ define [
         version       : $('#version-number').text()
         inject_point  : 'body'
         textProcessor : marked
-
       Herald.init herald_config
 
     # Kick off the show
