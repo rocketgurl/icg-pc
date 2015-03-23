@@ -332,19 +332,19 @@ define [
       if @navigation_view?
         @navigation_view.destroy()
         @navigation_view = null
-        @teardown_workspace()
+      @teardownWorkspace()
+      @destroyWorkspaceStates()
 
-      @destroy_workspace_model()
-
-    destroy_workspace_model :
-      valid_workspace \
-      ->
-        @workspace_state.destroy()
-        @workspace_state = null
-        @Amplify.store('ics_policy_central', null)
+    destroyWorkspaceStates : ->
+      if @workspace_state?
+        @workspace_state.destroy?()
+        delete @workspace_state
+        delete @current_state
+      @workspaceStateCollection?.reset()
+      @Amplify.store 'ics_policy_central', null
 
     handlePolicyHistory : ->
-      if id = @workspace_state.id
+      if id = @workspace_state?.id
 
         # Instantiate a new view for each workspace_state model
         unless _.isObject @policyHistoryViews[id]
