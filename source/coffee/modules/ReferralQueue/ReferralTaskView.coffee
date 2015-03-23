@@ -5,10 +5,9 @@ define [
 
   ReferralTaskView = BaseView.extend
 
-    className : 'tr'
+    tagName   : 'a'
 
-    events :
-      "click" : "openPolicy"
+    className : 'tr'
 
     initialize : (options) ->
       @PARENT_VIEW = options.parent_view
@@ -24,18 +23,10 @@ define [
         @$el.attr 'title', 'Assigned to Agent'
 
     render : ->
-      html = @Mustache.render tpl_row, @model.toJSON()
-      @$el.append html
-
-    openPolicy : (e) ->
-      e.preventDefault()
-      $el = $(e.currentTarget)
-      id = @model.get('relatedPolicyId') or @model.get('relatedQuoteId')
-
-      params =
-        url : @model.get 'relatedQuoteId'
-        label : "#{@model.get('insuredLastName')} #{id}"
-
-      @PARENT_VIEW?.MODULE.view.options.controller.launch_module('policyview', params)
-      @PARENT_VIEW?.MODULE.view.options.controller.Router.append_module('policyview', params)
+      data = @model.toJSON()
+      html = @Mustache.render tpl_row, data
+      href = "##{@PARENT_VIEW.MODULE.controller.baseRoute}/policy"
+      href += "/#{data.relatedQuoteId}/#{data.insuredLastName}"
+      href += "%20#{data.relatedPolicyId or data.relatedQuoteId}"
+      @$el.attr('href', href).append html
 
