@@ -20,7 +20,6 @@ define [
       'workspace/:env/:business/:context/:app/underwriting/referrals'     : 'underwritingReferralsView'
       'workspace/:env/:business/:context/:app/underwriting/renewalreview' : 'underwritingRenewalsView'
       'workspace/:env/:business/:context/:app/policy/:quotenum/:label'    : 'policyView'
-      # 'workspace/:env/:business/:context/:app/:module/*params' : 'module'
 
     initialize : ->
       @on 'all', -> console.log arguments
