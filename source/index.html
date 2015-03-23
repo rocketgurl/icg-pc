@@ -112,9 +112,9 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Underwriting <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="#" data-app="referral_queue">New Business Underwriting</a></li>
+            <li><a href="#" data-app="underwriting/referrals">New Business Underwriting</a></li>
             <li class="divider"></li>
-            <li class="renewal-review"><a href="#" data-app="renewalreview">Renewal Underwriting</a></li>
+            <li class="renewal-review"><a href="#" data-app="underwriting/renewalreview">Renewal Underwriting</a></li>
             <li class="divider renewal-review"></li>
             <li><a href="#" data-toggle="modal" data-target="#assignee-list-modal">Manage Referral Assignees</a></li>
           </ul>
@@ -268,7 +268,7 @@
 
   <!-- TEMPLATE: Workspace Tab -->
   <script type="text/template" id="tpl-workspace-tab">
-  <li{{{tab_class}}}><span class="glyphicon glyphicon-remove-circle" title="Close this tab" data-view="{{tab_url}}"></span><a href="{{tab_url}}">{{tab_label}}</a></li>
+  <li{{{tab_class}}}><span class="glyphicon glyphicon-remove-circle" title="Close this tab" data-view="{{tab_view}}"></span><a href="{{tab_url}}">{{tab_label}}</a></li>
   </script>
 
 </body>
