@@ -14,13 +14,12 @@ define [
     routes :
       'login'  : 'login'
       'logout' : 'logout'
+      'workspace/:env/:business/:context/:app/policy/:quotenum/:label' : 'policyView'
       'workspace/:env/:business/:context/:app/:module/*params' : 'module'
       'workspace/:env/:business/:context/:app' : 'workspace'
-      '*root' : 'root'
 
     initialize : (options) ->
-
-    root : (root) ->
+      @on 'all', -> console.log arguments
 
     # Render login form
     login : ->
@@ -31,33 +30,36 @@ define [
       @controller.trigger 'logout'
       @navigate('login', { trigger : true })
 
-    # Search parameters
-    module : (env, business, context, app, module, params) ->
-      @set_controller_state(env, business, context, app, module, params)
+    policyView : (env, business, context, app, quotenum, label) ->
+      module = 'policyview'
+      launchMethod = 'launch_module'
+      if app isnt @controller.current_state?.app
+        launchMethod = 'launch_workspace'
+      params = { url : quotenum, label : decodeURIComponent(label) }
+      @controller.set_current_state(env, business, context, app, module, params)
       if @controller.config?
-        # Parameter parsing
-        params = Helpers.unserialize params
-        @controller.launch_module module, params
+        @controller.set_workspace_state()
+        @controller[launchMethod](module, params)
+
+    # If a module is in the current workspace,
+    # simply launch the module. Otherwise, launch
+    # the new workspace
+    module : (env, business, context, app, module, params) ->
+      launchMethod = 'launch_module'
+      if app isnt @controller.current_state?.app
+        launchMethod = 'launch_workspace'
+      params = Helpers.unserialize params
+      @controller.set_current_state(env, business, context, app, module, params)
+      if @controller.config?
+        @controller.set_workspace_state()
+        @controller[launchMethod](module, params)
 
     # Parse workspace
     workspace : (env, business, context, app) ->
-      @set_controller_state(env, business, context, app)
-
-      # If we already have a configuration file then we should be ready to go
+      @controller.set_current_state(env, business, context, app)
       if @controller.config?
-        @controller.trigger 'launch'
-
-    # Set our workspace state in the controller
-    set_controller_state : (env, business, context, app, module, params) ->
-      @controller.current_state =
-        'env'      : env
-        'business' : business
-        'context'  : context
-        'app'      : app
-        'module'   : module ? null
-        'params'   : params ? null
-      @controller.set_nav_state()
-
+        @controller.set_workspace_state()
+        @controller.launch_workspace()
 
     # Build a path for modules (search, policyview) with the correct
     # named parameters, etc.
