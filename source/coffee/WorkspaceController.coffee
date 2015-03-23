@@ -225,7 +225,7 @@ define [
         $('#target').prepend('<div id="login-container" />')
 
       @login_view = new WorkspaceLoginView({
-          controller   : this
+          controller : this
         })
       @login_view.render()
 
