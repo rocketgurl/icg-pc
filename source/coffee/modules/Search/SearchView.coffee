@@ -102,13 +102,15 @@ define [
     renderPolicies : (collection) ->
       @$searchResultsTbody.empty()
       @searchPolicyViews = collection.map (model) =>
-        new SearchPolicyView
+        view = new SearchPolicyView
           model       : model
           controller  : @controller
           $target_el  : @$searchResultsTbody
+        @$searchResultsTbody.append view.render().$el
+        view
 
       if collection.length is 1
-        @searchPolicyViews[0].open_policy()
+        @searchPolicyViews[0].openPolicy()
 
     search : (e) ->
       e.preventDefault() if _.isObject e
