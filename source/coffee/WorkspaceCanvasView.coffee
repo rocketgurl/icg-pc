@@ -69,12 +69,20 @@ define [
 
     # Create tab for this view
     render_tab : (template) ->
-      @tab = $(Mustache.render template, {
-                tab_class : '',
-                tab_url : Helpers.id_safe(decodeURI(@el.id)),
-                tab_label : @app.app_label
-              })
-      @$tab_el.append(@tab)
+      data =
+        tab_class : ''
+        tab_view  : Helpers.id_safe(decodeURIComponent(@app.app))
+        tab_url   : @constructHref()
+        tab_label : @app.app_label
+      @tab = $(Mustache.render(template, data))
+      @$tab_el.append @tab
+
+    constructHref : ->
+      href = ''
+      if @app.params
+        href += "##{@controller.baseRoute}/policy"
+        href += "/#{@app.params.url}/#{encodeURIComponent(@app.app_label)}"
+      href
 
     # Put tab into active state
     activate : ->
@@ -116,12 +124,3 @@ define [
         if render?
           @module.render()
         )
-
-    # Launch a new app (tab) within the current workspace context
-    # Checks to make sure the app isn't already loaded first.
-    #
-    # @param `app` _Object_ application config object
-    #
-    launch_child_app : (module, app) ->
-      @options.controller.Router.append_module module, app.params.url
-      @options.controller.launch_module module, app
