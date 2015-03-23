@@ -1968,7 +1968,7 @@ ul:after { clear: both; }
 .pc-nav .dropdown-menu > li > a.disabled:hover, .pc-nav .policy-nav > ul.dropdown-menu > li > a.disabled.select, .pc-nav .dropdown-menu > li > a[disabled]:hover, .pc-nav .policy-nav > ul.dropdown-menu > li > a[disabled].select { background: transparent; }
 .pc-nav .renewal-review { display: none; }
 
-.is-sagesure .renewal-review { display: list-item; }
+.is-cru .renewal-review { display: list-item; }
 
 #workspace { position: relative; }
 #workspace:before, #workspace:after { content: " "; display: table; }
@@ -2074,6 +2074,7 @@ ul:after { clear: both; }
 .div-table .tr { margin-left: -15px; margin-right: -15px; border-top: 1px solid #dddddd; }
 .div-table .tr:before, .div-table .tr:after { content: " "; display: table; }
 .div-table .tr:after { clear: both; }
+.div-table a.tr { display: block; color: inherit; }
 .div-table .tr:first-child { border-top: 0; }
 .div-table .th, .div-table .td { position: relative; float: left; min-height: 1px; }
 .div-table > .thead > .tr > .th, .div-table > .thead > .tr > .td, .div-table > .tbody > .tr > .th, .div-table > .tbody > .tr > .td, .div-table > .tfoot > .tr > .th, .div-table > .tfoot > .tr > .td { overflow: hidden; padding: 8px; line-height: 1.42857; vertical-align: top; text-overflow: ellipsis; }
@@ -2661,7 +2662,7 @@ header.module-referrals .checkbox { padding: 0 10px; }
 #assignee-list-modal .list-status .list-loading { color: #5bc0de; }
 #assignee-list-modal .list-status .list-error { color: #d9534f; }
 
-.is-sagesure #assignee-list-modal .modal-dialog { width: 700px; }
+.is-cru #assignee-list-modal .modal-dialog { width: 700px; }
 
 .policyrep-container { padding: 0 1.8%; }
 .policyrep-container h1 { font-weight: bold; color: #002857; font-size: 24px; font-size: 2.4rem; text-shadow: 0 1px white; margin: 20px 0 0 0; }
