@@ -19,6 +19,7 @@ define [
       # because we can't use the built-in Backbone events, since
       # our subnav is not in $el
       $('#button-workspace').off('click').on 'click', @toggle_nav_slide
+      @render()
 
     render : ->
       @$el.prepend(@options.main_nav)
@@ -27,13 +28,14 @@ define [
 
     # Ensure that the navigation indicates current state
     setState : ->
-      if current_state = @options.controller.current_state
+      current_state = @options.controller.current_state
+      if _.isEmpty current_state
+        @$('#workspace-subnav li a').removeClass()
+        @$('li a[data-pc]').first().click()
+      else
         {env, business, context, app} = current_state
         @$("li a[data-pc=#{business}]").click()
         @$("#nav-#{env}-#{business}-#{context}-#{app}").addClass('on')
-      else
-        @$('#workspace-subnav li a').removeClass()
-        @$('li a[data-pc]').first().click()
 
     destroy : ->
       @$el.find('.main-nav').remove()
@@ -67,7 +69,6 @@ define [
       @$sub_el.find('a').removeClass()
       $a.addClass 'on'
       @toggle_nav_slide()
-
 
     #### Toggle Nav Slide
     #
