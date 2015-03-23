@@ -242,30 +242,25 @@ define [
     # Instantiate a new user and check ixDirectory
     # for valid credentials
     check_credentials : (username, password) ->
-      @user = new UserModel
-        urlRoot  : @services.ixdirectory + 'identities'
-        username : username
-        password : password
+      unless @user?
+        @user = new UserModel
+          urlRoot  : @services.ixdirectory + 'identities'
+          username : username
+          password : password
 
-      # retrieve an identity document or fail
-      @user.fetch(
+        # retrieve an identity document or fail
+        @user.fetch
           success : (model, resp) =>
-            # The model has to figure out what the
-            # response state was
+            # The model has to figure out
+            # what the response state was
             model.response_state()
-
-            fetch_state = @user.get('fetch_state')
-
-            if fetch_state?
-              fetch_state = if _.has(fetch_state, 'code') then fetch_state.code else null
-
-            switch fetch_state
-              when "200" then @login_success(model, resp)
-              else @login_fail(model, resp, fetch_state)
-
+            status = model.get 'fetch_state'
+            if _.isObject(status) and status.code is '200'
+              @login_success model, resp
+            else
+              @login_fail model, resp, status.code
           error : (model, resp) =>
             @response_fail model, resp
-        )
 
       @user
 
