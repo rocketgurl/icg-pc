@@ -443,55 +443,54 @@ define [
     # Attempt to setup and launch workspace based on info in the menu Obj
     #
     launch_workspace : ->
-      # If not logged in then back to login
-      if @is_loggedin == false
-        return
+      if @isLoggedIn()
+        menu = @config.get 'menu'
+        if menu == false
+          @Amplify.publish 'controller',
+                           'warning',
+                           "Sorry, you do not have access to any items in this environment."
+          return
 
-      menu = @config.get 'menu'
-      if menu == false
-        @Amplify.publish 'controller',
-                         'warning',
-                         "Sorry, you do not have access to any items in this environment."
-        return
+        @setBaseRoute()
 
-      group_label = menu[@current_state.business].contexts[@current_state.context].label
-      apps = menu[@current_state.business].contexts[@current_state.context].apps
+        group_label = menu[@current_state.business].contexts[@current_state.context].label
+        apps = menu[@current_state.business].contexts[@current_state.context].apps
 
-      app = _.find apps, (app) =>
-        app.app is @current_state.app
+        app = _.find apps, (app) =>
+          app.app is @current_state.app
 
-      # We need to destroy any existing tabs in the workspace
-      # before loading a new one. We do this recursively to prevent
-      # race conditions (new tabs pushing onto the stack as old ones pop off)
-      @teardown_workspace()
+        # We need to destroy any existing tabs in the workspace
+        # before loading a new one. We do this recursively to prevent
+        # race conditions (new tabs pushing onto the stack as old ones pop off)
+        @teardownWorkspace()
 
-      @launch_app app
-      @initAssigneeListView()
+        @launch_app app
+        @initAssigneeListView()
 
-      if @check_persisted_apps()
-        # Is this a search? attempt to launch it
-        if @current_state.module?
-          @launch_module(@current_state.module, @current_state.params)
-        @reassess_apps()
+        if @check_persisted_apps()
+          # Is this a search? attempt to launch it
+          if @current_state.module?
+            @launch_module(@current_state.module, @current_state.params)
+          @reassess_apps()
 
-      data =
-        business : @current_state.business
-        group    : MenuHelper.check_length(group_label)
-        app      : app.app_label
+        data =
+          business : @current_state.business
+          group    : MenuHelper.check_length(group_label)
+          app      : app.app_label
 
-      # Set breadcrumb
-      @set_breadcrumb(data)
+        # Set breadcrumb
+        @set_breadcrumb(data)
 
-      @set_business_namespace()
+        @set_business_namespace()
 
-      # Store our workplace information in localStorage
-      @set_nav_state()
+        # Store our workplace information in localStorage
+        @set_workspace_state()
 
-      # Initialize Policy History (Recently Viewed) handling
-      @handlePolicyHistory()
+        # Initialize Policy History (Recently Viewed) handling
+        @handlePolicyHistory()
 
-      # Setup service URLs
-      @configureServices()
+        # Setup service URLs
+        @configureServices()
 
     # Scan config model and dynamically update services object
     # to use the correct URLs
