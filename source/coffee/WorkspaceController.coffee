@@ -400,83 +400,36 @@ define [
     callback_delay : (ms, func) =>
       setTimeout func, ms
 
+    determineNavState : (menu) ->
+      @navigation_view.setState()
+      unless @workspaceStateCollection.length
+        # attempt to launch the workspace immediately if user has access to
+        # only 1 context, as is the case for the vast majority of users
+        workspaceRoutes = MenuHelper.getWorkspaceRoutes menu
+        if workspaceRoutes.length is 1
+          @Router.navigate(workspaceRoutes[0], { trigger : true })
+
+        # Otherwise, toggle the workspace nav
+        else if _.isEmpty @current_state
+          @navigation_view.show_nav() # open main nav
+
     #### Check Workplace State
     #
     # Attempt to setup and launch workspace based on localStorage
-    #
-    check_workspace_state : ->
-      raw_storage = @Amplify.store('ics_policy_central')
-      console.log raw_storage
-
-      storage = @workspaceStateCollection
+    setupWorkspaceState : (menu) ->
+      rawStorage = @Amplify.store 'ics_policy_central'
+      storage    = @workspaceStateCollection.reset _.values(rawStorage)
       @current_state = @current_state or {}
-
       if storage.length
-        console.log 'COLLECTION LENGTH', storage.length
         @workspace_state = storage.retrieve @current_state
         unless _.isObject @workspace_state
-          console.log ' 111 NO STATE RETRIEVED !!!'
           @workspace_state = storage.first()
           @current_state = @workspace_state.get 'workspace'
-        console.log storage.toJSON()
-        console.log 'current_state', @current_state
-        console.log 'workspace_state', @workspace_state
-        @navigation_view.setState()
-        true
       else
-        console.log 'COLLECTION EMPTY'
         @workspace_state = {}
-        false
-
-      # If already a PC2 object then add a model with its ID and fetch()
-      # otherwise create a new model (which will get a new GUID)
-      # if @workspaceStateCollection.length
-      #   @workspace_state = @workspaceStateCollection.retrieve state
-
-      #   if raw_id?
-      #     # workspaces = @workspaceStateCollection.add(
-      #     #     id : raw_id
-      #     #   )
-      #     # @workspace_state = workspaces.get(raw_id)
-      #     # @workspace_state.fetch(
-      #     #     success : (model, resp) =>
-      #     #       # @current_state = model.get 'workspace'
-      #     #       # model.build_name()
-      #     #       # @update_address()
-      #     #       true
-      #     #     error : (model, resp) =>
-      #     #       # Make a new WorkspaceState as we had a problem.
-      #     #       @Amplify.publish 'controller',
-      #     #                        'notice',
-      #     #                        "We had an issue with your saved state. Not major, but we're starting from scratch."
-      #     #       @workspace_state = @workspaceStateCollection.create()
-      #     #       true
-      #     #   )
-      #     true
-      # else
-      #   # If no localStorage data then make a stub object
-      #   @workspace_state = @workspaceStateCollection.create state
-      #   false
-
-
-    #### Setup Search Storage
-    #
-    # Setup collection to save search views in local storage. We
-    # need to attach this to the controller to ensure
-    # that models are passed around to many instances of
-    # SearchModule. It's a hack, but it works for now.
-    setup_search_storage : ->
-      collection = new SearchContextCollection()
-
-      @SEARCH =
-        saved_searches : collection
-
-      @SEARCH.saved_searches.controller = this # so we can phone home
-      @SEARCH.saved_searches.fetch()
-      @SEARCH.saved_searches
 
     #### Check logged in state
-    is_loggedin : ->
+    isLoggedIn : ->
       if !@user?
         @Amplify.publish 'controller',
                          'notice',
