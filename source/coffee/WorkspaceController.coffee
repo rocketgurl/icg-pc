@@ -165,19 +165,12 @@ define [
     setBaseRoute : ->
       {env, business, context, app} = @current_state
       @baseRoute = "workspace/#{env}/#{business}/#{context}/#{app}"
-
-    set_current_state : (env, business, context, app, module, params) ->
-      @current_state =
-        'env'      : env
-        'business' : business
-        'context'  : context
-        'app'      : app
-        'module'   : module ? null
-        'params'   : params ? null
+      unless location.hash
+        @Router.navigate @baseRoute
 
     # Try and keep the localStorage version of app state
     # persisted across requests
-    set_workspace_state : ->
+    setWorkspaceState : ->
       if @current_state? and @workspace_state?
         # If this is a string, then deserialize it
         params = @current_state.params
@@ -442,7 +435,7 @@ define [
     #
     # Attempt to setup and launch workspace based on info in the menu Obj
     #
-    launch_workspace : ->
+    launch_workspace : (module, params) ->
       if @isLoggedIn()
         menu = @config.get 'menu'
         if menu == false
@@ -468,9 +461,8 @@ define [
         @initAssigneeListView()
 
         if @check_persisted_apps()
-          # Is this a search? attempt to launch it
-          if @current_state.module?
-            @launch_module(@current_state.module, @current_state.params)
+          if module
+            @launch_module module, params
           @reassess_apps()
 
         data =
@@ -484,7 +476,7 @@ define [
         @set_business_namespace()
 
         # Store our workplace information in localStorage
-        @set_workspace_state()
+        @setWorkspaceState()
 
         # Initialize Policy History (Recently Viewed) handling
         @handlePolicyHistory()
@@ -564,42 +556,25 @@ define [
       for workspace in default_workspace
         @create_workspace workspace.module, workspace.app
 
-    #### Launch Search App w/ params
-    #
-    # We need to launch a Search Module preloaded with
-    # query params.
+    #### Launch A Module App w/ params
     #
     # @param `params` _Object_ query params
     #
     launch_module : (module, params) ->
       if @isLoggedIn()
-        params ?= {}
-
-        if !params.q and params.url?
-          url = params.url
-
-        url = params.q if params.q?
-        url = 'Renewal Underwriting' if params.renewalreviewrequired?
-
+        params = params or {}
         safe_app_name = "#{Helpers.id_safe(module)}"
-        safe_app_name += "_#{Helpers.id_safe(url)}" if url?
+        if params.url
+          safe_app_name += "_#{Helpers.id_safe(params.url)}"
 
-        label = params.label || "#{Helpers.uc_first(module)}: #{url}"
-
-        # Setup the app object to launch policy view with
-        app =
-          app       : safe_app_name
-          app_label : label
-          params    : params
-
-        app.app.params = params
-
-        # If doesn't already exist launch it
-        stack_check = @workspace_stack.get safe_app_name
-        if !stack_check?
-          @launch_app app
-        else
+        if @workspace_stack.has safe_app_name
           @toggle_apps safe_app_name
+        else
+          label = params.label or "#{Helpers.uc_first(module)}: #{params.url}"
+          @launch_app
+            app       : safe_app_name
+            app_label : label
+            params    : params
 
     # Instantiate a new WorkspaceCanvasView
     #
@@ -620,13 +595,11 @@ define [
     # If there are other apps persisted in localStorage we need
     # to launch those as well
     check_persisted_apps : ->
-      if !@workspace_state? || _.isEmpty(@workspace_state)
-        return false
-      saved_apps = @workspace_state.get 'apps'
-      unless _.isEmpty saved_apps
-        for app in saved_apps
+      unless _.isEmpty @workspace_state
+        _.each @workspace_state.get('apps'), (app) =>
           @launch_app app
-      return true
+        return true
+      false
 
     #### Update Address
     #
@@ -692,26 +665,16 @@ define [
       @$workspace_nav.hide()
       @resize_workspace()
 
-    #### Drop a click listener on all tabs
+    # Tab close icon
     attach_tab_handlers : ->
-      # Tabs
-      @$workspace_tabs.on 'click', 'li a', (e) =>
-        e.preventDefault()
-        app_name = $(e.target).attr('href')
-
-        # Fallback for search tabs
-        if app_name is undefined
-          app_name = $(e.target).parent().attr('href')
-
-        @toggle_apps app_name
-
-      # Tab close icon
       @$workspace_tabs.on 'click', 'li .glyphicon-remove-circle', (e) =>
         e.preventDefault()
         policyView = $(e.currentTarget).data 'view'
         @workspace_stack.get(policyView).destroy()
         @reassess_apps()
 
+    # HACK: Because we don't want to re-render the navbar for each
+    # separate workspace, we handle the routing programatically here.
     attach_navbar_handlers : ->
       @$workspace_main_navbar.on 'click', 'li > a', (e) =>
         $el = $(e.currentTarget)
@@ -722,12 +685,7 @@ define [
 
         # Launch module if [data-app="<app>"] is present
         if app_name = $el.data 'app'
-          if @workspace_stack.has app_name
-            @toggle_apps app_name
-          else
-            rules = new AppRules { app: app_name }
-            if rules[app_name]
-              @launch_app(rules[app_name].app, rules)
+          @Router.navigate "#{@baseRoute}/#{app_name}", { trigger : true }
 
         e.preventDefault()
 
@@ -762,35 +720,11 @@ define [
     handle_policy_count : ->
       @$no_policy_flag[if @workspace_stack.policyCount > 0 then 'hide' else 'show']()
 
-    #### Set Active Url
-    #
-    # When a tab is clicked, use the app_name to find
-    # the active tab and dig into it to get the module
-    # name and params of that tab module. Then use this
-    # to switch the url to what it should be.
-    #
-    # @param `app_name` _String_ app_name from tab href
-    #
-    set_active_url : (app_name) ->
-      for view in @workspace_stack.stack
-        if app_name == view.app.app
-          module = view.module
-          if module? and module.app? and module.app.params?
-            module_name = new AppRules(module.app).app_name
-            @Router.append_module module_name, module.app.params
-          else
-            @Router.remove_module()
-
-        #  Failsafe for default search tab with no name
-        if app_name is undefined
-          @Router.remove_module()
-
     # Loop through app stack and switch app states
     toggle_apps : (app_name) ->
       for view in @workspace_stack.stack
         if app_name == view.app.app
           @active_view = view
-          @set_active_url app_name
           view.activate()
           true
         else
@@ -799,20 +733,15 @@ define [
     # Look for active views in the stack, if there are none
     # then activate the last one in the stack.
     reassess_apps : ->
-      # No stack, no need
-      return false if @workspace_stack.stack.length is 0
-
-      active = _.filter @workspace_stack.stack, (view) ->
-        return view.is_active()
-
-      if active.length is 0
-        if @workspace_stack.stack.length > 2
-          last_view = _.last @workspace_stack.stack
-          @toggle_apps last_view.app.app
-        else
-          # Activate search tab by default
-          search_view = @workspace_stack.stack[0]
-          @toggle_apps search_view.app.app
+      if @workspace_stack.stack.length
+        active = _.find @workspace_stack.stack, (view) ->
+          view.is_active()
+        unless active
+          if @workspace_stack.stack.length > 2
+            view = _.last @workspace_stack.stack
+          else # Activate first app in the stack
+            view = @workspace_stack.stack[0]
+          @toggle_apps view.app.app
 
     # Tell every app in the stack to commit seppuku
     teardownWorkspace : ->
