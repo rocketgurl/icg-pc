@@ -384,30 +384,12 @@ define [
                 main_nav   : @config.get('menu_html').main_nav
                 sub_nav    : @config.get('menu_html').sub_nav
               })
-            @navigation_view.render()
 
-            # If our current_state is set then we should go ahead and launch.
-            # We do this here to ensure we have @config set before attempting to
-            # launch, which would be... bad.
-            #
-            # If current_state is not set, then we check localStorage to see if
-            # there was a previous state saved, and try to use that one.
-            #
-            if @check_workspace_state() is false # Check for localStorage state
-              workspaceRoutes = MenuHelper.getWorkspaceRoutes menu
-
-              # attempt to launch the workspace immediately if user has access to
-              # only 1 context, as is the case for the vast majority of users
-              if workspaceRoutes.length is 1
-                @Router.navigate(workspaceRoutes[0], { trigger : true })
-
-              # Otherwise, toggle the workspace nav
-              else if _.isEmpty @current_state
-                @navigation_view.show_nav() # open main nav
+            @setupWorkspaceState()
+            @determineNavState menu
 
             unless _.isEmpty @current_state
-              console.log 'CURRENT STATE', @current_state
-              @trigger 'launch'
+              @launch_workspace()
 
         # Try to throw a useful error message when possible.
         error : (model, resp) =>
