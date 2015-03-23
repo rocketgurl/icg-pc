@@ -41,6 +41,8 @@ define [
         serialized += "/#{key}:#{encodeURI(value)}"
       serialized
 
+    # lite version of $.deparam
+    # roughly the opposite of $.param
     deparam : (query) ->
       params = {}
       decode = (val) ->
