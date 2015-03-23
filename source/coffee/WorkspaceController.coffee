@@ -57,8 +57,6 @@ define [
       else
         false
 
-  storedStates = _.values amplify.store('ics_policy_central')
-
   #### Orchestrate the Workspace
   #
   # This controller wires together different views/models
@@ -83,7 +81,7 @@ define [
     COOKIE_NAME              : 'ics360_PolicyCentral'
     services                 : ics360.services
     global_flash             : new Messenger($('#canvas'), 'controller')
-    workspaceStateCollection : new WorkspaceStateCollection storedStates
+    workspaceStateCollection : new WorkspaceStateCollection()
     workspace_zindex         : 30000
     workspace_stack          : {} # store a ref to WorkspaceStack here
     policyHistoryViews       : {}
