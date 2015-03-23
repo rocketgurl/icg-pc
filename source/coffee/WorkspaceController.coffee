@@ -572,34 +572,34 @@ define [
     # @param `params` _Object_ query params
     #
     launch_module : (module, params) ->
-      # We need to sanitize this a little
-      params ?= {}
+      if @isLoggedIn()
+        params ?= {}
 
-      if !params.q and params.url?
-        url = params.url
+        if !params.q and params.url?
+          url = params.url
 
-      url = params.q if params.q?
-      url = 'Renewal Underwriting' if params.renewalreviewrequired?
+        url = params.q if params.q?
+        url = 'Renewal Underwriting' if params.renewalreviewrequired?
 
-      safe_app_name = "#{Helpers.id_safe(module)}"
-      safe_app_name += "_#{Helpers.id_safe(url)}" if url?
+        safe_app_name = "#{Helpers.id_safe(module)}"
+        safe_app_name += "_#{Helpers.id_safe(url)}" if url?
 
-      label = params.label || "#{Helpers.uc_first(module)}: #{url}"
+        label = params.label || "#{Helpers.uc_first(module)}: #{url}"
 
-      # Setup the app object to launch policy view with
-      app =
-        app       : safe_app_name
-        app_label : label
-        params    : params
+        # Setup the app object to launch policy view with
+        app =
+          app       : safe_app_name
+          app_label : label
+          params    : params
 
-      app.app.params = params
+        app.app.params = params
 
-      # If doesn't already exist launch it
-      stack_check = @workspace_stack.get safe_app_name
-      if !stack_check?
-        @launch_app app
-      else
-        @toggle_apps safe_app_name
+        # If doesn't already exist launch it
+        stack_check = @workspace_stack.get safe_app_name
+        if !stack_check?
+          @launch_app app
+        else
+          @toggle_apps safe_app_name
 
     # Instantiate a new WorkspaceCanvasView
     #
@@ -657,7 +657,11 @@ define [
       if !@$workspace_admin_initial?
         @$workspace_admin_initial = @$workspace_admin.find('ul').html()
 
-      @$workspace_admin.find('ul').html("""<li>Welcome back &nbsp;<a href="#profile">#{@user.get('name')}</a></li><li><a href="#" data-toggle="modal" data-target="#help-modal" data-workspace="saguresure">Help</a></li><li><a href="#logout">Logout</a></li>""")
+      @$workspace_admin.find('ul').html("""
+        <li>Welcome back &nbsp;<a href="#profile">#{@user.get('name')}</a></li>
+        <li><a href="#" data-toggle="modal" data-target="#help-modal" data-workspace="saguresure">Help</a></li>
+        <li><a href="#logout">Logout</a></li>
+        """)
 
     #### Reset Admin Links
     #
@@ -689,7 +693,6 @@ define [
       @resize_workspace()
 
     #### Drop a click listener on all tabs
-    #
     attach_tab_handlers : ->
       # Tabs
       @$workspace_tabs.on 'click', 'li a', (e) =>
@@ -812,28 +815,15 @@ define [
           @toggle_apps search_view.app.app
 
     # Tell every app in the stack to commit seppuku
-    teardown_workspace : ->
+    teardownWorkspace : ->
       @set_breadcrumb()
       @assigneeListView.dispose() if @assigneeListView
-      _.each @workspace_stack.stack, (view, index) =>
-        view.destroy()
-        view = null
-      if @workspace_stack.stack.length > 0
-        @workspace_stack.clear()
-        @$workspace_tabs.html('')
-        $('#target').empty()
-        true
-      else
-        false
+      @workspace_stack.clear()
+      @$workspace_tabs.html('')
+      $('#target').empty()
 
-    # Open a new window that then calls the url
-    launchWindow : (url) ->
-      if url?
-        new_window = window.open('download.html', '_blank')
-        new_window.setUrl = url
-
-    # Configure Herald to display updates and notifications to users
-    # after login
+    # Configure Herald to display updates
+    # and notifications to users after login
     setupHerald : ->
       herald_config =
         h_path        : '/js/lib/herald/'
@@ -864,6 +854,9 @@ define [
 
   # Events for Controller
   #
+  WorkspaceController.on "all", ->
+    console.log arguments
+
   WorkspaceController.on "log", (msg) ->
     @logger msg
 
