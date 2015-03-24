@@ -684,8 +684,8 @@ define [
           return true
 
         # Launch module if [data-app="<app>"] is present
-        if app_name = $el.data 'app'
-          @Router.navigate "#{@baseRoute}/#{app_name}", { trigger : true }
+        if route = $el.data 'route'
+          @Router.navigate "#{@baseRoute}/#{route}", { trigger : true }
 
         e.preventDefault()
 
