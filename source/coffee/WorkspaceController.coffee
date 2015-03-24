@@ -603,17 +603,7 @@ define [
         return true
       false
 
-    #### Update Address
-    #
-    # Set URL to whatever @current_state says it should be. Yo.
-    #
-    update_address : ->
-      if @current_state?
-        url = "workspace/#{@current_state.env}/#{@current_state.business}/#{@current_state.context}/#{@current_state.app}"
-        if @current_state.params? and @current_state.module?
-          url += "/#{@current_state.module}/#{Helpers.serialize(@current_state.params)}"
-        @Router.navigate url
-
+    # Add helpful body class for CSS purposes
     set_business_namespace : ->
       if business = @current_state?.business
         $('body').removeClass().addClass("is-#{business}")
@@ -671,8 +661,8 @@ define [
     attach_tab_handlers : ->
       @$workspace_tabs.on 'click', 'li .glyphicon-remove-circle', (e) =>
         e.preventDefault()
-        policyView = $(e.currentTarget).data 'view'
-        @workspace_stack.get(policyView).destroy()
+        view = $(e.currentTarget).data 'view'
+        @workspace_stack.get(view).destroy()
         @reassess_apps()
 
     # HACK: Because we don't want to re-render the navbar for each
