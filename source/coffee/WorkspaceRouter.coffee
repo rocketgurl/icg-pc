@@ -26,7 +26,10 @@ define [
 
     # Render login form
     login : ->
-      @controller.trigger 'login'
+      if @controller.baseRoute
+        @navigate @controller.baseRoute
+      else
+        @controller.trigger 'login'
 
     # Delete any cookies and render login form
     logout : ->

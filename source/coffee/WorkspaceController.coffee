@@ -165,7 +165,7 @@ define [
     setBaseRoute : ->
       {env, business, context, app} = @current_state
       @baseRoute = "workspace/#{env}/#{business}/#{context}/#{app}"
-      unless location.hash
+      if not location.hash or location.hash is '#login'
         @Router.navigate @baseRoute
 
     # Try and keep the localStorage version of app state
@@ -321,6 +321,7 @@ define [
       @close_policy_nav()
       @hide_workspace_button()
       @hide_navigation()
+      delete @baseRoute
 
       if @navigation_view?
         @navigation_view.destroy()
@@ -413,21 +414,22 @@ define [
       rawStorage = @Amplify.store 'ics_policy_central'
       storage    = @workspaceStateCollection.reset _.values(rawStorage)
       @current_state = @current_state or {}
+      @workspace_state = {}
       if storage.length
         @workspace_state = storage.retrieve @current_state
         unless _.isObject @workspace_state
           @workspace_state = storage.first()
           @current_state = @workspace_state.get 'workspace'
-      else
-        @workspace_state = {}
 
     #### Check logged in state
     isLoggedIn : ->
       if !@user?
         @Amplify.publish 'controller',
                          'notice',
-                         "Please login to Policy Central to continue."
-        @build_login()
+                         "Please login to Policy Central to continue.",
+                         3000
+        @trigger 'logout'
+        @Router.navigate 'login', { trigger : true }
         return false
       return true
 
