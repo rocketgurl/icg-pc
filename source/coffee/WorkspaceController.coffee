@@ -783,9 +783,6 @@ define [
 
   # Events for Controller
   #
-  WorkspaceController.on "all", ->
-    console.log arguments
-
   WorkspaceController.on "log", (msg) ->
     @logger msg
 
@@ -797,9 +794,6 @@ define [
 
   WorkspaceController.on "launch", ->
     @launch_workspace()
-
-  WorkspaceController.on "search", (module, params) ->
-    @launch_module(module, params)
 
   WorkspaceController.on "stack_add", (view) ->
     @workspace_stack.add view
