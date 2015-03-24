@@ -537,7 +537,7 @@ define [
     #
     # @param `app` _Object_ application config object
     #
-    launch_app : (app, rules=null) ->
+    launch_app : (app) ->
       # If app is not saved in @workspace_state and is not the
       # workspace defined app then we need to add it to our
       # stack of saved apps
