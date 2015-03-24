@@ -67,4 +67,4 @@ define [
         'params'   : params ? null
       if @controller.config?
         @controller.setWorkspaceState()
-        @controller[launchMethod](module, params)
+        @controller[launchMethod]()

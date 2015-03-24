@@ -435,7 +435,7 @@ define [
     #
     # Attempt to setup and launch workspace based on info in the menu Obj
     #
-    launch_workspace : (module, params) ->
+    launch_workspace : ->
       if @isLoggedIn()
         menu = @config.get 'menu'
         if menu == false
@@ -461,9 +461,10 @@ define [
         @initAssigneeListView()
 
         if @check_persisted_apps()
-          if module
-            @launch_module module, params
-          @reassess_apps()
+          if @current_state.module
+            @launch_module()
+          else
+            @reassess_apps()
 
         data =
           business : @current_state.business
@@ -560,9 +561,10 @@ define [
     #
     # @param `params` _Object_ query params
     #
-    launch_module : (module, params) ->
+    launch_module : ->
       if @isLoggedIn()
-        params = params or {}
+        params = @current_state.params or {}
+        module = @current_state.module
         safe_app_name = "#{Helpers.id_safe(module)}"
         if params.url
           safe_app_name += "_#{Helpers.id_safe(params.url)}"
