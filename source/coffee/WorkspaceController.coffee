@@ -473,7 +473,6 @@ define [
           group    : MenuHelper.check_length(group_label)
           app      : app.app_label
 
-        # Set breadcrumb
         @set_breadcrumb(data)
 
         @set_business_namespace()
