@@ -78,6 +78,25 @@ define [
             response = "Sorry, policy #{model.id} could not be loaded - #{xhr.status} : #{xhr.statusText}"
 
           @policy_view.trigger 'error', response
+
+          # Throw a hopefully useful ajax error for Muscula to pick up
+          if _.isObject Muscula
+            eid = "#{@Helpers.formatDate(new Date(), 'YYYY-MM-DD')}"
+            try
+              Muscula.info = {}
+              Muscula.info["RequestURL #{eid}"] = model.url()
+              Muscula.info["Status #{eid}"]     = xhr.status
+              Muscula.info["StatusText #{eid}"] = xhr.statusText
+              Muscula.info["ResponseHeaders #{eid}"] = xhr.getAllResponseHeaders()
+              throw new Error "XMLHTTPResponse Error (#{xhr.status}) #{xhr.statusText}"
+            catch ex
+              Muscula.errors.push ex
+
+              # delete the info object so we don't muddy up the other errors too much
+              setTimeout((->
+                if Muscula.info?.eid is eid
+                  delete Muscula.info
+              ), 2000)
       })
 
       # When this tab is activated
