@@ -41,6 +41,28 @@ define [
         serialized += "/#{key}:#{encodeURI(value)}"
       serialized
 
+    # Try to enforce helpful error logging to Muscula
+    # @param `message` _String_ a human readable Error message limited to 200 characters or less
+    # @param `infoObj` _Object_ a map of info to pass to Muscula along with the error. Will
+    # @return _String_ (Float)
+    #
+    logError : (message, infoObj) ->
+      if message and _.isObject Muscula
+        eid = _.uniqueId 'e'
+        try
+          if _.isObject infoObj
+            Muscula.info = infoObj
+            Muscula.info.eid = eid
+          throw new Error message
+        catch ex
+          Muscula.errors.push ex
+
+          # delete the info object so we don't muddy up the other errors too much
+          setTimeout((->
+            if Muscula.info?.eid is eid
+              delete Muscula.info
+          ), 2000)
+
     # Convenience method to create Canvas loader.
     # Returns loader object so it's easy to kill.
     loader : (id, diameter, color) ->
