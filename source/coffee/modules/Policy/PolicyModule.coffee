@@ -1,13 +1,12 @@
 define [
-  'jquery',
-  'underscore',
-  'backbone',
-  'mustache',
-  'modules/Policy/PolicyView',
-  'modules/Policy/PolicyModel',
-  'Messenger',
+  'backbone'
+  'mustache'
+  'Helpers'
+  'modules/Policy/PolicyView'
+  'modules/Policy/PolicyModel'
+  'Messenger'
   'loader'
-], ($, _, Backbone, Mustache, PolicyView, PolicyModel, Messenger, CanvasLoader) ->
+], (Backbone, Mustache, Helpers, PolicyView, PolicyModel, Messenger, CanvasLoader) ->
 
   class PolicyModule
 
