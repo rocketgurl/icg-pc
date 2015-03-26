@@ -29,7 +29,11 @@ define [
       @el.id = @app.app # Set container id to app name
 
       # Find navbar anchor and parent element corresponding to app
-      @$navbar_item = $(".pc-nav [data-app=#{@app.app}]").parent()
+      routeName = @Helpers.prettyMap(@app.app, {
+        'renewalreview'  : 'underwriting/renewalreview'
+        'referral_queue' : 'underwriting/referrals'
+        })
+      @$navbar_item = $(".pc-nav [data-route=\"#{routeName}\"]").parent()
 
       # Add to the stack
       controller.trigger 'stack_add', @
