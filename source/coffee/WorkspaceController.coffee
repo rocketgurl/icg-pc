@@ -229,7 +229,7 @@ define [
       $('body').removeClass()
       $('body').addClass('logo-background')
 
-      @resize_workspace()
+      _.defer @resize_workspace
       @login_view
 
     # Instantiate a new user and check ixDirectory
