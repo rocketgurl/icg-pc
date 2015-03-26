@@ -2018,7 +2018,7 @@ ul:after { clear: both; }
 #workspace .workspace-canvas.inactive { visibility: hidden; height: 0; opacity: 0; overflow: hidden; }
 
 #footer-main { border-top: #ccc 1px solid; text-align: center; }
-#footer-main ul { margin: 0; padding-top: 20px; padding-bottom: 20px; border-top: #fff 1px solid; color: dimgrey; font-size: 11px; font-size: 1.1rem; }
+#footer-main ul { margin: 0; padding-top: 10px; padding-bottom: 10px; border-top: #fff 1px solid; color: dimgrey; font-size: 11px; font-size: 1.1rem; }
 #footer-main ul li { display: inline-block; padding: 0 8px 0 6px; margin: 0; border-right: #bababa 1px solid; }
 #footer-main ul li a { color: #165788; text-decoration: none; }
 #footer-main ul li a:hover, #footer-main .policy-nav > ul > li > a.select { text-decoration: underline; }
