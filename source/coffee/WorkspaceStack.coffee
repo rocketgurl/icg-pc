@@ -35,11 +35,16 @@ define ['underscore'], (_) ->
           # Remove params from stack if present
           if view.app.params?
             @controller.current_state.params = null
-            @controller.set_nav_state()
-            @controller.update_address()
+            @controller.setWorkspaceState()
 
     # Remove all views from stack
-    clear : -> @stack = []
+    clear : ->
+      while @stack.length
+        view = @stack.shift()
+        if /policyview/.test view.app.app
+            @policyCount -= 1
+        view.dispose()
+        view = null
 
     has : (app_name) ->
       _.any @stack, (item) ->
