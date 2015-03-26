@@ -21,20 +21,30 @@ define [
       'workspace/:env/:business/:context/:app/underwriting/renewalreview' : 'underwritingRenewalsView'
       'workspace/:env/:business/:context/:app/policy/:quotenum/:label'    : 'policyView'
 
-    initialize : ->
-      @on 'all', -> console.log arguments
+    noop : -> # i do nothing; i harm no one
 
-    # Render login form
+    initialize : ->
+      @on 'all', @sendGAPageview
+
+    sendGAPageview : (route) ->
+      ga = if _.isFunction(window.ga) then window.ga else @noop
+      ga('send', 'pageview', {
+        page  : location.href
+        title : route
+        })
+
     login : ->
       if @controller.baseRoute
         @navigate @controller.baseRoute
       else
         @controller.trigger 'login'
 
-    # Delete any cookies and render login form
     logout : ->
       @controller.trigger 'logout'
-      @navigate('login', { trigger : true })
+
+      # Deferring the login so the routes
+      # are fired in the correct order
+      _.defer @navigate, 'login', { trigger : true }
 
     workspace : (env, business, context, app) ->
       @launch env, business, context, app
