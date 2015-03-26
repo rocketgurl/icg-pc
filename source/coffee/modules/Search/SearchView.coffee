@@ -223,18 +223,19 @@ define [
       if response.statusText is 'abort'
         @Amplify.publish @cid, 'notice', "Request canceled.", 3000
       else if response.statusText is 'timeout'
+        @logMusculaError collection, response
         @Amplify.publish(@cid
           'warning'
           'Your search has timed out waiting for service. Please try again later.'
           5000
           )
       else
+        @logMusculaError collection, response
         @Amplify.publish(@cid
           'warning'
           "There was a problem with this request: #{response.status} - #{response.statusText}"
           5000
           )
-      @logMusculaError collection, response
 
     logMusculaError : (collection, response) ->
       # Throw a hopefully useful ajax error for Muscula to pick up
