@@ -121,6 +121,28 @@ define [
         @Amplify.publish @cid, 'notice', "Request cancelled.", 3000
       else
         @Amplify.publish @cid, 'warning', "Could not load referrals: #{response.status} - #{response.statusText}"
+        @logMusculaError collection, response
+
+    logMusculaError : (collection, response) ->
+      # Throw a hopefully useful ajax error for Muscula to pick up
+      if _.isObject Muscula
+        eid = "#{@Helpers.formatDate(new Date(), 'YYYY-MM-DD')}"
+        try
+          Muscula.info = {}
+          Muscula.info["RequestURL #{eid}"] = collection.url
+          Muscula.info["RequestParams #{eid}"] = $.param collection.getParams()
+          Muscula.info["Status #{eid}"]     = response.status
+          Muscula.info["StatusText #{eid}"] = response.statusText
+          Muscula.info["ResponseHeaders #{eid}"] = response.getAllResponseHeaders()
+          throw new Error "ReferralQueue XMLHTTPResponse Error (#{response.status}) #{response.statusText}"
+        catch ex
+          Muscula.errors.push ex
+
+          # delete the info object so we don't muddy up the other errors too much
+          setTimeout((->
+            if Muscula.info?.eid is eid
+              delete Muscula.info
+          ), 2000)
 
     # Toggle the owner buttons on the UI and trigger collection.getReferrals()
     updateOwner : (e) ->

@@ -225,17 +225,40 @@ define [
       if response.statusText is 'abort'
         @Amplify.publish @cid, 'notice', "Request canceled.", 3000
       else if response.statusText is 'timeout'
+        @logMusculaError collection, response
         @Amplify.publish(@cid
           'warning'
           'Your search has timed out waiting for service. Please try again later.'
           5000
           )
       else
+        @logMusculaError collection, response
         @Amplify.publish(@cid
           'warning'
           "There was a problem with this request: #{response.status} - #{response.statusText}"
           5000
           )
+
+    logMusculaError : (collection, response) ->
+      # Throw a hopefully useful ajax error for Muscula to pick up
+      if _.isObject Muscula
+        eid = "#{@Helpers.formatDate(new Date(), 'YYYY-MM-DD')}"
+        try
+          Muscula.info = {}
+          Muscula.info["RequestURL #{eid}"] = collection.url
+          Muscula.info["SearchParams #{eid}"] = $.param collection.getParams()
+          Muscula.info["Status #{eid}"]     = response.status
+          Muscula.info["StatusText #{eid}"] = response.statusText
+          Muscula.info["ResponseHeaders #{eid}"] = response.getAllResponseHeaders()
+          throw new Error "Search XMLHTTPResponse Error (#{response.status}) #{response.statusText}"
+        catch ex
+          Muscula.errors.push ex
+
+          # delete the info object so we don't muddy up the other errors too much
+          setTimeout((->
+            if Muscula.info?.eid is eid
+              delete Muscula.info
+          ), 2000)
 
     callbackInvalid : (collection, msg) ->
       @toggleLoader false
