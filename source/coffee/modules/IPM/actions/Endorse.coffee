@@ -149,6 +149,9 @@ define [
       if @apparatchik.isProduct('wic-ho3-la')
         @addWICHO3LABehaviors()
 
+      if @apparatchik.isProduct('wic-ho3-tx')
+        @addWICHO3TXBehaviors()
+
       if @apparatchik.isProduct('ofcc-ho3-ak')
         @addOFCCHO3AKBehaviors()
 
@@ -168,6 +171,20 @@ define [
     # NOTE: These will start to get lengthy, you may want to move
     # them into external files and pull in via RequireJS.
     ###
+
+    addWICHO3TXBehaviors : ->
+      rules = [
+        field: "EarthquakeCoverage"
+        condition: "== 100"
+        target: [
+          "EarthquakeDeductible"
+          "EarthquakeLossAssessmentCoverage"
+          "EarthquakeMasonryVeneerExclusion"
+          ]
+        effect: @apparatchik.showElement
+      ]
+
+      @apparatchik.applyEnumDynamics rules
 
     addWICALBehaviors : ->
       rules = [
