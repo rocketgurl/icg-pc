@@ -78,7 +78,6 @@ define [
       app : 
         app       : 'search'
         app_label : 'search'
-        tab       : '#tpl-workspace-tab-blank'
         params    : null
 
     renewalreview :
@@ -87,7 +86,6 @@ define [
       app :
         app       : 'renewalreview'
         app_label : 'Renewal Underwriting'
-        tab       : '#tpl-workspace-tab-blank'
         params    :
           renewalreviewrequired : true
 
@@ -97,7 +95,6 @@ define [
       app :
         app       : 'home'
         app_label : 'Home'
-        tab       : '#tpl-workspace-tab-blank'
 
     policy_search_params :
       required : false
@@ -114,7 +111,6 @@ define [
       app :
         app       : 'referral_queue'
         app_label : 'Referrals'
-        tab       : '#tpl-workspace-tab-blank'
 
     default :
       required : false

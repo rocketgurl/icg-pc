@@ -589,11 +589,7 @@ define [
         controller  : @
         module_type : module
         app         : app
-
-      if app.tab?
-        options.template_tab = $(app.tab).html()
-
-      new WorkspaceCanvasView(options)
+      new WorkspaceCanvasView options
 
     # If there are other apps persisted in localStorage we need
     # to launch those as well
