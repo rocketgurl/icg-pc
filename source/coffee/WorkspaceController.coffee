@@ -724,7 +724,7 @@ define [
     reassess_apps : ->
       if @workspace_stack.stack.length
         active = _.find @workspace_stack.stack, (view) ->
-          view.is_active()
+          view.isActive
         unless active
           if @workspace_stack.stack.length > 2
             view = _.last @workspace_stack.stack

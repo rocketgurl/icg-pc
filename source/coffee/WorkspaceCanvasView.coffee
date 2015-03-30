@@ -7,19 +7,28 @@ define [
 
   WorkspaceCanvasView = BaseView.extend
 
-    $target    : $('#target')
-    $flash_tpl : $('#tpl-flash-message').html()
-    tagName    : 'section'
-    className  : 'workspace-canvas'
-    tab        : null
+    tabTemplate : """
+    <span class="glyphicon glyphicon-remove-circle" title="Close this tab" data-view="{{view}}"></span>
+    <a href="{{href}}">{{label}}</a>
+    """
+
+    $target     : $('#target')
+    $flash_tpl  : $('#tpl-flash-message').html()
+    tagName     : 'section'
+    className   : 'workspace-canvas'
+    isActive    : false
+    tab         : null
 
     initialize : (options) ->
       controller    = @controller = options.controller
-      @$tab_el      = controller.$workspace_tabs
+      @$tabNav      = controller.$workspace_tabs
       @template     = options.template if options.template?
-      @template_tab = if options.template_tab? then options.template_tab else $('#tpl-workspace-tab').html()
       @params       = options.params ? null
       @reactivate   = false
+
+      # Create a new tab element with each
+      # new workspace canvas view instance
+      @$tabEl = $('<li/>')
 
       # No app, throw a big error
       if !options.app?
@@ -42,6 +51,8 @@ define [
       require ["modules/#{@options.module_type}"], (Module) =>
         @module = new Module(@, @app)
         @module.load() if _.has(Module.prototype, 'load')
+        if _.isObject @module.policy_model
+          @module.policy_model.on 'change:insightId', -> console.log arguments
 
       @render()
 
@@ -57,8 +68,15 @@ define [
       # Drop loader image into place until our Module is good and ready
       @$el.html Mustache.render tpl_module_loader, {module_name : @app.app_label, app : @app.app}
 
-      @$target.append(@$el)
-      @render_tab(@template_tab)
+      # Only policies get tabs
+      if /policyview/.test @app.app
+        data =
+          view  : @app.app
+          href  : @constructHref()
+          label : @app.app_label
+        @renderTab data
+        @$tabNav.append @$tabEl
+      @$target.append @$el
 
       # Loading image
       @loader = Helpers.loader("loader-#{@app.app}", 60, '#696969')
@@ -71,15 +89,8 @@ define [
       #
       @options.controller.trigger 'new_tab', @app.app
 
-    # Create tab for this view
-    render_tab : (template) ->
-      data =
-        tab_class : ''
-        tab_view  : Helpers.id_safe(decodeURIComponent(@app.app))
-        tab_url   : @constructHref()
-        tab_label : @app.app_label
-      @tab = $(Mustache.render(template, data))
-      @$tab_el.append @tab
+    renderTab : (data) ->
+      @$tabEl.html Mustache.render @tabTemplate, data
 
     constructHref : ->
       href = ''
@@ -90,31 +101,29 @@ define [
 
     # Put tab into active state
     activate : ->
-      @tab.addClass 'selected'
+      @$tabEl.addClass('selected') if @$tabEl
       @$el.removeClass 'inactive'
       @$navbar_item.addClass 'active'
+      @isActive = true
       if @module
         @module.trigger 'activate'
 
     # Put tab into inactive state
     deactivate : ->
-      @tab.removeClass 'selected'
+      @$tabEl.removeClass('selected') if @$tabEl
       @$el.addClass 'inactive'
       @$navbar_item.removeClass 'active'
+      @isActive = false
       if @module
         @module.trigger 'deactivate'
-
-    # Is this view activated? (boolean)
-    is_active : ->
-      @tab.hasClass('selected')
 
     # Remove tab and view
     destroy : ->
       # Remove tab & nullify so GC can get it (?)
-      if @tab?
+      if @$tabEl?
         @$navbar_item.removeClass 'active'
-        @tab.remove()
-        @tab = null
+        @$tabEl.remove()
+        @$tabEl = null
 
       # Remove content
       @$el.html('').remove()
