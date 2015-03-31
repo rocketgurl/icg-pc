@@ -1029,6 +1029,17 @@
 
 
 		<div>
+			<label for="{{guid}}_MonthsRented" class="labelRequired">Number of Months Rented or Held For Rental <i>MonthsRented</i></label>
+			<select id="{{guid}}_MonthsRented" name="MonthsRented" data-value="{{MonthsRented}}"  required >
+				{{#EnumsMonthsRented}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsMonthsRented}}
+			</select>
+		</div>
+
+
+
+		<div>
 			<label for="{{guid}}_NumberFamilies" class="labelRequired">Number of Families <i>NumberFamilies</i></label>
 			<select id="{{guid}}_NumberFamilies" name="NumberFamilies" data-value="{{NumberFamilies}}"  required >
 				{{#EnumsNumberFamilies}}
@@ -1051,7 +1062,6 @@
 		</fieldset>
 			</div>
 		</fieldset>
-
 
 		<fieldset class="horizontalFields extraWide">
 			<h3>Optional Coverage <a data-alt-text="close">change</a></h3>
@@ -1374,6 +1384,17 @@
 			<label for="{{guid}}_Insured1BirthDate" >Insured Date Of Birth <i>Insured1BirthDate</i></label>
 			<input type="text" id="{{guid}}_Insured1BirthDate" name="Insured1BirthDate" value="{{Insured1BirthDate}}" class="datepicker"  >
 		</div>
+
+
+		<div>
+			<label for="{{guid}}_LapseInCoverage" class="labelRequired">Lapse in Coverage <i>LapseInCoverage</i></label>
+			<select id="{{guid}}_LapseInCoverage" name="LapseInCoverage" data-value="{{LapseInCoverage}}"  required >
+				{{#EnumsLapseInCoverage}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsLapseInCoverage}}
+			</select>
+		</div>
+
 
 			</div>
 		</fieldset>
