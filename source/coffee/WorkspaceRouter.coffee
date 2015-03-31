@@ -68,9 +68,9 @@ define [
       @launch env, business, context, app, 'policyview', params
 
     launch : (env, business, context, app, module, params) ->
-      launchMethod = 'launch_module'
-      if app isnt @controller.current_state?.app
-        launchMethod = 'launch_workspace'
+      launchMethod = 'launch_workspace'
+      if module and app is @controller.current_state?.app
+        launchMethod = 'launch_module'
       @controller.current_state =
         'env'      : env
         'business' : business
