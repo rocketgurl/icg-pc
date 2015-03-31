@@ -572,7 +572,6 @@ define [
 
         if @workspace_stack.has safe_app_name
           @toggle_apps safe_app_name
-          @setActiveRoute()
         else
           label = params.label or "#{Helpers.uc_first(module)}: #{params.url}"
           @launch_app
@@ -662,6 +661,7 @@ define [
         view = $(e.currentTarget).data 'view'
         @workspace_stack.get(view).destroy()
         @reassess_apps()
+        @setActiveRoute()
 
     # HACK: Because we don't want to re-render the navbar for each
     # separate workspace, we handle the routing programatically here.
@@ -744,14 +744,12 @@ define [
           else # Activate first app in the stack
             view = @workspace_stack.stack[0]
           @toggle_apps view.app.app
-          @setActiveRoute()
 
     # Tell every app in the stack to commit seppuku
     teardownWorkspace : ->
       @set_breadcrumb()
       @assigneeListView.dispose() if @assigneeListView
       @workspace_stack.clear()
-      @$workspace_tabs.html('')
       $('#target').empty()
 
     # Configure Herald to display updates
