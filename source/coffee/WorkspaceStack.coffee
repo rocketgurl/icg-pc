@@ -44,6 +44,7 @@ define ['underscore'], (_) ->
         if /policyview/.test view.app.app
             @policyCount -= 1
         view.dispose()
+        view.destroy()
         view = null
 
     has : (app_name) ->
