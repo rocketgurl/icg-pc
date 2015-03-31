@@ -51,8 +51,9 @@ define [
       require ["modules/#{@options.module_type}"], (Module) =>
         @module = new Module(@, @app)
         @module.load() if _.has(Module.prototype, 'load')
-        if _.isObject @module.policy_model
-          @module.policy_model.on 'change:insightId', -> console.log arguments
+
+        # if _.isObject @module.policy_model
+        #   @module.policy_model.on 'change:insightId', -> console.log arguments
 
       @render()
 
