@@ -109,7 +109,7 @@ define [
       if app.app is @current_state.app
         return false
 
-      saved_apps = @workspace_state.get 'apps'
+      saved_apps = @workspace_state.getAppStack()
 
       if saved_apps?
         # Check to see if this app is already in the array.
@@ -140,7 +140,7 @@ define [
     state_remove :
       valid_workspace \
       (app) ->
-        saved_apps = @workspace_state.get 'apps'
+        saved_apps = @workspace_state.getAppStack()
         _.each saved_apps, (obj, index) =>
           if app.app is obj.app
             saved_apps.splice index, 1
@@ -158,7 +158,7 @@ define [
       valid_workspace \
       (app) ->
         if _.isObject app
-          saved_apps = @workspace_state.get 'apps'
+          saved_apps = @workspace_state.getAppStack()
           _.find saved_apps, (saved) =>
             saved.app is app.app
 
@@ -596,7 +596,7 @@ define [
     # to launch those as well
     check_persisted_apps : ->
       unless _.isEmpty @workspace_state
-        _.each @workspace_state.get('apps'), (app) =>
+        _.each @workspace_state.getAppStack(), (app) =>
           @launch_app app
         return true
       false
