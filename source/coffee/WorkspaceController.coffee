@@ -717,9 +717,12 @@ define [
         'referral_queue': 'underwriting/referrals'
       })
       if /policyview_/.test routeName
-        routeName = routeName.replace 'policyview_', 'policy/'
-        if app.app_label
-          routeName += "/#{encodeURIComponent(app.app_label)}"
+        routeName = routeName.replace /policyview.*/, 'policy'
+        if _.isObject app.params
+          routeName += "/#{app.params.url}" if app.params.url
+          routeName += "/#{encodeURIComponent(app.app_label)}" if app.app_label
+        else
+          return false
       @Router.navigate "#{@baseRoute}/#{routeName}"
 
     # Loop through app stack and switch app states
