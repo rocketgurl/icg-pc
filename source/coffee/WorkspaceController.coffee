@@ -440,17 +440,22 @@ define [
     launch_workspace : ->
       if @isLoggedIn()
         menu = @config.get 'menu'
-        if menu == false
+        if menu is false
           @Amplify.publish 'controller',
                            'warning',
                            "Sorry, you do not have access to any items in this environment."
           return
 
+        group_label = menu[@current_state.business]?.contexts[@current_state.context]?.label
+        apps = menu[@current_state.business]?.contexts[@current_state.context]?.apps
+        unless group_label and apps
+          @Amplify.publish 'controller',
+                           'warning',
+                           "Sorry, you do not have access to this workspace."
+          @setActiveRoute() if @active_view
+          return
+
         @setBaseRoute()
-
-        group_label = menu[@current_state.business].contexts[@current_state.context].label
-        apps = menu[@current_state.business].contexts[@current_state.context].apps
-
         app = _.find apps, (app) =>
           app.app is @current_state.app
 
