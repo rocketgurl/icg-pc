@@ -551,7 +551,7 @@ define [
         @state_add app
 
       # Determine which Module to load into the view
-      rules = rules or new AppRules app
+      rules = new AppRules app
       default_workspace = rules.default_workspace
 
       # Open modules defined in workspace set
@@ -572,6 +572,7 @@ define [
 
         if @workspace_stack.has safe_app_name
           @toggle_apps safe_app_name
+          @setActiveRoute()
         else
           label = params.label or "#{Helpers.uc_first(module)}: #{params.url}"
           @launch_app
@@ -709,6 +710,18 @@ define [
     handle_policy_count : ->
       @$no_policy_flag[if @workspace_stack.policyCount > 0 then 'hide' else 'show']()
 
+    setActiveRoute : ->
+      app = @active_view.app
+      routeName = Helpers.prettyMap(app.app, {
+        'renewalreview': 'underwriting/renewalreview',
+        'referral_queue': 'underwriting/referrals'
+      })
+      if /policyview_/.test routeName
+        routeName = routeName.replace 'policyview_', 'policy/'
+        if app.app_label
+          routeName += "/#{encodeURIComponent(app.app_label)}"
+      @Router.navigate "#{@baseRoute}/#{routeName}"
+
     # Loop through app stack and switch app states
     toggle_apps : (app_name) ->
       for view in @workspace_stack.stack
@@ -731,6 +744,7 @@ define [
           else # Activate first app in the stack
             view = @workspace_stack.stack[0]
           @toggle_apps view.app.app
+          @setActiveRoute()
 
     # Tell every app in the stack to commit seppuku
     teardownWorkspace : ->
