@@ -22,8 +22,9 @@ define [
     #
     constructor : (@view, @app, @params) ->
       # Make sure we have some kind of params
-      @params = @app.params if @app.params?
-      @digest = @view.options.controller.user.get('digest')
+      @params     = @app.params if @app.params?
+      @controller = @view.options.controller
+      @digest     = @controller.user.get('digest')
 
       # Bind events
       _.extend @, Backbone.Events
@@ -38,7 +39,7 @@ define [
       # We need to either use the policy # or the quote #
       id = @params.id if @params.id?
       id ?= @params.url if @params.url?
-      urlRoot = @view.options.controller.services.pxcentral
+      urlRoot = @controller.services.pxcentral
 
       # path to mock policies. uncomment with care.
       # urlRoot = '/tests/mocks/'
@@ -66,6 +67,8 @@ define [
         headers :
           'Authorization'   : "Basic #{@digest}"
         success : (model, response, options) =>
+          # console.log id, @app
+          # console.log model.toJSON()
           @policy_view.trigger 'loaded'
         error : (model, xhr, options) =>
           @render({ flash_only : true })

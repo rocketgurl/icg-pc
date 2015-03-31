@@ -98,6 +98,21 @@ define [
     logger : (msg) ->
       @Amplify.publish 'log', msg
 
+    # Update app configs in workspace_state apps & policy history stack.
+    # The app.app attribute is required, but apart from that, it's possible
+    # to pass only the attributes you want to change. E.g.
+    # app = {
+    #   app : 'policyview_CRU4Q_123123'
+    #   app_label : 'New Cool Label'
+    # }
+    #
+    # @param `app` _Object_ application config object
+    state_update : (app) ->
+      appUpdated = @workspace_state.updateAppItem app
+      historyUpdated = @workspace_state.updateHistoryItem app
+      if appUpdated or historyUpdated
+        @workspace_state.save()
+
     # If app is not saved in @workspace_state and is not the
     # workspace defined app then we need to add it to our
     # stack of saved apps
@@ -109,7 +124,7 @@ define [
       if app.app is @current_state.app
         return false
 
-      saved_apps = @workspace_state.getAppStack()
+      saved_apps = _.clone @workspace_state.getAppStack()
 
       if saved_apps?
         # Check to see if this app is already in the array.
@@ -140,7 +155,7 @@ define [
     state_remove :
       valid_workspace \
       (app) ->
-        saved_apps = @workspace_state.getAppStack()
+        saved_apps = _.clone @workspace_state.getAppStack()
         _.each saved_apps, (obj, index) =>
           if app.app is obj.app
             saved_apps.splice index, 1

@@ -1,7 +1,6 @@
 define [
-  'BaseModel',
-  'base64'
-], (BaseModel, Base64) ->
+  'BaseModel'
+], (BaseModel) ->
 
   #### WorkspaceStateModel
   #
@@ -34,6 +33,32 @@ define [
 
     getAppStack : ->
       @getSafeArray 'apps'
+
+    # Updates an app config item from a given
+    # stack. Valid stacks include `apps` and `history`
+    # Should trigger a `change:type` event on the model
+    #
+    # @param `key` _Object_ name of the stack to retrieve
+    # @param `app` _Object_ application config object
+    updateStackItem : (key, app) ->
+      if _.contains ['apps', 'history'], key
+        stack = _.clone @getSafeArray key
+        updated = _.any stack, (item) ->
+          if item.app is app.app
+            _.extend item, app
+            true
+        if updated
+          @set key, stack, { trigger : false }
+          @trigger "change:#{key}", @, @get(key)
+        updated
+
+    # Updating info on an app config item
+    updateAppItem : (app) ->
+      @updateStackItem 'apps', app
+
+    # Updating info on an historic app config item
+    updateHistoryItem : (app) ->
+      @updateStackItem 'history', app
 
     # Maintain a history of recently viewed apps
     # Ordered by most recently updated

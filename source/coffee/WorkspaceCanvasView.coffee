@@ -9,7 +9,7 @@ define [
 
     tabTemplate : """
     <span class="glyphicon glyphicon-remove-circle" title="Close this tab" data-view="{{view}}"></span>
-    <a href="{{href}}">{{label}}</a>
+    <a href="{{href}}">{{{label}}}</a>
     """
 
     $target     : $('#target')
@@ -17,7 +17,6 @@ define [
     tagName     : 'section'
     className   : 'workspace-canvas'
     isActive    : false
-    tab         : null
 
     initialize : (options) ->
       controller    = @controller = options.controller
@@ -96,12 +95,12 @@ define [
     constructHref : ->
       href = ''
       if @app.params
-        href += "##{@controller.baseRoute}/policy"
-        href += "/#{@app.params.url}/#{encodeURIComponent(@app.app_label)}"
+        href += "##{@controller.baseRoute}/policy/#{@app.params.url}"
       href
 
     # Put tab into active state
     activate : ->
+      console.log @isActive, @$tabEl
       @$tabEl.addClass('selected') if @$tabEl
       @$el.removeClass 'inactive'
       @$navbar_item.addClass 'active'

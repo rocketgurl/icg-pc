@@ -19,7 +19,7 @@ define [
       'workspace/:env/:business/:context/:app/search'                     : 'searchView'
       'workspace/:env/:business/:context/:app/underwriting/referrals'     : 'underwritingReferralsView'
       'workspace/:env/:business/:context/:app/underwriting/renewalreview' : 'underwritingRenewalsView'
-      'workspace/:env/:business/:context/:app/policy/:quotenum/:label'    : 'policyView'
+      'workspace/:env/:business/:context/:app/policy/:quotenum'           : 'policyView'
 
     noop : -> # i do nothing; i harm no one
 
@@ -61,10 +61,9 @@ define [
     underwritingRenewalsView : (env, business, context, app) ->
       @launch env, business, context, app, 'renewalreview'
 
-    policyView : (env, business, context, app, quotenum, label) ->
+    policyView : (env, business, context, app, quotenum) ->
       params =
         url   : quotenum
-        label : decodeURIComponent(label)
       @launch env, business, context, app, 'policyview', params
 
     launch : (env, business, context, app, module, params) ->
