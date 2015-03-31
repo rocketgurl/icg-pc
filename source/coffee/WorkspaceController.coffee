@@ -463,7 +463,7 @@ define [
         @initAssigneeListView()
 
         if @check_persisted_apps()
-          if @current_state.module
+          if @current_state.module and @current_state.params
             @launch_module()
           else
             @reassess_apps()
