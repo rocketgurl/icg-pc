@@ -81,7 +81,7 @@ define [
 
           # Throw a hopefully useful ajax error for Muscula to pick up
           if _.isObject Muscula
-            eid = "#{@Helpers.formatDate(new Date(), 'YYYY-MM-DD')}"
+            eid = "#{Helpers.formatDate(new Date(), 'YYYY-MM-DD')}"
             try
               Muscula.info = {}
               Muscula.info["RequestURL #{eid}"] = model.url()
