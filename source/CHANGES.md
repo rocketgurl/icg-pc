@@ -1,3 +1,14 @@
+### 3.1.0 - Apr 07, 2015
+
+- Enable Google Analytics tracking of various views
+- Reduce padding/margins in layout to better accommodate small screens
+- Catch and log AJAX errors to Muscula
+- The following IPM forms were modified:
+    - Add ProtectionClassRating field and enums to ofcc-ho3/6-sc for rate filing changes
+    - Update fnic-ho3-la IPM endorse forms to add Lapse in Coverage field
+    - Update wic-ho3-tx to add earthquake coverage and related fields to the endorse IPM forms
+    - Add Lapse in Coverage surcharge option to all eligible SageSure IPM endorse forms
+
 ### 3.0.6 - Mar 17, 2015
 
 - Download attachments when using IE

@@ -14,41 +14,63 @@ define [
     routes :
       'login'  : 'login'
       'logout' : 'logout'
-      'workspace/:env/:business/:context/:app/:module/*params' : 'module'
-      'workspace/:env/:business/:context/:app' : 'workspace'
-      '*root' : 'root'
+      'workspace/:env/:business/:context/:app'                            : 'workspace'
+      'workspace/:env/:business/:context/:app/home'                       : 'homeView'
+      'workspace/:env/:business/:context/:app/search'                     : 'searchView'
+      'workspace/:env/:business/:context/:app/underwriting/referrals'     : 'underwritingReferralsView'
+      'workspace/:env/:business/:context/:app/underwriting/renewalreview' : 'underwritingRenewalsView'
+      'workspace/:env/:business/:context/:app/policy/:quotenum/:label'    : 'policyView'
 
-    initialize : (options) ->
+    noop : -> # i do nothing; i harm no one
 
-    root : (root) ->
+    initialize : ->
+      @on 'all', @sendGAPageview
 
-    # Render login form
+    sendGAPageview : (route) ->
+      ga = if _.isFunction(window.ga) then window.ga else @noop
+      ga('send', 'pageview', {
+        page  : location.href
+        title : route
+        })
+
     login : ->
-      @controller.trigger 'login'
+      if @controller.baseRoute
+        @navigate @controller.baseRoute
+      else
+        @controller.trigger 'login'
 
-    # Delete any cookies and render login form
     logout : ->
       @controller.trigger 'logout'
-      @navigate('login', { trigger : true })
 
-    # Search parameters
-    module : (env, business, context, app, module, params) ->
-      @set_controller_state(env, business, context, app, module, params)
-      if @controller.config?
-        # Parameter parsing
-        params = Helpers.unserialize params
-        @controller.launch_module module, params
+      # Deferring the login so the routes
+      # are fired in the correct order
+      _.defer @navigate, 'login', { trigger : true }
 
-    # Parse workspace
     workspace : (env, business, context, app) ->
-      @set_controller_state(env, business, context, app)
+      @launch env, business, context, app
 
-      # If we already have a configuration file then we should be ready to go
-      if @controller.config?
-        @controller.trigger 'launch'
+    homeView : (env, business, context, app) ->
+      @launch env, business, context, app, 'home'
 
-    # Set our workspace state in the controller
-    set_controller_state : (env, business, context, app, module, params) ->
+    searchView : (env, business, context, app) ->
+      @launch env, business, context, app, 'search'
+
+    underwritingReferralsView : (env, business, context, app) ->
+      @launch env, business, context, app, 'referral_queue'
+
+    underwritingRenewalsView : (env, business, context, app) ->
+      @launch env, business, context, app, 'renewalreview'
+
+    policyView : (env, business, context, app, quotenum, label) ->
+      params =
+        url   : quotenum
+        label : decodeURIComponent(label)
+      @launch env, business, context, app, 'policyview', params
+
+    launch : (env, business, context, app, module, params) ->
+      launchMethod = 'launch_workspace'
+      if module and app is @controller.current_state?.app
+        launchMethod = 'launch_module'
       @controller.current_state =
         'env'      : env
         'business' : business
@@ -56,44 +78,6 @@ define [
         'app'      : app
         'module'   : module ? null
         'params'   : params ? null
-      @controller.set_nav_state()
-
-
-    # Build a path for modules (search, policyview) with the correct
-    # named parameters, etc.
-    #
-    # @param `module` _String_ module name
-    # @param `params` _Object_ app parameters. Will be serialized for url.
-    #
-    build_module_path : (module, params) ->
-      [@controller.current_state.module, @controller.current_state.params] = [module, params]
-      {env, business, context, app} = @controller.current_state
-
-      # Seriailze params
-      serialized = Helpers.serialize params
-
-      "workspace/#{env}/#{business}/#{context}/#{app}/#{module}#{serialized}"
-
-    # Take current workspace url and append search params to it
-    #
-    # @param `module` _String_ module name
-    # @param `params` _Object_ app parameters. Will be serialized for url.
-    #
-    append_module : (module, params) ->
-      @navigate @build_module_path(module, params)
-
-    # Do the same as append_module but trigger the route
-    #
-    # @param `module` _String_ module name
-    # @param `params` _Object_ app parameters. Will be serialized for url.
-    #
-    navigate_to_module : (module, params) ->
-      @navigate @build_module_path(module, params), {trigger : true}
-
-    # remove module info from url
-    remove_module : ->
-      {env, business, context, app} = @controller.current_state
-      @navigate "workspace/#{env}/#{business}/#{context}/#{app}"
-
-
-
+      if @controller.config?
+        @controller.setWorkspaceState()
+        @controller[launchMethod]()

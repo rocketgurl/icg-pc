@@ -20,7 +20,7 @@
   }
 
   .nav {
-    padding-top: 10px;
+    padding-top: 8px;
     padding-left: 15px;
     padding-right: 15px;
     background-color: $modulegray;
@@ -45,7 +45,7 @@
 
   .col-left {
     width: percentage(8 / 12);
-    min-height: 810px;
+    min-height: 700px;
     border-right: 1px solid #ddd;
   }
 
@@ -100,12 +100,13 @@
   }
 
   .tab-content {
-    padding: 15px 0;
+    padding: 10px 0;
     background-color: #fff;
   }
 
   .policy-status {
     @include font-size(18);
+    margin-bottom: 15px;
     font-weight: bold;
     text-align: center;
   }
@@ -119,8 +120,8 @@
     @include clearfix();
     padding-left: 47%;
     padding-right: 3%;
-    padding-top: 8px;
-    padding-bottom: 8px;
+    padding-top: 4px;
+    padding-bottom: 4px;
 
     > ul > li {
       padding: 5px 0;

@@ -1317,6 +1317,28 @@
 			<input type="text" id="{{guid}}_Insured1BirthDate" name="Insured1BirthDate" value="{{Insured1BirthDate}}" class="datepicker"  >
 		</div>
 
+
+		<div>
+			<label for="{{guid}}_LapseInCoverage" >Lapse in Coverage <i>LapseInCoverage</i></label>
+			<select id="{{guid}}_LapseInCoverage" name="LapseInCoverage" data-value="{{LapseInCoverage}}"   >
+				{{#EnumsLapseInCoverage}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsLapseInCoverage}}
+			</select>
+		</div>
+
+
+
+		<div>
+			<label for="{{guid}}_LapseInCoveragePeriod" >Time of Lapse in Coverage? <i>LapseInCoveragePeriod</i></label>
+			<select id="{{guid}}_LapseInCoveragePeriod" name="LapseInCoveragePeriod" data-value="{{LapseInCoveragePeriod}}"   >
+				{{#EnumsLapseInCoveragePeriod}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsLapseInCoveragePeriod}}
+			</select>
+		</div>
+
+
 			</div>
 		</fieldset>
 

@@ -5,60 +5,45 @@ define [
 
   SearchPolicyView = BaseView.extend
 
+    tagName   : 'a'
+
     className : 'tr'
 
-    events :
-      "click" : "open_policy"
-
     initialize : (options) ->
-      @data       = options.model.toJSON()
       @controller = options.controller
-      @el.id  = "#{@data.identifiers.policyId}-#{@cid}"
-      @render()
+      @el.id   = "#{@model.get('identifiers').policyId}-#{@cid}"
 
-    # Attach view to table
     render : ->
-      # Chomp dates
-      @data.effectiveDate = @data.effectiveDate.substr(0,10) if @data.effectiveDate?
-
-      # Change UI on PolicyState label using className
-      @data.policyStateClass = @data.policyState.toLowerCase()
-
-      if @data.renewalReviewRequired?
-        @data.renewalReviewRequired = if @data.renewalReviewRequired == true then 'Yes' else 'No'
-      else
-        @data.renewalReviewRequired = 'No'
-
-      # Deal with address concatenation
-      @data.insured.Address = ""
-      if @data.insured.address.line1?
-        @data.insured.Address += "#{@data.insured.address.line1}, "
-      if @data.insured.address.city?
-        @data.insured.Address += "#{@data.insured.address.city}, "
-
-      @$el.html @Mustache.render tpl_search_policy_row, @data
-      @options.$target_el.append @$el
+      data = @model.toJSON()
+      data.effectiveDate = data.effectiveDate?.substr(0, 10) 
+      data.policyStateClass = data.policyState.toLowerCase()
+      data.renewalReviewRequired = if data.renewalReviewRequired is true then 'Yes' else 'No'
+      data.insured.Address = @constructAddress data.insured.address
+      href = @href = @constructHref data
+      html = @Mustache.render tpl_search_policy_row, data
+      @$el.attr('href', href).html html
       this
+
+    constructAddress : (addressObj) ->
+      {line1, city, state} = addressObj
+      address = ''
+      address += line1 if line1
+      address += ', ' if line1 and city
+      address += city if city
+      address += ', ' if city and state
+      address
+
+    constructHref : (data) ->
+      href = "##{@controller.baseRoute}/policy"
+      href += "/#{data.identifiers.quoteNumber}/#{data.insured.lastName}"
+      href += "%20#{data.identifiers.policyId or data.identifiers.quoteNumber}"
+      href
+
+    openPolicy : ->
+      @controller.Router.navigate @href, { trigger : true }
 
     # Remove view and deref what we can for GC
     destroy : ->
       @$el.remove()
       @model = null
       @el    = null
-
-    # Open a new PolicyView tab with the current policy
-    open_policy : (e) ->
-      e.preventDefault() if _.isObject e
-
-      identifiers = @model.get 'identifiers'
-      last_name = @model.get('insured').lastName or ''
-
-      # Setup the params object to launch policy view with
-      policyLabel = identifiers.policyId or identifiers.quoteNumber
-      
-      params =
-        url     : identifiers.quoteNumber
-        label : "#{last_name} #{policyLabel}"
-
-      @controller.launch_module 'policyview', params
-      @controller.Router.append_module 'policyview', params

@@ -8,31 +8,20 @@ define [
     <h4>Recently Viewed</h4>
     <ul id="<%= id %>">
       <% _.each(historyStack, function (item) { %>
-      <li><a href="#" id="<%= item.app %>"><%= item.app_label %></a></li>
+      <li><a href="#<%= baseRoute %>/policy/<%= item.params.url %>/<%= encodeURIComponent(item.app_label) %>" id="<%= item.app %>"><%= item.app_label %></a></li>
       <% }) %>
     </ul>
     """
 
     initialize : (options) ->
-      _.bindAll this, 'render', 'launchApp'
+      _.bindAll this, 'render'
       @controller = options.controller
       @workspaceState = options.workspaceState
       @listenTo @workspaceState, 'change:history', @render
-      
-      # HACK!
-      # Since we're currently forced to use the same $el for each instance of PolicyHistoryView,
-      # Namespace our click handler to the workspace state id to prevent firing multiple events
-      @$el.on 'click', "##{@workspaceState.id} > li > a", @launchApp
-
-    launchApp : (e) ->
-      e.preventDefault()
-      historyStack = @workspaceState.getHistoryStack()
-      app = _.findWhere historyStack, { app: e.currentTarget.id }
-      @controller.launch_module 'policyview', app.params
-      @controller.Router.append_module 'policyview', app.params
 
     render : ->
       data = {}
+      data.baseRoute    = @controller.baseRoute
       data.historyStack = @workspaceState.getHistoryStack()
       data.id           = @workspaceState.id
       if data.historyStack.length > 0
@@ -41,5 +30,3 @@ define [
       else
         @$el.empty()
         @$el.addClass 'hidden'
-      
-

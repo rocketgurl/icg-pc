@@ -64,29 +64,29 @@ define [
   # a switchboard operator.
   #
   WorkspaceController =
-    Amplify               : amplify
-    $workspace_header     : $('#header')
-    $workspace_el         : $('#workspace')
-    $workspace_footer     : $('#footer-main')
-    $workspace_button     : $('#button-workspace')
-    $workspace_breadcrumb : $('#breadcrumb')
-    $workspace_admin      : $('#header-admin')
-    $workspace_main_navbar: $('#header-navbar')
-    $workspace_canvas     : $('#canvas')
-    $workspace_nav        : $('#workspace nav')
-    $workspace_tabs       : $('#workspace #open-policy-tabs')
-    $no_policy_flag       : $('#workspace .no-policies')
-    Router                : new WorkspaceRouter()
-    Cookie                : new Cookie()
-    COOKIE_NAME           : 'ics360_PolicyCentral'
-    services              : ics360.services
-    global_flash          : new Messenger($('#canvas'), 'controller')
-    Workspaces            : new WorkspaceStateCollection()
-    workspace_zindex      : 30000
-    workspace_stack       : {} # store a ref to WorkspaceStack here
-    policyHistoryViews    : {}
-    APP_PC_AUTH           : 'Y29tLmljcy5hcHBzLnBvbGljeWNlbnRyYWw6N2FjZmU5NTAxNDlkYWQ4M2ZlNDdhZTdjZDdkODA2Mzg='
-    IXVOCAB_AUTH          : 'Y29tLmljcy5hcHBzLmluc2lnaHRjZW50cmFsOjVhNWE3NGNjODBjMzUyZWVkZDVmODA4MjkzZWFjMTNk'
+    Amplify                  : amplify
+    $workspace_header        : $('#header')
+    $workspace_el            : $('#workspace')
+    $workspace_footer        : $('#footer-main')
+    $workspace_button        : $('#button-workspace')
+    $workspace_breadcrumb    : $('#breadcrumb')
+    $workspace_admin         : $('#header-admin')
+    $workspace_main_navbar   : $('#header-navbar')
+    $workspace_canvas        : $('#canvas')
+    $workspace_nav           : $('#workspace nav')
+    $workspace_tabs          : $('#workspace #open-policy-tabs')
+    $no_policy_flag          : $('#workspace .no-policies')
+    Router                   : new WorkspaceRouter()
+    Cookie                   : new Cookie()
+    COOKIE_NAME              : 'ics360_PolicyCentral'
+    services                 : ics360.services
+    global_flash             : new Messenger($('#canvas'), 'controller')
+    workspaceStateCollection : new WorkspaceStateCollection()
+    workspace_zindex         : 30000
+    workspace_stack          : {} # store a ref to WorkspaceStack here
+    policyHistoryViews       : {}
+    APP_PC_AUTH              : 'Y29tLmljcy5hcHBzLnBvbGljeWNlbnRyYWw6N2FjZmU5NTAxNDlkYWQ4M2ZlNDdhZTdjZDdkODA2Mzg='
+    IXVOCAB_AUTH             : 'Y29tLmljcy5hcHBzLmluc2lnaHRjZW50cmFsOjVhNWE3NGNjODBjMzUyZWVkZDVmODA4MjkzZWFjMTNk'
 
     # function to support document opening from pxClient flash module
     launchAttachmentWindow : (url, params) ->
@@ -109,7 +109,7 @@ define [
       if app.app is @current_state.app
         return false
 
-      saved_apps = @workspace_state.get 'apps'
+      saved_apps = @workspace_state.getAppStack()
 
       if saved_apps?
         # Check to see if this app is already in the array.
@@ -140,7 +140,7 @@ define [
     state_remove :
       valid_workspace \
       (app) ->
-        saved_apps = @workspace_state.get 'apps'
+        saved_apps = @workspace_state.getAppStack()
         _.each saved_apps, (obj, index) =>
           if app.app is obj.app
             saved_apps.splice index, 1
@@ -157,43 +157,34 @@ define [
     state_exists :
       valid_workspace \
       (app) ->
-        saved_apps = @workspace_state.get 'apps'
-        _.find saved_apps, (saved) =>
-          saved.app is app.app
+        if _.isObject app
+          saved_apps = @workspace_state.getAppStack()
+          _.find saved_apps, (saved) =>
+            saved.app is app.app
 
+    setBaseRoute : ->
+      {env, business, context, app} = @current_state
+      @baseRoute = "workspace/#{env}/#{business}/#{context}/#{app}"
+      if not location.hash or location.hash is '#login'
+        @Router.navigate @baseRoute
 
     # Try and keep the localStorage version of app state
     # persisted across requests
-    set_nav_state : ->
+    setWorkspaceState : ->
       if @current_state? and @workspace_state?
-
-        if @current_state is undefined
-          return false
-
         # If this is a string, then deserialize it
-        params = @current_state.params ? null
+        params = @current_state.params
         if _.isString(params)
-          params = Helpers.unserialize params
+          @current_state.params = Helpers.unserialize params
 
         # Get the current workspace, if not present, then
         # we need to create a new workspace for the current_state
-        @workspace_state = @Workspaces.retrieve @current_state
-
-        if @workspace_state is undefined or _.isEmpty(@workspace_state)
-          @workspace_state = @Workspaces.create({ workspace : @current_state })
-
-        if _.isArray @workspace_state
-          @workspace_state = @workspace_state[0]
-
-        @workspace_state.set 'workspace', {
-          env      : @current_state.env
-          business : @current_state.business
-          context  : @current_state.context
-          app      : @current_state.app
-          module   : @current_state.module ? null
-          params   : params
-        }
+        @workspace_state = @workspaceStateCollection.retrieve @current_state
+        if _.isEmpty @workspace_state
+          @workspace_state = @workspaceStateCollection.create
+            workspace : @current_state
         @workspace_state.save()
+        @navigation_view.setState()
 
     # Check for an identity cookie and check server for
     # validity. If no cookie present then just build the
@@ -227,7 +218,7 @@ define [
         $('#target').prepend('<div id="login-container" />')
 
       @login_view = new WorkspaceLoginView({
-          controller   : this
+          controller : this
         })
       @login_view.render()
 
@@ -238,36 +229,31 @@ define [
       $('body').removeClass()
       $('body').addClass('logo-background')
 
-      @resize_workspace()
+      _.defer _.bind(@resize_workspace, this)
       @login_view
 
     # Instantiate a new user and check ixDirectory
     # for valid credentials
     check_credentials : (username, password) ->
-      @user = new UserModel
-        urlRoot  : @services.ixdirectory + 'identities'
-        username : username
-        password : password
+      unless @user?
+        @user = new UserModel
+          urlRoot  : @services.ixdirectory + 'identities'
+          username : username
+          password : password
 
-      # retrieve an identity document or fail
-      @user.fetch(
+        # retrieve an identity document or fail
+        @user.fetch
           success : (model, resp) =>
-            # The model has to figure out what the
-            # response state was
+            # The model has to figure out
+            # what the response state was
             model.response_state()
-
-            fetch_state = @user.get('fetch_state')
-
-            if fetch_state?
-              fetch_state = if _.has(fetch_state, 'code') then fetch_state.code else null
-
-            switch fetch_state
-              when "200" then @login_success(model, resp)
-              else @login_fail(model, resp, fetch_state)
-
+            status = model.get 'fetch_state'
+            if _.isObject(status) and status.code is '200'
+              @login_success model, resp
+            else
+              @login_fail model, resp, status.code
           error : (model, resp) =>
             @response_fail model, resp
-        )
 
       @user
 
@@ -335,32 +321,33 @@ define [
       @close_policy_nav()
       @hide_workspace_button()
       @hide_navigation()
+      delete @baseRoute
 
       if @navigation_view?
         @navigation_view.destroy()
         @navigation_view = null
-        @teardown_workspace()
+      @teardownWorkspace()
+      @destroyWorkspaceStates()
 
-      @destroy_workspace_model()
-
-    destroy_workspace_model :
-      valid_workspace \
-      ->
-        @workspace_state.destroy()
-        @workspace_state = null
-        @Amplify.store('ics_policy_central', null)
+    destroyWorkspaceStates : ->
+      if @workspace_state?
+        @workspace_state.destroy?()
+        delete @workspace_state
+        delete @current_state
+      @workspaceStateCollection?.reset()
+      @Amplify.store 'ics_policy_central', null
 
     handlePolicyHistory : ->
-      id = @workspace_state.id
+      if id = @workspace_state?.id
 
-      # Instantiate a new view for each workspace_state model
-      unless _.isObject @policyHistoryViews[id]
-        @policyHistoryViews[id] = new PolicyHistoryView
-          controller     : this
-          workspaceState : @Workspaces.get id
-          el             : '#policy-history'
+        # Instantiate a new view for each workspace_state model
+        unless _.isObject @policyHistoryViews[id]
+          @policyHistoryViews[id] = new PolicyHistoryView
+            controller     : this
+            workspaceState : @workspaceStateCollection.get id
+            el             : '#policy-history'
 
-      @policyHistoryViews[id].render()
+        @policyHistoryViews[id].render()
 
     #### Get Configuration Files
     #
@@ -385,38 +372,18 @@ define [
 
             # Instantiate our SearchContextCollection
             @navigation_view = new WorkspaceNavView({
-                router     : @Router
                 controller : @
                 el         : '#header-workspace-nav'
                 sub_el     : '#workspace-subnav'
                 main_nav   : @config.get('menu_html').main_nav
                 sub_nav    : @config.get('menu_html').sub_nav
               })
-            @navigation_view.render()
 
-            # If our current_state is set then we should go ahead and launch.
-            # We do this here to ensure we have @config set before attempting to
-            # launch, which would be... bad.
-            #
-            # If current_state is not set, then we check localStorage to see if
-            # there was a previous state saved, and try to use that one.
-            #
-            if @check_workspace_state() is false # Check for localStorage state
-              workspaceRoutes = MenuHelper.getWorkspaceRoutes menu
+            @setupWorkspaceState()
+            @determineNavState menu
 
-              # attempt to launch the workspace immediately if user has access to
-              # only 1 context, as is the case for the vast majority of users
-              if workspaceRoutes.length is 1
-                @Router.navigate(workspaceRoutes[0], { trigger : true })
-                @set_business_namespace()
-
-              # Otherwise, toggle the workspace nav
-              else
-                @navigation_view.show_nav() # open main nav
-                @navigation_view.$el.find('li a span').first().trigger('click') # select first item
-
-            if @current_state?
-              @trigger 'launch'
+            unless _.isEmpty @current_state
+              @launch_workspace()
 
         # Try to throw a useful error message when possible.
         error : (model, resp) =>
@@ -427,69 +394,42 @@ define [
     callback_delay : (ms, func) =>
       setTimeout func, ms
 
+    determineNavState : (menu) ->
+      @navigation_view.setState()
+      unless @workspaceStateCollection.length
+        # attempt to launch the workspace immediately if user has access to
+        # only 1 context, as is the case for the vast majority of users
+        workspaceRoutes = MenuHelper.getWorkspaceRoutes menu
+        if workspaceRoutes.length is 1
+          @Router.navigate(workspaceRoutes[0], { trigger : true })
+
+        # Otherwise, toggle the workspace nav
+        else if _.isEmpty @current_state
+          @navigation_view.show_nav() # open main nav
+
     #### Check Workplace State
     #
     # Attempt to setup and launch workspace based on localStorage
-    #
-    check_workspace_state : ->
-      # Hit localStorage directly with Amplify
-      if !_.isFunction(@Amplify.store)
-        @check_workspace_state()
-      raw_storage = @Amplify.store('ics_policy_central')
-      # If already a PC2 object then add a model with its ID and fetch()
-      # otherwise create a new model (which will get a new GUID)
-      if raw_storage?
-        raw_id = _.keys(raw_storage)[0]
-        if raw_id?
-          workspaces = @Workspaces.add(
-              id : raw_id
-            )
-          @workspace_state = workspaces.get(raw_id)
-          @workspace_state.fetch(
-              success : (model, resp) =>
-                @current_state = model.get 'workspace'
-                model.build_name()
-                @update_address()
-                @set_business_namespace()
-                true
-              error : (model, resp) =>
-                # Make a new WorkspaceState as we had a problem.
-                @Amplify.publish 'controller',
-                                 'notice',
-                                 "We had an issue with your saved state. Not major, but we're starting from scratch."
-                @workspace_state = @Workspaces.create()
-                true
-            )
-          true
-      else
-        # If no localStorage data then make a stub object
-        @workspace_state = {}
-        false
-
-
-    #### Setup Search Storage
-    #
-    # Setup collection to save search views in local storage. We
-    # need to attach this to the controller to ensure
-    # that models are passed around to many instances of
-    # SearchModule. It's a hack, but it works for now.
-    setup_search_storage : ->
-      collection = new SearchContextCollection()
-
-      @SEARCH =
-        saved_searches : collection
-
-      @SEARCH.saved_searches.controller = this # so we can phone home
-      @SEARCH.saved_searches.fetch()
-      @SEARCH.saved_searches
+    setupWorkspaceState : (menu) ->
+      rawStorage = @Amplify.store 'ics_policy_central'
+      storage    = @workspaceStateCollection.reset _.values(rawStorage)
+      @current_state = @current_state or {}
+      @workspace_state = {}
+      if storage.length
+        @workspace_state = storage.retrieve @current_state
+        unless _.isObject @workspace_state
+          @workspace_state = storage.first()
+          @current_state = @workspace_state.get 'workspace'
 
     #### Check logged in state
-    is_loggedin : ->
+    isLoggedIn : ->
       if !@user?
         @Amplify.publish 'controller',
                          'notice',
-                         "Please login to Policy Central to continue."
-        @build_login()
+                         "Please login to Policy Central to continue.",
+                         3000
+        @trigger 'logout'
+        @Router.navigate 'login', { trigger : true }
         return false
       return true
 
@@ -498,53 +438,58 @@ define [
     # Attempt to setup and launch workspace based on info in the menu Obj
     #
     launch_workspace : ->
-      # If not logged in then back to login
-      if @is_loggedin == false
-        return
+      if @isLoggedIn()
+        menu = @config.get 'menu'
+        if menu is false
+          @Amplify.publish 'controller',
+                           'warning',
+                           "Sorry, you do not have access to any items in this environment."
+          return
 
-      menu = @config.get 'menu'
-      if menu == false
-        @Amplify.publish 'controller',
-                         'warning',
-                         "Sorry, you do not have access to any items in this environment."
-        return
+        group_label = menu[@current_state.business]?.contexts[@current_state.context]?.label
+        apps = menu[@current_state.business]?.contexts[@current_state.context]?.apps
+        unless group_label and apps
+          @Amplify.publish 'controller',
+                           'warning',
+                           "Sorry, you do not have access to this workspace."
+          @setActiveRoute() if @active_view
+          return
 
-      group_label = menu[@current_state.business].contexts[@current_state.context].label
-      apps = menu[@current_state.business].contexts[@current_state.context].apps
+        @setBaseRoute()
+        app = _.find apps, (app) =>
+          app.app is @current_state.app
 
-      app = _.find apps, (app) =>
-        app.app is @current_state.app
+        # We need to destroy any existing tabs in the workspace
+        # before loading a new one. We do this recursively to prevent
+        # race conditions (new tabs pushing onto the stack as old ones pop off)
+        @teardownWorkspace()
 
-      # We need to destroy any existing tabs in the workspace
-      # before loading a new one. We do this recursively to prevent
-      # race conditions (new tabs pushing onto the stack as old ones pop off)
-      @teardown_workspace()
+        @launch_app app
+        @initAssigneeListView()
 
-      @launch_app app
-      @initAssigneeListView()
+        if @check_persisted_apps()
+          if @current_state.module and @current_state.params
+            @launch_module()
+          else
+            @reassess_apps()
 
-      if @check_persisted_apps()
-        # Is this a search? attempt to launch it
-        if @current_state.module?
-          @launch_module(@current_state.module, @current_state.params)
-        @reassess_apps()
+        data =
+          business : @current_state.business
+          group    : MenuHelper.check_length(group_label)
+          app      : app.app_label
 
-      data =
-        business : @current_state.business
-        group    : MenuHelper.check_length(group_label)
-        app      : app.app_label
+        @set_breadcrumb(data)
 
-      # Set breadcrumb
-      @set_breadcrumb(data)
+        @set_business_namespace()
 
-      # Store our workplace information in localStorage
-      @set_nav_state()
+        # Store our workplace information in localStorage
+        @setWorkspaceState()
 
-      # Initialize Policy History (Recently Viewed) handling
-      @handlePolicyHistory()
+        # Initialize Policy History (Recently Viewed) handling
+        @handlePolicyHistory()
 
-      # Setup service URLs
-      @configureServices()
+        # Setup service URLs
+        @configureServices()
 
     # Scan config model and dynamically update services object
     # to use the correct URLs
@@ -599,59 +544,45 @@ define [
     #
     # @param `app` _Object_ application config object
     #
-    launch_app : (app, rules=null) ->
+    launch_app : (app) ->
       # If app is not saved in @workspace_state and is not the
       # workspace defined app then we need to add it to our
       # stack of saved apps
-      if @state_exists(app)?
+      if _.isUndefined app
+        return false
+      else if @state_exists(app)?
         @toggle_apps app.app
       else
         @state_add app
 
       # Determine which Module to load into the view
-      rules = rules or new AppRules app
+      rules = new AppRules app
       default_workspace = rules.default_workspace
 
       # Open modules defined in workspace set
       for workspace in default_workspace
         @create_workspace workspace.module, workspace.app
 
-    #### Launch Search App w/ params
-    #
-    # We need to launch a Search Module preloaded with
-    # query params.
+    #### Launch A Module App w/ params
     #
     # @param `params` _Object_ query params
     #
-    launch_module : (module, params) ->
-      # We need to sanitize this a little
-      params ?= {}
+    launch_module : ->
+      if @isLoggedIn()
+        params = @current_state.params or {}
+        module = @current_state.module
+        safe_app_name = "#{Helpers.id_safe(module)}"
+        if params.url
+          safe_app_name += "_#{Helpers.id_safe(params.url)}"
 
-      if !params.q and params.url?
-        url = params.url
-
-      url = params.q if params.q?
-      url = 'Renewal Underwriting' if params.renewalreviewrequired?
-
-      safe_app_name = "#{Helpers.id_safe(module)}"
-      safe_app_name += "_#{Helpers.id_safe(url)}" if url?
-
-      label = params.label || "#{Helpers.uc_first(module)}: #{url}"
-
-      # Setup the app object to launch policy view with
-      app =
-        app       : safe_app_name
-        app_label : label
-        params    : params
-
-      app.app.params = params
-
-      # If doesn't already exist launch it
-      stack_check = @workspace_stack.get safe_app_name
-      if !stack_check?
-        @launch_app app
-      else
-        @toggle_apps safe_app_name
+        if @workspace_stack.has safe_app_name
+          @toggle_apps safe_app_name
+        else
+          label = params.label or "#{Helpers.uc_first(module)}: #{params.url}"
+          @launch_app
+            app       : safe_app_name
+            app_label : label
+            params    : params
 
     # Instantiate a new WorkspaceCanvasView
     #
@@ -663,40 +594,21 @@ define [
         controller  : @
         module_type : module
         app         : app
-
-      if app.tab?
-        options.template_tab = $(app.tab).html()
-
-      new WorkspaceCanvasView(options)
+      new WorkspaceCanvasView options
 
     # If there are other apps persisted in localStorage we need
     # to launch those as well
     check_persisted_apps : ->
-      if !@workspace_state? || _.isEmpty(@workspace_state)
-        return false
-      saved_apps = @workspace_state.get 'apps'
-      unless _.isEmpty saved_apps
-        for app in saved_apps
+      unless _.isEmpty @workspace_state
+        _.each @workspace_state.getAppStack(), (app) =>
           @launch_app app
-      return true
+        return true
+      false
 
-    #### Update Address
-    #
-    # Set URL to whatever @current_state says it should be. Yo.
-    #
-    update_address : ->
-      if @current_state?
-        url = "workspace/#{@current_state.env}/#{@current_state.business}/#{@current_state.context}/#{@current_state.app}"
-        if @current_state.params? and @current_state.module?
-          url += "/#{@current_state.module}/#{Helpers.serialize(@current_state.params)}"
-        @Router.navigate url
-
+    # Add helpful body class for CSS purposes
     set_business_namespace : ->
       if business = @current_state?.business
-        if business is 'cru'
-          $('body').addClass('is-sagesure').removeClass('is-fednat')
-        if business is 'fnic'
-          $('body').addClass('is-fednat').removeClass('is-sagesure')
+        $('body').removeClass().addClass("is-#{business}")
 
     initAssigneeListView : ->
       @assigneeListView = new AssigneeListView
@@ -712,7 +624,11 @@ define [
       if !@$workspace_admin_initial?
         @$workspace_admin_initial = @$workspace_admin.find('ul').html()
 
-      @$workspace_admin.find('ul').html("""<li>Welcome back &nbsp;<a href="#profile">#{@user.get('name')}</a></li><li><a href="#" data-toggle="modal" data-target="#help-modal" data-workspace="saguresure">Help</a></li><li><a href="#logout">Logout</a></li>""")
+      @$workspace_admin.find('ul').html("""
+        <li>Welcome back &nbsp;<a href="#profile">#{@user.get('name')}</a></li>
+        <li><a href="#" data-toggle="modal" data-target="#help-modal" data-workspace="saguresure">Help</a></li>
+        <li><a href="#logout">Logout</a></li>
+        """)
 
     #### Reset Admin Links
     #
@@ -743,27 +659,17 @@ define [
       @$workspace_nav.hide()
       @resize_workspace()
 
-    #### Drop a click listener on all tabs
-    #
+    # Tab close icon
     attach_tab_handlers : ->
-      # Tabs
-      @$workspace_tabs.on 'click', 'li a', (e) =>
-        e.preventDefault()
-        app_name = $(e.target).attr('href')
-
-        # Fallback for search tabs
-        if app_name is undefined
-          app_name = $(e.target).parent().attr('href')
-
-        @toggle_apps app_name
-
-      # Tab close icon
       @$workspace_tabs.on 'click', 'li .glyphicon-remove-circle', (e) =>
         e.preventDefault()
-        policyView = $(e.currentTarget).data 'view'
-        @workspace_stack.get(policyView).destroy()
+        view = $(e.currentTarget).data 'view'
+        @workspace_stack.get(view).destroy()
         @reassess_apps()
+        @setActiveRoute()
 
+    # HACK: Because we don't want to re-render the navbar for each
+    # separate workspace, we handle the routing programatically here.
     attach_navbar_handlers : ->
       @$workspace_main_navbar.on 'click', 'li > a', (e) =>
         $el = $(e.currentTarget)
@@ -773,13 +679,8 @@ define [
           return true
 
         # Launch module if [data-app="<app>"] is present
-        if app_name = $el.data 'app'
-          if @workspace_stack.has app_name
-            @toggle_apps app_name
-          else
-            rules = new AppRules { app: app_name }
-            if rules[app_name]
-              @launch_app(rules[app_name].app, rules)
+        if route = $el.data 'route'
+          @Router.navigate "#{@baseRoute}/#{route}", { trigger : true }
 
         e.preventDefault()
 
@@ -814,35 +715,26 @@ define [
     handle_policy_count : ->
       @$no_policy_flag[if @workspace_stack.policyCount > 0 then 'hide' else 'show']()
 
-    #### Set Active Url
-    #
-    # When a tab is clicked, use the app_name to find
-    # the active tab and dig into it to get the module
-    # name and params of that tab module. Then use this
-    # to switch the url to what it should be.
-    #
-    # @param `app_name` _String_ app_name from tab href
-    #
-    set_active_url : (app_name) ->
-      for view in @workspace_stack.stack
-        if app_name == view.app.app
-          module = view.module
-          if module? and module.app? and module.app.params?
-            module_name = new AppRules(module.app).app_name
-            @Router.append_module module_name, module.app.params
-          else
-            @Router.remove_module()
-
-        #  Failsafe for default search tab with no name
-        if app_name is undefined
-          @Router.remove_module()
+    setActiveRoute : ->
+      app = @active_view.app
+      routeName = Helpers.prettyMap(app.app, {
+        'renewalreview': 'underwriting/renewalreview',
+        'referral_queue': 'underwriting/referrals'
+      })
+      if /policyview_/.test routeName
+        routeName = routeName.replace /policyview.*/, 'policy'
+        if _.isObject app.params
+          routeName += "/#{app.params.url}" if app.params.url
+          routeName += "/#{encodeURIComponent(app.app_label)}" if app.app_label
+        else
+          return false
+      @Router.navigate "#{@baseRoute}/#{routeName}"
 
     # Loop through app stack and switch app states
     toggle_apps : (app_name) ->
       for view in @workspace_stack.stack
         if app_name == view.app.app
           @active_view = view
-          @set_active_url app_name
           view.activate()
           true
         else
@@ -851,44 +743,25 @@ define [
     # Look for active views in the stack, if there are none
     # then activate the last one in the stack.
     reassess_apps : ->
-      # No stack, no need
-      return false if @workspace_stack.stack.length is 0
-
-      active = _.filter @workspace_stack.stack, (view) ->
-        return view.is_active()
-
-      if active.length is 0
-        if @workspace_stack.stack.length > 2
-          last_view = _.last @workspace_stack.stack
-          @toggle_apps last_view.app.app
-        else
-          # Activate search tab by default
-          search_view = @workspace_stack.stack[0]
-          @toggle_apps search_view.app.app
+      if @workspace_stack.stack.length
+        active = _.find @workspace_stack.stack, (view) ->
+          view.isActive
+        unless active
+          if @workspace_stack.stack.length > 2
+            view = _.last @workspace_stack.stack
+          else # Activate first app in the stack
+            view = @workspace_stack.stack[0]
+          @toggle_apps view.app.app
 
     # Tell every app in the stack to commit seppuku
-    teardown_workspace : ->
+    teardownWorkspace : ->
       @set_breadcrumb()
       @assigneeListView.dispose() if @assigneeListView
-      _.each @workspace_stack.stack, (view, index) =>
-        view.destroy()
-        view = null
-      if @workspace_stack.stack.length > 0
-        @workspace_stack.clear()
-        @$workspace_tabs.html('')
-        $('#target').empty()
-        true
-      else
-        false
+      @workspace_stack.clear()
+      $('#target').empty()
 
-    # Open a new window that then calls the url
-    launchWindow : (url) ->
-      if url?
-        new_window = window.open('download.html', '_blank')
-        new_window.setUrl = url
-
-    # Configure Herald to display updates and notifications to users
-    # after login
+    # Configure Herald to display updates
+    # and notifications to users after login
     setupHerald : ->
       herald_config =
         h_path        : '/js/lib/herald/'
@@ -897,7 +770,6 @@ define [
         version       : $('#version-number').text()
         inject_point  : 'body'
         textProcessor : marked
-
       Herald.init herald_config
 
     # Kick off the show
@@ -931,9 +803,6 @@ define [
 
   WorkspaceController.on "launch", ->
     @launch_workspace()
-
-  WorkspaceController.on "search", (module, params) ->
-    @launch_module(module, params)
 
   WorkspaceController.on "stack_add", (view) ->
     @workspace_stack.add view

@@ -28,6 +28,11 @@
     border-top: 1px solid $table-border-color;
   }
 
+  a.tr {
+    display: block;
+    color: inherit;
+  }
+
   .tr:first-child {
     border-top: 0;
   }

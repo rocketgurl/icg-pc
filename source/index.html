@@ -99,8 +99,8 @@
 
     <div id="header-navbar" class="navbar navbar-static-top pc-nav" role="navigation">
       <ul class="nav navbar-nav">
-        <li><a href="#" data-app="home">Home</a></li>
-        <li><a href="#" data-app="search">Search</a></li>
+        <li><a href="#" data-route="home">Home</a></li>
+        <li><a href="#" data-route="search">Search</a></li>
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Servicing <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
@@ -112,9 +112,9 @@
         <li class="dropdown">
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">Underwriting <span class="caret"></span></a>
           <ul class="dropdown-menu" role="menu">
-            <li><a href="#" data-app="referral_queue">New Business Underwriting</a></li>
+            <li><a href="#" data-route="underwriting/referrals">New Business Underwriting</a></li>
             <li class="divider"></li>
-            <li class="renewal-review"><a href="#" data-app="renewalreview">Renewal Underwriting</a></li>
+            <li class="renewal-review"><a href="#" data-route="underwriting/renewalreview">Renewal Underwriting</a></li>
             <li class="divider renewal-review"></li>
             <li><a href="#" data-toggle="modal" data-target="#assignee-list-modal">Manage Referral Assignees</a></li>
           </ul>
@@ -160,14 +160,14 @@
         </div>
         <div class="modal-body">
           <section class="pc-help-support">
-            <h4><span class="inline"><span class="show-sagesure">SageSure</span><span class="show-fednat">FedNat</span></span> Support</h4>
-            <p>Hours: <span class="inline"><span class="show-sagesure">9am to 5pm ET</span><span class="show-fednat">8am to 6pm ET</span></span></p>
-            <p>Phone: <span class="inline"><span class="show-sagesure">877-304-4785 option #6</span><span class="show-fednat">800-293-2532</span></span></p>
-            <p class="show-sagesure">Ticket submission: <a href="https://icg360.zendesk.com/" target="_blank" rel="nofollow">https://icg360.zendesk.com/</a></p>
+            <h4><span class="inline"><span class="show-cru">SageSure</span><span class="show-fnic">FedNat</span></span> Support</h4>
+            <p>Hours: <span class="inline"><span class="show-cru">9am to 5pm ET</span><span class="show-fnic">8am to 6pm ET</span></span></p>
+            <p>Phone: <span class="inline"><span class="show-cru">877-304-4785 option #6</span><span class="show-fnic">800-293-2532</span></span></p>
+            <p class="show-cru">Ticket submission: <a href="https://icg360.zendesk.com/" target="_blank" rel="nofollow">https://icg360.zendesk.com/</a></p>
           </section>
           <section class="pc-help-feedback">
             <h4>Got Feedback?</h4>
-            <p>Send an email to our user feedback box: <span class="inline"><a href="mailto:feedback@icg360.com?subject=Policy%20Central%20-%20SageSure%20Feedback" class="show-sagesure">feedback@icg360.com</a><a href="mailto:feedback@icg360.com?subject=Policy%20Central%20-%20FedNat%20Feedback" class="show-fednat">feedback@icg360.com</a></span></p><p>Note: <em>Please do not send bug reports or request support here as this mailbox is not regularly monitored.</em></p>
+            <p>Send an email to our user feedback box: <span class="inline"><a href="mailto:feedback@icg360.com?subject=Policy%20Central%20-%20SageSure%20Feedback" class="show-cru">feedback@icg360.com</a><a href="mailto:feedback@icg360.com?subject=Policy%20Central%20-%20FedNat%20Feedback" class="show-fnic">feedback@icg360.com</a></span></p><p>Note: <em>Please do not send bug reports or request support here as this mailbox is not regularly monitored.</em></p>
           </section>
           <section class="pc-help-faq">
             <h4>FAQs</h4>
@@ -251,24 +251,6 @@
   <div class="flash-message-container">
   <div id="flash-message-{{cid}}" class="flash-message"></div>
   </div>
-  </script>
-
-  <!-- TEMPLATE: Search Tab -->
-  <script type="text/template" id="tpl-workspace-tab-search">
-  <li {{{tab_class}}}id="tab-search"><a href="{{tab_url}}"><i class="icon-search" data-tab-label="{{tab_label}}"></i></a></li>
-  </script>
-
-  <!-- TEMPLATE: Tab + no close -->
-  <script type="text/template" id="tpl-workspace-tab-noclose">
-  <li{{{tab_class}}} id="tab-noclose"><a href="{{tab_url}}">{{tab_label}}</a></li>
-  </script>
-
-  <!-- HACK: No tab -->
-  <script type="text/template" id="tpl-workspace-tab-blank"></script>
-
-  <!-- TEMPLATE: Workspace Tab -->
-  <script type="text/template" id="tpl-workspace-tab">
-  <li{{{tab_class}}}><span class="glyphicon glyphicon-remove-circle" title="Close this tab" data-view="{{tab_url}}"></span><a href="{{tab_url}}">{{tab_label}}</a></li>
   </script>
 
 </body>

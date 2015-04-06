@@ -8,7 +8,9 @@ define [
     receivedTemplate : """
     <p>
       {{relationship}} Policy #:
-      <a href="#" class="policy-id-link">{{policyId}} <span class="glyphicon glyphicon-new-window"></span></a>
+      <a href="\#{{controller.baseRoute}}/policy/{{quoteNumber}}/{{insuredLastName}}%20{{policyId}}">
+        {{policyId}} <span class="glyphicon glyphicon-new-window"></span>
+      </a>
     </p>
     <p><em>Effective {{effectiveDate}}</em></p>
     """
@@ -21,12 +23,8 @@ define [
     <p class="alert alert-danger" role="alert"><strong>{{{status}}}</strong>: {{{statusText}}}</p>
     """
 
-    events :
-      'click .policy-id-link' : 'openPolicy'
-
     initialize : (options) ->
       _.bindAll this, 'renderRetrieving', 'renderRetrieved', 'renderError'
-      @options = options
       @content = @$('.popover-content')
       @$el.show()
 
@@ -39,17 +37,6 @@ define [
       @model.on 'sync',    @renderRetrieved
       @model.on 'error',   @renderError
       @model.requestData()
-
-    # Activate existing PolicyView tab or open a new one
-    openPolicy : (e) ->
-      e.preventDefault()
-
-      params =
-        url   : @model.get('quoteNumber')
-        label : "#{@model.get('insuredLastName')} #{@options.policyId}"
-
-      @options.controller.launch_module 'policyview', params
-      @options.controller.Router.append_module 'policyview', params
 
     renderRetrieving : ->
       @content.html @retrievingTemplate
