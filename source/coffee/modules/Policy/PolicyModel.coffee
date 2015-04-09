@@ -154,7 +154,7 @@ define [
       if @get('document')?
         ipm_header =
           id                      : @getPolicyId()
-          product                 : @getTermDataItemValue 'ProductLabel'
+          product                 : @getProductLabel()
           holder                  : @getPolicyHolder()
           state                   : policyState
           stateClass              : ''
@@ -283,6 +283,16 @@ define [
           'ProtectionClass'
           'InsuranceScoreRange'
         ])
+
+    getProductLabel : ->
+      if @isQuote()
+        dataItems = @findInQuoteTerm('ProtoInterval')?.DataItem
+      else if @isFNIC()
+        dataItems = @findInLastTerm('Intervals Interval')?.DataItem
+      else
+        dataItems = @getLastTerm()?.DataItem
+
+      @getDataItem @_sanitizeNodeArray(dataItems), 'ProductLabel'
 
     # Map policy state to a prettier version
     getPrettyPolicyState : ->
@@ -428,7 +438,8 @@ define [
       text == @states.ACTIVE_QUOTE or text == @states.EXPIRED_QUOTE
 
     isFNIC : ->
-      'fnic' is @find('Management ProgramAdministrator')
+      programAdmin = @find('Management ProgramAdministrator')
+      /fnic/gi.test programAdmin
 
     # **Is this policy pending cancellation?**
     # User can specify a boolean return (bool = true) or
