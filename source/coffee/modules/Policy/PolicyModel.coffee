@@ -308,16 +308,17 @@ define [
       
       # PolicyState is stored in a few different places and ways
       # WARNING: this can get messy
-      state = @get('state').text || @get('state')
+      state = @get('state').text or @get('state')
       policyStates = @get('document').find('PolicyState')
 
       if @isPendingCancel true
         state = 'PENDINGCANCELLATION'
       else if @isPendingNonRenewal()
         state = 'PENDINGNONRENEWAL'
-      else if policyStates?.length > 1
-        stateNode = _.find(policyStates, (node) -> $(node).text() != state)
-        state = $(stateNode).text() if stateNode
+      else if state is 'ACTIVEQUOTE'
+        dataItems = @findInQuoteTerm('ProtoInterval')?.DataItem
+        unless @getDataItem @_sanitizeNodeArray(dataItems), 'TotalPremium'
+          state = 'INCOMPLETEQUOTE'
       
       @Helpers.prettyMap state, prettyStates
 
