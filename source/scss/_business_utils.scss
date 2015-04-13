@@ -1,9 +1,9 @@
 // Utilities to show/hide SageSure/FedNat specific items
 .show-fnic {
-  display: none;
+  display: none !important;
 }
 
 .is-fnic {
-  .show-cru  { display: none; }
-  .show-fnic { display: inherit; }
+  .show-cru  { display: none !important; }
+  .show-fnic { display: inherit !important; }
 }

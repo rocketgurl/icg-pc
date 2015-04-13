@@ -154,7 +154,7 @@ define [
       if @get('document')?
         ipm_header =
           id                      : @getPolicyId()
-          product                 : @getTermDataItemValue 'ProductLabel'
+          product                 : @getProductLabel()
           holder                  : @getPolicyHolder()
           state                   : policyState
           stateClass              : ''
@@ -284,6 +284,16 @@ define [
           'InsuranceScoreRange'
         ])
 
+    getProductLabel : ->
+      if @isQuote()
+        dataItems = @findInQuoteTerm('ProtoInterval')?.DataItem
+      else if @isFNIC()
+        dataItems = @findInLastTerm('Intervals Interval')?.DataItem
+      else
+        dataItems = @getLastTerm()?.DataItem
+
+      @getDataItem @_sanitizeNodeArray(dataItems), 'ProductLabel'
+
     # Map policy state to a prettier version
     getPrettyPolicyState : ->
       prettyStates =
@@ -298,16 +308,17 @@ define [
       
       # PolicyState is stored in a few different places and ways
       # WARNING: this can get messy
-      state = @get('state').text || @get('state')
+      state = @get('state').text or @get('state')
       policyStates = @get('document').find('PolicyState')
 
       if @isPendingCancel true
         state = 'PENDINGCANCELLATION'
       else if @isPendingNonRenewal()
         state = 'PENDINGNONRENEWAL'
-      else if policyStates?.length > 1
-        stateNode = _.find(policyStates, (node) -> $(node).text() != state)
-        state = $(stateNode).text() if stateNode
+      else if state is 'ACTIVEQUOTE'
+        dataItems = @findInQuoteTerm('ProtoInterval')?.DataItem
+        unless @getDataItem @_sanitizeNodeArray(dataItems), 'TotalPremium'
+          state = 'INCOMPLETEQUOTE'
       
       @Helpers.prettyMap state, prettyStates
 
@@ -428,7 +439,8 @@ define [
       text == @states.ACTIVE_QUOTE or text == @states.EXPIRED_QUOTE
 
     isFNIC : ->
-      'fnic' is @find('Management ProgramAdministrator')
+      programAdmin = @find('Management ProgramAdministrator')
+      /fnic/gi.test programAdmin
 
     # **Is this policy pending cancellation?**
     # User can specify a boolean return (bool = true) or

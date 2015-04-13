@@ -1913,7 +1913,7 @@ ul:after { clear: both; }
 
 #header-logo { position: absolute; top: 0; left: 0; }
 
-#header-controls { font-size: 12px; font-size: 1.2rem; margin: 0 auto; padding: 9px 0; width: 450px; text-align: center; }
+#header-controls { font-size: 12px; font-size: 1.2rem; margin: 0 auto; padding: 10px 0; width: 450px; text-align: center; white-space: nowrap; }
 #header-controls span { color: #80bcea; display: none; }
 #header-controls #breadcrumb { margin: 0; padding: 0; display: inline-block; }
 #header-controls #breadcrumb li { display: inline-block; color: #80bcea; }
@@ -1922,7 +1922,7 @@ ul:after { clear: both; }
 #header-controls #breadcrumb li:last-child:after { content: ' '; }
 #header-controls #breadcrumb li:first-child { text-transform: uppercase; }
 
-#button-workspace { display: inline-block; padding: 6px 12px 8px 12px; margin: 0 10px; background: #648fb0; border-radius: 4px; color: white; font-weight: bold; text-shadow: #002857 0 1px 1px; text-decoration: none; }
+#button-workspace { display: inline-block; padding: 6px 8px; margin-right: 8px; background: #648fb0; border-radius: 3px; color: white; font-weight: bold; text-shadow: #002857 0 1px 1px; text-decoration: none; }
 
 #button-workspace:hover { background: black; text-shadow: none 0 0 0; color: #d7eaf9; }
 
@@ -2692,7 +2692,7 @@ header.module-referrals .checkbox { padding: 0 10px; }
 
 .herald-content ul { padding-left: 15px; list-style: initial; }
 
-.show-fnic { display: none; }
+.show-fnic { display: none !important; }
 
-.is-fnic .show-cru { display: none; }
-.is-fnic .show-fnic { display: inherit; }
+.is-fnic .show-cru { display: none !important; }
+.is-fnic .show-fnic { display: inherit !important; }

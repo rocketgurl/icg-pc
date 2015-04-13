@@ -1,0 +1,1 @@
+{"terms":[{"name":"RescindPendingCancelReason","label":"Reason Code","enumerations":[{"value":"201","label":"Payment received"},{"value":"29","label":"Underwriting reason for cancellation resolved"},{"value":"1","label":"Insured request"},{"value":"160","label":"Payment not received - Underwriting cancellation to be issued"}]}]}
