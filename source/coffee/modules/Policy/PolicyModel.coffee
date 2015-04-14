@@ -139,6 +139,10 @@ define [
       id = @getIdentifier('PolicyID')
       if id then id else ''
 
+    getQuoteNumber : ->
+      qn = @getIdentifier('QuoteNumber')
+      if qn then qn else ''
+
     getPolicyPrefix : ->
       prefix = @get('policyPrefix')
       unless prefix?
@@ -181,11 +185,21 @@ define [
       if @isQuote()
         start = (@findInQuoteTerm('EffectiveDate') or '').substr(0, 10)
         end   = (@findInQuoteTerm('ExpirationDate') or '').substr(0, 10)
-        ipm_header.id = @id
+        ipm_header.id = @getQuoteNumber()
         ipm_header.period = @Helpers.concatStrings(start, end, ' - ')
         ipm_header.isQuote = true
         ipm_header.product = @findInQuoteTerm('ProtoInterval DataItem[name=OpPolicyType]')
       ipm_header
+
+    getTabLabel : ->
+      doc = @get('document')
+      lastName = doc.find('Customer[type="Insured"] DataItem[name="InsuredLastName"]')
+      if @isQuote()
+        id = @getQuoteNumber()
+      else
+        id = @getPolicyId()
+      if id and lastName.length
+        "#{lastName.attr('value')} #{id}"
 
     # Assemble all the policy data for HTML QuickView servicing tab into one place
     getServicingData : ->
