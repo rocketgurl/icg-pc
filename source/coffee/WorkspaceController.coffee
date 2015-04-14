@@ -653,15 +653,6 @@ define [
       @$workspace_nav.hide()
       @resize_workspace()
 
-    # Tab close icon
-    attach_tab_handlers : ->
-      @$workspace_tabs.on 'click', 'li .glyphicon-remove-circle', (e) =>
-        e.preventDefault()
-        view = $(e.currentTarget).data 'view'
-        @workspace_stack.get(view).destroy()
-        @reassess_apps()
-        @setActiveRoute()
-
     # HACK: Because we don't want to re-render the navbar for each
     # separate workspace, we handle the routing programatically here.
     attach_navbar_handlers : ->
@@ -773,7 +764,6 @@ define [
         @Router.controller = this
         Backbone.history.start()
         @check_cookie_identity()
-        @attach_tab_handlers()
         @attach_navbar_handlers()
         @attach_policy_nav_handler()
         @attach_window_resize_handler()
