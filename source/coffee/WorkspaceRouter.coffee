@@ -18,8 +18,10 @@ define [
       'workspace/:env/:business/:context/:app/home'                       : 'homeView'
       'workspace/:env/:business/:context/:app/search'                     : 'searchView'
       'workspace/:env/:business/:context/:app/underwriting/referrals'     : 'underwritingReferralsView'
+      'workspace/:env/:business/:context/:app/underwriting/renewals'      : 'underwritingRenewalsView'
       'workspace/:env/:business/:context/:app/underwriting/renewalreview' : 'underwritingRenewalsView'
       'workspace/:env/:business/:context/:app/policy/:quotenum'           : 'policyView'
+      'workspace/:env/:business/:context/:app/policy/:quotenum/:label'    : 'policyView'
 
     noop : -> # i do nothing; i harm no one
 
