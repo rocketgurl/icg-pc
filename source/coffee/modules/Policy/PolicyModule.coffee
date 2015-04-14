@@ -103,11 +103,11 @@ define [
       })
 
       # When this tab is activated
-      @on 'activate', () ->
+      @on 'activate', ->
         @policy_view.trigger 'activate'
 
       # When this tab is activated
-      @on 'deactivate', () ->
+      @on 'deactivate', ->
         @policy_view.trigger 'deactivate'
 
     # If the policy throws some crazy crippled client stuff then set off a
