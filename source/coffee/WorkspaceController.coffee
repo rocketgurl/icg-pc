@@ -342,6 +342,7 @@ define [
         view = @policyHistoryViews[id] = new PolicyHistoryView
           controller     : this
           el             : '#policy-history'
+      view.render()
 
     #### Get Configuration Files
     #
@@ -458,10 +459,6 @@ define [
         # race conditions (new tabs pushing onto the stack as old ones pop off)
         @teardownWorkspace()
 
-        # Initialize Open Policies & Policy History views
-        if id = @workspace_state?.id
-          @initPolicyHistoryView id
-
         @launch_app app
         @initAssigneeListView()
 
@@ -482,6 +479,10 @@ define [
 
         # Store our workplace information in localStorage
         @setWorkspaceState()
+
+        # Initialize Open Policies & Policy History views
+        if id = @workspace_state?.id
+          @initPolicyHistoryView id
 
         # Setup service URLs
         @configureServices()
@@ -663,7 +664,7 @@ define [
         if $el.is '[target="_blank"]'
           return true
 
-        # Launch module if [data-app="<app>"] is present
+        # Launch module if [data-route="[route]"] is present
         if route = $el.data 'route'
           @Router.navigate "#{@baseRoute}/#{route}", { trigger : true }
 
