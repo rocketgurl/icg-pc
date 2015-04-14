@@ -334,17 +334,14 @@ define [
       @workspaceStateCollection?.reset()
       @Amplify.store 'ics_policy_central', null
 
-    handlePolicyHistory : ->
-      if id = @workspace_state?.id
-
-        # Instantiate a new view for each workspace_state model
-        unless _.isObject @policyHistoryViews[id]
-          @policyHistoryViews[id] = new PolicyHistoryView
-            controller     : this
-            workspaceState : @workspaceStateCollection.get id
-            el             : '#policy-history'
-
-        @policyHistoryViews[id].render()
+    # Instantiate new policy history view
+    # for each workspace_state model
+    initPolicyHistoryView : (id) ->
+      view = @policyHistoryViews[id]
+      unless _.isObject view
+        view = @policyHistoryViews[id] = new PolicyHistoryView
+          controller     : this
+          el             : '#policy-history'
 
     #### Get Configuration Files
     #
@@ -461,6 +458,10 @@ define [
         # race conditions (new tabs pushing onto the stack as old ones pop off)
         @teardownWorkspace()
 
+        # Initialize Open Policies & Policy History views
+        if id = @workspace_state?.id
+          @initPolicyHistoryView id
+
         @launch_app app
         @initAssigneeListView()
 
@@ -481,9 +482,6 @@ define [
 
         # Store our workplace information in localStorage
         @setWorkspaceState()
-
-        # Initialize Policy History (Recently Viewed) handling
-        @handlePolicyHistory()
 
         # Setup service URLs
         @configureServices()
@@ -571,7 +569,6 @@ define [
         safe_app_name = "#{Helpers.id_safe(module)}"
         if params.url
           safe_app_name += "_#{Helpers.id_safe(params.url)}"
-
         if @workspace_stack.has safe_app_name
           @toggle_apps safe_app_name
         else
