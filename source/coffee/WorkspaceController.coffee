@@ -702,19 +702,19 @@ define [
       @$no_policy_flag[if @workspace_stack.policyCount > 0 then 'hide' else 'show']()
 
     setActiveRoute : ->
-      app = @active_view.app
-      routeName = Helpers.prettyMap(app.app, {
-        'renewalreview': 'underwriting/renewalreview',
-        'referral_queue': 'underwriting/referrals'
-      })
-      if /policyview_/.test routeName
-        routeName = routeName.replace /policyview.*/, 'policy'
-        if _.isObject app.params
-          routeName += "/#{app.params.url}" if app.params.url
-          routeName += "/#{encodeURIComponent(app.app_label)}" if app.app_label
-        else
-          return false
-      @Router.navigate "#{@baseRoute}/#{routeName}"
+      if _.isObject @active_view
+        app = @active_view.app
+        appName = Helpers.prettyMap(app.app, {
+          'renewalreview': 'underwriting/renewals',
+          'referral_queue': 'underwriting/referrals'
+        })
+        if /policyview_/.test appName
+          routeName = appName.replace /policyview.*/, 'policy'
+          if _.isObject app.params
+            routeName += "/#{app.params.url}" if app.params.url
+          else
+            return false
+        @Router.navigate "#{@baseRoute}/#{routeName}"
 
     # Loop through app stack and switch app states
     toggle_apps : (app_name) ->
@@ -731,7 +731,7 @@ define [
     reassess_apps : ->
       if @workspace_stack.stack.length
         active = _.find @workspace_stack.stack, (view) ->
-          view.isActive
+          view.app.isActive
         unless active
           if @workspace_stack.stack.length > 2
             view = _.last @workspace_stack.stack
@@ -742,6 +742,7 @@ define [
     # Tell every app in the stack to commit seppuku
     teardownWorkspace : ->
       @set_breadcrumb()
+      @active_view = null
       @assigneeListView.dispose() if @assigneeListView
       @workspace_stack.clear()
       $('#target').empty()
@@ -796,6 +797,8 @@ define [
   WorkspaceController.on "stack_remove", (view) ->
     @workspace_stack.remove(view)
     @state_remove(view.app)
+    @reassess_apps()
+    @setActiveRoute()
     @handle_policy_count()
 
   WorkspaceController.on "new_tab", (app_name) ->
