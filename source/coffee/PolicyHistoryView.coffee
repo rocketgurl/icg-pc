@@ -16,8 +16,9 @@ define [
     initialize : (options) ->
       _.bindAll this, 'render'
       @controller = options.controller
-      @workspaceState = options.workspaceState
+      @workspaceState = @controller.workspace_state
       @listenTo @workspaceState, 'change:history', @render
+      @render()
 
     render : ->
       data = {}
