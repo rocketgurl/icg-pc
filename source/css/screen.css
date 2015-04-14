@@ -2000,8 +2000,8 @@ ul:after { clear: both; }
 #workspace > nav > ul > li.selected > a { color: #fff; }
 #workspace > nav > ul .no-policies { margin-right: 10px; padding: initial; border-radius: initial; text-align: center; font-family: serif; color: #999; }
 #workspace > nav > ul .no-policies:hover { background: initial; }
-#workspace #open-policy-tabs, #workspace #policy-history, #workspace #policy-history > ul { position: absolute; right: 0; left: 0; border-top: 1px solid #ccc; }
-#workspace #open-policy-tabs { top: 48px; bottom: 40%; }
+#workspace #policy-nav, #workspace #policy-history, #workspace #policy-history > ul { position: absolute; right: 0; left: 0; border-top: 1px solid #ccc; }
+#workspace #policy-nav { top: 48px; bottom: 40%; }
 #workspace #policy-history { display: block; top: 60%; bottom: 0; }
 #workspace #policy-history h4 { text-align: center; font-family: serif; font-style: italic; font-size: 16px; font-size: 1.6rem; color: #838383; }
 #workspace #policy-history > ul { top: 37px; bottom: 0; overflow-y: auto; margin: 0; padding: 0 10px; }
