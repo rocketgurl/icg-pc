@@ -119,34 +119,16 @@ define [
     #
     # @param `app` _Object_ application config object
     #
-    state_add : (app) ->
-      # No workspace default apps allowed
-      if app.app is @current_state.app
-        return false
-
-      saved_apps = _.clone @workspace_state.getAppStack()
-
-      if saved_apps?
-        # Check to see if this app is already in the array.
-        # If its not, add it.
-        exists = @state_exists app
-        if !exists?
-          saved_apps.push app
-        else
-          return false
-      else
-        # Otherwise create a new array of apps if this app
-        # is not the workspace defined default
-        if app.app != @current_state.app
-          saved_apps = [app]
-
-      # If app is a policy, add it to our history stack
-      if /policyview_/.test app.app
-        @workspace_state.updateHistoryStack app
-
-      @workspace_state.set 'apps', saved_apps
-      @workspace_state.save()
-      return true
+    state_add :
+      valid_workspace \
+      (app) ->
+        # No workspace default apps allowed
+        unless app.app is @current_state.app
+          appAdded = @workspace_state.addAppItem app
+          if appAdded
+            @workspace_state.save()
+            true
+        false
 
     # Remove app from saved workspace state
     #
