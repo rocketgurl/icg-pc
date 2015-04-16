@@ -547,7 +547,7 @@ define [
       if _.isUndefined app
         return false
       else if @state_exists(app)?
-        @toggle_apps app.app
+        @toggle_apps app
       else
         @state_add app
 
@@ -565,19 +565,26 @@ define [
     #
     launch_module : ->
       if @isLoggedIn()
-        params = @current_state.params or {}
+        params = @current_state.params or null
         module = @current_state.module
         safe_app_name = "#{Helpers.id_safe(module)}"
-        if params.url
-          safe_app_name += "_#{Helpers.id_safe(params.url)}"
-        if @workspace_stack.has safe_app_name
-          @toggle_apps safe_app_name
+        safe_app_name += "_#{Helpers.id_safe(params.url)}" if params?.url
+
+        if params?.label
+          label = params.label
         else
-          label = params.label or "#{Helpers.uc_first(module)}: #{params.url}"
-          @launch_app
-            app       : safe_app_name
-            app_label : label
-            params    : params
+          label = "#{Helpers.uc_first(module)}"
+          label += ": #{params.url}" if params?.url
+
+        app =
+          app       : safe_app_name
+          app_label : label
+          params    : params
+
+        if @workspace_stack.has safe_app_name
+          @toggle_apps app
+        else
+          @launch_app app
 
     # Instantiate a new WorkspaceCanvasView
     #
@@ -717,9 +724,9 @@ define [
         @Router.navigate "#{@baseRoute}/#{routeName}"
 
     # Loop through app stack and switch app states
-    toggle_apps : (app_name) ->
+    toggle_apps : (app) ->
       for view in @workspace_stack.stack
-        if app_name == view.app.app
+        if app.app is view.app.app
           @active_view = view
           view.activate()
           true
@@ -737,7 +744,7 @@ define [
             view = _.last @workspace_stack.stack
           else # Activate first app in the stack
             view = @workspace_stack.stack[0]
-          @toggle_apps view.app.app
+          @toggle_apps view.app
 
     # Tell every app in the stack to commit seppuku
     teardownWorkspace : ->
@@ -801,5 +808,5 @@ define [
     @setActiveRoute()
     @handle_policy_count()
 
-  WorkspaceController.on "new_tab", (app_name) ->
-    @toggle_apps app_name
+  WorkspaceController.on "new_tab", (app) ->
+    @toggle_apps app

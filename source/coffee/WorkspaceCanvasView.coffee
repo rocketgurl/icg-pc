@@ -91,7 +91,7 @@ define [
       # There should prolly be some checking to make sure the app has
       # loaded before telling the controller we're here?
       #
-      @options.controller.trigger 'new_tab', @app.app
+      @options.controller.trigger 'new_tab', @app
 
     renderTab : (data) ->
       @$tabEl.html Mustache.render @tabTemplate, data
