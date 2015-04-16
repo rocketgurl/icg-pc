@@ -46,7 +46,7 @@ define [
         'renewalreview'  : 'underwriting/renewals'
         'referral_queue' : 'underwriting/referrals'
         })
-      @$navbar_item = $(".pc-nav [data-route=\"#{routeName}\"]").parent()
+      @$navbarItem = $(".pc-nav [data-route=\"#{routeName}\"]").parent()
 
       # Add to the stack
       controller.trigger 'stack_add', @
@@ -116,7 +116,7 @@ define [
     activate : ->
       @$tabEl.addClass('selected') if @$tabEl
       @$el.removeClass 'inactive'
-      @$navbar_item.addClass 'active'
+      @$navbarItem.addClass 'active'
       @app.isActive = true
       if @module
         @module.trigger 'activate'
@@ -125,7 +125,7 @@ define [
     deactivate : ->
       @$tabEl.removeClass('selected') if @$tabEl
       @$el.addClass 'inactive'
-      @$navbar_item.removeClass 'active'
+      @$navbarItem.removeClass 'active'
       @app.isActive = false
       if @module
         @module.trigger 'deactivate'
@@ -134,7 +134,7 @@ define [
     destroy : ->
       # Remove tab & nullify so GC can get it (?)
       if @$tabEl?
-        @$navbar_item.removeClass 'active'
+        @$navbarItem.removeClass 'active'
         @$tabEl.remove()
         @$tabEl = null
 
