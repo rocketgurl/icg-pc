@@ -74,7 +74,7 @@ define [
     $workspace_main_navbar   : $('#header-navbar')
     $workspace_canvas        : $('#canvas')
     $workspace_nav           : $('#workspace nav')
-    $workspace_tabs          : $('#workspace #open-policy-tabs')
+    $workspace_tabs          : $('#workspace #policy-nav')
     $no_policy_flag          : $('#workspace .no-policies')
     Router                   : new WorkspaceRouter()
     Cookie                   : new Cookie()
@@ -98,40 +98,37 @@ define [
     logger : (msg) ->
       @Amplify.publish 'log', msg
 
+    # Update app configs in workspace_state apps & policy history stack.
+    # The app.app attribute is required, but apart from that, it's possible
+    # to pass only the attributes you want to change. E.g.
+    # app = {
+    #   app : 'policyview_CRU4Q_123123'
+    #   app_label : 'New Cool Label'
+    # }
+    #
+    # @param `app` _Object_ application config object
+    state_update : (app) ->
+      appUpdated = @workspace_state.updateAppItem app
+      historyUpdated = @workspace_state.updateHistoryItem app
+      if appUpdated or historyUpdated
+        @workspace_state.save()
+
     # If app is not saved in @workspace_state and is not the
     # workspace defined app then we need to add it to our
     # stack of saved apps
     #
     # @param `app` _Object_ application config object
     #
-    state_add : (app) ->
-      # No workspace default apps allowed
-      if app.app is @current_state.app
-        return false
-
-      saved_apps = @workspace_state.getAppStack()
-
-      if saved_apps?
-        # Check to see if this app is already in the array.
-        # If its not, add it.
-        exists = @state_exists app
-        if !exists?
-          saved_apps.push app
-        else
-          return false
-      else
-        # Otherwise create a new array of apps if this app
-        # is not the workspace defined default
-        if app.app != @current_state.app
-          saved_apps = [app]
-
-      # If app is a policy, add it to our history stack
-      if /policyview_/.test app.app
-        @workspace_state.updateHistoryStack app
-
-      @workspace_state.set 'apps', saved_apps
-      @workspace_state.save()
-      return true
+    state_add :
+      valid_workspace \
+      (app) ->
+        # No workspace default apps allowed
+        unless app.app is @current_state.app
+          appAdded = @workspace_state.addAppItem app
+          if appAdded
+            @workspace_state.save()
+            true
+        false
 
     # Remove app from saved workspace state
     #
@@ -140,7 +137,7 @@ define [
     state_remove :
       valid_workspace \
       (app) ->
-        saved_apps = @workspace_state.getAppStack()
+        saved_apps = _.clone @workspace_state.getAppStack()
         _.each saved_apps, (obj, index) =>
           if app.app is obj.app
             saved_apps.splice index, 1
@@ -337,17 +334,15 @@ define [
       @workspaceStateCollection?.reset()
       @Amplify.store 'ics_policy_central', null
 
-    handlePolicyHistory : ->
-      if id = @workspace_state?.id
-
-        # Instantiate a new view for each workspace_state model
-        unless _.isObject @policyHistoryViews[id]
-          @policyHistoryViews[id] = new PolicyHistoryView
-            controller     : this
-            workspaceState : @workspaceStateCollection.get id
-            el             : '#policy-history'
-
-        @policyHistoryViews[id].render()
+    # Instantiate new policy history view
+    # for each workspace_state model
+    initPolicyHistoryView : (id) ->
+      view = @policyHistoryViews[id]
+      unless _.isObject view
+        view = @policyHistoryViews[id] = new PolicyHistoryView
+          controller     : this
+          el             : '#policy-history'
+      view.render()
 
     #### Get Configuration Files
     #
@@ -468,7 +463,7 @@ define [
         @initAssigneeListView()
 
         if @check_persisted_apps()
-          if @current_state.module and @current_state.params
+          if @current_state.module
             @launch_module()
           else
             @reassess_apps()
@@ -485,8 +480,9 @@ define [
         # Store our workplace information in localStorage
         @setWorkspaceState()
 
-        # Initialize Policy History (Recently Viewed) handling
-        @handlePolicyHistory()
+        # Initialize Open Policies & Policy History views
+        if id = @workspace_state?.id
+          @initPolicyHistoryView id
 
         # Setup service URLs
         @configureServices()
@@ -551,7 +547,7 @@ define [
       if _.isUndefined app
         return false
       else if @state_exists(app)?
-        @toggle_apps app.app
+        @toggle_apps app
       else
         @state_add app
 
@@ -569,18 +565,23 @@ define [
     #
     launch_module : ->
       if @isLoggedIn()
-        params = @current_state.params or {}
+        params = @current_state.params or null
         module = @current_state.module
-        safe_app_name = "#{Helpers.id_safe(module)}"
-        if params.url
-          safe_app_name += "_#{Helpers.id_safe(params.url)}"
+        appName = "#{Helpers.id_safe(module)}"
+        appName += "_#{Helpers.id_safe(params.url)}" if params?.url
 
-        if @workspace_stack.has safe_app_name
-          @toggle_apps safe_app_name
+        if @workspace_stack.has appName
+          app = @workspace_stack.get(appName).app
+          app.params = params if _.isObject params
+          @toggle_apps app
         else
-          label = params.label or "#{Helpers.uc_first(module)}: #{params.url}"
+          if params?.label
+            label = params.label
+          else
+            label = "#{Helpers.uc_first(module)}"
+            label += ": #{params.url}" if params?.url
           @launch_app
-            app       : safe_app_name
+            app       : appName
             app_label : label
             params    : params
 
@@ -659,15 +660,6 @@ define [
       @$workspace_nav.hide()
       @resize_workspace()
 
-    # Tab close icon
-    attach_tab_handlers : ->
-      @$workspace_tabs.on 'click', 'li .glyphicon-remove-circle', (e) =>
-        e.preventDefault()
-        view = $(e.currentTarget).data 'view'
-        @workspace_stack.get(view).destroy()
-        @reassess_apps()
-        @setActiveRoute()
-
     # HACK: Because we don't want to re-render the navbar for each
     # separate workspace, we handle the routing programatically here.
     attach_navbar_handlers : ->
@@ -678,7 +670,7 @@ define [
         if $el.is '[target="_blank"]'
           return true
 
-        # Launch module if [data-app="<app>"] is present
+        # Launch module if [data-route="[route]"] is present
         if route = $el.data 'route'
           @Router.navigate "#{@baseRoute}/#{route}", { trigger : true }
 
@@ -716,24 +708,24 @@ define [
       @$no_policy_flag[if @workspace_stack.policyCount > 0 then 'hide' else 'show']()
 
     setActiveRoute : ->
-      app = @active_view.app
-      routeName = Helpers.prettyMap(app.app, {
-        'renewalreview': 'underwriting/renewalreview',
-        'referral_queue': 'underwriting/referrals'
-      })
-      if /policyview_/.test routeName
-        routeName = routeName.replace /policyview.*/, 'policy'
-        if _.isObject app.params
-          routeName += "/#{app.params.url}" if app.params.url
-          routeName += "/#{encodeURIComponent(app.app_label)}" if app.app_label
-        else
-          return false
-      @Router.navigate "#{@baseRoute}/#{routeName}"
+      if _.isObject @active_view
+        app = @active_view.app
+        appName = Helpers.prettyMap(app.app, {
+          'renewalreview': 'underwriting/renewals',
+          'referral_queue': 'underwriting/referrals'
+        })
+        if /policyview_/.test appName
+          routeName = appName.replace /policyview.*/, 'policy'
+          if _.isObject app.params
+            routeName += "/#{app.params.url}" if app.params.url
+          else
+            return false
+        @Router.navigate "#{@baseRoute}/#{routeName}"
 
     # Loop through app stack and switch app states
-    toggle_apps : (app_name) ->
-      for view in @workspace_stack.stack
-        if app_name == view.app.app
+    toggle_apps : (app) ->
+      _.each @workspace_stack.stack, (view) =>
+        if app.app is view.app.app
           @active_view = view
           view.activate()
           true
@@ -745,17 +737,18 @@ define [
     reassess_apps : ->
       if @workspace_stack.stack.length
         active = _.find @workspace_stack.stack, (view) ->
-          view.isActive
+          view.app.isActive
         unless active
           if @workspace_stack.stack.length > 2
             view = _.last @workspace_stack.stack
           else # Activate first app in the stack
             view = @workspace_stack.stack[0]
-          @toggle_apps view.app.app
+          @toggle_apps view.app
 
     # Tell every app in the stack to commit seppuku
     teardownWorkspace : ->
       @set_breadcrumb()
+      @active_view = null
       @assigneeListView.dispose() if @assigneeListView
       @workspace_stack.clear()
       $('#target').empty()
@@ -779,7 +772,6 @@ define [
         @Router.controller = this
         Backbone.history.start()
         @check_cookie_identity()
-        @attach_tab_handlers()
         @attach_navbar_handlers()
         @attach_policy_nav_handler()
         @attach_window_resize_handler()
@@ -811,7 +803,9 @@ define [
   WorkspaceController.on "stack_remove", (view) ->
     @workspace_stack.remove(view)
     @state_remove(view.app)
+    @reassess_apps()
+    @setActiveRoute()
     @handle_policy_count()
 
-  WorkspaceController.on "new_tab", (app_name) ->
-    @toggle_apps app_name
+  WorkspaceController.on "new_tab", (app) ->
+    @toggle_apps app

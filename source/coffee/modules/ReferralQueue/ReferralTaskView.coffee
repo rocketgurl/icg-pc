@@ -26,7 +26,6 @@ define [
       data = @model.toJSON()
       html = @Mustache.render tpl_row, data
       href = "##{@PARENT_VIEW.MODULE.controller.baseRoute}/policy"
-      href += "/#{data.relatedQuoteId}/#{data.insuredLastName}"
-      href += "%20#{data.relatedPolicyId or data.relatedQuoteId}"
+      href += "/#{data.relatedQuoteId}"
       @$el.attr('href', href).append html
 
