@@ -26,6 +26,7 @@ define [
 
     initialize : (options) ->
       _.bindAll(this
+        'updateSearchParams'
         'callbackRequest'
         'callbackSuccess'
         'callbackError'
@@ -42,6 +43,8 @@ define [
 
       # Load any passed parameters into view
       @params = @module.app.params ? {}
+
+      # @listenTo @module, 'activate', @updateSearchParams
 
       # Special param to enable fetching of all policies requiring renewal underwriting
       if @params.renewalreviewrequired
@@ -134,6 +137,11 @@ define [
         $sortIcon.addClass 'glyphicon-chevron-up'
       else
         $sortIcon.addClass 'glyphicon-chevron-down'
+
+    updateSearchParams : ->
+      # console.log @params
+      # console.log @module.app.params
+      # console.log @collection.getParams()
 
     updatePage : (e) ->
       page = +e.currentTarget.value
