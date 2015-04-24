@@ -567,24 +567,23 @@ define [
       if @isLoggedIn()
         params = @current_state.params or null
         module = @current_state.module
-        safe_app_name = "#{Helpers.id_safe(module)}"
-        safe_app_name += "_#{Helpers.id_safe(params.url)}" if params?.url
+        appName = "#{Helpers.id_safe(module)}"
+        appName += "_#{Helpers.id_safe(params.url)}" if params?.url
 
-        if params?.label
-          label = params.label
-        else
-          label = "#{Helpers.uc_first(module)}"
-          label += ": #{params.url}" if params?.url
-
-        app =
-          app       : safe_app_name
-          app_label : label
-          params    : params
-
-        if @workspace_stack.has safe_app_name
+        if @workspace_stack.has appName
+          app = @workspace_stack.get(appName).app
+          app.params = params if _.isObject params
           @toggle_apps app
         else
-          @launch_app app
+          if params?.label
+            label = params.label
+          else
+            label = "#{Helpers.uc_first(module)}"
+            label += ": #{params.url}" if params?.url
+          @launch_app
+            app       : appName
+            app_label : label
+            params    : params
 
     # Instantiate a new WorkspaceCanvasView
     #
@@ -725,7 +724,7 @@ define [
 
     # Loop through app stack and switch app states
     toggle_apps : (app) ->
-      for view in @workspace_stack.stack
+      _.each @workspace_stack.stack, (view) =>
         if app.app is view.app.app
           @active_view = view
           view.activate()
