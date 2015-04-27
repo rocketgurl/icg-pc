@@ -193,7 +193,7 @@ define [
 
     getTabLabel : ->
       doc = @get('document')
-      lastName = doc.find('Customer[type="Insured"] DataItem[name="InsuredLastName"]')
+      lastName = doc.find('Customer[type="Insured"] DataItem[name$="InsuredLastName"]')
       if @isQuote()
         id = @getQuoteNumber()
       else
