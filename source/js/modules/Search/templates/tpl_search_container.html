@@ -7,9 +7,11 @@
     <div id="search-filters-{{cid}}" class="module-search filters">
       <form id="search-form" action="search_submit" method="get" accept-charset="utf-8" class="form-inline">
         <div class="form-group form-group-sm">
-          <select name="searchby" class="search-by form-control" disabled>
-            <!-- <option value="quote-policy-number">Quote/Policy number</option>
-            <option value="property-address">Property street address</option> -->
+          <select name="searchby" class="search-by form-control" {{^shouldShowEnhancedSearch}}disabled{{/shouldShowEnhancedSearch}}>
+            {{#shouldShowEnhancedSearch}}
+            <option value="quote-policy-number">Quote/Policy number</option>
+            <option value="property-address">Property street address</option>
+            {{/shouldShowEnhancedSearch}}
             <option value="default">Search all fields</option>
           </select>
         </div>

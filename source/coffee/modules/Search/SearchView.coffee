@@ -49,11 +49,10 @@ define [
       # Special param to enable fetching of all policies requiring renewal underwriting
       if @params.renewalreviewrequired
         @collection.renewalreviewrequired = true
-
-      # NOT DEFAULTING TO QUOTE_POLICY_NUMBER UNTIL SEARCH IS FIXED IN PROD
-      # else
-      #   # For regular search, default to quote-policy number
-      #   @collection.setParam 'searchBy', 'quote-policy-number'
+      else
+        if @shouldShowEnhancedSearch()
+          # For regular search, default to quote-policy number
+          @collection.setParam 'searchBy', 'quote-policy-number'
 
       @render()
 
@@ -75,10 +74,18 @@ define [
       @$searchResultsThead = @$searchResultsTable.find '.thead'
       @$searchResultsTbody = @$searchResultsTable.find '.tbody'
 
+    # Sagesure (business='cru') should have access to the enhanced search functionality
+    shouldShowEnhancedSearch : ->
+      @controller.current_state?.business is 'cru'
+
     render : ->
       template = if @params.renewalreviewrequired then tpl_renewal_review_container else tpl_search_container
       html = @Mustache.render $('#tpl-flash-message').html(), { cid : @cid }
-      html += @Mustache.render template, { cid : @cid, pagination: @collection.pagination }
+      html += @Mustache.render(template, {
+        cid : @cid
+        pagination: @collection.pagination
+        shouldShowEnhancedSearch : @shouldShowEnhancedSearch()
+        })
       @$el.html html
       
       # Cache useful DOM elements for later
