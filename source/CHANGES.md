@@ -1,3 +1,14 @@
+### 3.1.1 - Apr 28, 2015
+
+- Completed Quotes have a Premium as it has been calculated in rating
+- Incomplete Quotes do not have a Premium as they have not been rated
+- Servicing, Agencies, and Reports navigation has been removed for FedNat
+- New forms for fnic-ho3-sc and fnic-ho5-sc
+- Updated Endorse forms for LA STD IPM
+- Updated Endorse enums for ofcc-ho3-va
+- Corrected FedNat policies from showing “false” Product in Policy Vitals
+- Navigation within the policy is now possible via the URL
+
 ### 3.1.0 - Apr 07, 2015
 
 - Enable Google Analytics tracking of various views
