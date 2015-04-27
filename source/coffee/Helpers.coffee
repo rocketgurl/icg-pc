@@ -44,27 +44,28 @@ define [
     # lite version of $.deparam
     # roughly the opposite of $.param
     deparam : (query) ->
-      params = {}
-      decode = (val) ->
-        if val?
-          decodeURIComponent val
-        else
-          null
+      if _.isString query
+        params = {}
+        decode = (val) ->
+          if val?
+            decodeURIComponent val
+          else
+            null
 
-      # remove preceding non-querystring,
-      # correct spaces, and split into pairs
-      query = query
-        .substring(query.indexOf('?') + 1)
-        .replace(/\+/g, ' ')
-        .split('&')
+        # remove preceding non-querystring,
+        # correct spaces, and split into pairs
+        query = query
+          .substring(query.indexOf('?') + 1)
+          .replace(/\+/g, ' ')
+          .split('&')
 
-      _.each query, (pair) ->
-        pair = pair.split '='
-        key = decode(pair[0])
-        val = decode(pair[1])
-        params[key] = val if key
+        _.each query, (pair) ->
+          pair = pair.split '='
+          key = decode(pair[0])
+          val = decode(pair[1])
+          params[key] = val if key
 
-      params
+        params
 
     # Try to enforce helpful error logging to Muscula
     # @param `message` _String_ a human readable Error message limited to 200 characters or less

@@ -8,8 +8,8 @@ define [
   WorkspaceCanvasView = BaseView.extend
 
     tabTemplate : """
-    <span class="glyphicon glyphicon-remove-circle" title="Close this tab" data-view="{{view}}"></span>
-    <a href="{{href}}">{{label}}</a>
+    <span class="glyphicon glyphicon-remove-circle" title="Close this tab" data-view="{{app}}"></span>
+    <a href="{{href}}">{{{app_label}}}</a>
     """
 
     $target     : $('#target')
@@ -17,18 +17,22 @@ define [
     tagName     : 'section'
     className   : 'workspace-canvas'
     isActive    : false
-    tab         : null
 
     initialize : (options) ->
-      controller    = @controller = options.controller
-      @$tabNav      = controller.$workspace_tabs
-      @template     = options.template if options.template?
-      @params       = options.params ? null
-      @reactivate   = false
+      _.bindAll this, 'destroy', 'updateTabLabel'
+
+      controller     = @controller = options.controller
+      @$tabNav       = controller.$workspace_tabs
+      @template      = options.template if options.template?
+      @params        = options.params ? null
+      @reactivate    = false
 
       # Create a new tab element with each
       # new workspace canvas view instance
       @$tabEl = $('<li/>')
+
+      # Handle tab close
+      @$tabEl.on 'click', '.glyphicon-remove-circle', @destroy
 
       # No app, throw a big error
       if !options.app?
@@ -39,10 +43,10 @@ define [
 
       # Find navbar anchor and parent element corresponding to app
       routeName = @Helpers.prettyMap(@app.app, {
-        'renewalreview'  : 'underwriting/renewalreview'
+        'renewalreview'  : 'underwriting/renewals'
         'referral_queue' : 'underwriting/referrals'
         })
-      @$navbar_item = $(".pc-nav [data-route=\"#{routeName}\"]").parent()
+      @$navbarItem = $(".pc-nav [data-route=\"#{routeName}\"]").parent()
 
       # Add to the stack
       controller.trigger 'stack_add', @
@@ -51,9 +55,8 @@ define [
       require ["modules/#{@options.module_type}"], (Module) =>
         @module = new Module(@, @app)
         @module.load() if _.has(Module.prototype, 'load')
-
-        # if _.isObject @module.policy_model
-        #   @module.policy_model.on 'change:insightId', -> console.log arguments
+        if _.isObject @module.policy_model
+          @listenTo @module.policy_model, 'change:insightId', @updateTabLabel
 
       @render()
 
@@ -72,9 +75,9 @@ define [
       # Only policies get tabs
       if /policyview/.test @app.app
         data =
-          view  : @app.app
-          href  : @constructHref()
-          label : @app.app_label
+          app       : @app.app
+          app_label : @app.app_label
+          href      : @constructHref()
         @renderTab data
         @$tabNav.append @$tabEl
       @$target.append @$el
@@ -88,24 +91,33 @@ define [
       # There should prolly be some checking to make sure the app has
       # loaded before telling the controller we're here?
       #
-      @options.controller.trigger 'new_tab', @app.app
+      @options.controller.trigger 'new_tab', @app
 
     renderTab : (data) ->
       @$tabEl.html Mustache.render @tabTemplate, data
 
+    updateTabLabel : (policy) ->
+      label = policy.getTabLabel()
+      if label and label isnt @app.app_label
+        data =
+          app       : @app.app
+          app_label : label
+          href      : @constructHref()
+        @controller.state_update data
+        @renderTab data
+
     constructHref : ->
       href = ''
       if @app.params
-        href += "##{@controller.baseRoute}/policy"
-        href += "/#{@app.params.url}/#{encodeURIComponent(@app.app_label)}"
+        href += "##{@controller.baseRoute}/policy/#{@app.params.url}"
       href
 
     # Put tab into active state
     activate : ->
       @$tabEl.addClass('selected') if @$tabEl
       @$el.removeClass 'inactive'
-      @$navbar_item.addClass 'active'
-      @isActive = true
+      @$navbarItem.addClass 'active'
+      @app.isActive = true
       if @module
         @module.trigger 'activate'
 
@@ -113,8 +125,8 @@ define [
     deactivate : ->
       @$tabEl.removeClass('selected') if @$tabEl
       @$el.addClass 'inactive'
-      @$navbar_item.removeClass 'active'
-      @isActive = false
+      @$navbarItem.removeClass 'active'
+      @app.isActive = false
       if @module
         @module.trigger 'deactivate'
 
@@ -122,7 +134,7 @@ define [
     destroy : ->
       # Remove tab & nullify so GC can get it (?)
       if @$tabEl?
-        @$navbar_item.removeClass 'active'
+        @$navbarItem.removeClass 'active'
         @$tabEl.remove()
         @$tabEl = null
 

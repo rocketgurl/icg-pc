@@ -14,12 +14,17 @@ define [
     routes :
       'login'  : 'login'
       'logout' : 'logout'
-      'workspace/:env/:business/:context/:app'                            : 'workspace'
-      'workspace/:env/:business/:context/:app/home'                       : 'homeView'
-      'workspace/:env/:business/:context/:app/search'                     : 'searchView'
-      'workspace/:env/:business/:context/:app/underwriting/referrals'     : 'underwritingReferralsView'
-      'workspace/:env/:business/:context/:app/underwriting/renewalreview' : 'underwritingRenewalsView'
-      'workspace/:env/:business/:context/:app/policy/:quotenum/:label'    : 'policyView'
+      'workspace/:env/:business/:context/:app'                              : 'workspace'
+      'workspace/:env/:business/:context/:app/home'                         : 'homeView'
+      'workspace/:env/:business/:context/:app/search'                       : 'searchView'
+      'workspace/:env/:business/:context/:app/search/?*query'               : 'searchView'
+      'workspace/:env/:business/:context/:app/underwriting/referrals'       : 'underwritingReferralsView'
+      'workspace/:env/:business/:context/:app/underwriting/renewals'        : 'underwritingRenewalsView'
+      'workspace/:env/:business/:context/:app/underwriting/renewalreview'   : 'underwritingRenewalsView'
+      'workspace/:env/:business/:context/:app/policy/:id'                   : 'policyView' # default view
+      'workspace/:env/:business/:context/:app/policy/:id/v/:view'           : 'policyView' # view within policy
+      'workspace/:env/:business/:context/:app/policy/:id/v/:view/a/:action' : 'policyView' # view within policy
+      'workspace/:env/:business/:context/:app/policy/:id/:name%20:id'       : 'policyViewOld' # fallback for old url pattern with label
 
     noop : -> # i do nothing; i harm no one
 
@@ -52,8 +57,9 @@ define [
     homeView : (env, business, context, app) ->
       @launch env, business, context, app, 'home'
 
-    searchView : (env, business, context, app) ->
-      @launch env, business, context, app, 'search'
+    searchView : (env, business, context, app, params) ->
+      params = Helpers.deparam params
+      @launch env, business, context, app, 'search', params
 
     underwritingReferralsView : (env, business, context, app) ->
       @launch env, business, context, app, 'referral_queue'
@@ -61,11 +67,15 @@ define [
     underwritingRenewalsView : (env, business, context, app) ->
       @launch env, business, context, app, 'renewalreview'
 
-    policyView : (env, business, context, app, quotenum, label) ->
-      params =
-        url   : quotenum
-        label : decodeURIComponent(label)
+    policyView : (env, business, context, app, id, view, action) ->
+      params = { url : id }
+      params.view = view if view
+      params.action = action if action
       @launch env, business, context, app, 'policyview', params
+
+    # In case of old url including label, filter out extra info
+    policyViewOld : (env, business, context, app, id) ->
+      @policyView env, business, context, app, id
 
     launch : (env, business, context, app, module, params) ->
       launchMethod = 'launch_workspace'

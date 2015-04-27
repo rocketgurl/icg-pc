@@ -1,0 +1,127 @@
+<!-- Product: FNIC HO5 South Carolina -->
+{{^preview}}
+<form id="cancellation" action="cancellation" method="get" accept-charset="utf-8">
+  <input type="hidden" id="page_action" name="page_action" value="none">
+  <div id="content">
+    <div id="content_header">
+      <h2>Cancellation actions for policy {{policyId}}</h2>
+    </div>
+
+    {{#msg}}
+    <div class="content_msg {{msgType}}">
+      <h3>{{msgHeading}}</h3>
+      {{#msgText}}
+      <p>{{{msgText}}}</p>
+      {{/msgText}}
+    </div>
+    {{/msg}}
+
+    <div class="content_body">
+
+      {{#policyOverview}}
+      <section class="policyOverview">
+        <h1>Policy Overview</h1>
+        <ul>
+          <li>{{InsuredFirstName}} {{InsuredMiddleName}} {{InsuredLastName}}</li>
+          <li>{{InsuredMailingAddressLine1}}</li>
+          <li>{{InsuredMailingAddressLine2}}</li>
+          <li>{{InsuredMailingAddressCity}}, {{InsuredMailingAddressState}} {{InsuredMailingAddressZip}}</li>
+        </ul>
+      </section>
+      {{/policyOverview}}
+
+      <fieldset>
+        <ul>
+          <li><input name="cancel" type="submit" value="Cancel" {{cancelDisabled}}></li>
+          <li><input name="cancel_pending" type="submit" value="Set pending cancel" {{pendingDisabled}}></li>
+          <li><input name="reinstate" type="submit" value="Reinstate" {{reinstateDisabled}}></li>
+          <li><input name="rescind" type="submit" value="Rescind pending cancel" {{rescindDisabled}}></li>
+        </ul>
+      </fieldset> 
+      <div class="form_actions">
+        <a href="home">Nevermind, go back</a>
+      </div>
+    </div>
+  </div>
+</form>
+{{/preview}}
+
+{{#preview}}
+<form id="cancellation" action="#" method="get" accept-charset="utf-8">
+  <div id="content">
+    <div id="content_header">
+      <h2>Preview {{PreviewLabel}} for policy {{policyId}}</h2>
+    </div>
+
+    <div class="content_body preview">
+      {{#policyOverview}}
+      <section class="policyOverview">
+        <h1>Policy Overview</h1>
+        <ul>
+          <li>{{InsuredFirstName}} {{InsuredMiddleName}} {{InsuredLastName}}</li>
+          <li>{{InsuredMailingAddressLine1}}</li>
+          <li>{{InsuredMailingAddressLine2}}</li>
+          <li>{{InsuredMailingAddressCity}}, {{InsuredMailingAddressState}} {{InsuredMailingAddressZip}}</li>
+        </ul>
+      </section>
+      {{/policyOverview}}
+
+      <fieldset>
+        <div class="table_wrapping">
+          <table class="summary_table" summary="Proposed action">
+            <caption>{{^Undo}}Proposed{{/Undo}}{{#Undo}}Previous{{/Undo}}&nbsp;action</caption>
+            <tbody>
+              <tr>
+                <th scope="row">Action</th>
+                <td>{{Action}}</td>
+              </tr>
+              <tr>
+                <th scope="row">Cancellation Type</th>
+                <td>{{RateType}}</td>
+              </tr>
+              <tr>
+                <th scope="row">Cancellation Effective Date</th>
+                <td>{{EffectiveDate}}</td>
+              </tr>
+              <tr>
+                <th scope="row">Notice Days Until Cancellation</th>
+                <td>{{AdvanceNoticeDays}}</td>
+              </tr>
+              <tr>
+                <th scope="row">Cancellation Reason</th>
+                <td>{{ReasonCode}} - {{ReasonCodeLabel}}</td>
+              </tr>
+              {{#ChangeInPremium}}
+              <tr>
+                <th scope="row">Change in Premiums</th>
+                <td>{{ChangeInPremium}}</td>
+              </tr>
+              <tr>
+                <th scope="row">Changes in Fees</th>
+                <td>{{ChangeInFee}}</td>
+              </tr>
+              <tr>
+                <th scope="row">Change in Taxes</th>
+                <td>{{ChangeInTax}}</td>
+              </tr>
+              <tr>
+                <th scope="row">Total Change</th>
+                <td>{{CancelAmount}}</td>
+              </tr>
+              {{/ChangeInPremium}}
+            </tbody>
+          </table>
+        </div>
+        <div>
+          <label for="{{guid}}_addNotes">Notes</label>
+          <textarea cols="97" rows="7" id="{{guid}}_addNotes" name="addNotes" value=""></textarea>
+        </div>
+      </fieldset>
+      <div class="form_actions">
+      <p>{{^Undo}}Confirm{{/Undo}}{{#Undo}}Undo{{/Undo}}&nbsp;this action?</p>
+        <input type="submit" class="button" value="{{ submitLabel }}"> <a href="home">Nevermind, go back</a>
+      </div>
+    </div>
+  </div>
+</form>
+{{/preview}}

@@ -35,8 +35,7 @@ define [
 
     constructHref : (data) ->
       href = "##{@controller.baseRoute}/policy"
-      href += "/#{data.identifiers.quoteNumber}/#{data.insured.lastName}"
-      href += "%20#{data.identifiers.policyId or data.identifiers.quoteNumber}"
+      href += "/#{data.identifiers.quoteNumber}"
       href
 
     openPolicy : ->

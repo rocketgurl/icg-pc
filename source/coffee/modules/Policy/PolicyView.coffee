@@ -19,14 +19,13 @@ define [
   PolicyView = BaseView.extend
 
     events :
-      "click .policy-nav a"        : "dispatch"
       "click .policy-error button" : "close"
       "click .nav-toggle"          : "toggle_policy_nav"
 
     # We need to brute force the View's container to the
     # WorkspaceCanvasView's el
     initialize : (options) ->
-      _.bindAll this, 'resize_modules', 'resize_swf_container'
+      _.bindAll this, 'resize_modules', 'resize_swf_container', 'checkParams'
       @view          = options.view
       @el            = options.view.el
       @$el           = options.view.$el
@@ -45,8 +44,14 @@ define [
       # Save current route state for this view
       @current_route = null
 
-      # Setup overview SWF when view is made visible
+      # Setup overview SWF when view is first made visible
       @on 'activate', @onViewActivate
+
+      # The PolicyView 'activate' event is fired when the route to the policy
+      # changes. When this happens, we check the params to see if a `view`
+      # property is defined. If so, we activate that view. If not, we leave
+      # the PolicyView alone.
+      @on 'activate', @checkParams
 
       # On deactivate we destroy the SWF completely. We have to do this so we
       # can find window.reload() when you switch back to this tab, otherwise it
@@ -99,11 +104,13 @@ define [
       @$el.html html
 
     render : ->
+      @policyRoute = "#{@controller.baseRoute}/policy/#{@model.getQuoteNumber()}"
       html = @Mustache.render $('#tpl-flash-message').html(), { cid : @cid }
       html += @Mustache.render(tpl_policy_container, {
-                auth_digest : @model.get('digest')
-                policy_id : @model.get('pxServerIndex')
-                cid : @cid
+                auth_digest  : @model.get('digest')
+                policy_id    : @model.get('pxServerIndex')
+                policy_route : @policyRoute
+                cid          : @cid
               })
       @$el.html html
 
@@ -120,7 +127,7 @@ define [
       @adjustActionVisibility()
 
       # Get an array of our policy-nav actions
-      @actions = _.map @policy_nav_links, (link) -> return $(link).attr('href')
+      @actions = _.map @policy_nav_links, (link) -> return $(link).data('action')
 
       @buildPolicyHeader()
 
@@ -163,25 +170,24 @@ define [
     #
     adjustActionVisibility : ->
       # We hide a few actions if this is a quote
-      hide_actions = []
       if @model.isQuote()
         for action in ['renewalunderwriting', 'servicerequests', 'losshistory']
-          @$el.find(".policy-nav a[href=#{action}]").parent('li').hide()
+          @$el.find(".policy-nav a[data-action=#{action}]").parent('li').hide()
       else
-        @$el.find(".policy-nav a[href=quoting]").parent('li').hide()
+        @$el.find(".policy-nav a[data-action=quoting]").parent('li').hide()
 
       # If we're not IPM or Dovetail then no IPM for you!
       if @model.isIPM() == false && @model.isDovetail() == false
-        @$el.find(".policy-nav a[href=ipmchanges]").parent('li').hide()
+        @$el.find(".policy-nav a[data-action=ipmchanges]").parent('li').hide()
 
       # Hide Policy representations if user doesn't have VIEW_ADVANCED <Right>
       if @controller.user?.canViewAdvanced() == false
-        @$el.find(".policy-nav a[href=policyrepresentations]").parent('li').hide()
+        @$el.find(".policy-nav a[data-action=policyrepresentations]").parent('li').hide()
 
       # Carrier users are not allowed most things (ICS-2019)
       if @controller.user.isCarrier() == true
         for action in ['renewalunderwriting', 'ipmchanges', 'servicerequests']
-          @$el.find(".policy-nav a[href=#{action}]").parent('li').hide()
+          @$el.find(".policy-nav a[data-action=#{action}]").parent('li').hide()
 
     initPolicyLinksPopover : ->
       linksPopover = new PolicyLinksView
@@ -203,20 +209,18 @@ define [
     toggle_policy_nav : ->
       @$el[if @$el.is('.out') then 'removeClass' else 'addClass'] 'out'
 
-    # Dynamically call methods based on href of #policy-nav elements
-    # Because JavaScript is dynamic like that, yo.
-    # SAFETY: We namespace the function signature and also make
-    # sure it actually exists before attempting to call it.
-    dispatch : (e) ->
-      e.preventDefault()
-      $e     = $(e.currentTarget)
-      action = $e.attr('href')
-      @route action, $e
-
     close : (e) ->
       e.preventDefault()
       @view.destroy()
       @controller.reassess_apps()
+
+    checkParams : ->
+      params = @view.app.params or {}
+      if _.has params, 'view'
+        view = params.view
+        $el  = @$("[data-action=#{view}]")
+        if $el.length
+          @route view, $el
 
     # **Route**
     # Call the `action` and teardown all other views

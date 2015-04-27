@@ -152,7 +152,7 @@
     }
   }
 
-  #open-policy-tabs,
+  #policy-nav,
   #policy-history,
   #policy-history > ul {
     position: absolute;
@@ -161,7 +161,7 @@
     border-top: 1px solid #ccc;
   }
 
-  #open-policy-tabs {
+  #policy-nav {
     top: 48px;
     bottom: 40%
   }

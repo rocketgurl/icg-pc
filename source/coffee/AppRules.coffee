@@ -1,7 +1,6 @@
 define [
-  'jquery', 
   'underscore'
-], ($, _) ->
+], (_) ->
 
   # Sets up rules for which modules to load for a given app.
   # Also handles any additional modules which should accompany that app
@@ -59,8 +58,6 @@ define [
           [@policy_search, @add_app(@rulesets)]
         when 'policyview'
           [@add_app(@policy_view)]
-        when 'search'
-          [@add_app(@policy_search_params)]
         else
           [@add_app(@default)]
 
@@ -77,7 +74,7 @@ define [
       module   : 'Search/SearchModule'
       app : 
         app       : 'search'
-        app_label : 'search'
+        app_label : 'Search'
         params    : null
 
     renewalreview :
@@ -95,11 +92,6 @@ define [
       app :
         app       : 'home'
         app_label : 'Home'
-
-    policy_search_params :
-      required : false
-      module   : 'Search/SearchModule'
-      params   : null 
     
     policy_view : 
       required : ['params']
@@ -114,8 +106,10 @@ define [
 
     default :
       required : false
-      module   : 'Search/SearchModule'
-      params   : null 
+      module   : 'Home/HomeModule'
+      app :
+        app       : 'home'
+        app_label : 'Home'
 
 
 
