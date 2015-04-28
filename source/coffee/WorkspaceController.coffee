@@ -715,12 +715,12 @@ define [
           'referral_queue': 'underwriting/referrals'
         })
         if /policyview_/.test appName
-          routeName = appName.replace /policyview.*/, 'policy'
+          appName = appName.replace /policyview.*/, 'policy'
           if _.isObject app.params
-            routeName += "/#{app.params.url}" if app.params.url
+            appName += "/#{app.params.url}" if app.params.url
           else
             return false
-        @Router.navigate "#{@baseRoute}/#{routeName}"
+        @Router.navigate "#{@baseRoute}/#{appName}"
 
     # Loop through app stack and switch app states
     toggle_apps : (app) ->
@@ -804,7 +804,6 @@ define [
     @workspace_stack.remove(view)
     @state_remove(view.app)
     @reassess_apps()
-    @setActiveRoute()
     @handle_policy_count()
 
   WorkspaceController.on "new_tab", (app) ->
