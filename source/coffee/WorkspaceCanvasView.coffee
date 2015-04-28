@@ -19,7 +19,7 @@ define [
     isActive    : false
 
     initialize : (options) ->
-      _.bindAll this, 'destroy', 'updateTabLabel'
+      _.bindAll this, 'clickDestroy', 'updateTabLabel'
 
       controller     = @controller = options.controller
       @$tabNav       = controller.$workspace_tabs
@@ -32,7 +32,7 @@ define [
       @$tabEl = $('<li/>')
 
       # Handle tab close
-      @$tabEl.on 'click', '.glyphicon-remove-circle', @destroy
+      @$tabEl.on 'click', '.glyphicon-remove-circle', @clickDestroy
 
       # No app, throw a big error
       if !options.app?
@@ -129,6 +129,10 @@ define [
       @app.isActive = false
       if @module
         @module.trigger 'deactivate'
+
+    clickDestroy : ->
+      @destroy()
+      @options.controller.setActiveRoute()
 
     # Remove tab and view
     destroy : ->
