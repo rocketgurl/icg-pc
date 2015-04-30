@@ -66,36 +66,31 @@ define [
       @$searchHeader       = @$('header.module-search')
       @$searchFiltersEl    = @$('.module-search.filters')
       @$searchInput        = @$searchFiltersEl.find 'input[type=search]'
-      @$paginationEl       = @$('.module-search.pagination')
-      @$itemsEl            = @$('.pagination-a span')
-      @$pageEl             = @$('.search-pagination-page')
-      @$perPageEl          = @$('.search-pagination-perpage')
+      @$paginationEl       = @$('.search-pagination')
       @$searchResultsTable = @$('.div-table.module-search')
       @$searchResultsThead = @$searchResultsTable.find '.thead'
       @$searchResultsTbody = @$searchResultsTable.find '.tbody'
 
-    # Sagesure (business='cru') should have access to the enhanced search functionality
-    shouldShowEnhancedSearch : ->
-      @controller.current_state?.business is 'cru'
-
     render : ->
-      template = if @params.renewalreviewrequired then tpl_renewal_review_container else tpl_search_container
-      html = @Mustache.render $('#tpl-flash-message').html(), { cid : @cid }
-      html += @Mustache.render(template, {
-        cid : @cid
-        pagination: @collection.pagination
-        shouldShowEnhancedSearch : @shouldShowEnhancedSearch()
-        })
-      @$el.html html
-      
-      # Cache useful DOM elements for later
-      @cacheElements()
-
+      @$el.html(@baseTemplate({
+        cid                      : @cid
+        pagination               : @paginationTemplate @determinePagination()
+        isRenewalUnderwriting    : @params.renewalreviewrequired
+        shouldShowEnhancedSearch : @shouldShowEnhancedSearch
+      }))
+      @cacheElements() # Cache useful DOM elements for later
       @setTbodyMaxHeight()
       @attachWindowResizeHandler()
+      @messenger = new Messenger @, @cid # Register flash message pubsub for this view
 
-      # Register flash message pubsub for this view
-      @messenger = new Messenger @, @cid
+    renderPolicies : (collection) ->
+      rows = collection.map (model) =>
+        @policyRowTemplate model.toJSON()
+      @$searchResultsTbody.html rows.join('\n')
+
+      if collection.length is 1
+        href = collection.at(0).get('href')
+        @controller.Router.navigate href, { trigger : true }
 
     attachWindowResizeHandler : ->
       lazyResize = _.debounce _.bind(@setTbodyMaxHeight, this), 500
