@@ -2,47 +2,51 @@ define [
   'BaseView'
   'Helpers'
   'Messenger'
-  'modules/ReferralQueue/ReferralTaskView'
   'text!modules/ReferralQueue/templates/tpl_referral_container.html'
-], (BaseView, Helpers, Messenger, ReferralTaskView, tpl_container) ->
+  'text!modules/ReferralQueue/templates/tpl_referral_task_row.html'
+  'text!templates/tpl_pagination.html'
+], (BaseView, Helpers, Messenger, tpl_container, tpl_row, tpl_pagination) ->
 
-  ReferralQueueView = BaseView.extend
+  class ReferralQueueView extends BaseView
 
-    PAGINATION_EL : {} # Pagination form elements
+    baseTemplate : _.template(tpl_container)
+
+    taskRowTemplate : _.template(tpl_row)
+
+    paginationTemplate : _.template(tpl_pagination)
+
+    perPageOpts : [15, 25, 50, 75, 100]
 
     events :
-      'change .referrals-pagination-page'    : 'updatePage'
-      'change .referrals-pagination-perpage' : 'updatePerPage'
-      'change input[name=show-all]'          : 'updateStatus'
-      'click .referrals-switch a'            : 'updateOwner'
-      'click .referrals-sort-link'           : 'sortTasks'
-      'click .referrals-refresh'             : 'refreshTasks'
-      'click .abort'                         : 'abortRequest'
+      'change .pagination-page'     : 'onPageChange'
+      'change .pagination-perpage'  : 'onPerPageChange'
+      'change input[name=status]'   : 'onStatusChange'
+      'click .owner-switch a'       : 'onOwnerSwitchClick'
+      'click .referrals-sort-link'  : 'sortTasks'
+      'click .referrals-refresh'    : 'refreshTasks'
+      'click .abort'                : 'abortRequest'
 
     initialize : (options) ->
       _.bindAll(this
         'toggleLoader'
-        'renderTasks'
-        'tasksError'
+        'tasksSuccessCallback'
+        'tasksErrorCallback'
         )
 
-      @MODULE                = options.module || false
-      @COLLECTION            = options.collection || false
-      @COLLECTION.controller = options.module.controller
       @PARENT_VIEW           = options.view || false
-
-      # When the collection is populated, generate the views
-      @COLLECTION.on 'update', => @toggleLoader true
-      @COLLECTION.on 'reset', @renderTasks
-      @COLLECTION.on 'error', @tasksError
+      @MODULE                = options.module || false
+      @collection            = options.collection || false
+      @collection.controller = options.module.controller
+      @collection.on 'request', => @toggleLoader true
+      @collection.on 'reset', @tasksSuccessCallback
+      @collection.on 'error', @tasksErrorCallback
 
     cacheElements : ->
       @$header       = @$('header.module-referrals')
       @$table        = @$('.div-table.module-referrals')
       @$tHead        = @$table.find '.thead'
       @$tBody        = @$table.find '.tbody'
-      @CONTAINER     = @$tBody
-      @PAGINATION_EL = @cachePaginationElements()
+      @$paginationEl = @$('.pagination')
 
     attachWindowResizeHandler : ->
       lazyResize = _.debounce _.bind(@setTbodyMaxHeight, this), 500
@@ -57,19 +61,17 @@ define [
 
     render : ->
       # Setup flash module & main container
-      html = @Mustache.render $('#tpl-flash-message').html(), { cid : @cid }
-      html += @Mustache.render tpl_container, { cid : @cid, pagination: {} }
-      @$el.html html
+      @$el.html(@baseTemplate({
+        cid        : @cid
+        pagination : @paginationTemplate @determinePagination()
+      }))
 
       @cacheElements()
-
       @setTbodyMaxHeight()
       @attachWindowResizeHandler()
 
       # Setup Flash Messenger
       @messenger = new Messenger(@PARENT_VIEW, @cid)
-
-      @$('.launch-manage-assignees').removeClass('disabled').prop('disabled', false)
 
       # Throw up our loading image until the tasks come in
       @toggleLoader true
@@ -84,38 +86,32 @@ define [
     # @return _Array_
     #
     renderTasks : (collection) ->
-      @TASK_VIEWS = collection.map (model) =>
-        new ReferralTaskView(
-            model       : model,
-            parent_view : this
-          )
-
-      @CONTAINER.html('')
-
-      for task in @TASK_VIEWS
-        @CONTAINER.append(task.render())
-
-      @toggleLoader()
-      @updatePagination(collection, @PAGINATION_EL)
+      rows = collection.map (model) =>
+        @taskRowTemplate model.toJSON()
+      @$tBody.html rows.join('\n')
 
       # Need to let the footer know that we changed height
       if _.has(@MODULE, 'trigger')
         @MODULE.trigger 'workspace.rendered'
 
+    renderPagination : ->
+      html = @paginationTemplate @determinePagination()
+      @$paginationEl.html html
+
     refreshTasks : ->
       @toggleLoader true
-      @COLLECTION.getReferrals()
+      @collection.fetch()
 
     abortRequest : ->
-      if jqXHR = @COLLECTION.jqXHR
+      if jqXHR = @collection.jqXHR
         jqXHR.abort()
 
-    # Handle server errors from the Tasks Collection
-    #
-    # @param `collection` _Object_ ReferralTaskCollection
-    # @param `response` _jqXHR_ Response object
-    #
-    tasksError : (collection, response) ->
+    tasksSuccessCallback : (collection) ->
+      @toggleLoader()
+      @renderTasks collection
+      @renderPagination()
+
+    tasksErrorCallback : (collection, response) ->
       @toggleLoader false
       if response?.statusText is 'abort'
         @Amplify.publish @cid, 'notice', "Request canceled.", 3000
@@ -144,77 +140,78 @@ define [
               delete Muscula.info
           ), 2000)
 
-    # Toggle the owner buttons on the UI and trigger collection.getReferrals()
-    updateOwner : (e) ->
+    onPageChange : (e) ->
+      @updatePage +e.currentTarget.value
+
+    updatePage : (page) ->
+      if page > 0
+        @collection.setParam 'page', page
+        @collection.fetch()
+
+    onPerPageChange : (e) ->
+      @updatePerPage +e.currentTarget.value
+
+    updatePerPage : (perPage) ->
+      if perPage > 0
+        @collection.setParam 'perPage', perPage
+        @collection.setParam 'page', 'default'
+        @collection.fetch()
+
+    onStatusChange : (e) ->
+      showAll = $(e.currentTarget).prop 'checked'
+      status = if showAll then null else 'default'
+      @updateStatus status
+
+    updateStatus : (status) ->
+      @collection.setParam 'status', status
+      @collection.setParam 'page', 'default'
+      @collection.fetch()
+
+    onOwnerSwitchClick : (e) ->
       e.preventDefault()
       $btn = $(e.currentTarget)
-
       unless $btn.hasClass 'active'
-        $('.referrals-switch > a').removeClass 'active'
+        $('.owner-switch > a').removeClass 'active'
         $btn.addClass 'active'
+        owner = if $btn.attr('href') is 'myreferrals' then 'default' else null
+        @updateOwner owner
 
-        if $btn.attr('href') is 'myreferrals'
-          @COLLECTION.setParam 'owner', 'default'
-        else
-          @COLLECTION.setParam 'owner', null
+    updateOwner : (owner) ->
+      @collection.setParam 'owner', owner
+      @collection.setParam 'page', 'default'
+      @collection.fetch()
 
-    updatePage : (e) ->
-      page = +e.currentTarget.value
-      if page > 0
-        @COLLECTION.setParam 'page', page
+    determinePagination : ->
+      params      = @collection.getParams()
+      currentPage = params.page
+      perPage     = params.perPage
+      totalItems  = @collection.totalItems or 0
 
-    updatePerPage : (e) ->
-      perPage = +e.currentTarget.value
-      if perPage > 0
-        @COLLECTION.setParam 'perPage', perPage
-
-    updateStatus : (e) ->
-      showAll = $(e.currentTarget).prop 'checked'
-      if showAll
-        @COLLECTION.setParam 'status', null
+      if totalItems > 0
+        pages = [1..Math.ceil(totalItems / perPage)]
       else
-        @COLLECTION.setParam 'status', 'default'
+        pages = [1]
 
-    # Return an object of pagination form elements
-    # @return _Object_
-    cachePaginationElements : ->
-      items    : @$('.pagination-a')
-      jump_to  : @$('.referrals-pagination-page')
-      per_page : @$('.referrals-pagination-perpage')
-
-    # Update the pagination controls with current info
-    #
-    # @param `collection` _Object_ ReferralTaskCollection
-    # @param `elements` _Object_ jQuery wrapped HTML elements
-    #
-    updatePagination : (collection, elements) ->
-      # Items count
-      per_page = collection.perPage
-
-      if per_page > collection.totalItems
-        end_position   = collection.totalItems
-        start_position = 1
+      if totalItems is 0
+        start = 0
+        end = 0
+      else if perPage > totalItems
+        end   = totalItems
+        start = 1
       else
-        end_position   = collection.page * per_page
-        start_position = end_position - per_page
+        end   = currentPage * perPage
+        start = end - perPage + 1
 
-      start_position = if start_position == 0 then 1 else start_position
-
-      if end_position > collection.totalItems
-        end_position = collection.totalItems
-
-      elements.items.find('span').html("Items #{start_position} - #{end_position} of #{collection.totalItems}")
-
-      # Jump to pages
-      pages        = [1..Math.ceil(collection.totalItems / per_page)]
-      current_page = collection.page
-      values       = _.map pages, (page) ->
-        if page is current_page
-          "<option value=\"#{page}\" selected>#{page}</option>"
-        else
-          "<option value=\"#{page}\">#{page}</option>"
-      elements.jump_to.html(values)
-
+      start = 0 if start < 1
+      end = totalItems if end > totalItems
+      pagination =
+        currentPage : currentPage
+        perPage     : perPage
+        perPageOpts : @perPageOpts
+        totalItems  : totalItems
+        pages       : pages
+        start       : start
+        end         : end
 
     # Place a loading animation on top of the content
     toggleLoader : (bool) ->
@@ -244,10 +241,10 @@ define [
       $sortIcon = $el.find '.glyphicon'
       sortProp = $el.attr 'href'
 
-      @COLLECTION.sortTasks sortProp
+      @collection.sortTasks sortProp
       @remove_indicators()
 
-      if @COLLECTION.sortDir is 'asc'
+      if @collection.sortDir is 'asc'
         $sortIcon.addClass 'glyphicon-chevron-down'
       else
         $sortIcon.addClass 'glyphicon-chevron-up'
