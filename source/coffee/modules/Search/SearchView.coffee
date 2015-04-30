@@ -132,35 +132,45 @@ define [
       else
         $sortIcon.addClass 'glyphicon-chevron-down'
 
-    updateSearchParams : ->
-      # console.log @params
-      # console.log @module.app.params
-      # console.log @collection.getParams()
+    onPageChange : (e) ->
+      @updatePage +e.currentTarget.value
 
-    updatePage : (e) ->
-      page = +e.currentTarget.value
+    updatePage : (page) ->
       if page > 0
         @collection.setParam 'page', page
         @search()
 
-    updatePerPage : (e) ->
-      perPage = +e.currentTarget.value
+    onPerPageChange : (e) ->
+      @updatePerPage +e.currentTarget.value
+
+    updatePerPage : (perPage) ->
       if perPage > 0
         @collection.setParam 'perPage', perPage
+        @collection.setParam 'page', 1
         @search()
 
-    updateQuery : (e) ->
-      @collection.setParam 'q', e.currentTarget.value
+    onQueryChange : (e) ->
+      @updateQuery "#{e.currentTarget.value}"
 
-    updateSearchBy : (e) ->
-      value = e.currentTarget.value
+    updateQuery : (query) ->
+      @collection.setParam 'q', query
+      @collection.setParam 'page', 1
+
+    onSearchByChange : (e) ->
+      @updateSearchBy "#{e.currentTarget.value}"
+
+    updateSearchBy : (value) ->
       @$searchInput.attr 'placeholder', @getSearchPlaceholder value
       @collection.setParam 'searchBy', value
+      @collection.setParam 'page', 1
 
-    updatePolicyState : (e) ->
-      $input = $(e.currentTarget)
+    onPolicyStateChange : (e) ->
+      @updatePolicyState $(e.currentTarget)
+
+    updatePolicyState : ($input) ->
       @policyState[$input.attr('name')] = $input.prop 'checked'
       @collection.setParam 'policyState', @determinePolicyState()
+      @collection.setParam 'page', 1
 
     getSearchPlaceholder : (value) ->
       if value is 'property-address'
