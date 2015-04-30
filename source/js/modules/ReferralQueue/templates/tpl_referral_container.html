@@ -1,21 +1,24 @@
+<div class="flash-message-container">
+  <div id="flash-message-<%=cid%>" class="flash-message"></div>
+</div>
 <div class="scroll-wrapper">
   <div class="width-wrapper">
-    <header class="module-referrals clearfix" id="module-referrals-{{cid}}">
+    <header class="module-referrals clearfix" id="module-referrals-<%=cid%>">
       <h1>New Business Referral Queue</h1>
-      <div id="referrals-switch-{{cid}}" class="referrals-switch btn-group pull-left">
+      <div id="owner-switch-<%=cid%>" class="owner-switch btn-group pull-left">
         <a href="myreferrals" class="btn btn-default active">My Referrals</a>
         <a href="allreferrals" class="btn btn-default">All Referrals</a>
       </div>
       <button class="btn btn-primary pull-right referrals-refresh">Refresh <span class="glyphicon glyphicon-refresh"></span></button>
       <div class="checkbox pull-right">
         <label>
-          <input name="show-all" type="checkbox"> Show resolved &amp; withdrawn
+          <input name="status" type="checkbox"> Show resolved &amp; withdrawn
         </label>
       </div>
     </header>
 
-    <div id="referrals-loader-{{cid}}" class="referrals-loader">
-      <h2 id="referrals-spinner-{{cid}}">
+    <div id="referrals-loader-<%=cid%>" class="referrals-loader">
+      <h2 id="referrals-spinner-<%=cid%>">
         <span>Loading Referrals&hellip;</span>
         <button class="abort btn btn-sm btn-dark">Cancel Request <span class="glyphicon glyphicon-remove-circle"></span></button>
       </h2>
@@ -25,7 +28,7 @@
         <div class="thead">
           <div class="tr">
             <div class="th"><a class="related-quote-id referrals-sort-link" href="relatedQuoteId">Policy Number <span class="glyphicon"></span></a></div>
-            <div class="th"><a class="carrier-id referrals-sort-link" href="CarrierId">Carrier ID <span class="glyphicon"></span></a></a></div>
+            <div class="th"><a class="carrier-id referrals-sort-link" href="CarrierId">Carrier ID <span class="glyphicon"></span></a></div>
             <div class="th"><a class="insured-last-name referrals-sort-link" href="insuredLastName">Last name <span class="glyphicon"></span></a></div>
             <div class="th"><a class="referral-status referrals-sort-link" href="status">Status <span class="glyphicon"></span></a></div>
             <div class="th"><a class="referral-subtype referrals-sort-link" href="prettySubtype">Type <span class="glyphicon"></span></a></div>
@@ -36,36 +39,7 @@
         </div>
         <div class="tbody"></div>
       </div>
-    </div>
-    <div id="referrals-pagination-{{cid}}" class="module-referrals pagination">
-      <form class="form-horizontal col-xs-12" action="pagination" method="get" accept-charset="utf-8">
-        <div class="form-group form-group-sm">
-          <div class="col-xs-4 pagination-a">
-            <span>Items </span>
-          </div>
-          <div class="col-xs-4 pagination-b">
-            <label for="referrals-pagination-page-{{cid}}" class="col-xs-5 control-label">Jump to page:</label>
-            <div class="col-xs-3">
-              <select class="referrals-pagination-page form-control" name="referrals-pagination-page" id="referrals-pagination-page-{{cid}}">
-                <option value="1">1</option>
-              </select>
-            </div>
-          </div>
-          <div class="col-xs-4 pagination-c">
-            <label for="referrals-pagination-perpage-{{cid}}" class="col-xs-7 control-label">Result count:</label>
-            <div class="col-xs-5">
-              <select class="referrals-pagination-perpage form-control" name="referrals-pagination-perpage" id="referrals-pagination-perpage-{{cid}}">
-                <option value="25">25 per page</option>
-                <option value="50" selected>50 per page</option>
-                <option value="75">75 per page</option>
-                <option value="100">100 per page</option>
-                <option value="500">500 per page</option>
-                <option value="1000">1000 per page</option>
-              </select>
-            </div>
-          </div>
-        </div>
-      </form>
+      <div class="panel-footer pagination clearfix"><%=pagination%></div>
     </div>
   </div>
 </div>
