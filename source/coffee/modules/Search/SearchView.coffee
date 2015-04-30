@@ -1,56 +1,61 @@
 define [
   'BaseView'
   'Messenger'
-  'modules/Search/SearchPolicyView'
   'modules/Search/SearchPolicyCollection'
   'text!modules/Search/templates/tpl_search_container.html'
-  'text!modules/Search/templates/tpl_renewal_review_container.html'
-], (BaseView, Messenger, SearchPolicyView, SearchPolicyCollection, tpl_search_container, tpl_renewal_review_container) ->
+  'text!modules/Search/templates/tpl_search_policy_row.html'
+  'text!modules/Search/templates/tpl_search_pagination.html'
+], (BaseView, Messenger, SearchPolicyCollection, tpl_search_container, tpl_search_policy_row, tpl_search_pagination) ->
 
   class SearchView extends BaseView
 
+    baseTemplate : _.template(tpl_search_container)
+
+    policyRowTemplate : _.template(tpl_search_policy_row)
+
+    paginationTemplate : _.template(tpl_search_pagination)
+
+    perPageOpts : [15, 25, 50, 75, 100]
+
     events :
-      'change input[name=search-query]'   : 'updateQuery'
-      'change .search-pagination-page'    : 'updatePage'
-      'change .search-pagination-perpage' : 'updatePerPage'
-      'change .search-pagination-perpage' : 'updatePerPage'
-      'change .search-by'                 : 'updateSearchBy'
-      'change .policy-state-input'        : 'updatePolicyState'
+      'change input[name=search-query]'   : 'onQueryChange'
+      'change .search-pagination-page'    : 'onPageChange'
+      'change .search-pagination-perpage' : 'onPerPageChange'
+      'change .search-by'                 : 'onSearchByChange'
+      'change .policy-state-input'        : 'onPolicyStateChange'
       'submit .filters form'              : 'search'
       'click  .search-sort-link'          : 'searchSorted'
       'click  .abort'                     : 'abortRequest'
 
-    policyState :
-      'policy' : true
-      'quote'  : true
-
     initialize : (options) ->
       _.bindAll(this
-        'updateSearchParams'
         'callbackRequest'
         'callbackSuccess'
         'callbackError'
         'callbackInvalid'
         )
 
-      @module                = options.module
-      @controller            = options.controller
-      @collection            = new SearchPolicyCollection()
-      @collection.url        = @controller.services.pxcentral + 'policies'
-      @collection.controller = @controller
+      @module                   = options.module
+      @controller               = options.controller
+      @collection               = new SearchPolicyCollection()
+      @collection.url           = @controller.services.pxcentral + 'policies'
+      @collection.controller    = @controller
+      @shouldShowEnhancedSearch = @controller.current_state?.business is 'cru'
+      @policyState =
+        'policy' : true
+        'quote'  : true
 
       @setupCollectionEventHandlers()
 
       # Load any passed parameters into view
       @params = @module.app.params ? {}
-
-      # @listenTo @module, 'activate', @updateSearchParams
+      @mainTemplate = _.template(tpl_search_container)
 
       # Special param to enable fetching of all policies requiring renewal underwriting
       if @params.renewalreviewrequired
         @collection.renewalreviewrequired = true
       else
-        if @shouldShowEnhancedSearch()
+        if @shouldShowEnhancedSearch
           # For regular search, default to quote-policy number
           @collection.setParam 'searchBy', 'quote-policy-number'
 
