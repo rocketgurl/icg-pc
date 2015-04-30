@@ -26,6 +26,7 @@ define [
 
     sync : (method, collection, options) ->
       options = _.extend options,
+        data        : @getParams()
         cache       : false # force non-cached request for IE
         dataType    : 'xml'
         contentType : 'application/xml'
@@ -61,7 +62,6 @@ define [
 
     initialize : ->
       @resetDefaults()
-      @on 'update', @getReferrals
 
     # **Parse response**  
     # We need to get the XML from pxCentral into a nice JSON format for our
@@ -99,19 +99,8 @@ define [
         @trigger "update update:#{param}" unless silent
 
     resetDefaults : ->
-      collection = this
-      params = [
-        'page'
-        'status'
-        'perPage'
-      ]
-      _.each params, (param) ->
-        collection.setParam param, 'default', true
-
-    # **Get Tasks from Server**
-    #
-    getReferrals : ->
-      @fetch { data : @getParams() }
+      _.each ['page', 'status', 'perPage'], (param) =>
+        @setParam param, 'default', true
 
     # **Sort columns**  
     sortTasks : (property) ->
