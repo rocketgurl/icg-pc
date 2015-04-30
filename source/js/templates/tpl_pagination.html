@@ -6,9 +6,9 @@
       <% } %>
     </div>
     <div class="col-xs-4">
-      <label for="search-pagination-page" class="col-xs-5 control-label">Jump to page:</label>
+      <label for="pagination-page" class="col-xs-5 control-label">Jump to page:</label>
       <div class="col-xs-3">
-        <select class="search-pagination-page form-control" name="search-pagination-page">
+        <select class="pagination-page form-control" name="pagination-page">
           <% _.each(pages, function(page) { %>
           <option value="<%= page %>"<% if (page === currentPage) { %> selected<% } %>>
           <%= page %>
@@ -18,9 +18,9 @@
       </div>
     </div>
     <div class="col-xs-4">
-      <label for="search-pagination-perpage" class="col-xs-7 control-label">Result count:</label>
+      <label for="pagination-perpage" class="col-xs-7 control-label">Result count:</label>
       <div class="col-xs-5">
-        <select class="search-pagination-perpage form-control" name="search-pagination-perpage">
+        <select class="pagination-perpage form-control" name="pagination-perpage">
           <% _.each(perPageOpts, function (val) { %>
           <option value="<%= val %>"<% if (val === perPage) { %> selected<% } %>><%= val %> per page</option>
           <% }) %>

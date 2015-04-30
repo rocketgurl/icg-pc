@@ -4,8 +4,8 @@ define [
   'modules/Search/SearchPolicyCollection'
   'text!modules/Search/templates/tpl_search_container.html'
   'text!modules/Search/templates/tpl_search_policy_row.html'
-  'text!modules/Search/templates/tpl_search_pagination.html'
-], (BaseView, Messenger, SearchPolicyCollection, tpl_search_container, tpl_search_policy_row, tpl_search_pagination) ->
+  'text!templates/tpl_pagination.html'
+], (BaseView, Messenger, SearchPolicyCollection, tpl_search_container, tpl_search_policy_row, tpl_pagination) ->
 
   class SearchView extends BaseView
 
@@ -13,19 +13,19 @@ define [
 
     policyRowTemplate : _.template(tpl_search_policy_row)
 
-    paginationTemplate : _.template(tpl_search_pagination)
+    paginationTemplate : _.template(tpl_pagination)
 
     perPageOpts : [15, 25, 50, 75, 100]
 
     events :
-      'change input[name=search-query]'   : 'onQueryChange'
-      'change .search-pagination-page'    : 'onPageChange'
-      'change .search-pagination-perpage' : 'onPerPageChange'
-      'change .search-by'                 : 'onSearchByChange'
-      'change .policy-state-input'        : 'onPolicyStateChange'
-      'submit .filters form'              : 'search'
-      'click  .search-sort-link'          : 'searchSorted'
-      'click  .abort'                     : 'abortRequest'
+      'change input[name=search-query]' : 'onQueryChange'
+      'change .pagination-page'         : 'onPageChange'
+      'change .pagination-perpage'      : 'onPerPageChange'
+      'change .search-by'               : 'onSearchByChange'
+      'change .policy-state-input'      : 'onPolicyStateChange'
+      'submit .filters form'            : 'search'
+      'click  .search-sort-link'        : 'searchSorted'
+      'click  .abort'                   : 'abortRequest'
 
     initialize : (options) ->
       _.bindAll(this
@@ -71,7 +71,7 @@ define [
       @$searchHeader       = @$('header.module-search')
       @$searchFiltersEl    = @$('.module-search.filters')
       @$searchInput        = @$searchFiltersEl.find 'input[type=search]'
-      @$paginationEl       = @$('.search-pagination')
+      @$paginationEl       = @$('.pagination')
       @$searchResultsTable = @$('.div-table.module-search')
       @$searchResultsThead = @$searchResultsTable.find '.thead'
       @$searchResultsTbody = @$searchResultsTable.find '.tbody'
