@@ -180,44 +180,52 @@ define [
       else
         'default'
 
-    renderPagination : (collection) ->
-      currentPage = collection.page
-      perPage     = collection.perPage
-      totalItems  = collection.totalItems
-      pages       = [1..Math.ceil(totalItems / perPage)]
+    determinePagination : ->
+      params      = @collection.getParams()
+      currentPage = params.page
+      perPage     = params.perPage
+      totalItems  = @collection.totalItems or 0
 
-      if perPage > totalItems
+      if totalItems > 0
+        pages = [1..Math.ceil(totalItems / perPage)]
+      else
+        pages = [1]
+
+      if totalItems is 0
+        start = 0
+        end = 0
+      else if perPage > totalItems
         end   = totalItems
         start = 1
       else
         end   = currentPage * perPage
         start = end - perPage + 1
 
-      start = 1 if start < 1
+      start = 0 if start < 1
       end = totalItems if end > totalItems
+      pagination =
+        currentPage : currentPage
+        perPage     : perPage
+        perPageOpts : @perPageOpts
+        totalItems  : totalItems
+        pages       : pages
+        start       : start
+        end         : end
 
-      @$itemsEl.html "Items #{start} - #{end} of #{totalItems}"
-
-      # Jump to page options
-      @$pageEl.html _.map pages, (page) ->
-        if page is currentPage
-          "<option value=\"#{page}\" selected>#{page}</option>"
-        else
-          "<option value=\"#{page}\">#{page}</option>"
+    renderPagination : ->
+      html = @paginationTemplate @determinePagination()
+      @$paginationEl.html html
 
     callbackRequest : (collection) ->
       @toggleLoader true
 
     callbackSuccess : (collection) ->
       @toggleLoader false
-
-      # check for empty response
       if collection.length is 0
         @Amplify.publish @cid, 'notice', "No results found when searching for \"#{collection.q}\"", 3000
         return
-
       @renderPolicies collection
-      @renderPagination collection
+      @renderPagination()
       @module.trigger 'workspace.rendered'
 
     # Error callback handles aborted requests, in addition to errors
