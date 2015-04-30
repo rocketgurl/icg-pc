@@ -109,19 +109,6 @@ define [
       tbodyMaxHeight     = workspaceHeight - (headerHeight + searchFilterHeight + searchHeaderHeight)
       @$searchResultsTbody.css 'max-height', tbodyMaxHeight
 
-    renderPolicies : (collection) ->
-      @$searchResultsTbody.empty()
-      @searchPolicyViews = collection.map (model) =>
-        view = new SearchPolicyView
-          model       : model
-          controller  : @controller
-          $target_el  : @$searchResultsTbody
-        @$searchResultsTbody.append view.render().$el
-        view
-
-      if collection.length is 1
-        @searchPolicyViews[0].openPolicy()
-
     search : (e) ->
       e.preventDefault() if _.isObject e
       @collection.fetch()
