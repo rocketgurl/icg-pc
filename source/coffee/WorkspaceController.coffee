@@ -248,8 +248,12 @@ define [
               @login_success model, resp
             else
               @login_fail model, resp, status.code
+              @user.clear().off()
+              @user = null
           error : (model, resp) =>
             @response_fail model, resp
+            @user.clear().off()
+            @user = null
 
       @user
 
