@@ -11,7 +11,7 @@ define [
 
     baseTemplate : _.template(tpl_search_container)
 
-    policyRowTemplate : _.template(tpl_search_policy_row)
+    rowTemplate : _.template(tpl_search_policy_row)
 
     paginationTemplate : _.template(tpl_pagination)
 
@@ -90,7 +90,7 @@ define [
 
     renderPolicies : (collection) ->
       rows = collection.map (model) =>
-        @policyRowTemplate model.toJSON()
+        @rowTemplate model.toJSON()
       @$searchResultsTbody.html rows.join('\n')
 
       if collection.length is 1

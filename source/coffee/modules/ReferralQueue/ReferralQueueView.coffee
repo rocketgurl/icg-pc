@@ -11,7 +11,7 @@ define [
 
     baseTemplate : _.template(tpl_container)
 
-    taskRowTemplate : _.template(tpl_row)
+    rowTemplate : _.template(tpl_row)
 
     paginationTemplate : _.template(tpl_pagination)
 
@@ -87,7 +87,7 @@ define [
     #
     renderTasks : (collection) ->
       rows = collection.map (model) =>
-        @taskRowTemplate model.toJSON()
+        @rowTemplate model.toJSON()
       @$tBody.html rows.join('\n')
 
       # Need to let the footer know that we changed height
