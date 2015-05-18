@@ -1,3 +1,11 @@
+### 3.1.2 - May 19, 2015
+
+- Reset page on consecutive searches
+- Enable search dropdown for SageSure
+- Update the following forms:
+    - ofcc-ho3-sc
+    - add excluded other structures
+
 ### 3.1.1 - Apr 28, 2015
 
 - Completed Quotes have a Premium as it has been calculated in rating
