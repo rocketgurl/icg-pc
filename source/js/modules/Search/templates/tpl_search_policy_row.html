@@ -1,9 +1,11 @@
-<div class="td" title="{{identifiers.quoteNumber}}">{{identifiers.quoteNumber}}</div>
-<div class="td" title="{{identifiers.policyId}}">{{identifiers.policyId}}</div>
-<div class="td" title="{{CarrierId}}">{{CarrierId}}</div>
-<div class="td" title="{{productLabel}}">{{productLabel}}</div>
-<div class="td" title="{{insured.lastName}}">{{insured.lastName}}</div>
-<div class="td" title="{{insured.Address}} {{insured.address.state}} {{insured.address.zip}}">{{insured.Address}} {{insured.address.state}} {{insured.address.zip}}</div>
-<div class="td{{#policyStateClass}} {{policyStateClass}}{{/policyStateClass}}" title="{{policyState}}">{{policyState}}</div>
-<div class="td" title="{{effectiveDate}}">{{effectiveDate}}</div>
-<div class="td" title="{{renewalReviewRequired}}">{{renewalReviewRequired}}</div>
+<a class="tr" href="<%= href %>">
+  <div class="td" title="<%= identifiers.quoteNumber %>"><%= identifiers.quoteNumber %></div>
+  <div class="td" title="<%= identifiers.policyId %>"><%= identifiers.policyId %></div>
+  <div class="td" title="<%= CarrierId %>"><%= CarrierId %></div>
+  <div class="td" title="<%= productLabel %>"><%= productLabel %></div>
+  <div class="td" title="<%= insured.lastName %>"><%= insured.lastName %></div>
+  <div class="td" title="<%= insured.Address %> <%= insured.address.state %> <%= insured.address.zip %>"><%= insured.Address %> <%= insured.address.state %> <%= insured.address.zip %></div>
+  <div class="td <%= policyState.toLowerCase() %>" title="<%= policyState %>"><%= policyState %></div>
+  <div class="td" title="<%= effectiveDate %>"><%= effectiveDate %></div>
+  <div class="td" title="<%= renewalReviewRequired %>"><%= renewalUwStatus %></div>
+</a>

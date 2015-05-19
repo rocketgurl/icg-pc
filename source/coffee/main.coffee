@@ -99,6 +99,31 @@ require [
   'modal'
 ], ($, _, Backbone, WorkspaceController, u_string, u_policycentral, domReady) ->
 
+  (->
+    unless window.trackJs
+      return false
+
+    _.each(["View", "Model", "Collection", "Router"], (className) ->
+      Klass = Backbone[className]
+      Backbone[className] = Klass.extend({
+        constructor: ->
+          # NOTE: This allows you to set _trackJs = false for any individual object
+          # that you want excluded from tracking
+          if typeof this._trackJs is "undefined"
+            this._trackJs = true
+
+          if this._trackJs
+            # Additional parameters are excluded from watching. Constructors and Comparators
+            # have a lot of edge-cases that are difficult to wrap so we'll ignore them.
+            window.trackJs.watchAll(this, "model", "constructor", "comparator")
+
+          return Klass.prototype.constructor.apply(this, arguments)
+      })
+    )
+    return true
+  )
+
+
   # Setup underscore.string
   _.mixin _.str.exports()
 

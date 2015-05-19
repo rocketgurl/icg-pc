@@ -38,4 +38,4 @@ define [
     # server for some XML
     render : ->
       if @QUEUE_VIEW.render()
-        @TASKS.getReferrals()
+        @TASKS.fetch()

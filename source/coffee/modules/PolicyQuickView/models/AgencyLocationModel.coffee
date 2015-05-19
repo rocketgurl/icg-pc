@@ -7,7 +7,7 @@ define [
   class AgencyLocationModel extends Backbone.Model
 
     url : ->
-      "#{@urlRoot}/#{@POLICY.getAgencyLocationCode()}"
+      "#{@urlRoot}/#{@alc}"
 
     parse : (resp) ->
       resp = $.fn.xml2json resp
@@ -21,7 +21,8 @@ define [
       _.bindAll this, 'syncRequest'
       @POLICY  = options.policy
       @urlRoot = options.urlRoot
-      @fetchXML()
+      @alc     = @POLICY.getAgencyLocationCode()
+      @fetchXML() if @alc
 
     fetchXML : ->
       request = @fetch

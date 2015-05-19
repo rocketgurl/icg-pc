@@ -193,7 +193,7 @@ define [
 
     getTabLabel : ->
       doc = @get('document')
-      lastName = doc.find('Customer[type="Insured"] DataItem[name="InsuredLastName"]')
+      lastName = doc.find('Customer[type="Insured"] DataItem[name$="InsuredLastName"]')
       if @isQuote()
         id = @getQuoteNumber()
       else
@@ -305,8 +305,12 @@ define [
         dataItems = @findInLastTerm('Intervals Interval')?.DataItem
       else
         dataItems = @getLastTerm()?.DataItem
-
-      @getDataItem @_sanitizeNodeArray(dataItems), 'ProductLabel'
+      label = @getDataItem @_sanitizeNodeArray(dataItems), 'ProductLabel'
+      unless label
+        label = @get('document')
+                  .find('ProductRef [name="Labels"]')
+                  .attr('value')
+      label
 
     # Map policy state to a prettier version
     getPrettyPolicyState : ->

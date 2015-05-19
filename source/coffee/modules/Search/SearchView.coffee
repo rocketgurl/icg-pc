@@ -1,59 +1,63 @@
 define [
   'BaseView'
   'Messenger'
-  'modules/Search/SearchPolicyView'
   'modules/Search/SearchPolicyCollection'
   'text!modules/Search/templates/tpl_search_container.html'
-  'text!modules/Search/templates/tpl_renewal_review_container.html'
-], (BaseView, Messenger, SearchPolicyView, SearchPolicyCollection, tpl_search_container, tpl_renewal_review_container) ->
+  'text!modules/Search/templates/tpl_search_policy_row.html'
+  'text!templates/tpl_pagination.html'
+], (BaseView, Messenger, SearchPolicyCollection, tpl_search_container, tpl_search_policy_row, tpl_pagination) ->
 
   class SearchView extends BaseView
 
-    events :
-      'change input[name=search-query]'   : 'updateQuery'
-      'change .search-pagination-page'    : 'updatePage'
-      'change .search-pagination-perpage' : 'updatePerPage'
-      'change .search-pagination-perpage' : 'updatePerPage'
-      'change .search-by'                 : 'updateSearchBy'
-      'change .policy-state-input'        : 'updatePolicyState'
-      'submit .filters form'              : 'search'
-      'click  .search-sort-link'          : 'searchSorted'
-      'click  .abort'                     : 'abortRequest'
+    baseTemplate : _.template(tpl_search_container)
 
-    policyState :
-      'policy' : true
-      'quote'  : true
+    rowTemplate : _.template(tpl_search_policy_row)
+
+    paginationTemplate : _.template(tpl_pagination)
+
+    perPageOpts : [15, 25, 50, 75, 100]
+
+    events :
+      'change input[name=search-query]' : 'onQueryChange'
+      'change .pagination-page'         : 'onPageChange'
+      'change .pagination-perpage'      : 'onPerPageChange'
+      'change .search-by'               : 'onSearchByChange'
+      'change .policy-state-input'      : 'onPolicyStateChange'
+      'submit .filters form'            : 'search'
+      'click  .search-sort-link'        : 'searchSorted'
+      'click  .abort'                   : 'abortRequest'
 
     initialize : (options) ->
       _.bindAll(this
-        'updateSearchParams'
         'callbackRequest'
         'callbackSuccess'
         'callbackError'
         'callbackInvalid'
         )
 
-      @module                = options.module
-      @controller            = options.controller
-      @collection            = new SearchPolicyCollection()
-      @collection.url        = @controller.services.pxcentral + 'policies'
-      @collection.controller = @controller
+      @module                   = options.module
+      @controller               = options.controller
+      @collection               = new SearchPolicyCollection()
+      @collection.url           = @controller.services.pxcentral + 'policies'
+      @collection.controller    = @controller
+      @shouldShowEnhancedSearch = @controller.current_state?.business is 'cru'
+      @policyState =
+        'policy' : true
+        'quote'  : true
 
       @setupCollectionEventHandlers()
 
       # Load any passed parameters into view
       @params = @module.app.params ? {}
-
-      # @listenTo @module, 'activate', @updateSearchParams
+      @mainTemplate = _.template(tpl_search_container)
 
       # Special param to enable fetching of all policies requiring renewal underwriting
       if @params.renewalreviewrequired
         @collection.renewalreviewrequired = true
-
-      # NOT DEFAULTING TO QUOTE_POLICY_NUMBER UNTIL SEARCH IS FIXED IN PROD
-      # else
-      #   # For regular search, default to quote-policy number
-      #   @collection.setParam 'searchBy', 'quote-policy-number'
+      else
+        if @shouldShowEnhancedSearch
+          # For regular search, default to quote-policy number
+          @collection.setParam 'searchBy', 'quote-policy-number'
 
       @render()
 
@@ -67,28 +71,31 @@ define [
       @$searchHeader       = @$('header.module-search')
       @$searchFiltersEl    = @$('.module-search.filters')
       @$searchInput        = @$searchFiltersEl.find 'input[type=search]'
-      @$paginationEl       = @$('.module-search.pagination')
-      @$itemsEl            = @$('.pagination-a span')
-      @$pageEl             = @$('.search-pagination-page')
-      @$perPageEl          = @$('.search-pagination-perpage')
+      @$paginationEl       = @$('.pagination')
       @$searchResultsTable = @$('.div-table.module-search')
       @$searchResultsThead = @$searchResultsTable.find '.thead'
       @$searchResultsTbody = @$searchResultsTable.find '.tbody'
 
     render : ->
-      template = if @params.renewalreviewrequired then tpl_renewal_review_container else tpl_search_container
-      html = @Mustache.render $('#tpl-flash-message').html(), { cid : @cid }
-      html += @Mustache.render template, { cid : @cid, pagination: @collection.pagination }
-      @$el.html html
-      
-      # Cache useful DOM elements for later
-      @cacheElements()
-
+      @$el.html(@baseTemplate({
+        cid                      : @cid
+        pagination               : @paginationTemplate @determinePagination()
+        isRenewalUnderwriting    : @params.renewalreviewrequired
+        shouldShowEnhancedSearch : @shouldShowEnhancedSearch
+      }))
+      @cacheElements() # Cache useful DOM elements for later
       @setTbodyMaxHeight()
       @attachWindowResizeHandler()
+      @messenger = new Messenger @, @cid # Register flash message pubsub for this view
 
-      # Register flash message pubsub for this view
-      @messenger = new Messenger @, @cid
+    renderPolicies : (collection) ->
+      rows = collection.map (model) =>
+        @rowTemplate model.toJSON()
+      @$searchResultsTbody.html rows.join('\n')
+
+      if collection.length is 1
+        href = collection.at(0).get('href')
+        @controller.Router.navigate href, { trigger : true }
 
     attachWindowResizeHandler : ->
       lazyResize = _.debounce _.bind(@setTbodyMaxHeight, this), 500
@@ -101,19 +108,6 @@ define [
       searchHeaderHeight = @$searchResultsThead.outerHeight()
       tbodyMaxHeight     = workspaceHeight - (headerHeight + searchFilterHeight + searchHeaderHeight)
       @$searchResultsTbody.css 'max-height', tbodyMaxHeight
-
-    renderPolicies : (collection) ->
-      @$searchResultsTbody.empty()
-      @searchPolicyViews = collection.map (model) =>
-        view = new SearchPolicyView
-          model       : model
-          controller  : @controller
-          $target_el  : @$searchResultsTbody
-        @$searchResultsTbody.append view.render().$el
-        view
-
-      if collection.length is 1
-        @searchPolicyViews[0].openPolicy()
 
     search : (e) ->
       e.preventDefault() if _.isObject e
@@ -138,35 +132,45 @@ define [
       else
         $sortIcon.addClass 'glyphicon-chevron-down'
 
-    updateSearchParams : ->
-      # console.log @params
-      # console.log @module.app.params
-      # console.log @collection.getParams()
+    onPageChange : (e) ->
+      @updatePage +e.currentTarget.value
 
-    updatePage : (e) ->
-      page = +e.currentTarget.value
+    updatePage : (page) ->
       if page > 0
         @collection.setParam 'page', page
         @search()
 
-    updatePerPage : (e) ->
-      perPage = +e.currentTarget.value
+    onPerPageChange : (e) ->
+      @updatePerPage +e.currentTarget.value
+
+    updatePerPage : (perPage) ->
       if perPage > 0
         @collection.setParam 'perPage', perPage
+        @collection.setParam 'page', 1
         @search()
 
-    updateQuery : (e) ->
-      @collection.setParam 'q', e.currentTarget.value
+    onQueryChange : (e) ->
+      @updateQuery "#{e.currentTarget.value}"
 
-    updateSearchBy : (e) ->
-      value = e.currentTarget.value
+    updateQuery : (query) ->
+      @collection.setParam 'q', query
+      @collection.setParam 'page', 1
+
+    onSearchByChange : (e) ->
+      @updateSearchBy "#{e.currentTarget.value}"
+
+    updateSearchBy : (value) ->
       @$searchInput.attr 'placeholder', @getSearchPlaceholder value
       @collection.setParam 'searchBy', value
+      @collection.setParam 'page', 1
 
-    updatePolicyState : (e) ->
-      $input = $(e.currentTarget)
+    onPolicyStateChange : (e) ->
+      @updatePolicyState $(e.currentTarget)
+
+    updatePolicyState : ($input) ->
       @policyState[$input.attr('name')] = $input.prop 'checked'
       @collection.setParam 'policyState', @determinePolicyState()
+      @collection.setParam 'page', 1
 
     getSearchPlaceholder : (value) ->
       if value is 'property-address'
@@ -186,44 +190,52 @@ define [
       else
         'default'
 
-    renderPagination : (collection) ->
-      currentPage = collection.page
-      perPage     = collection.perPage
-      totalItems  = collection.totalItems
-      pages       = [1..Math.ceil(totalItems / perPage)]
+    determinePagination : ->
+      params      = @collection.getParams()
+      currentPage = params.page
+      perPage     = params.perPage
+      totalItems  = @collection.totalItems or 0
 
-      if perPage > totalItems
+      if totalItems > 0
+        pages = [1..Math.ceil(totalItems / perPage)]
+      else
+        pages = [1]
+
+      if totalItems is 0
+        start = 0
+        end = 0
+      else if perPage > totalItems
         end   = totalItems
         start = 1
       else
         end   = currentPage * perPage
         start = end - perPage + 1
 
-      start = 1 if start < 1
+      start = 0 if start < 1
       end = totalItems if end > totalItems
+      pagination =
+        currentPage : currentPage
+        perPage     : perPage
+        perPageOpts : @perPageOpts
+        totalItems  : totalItems
+        pages       : pages
+        start       : start
+        end         : end
 
-      @$itemsEl.html "Items #{start} - #{end} of #{totalItems}"
-
-      # Jump to page options
-      @$pageEl.html _.map pages, (page) ->
-        if page is currentPage
-          "<option value=\"#{page}\" selected>#{page}</option>"
-        else
-          "<option value=\"#{page}\">#{page}</option>"
+    renderPagination : ->
+      html = @paginationTemplate @determinePagination()
+      @$paginationEl.html html
 
     callbackRequest : (collection) ->
       @toggleLoader true
 
     callbackSuccess : (collection) ->
       @toggleLoader false
-
-      # check for empty response
       if collection.length is 0
         @Amplify.publish @cid, 'notice', "No results found when searching for \"#{collection.q}\"", 3000
         return
-
       @renderPolicies collection
-      @renderPagination collection
+      @renderPagination()
       @module.trigger 'workspace.rendered'
 
     # Error callback handles aborted requests, in addition to errors

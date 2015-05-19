@@ -9,7 +9,6 @@ define [
   'WorkspaceNavView'
   'PolicyHistoryView'
   'WorkspaceRouter'
-  'modules/Search/SearchContextCollection'
   'modules/ReferralQueue/AssigneeListView'
   'Messenger'
   'base64'
@@ -19,7 +18,7 @@ define [
   'Cookie'
   'herald'
   'marked'
-], (UserModel, ConfigModel, WorkspaceStack, WorkspaceStateModel, WorkspaceStateCollection, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, PolicyHistoryView, WorkspaceRouter, SearchContextCollection, AssigneeListView, Messenger, Base64, MenuHelper, AppRules, Helpers, Cookie, Herald, marked, xml2json) ->
+], (UserModel, ConfigModel, WorkspaceStack, WorkspaceStateModel, WorkspaceStateCollection, WorkspaceLoginView, WorkspaceCanvasView, WorkspaceNavView, PolicyHistoryView, WorkspaceRouter, AssigneeListView, Messenger, Base64, MenuHelper, AppRules, Helpers, Cookie, Herald, marked, xml2json) ->
 
   # Global log object for debugging
   #
@@ -249,8 +248,12 @@ define [
               @login_success model, resp
             else
               @login_fail model, resp, status.code
+              @user.clear().off()
+              @user = null
           error : (model, resp) =>
             @response_fail model, resp
+            @user.clear().off()
+            @user = null
 
       @user
 
@@ -364,8 +367,6 @@ define [
             @config.set 'menu', menu
             @config.set 'menu_html', MenuHelper.generate_menu(menu)
             @show_navigation()
-
-            # Instantiate our SearchContextCollection
             @navigation_view = new WorkspaceNavView({
                 controller : @
                 el         : '#header-workspace-nav'

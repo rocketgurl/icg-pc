@@ -2155,6 +2155,10 @@ ul:after { clear: both; }
 
 .table-24-columns .th, .table-24-columns .td { width: 4.16667%; }
 
+.pagination-group { margin-bottom: 0; }
+
+.pagination-label { padding-top: 6px; font-weight: inherit; }
+
 #home .home-container { margin: 0 auto; padding-left: 5%; padding-right: 5%; max-width: 1170px; }
 #home .home-container:before, #home .home-container:after { content: " "; display: table; }
 #home .home-container:after { clear: both; }

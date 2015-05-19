@@ -1,21 +1,36 @@
+<div class="flash-message-container">
+  <div id="flash-message-<%= cid %>" class="flash-message"></div>
+</div>
 <div class="scroll-wrapper">
   <div class="width-wrapper">
-    <header class="module-search clearfix" id="module-search-{{cid}}">
+    <header class="module-search clearfix" id="module-search-<%= cid %>">
+      <% if (isRenewalUnderwriting) { %>
+      <h1>Renewal Underwriting</h1>
+      <div id="search-filters-{{cid}}" class="module-search filters pull-right">
+        <form id="renewal-review-form" action="search_submit" method="get" accept-charset="utf-8" class="form-inline">
+          <button type="submit" class="btn btn-primary">Load Policies</button>
+        </form>
+      </div>
+      <% } else { %>
       <h1>Quote &amp; Policy Search</h1>
+      <% } %>
     </header>
 
-    <div id="search-filters-{{cid}}" class="module-search filters">
+    <% if (!isRenewalUnderwriting) { %>
+    <div id="search-filters-<%= cid %>" class="module-search filters">
       <form id="search-form" action="search_submit" method="get" accept-charset="utf-8" class="form-inline">
         <div class="form-group form-group-sm">
-          <select name="searchby" class="search-by form-control" disabled>
-            <!-- <option value="quote-policy-number">Quote/Policy number</option>
-            <option value="property-address">Property street address</option> -->
+          <select name="searchby" class="search-by form-control"<% if (!shouldShowEnhancedSearch) { %> disabled<% } %>>
+            <% if (shouldShowEnhancedSearch) { %>
+            <option value="quote-policy-number">Quote/Policy number</option>
+            <option value="property-address">Property street address</option>
+            <% } %>>
             <option value="default">Search all fields</option>
           </select>
         </div>
         <div class="form-group form-group-sm">
           <div class="input-group">
-            <input type="search" name="search-query" value="" placeholder="Enter search terms" class="form-control">
+            <input type="search" name="search-query" value="" placeholder="<% if (shouldShowEnhancedSearch) { %>Enter Quote or Policy number<% } else { %>Enter search terms<% } %>" class="form-control">
             <span class="input-group-btn">
               <button type="submit" class="btn btn-default">Search</button>
             </span>
@@ -33,9 +48,10 @@
         </div>
       </form>
     </div>
+    <% } %>
 
-    <div id="search-loader-{{cid}}" class="search-loader">
-      <h2 id="search-spinner-{{cid}}">
+    <div id="search-loader-<%= cid %>" class="search-loader">
+      <h2 id="search-spinner-<%= cid %>">
         <span>Searching Policies&hellip;</span>
         <button class="abort btn btn-sm btn-dark">Cancel Request <span class="glyphicon glyphicon-remove-circle"></span></button>
       </h2>
@@ -58,36 +74,7 @@
         </div>
         <div class="tbody"></div>
       </div>
-    </div>
-
-    <div id="search-pagination-{{cid}}" class="module-search pagination">
-      <form class="form-horizontal col-xs-12" action="pagination" method="get" accept-charset="utf-8">
-        <div class="form-group form-group-sm">
-          <div class="col-xs-4 pagination-a">
-            <span>Items </span>
-          </div>
-          <div class="col-xs-4 pagination-b">
-            <label for="search-pagination-page-{{cid}}" class="col-xs-5 control-label">Jump to page:</label>
-            <div class="col-xs-3">
-              <select class="search-pagination-page form-control" name="search-pagination-page" id="search-pagination-page-{{cid}}">
-                <option value="1">1</option>
-              </select>
-            </div>
-          </div>
-          <div class="col-xs-4 pagination-c">
-            <label for="search-pagination-perpage-{{cid}}" class="col-xs-7 control-label">Result count:</label>
-            <div class="col-xs-5">
-              <select class="search-pagination-perpage form-control" name="search-pagination-perpage" id="search-pagination-perpage-{{cid}}">
-                <option value="15">15 per page</option>
-                <option value="25">25 per page</option>
-                <option value="50" selected>50 per page</option>
-                <option value="75">75 per page</option>
-                <option value="100">100 per page</option>
-              </select>
-            </div>
-          </div>
-        </div>
-      </form>
+      <div class="panel-footer pagination clearfix"><%= pagination %></div>
     </div>
   </div>
 </div>
