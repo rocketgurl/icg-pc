@@ -7,7 +7,7 @@ define [
 
     baseURL : '/'
 
-    changesFile : 'Changes.md'
+    changesFile : 'CHANGES.md'
 
     initialize : ->
       _.bindAll this, 'renderNotices'
