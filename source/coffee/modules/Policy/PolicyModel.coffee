@@ -299,17 +299,17 @@ define [
         ])
 
     getProductLabel : ->
-      if @isQuote()
-        dataItems = @findInQuoteTerm('ProtoInterval')?.DataItem
-      else if @isFNIC()
-        dataItems = @findInLastTerm('Intervals Interval')?.DataItem
-      else
-        dataItems = @getLastTerm()?.DataItem
-      label = @getDataItem @_sanitizeNodeArray(dataItems), 'ProductLabel'
+      label = @get('document')
+        .find('ProductRef [name="Label"]')
+        .attr('value')
       unless label
-        label = @get('document')
-                  .find('ProductRef [name="Labels"]')
-                  .attr('value')
+        if @isQuote()
+          dataItems = @findInQuoteTerm('ProtoInterval')?.DataItem
+        else if @isFNIC()
+          dataItems = @findInLastTerm('Intervals Interval')?.DataItem
+        else
+          dataItems = @getLastTerm()?.DataItem
+        label = @getDataItem @_sanitizeNodeArray(dataItems), 'ProductLabel'
       label
 
     # Map policy state to a prettier version
