@@ -140,6 +140,9 @@ define [
          @apparatchik.isProduct('ofcc-ho3-nj')
         @addWICALBehaviors()
 
+      if @apparatchik.isProduct('fnic-ho3-sc') || @apparatchik.isProduct('fnic-ho5-sc')
+        @addFNICSCBehaviors()
+
       if @apparatchik.isProduct('fnic-ho3-la') || @apparatchik.isProduct('fnic-ho3-al')
         @addFNICHO3Behaviors()
 
@@ -432,7 +435,25 @@ define [
 
       @apparatchik.applyEnumDynamics rules
 
-    # Rules common to both FNIC HO3 Produc
+    # Rules common to FNIC SC Products
+    addFNICSCBehaviors : ->
+      rules = [{
+        field: "WindstormDeductibleOption"
+        sideEffects: [{
+          target: "HurricaneDeductible"
+          condition: "== 100"
+          effect: @apparatchik.showElement
+        },
+        {
+          target: "WindHailDeductible"
+          condition: "== 200"
+          effect: @apparatchik.showElement
+        }]
+      }]
+
+      @apparatchik.applyEnumDynamics rules
+
+    # Rules common to both FNIC HO3 Products
     addFNICHO3Behaviors : ->
       rules = [
         field: 'OtherStructuresIndicator'
