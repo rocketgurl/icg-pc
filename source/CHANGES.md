@@ -1,3 +1,15 @@
+### 3.1.3 - Jun 09, 2015
+
+- Changes to IPM forms:
+    - Update IPM forms to change Exclude Other Structure fields
+    - Update ofcc-ho3-ny Special Limits enums
+    - Update multiple IPM SPP fields
+    - Update FNIC-ho3/5-sc
+    - Update WindstormDeductibleOptino for fnic-ho3/5-sc
+    - Add Exclude Other Structures to iic-ho3-sc
+    - Add UW guidelines to ofcc-ho3/6-sc
+- Minor bug fixes
+
 ### 3.1.2 - May 19, 2015
 
 - Reset page on consecutive searches
