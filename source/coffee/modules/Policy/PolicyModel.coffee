@@ -193,13 +193,17 @@ define [
 
     getTabLabel : ->
       doc = @get('document')
-      lastName = doc.find('Customer[type="Insured"] DataItem[name$="InsuredLastName"]')
-      if @isQuote()
-        id = @getQuoteNumber()
-      else
-        id = @getPolicyId()
-      if id and lastName.length
-        "#{lastName.attr('value')} #{id}"
+      $insuredLastName = doc.find('Customer[type="Insured"] DataItem')
+          .filter('[name="OpInsuredLastName"],[name="InsuredLastName"]')
+          .first()
+      # Only return a label if there is a positive match with our query
+      # Otherwise return undefined and leave the default label in place
+      if $insuredLastName.length
+        if @isQuote()
+          id = @getQuoteNumber()
+        else
+          id = @getPolicyId()
+        "#{$insuredLastName.attr('value')} #{id}"
 
     # Assemble all the policy data for HTML QuickView servicing tab into one place
     getServicingData : ->
@@ -299,17 +303,17 @@ define [
         ])
 
     getProductLabel : ->
-      if @isQuote()
-        dataItems = @findInQuoteTerm('ProtoInterval')?.DataItem
-      else if @isFNIC()
-        dataItems = @findInLastTerm('Intervals Interval')?.DataItem
-      else
-        dataItems = @getLastTerm()?.DataItem
-      label = @getDataItem @_sanitizeNodeArray(dataItems), 'ProductLabel'
+      label = @get('document')
+        .find('ProductRef [name="Label"]')
+        .attr('value')
       unless label
-        label = @get('document')
-                  .find('ProductRef [name="Labels"]')
-                  .attr('value')
+        if @isQuote()
+          dataItems = @findInQuoteTerm('ProtoInterval')?.DataItem
+        else if @isFNIC()
+          dataItems = @findInLastTerm('Intervals Interval')?.DataItem
+        else
+          dataItems = @getLastTerm()?.DataItem
+        label = @getDataItem @_sanitizeNodeArray(dataItems), 'ProductLabel'
       label
 
     # Map policy state to a prettier version

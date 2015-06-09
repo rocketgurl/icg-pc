@@ -648,6 +648,28 @@
 
 
 		<div>
+			<label for="{{guid}}_ScreenedEnclosureLimit" >Swimming Pool and/or Patio Limited Coverage <i>ScreenedEnclosureLimit</i></label>
+			<select id="{{guid}}_ScreenedEnclosureLimit" name="ScreenedEnclosureLimit" data-value="{{ScreenedEnclosureLimit}}"   >
+				{{#EnumsScreenedEnclosureLimit}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsScreenedEnclosureLimit}}
+			</select>
+		</div>
+
+
+
+		<div>
+			<label for="{{guid}}_AnimalLiability" class="labelRequired">Limited Dog Liability <i>AnimalLiability</i></label>
+			<select id="{{guid}}_AnimalLiability" name="AnimalLiability" data-value="{{AnimalLiability}}"  required >
+				{{#EnumsAnimalLiability}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsAnimalLiability}}
+			</select>
+		</div>
+
+
+
+		<div>
 			<label for="{{guid}}_LossAssessmentCoverage" class="labelRequired">Loss Assessment <i>LossAssessmentCoverage</i></label>
 			<select id="{{guid}}_LossAssessmentCoverage" name="LossAssessmentCoverage" data-value="{{LossAssessmentCoverage}}"  required >
 				{{#EnumsLossAssessmentCoverage}}

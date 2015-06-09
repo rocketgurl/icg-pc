@@ -394,6 +394,56 @@
 			<input type="text" id="{{guid}}_OtherStructures3BusinessType" name="OtherStructures3BusinessType" value="{{OtherStructures3BusinessType}}"  >
 		</div>
 		</fieldset>
+		<fieldset>
+				<legend id="{{guid}}_excluded_other_structures">Excluded Other Structures</legend>				
+
+		<div>
+			<label for="{{guid}}_ExcludedOtherStructure1Type" >1st Excluded Other Structure - Type <i>ExcludedOtherStructure1Type</i></label>
+			<select id="{{guid}}_ExcludedOtherStructure1Type" name="ExcludedOtherStructure1Type" data-value="{{ExcludedOtherStructure1Type}}"   >
+				{{#EnumsExcludedOtherStructure1Type}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsExcludedOtherStructure1Type}}
+			</select>
+		</div>
+
+
+		<div>
+			<label for="{{guid}}_ExcludedOtherStructure1Description" >1st Excluded Other Structure - Description <i>ExcludedOtherStructure1Description</i></label>
+			<input type="text" id="{{guid}}_ExcludedOtherStructure1Description" name="ExcludedOtherStructure1Description" value="{{ExcludedOtherStructure1Description}}"  >
+		</div>
+
+
+		<div>
+			<label for="{{guid}}_ExcludedOtherStructure2Type" >2nd Excluded Other Structure - Type <i>ExcludedOtherStructure2Type</i></label>
+			<select id="{{guid}}_ExcludedOtherStructure2Type" name="ExcludedOtherStructure2Type" data-value="{{ExcludedOtherStructure2Type}}"   >
+				{{#EnumsExcludedOtherStructure2Type}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsExcludedOtherStructure2Type}}
+			</select>
+		</div>
+
+
+		<div>
+			<label for="{{guid}}_ExcludedOtherStructure2Description" >2nd Excluded Other Structure - Description <i>ExcludedOtherStructure2Description</i></label>
+			<input type="text" id="{{guid}}_ExcludedOtherStructure2Description" name="ExcludedOtherStructure2Description" value="{{ExcludedOtherStructure2Description}}"  >
+		</div>
+
+
+		<div>
+			<label for="{{guid}}_ExcludedOtherStructure3Type" >3rd Excluded Other Structure - Type <i>ExcludedOtherStructure3Type</i></label>
+			<select id="{{guid}}_ExcludedOtherStructure3Type" name="ExcludedOtherStructure3Type" data-value="{{ExcludedOtherStructure3Type}}"   >
+				{{#EnumsExcludedOtherStructure3Type}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsExcludedOtherStructure3Type}}
+			</select>
+		</div>
+
+
+		<div>
+			<label for="{{guid}}_ExcludedOtherStructure3Description" >3rd Excluded Other Structure - Description <i>ExcludedOtherStructure3Description</i></label>
+			<input type="text" id="{{guid}}_ExcludedOtherStructure3Description" name="ExcludedOtherStructure3Description" value="{{ExcludedOtherStructure3Description}}"  >
+		</div>
+		</fieldset>
 			</div>
 		</fieldset>
 
@@ -1105,6 +1155,17 @@
 				{{#EnumsAdditionalAmountsOfInsurance}}
 				<option value="{{value}}">{{label}}</option>
 				{{/EnumsAdditionalAmountsOfInsurance}}
+			</select>
+		</div>
+
+
+
+		<div>
+			<label for="{{guid}}_ScreenedEnclosureLimit" >Swimming Pool and/or Patio Limited Coverage <i>ScreenedEnclosureLimit</i></label>
+			<select id="{{guid}}_ScreenedEnclosureLimit" name="ScreenedEnclosureLimit" data-value="{{ScreenedEnclosureLimit}}"   >
+				{{#EnumsScreenedEnclosureLimit}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsScreenedEnclosureLimit}}
 			</select>
 		</div>
 

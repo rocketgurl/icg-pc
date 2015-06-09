@@ -61,7 +61,7 @@
         },
         {
           "label": "Write off charges",
-          "view": "WriteOffCharges"
+          "view": "WriteoffCharges"
         }
       ]
     },
