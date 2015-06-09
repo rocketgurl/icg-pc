@@ -667,8 +667,8 @@ define [
       @$workspace_main_navbar.on 'click', 'li > a', (e) =>
         $el = $(e.currentTarget)
 
-        # Allow the default behavior if [target="_blank"] is present
-        if $el.is '[target="_blank"]'
+        # Allow the default behavior if [target="_blank|_self"]
+        if $el.is '[target="_blank"],[target="_self"]'
           return true
 
         # Launch module if [data-route="[route]"] is present
