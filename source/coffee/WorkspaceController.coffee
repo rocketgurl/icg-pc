@@ -250,10 +250,12 @@ define [
               @login_fail model, resp, status.code
               @user.clear().off()
               @user = null
+              window.sessionStorage.removeItem 'user'
           error : (model, resp) =>
             @response_fail model, resp
             @user.clear().off()
             @user = null
+            window.sessionStorage.removeItem 'user'
 
       @user
 
@@ -272,6 +274,8 @@ define [
 
     # On a successfull login have @user set some variables
     # and set an identity cookie to smooth logging in later.
+    # User identity is also stored in session storage for
+    # Batch Wolf access
     #
     # @param `model` _Object_ User model
     # @param `resp` _Object_ Response from server
@@ -282,6 +286,13 @@ define [
       @set_cookie_identity(@user.get('digest')) # set cookie
       @set_admin_links() # Change admin links to name & logout
       @show_workspace_button()
+
+      userJSON = JSON.stringify({
+        digest   : @user.get('digest'),
+        email    : @user.get('email'),
+        username : @user.get('username')
+      })
+      window.sessionStorage.setItem 'user', userJSON
 
       if @login_view?
         @login_view.destroy()
@@ -311,7 +322,7 @@ define [
 
       @login_view.displayMessage 'warning', msg
 
-    # Delete the identity cookie and nullify User
+    # Delete the identity cookie/session storage and nullify User
     # TODO: Need to teardown the main nav
     logout : ->
       @Cookie.remove(@COOKIE_NAME)
@@ -322,6 +333,8 @@ define [
       @hide_workspace_button()
       @hide_navigation()
       delete @baseRoute
+
+      window.sessionStorage.removeItem 'user'
 
       if @navigation_view?
         @navigation_view.destroy()
