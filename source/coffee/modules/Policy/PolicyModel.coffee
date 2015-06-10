@@ -188,7 +188,6 @@ define [
         ipm_header.id = @getQuoteNumber()
         ipm_header.period = @Helpers.concatStrings(start, end, ' - ')
         ipm_header.isQuote = true
-        ipm_header.product = @findInQuoteTerm('ProtoInterval DataItem[name=OpPolicyType]')
       ipm_header
 
     getTabLabel : ->
