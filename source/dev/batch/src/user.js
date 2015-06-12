@@ -1,7 +1,7 @@
 import _ from 'underscore';
 
 const userJSON = window.sessionStorage.getItem('user');
-const user = JSON.parse(userJSON);
+const user = JSON.parse(userJSON) || {};
 
 function validate() {
   if (!_.has(user, 'digest') ||
