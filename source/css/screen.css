@@ -2155,9 +2155,16 @@ ul:after { clear: both; }
 
 .table-24-columns .th, .table-24-columns .td { width: 4.16667%; }
 
+.panel-nav { margin-top: 37px; }
+.panel-nav > nav { margin-top: -37px; padding-left: 10px; padding-right: 10px; }
+
 .pagination-group { margin-bottom: 0; }
 
 .pagination-label { padding-top: 6px; font-weight: inherit; }
+
+.bw-wrapper { padding: 10px; }
+.bw-wrapper:before, .bw-wrapper:after { content: " "; display: table; }
+.bw-wrapper:after { clear: both; }
 
 #home .home-container { margin: 0 auto; padding-left: 5%; padding-right: 5%; max-width: 1170px; }
 #home .home-container:before, #home .home-container:after { content: " "; display: table; }

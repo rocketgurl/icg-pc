@@ -1,0 +1,9 @@
+.panel-nav {
+  margin-top: 37px;
+
+  > nav {
+    margin-top: -37px;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}
