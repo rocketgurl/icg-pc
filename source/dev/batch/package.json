@@ -5,9 +5,13 @@
   "main": "src/app.js",
   "author": "Liam Bowers",
   "devDependencies": {
+    "ampersand-model": "^5.0.3",
+    "ampersand-rest-collection": "^4.0.0",
+    "ampersand-router": "^3.0.2",
+    "babelify": "^6.1.2",
     "browserify": "^10.2.0",
+    "d3": "^3.5.5",
     "envify": "^3.0.0",
-    "es6ify": "^1.6.0",
     "jest-cli": "~0.1.17",
     "react-bootstrap": "^0.23.2",
     "reactify": "^0.15.2",
@@ -16,14 +20,14 @@
     "watchify": "^2.1.1"
   },
   "scripts": {
-    "start": "watchify -o public/bundle.js -v -d src/app.js",
+    "start": "watchify src/app.js -o public/bundle.js -v",
     "build": "browserify . -t [envify --NODE_ENV production] | uglifyjs -cm > public/bundle.min.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "browserify": {
     "transform": [
-      "es6ify",
       "reactify",
+      "babelify",
       "envify"
     ]
   }
