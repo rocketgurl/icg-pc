@@ -286,6 +286,7 @@ define [
 
       @getDataItemValues(@_sanitizeNodeArray(dataItems), [
           'CoverageA'
+          'ReplacementCostBuilding'
           'HurricaneDeductible'
           'WindHailDeductible'
           'AllOtherPerilsDeductible'

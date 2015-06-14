@@ -81,6 +81,7 @@ define [
 
     mapDataItemValues : (data) ->
       data.CoverageA                = @Helpers.formatLocaleNum data.CoverageA
+      data.ReplacementCostBuilding  = @Helpers.formatLocaleNum data.ReplacementCostBuilding
       data.HurricaneDeductible      = @Helpers.prettyMap data.HurricaneDeductible, @enumsHurricaneDeductible
       data.WindHailDeductible       = @Helpers.prettyMap data.WindHailDeductible, @enumsWindHailDeductible
       data.AllOtherPerilsDeductible = @Helpers.prettyMap data.AllOtherPerilsDeductible, @enumsAllOtherPerilsDeductible
