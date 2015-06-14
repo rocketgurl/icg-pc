@@ -391,9 +391,15 @@ define [
     # Retrieve Lat/Long coords from last policy term
     # Return empty result if Lat/Long does not exist
     getPropertyCoords : ->
-      coords =
-        Latitude  : @getTermDataItemValue 'Latitude'
-        Longitude : @getTermDataItemValue 'Longitude'
+      if @isQuote()
+        $protoInterval = @get('document').find('ProtoInterval')
+        coords =
+          Latitude  : $protoInterval.find('[name="Latitude"]').attr('value')
+          Longitude : $protoInterval.find('[name="Longitude"]').attr('value')
+      else
+        coords =
+          Latitude  : @getTermDataItemValue 'Latitude'
+          Longitude : @getTermDataItemValue 'Longitude'
       coords if coords.Latitude and coords.Longitude
 
     # **Get <SystemOfRecord>** - used to determine IPM eligibility.
