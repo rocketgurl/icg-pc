@@ -491,7 +491,7 @@ define [
       </EventHistory>
     """
 
-    write_off_charges : """
+    writeoff_charges : """
       <Ledger>
         <LineItem value="-{{amount}}" type="WRITE_OFF_CHARGE" timestamp="{{timestamp}}">
           <Memo>Installment Charge</Memo>
