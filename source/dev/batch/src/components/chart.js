@@ -2,7 +2,7 @@ import React from 'react';
 import ChartFactory from '../charts/chart-factory';
 
 
-export default = React.createClass({
+export default React.createClass({
   propTypes: {
     type: React.PropTypes.string.isRequired,
     data: React.PropTypes.array.isRequired,
