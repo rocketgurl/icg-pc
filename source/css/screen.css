@@ -2155,6 +2155,13 @@ ul:after { clear: both; }
 
 .table-24-columns .th, .table-24-columns .td { width: 4.16667%; }
 
+.axis path, .axis line { fill: none; stroke: #000; shape-rendering: crispEdges; }
+
+.bar rect { opacity: 0.75; }
+
+.y.axis path { display: none; }
+.y.axis .tick line { stroke: #777; stroke-dasharray: 2,2; }
+
 .panel-nav { margin-top: 37px; }
 .panel-nav > nav { margin-top: -37px; padding-left: 10px; padding-right: 10px; }
 

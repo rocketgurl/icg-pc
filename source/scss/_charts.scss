@@ -1,0 +1,26 @@
+.axis path,
+.axis line {
+  fill: none;
+  stroke: #000;
+  shape-rendering: crispEdges;
+}
+
+.bar rect {
+  opacity: 0.75;
+}
+
+.x.axis path {
+  // display: none;
+}
+.y.axis {
+  path {
+    display: none;
+  }
+
+  .tick {
+    line {
+      stroke: #777;
+      stroke-dasharray: 2,2;
+    }
+  }
+}
