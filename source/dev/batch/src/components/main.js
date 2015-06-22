@@ -1,7 +1,7 @@
 import React from 'react';
 import TabContent from './tab-content';
+import StackedBarChart from './stacked-bar-chart';
 import {Nav, NavItem, TabPane} from 'react-bootstrap';
-
 
 export default React.createClass({
   render() {
@@ -15,7 +15,9 @@ export default React.createClass({
         <div className="panel-body">
           <TabContent activeKey={tab}>
             <TabPane key="batches">TabPane 1 content</TabPane>
-            <TabPane key="policies">TabPane 2 content</TabPane>
+            <TabPane key="policies">
+              <StackedBarChart/>
+            </TabPane>
           </TabContent>
         </div>
       </div>
