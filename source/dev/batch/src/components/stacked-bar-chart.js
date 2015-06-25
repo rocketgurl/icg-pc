@@ -1,24 +1,37 @@
 import React from 'react';
 import Chart from './chart';
+import app from 'ampersand-app';
 
-const totalData = [];
-const errorsOnlyData = [];
+let showErrorsOnly = false;
+
+function getPolicyData() {
+  let keys = showErrorsOnly ? ['errors'] : [];
+  return app.policies.getData(...keys);
+}
 
 export default React.createClass({
   getInitialState() {
     return {
-      errorsOnly: false
+      policies: getPolicyData()
     }
   },
 
+  componentDidMount() {
+    app.policies.on('sync', this._onSync);
+  },
+
+  componentWillUnmount() {
+    app.policies.off();
+  },
+
   render() {
+    console.log(this.state)
     return (
       <div>
-        <h2>Events API Activity</h2>
-        <input type='checkbox' onChange={this._onToggleErrorsOnly} value={this.state.errorsOnly} />
+        <button className="btn btn-primary" onClick={this._onClick}>Toggle</button>
         <Chart
-          type='StackedBarChart'
-          data={this._aggregateAppropriateData()}
+          type="StackedBarChart"
+          data={this.state.policies}
           options={{
             height: 500,
             width: 960,
@@ -27,6 +40,9 @@ export default React.createClass({
               top: 20,
               right: 20,
               bottom: 30
+            },
+            yaxis: {
+              orientation: 'right'
             }
           }}
         />
@@ -34,16 +50,17 @@ export default React.createClass({
     );
   },
 
-  _onToggleErrorsOnly() {
+  _onClick() {
+    showErrorsOnly = !showErrorsOnly;
     this.setState({
-      errorsOnly: !this.state.errorsOnly
+      policies: getPolicyData()
     });
   },
 
-  _aggregateAppropriateData() {
-    if (this.state.errorsOnly) {
-      return errorsOnlyData;
-    }
-    return totalData;
-  },
+  _onSync() {
+    this.setState({
+      policies: getPolicyData()
+    });
+  }
+
 });

@@ -1,98 +1,101 @@
 import d3 from 'd3';
 
-const hour       = 3600000; // 1 hour = (60 * 60 * 1000)
-const bucketSize = hour * 2;
+const hour = 3600000; // 1 hour = (60 * 60 * 1000)
+const step = hour * 2;
 function StackedBarChart() {};
 
 StackedBarChart.prototype.update = function update(data) {
   const {xAxis, yAxis, svg, width, height} = this;
-
-  const x = d3.time.scale()
-      .range([0, width]);
-
-  const y = d3.scale.linear()
-      .rangeRound([height, 0]);
-
-  const color = d3.scale.category20();
-
-  xAxis.scale(x).ticks(d3.time.day);
-  yAxis.scale(y)
-      .tickSize(width)
-      .orient('right');
-
-  d3.tsv("./public/models/data.tsv", function (error, data) {
-    if (error) throw error;
-
-    color.domain(d3.keys(data[0]).filter(key => { return key !== "date"; }));
-
-    // aggregates time series data into buckets (e.g. 1 hour * scalar)
-    // creates y values for stacking each separate process type
-    const buckets = d3.nest()
-      .key(d => { return d.date - (d.date % bucketSize)})
-      .rollup(data => {
-        let y = 0;
-        let total = 0;
-        let values = color.domain().map(type => {
-          let y0 = y;
-          let y1 = total = y += d3.sum(data, d => { return d[type]; });
-          return {type, y0, y1};
+  const dataTypes = d3.keys(data[0]).filter(d => {
+          return d !== 'date';
         });
-        values.total = total;
-        return values;
-      })
-      .entries(data);
 
-    const startDate = d3.min(buckets, d => { return +d.key; });
+  const x = d3.time.scale().range([0, width]),
+        y = d3.scale.linear().rangeRound([height, 0]),
+        color = d3.scale.category20();
 
-    x.domain(d3.extent(buckets, d => { return +d.key; }));
-    y.domain([0, d3.max(buckets, d => { return d.values.total; })]);
+  color.domain(dataTypes);
 
-    const padding   = 0.1;                            // space between bars
-    const step      = bucketSize * (1 - padding * 2); // corrected for padding
-    const offset    = step / 2;                       // center bar over the tick
-    const barWidth = x(startDate + step);             // x func translates the step to chart proportions
+  // aggregates time series data into buckets (e.g. 1 hour * scalar)
+  // creates y values for stacking each separate data type
+  const buckets = d3.nest()
+    .key(d => { return d.date - (d.date % step)})
+    .rollup(values => {
+      let y = 0;
+      let total = 0;
+      let aggregate = dataTypes.map(type => {
+        let y0 = y;
+        let y1 = total = y += d3.sum(values, d => { return d[type]; });
+        return {type, y0, y1};
+      });
+      aggregate.total = total;
+      return aggregate;
+    })
+    .entries(data);
 
-    let bar = svg.selectAll(".bar")
-        .data(buckets)
-      .enter().append("g")
-        .attr("class", "bar")
-        .attr("transform", d => { return `translate(${x(d.key - offset)}, 0)`; });
+  const startDate = d3.min(buckets, d => { return +d.key; }),
+        endDate = d3.max(buckets, d => { return +d.key; }) + step; // add an extra step to round nicely
 
-    bar.selectAll("rect")
-        .data(d => { return d.values; })
-      .enter().append("rect")
-        .attr("width", barWidth)
-        .attr("y", d => { return y(d.y1); })
-        .attr("height", d => { return y(d.y0) - y(d.y1); })
-        .style("fill", d => { return color(d.type); });
+  let legend = svg.selectAll('.legend')
+        .data(dataTypes)
+      .enter().append('g')
+        .attr('class', 'legend')
+        .attr('transform', (d, i) => { return `translate(0, ${i * 20})`; });
 
-    var legend = svg.selectAll(".legend")
-        .data(color.domain().slice().reverse())
-      .enter().append("g")
-        .attr("class", "legend")
-        .attr("transform", (d, i) => { return `translate(0, ${i * 20})`; });
+  legend.append('rect')
+      .attr('x', width - 18)
+      .attr('width', 18)
+      .attr('height', 18)
+      .style('fill', color);
 
-    legend.append("rect")
-        .attr("x", width - 18)
-        .attr("width", 18)
-        .attr("height", 18)
-        .style("fill", color);
+  legend.append('text')
+      .attr('x', width - 24)
+      .attr('y', 9)
+      .attr('dy', '.35em')
+      .style('text-anchor', 'end')
+      .text(d => { return d; });
 
-    legend.append("text")
-        .attr("x", width - 24)
-        .attr("y", 9)
-        .attr("dy", ".35em")
-        .style("text-anchor", "end")
-        .text(d => { return d; });
+  x.domain([startDate, endDate]);
+  y.domain([0, d3.max(buckets, d => { return d.values.total; })]);
+  xAxis.scale(x).ticks(d3.time.day);
+  yAxis.scale(y).tickSize(width);
 
-    svg.select(".x.axis").call(xAxis);
-    svg.select(".y.axis")
-        .call(yAxis)
-      .selectAll("text")
-        .attr("x", -5)
-        .attr("dy", 5)
-        .style("text-anchor", "end");
+  d3.transition().duration(1000).each(function () {
+    let bars = svg.selectAll('.bar')
+        .data(buckets);
 
+    bars.enter().append('g')
+        .attr('class', 'bar');
+
+    bars.transition()
+        .attr('transform', d => { return `translate(${x(d.key)}, 0)`; });
+
+    let rects = bars.selectAll('rect')
+        .data(d => { return d.values; });
+
+    rects.enter().append('rect')
+        .style('fill', d => { return color(d.type); });
+
+    rects.transition()
+        .attr('width', x(startDate + step)) // x func to derive bar width
+        .attr('y', d => { return y(d.y1); })
+        .attr('height', d => { return y(d.y0) - y(d.y1); });
+
+    bars.exit().remove();
+    rects.exit().remove();
+
+    svg.select('.x.axis').transition().call(xAxis);
+
+    let gy = svg.select('.y.axis').transition()
+        .call(yAxis);
+
+    gy.selectAll('g').filter(d => { return d !== 0; })
+        .attr('class', 'tick minor');
+
+    gy.selectAll('text')
+        .attr('x', -5)
+        .attr('dy', 4)
+        .style('text-anchor', 'end');
   });
 };
 
