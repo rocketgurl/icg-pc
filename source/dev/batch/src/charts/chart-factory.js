@@ -12,7 +12,7 @@ const defaultOpts = {
     bottom: 20
   },
   yaxis: {
-    orientation: 'left',
+    orientation: 'left'
   },
   xaxis: {
     orientation: 'bottom'
