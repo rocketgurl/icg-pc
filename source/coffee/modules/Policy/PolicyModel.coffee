@@ -188,7 +188,6 @@ define [
         ipm_header.id = @getQuoteNumber()
         ipm_header.period = @Helpers.concatStrings(start, end, ' - ')
         ipm_header.isQuote = true
-        ipm_header.product = @findInQuoteTerm('ProtoInterval DataItem[name=OpPolicyType]')
       ipm_header
 
     getTabLabel : ->
@@ -287,6 +286,7 @@ define [
 
       @getDataItemValues(@_sanitizeNodeArray(dataItems), [
           'CoverageA'
+          'ReplacementCostBuilding'
           'HurricaneDeductible'
           'WindHailDeductible'
           'AllOtherPerilsDeductible'
@@ -392,9 +392,15 @@ define [
     # Retrieve Lat/Long coords from last policy term
     # Return empty result if Lat/Long does not exist
     getPropertyCoords : ->
-      coords =
-        Latitude  : @getTermDataItemValue 'Latitude'
-        Longitude : @getTermDataItemValue 'Longitude'
+      if @isQuote()
+        $protoInterval = @get('document').find('ProtoInterval')
+        coords =
+          Latitude  : $protoInterval.find('[name="Latitude"]').attr('value')
+          Longitude : $protoInterval.find('[name="Longitude"]').attr('value')
+      else
+        coords =
+          Latitude  : @getTermDataItemValue 'Latitude'
+          Longitude : @getTermDataItemValue 'Longitude'
       coords if coords.Latitude and coords.Longitude
 
     # **Get <SystemOfRecord>** - used to determine IPM eligibility.

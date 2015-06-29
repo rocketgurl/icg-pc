@@ -32,7 +32,7 @@ define [
         contentType : 'application/xml'
         headers     :
           'Accept'        : 'application/xml'
-          'Authorization' : "Basic #{@controller.IXVOCAB_AUTH}"
+          'Authorization' : "Basic #{@digest}"
       @jqXHR = Backbone.sync method, collection, options
       @trigger 'request', this, @jqXHR
 

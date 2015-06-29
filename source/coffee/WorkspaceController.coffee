@@ -336,6 +336,7 @@ define [
         delete @current_state
       @workspaceStateCollection?.reset()
       @Amplify.store 'ics_policy_central', null
+      @Amplify.store 'ics_renewal_vocab', null
 
     # Instantiate new policy history view
     # for each workspace_state model
