@@ -14,8 +14,6 @@ StackedBarChart.prototype.update = function update(data) {
         y = d3.scale.linear().rangeRound([height, 0]),
         color = d3.scale.category20();
 
-  color.domain(dataTypes);
-
   // aggregates time series data into buckets (e.g. 1 hour * scalar)
   // creates y values for stacking each separate data type
   const buckets = d3.nest()
@@ -25,7 +23,8 @@ StackedBarChart.prototype.update = function update(data) {
       let total = 0;
       let aggregate = dataTypes.map(type => {
         let y0 = y;
-        let y1 = total = y += d3.sum(values, d => { return d[type]; });
+        let y1 = y += d3.sum(values, d => { return d[type]; });
+        total = y1;
         return {type, y0, y1};
       });
       aggregate.total = total;
@@ -35,6 +34,13 @@ StackedBarChart.prototype.update = function update(data) {
 
   const startDate = d3.min(buckets, d => { return +d.key; }),
         endDate = d3.max(buckets, d => { return +d.key; }) + step; // add an extra step to round nicely
+
+  x.domain([startDate, endDate]);
+  y.domain([0, d3.max(buckets, d => { return d.values.total; })]);
+  color.domain(dataTypes);
+
+  xAxis.scale(x).ticks(d3.time.day);
+  yAxis.scale(y).tickSize(width);
 
   let legend = svg.selectAll('.legend')
         .data(dataTypes)
@@ -54,11 +60,6 @@ StackedBarChart.prototype.update = function update(data) {
       .attr('dy', '.35em')
       .style('text-anchor', 'end')
       .text(d => { return d; });
-
-  x.domain([startDate, endDate]);
-  y.domain([0, d3.max(buckets, d => { return d.values.total; })]);
-  xAxis.scale(x).ticks(d3.time.day);
-  yAxis.scale(y).tickSize(width);
 
   d3.transition().duration(1000).each(function () {
     let bars = svg.selectAll('.bar')
