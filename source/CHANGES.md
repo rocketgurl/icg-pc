@@ -1,3 +1,12 @@
+### 3.1.4 - Jun 30, 2015
+
+- Quick View Property & Coverage: added Replacement cost
+- Quick View Policy Information: added Google Maps link for Quotes
+- Changes to IPM forms:
+    - Update acic-ho3-sc IPM forms for UW guideline changes
+    - Update Renewal IPM Forms
+    - Update AL IPM endorse forms for ITV Changes
+
 ### 3.1.3 - Jun 09, 2015
 
 - Changes to IPM forms:
