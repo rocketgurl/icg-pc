@@ -25,7 +25,6 @@ export default React.createClass({
   },
 
   render() {
-    console.log(this.state)
     return (
       <div>
         <button className="btn btn-primary" onClick={this._onClick}>Toggle</button>
