@@ -186,7 +186,6 @@ define [
 
     # Alabama and Louisiana Behaviors
     addALLABehaviors : ->
-      console.log('SUPS!')
       rules = [
         field: "GarageType"
         condition: "> 1"
