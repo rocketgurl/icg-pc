@@ -737,7 +737,7 @@ define [
     # @param `name` _String_ name attr of element
     # @return _Array_
     getIdentifierArray : (name) ->
-      if @get('json').Identifiers?.Identifier?
+      if @get('json')?.Identifiers?.Identifier?
         return _.where(@get('json').Identifiers.Identifier, { name : name })
       false
 
