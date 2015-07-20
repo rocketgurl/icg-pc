@@ -134,6 +134,15 @@ define [
       @adjustAlabamaLossTypeFields()
       @adjustAlabamaPropertyUsage()
 
+      if @apparatchik.isProduct('fnic-ho3-al') ||
+         @apparatchik.isProduct('fnic-ho3-la') ||
+         @apparatchik.isProduct('ofcc-ho3-la-lap') ||
+         @apparatchik.isProduct('wic-dp3-al') ||
+         @apparatchik.isProduct('wic-ho3-al') ||
+         @apparatchik.isProduct('wic-ho3-la') ||
+         @apparatchik.isProduct('wic-hwo-al')
+        @addALLABehaviors()
+
       if @apparatchik.isProduct('wic-hwo-al') ||
          @apparatchik.isProduct('wic-ho3-al') ||
          @apparatchik.isProduct('wic-ho3-nj') ||
@@ -174,6 +183,16 @@ define [
     # NOTE: These will start to get lengthy, you may want to move
     # them into external files and pull in via RequireJS.
     ###
+
+    # Alabama and Louisiana Behaviors
+    addALLABehaviors : ->
+      rules = [
+        field: "GarageType"
+        condition: "> 1"
+        target: "SquareFootUnderRoofGarage"
+        effect: @apparatchik.showElement
+      ]
+      @apparatchik.applyEnumDynamics rules
 
     addWICHO3TXBehaviors : ->
       rules = [

@@ -507,6 +507,17 @@
 
 
 		<div>
+			<label for="{{guid}}_SquareFootUnderRoofGarage" >Garage Square Footage <i>SquareFootUnderRoofGarage</i></label>
+			<select id="{{guid}}_SquareFootUnderRoofGarage" name="SquareFootUnderRoofGarage" data-value="{{SquareFootUnderRoofGarage}}"   >
+				{{#EnumsSquareFootUnderRoofGarage}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsSquareFootUnderRoofGarage}}
+			</select>
+		</div>
+
+
+
+		<div>
 			<label for="{{guid}}_FoundationType" class="labelRequired">Foundation Type <i>FoundationType</i></label>
 			<select id="{{guid}}_FoundationType" name="FoundationType" data-value="{{FoundationType}}"  required >
 				{{#EnumsFoundationType}}
