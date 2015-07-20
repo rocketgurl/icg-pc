@@ -3,7 +3,7 @@ import _ from 'underscore';
 
 
 function getDefaultActiveKeyFromChildren(children) {
-  var defaultActiveKey;
+  let defaultActiveKey;
   _.each(children, function (child) {
     if (defaultActiveKey == null) {
       defaultActiveKey = child.key;
@@ -19,7 +19,7 @@ const selectableParentMixin = {
   },
 
   getInitialState() {
-    var defaultActiveKey = this.props.defaultActiveKey != null ?
+    let defaultActiveKey = this.props.defaultActiveKey != null ?
       this.props.defaultActiveKey :
       getDefaultActiveKeyFromChildren(this.props.children);
     return {
