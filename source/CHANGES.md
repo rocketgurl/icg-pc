@@ -1,3 +1,11 @@
+### 3.1.5 - Jul 21, 2015
+
+- Changes to IPM forms:
+    - Add trust reason code for OFCC HO3 NY endorse forms
+    - Update OFCC HO3 NY enums for trust occupancy
+    - Update LA and AL endorse IPM forms for SquareFootUnderRoofGarage field and enums
+    - Update IPM renewal forms for loss types
+
 ### 3.1.4 - Jun 30, 2015
 
 - Quick View Property & Coverage: added Replacement cost
