@@ -1,6 +1,8 @@
 import React from 'react';
+import app from 'ampersand-app';
 
 export default React.createClass({
+
   render() {
     return (
       <div className="div-table table-striped table-hover table-condensed table-scrollable table-5-columns">
