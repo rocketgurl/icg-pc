@@ -41,6 +41,10 @@ define [
       @collection.tasks       = @POLICY.getTasks()
       @collection.reset events.concat(notes)
 
+      # It is necessary to update the modelCache with the
+      # latest set of activity models on policy refresh
+      @collection.updateModelCache()
+
     filterCollection : (e) ->
       throttledFilter = _.throttle @collection.filterByQuery, 500
       throttledFilter e.currentTarget.value
