@@ -34,6 +34,9 @@ define [
         @modelCache = @models
         @initialized = true
 
+    updateModelCache : ->
+      @modelCache = @models
+
     # ** HACK: Short circuit the initial silent sort **
     # We need to hook into the reset event in order to cache 
     # the initial set of models once they're model-ified
