@@ -7,8 +7,12 @@ import BatchesTable from './batches-table';
 import {Nav, NavItem, TabPane} from 'react-bootstrap';
 
 export default React.createClass({
+  getInitialState() {
+    return {batches: []};
+  },
+
   componentDidMount() {
-    // app.batches.on('all', (...args) => { console.log(args) })
+    // app.batches.on('all', (...args) => { console.log('COLL', args) })
     app.batches.on('sync', this._onBatchesSync);
   },
 
@@ -24,7 +28,7 @@ export default React.createClass({
           <TabContent activeKey={tab}>
             <TabPane key="batches">
               <FormControls/>
-              <BatchesTable/>
+              <BatchesTable batches={this.state.batches}/>
             </TabPane>
             <TabPane key="policies">
               <FormControls/>
@@ -36,7 +40,7 @@ export default React.createClass({
     );
   },
 
-  _onBatchesSync(...args) {
-    console.log('BATCHES_SYNC', args)
+  _onBatchesSync(collection) {
+    this.setState({batches: collection});
   }
 });

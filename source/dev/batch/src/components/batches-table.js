@@ -16,13 +16,17 @@ export default React.createClass({
           </div>
         </div>
         <div className="tbody" style={{maxHeight: `${500}px`}}>
-          <div className="tr">
-            <div className="td">Status</div>
-            <div className="td">Batch ID</div>
-            <div className="td">Quantity</div>
-            <div className="td">Time Started</div>
-            <div className="td">Assignee</div>
-          </div>
+          {this.props.batches.map((batch, index) => {
+            return (
+              <div key={index} className="tr">
+                <div className="td">Status</div>
+                <div className="td">{`${batch.processDefinitionKey} ${batch.id}`}</div>
+                <div className="td">Quantity</div>
+                <div className="td">{batch.startTime}</div>
+                <div className="td">{batch.startUserId}</div>
+              </div>
+              );
+          })}
         </div>
       </div>
     );
