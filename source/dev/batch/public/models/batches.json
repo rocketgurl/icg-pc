@@ -1,0 +1,209 @@
+{
+  "data": [
+    {
+      "id": "2634",
+      "url": "http://policycentral.dev/history/historic-process-instances/2634",
+      "businessKey": null,
+      "processDefinitionId": "batchInvoicing:1:8",
+      "processDefinitionUrl": "http://policycentral.dev/repository/process-definitions/batchInvoicing:1:8",
+      "startTime": "2015-07-10T18:10:15.457-04:00",
+      "endTime": "2015-07-10T18:10:15.707-04:00",
+      "durationInMillis": 250,
+      "startUserId": "dev@icg360.com",
+      "startActivityId": "batchStartEvent",
+      "endActivityId": "batchEndEvent",
+      "deleteReason": null,
+      "superProcessInstanceId": null,
+      "variables": [
+        {
+          "name": "numPolicyRefs",
+          "type": "integer",
+          "value": 4,
+          "scope": "local"
+        },
+        {
+          "name": "initiator",
+          "type": "string",
+          "value": "dev@icg360.com",
+          "scope": "local"
+        },
+        {
+          "name": "policyRefsStr",
+          "type": "string",
+          "value": "LAP042185000,AKH019988101,AKH019874201,AKH019043700",
+          "scope": "local"
+        },
+        {
+          "name": "policyRefs",
+          "type": "serializable",
+          "value": null,
+          "valueUrl": "http://policycentral.dev/history/historic-process-instances/2634/variables/policyRefs/data",
+          "scope": "local"
+        },
+        {
+          "name": "batchProcessInstanceIds",
+          "type": "serializable",
+          "value": null,
+          "valueUrl": "http://policycentral.dev/history/historic-process-instances/2634/variables/batchProcessInstanceIds/data",
+          "scope": "local"
+        }
+      ],
+      "tenantId": ""
+    },
+    {
+      "id": "191",
+      "url": "http://policycentral.dev/history/historic-process-instances/191",
+      "businessKey": null,
+      "processDefinitionId": "batchInvoicing:1:8",
+      "processDefinitionUrl": "http://policycentral.dev/repository/process-definitions/batchInvoicing:1:8",
+      "startTime": "2015-07-10T17:53:40.222-04:00",
+      "endTime": "2015-07-10T17:53:40.241-04:00",
+      "durationInMillis": 19,
+      "startUserId": "dev@icg360.com",
+      "startActivityId": "batchStartEvent",
+      "endActivityId": "batchEndEvent",
+      "deleteReason": null,
+      "superProcessInstanceId": null,
+      "variables": [
+        {
+          "name": "numPolicyRefs",
+          "type": "integer",
+          "value": 4,
+          "scope": "local"
+        },
+        {
+          "name": "initiator",
+          "type": "string",
+          "value": "dev@icg360.com",
+          "scope": "local"
+        },
+        {
+          "name": "policyRefsStr",
+          "type": "string",
+          "value": "LAP042185000,AKH019988101,AKH019874201,AKH019043700",
+          "scope": "local"
+        },
+        {
+          "name": "policyRefs",
+          "type": "serializable",
+          "value": null,
+          "valueUrl": "http://policycentral.dev/history/historic-process-instances/191/variables/policyRefs/data",
+          "scope": "local"
+        },
+        {
+          "name": "batchProcessInstanceIds",
+          "type": "serializable",
+          "value": null,
+          "valueUrl": "http://policycentral.dev/history/historic-process-instances/191/variables/batchProcessInstanceIds/data",
+          "scope": "local"
+        }
+      ],
+      "tenantId": ""
+    },
+    {
+      "id": "92",
+      "url": "http://policycentral.dev/history/historic-process-instances/92",
+      "businessKey": null,
+      "processDefinitionId": "batchInvoicing:1:8",
+      "processDefinitionUrl": "http://policycentral.dev/repository/process-definitions/batchInvoicing:1:8",
+      "startTime": "2015-07-09T13:24:31.178-04:00",
+      "endTime": "2015-07-09T13:24:31.190-04:00",
+      "durationInMillis": 12,
+      "startUserId": "dev@icg360.com",
+      "startActivityId": "batchStartEvent",
+      "endActivityId": "batchEndEvent",
+      "deleteReason": null,
+      "superProcessInstanceId": null,
+      "variables": [
+        {
+          "name": "numPolicyRefs",
+          "type": "integer",
+          "value": 1,
+          "scope": "local"
+        },
+        {
+          "name": "initiator",
+          "type": "string",
+          "value": "dev@icg360.com",
+          "scope": "local"
+        },
+        {
+          "name": "policyRefsStr",
+          "type": "string",
+          "value": "LAP042185000",
+          "scope": "local"
+        },
+        {
+          "name": "policyRefs",
+          "type": "serializable",
+          "value": null,
+          "valueUrl": "http://policycentral.dev/history/historic-process-instances/92/variables/policyRefs/data",
+          "scope": "local"
+        },
+        {
+          "name": "batchProcessInstanceIds",
+          "type": "serializable",
+          "value": null,
+          "valueUrl": "http://policycentral.dev/history/historic-process-instances/92/variables/batchProcessInstanceIds/data",
+          "scope": "local"
+        }
+      ],
+      "tenantId": ""
+    },
+    {
+      "id": "11",
+      "url": "http://policycentral.dev/history/historic-process-instances/11",
+      "businessKey": null,
+      "processDefinitionId": "batchInvoicing:1:8",
+      "processDefinitionUrl": "http://policycentral.dev/repository/process-definitions/batchInvoicing:1:8",
+      "startTime": "2015-07-09T13:17:34.302-04:00",
+      "endTime": "2015-07-09T13:17:34.691-04:00",
+      "durationInMillis": 389,
+      "startUserId": "dev@icg360.com",
+      "startActivityId": "batchStartEvent",
+      "endActivityId": "batchEndEvent",
+      "deleteReason": null,
+      "superProcessInstanceId": null,
+      "variables": [
+        {
+          "name": "numPolicyRefs",
+          "type": "integer",
+          "value": 1,
+          "scope": "local"
+        },
+        {
+          "name": "initiator",
+          "type": "string",
+          "value": "dev@icg360.com",
+          "scope": "local"
+        },
+        {
+          "name": "policyRefsStr",
+          "type": "string",
+          "value": "LAP042185000",
+          "scope": "local"
+        },
+        {
+          "name": "policyRefs",
+          "type": "serializable",
+          "value": null,
+          "valueUrl": "http://policycentral.dev/history/historic-process-instances/11/variables/policyRefs/data",
+          "scope": "local"
+        },
+        {
+          "name": "batchProcessInstanceIds",
+          "type": "serializable",
+          "value": null,
+          "valueUrl": "http://policycentral.dev/history/historic-process-instances/11/variables/batchProcessInstanceIds/data",
+          "scope": "local"
+        }
+      ],
+      "tenantId": ""
+    }
+  ],
+  "total": 4,
+  "start": 0,
+  "sort": "startTime",
+  "order": "desc",
+  "size": 4
+}
