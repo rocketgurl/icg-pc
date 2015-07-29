@@ -1,7 +1,7 @@
-import Model from 'ampersand-model';
-import _ from 'underscore';
+import BaseModel from './base-model';
+import PoliciesCollection from '../collections/policies';
 
-export default Model.extend({
+export default BaseModel.extend({
   props: {
     id: 'string',
     businessKey: 'string',
@@ -23,19 +23,18 @@ export default Model.extend({
     processDefinitionKey: {
       deps: ['processDefinitionId'],
       fn: function () {
-        return this.processDefinitionId.split(':')[0]
+        return this.processDefinitionId.split(':')[0];
       }
     },
     numPolicyRefs: {
       fn: function () {
-        const numRefs = _.findWhere(this.variables, {name: 'numPolicyRefs'});
-        console.log(numRefs)
-        return numRefs.value;
+        const numRefs = this.findVariableWhere({name: 'numPolicyRefs'});
+        return numRefs && numRefs.value;
       }
     }
   },
 
-  initialize() {
-    console.log(this.processDefinitionId, this)
+  collections: {
+    policies: PoliciesCollection
   }
 });

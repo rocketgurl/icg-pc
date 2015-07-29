@@ -1,21 +1,27 @@
 import _ from 'underscore';
-import app from 'ampersand-app';
-import Collection from 'ampersand-rest-collection';
-import Batch from '../models/batch';
+import BaseCollection from './base-collection';
+import BatchModel from '../models/batch';
 
-export default Collection.extend({
-  model: Batch,
+export default BaseCollection.extend({
+  model: BatchModel,
 
-  url: '/batch/history/historic-process-instances',
+  url: '/batch/query/historic-process-instances',
 
-  comparator() { return false; },
+  ajaxConfig() {
+    return {
+      headers: {
+        'Authorization': 'Basic ZGV2QGljZzM2MC5jb206bW92aWVMdW5jaGVzRlRXMjAxNQ=='
+      }
+    };
+  },
+
+  options: {
+    parse: true,
+    attrs: {}
+  },
 
   parse(response) {
-    this.size     = response.size;
-    this.order    = response.order;
-    this.sortProp = response.sort;
-    this.total    = response.total;
-    this.start    = response.start;
+    this.total = response.total;
     return response.data;
   }
 });
