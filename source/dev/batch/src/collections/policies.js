@@ -1,23 +1,44 @@
 import _ from 'underscore';
-import Collection from 'ampersand-rest-collection';
-import Policy from '../models/policy';
+import BaseCollection from './base-collection';
+import PolicyModel from '../models/policy';
 
-const CHANGE_EVENT = 'change';
+export default BaseCollection.extend({
+  model: PolicyModel,
 
-export default Collection.extend({
-  url: './public/models/policies.json',
+  url: '/batch/query/historic-process-instances',
 
-  getData(...keys) {
-    if (keys.length) {
-      return this.pick(...keys);
-    } else {
-      return this.serialize();
+  ajaxConfig() {
+    return {
+      headers: {
+        'Authorization': 'Basic ZGV2QGljZzM2MC5jb206bW92aWVMdW5jaGVzRlRXMjAxNQ=='
+      }
+    };
+  },
+
+  options: {
+    parse: true,
+    attrs: {
+      start: 0,
+      size: 50,
+      sort: 'startTime',
+      order: 'desc',
+      includeProcessVariables: true,
+      variables: [{
+        name: 'batchId', // HACK: This should only return "policy" processes
+        operation: 'greaterThanOrEquals',
+        value: "0"
+      }]
     }
   },
 
-  pick(...keys) {
-    return this.map(d => {
-      return _.pick(d, 'date', ...keys); // always return the date prop
+  parse(response) {
+    _.extend(this.options.attrs, {
+      order: response.order,
+      size: response.size,
+      sort: response.sort,
+      start: response.start
     });
+    this.total = response.total;
+    return response.data;
   }
 });
