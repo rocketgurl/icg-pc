@@ -134,14 +134,21 @@ define [
       @adjustAlabamaLossTypeFields()
       @adjustAlabamaPropertyUsage()
 
-      if @apparatchik.isProduct('fnic-ho3-al') ||
+      # TODO: define this logic somewhere else.
+      # This apparatchik stuff is getting out of hand
+      if @apparatchik.isProduct('ofcc-ho3-la-lap') ||
+         @apparatchik.isProduct('fnic-ho3-al') ||
          @apparatchik.isProduct('fnic-ho3-la') ||
-         @apparatchik.isProduct('ofcc-ho3-la-lap') ||
-         @apparatchik.isProduct('wic-dp3-al') ||
-         @apparatchik.isProduct('wic-ho3-al') ||
-         @apparatchik.isProduct('wic-ho3-la') ||
-         @apparatchik.isProduct('wic-hwo-al')
-        @addALLABehaviors()
+         @apparatchik.isProduct('wic-dp3-al')  ||
+         @apparatchik.isProduct('wic-ho3-al')  ||
+         @apparatchik.isProduct('wic-ho3-la')  ||
+         @apparatchik.isProduct('wic-hwo-al')  ||
+         @apparatchik.isProduct('acic-ho3-sc') ||
+         @apparatchik.isProduct('fnic-ho3-sc') ||
+         @apparatchik.isProduct('fnic-ho5-sc') ||
+         @apparatchik.isProduct('iic-ho3-sc')  ||
+         @apparatchik.isProduct('ofcc-ho3-sc')
+        @addALLASCBehaviors()
 
       if @apparatchik.isProduct('wic-hwo-al') ||
          @apparatchik.isProduct('wic-ho3-al') ||
@@ -184,8 +191,8 @@ define [
     # them into external files and pull in via RequireJS.
     ###
 
-    # Alabama and Louisiana Behaviors
-    addALLABehaviors : ->
+    # Alabama, Louisiana & South Carolina Behaviors
+    addALLASCBehaviors : ->
       rules = [
         field: "GarageType"
         condition: "> 1"
