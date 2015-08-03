@@ -12,7 +12,7 @@ app.extend({
     this.user = user.validate();
     this.errors = new ErrorsCollection();
     this.batches = new BatchesCollection();
-    this.policies = new PoliciesCollection();
+    this.allPolicies = new PoliciesCollection();
     this.router = new Router({});
     this.router.history.start({
       pushState: false,
