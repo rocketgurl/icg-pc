@@ -2,9 +2,6 @@ import React from 'react';
 import app from 'ampersand-app';
 
 export default React.createClass({
-  componentWillUnmount() {
-    this.props.policy.destroy();
-  },
 
   render() {
     const {policy} = this.props;

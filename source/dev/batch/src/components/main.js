@@ -16,21 +16,27 @@ export default React.createClass({
         start: 0,
         size: 50,
         sort: 'startTime',
-        order: 'desc',
-        includeProcessVariables: true,
-        variables: [{
-          name : 'numPolicyRefs', // HACK: This should only return "batch" processes
-          operation : 'greaterThanOrEquals',
-          value : 0
-        }]
+        order: 'desc'
       }
     };
   },
 
   componentDidMount() {
-    // app.batches.on('all', (...args) => { console.log('COLL', args) })
     app.batches.on('sync', this._onBatchesSync);
     app.batches.query(this.state.query);
+  },
+
+  // Determine the correct collection of policies and return it
+  // along with the <PoliciesTable/> node
+  getPoliciesTable() {
+    const {activeBatchId} = this.props;
+    if (app.batches.length) {
+      const activeBatch = app.batches.get(activeBatchId);
+      const policies = activeBatch ?
+        activeBatch.policies :
+        app.allPolicies;
+      return <PoliciesTable key={activeBatchId} policies={policies}/>;
+    }
   },
 
   render() {
@@ -46,10 +52,10 @@ export default React.createClass({
           <div className="panel-body">
             <TabContent activeKey={tab}>
               <TabPane key="batches">
-                <BatchesTable batches={this.state.batches}/>
+                <BatchesTable batches={this.state.batches} onSort={this._onBatchesSort}/>
               </TabPane>
               <TabPane key="policies">
-                <PoliciesTable/>
+                {this.getPoliciesTable()}
               </TabPane>
             </TabContent>
           </div>
@@ -61,6 +67,14 @@ export default React.createClass({
   _onBatchesSync(collection) {
     this.setState({batches: collection});
   },
+
+  _onBatchesSort(sortBy, order) {
+    const {query} = this.state;
+    query.sort = sortBy;
+    query.order = order;
+    this.setState({query});
+    app.batches.query(query);
+   },
 
   _onActionSelect() {}
 });

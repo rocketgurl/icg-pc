@@ -4,12 +4,24 @@ import PolicyRow from './policy-row';
 
 export default React.createClass({
   getInitialState() {
-    return {policies: []};
+    return {
+      policies: [],
+      query: null
+    };
   },
 
   componentDidMount() {
-    app.policies.on('sync', this._onPoliciesSync);
-    app.policies.query(this.state.query);
+    const {policies} = this.props;
+    policies.on('sync', this._onPoliciesSync);
+    if (policies.length) {
+      this.setState({policies})
+    } else {
+      policies.query();
+    }
+  },
+
+  componentWillUnmount() {
+    this.props.policies.off();
   },
 
   render() {
@@ -19,11 +31,11 @@ export default React.createClass({
           <div className="tr">
             <div className="th"><input type="checkbox"/></div>
             <div className="th"><a href="startTime">Time Started <span className="glyphicon"></span></a></div>
-            <div className="th"><a href="policyNum">Policy # <span className="glyphicon"></span></a></div>
-            <div className="th"><a href="batchId">Batch ID <span className="glyphicon"></span></a></div>
-            <div className="th"><a href="assignee">Assignee <span className="glyphicon"></span></a></div>
-            <div className="th"><a href="status">Status <span className="glyphicon"></span></a></div>
-            <div className="th"><a href="message">Message <span className="glyphicon"></span></a></div>
+            <div className="th">Policy #</div>
+            <div className="th">Batch ID</div>
+            <div className="th"><a href="startUserId">Initiator <span className="glyphicon"></span></a></div>
+            <div className="th">Status</div>
+            <div className="th">Message</div>
           </div>
         </div>
         <div className="tbody" style={{maxHeight: `${500}px`}}>
@@ -35,7 +47,7 @@ export default React.createClass({
     );
   },
 
-  _onPoliciesSync(collection) {
-    this.setState({policies: collection});
+  _onPoliciesSync(policies) {
+    this.setState({policies});
   }
 });
