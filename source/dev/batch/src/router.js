@@ -1,14 +1,17 @@
 import Router from 'ampersand-router';
 import React from 'react';
 import Main from './components/main';
+import {deparam} from 'node-qs-serialization';
 
+let activeBatchId = '0';
 
 export default Router.extend({
   routes: {
-    '': 'policies',
-    'batches': 'batches',
-    'policies': 'policies',
-    '*notFound': 'notFound'
+    ''                  : 'batches',
+    'batches'           : 'batches',
+    'policies'          : 'policies',
+    'policies/?*params' : 'policies',
+    '*notFound'         : 'notFound'
   },
 
   actuateTab(props={}) {
@@ -19,11 +22,13 @@ export default Router.extend({
     this.actuateTab({tab: 'batches'});
   },
 
-  policies() {
-    this.actuateTab({tab: 'policies'});
+  policies(params) {
+    const {bid} = deparam(params);
+    if (bid) activeBatchId = bid + '';
+    this.actuateTab({activeBatchId, tab: 'policies'});
   },
 
   notFound() {
     console.log('NOT FOUND');
   }
-})
+});
