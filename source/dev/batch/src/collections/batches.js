@@ -15,13 +15,24 @@ export default BaseCollection.extend({
     };
   },
 
-  options: {
-    parse: true,
-    attrs: {}
-  },
-
   parse(response) {
     this.total = response.total;
     return response.data;
+  },
+
+  initialize() {
+    this.options = {
+      parse: true,
+      attrs: {
+        includeProcessVariables: true,
+
+        // HACK: This should only return "batch" processes
+        variables: [{
+          name : 'numPolicyRefs',
+          operation : 'greaterThan',
+          value : 0
+        }]
+      }
+    };
   }
 });

@@ -1,7 +1,7 @@
 import BaseModel from './base-model';
 
 export default BaseModel.extend({
-    props: {
+  props: {
     id: 'string',
     businessKey: 'string',
     deleteReason: 'string',

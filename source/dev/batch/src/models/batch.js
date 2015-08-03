@@ -34,7 +34,9 @@ export default BaseModel.extend({
     }
   },
 
-  collections: {
-    policies: PoliciesCollection
+  // updates the batchId query variable
+  initialize() {
+    this.policies = new PoliciesCollection();
+    this.policies.setBatchId(this.id);
   }
 });
