@@ -121,6 +121,30 @@
   }
 }
 
+.table-sortable {
+  .caret {
+    display: none;
+  }
+
+  .desc,
+  .asc {
+    .caret {
+      display: inline-block;
+    }
+  }
+
+  .asc .caret {
+    content: "";
+    border-top: 0;
+    border-bottom: 4px dashed;
+    border-bottom: 4px solid\9;
+  }
+
+  .th > a {
+    cursor: pointer;
+  }
+}
+
 // Handle div-tables in panels
 .panel {
   > .div-table {

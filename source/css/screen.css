@@ -2092,6 +2092,11 @@ ul:after { clear: both; }
 
 .table-scrollable .tbody { overflow-x: hidden; overflow-y: auto; }
 
+.table-sortable .caret { display: none; }
+.table-sortable .desc .caret, .table-sortable .asc .caret { display: inline-block; }
+.table-sortable .asc .caret { content: ""; border-top: 0; border-bottom: 4px dashed; border-bottom: 4px solid\9; }
+.table-sortable .th > a { cursor: pointer; }
+
 .panel > .div-table { margin-bottom: 0; }
 .panel > .div-table:first-child { border-top-right-radius: 3px; border-top-left-radius: 3px; }
 .panel > .div-table:first-child > .thead:first-child > .tr:first-child .td:first-child, .panel > .div-table:first-child > .thead:first-child > .tr:first-child .th:first-child, .panel > .div-table:first-child > .tbody:first-child > .tr:first-child .td:first-child, .panel > .div-table:first-child > .tbody:first-child > .tr:first-child .th:first-child { border-top-left-radius: 3px; }
