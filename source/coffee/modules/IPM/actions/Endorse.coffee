@@ -150,6 +150,10 @@ define [
          @apparatchik.isProduct('ofcc-ho3-sc')
         @addALLASCBehaviors()
 
+      # if @apparatchik.isProduct('ofcc-ho3-la-lap')
+      if @apparatchik.isProduct('ofcc-ho6-sc')
+        @addLAPBehaviors()
+
       if @apparatchik.isProduct('wic-hwo-al') ||
          @apparatchik.isProduct('wic-ho3-al') ||
          @apparatchik.isProduct('wic-ho3-nj') ||
@@ -197,6 +201,31 @@ define [
         field: "GarageType"
         condition: "> 1"
         target: "SquareFootUnderRoofGarage"
+        effect: @apparatchik.showElement
+      ]
+      @apparatchik.applyEnumDynamics rules
+
+    addLAPBehaviors : ->
+      rules = [
+        field: 'OtherStructuresIndicator'
+        condition: '> 1'
+        target: [
+          'OtherStructures1Type'
+          'OtherStructures1ConstructionYear'
+          'OtherStructures1Occupancy'
+          'OtherStructures1Coverage'
+          'OtherStructures1BusinessType'
+          'OtherStructures2Type'
+          'OtherStructures2ConstructionYear'
+          'OtherStructures2Occupancy'
+          'OtherStructures2Coverage'
+          'OtherStructures2BusinessType'
+          'OtherStructures3Type'
+          'OtherStructures3ConstructionYear'
+          'OtherStructures3Occupancy'
+          'OtherStructures3Coverage'
+          'OtherStructures3BusinessType'
+          ]
         effect: @apparatchik.showElement
       ]
       @apparatchik.applyEnumDynamics rules
