@@ -147,8 +147,10 @@ define [
          @apparatchik.isProduct('fnic-ho3-sc') ||
          @apparatchik.isProduct('fnic-ho5-sc') ||
          @apparatchik.isProduct('iic-ho3-sc')  ||
-         @apparatchik.isProduct('ofcc-ho3-sc')
-        @addALLASCBehaviors()
+         @apparatchik.isProduct('ofcc-ho3-sc') ||
+         @apparatchik.isProduct('ofcc-ho3-tx') ||
+         @apparatchik.isProduct('wic-ho3-tx')
+        @addRoofGarageBehaviors()
 
       # if @apparatchik.isProduct('ofcc-ho3-la-lap')
       if @apparatchik.isProduct('ofcc-ho6-sc')
@@ -196,7 +198,7 @@ define [
     ###
 
     # Alabama, Louisiana & South Carolina Behaviors
-    addALLASCBehaviors : ->
+    addRoofGarageBehaviors : ->
       rules = [
         field: "GarageType"
         condition: "> 1"
