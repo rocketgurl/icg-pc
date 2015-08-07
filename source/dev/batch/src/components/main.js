@@ -11,19 +11,12 @@ import {Nav, NavItem, TabPane} from 'react-bootstrap';
 export default React.createClass({
   getInitialState() {
     return {
-      batches: [],
-      query: {
-        start: 0,
-        size: 50,
-        sort: 'startTime',
-        order: 'desc'
-      }
+      batches: app.batches
     };
   },
 
   componentDidMount() {
     app.batches.on('sync', this._onBatchesSync);
-    app.batches.query(this.state.query);
   },
 
   // Determine the correct collection of policies and return it
@@ -52,7 +45,7 @@ export default React.createClass({
           <div className="panel-body">
             <TabContent activeKey={tab}>
               <TabPane key="batches">
-                <BatchesTable batches={this.state.batches} onSort={this._onBatchesSort}/>
+                <BatchesTable batches={this.state.batches}/>
               </TabPane>
               <TabPane key="policies">
                 {this.getPoliciesTable()}
@@ -64,17 +57,9 @@ export default React.createClass({
     );
   },
 
-  _onBatchesSync(collection) {
-    this.setState({batches: collection});
+  _onBatchesSync(batches) {
+    this.setState({batches});
   },
-
-  _onBatchesSort(sortBy, order) {
-    const {query} = this.state;
-    query.sort = sortBy;
-    query.order = order;
-    this.setState({query});
-    app.batches.query(query);
-   },
 
   _onActionSelect() {}
 });

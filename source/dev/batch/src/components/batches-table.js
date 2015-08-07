@@ -1,11 +1,16 @@
 import React from 'react';
-import app from 'ampersand-app';
 import _ from 'underscore';
 import BatchRow from './batch-row';
 
 export default React.createClass({
   getInitialState() {
     return {
+      query: {
+        start: 0,
+        size: 50,
+        sort: 'startTime',
+        order: 'desc'
+      },
       sortTable: {
         startTime: {
           active: true,
@@ -19,8 +24,16 @@ export default React.createClass({
     };
   },
 
+  componentDidMount() {
+    this.getBatches();
+  },
+
+  getBatches() {
+    this.props.batches.query(this.state.query);
+  },
+
   updateSortTable(sortBy) {
-    let {sortTable} = this.state;
+    const {sortTable} = this.state;
     _.each(sortTable, (item, key) => {
       if (key === sortBy) {
         item.active = true;
@@ -29,8 +42,14 @@ export default React.createClass({
         item.active = false;
       }
     });
-    this.setState({sortTable});
     return sortTable;
+  },
+
+  updateQuery(sortBy, sortTable) {
+    const {query} = this.state;
+    query.sort = sortBy;
+    query.order = sortTable[sortBy].order;
+    return query;
   },
 
   render() {
@@ -43,19 +62,13 @@ export default React.createClass({
             <div className="th">Batch ID</div>
             <div className="th">Quantity</div>
             <div className="th">
-              <a id="startTime"
+              <a data-sortby="startTime"
                 className={startTime.active ? startTime.order : null}
                 onClick={this._onHeaderClick}>
                 Time Started <span className="caret"/>
               </a>
             </div>
-            <div className="th">
-              <a id="startUserId"
-                className={startUserId.active ? startUserId.order : null}
-                onClick={this._onHeaderClick}>
-                Initiator <span className="caret"/>
-              </a>
-            </div>
+            <div className="th">Initiator</div>
           </div>
         </div>
         <div className="tbody" style={{maxHeight: `${500}px`}}>
@@ -69,8 +82,10 @@ export default React.createClass({
 
   _onHeaderClick(e) {
     e.preventDefault();
-    const sortBy = e.currentTarget.id;
+    const sortBy = e.currentTarget.attributes['data-sortby'].value;
     const sortTable = this.updateSortTable(sortBy);
-    this.props.onSort(sortBy, sortTable[sortBy].order);
+    const query = this.updateQuery(sortBy, sortTable);
+    this.setState({query, sortTable});
+    this.getBatches();
   }
 });

@@ -42,8 +42,8 @@ export default BaseCollection.extend({
   },
 
   // If this collection has a parent batch model
-  // this method will be invoked to update the
-  // batchId in the query variables.
+  // this method will be invoked once by the model
+  // to update the batchId in the query variables.
   setBatchId(batchId) {
     this.options.attrs.variables = [{
       name: 'batchId',
