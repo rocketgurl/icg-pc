@@ -300,6 +300,17 @@
 				<legend id="{{guid}}_scheduled_other_structures">Scheduled Other Structures</legend>				
 
 		<div>
+			<label for="{{guid}}_OtherStructuresIndicator" class="labelRequired">Additional Other Structures - On Premises <i>OtherStructuresIndicator</i></label>
+			<select id="{{guid}}_OtherStructuresIndicator" name="OtherStructuresIndicator" data-value="{{OtherStructuresIndicator}}"  required >
+				{{#EnumsOtherStructuresIndicator}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsOtherStructuresIndicator}}
+			</select>
+		</div>
+
+
+
+		<div>
 			<label for="{{guid}}_OtherStructures1Type" >1st Scheduled Structure - Type <i>OtherStructures1Type</i></label>
 			<select id="{{guid}}_OtherStructures1Type" name="OtherStructures1Type" data-value="{{OtherStructures1Type}}"   >
 				{{#EnumsOtherStructures1Type}}

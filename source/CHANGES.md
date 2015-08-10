@@ -1,3 +1,15 @@
+### 3.1.6 - Aug 11, 2015
+
+- Fixes sorting  newly added notes in QuickView 'Recent Activity'
+- Add new Payment Method "Carrier Transfer"
+- Change IPM "Make a Payment" to "Post a Payment"
+- Changes to IPM forms:
+    - Update ACIC-HO3-SC, FNIC-HO3-SC, FNIC-HO5-SC, IIC-HO3-SC, & OFCC-HO3-SC Endorse forms
+    - Update OFCC-HO3-TX & WIC-HO3-TX IPM Endorse Forms
+    - Update iic-ho3-sc IPM forms for 30% OptionCoverageD
+    - Update AL IPM forms
+    - Update ofcc-ho3-la-lap IPM forms
+
 ### 3.1.5 - Jul 21, 2015
 
 - Changes to IPM forms:
