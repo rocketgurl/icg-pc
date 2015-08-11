@@ -154,7 +154,6 @@ define [
         policyInceptionDate          : policy.getInceptionDate()
         cancellationEffectiveDate    : null
 
-
       # getState() may return an object
       if _.isObject cancel_data.policyState
         cancel_data.policyStateVal = cancel_data.policyState.text
@@ -365,10 +364,11 @@ define [
     #
     extractEventValues : (policy, viewData) ->
       eventsMap =
-        'RescindPendingCancellation'    : 'Pending Cancellation Rescission'
-        'Reinstatement'                 : 'Reinstatement'
-        'PendingCancellation'           : 'Pending Cancellation'
-        'Cancellation'                  : 'Cancellation'
+        'RescindPendingCancellation' : 'Pending Cancellation Rescission'
+        'Reinstatement'              : 'Reinstatement'
+        'PendingCancellation'        : 'Pending Cancellation'
+        'Cancellation'               : 'Cancellation'
+        'Cancel'                     : 'Cancellation'
 
       # Find the most recent Cancellation/PendingCancellation in the Policy.
       # Most recent is last in the XML, so we flip the array with reverse()
