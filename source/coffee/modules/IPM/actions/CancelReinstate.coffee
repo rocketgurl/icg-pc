@@ -22,7 +22,7 @@ define [
         "click input[name=cancel_pending]" : "loadSubAction"
         "click input[name=reinstate]" : "loadSubAction"
         "click input[name=rescind]" : "loadSubAction"
-        "change select[name=reasonCode]" : "handlePendingCancelReasonCodes"
+        "input select[name=reasonCode]" : "handlePendingCancelReasonCodes"
 
       # Metadata about Cancellation types, used in views
       @TRANSACTION_TYPES =
