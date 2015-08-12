@@ -495,6 +495,7 @@ define [
           when 16
             $dateInputLabel.addClass 'labelRequired'
             validators.effectiveDate = 'dateRange'
+            @FormValidation.validators.effectiveDate = 'dateRange'
             $dateInput
               .prop({
                 disabled: false
@@ -508,6 +509,7 @@ define [
           else
             $dateInputLabel.addClass 'labelRequired'
             validators.effectiveDate = 'dateRange'
+            @FormValidation.validators.effectiveDate = 'dateRange'
             $dateInput
               .prop({
                 disabled: false
