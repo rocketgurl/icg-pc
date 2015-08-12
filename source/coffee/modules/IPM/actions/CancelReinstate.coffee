@@ -465,8 +465,8 @@ define [
     #
     handlePendingCancelReasonCodes : (e) ->
       if @CURRENT_SUBVIEW is 'cancel_pending'
-        $dateInput = @$("##{@cid}_effectiveDate")
-        $dateInputLabel = @$("[for=\"#{@cid}_effectiveDate\"]")
+        $dateInput = @$('input[id$="_effectiveDate"]')
+        $dateInputLabel = @$('label[for$="_effectiveDate"]')
         reasonCode = +e.currentTarget.value # coerce value to Number
         validators = @TRANSACTION_TYPES.cancel_pending.validators
 
