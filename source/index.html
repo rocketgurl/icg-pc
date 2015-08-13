@@ -14,27 +14,12 @@
   </script>
 
   <script>
-    // Muscula Logs are loaded in this block
     (function () {
-      var logIdMap = {
-        'staging'     : 'Lp0m6ID-MIqvcb',
-        'production'  : 'hCWm6ID-YrZOqb',
-        'development' : 'aCDS6ID-Oqd2Z'
-      };
-
       // Check for the existence of the 'pc-dev' on the <html> node. We remove this during the
       // rake build job, which should ensure that all environments log to the correct place.
       var envId = document.documentElement.id === 'pc-dev' ? 'development' : window.ICS360_ENV;
 
-      window.Muscula = {
-        settings: {
-          logId: logIdMap[envId],
-          suppressErrors: false
-        },
-        errors: []
-      };
-
-      // Remove this check if you want Google Analytics or Muscula in dev.
+      // Remove this check if you want Google Analytics in dev.
       if (envId !== 'development') {
         // Google Analytics
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
@@ -44,15 +29,6 @@
 
         ga('create', 'UA-56219704-1', 'auto');
         ga('send', 'pageview');
-
-        // Muscula
-        var m = document.createElement('script'); m.type = 'text/javascript'; m.async = true;
-        m.src = (window.location.protocol == 'https:' ? 'https:' : 'http:') +
-          '//musculahq.appspot.com/Muscula7.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(m, s);
-        window.Muscula.run=function(){var a;eval(arguments[0]);window.Muscula.run=function(){};};
-        window.Muscula.errors=[];window.onerror=function(){window.Muscula.errors.push(arguments);
-        return window.Muscula.settings.suppressErrors===undefined;}
       }
     }());
   </script>
