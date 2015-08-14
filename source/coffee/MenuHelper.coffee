@@ -342,7 +342,7 @@ define [
             try
               routes.push "#workspace/#{app.env}/#{app.business}/#{app.context.context}/#{app.app}"
             catch err
-              Muscula.errors.push err
+              console.error err
       routes
 
   MenuHelper

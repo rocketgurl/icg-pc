@@ -22,7 +22,7 @@ define [
         "click input[name=cancel_pending]" : "loadSubAction"
         "click input[name=reinstate]" : "loadSubAction"
         "click input[name=rescind]" : "loadSubAction"
-        "change select[name=reasonCode]" : "handlePendingCancelReasonCodes"
+        "input select[name=reasonCode]" : "handlePendingCancelReasonCodes"
 
       # Metadata about Cancellation types, used in views
       @TRANSACTION_TYPES =
@@ -153,7 +153,6 @@ define [
         policyExpirationDate         : policy.getExpirationDate()
         policyInceptionDate          : policy.getInceptionDate()
         cancellationEffectiveDate    : null
-
 
       # getState() may return an object
       if _.isObject cancel_data.policyState
@@ -365,10 +364,11 @@ define [
     #
     extractEventValues : (policy, viewData) ->
       eventsMap =
-        'RescindPendingCancellation'    : 'Pending Cancellation Rescission'
-        'Reinstatement'                 : 'Reinstatement'
-        'PendingCancellation'           : 'Pending Cancellation'
-        'Cancellation'                  : 'Cancellation'
+        'RescindPendingCancellation' : 'Pending Cancellation Rescission'
+        'Reinstatement'              : 'Reinstatement'
+        'PendingCancellation'        : 'Pending Cancellation'
+        'Cancellation'               : 'Cancellation'
+        'Cancel'                     : 'Cancellation'
 
       # Find the most recent Cancellation/PendingCancellation in the Policy.
       # Most recent is last in the XML, so we flip the array with reverse()
@@ -465,37 +465,57 @@ define [
     #
     handlePendingCancelReasonCodes : (e) ->
       if @CURRENT_SUBVIEW is 'cancel_pending'
+        $dateInput = @$('input[id$="_effectiveDate"]')
+        $dateInputLabel = @$('label[for$="_effectiveDate"]')
         reasonCode = +e.currentTarget.value # coerce value to Number
         validators = @TRANSACTION_TYPES.cancel_pending.validators
-        $dateField = @$el.find 'input[name=effectiveDate]'
+
+        @FormValidation.removeErrorState $(e.currentTarget)
+        @FormValidation.removeErrorState $dateInput
 
         switch reasonCode
           # The following reason codes should clear
           # & disable the Effective Date field
           # (dateRange validator must also be removed)
           when 2, 6, 7, 8, 10, 11, 14
+            $dateInputLabel.removeClass 'labelRequired'
+            delete @FormValidation.validators.effectiveDate
             delete validators.effectiveDate
-            $dateField
-              .prop({ disabled: true, readonly: false })
-              .removeClass('validation_error')
+            $dateInput
+              .prop({
+                disabled: true
+                readonly: true
+                required: false
+                })
               .fadeTo(300, 0.6)
               .val('')
 
           # Reason code 16 should set the Effective Date
           # to the Current Term Effective Date
           when 16
+            $dateInputLabel.addClass 'labelRequired'
             validators.effectiveDate = 'dateRange'
-            $dateField
-              .prop({ disabled: false, readonly: true })
+            @FormValidation.validators.effectiveDate = 'dateRange'
+            $dateInput
+              .prop({
+                disabled: false
+                readonly: true
+                required: true
+                })
               .val(@MODULE.POLICY.getEffectiveDate())
-              .removeClass('validation_error')
               .fadeTo(300, 0.6)
 
           # Otherwise enable and add the dateRange validator back
           else
+            $dateInputLabel.addClass 'labelRequired'
             validators.effectiveDate = 'dateRange'
-            $dateField
-              .prop({ disabled: false, readonly: false })
+            @FormValidation.validators.effectiveDate = 'dateRange'
+            $dateInput
+              .prop({
+                disabled: false
+                readonly: false
+                required: true
+                })
               .fadeTo(300, 1)
 
     # **Date math to get AdvanceNotceDays**

@@ -267,10 +267,9 @@ define [
         @login_view.displayMessage 'warning', "Sorry, your password or username was incorrect"
       else
         errMsg += '@login_view not defined; '
-      if Muscula?.errors?
-        errMsg += "Response fail: #{resp.status} : #{resp.statusText} - #{resp.responseText}"
-        err = new Error errMsg
-        Muscula.errors.push err
+      errMsg += "Response fail: #{resp.status} : #{resp.statusText} - #{resp.responseText}"
+      err = new Error errMsg
+      console.error err
 
     # On a successfull login have @user set some variables
     # and set an identity cookie to smooth logging in later.

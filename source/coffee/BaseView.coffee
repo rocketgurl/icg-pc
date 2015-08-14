@@ -38,6 +38,21 @@ define [
       object.on events, callback || this, this
       this
 
+    # Tell this object to stop listening to either specific events ... or
+    # to every object it's currently listening to.
+    stopListening : (object, events, callback) ->
+      listeners = @_listeners
+      return unless listeners
+      if object
+        object.off(events, callback, this)
+        if (!events and !callback)
+          delete listeners[object._listenerId]
+      else
+        for id, listener of listeners
+          listener.off(null, null, this)
+        @_listeners = {}
+      this
+
     # Simple logger pubsub
     logger : (msg) ->
       @Amplify.publish 'log', msg
@@ -50,6 +65,7 @@ define [
         @off()
         @$el.off() if @$el
         @undelegateEvents()
+        @stopListening()
         if (@model && @model.off)
           @model.off()
         if (@collection && @collection.off)

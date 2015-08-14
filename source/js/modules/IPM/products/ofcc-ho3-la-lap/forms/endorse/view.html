@@ -300,6 +300,17 @@
 				<legend id="{{guid}}_scheduled_other_structures">Scheduled Other Structures</legend>				
 
 		<div>
+			<label for="{{guid}}_OtherStructuresIndicator" class="labelRequired">Additional Other Structures - On Premises <i>OtherStructuresIndicator</i></label>
+			<select id="{{guid}}_OtherStructuresIndicator" name="OtherStructuresIndicator" data-value="{{OtherStructuresIndicator}}"  required >
+				{{#EnumsOtherStructuresIndicator}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsOtherStructuresIndicator}}
+			</select>
+		</div>
+
+
+
+		<div>
 			<label for="{{guid}}_OtherStructures1Type" >1st Scheduled Structure - Type <i>OtherStructures1Type</i></label>
 			<select id="{{guid}}_OtherStructures1Type" name="OtherStructures1Type" data-value="{{OtherStructures1Type}}"   >
 				{{#EnumsOtherStructures1Type}}
@@ -408,8 +419,18 @@
 		</div>
 
 		<div>
+			<label for="{{guid}}_SquareFootUnderRoofRetrieved" >Square Footage Retrieved <i>SquareFootUnderRoofRetrieved</i></label>
+			<input type="text" id="{{guid}}_SquareFootUnderRoofRetrieved" name="SquareFootUnderRoofRetrieved" value="{{SquareFootUnderRoofRetrieved}}"  readonly>
+		</div>
+
+		<div>
 			<label for="{{guid}}_ConstructionYear" class="labelRequired">Construction Year - Dwelling <i>ConstructionYear</i></label>
 			<input type="text" id="{{guid}}_ConstructionYear" name="ConstructionYear" value="{{ConstructionYear}}" required >
+		</div>
+
+		<div>
+			<label for="{{guid}}_ConstructionYearRetrieved" >Construction Year - Dwelling Retrieved <i>ConstructionYearRetrieved</i></label>
+			<input type="text" id="{{guid}}_ConstructionYearRetrieved" name="ConstructionYearRetrieved" value="{{ConstructionYearRetrieved}}"  readonly>
 		</div>
 
 		<div>
@@ -663,6 +684,17 @@
 
 
 		<div>
+			<label for="{{guid}}_NumberOfFullBathsRetrieved" >Number Of Full Bathrooms Retrieved <i>NumberOfFullBathsRetrieved</i></label>
+			<select id="{{guid}}_NumberOfFullBathsRetrieved" name="NumberOfFullBathsRetrieved" data-value="{{NumberOfFullBathsRetrieved}}"   disabled="disabled">
+				{{#EnumsNumberOfFullBathsRetrieved}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsNumberOfFullBathsRetrieved}}
+			</select>
+		</div>
+
+
+
+		<div>
 			<label for="{{guid}}_FullBathQuality" class="labelRequired">Full Bathroom Grade <i>FullBathQuality</i></label>
 			<select id="{{guid}}_FullBathQuality" name="FullBathQuality" data-value="{{FullBathQuality}}"  required >
 				{{#EnumsFullBathQuality}}
@@ -679,6 +711,17 @@
 				{{#EnumsNumberOfHalfBaths}}
 				<option value="{{value}}">{{label}}</option>
 				{{/EnumsNumberOfHalfBaths}}
+			</select>
+		</div>
+
+
+
+		<div>
+			<label for="{{guid}}_NumberOfHalfBathsRetrieved" >Number Of Half Bathrooms Retrieved <i>NumberOfHalfBathsRetrieved</i></label>
+			<select id="{{guid}}_NumberOfHalfBathsRetrieved" name="NumberOfHalfBathsRetrieved" data-value="{{NumberOfHalfBathsRetrieved}}"   disabled="disabled">
+				{{#EnumsNumberOfHalfBathsRetrieved}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsNumberOfHalfBathsRetrieved}}
 			</select>
 		</div>
 

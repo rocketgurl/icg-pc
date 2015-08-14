@@ -32,7 +32,7 @@
       "label": "Billing & Accounting",
       "actions": [
         {
-          "label": "Make Payment",
+          "label": "Post Payment",
           "view": "MakePayment"
         },
         {
