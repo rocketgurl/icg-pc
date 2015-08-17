@@ -1,45 +1,69 @@
 import React from 'react';
-import app from 'ampersand-app';
+import sortableTableMixin from '../lib/sortable-table-mixin';
 import PolicyRow from './policy-row';
 
 export default React.createClass({
+  mixins: [sortableTableMixin], // mixin common methods for sortable tables
+
   getInitialState() {
     return {
-      policies: [],
-      query: null
+      collection: [],
+      query: {
+        start: 0,
+        size: 50,
+        sort: 'startTime',
+        order: 'desc'
+      },
+      sortTable: {
+        startTime: {
+          active: true,
+          order: 'desc'
+        }
+      }
     };
   },
 
   componentDidMount() {
-    const {policies} = this.props;
-    policies.on('sync', this._onPoliciesSync);
-    if (policies.length) {
-      this.setState({policies})
+    const {collection} = this.props;
+    collection.on('sync', this._onCollectionSync);
+    if (collection.length) {
+      this.setState({collection});
     } else {
-      policies.query();
+      this.makeQuery();
     }
   },
 
   componentWillUnmount() {
-    this.props.policies.off();
+    this.props.collection.off();
+  },
+
+  makeQuery() {
+    this.props.collection.query(this.state.query);
   },
 
   render() {
+    const {startTime} = this.state.sortTable;
     return (
-      <div className="div-table table-striped table-hover table-scrollable table-7-columns">
+      <div className="div-table table-striped table-hover table-scrollable table-sortable table-7-columns">
         <div className="thead">
           <div className="tr">
             <div className="th"><input type="checkbox"/></div>
-            <div className="th"><a href="startTime">Time Started <span className="glyphicon"></span></a></div>
+            <div className="th">
+              <a data-sortby="startTime"
+                className={startTime.active ? startTime.order : null}
+                onClick={this._onHeaderClick}>
+                Time Started <span className="caret"/>
+              </a>
+            </div>
             <div className="th">Policy #</div>
             <div className="th">Batch ID</div>
-            <div className="th"><a href="startUserId">Initiator <span className="glyphicon"></span></a></div>
+            <div className="th">Initiator</div>
             <div className="th">Status</div>
             <div className="th">Message</div>
           </div>
         </div>
         <div className="tbody" style={{maxHeight: `${500}px`}}>
-          {this.state.policies.map((policy, index) => {
+          {this.state.collection.map(policy => {
             return <PolicyRow key={policy.id} policy={policy}/>;
           })}
         </div>
@@ -47,7 +71,7 @@ export default React.createClass({
     );
   },
 
-  _onPoliciesSync(policies) {
-    this.setState({policies});
+  _onCollectionSync(collection) {
+    this.setState({collection});
   }
 });

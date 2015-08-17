@@ -1,8 +1,10 @@
 import React from 'react';
-import _ from 'underscore';
+import sortableTableMixin from '../lib/sortable-table-mixin';
 import BatchRow from './batch-row';
 
 export default React.createClass({
+  mixins: [sortableTableMixin],
+
   getInitialState() {
     return {
       query: {
@@ -15,45 +17,25 @@ export default React.createClass({
         startTime: {
           active: true,
           order: 'desc'
-        },
-        startUserId: {
-          active: false,
-          order: 'asc'
         }
       }
     };
   },
 
   componentDidMount() {
-    this.getBatches();
+    this.makeQuery();
   },
 
-  getBatches() {
-    this.props.batches.query(this.state.query);
+  componentWillUnmount() {
+    this.props.collection.off();
   },
 
-  updateSortTable(sortBy) {
-    const {sortTable} = this.state;
-    _.each(sortTable, (item, key) => {
-      if (key === sortBy) {
-        item.active = true;
-        item.order = item.order === 'asc' ? 'desc' : 'asc';
-      } else {
-        item.active = false;
-      }
-    });
-    return sortTable;
-  },
-
-  updateQuery(sortBy, sortTable) {
-    const {query} = this.state;
-    query.sort = sortBy;
-    query.order = sortTable[sortBy].order;
-    return query;
+  makeQuery() {
+    this.props.collection.query(this.state.query);
   },
 
   render() {
-    const {startTime, startUserId} = this.state.sortTable;
+    const {startTime} = this.state.sortTable;
     return (
       <div className="div-table table-striped table-hover table-scrollable table-sortable table-5-columns">
         <div className="thead">
@@ -72,7 +54,7 @@ export default React.createClass({
           </div>
         </div>
         <div className="tbody" style={{maxHeight: `${500}px`}}>
-          {this.props.batches.map((batch, index) => {
+          {this.props.collection.map(batch => {
             return <BatchRow key={batch.id} batch={batch}/>;
           })}
         </div>
@@ -80,12 +62,7 @@ export default React.createClass({
     );
   },
 
-  _onHeaderClick(e) {
-    e.preventDefault();
-    const sortBy = e.currentTarget.attributes['data-sortby'].value;
-    const sortTable = this.updateSortTable(sortBy);
-    const query = this.updateQuery(sortBy, sortTable);
-    this.setState({query, sortTable});
-    this.getBatches();
+  _onCollectionSync(collection) {
+    this.setState({collection});
   }
 });

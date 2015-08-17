@@ -28,7 +28,7 @@ export default React.createClass({
       const policies = activeBatch ?
         activeBatch.policies :
         app.allPolicies;
-      return <PoliciesTable key={activeBatchId} policies={policies}/>;
+      return <PoliciesTable key={activeBatchId} collection={policies}/>;
     }
   },
 
@@ -45,7 +45,7 @@ export default React.createClass({
           <div className="panel-body">
             <TabContent activeKey={tab}>
               <TabPane key="batches">
-                <BatchesTable batches={this.state.batches}/>
+                <BatchesTable collection={this.state.batches}/>
               </TabPane>
               <TabPane key="policies">
                 {this.getPoliciesTable()}
