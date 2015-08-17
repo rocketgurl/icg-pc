@@ -5,6 +5,7 @@
   "main": "src/app.js",
   "author": "Liam Bowers",
   "devDependencies": {
+    "ampersand-app": "^1.0.4",
     "ampersand-model": "^5.0.3",
     "ampersand-rest-collection": "^4.0.0",
     "ampersand-router": "^3.0.2",
@@ -12,10 +13,11 @@
     "browserify": "^10.2.6",
     "d3": "^3.5.5",
     "envify": "^3.0.0",
+    "moment": "^2.10.6",
     "node-qs-serialization": "0.0.2",
-    "react-bootstrap": "^0.24.2",
+    "react-bootstrap": "^0.24.5",
     "reactify": "^0.15.2",
-    "uglify-js": "~2.4.15",
+    "uglify-js": "~2.4.24",
     "underscore": "^1.8.3",
     "watchify": "^2.6.2"
   },
