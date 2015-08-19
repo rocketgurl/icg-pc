@@ -3,6 +3,8 @@
 @import "bootstrap";
 
 // Now begin importing our partials
+@import "checkbox_label";
+@import "datepicker";
 @import "icg_icons";
 @import "page";
 @import "buttons";
@@ -11,6 +13,7 @@
 @import "header";
 @import "workspace";
 @import "div_tables";
+@import "table_controls";
 @import "charts";
 @import "panel_nav";
 @import "pagination";
