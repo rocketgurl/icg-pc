@@ -18,6 +18,10 @@ export default React.createClass({
     app.batches.on('sync', this._onBatchesSync);
   },
 
+  componentWillUnmount() {
+    app.batches.off();
+  },
+
   // Determine the correct collection of policies and return it
   // along with the <PoliciesTable/> node
   getPoliciesTable() {
