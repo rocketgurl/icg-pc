@@ -2,7 +2,6 @@ import React from 'react';
 import app from 'ampersand-app';
 import TabContent from './tab-content';
 import StackedBarChart from './stacked-bar-chart';
-import FormControls from './form-controls';
 import BatchActionSelect from './batch-action-select';
 import BatchesTable from './batches-table';
 import PoliciesTable from './policies-table';
