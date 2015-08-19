@@ -28,9 +28,9 @@ export default BaseCollection.extend({
 
         // HACK: This should only return "batch" processes
         variables: [{
-          name : 'numPolicyRefs',
-          operation : 'greaterThan',
-          value : 0
+          name: 'numPolicyRefs',
+          operation: 'greaterThan',
+          value: 0
         }]
       }
     };
