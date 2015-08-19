@@ -2,10 +2,6 @@ import React from 'react';
 import _ from 'underscore';
 
 const sortableTableMixin = {
-  propTypes: {
-    collection: React.PropTypes.object
-  },
-
   updateSortTable(sortBy) {
     const {sortTable} = this.state;
     _.each(sortTable, (item, key) => {
@@ -19,7 +15,7 @@ const sortableTableMixin = {
     return sortTable;
   },
 
-  updateQuery(sortBy, sortTable) {
+  updateSortQuery(sortBy, sortTable) {
     const {query} = this.state;
     query.sort = sortBy;
     query.order = sortTable[sortBy].order;
@@ -30,7 +26,7 @@ const sortableTableMixin = {
     e.preventDefault();
     const sortBy = e.currentTarget.attributes['data-sortby'].value;
     const sortTable = this.updateSortTable(sortBy);
-    const query = this.updateQuery(sortBy, sortTable);
+    const query = this.updateSortQuery(sortBy, sortTable);
     this.setState({query, sortTable});
     this.makeQuery();
   }
