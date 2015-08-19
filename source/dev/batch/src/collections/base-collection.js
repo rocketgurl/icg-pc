@@ -1,4 +1,4 @@
-import _ from 'underscore';
+import extend from 'extend';
 import Collection from 'ampersand-rest-collection';
 import app from 'ampersand-app';
 
@@ -8,8 +8,9 @@ export default Collection.extend({
   },
 
   query: function(attrs) {
-    let options = this.options;
-    if (attrs) _.extend(options.attrs, attrs);
+    // create deep clone of this.options so default options stay intact
+    let options = extend(true, {}, this.options);
+    if (attrs) extend(options.attrs, attrs);
     options.success = (resp) => {
       this.reset(resp, options);
       this.trigger('sync', this, resp, options);
