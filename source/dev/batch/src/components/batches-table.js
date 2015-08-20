@@ -7,12 +7,6 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      query: {
-        start: 0,
-        size: 50,
-        sort: 'startTime',
-        order: 'desc'
-      },
       sortTable: {
         startTime: {
           active: true,
@@ -22,8 +16,13 @@ export default React.createClass({
     };
   },
 
-  componentDidMount() {
-    this.makeQuery();
+  componentWillMount() {
+    const {collection} = this.props;
+    collection.on('sync', this._onCollectionSync);
+    this.setState({collection, ...collection.getParameters()});
+    if (!collection.length) {
+      this.makeQuery();
+    }
   },
 
   componentWillUnmount() {
@@ -31,11 +30,11 @@ export default React.createClass({
   },
 
   makeQuery() {
-    this.props.collection.query(this.state.query);
+    this.props.collection.query();
   },
 
   render() {
-    const {startTime} = this.state.sortTable;
+    const {sort, order} = this.state;
     return (
       <div className="div-table table-striped table-hover table-scrollable table-sortable table-5-columns">
         <div className="thead">
@@ -45,7 +44,7 @@ export default React.createClass({
             <div className="th">Quantity</div>
             <div className="th">
               <a data-sortby="startTime"
-                className={startTime.active ? startTime.order : null}
+                className={sort === 'startTime' ? order : null}
                 onClick={this._onHeaderClick}>
                 Time Started <span className="caret"/>
               </a>
@@ -54,7 +53,7 @@ export default React.createClass({
           </div>
         </div>
         <div className="tbody" style={{maxHeight: `${500}px`}}>
-          {this.props.collection.map(batch => {
+          {this.state.collection.map(batch => {
             return <BatchRow key={batch.id} batch={batch}/>;
           })}
         </div>

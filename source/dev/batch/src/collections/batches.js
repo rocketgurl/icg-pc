@@ -7,32 +7,26 @@ export default BaseCollection.extend({
 
   url: '/batch/query/historic-process-instances',
 
-  ajaxConfig() {
-    return {
-      headers: {
-        'Authorization': 'Basic ZGV2QGljZzM2MC5jb206bW92aWVMdW5jaGVzRlRXMjAxNQ=='
-      }
-    };
-  },
-
   parse(response) {
     this.total = response.total;
     return response.data;
   },
 
   initialize() {
-    this.options = {
-      parse: true,
-      attrs: {
-        includeProcessVariables: true,
-
-        // HACK: This should only return "batch" processes
-        variables: [{
-          name: 'numPolicyRefs',
-          operation: 'greaterThan',
-          value: 0
-        }]
-      }
+    this.options = {parse: true};
+    this.parameters = {
+      start: 0,
+      size: 50,
+      sort: 'startTime',
+      order: 'desc',
+      includeProcessVariables: true,
     };
+
+    // HACK: This should only return "batch" processes
+    this.variables = [{
+      name: 'numPolicyRefs',
+      operation: 'greaterThan',
+      value: 0
+    }];
   }
 });

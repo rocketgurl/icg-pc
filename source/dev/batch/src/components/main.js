@@ -39,7 +39,9 @@ export default React.createClass({
     const {tab} = this.props;
     return (
       <div>
-        <BatchActionSelect onActionSelect={this._onActionSelect}/>
+        <div className="row action-row">
+          <BatchActionSelect onActionSelect={this._onActionSelect}/>
+        </div>
         <div className="panel panel-default panel-nav">
           <Nav bsStyle="tabs" activeKey={tab}>
             <NavItem eventKey="batches" href="#batches">Batches</NavItem>

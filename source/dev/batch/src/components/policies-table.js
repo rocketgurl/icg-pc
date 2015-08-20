@@ -10,13 +10,6 @@ export default React.createClass({
   getInitialState() {
     return {
       shouldAllItemsBeChecked: false,
-      collection: [],
-      query: {
-        start: 0,
-        size: 50,
-        sort: 'startTime',
-        order: 'desc'
-      },
       sortTable: {
         startTime: {
           active: true,
@@ -26,12 +19,11 @@ export default React.createClass({
     };
   },
 
-  componentDidMount() {
+  componentWillMount() {
     const {collection} = this.props;
     collection.on('sync', this._onCollectionSync);
-    if (collection.length) {
-      this.setState({collection});
-    } else {
+    this.setState({collection, ...collection.getParameters()});
+    if (!collection.length) {
       this.makeQuery();
     }
   },
@@ -41,16 +33,16 @@ export default React.createClass({
   },
 
   makeQuery() {
-    this.props.collection.query(this.state.query);
+    this.props.collection.query();
   },
 
   render() {
-    const {startTime} = this.state.sortTable;
-    const {startedAfter, finishedBefore} = this.state.query;
-    console.log(this.state.query)
+    const {sort, order} = this.state;
     return (
       <div>
-        <TableControls onControlChange={this._onControlChange}/>
+        <div className="tab-pane-heading">
+          <TableControls {...this.state} onControlChange={this._onControlChange}/>
+        </div>
         <div className="div-table table-striped table-hover table-scrollable table-sortable table-7-columns">
           <div className="thead">
             <div className="tr">
@@ -64,7 +56,7 @@ export default React.createClass({
               </div>
               <div className="th">
                 <a data-sortby="startTime"
-                  className={startTime.active ? startTime.order : null}
+                  className={sort === 'startTime' ? order : null}
                   onClick={this._onHeaderClick}>
                   Time Started <span className="caret"/>
                 </a>
@@ -99,14 +91,10 @@ export default React.createClass({
     this.setState({collection});
   },
 
-  _onControlChange(key, value) {
-    let {query} = this.state;
-    if (value === 'default') {
-      delete query[key];
-    } else {
-      query[key] = value;
-    }
-    this.setState({query});
+  _onControlChange(name, value) {
+    const {collection} = this.props;
+    collection.updateParameter(name, value);
+    this.setState({...collection.getParameters()});
     this.makeQuery();
   }
 });

@@ -7,49 +7,34 @@ export default BaseCollection.extend({
 
   url: '/batch/query/historic-process-instances',
 
-  ajaxConfig() {
-    return {
-      headers: {
-        'Authorization': 'Basic ZGV2QGljZzM2MC5jb206bW92aWVMdW5jaGVzRlRXMjAxNQ=='
-      }
-    };
-  },
-
   parse(response) {
     this.total = response.total;
     return response.data;
   },
 
   initialize() {
-    this.options = {
-      parse: true,
-      attrs: {
-        start: 0,
-        size: 50,
-        sort: 'startTime',
-        order: 'desc',
-        includeProcessVariables: true,
-
-        // HACK: This default query should
-        // return all "non-batch" processes
-        variables: [{
-          name: 'batchId',
-          operation: 'notEquals',
-          value: '0'
-        }]
-      }
+    this.options = {parse: true};
+    this.parameters = {
+      start: 0,
+      size: 50,
+      sort: 'startTime',
+      order: 'desc',
+      includeProcessVariables: true
     };
+
+    // HACK: This default query should
+    // return all "non-batch" processes
+    this.variables = [{
+      name: 'batchId',
+      operation: 'notEquals',
+      value: '0'
+    }];
   },
 
   // If this collection has a parent batch model
   // this method will be invoked once by the model
   // to update the batchId in the query variables.
-  // P.S. always reserve the first variable for `batchId`
   setBatchId(batchId) {
-    this.options.attrs.variables[0] = {
-      name: 'batchId',
-      operation: 'equals',
-      value: batchId
-    };
+    this.updateProcessVariable('batchId', 'equals', batchId);
   }
 });
