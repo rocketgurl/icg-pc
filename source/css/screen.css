@@ -2237,6 +2237,8 @@ ul:after { clear: both; }
 .bw-wrapper:before, .bw-wrapper:after { content: " "; display: table; }
 .bw-wrapper:after { clear: both; }
 
+.action-row { margin-bottom: 47px; }
+
 #home .home-container { margin: 0 auto; padding-left: 5%; padding-right: 5%; max-width: 1170px; }
 #home .home-container:before, #home .home-container:after { content: " "; display: table; }
 #home .home-container:after { clear: both; }
