@@ -3,16 +3,20 @@ import app from 'ampersand-app';
 
 export default React.createClass({
   componentWillMount() {
-    const {processDefinitions} = app;
-    processDefinitions.on('sync', this._onProcessDefinitionsSync);
-    this.setState({processDefinitions});
-    if (!processDefinitions.length) {
-      processDefinitions.fetch({data: {keyLike: 'batch%'}});
+    const collection = app.processDefinitions;
+    collection.on('sync', this._onCollectionSync);
+    this.setState({collection});
+    
+    // If the processDefinitions collection is empty,
+    // fetch a list of processDefinitions having keys
+    // that start with "batch..."
+    if (!collection.length) {
+      collection.fetch({data: {keyLike: 'batch%'}});
     }
   },
 
   componentWillUnmount() {
-    app.processDefinitions.off();
+    this.state.collection.off();
   },
 
   render() {
@@ -21,7 +25,7 @@ export default React.createClass({
         <select className="form-control"
           onChange={this.props.onActionSelect}>
           <option value="">Select a Batch Action</option>
-          {this.state.processDefinitions.map(pd => {
+          {this.state.collection.map(pd => {
             return (
               <option key={pd.id} value={pd.id}>
                 {pd.name}
@@ -33,7 +37,7 @@ export default React.createClass({
       );
   },
 
-  _onProcessDefinitionsSync(processDefinitions) {
-    this.setState({processDefinitions});
+  _onCollectionSync(collection) {
+    this.setState({collection});
   },
 });
