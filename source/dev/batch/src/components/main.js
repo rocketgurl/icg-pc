@@ -10,11 +10,18 @@ import {Nav, NavItem, TabPane} from 'react-bootstrap';
 export default React.createClass({
   getInitialState() {
     return {
+      tab: 'batches',
       batches: app.batches
     };
   },
 
-  componentDidMount() {
+  componentWillReceiveProps(props) {
+    if (props.tab) {
+      this.setState({tab: props.tab});
+    }
+  },
+
+  componentWillMount() {
     app.batches.on('sync', this._onBatchesSync);
   },
 
@@ -36,11 +43,13 @@ export default React.createClass({
   },
 
   render() {
-    const {tab} = this.props;
+    const {tab} = this.state;
     return (
       <div>
         <div className="row action-row">
-          <BatchActionSelect onActionSelect={this._onActionSelect}/>
+          <BatchActionSelect
+            collection={app.processDefinitions}
+            router={app.router}/>
         </div>
         <div className="panel panel-default panel-nav">
           <Nav bsStyle="tabs" activeKey={tab}>
@@ -64,7 +73,5 @@ export default React.createClass({
 
   _onBatchesSync(batches) {
     this.setState({batches});
-  },
-
-  _onActionSelect() {}
+  }
 });

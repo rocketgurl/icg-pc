@@ -18,15 +18,10 @@ export default React.createClass({
 
   componentWillMount() {
     const {collection} = this.props;
-    collection.on('sync', this._onCollectionSync);
     this.setState({collection, ...collection.getParameters()});
     if (!collection.length) {
-      this.makeQuery();
+      collection.query();
     }
-  },
-
-  componentWillUnmount() {
-    this.props.collection.off();
   },
 
   makeQuery() {
@@ -59,9 +54,5 @@ export default React.createClass({
         </div>
       </div>
     );
-  },
-
-  _onCollectionSync(collection) {
-    this.setState({collection});
   }
 });
