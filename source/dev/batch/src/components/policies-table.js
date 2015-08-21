@@ -9,7 +9,7 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      shouldAllItemsBeChecked: false,
+      shouldItemsBeChecked: false,
       sortTable: {
         startTime: {
           active: true,
@@ -50,7 +50,7 @@ export default React.createClass({
                 <label className="checkbox-label">
                   <input
                     type="checkbox"
-                    checked={this.state.shouldAllItemsBeChecked}
+                    checked={this.state.shouldItemsBeChecked}
                     onChange={this._onSelectAllToggle}/> Select All
                 </label>
               </div>
@@ -74,7 +74,7 @@ export default React.createClass({
                 <PolicyRow
                   key={policy.id}
                   policy={policy}
-                  itemShouldBeChecked={this.state.shouldAllItemsBeChecked}/>
+                  itemShouldBeChecked={this.state.shouldItemsBeChecked}/>
                 );
             })}
           </div>
@@ -84,7 +84,7 @@ export default React.createClass({
   },
 
   _onSelectAllToggle(e) {
-    this.setState({shouldAllItemsBeChecked: e.target.checked});
+    this.setState({shouldItemsBeChecked: e.target.checked});
   },
 
   _onCollectionSync(collection) {
