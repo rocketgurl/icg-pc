@@ -1,9 +1,8 @@
 import React from 'react';
-import app from 'ampersand-app';
 
 export default React.createClass({
   componentWillMount() {
-    const collection = app.processDefinitions;
+    const {collection} = this.props;
     collection.on('sync', this._onCollectionSync);
     this.setState({collection});
     
@@ -23,12 +22,13 @@ export default React.createClass({
     return (
       <div className="col-xs-2">
         <select className="form-control"
-          onChange={this.props.onActionSelect}>
+          onChange={this._onActionSelect}>
           <option value="">Select a Batch Action</option>
-          {this.state.collection.map(pd => {
+          {this.state.collection.map(processDefinition => {
+            const {id, name} = processDefinition;
             return (
-              <option key={pd.id} value={pd.id}>
-                {pd.name}
+              <option key={id} value={id}>
+                {name}
               </option>
               );
           })}
@@ -37,7 +37,20 @@ export default React.createClass({
       );
   },
 
+  // Selecting an action sets the url to #modal/processDefinitionId,
+  // triggering the batch action modal in the process
+  // if the value is null, the url is set to the project root
+  _onActionSelect(e) {
+    const {value} = e.target;
+    const {router} = this.props;
+    if (value) {
+      router.navigate(`modal/${e.target.value}`);
+    } else {
+      router.navigate('/');
+    }
+  },
+
   _onCollectionSync(collection) {
     this.setState({collection});
-  },
+  }
 });
