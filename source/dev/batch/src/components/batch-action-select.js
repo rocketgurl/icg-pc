@@ -27,9 +27,7 @@ export default React.createClass({
           {this.state.collection.map(processDefinition => {
             const {id, name} = processDefinition;
             return (
-              <option key={id} value={id}>
-                {name}
-              </option>
+              <option key={id} value={id}>{name}</option>
               );
           })}
         </select>
@@ -44,7 +42,7 @@ export default React.createClass({
     const {value} = e.target;
     const {router} = this.props;
     if (value) {
-      router.navigate(`modal/${e.target.value}`);
+      router.navigate(`batch-action/${value}`);
     } else {
       router.navigate('/');
     }
