@@ -7,25 +7,33 @@ let activeBatchId = '0';
 
 export default Router.extend({
   routes: {
-    ''                  : 'batches',
+    ''                  : 'main',
     'batches'           : 'batches',
     'policies'          : 'policies',
     'policies/?*params' : 'policies',
+    'batch-action/*id'  : 'batchActionModal',
     '*notFound'         : 'notFound'
   },
 
-  actuateTab(props={}) {
+  main(props={}) {
     React.render(<Main {...props}/>, document.getElementById('main'));
   },
 
   batches() {
-    this.actuateTab({tab: 'batches'});
+    this.main({tab: 'batches'});
   },
 
   policies(params) {
     const {bid} = deparam(params);
     if (bid) activeBatchId = bid + '';
-    this.actuateTab({activeBatchId, tab: 'policies'});
+    this.main({activeBatchId, tab: 'policies'});
+  },
+
+  batchActionModal(processDefinitionId) {
+    this.main({
+      processDefinitionId,
+      showBatchActionModal: true
+    });
   },
 
   notFound() {
