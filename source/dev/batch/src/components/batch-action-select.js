@@ -1,10 +1,13 @@
 import React from 'react';
 
 export default React.createClass({
+  getInitialState() {
+    return {collection: this.props.collection};
+  },
+
   componentWillMount() {
     const {collection} = this.props;
     collection.on('sync', this._onCollectionSync);
-    this.setState({collection});
     
     // If the processDefinitions collection is empty,
     // fetch a list of processDefinitions having keys
@@ -21,9 +24,11 @@ export default React.createClass({
   render() {
     return (
       <div className="col-xs-2">
-        <select className="form-control"
-          onChange={this._onActionSelect}>
-          <option value="">Select a Batch Action</option>
+        <select
+          className="form-control"
+          onChange={this._onActionSelect}
+          value={this.props.processDefinitionId || 'default'}>
+          <option value="default">Select a Batch Action</option>
           {this.state.collection.map(processDefinition => {
             const {id, name} = processDefinition;
             return (

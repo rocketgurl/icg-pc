@@ -1,16 +1,23 @@
 import React from 'react';
 import app from 'ampersand-app';
 import TabContent from './tab-content';
-import StackedBarChart from './stacked-bar-chart';
 import BatchActionSelect from './batch-action-select';
+import BatchActionModal from './batch-action-modal';
 import BatchesTable from './batches-table';
 import PoliciesTable from './policies-table';
 import {Nav, NavItem, TabPane} from 'react-bootstrap';
 
 export default React.createClass({
+  getDefaultProps() {
+    return {
+      showBatchActionModal: false,
+      processDefinitionId: null
+    };
+  },
+
   getInitialState() {
     return {
-      tab: 'batches',
+      tab: this.props.tab || 'batches',
       batches: app.batches
     };
   },
@@ -44,11 +51,17 @@ export default React.createClass({
 
   render() {
     const {tab} = this.state;
+    const {showBatchActionModal, processDefinitionId} = this.props;
     return (
       <div>
         <div className="row action-row">
           <BatchActionSelect
             collection={app.processDefinitions}
+            processDefinitionId={processDefinitionId}
+            router={app.router}/>
+          <BatchActionModal
+            showModal={showBatchActionModal}
+            processDefinitionId={processDefinitionId}
             router={app.router}/>
         </div>
         <div className="panel panel-default panel-nav">

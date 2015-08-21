@@ -4,16 +4,19 @@ import {Modal} from 'react-bootstrap';
 export default React.createClass({
   getInitialState() {
     return {
-      showModal: false
+      showModal: !!this.props.showModal
     };
   },
 
-  close(){
-    this.setState({ showModal: false });
+  componentWillReceiveProps(props) {
+    const {showModal, processDefinitionId} = props;
+    this.setState({
+      showModal: (showModal && processDefinitionId) ? true : false
+    });
   },
 
-  open(){
-    this.setState({ showModal: true });
+  close() {
+    this.props.router.navigate('/');
   },
 
   render() {
@@ -42,13 +45,5 @@ export default React.createClass({
         </Modal.Footer>
       </Modal>
     );
-  },
-
-  _onBatchesSync(collection) {
-    this.setState({batches: collection});
-  },
-
-  _onActionSelect() {
-    this.open();
   }
 });
