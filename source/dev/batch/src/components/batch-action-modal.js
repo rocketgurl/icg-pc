@@ -3,18 +3,20 @@ import {Modal} from 'react-bootstrap';
 
 export default React.createClass({
   getInitialState() {
+    const {showModal, processDefinitionId} = this.props;
     return {
-      showModal: !!this.props.showModal
+      showModal: !!(showModal && processDefinitionId)
     };
   },
 
   componentWillReceiveProps(props) {
     const {showModal, processDefinitionId} = props;
     this.setState({
-      showModal: (showModal && processDefinitionId) ? true : false
+      showModal: !!(showModal && processDefinitionId)
     });
   },
 
+  // close the modal by navigating away from the modal route
   close() {
     this.props.router.navigate('/');
   },
@@ -23,7 +25,7 @@ export default React.createClass({
     return (
       <Modal show={this.state.showModal} onHide={this.close}>
         <Modal.Header closeButton>
-          <Modal.Title>Modal heading</Modal.Title>
+          <Modal.Title>{this.props.actionName}</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <h4>Text in a modal</h4>

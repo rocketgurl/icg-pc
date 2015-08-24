@@ -51,7 +51,10 @@ export default React.createClass({
 
   render() {
     const {tab} = this.state;
-    const {showBatchActionModal, processDefinitionId} = this.props;
+    const {
+      showBatchActionModal,
+      processDefinitionId,
+      actionName} = this.props;
     return (
       <div>
         <div className="row action-row">
@@ -61,6 +64,7 @@ export default React.createClass({
             router={app.router}/>
           <BatchActionModal
             showModal={showBatchActionModal}
+            actionName={actionName}
             processDefinitionId={processDefinitionId}
             router={app.router}/>
         </div>

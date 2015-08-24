@@ -32,7 +32,7 @@ export default React.createClass({
           {this.state.collection.map(processDefinition => {
             const {id, name} = processDefinition;
             return (
-              <option key={id} value={id}>{name}</option>
+              <option key={id} value={`${id}/${name}`}>{name}</option>
               );
           })}
         </select>

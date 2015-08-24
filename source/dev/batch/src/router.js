@@ -7,12 +7,12 @@ let activeBatchId = '0';
 
 export default Router.extend({
   routes: {
-    ''                  : 'main',
-    'batches'           : 'batches',
-    'policies'          : 'policies',
-    'policies/?*params' : 'policies',
-    'batch-action/*id'  : 'batchActionModal',
-    '*notFound'         : 'notFound'
+    ''                         : 'main',
+    'batches'                  : 'batches',
+    'policies'                 : 'policies',
+    'policies/?*params'        : 'policies',
+    'batch-action/:pdid/:name' : 'batchActionModal',
+    '*notFound'                : 'notFound'
   },
 
   main(props={}) {
@@ -29,8 +29,10 @@ export default Router.extend({
     this.main({activeBatchId, tab: 'policies'});
   },
 
-  batchActionModal(processDefinitionId) {
+  batchActionModal(processDefinitionId, actionName) {
+    actionName = decodeURIComponent(actionName);
     this.main({
+      actionName,
       processDefinitionId,
       showBatchActionModal: true
     });
