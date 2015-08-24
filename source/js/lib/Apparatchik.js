@@ -493,8 +493,8 @@ var Apparatchik = (function(){
    */
   Apparatchik.prototype.makeReadOnly = function(target, reset, args) {
     var $el = this.wrapField(target);
-    if (reset) { $el.prop('disabled', false); }
-    return $el.prop('disabled', true);
+    if (reset) { $el.attr('readonly', false); }
+    return $el.attr('readonly', true);
   };
 
   /**
