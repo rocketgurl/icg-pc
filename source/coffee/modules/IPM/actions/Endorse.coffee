@@ -152,15 +152,17 @@ define [
          @apparatchik.isProduct('wic-ho3-tx')
         @addRoofGarageBehaviors()
 
-      # if @apparatchik.isProduct('ofcc-ho3-la-lap')
-      if @apparatchik.isProduct('ofcc-ho6-sc')
-        @addLAPBehaviors()
-
       if @apparatchik.isProduct('wic-hwo-al') ||
          @apparatchik.isProduct('wic-ho3-al') ||
          @apparatchik.isProduct('wic-ho3-nj') ||
          @apparatchik.isProduct('ofcc-ho3-nj')
         @addWICALBehaviors()
+
+      if @apparatchik.isProduct('ofcc-ho3-la-lap')
+        @addLAPBehaviors()
+
+      if @apparatchik.isProduct('iic-ho3-sc')
+        @addIICHO3SCBehaviors()
 
       if @apparatchik.isProduct('fnic-ho3-sc') || @apparatchik.isProduct('fnic-ho5-sc')
         @addFNICSCBehaviors()
@@ -227,6 +229,17 @@ define [
           'OtherStructures3Occupancy'
           'OtherStructures3Coverage'
           'OtherStructures3BusinessType'
+          ]
+        effect: @apparatchik.showElement
+      ]
+      @apparatchik.applyEnumDynamics rules
+
+    addIICHO3SCBehaviors : ->
+      rules = [
+        field: 'ScreenedEnclosure'
+        condition: '== 100'
+        target: [
+          'ScreenedEnclosureLimit'
           ]
         effect: @apparatchik.showElement
       ]
