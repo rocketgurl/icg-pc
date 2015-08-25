@@ -674,6 +674,28 @@
 			</select>
 		</div>
 
+
+
+		<div>
+			<label for="{{guid}}_ScreenedEnclosure" class="labelRequired">Any fully screened pool/patio enclosures (attached or detached)? <i>ScreenedEnclosure</i></label>
+			<select id="{{guid}}_ScreenedEnclosure" name="ScreenedEnclosure" data-value="{{ScreenedEnclosure}}"  required >
+				{{#EnumsScreenedEnclosure}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsScreenedEnclosure}}
+			</select>
+		</div>
+
+
+
+		<div>
+			<label for="{{guid}}_ScreenedEnclosureLimit" >Screened Enclosure Limit <i>ScreenedEnclosureLimit</i></label>
+			<select id="{{guid}}_ScreenedEnclosureLimit" name="ScreenedEnclosureLimit" data-value="{{ScreenedEnclosureLimit}}"   >
+				{{#EnumsScreenedEnclosureLimit}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsScreenedEnclosureLimit}}
+			</select>
+		</div>
+
 		</fieldset>
 		<fieldset>
 				<legend id="{{guid}}_dwelling_interior">Dwelling Interior</legend>				
