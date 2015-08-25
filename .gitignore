@@ -8,4 +8,5 @@ source/js/modules/*/*.js
 source/js/modules/*/*/*.js
 node_modules/
 source/css/bootstrap/*
+source/css/react-datepicker/*
 source/test-results.xml
