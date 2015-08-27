@@ -180,14 +180,18 @@ define [
       if @model.isIPM() == false && @model.isDovetail() == false
         @$el.find(".policy-nav a[data-action=ipmchanges]").parent('li').hide()
 
+      # Carrier users are not allowed most things (ICS-2019)
+      if @controller.user.isCarrier() == true
+        @$el.find(".policy-nav a[data-action=renewalunderwriting").parent('li').hide()
+        @$el.find(".policy-nav a[data-action=servicerequests]").parent('li').hide()
+
+        # In some cases, we actually need Carrier users to see IPM Actions (ICS-4317)
+        unless @controller.user.canViewIPM()
+          @$el.find(".policy-nav a[data-action=ipmchanges]").parent('li').hide()
+
       # Hide Policy representations if user doesn't have VIEW_ADVANCED <Right>
       if @controller.user?.canViewAdvanced() == false
         @$el.find(".policy-nav a[data-action=policyrepresentations]").parent('li').hide()
-
-      # Carrier users are not allowed most things (ICS-2019)
-      if @controller.user.isCarrier() == true
-        for action in ['renewalunderwriting', 'ipmchanges', 'servicerequests']
-          @$el.find(".policy-nav a[data-action=#{action}]").parent('li').hide()
 
     initPolicyLinksPopover : ->
       linksPopover = new PolicyLinksView
