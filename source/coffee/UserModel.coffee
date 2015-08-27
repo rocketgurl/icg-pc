@@ -46,6 +46,16 @@ define [
           'PoliciesModule Rights Right'),
         'VIEW_ADVANCED')
 
+    # True if User has ixadmin > PoliciesModule > Rights > Right > IPM_ACTIONS
+    canViewIPM : ->
+      _.contains(
+        @findProperty(
+          _.findWhere(@get('json').ApplicationSettings, {
+            environmentName: ICS360_ENV,
+            applicationName : 'ixadmin'}),
+          'PoliciesModule Rights Right'),
+        'IPM_ACTIONS')
+
     # Is this a carrier user? (ICS-2019)
     isCarrier : ->
       _.where(@find('Affiliation'),
