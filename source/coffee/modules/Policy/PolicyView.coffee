@@ -182,7 +182,7 @@ define [
 
       # Carrier users are not allowed most things (ICS-2019)
       if @controller.user.isCarrier() == true
-        @$el.find(".policy-nav a[data-action=renewalunderwriting").parent('li').hide()
+        @$el.find(".policy-nav a[data-action=renewalunderwriting]").parent('li').hide()
         @$el.find(".policy-nav a[data-action=servicerequests]").parent('li').hide()
 
         # In some cases, we actually need Carrier users to see IPM Actions (ICS-4317)
