@@ -287,7 +287,6 @@ define [
       @show_workspace_button()
 
       userJSON = JSON.stringify({
-        digest   : @user.get('digest'),
         email    : @user.get('email'),
         name     : @user.get('name'),
         username : @user.get('username')
