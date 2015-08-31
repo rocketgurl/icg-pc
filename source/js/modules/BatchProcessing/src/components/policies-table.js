@@ -41,7 +41,9 @@ export default React.createClass({
     return (
       <div>
         <div className="tab-pane-heading">
-          <TableControls {...this.state} onControlChange={this._onControlChange}/>
+          <TableControls {...this.state}
+            onControlChange={this._onControlChange}
+            onRefreshClick={this._onRefreshClick}/>
         </div>
         <div className="div-table table-striped table-hover table-scrollable table-sortable table-7-columns">
           <div className="thead">
@@ -81,6 +83,10 @@ export default React.createClass({
         </div>
       </div>
     );
+  },
+
+  _onRefreshClick() {
+    this.props.collection.query();
   },
 
   _onSelectAllToggle(e) {

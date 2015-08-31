@@ -87,7 +87,9 @@ export default React.createClass({
             </div>
             <div className="td">
               <div className="col-xs-6">
-                <button className="btn btn-primary btn-block">
+                <button
+                  className="btn btn-primary btn-block"
+                  onClick={this._onRefreshClick}>
                   <span className="glyphicon glyphicon-repeat"/>
                 </button>
               </div>
@@ -101,6 +103,10 @@ export default React.createClass({
         </div>
       </div>
     );
+  },
+
+  _onRefreshClick() {
+    this.props.onRefreshClick();
   },
 
   _onSelectChange(e) {
