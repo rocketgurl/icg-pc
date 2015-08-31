@@ -54,6 +54,12 @@ export default BaseModel.extend({
       fn: function () {
         return this.processDefinitionId.split(':')[0];
       }
+    },
+    status: {
+      fn: function () {
+        const hasException = this.getVariableValue('hasException');
+        return `${hasException} ${this.endTime}`;
+      }
     }
   }
 });
