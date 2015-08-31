@@ -8,7 +8,7 @@ export default Collection.extend({
   ajaxConfig() {
     return {
       headers: {
-        'Authorization': 'Basic ZGV2QGljZzM2MC5jb206bW92aWVMdW5jaGVzRlRXMjAxNQ=='
+        'Authorization': app.user.getBasicAuth()
       }
     };
   },
