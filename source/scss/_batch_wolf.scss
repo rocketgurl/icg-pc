@@ -1,9 +1,13 @@
 .bw-wrapper {
   @include clearfix;
-  padding: 10px;
+  padding: 15px;
 }
 
-#bw {}
+#bw {
+  .pc-nav {
+    display: block;
+  }
+}
 
 .action-row {
   margin-bottom: 47px;
