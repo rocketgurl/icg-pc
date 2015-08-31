@@ -1,3 +1,13 @@
+### 3.1.7 - Sep 02, 2015
+
+- Fix blank details being displayed in 'Preview Cancellation for Policy' page
+- Fix interaction with Reason codes and required fields for 'Cancel/Reinstate'
+- Make Policy Central UW Referrals sortable by CarrierID
+- Changes to IPM forms:
+    - Update LA program IPM endorse forms
+    - Update iic-ho3-sc IPM endorse forms
+    - Fix issue with readonly fields not being included in transaction request
+
 ### 3.1.6 - Aug 11, 2015
 
 - Fixes sorting  newly added notes in QuickView 'Recent Activity'
