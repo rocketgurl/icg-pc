@@ -20,7 +20,7 @@ define [
     """
 
     errorTemplate : """
-    <p class="alert alert-danger" role="alert"><strong>{{{status}}}</strong>: {{{statusText}}}</p>
+    <p class="alert alert-danger pc-alert" role="alert"><strong>{{{status}}}</strong>: {{{statusText}}}</p>
     """
 
     initialize : (options) ->
