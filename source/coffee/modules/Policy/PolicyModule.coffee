@@ -82,24 +82,17 @@ define [
 
           @policy_view.trigger 'error', response
 
-          # Throw a hopefully useful ajax error for Muscula to pick up
-          if _.isObject Muscula
-            eid = "#{Helpers.formatDate(new Date(), 'YYYY-MM-DD')}"
-            try
-              Muscula.info = {}
-              Muscula.info["RequestURL #{eid}"] = model.url()
-              Muscula.info["Status #{eid}"]     = xhr.status
-              Muscula.info["StatusText #{eid}"] = xhr.statusText
-              Muscula.info["ResponseHeaders #{eid}"] = xhr.getAllResponseHeaders()
-              throw new Error "XMLHTTPResponse Error (#{xhr.status}) #{xhr.statusText}"
-            catch ex
-              Muscula.errors.push ex
-
-              # delete the info object so we don't muddy up the other errors too much
-              setTimeout((->
-                if Muscula.info?.eid is eid
-                  delete Muscula.info
-              ), 2000)
+          # Log a hopefully useful ajax error for TrackJS
+          eid = "#{Helpers.formatDate(new Date(), 'YYYY-MM-DD')}"
+          info = {}
+          try
+            info["RequestURL #{eid}"] = model.url()
+            info["Status #{eid}"]     = xhr.status
+            info["StatusText #{eid}"] = xhr.statusText
+            info["ResponseHeaders #{eid}"] = xhr.getAllResponseHeaders()
+            throw new Error "XMLHTTPResponse Error (#{xhr.status}) #{xhr.statusText}"
+          catch ex
+            console.error info, ex
       })
 
       # When this tab is activated

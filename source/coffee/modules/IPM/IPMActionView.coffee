@@ -629,31 +629,23 @@ define [
 
       @displayError 'warning', @errors
 
-      # Throw a hopefully useful ajax error for Muscula to pick up
-      if _.isObject Muscula
-        eid = "#{@Helpers.formatDate(new Date(), 'YYYY-MM-DD')}"
-        try
-          Muscula.info = {}
-          Muscula.info["RequestURL #{eid}"] = @MODULE.POLICY.url()
-          Muscula.info["IPMAction #{eid}"]  = @ChangeSet.ACTION
-          Muscula.info["ErrorName #{eid}"]  = @errors.title
-          Muscula.info["ErrorMessage #{eid}"] = @errors.desc
-          if @errors.details
-            details = $(@errors.details).text() or @errors.details
-            Muscula.info["ErrorDetails #{eid}"] = details
-          Muscula.info["Status #{eid}"]     = jqXHR.status
-          Muscula.info["StatusText #{eid}"] = jqXHR.statusText
-          Muscula.info["ResponseHeaders #{eid}"] = jqXHR.getAllResponseHeaders()
-          throw new Error "IPM Action Error"
-        catch ex
-          Muscula.errors.push ex
-
-          # delete the info object so we don't muddy up the other errors too much
-          setTimeout((->
-            if Muscula.info?.eid is eid
-              delete Muscula.info
-          ), 2000)
-    
+      # Log a hopefully useful ajax error for TrackJS
+      eid = "#{@Helpers.formatDate(new Date(), 'YYYY-MM-DD')}"
+      info = {}
+      try
+        info["RequestURL #{eid}"] = @MODULE.POLICY.url()
+        info["IPMAction #{eid}"]  = @ChangeSet.ACTION
+        info["ErrorName #{eid}"]  = @errors.title
+        info["ErrorMessage #{eid}"] = @errors.desc
+        if @errors.details
+          details = $(@errors.details).text() or @errors.details
+          info["ErrorDetails #{eid}"] = details
+        info["Status #{eid}"]     = jqXHR.status
+        info["StatusText #{eid}"] = jqXHR.statusText
+        info["ResponseHeaders #{eid}"] = jqXHR.getAllResponseHeaders()
+        throw new Error "IPM Action Error"
+      catch ex
+        console.error info, ex
     
     # **Notes field handling, post a notes ChangeSet**
     #

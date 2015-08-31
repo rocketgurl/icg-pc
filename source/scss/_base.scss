@@ -238,6 +238,16 @@ $btn-danger-background-highlight: lighten($btn-danger-background, 15%);
   @include clearfix;
 }
 
+select[readonly] > option:not(:checked) {
+  display: none;
+}
+
+select[readonly],
+option[readonly],
+select[readonly] > option {
+  color: graytext;
+}
+
 // Remove outline around links
 a {
   outline: none;

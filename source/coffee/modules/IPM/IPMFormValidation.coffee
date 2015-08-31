@@ -113,7 +113,6 @@ define [
     showErrorState : (el, scope) ->
       scope = scope ? this
       el.addClass('validation_error')
-        .on('change', (el) => scope.validateField($(el.currentTarget)))
         .parent()
         .find('label')
         .addClass('validation_error')
