@@ -180,7 +180,7 @@ define [
         $dp.datepicker(date_options)
 
       # Attach event listener to preview button
-      @$el.find('form input.button[type=submit]').on(
+      @$el.find('form input[type=submit]').on(
           'click',
           (e) =>
             e.preventDefault()
