@@ -470,9 +470,6 @@ define [
         reasonCode = +e.currentTarget.value # coerce value to Number
         validators = @TRANSACTION_TYPES.cancel_pending.validators
 
-        @FormValidation.removeErrorState $(e.currentTarget)
-        @FormValidation.removeErrorState $dateInput
-
         switch reasonCode
           # The following reason codes should clear
           # & disable the Effective Date field
