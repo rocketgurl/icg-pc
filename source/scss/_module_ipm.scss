@@ -129,7 +129,7 @@
   margin: 20px 20px 20px 0;
 }
 
-section.policyOverview {
+.policyOverview {
   display: none;
 }
 
@@ -219,13 +219,6 @@ h2.ipm-action-header {
       width: 70%;
     }
 
-    .form_actions {
-      margin: 15px 0;
-      a {
-        @extend .btn;
-      }
-    }
-
     h3 {
       @include font-size(18);
       @include emboss;
@@ -295,32 +288,36 @@ h2.ipm-action-header {
       }
     }
     label.labelRequired {
-      color: #444;
-      font-weight: bold;
       &:after {
         color: #752E2E;
         content: ' *';
       }
     }
-    label.validation_error {
-      color: #a00;
-    }
     label.noteslabel {
       margin-left: -5px;
+    }
+    .has-error {
+      label {
+        color: #a94442;
+      }
+      input,
+      select,
+      textarea {
+        border-color: #a94442;
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+      }
+      input:focus,
+      select:focus,
+      textarea:focus {
+        border-color: #843534;
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #ce8483;
+      }  
     }
     div > i {
       margin: 0 0 0 10px;
       padding: 5px 0 0 0;
       @include font-size(12);
       color: darken($darkgray, 10);
-    }
-    input.validation_error,
-    textarea.validation_error {
-      box-shadow: 0 0 5px rgba(160, 0, 0, 1);
-      background-color: lighten($red, 50);
-    }
-    select.validation_error {
-      background: #fcc;
     }
     input {
       vertical-align: top;
@@ -400,13 +397,19 @@ h2.ipm-action-header {
 
 // Summary Data Table (Cancellation previews, etc)
 .form_actions {
+  margin: 15px 0;
   p {
     @include font-size(14);
     padding: 10px 0;
     font-weight: bold;
     color: $darkgray;
   }
+
+  a {
+    @extend .btn;
+  }
 }
+
 
 .summary_table {
   background: $white;
@@ -592,8 +595,6 @@ h2.ipm-action-header {
     color: $darkgray;
   }
   .labelRequired {
-    color: #444;
-    font-weight: bold;
     &:after {
       color: #752E2E;
       content: ' *';
