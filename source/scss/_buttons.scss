@@ -47,6 +47,7 @@
   }
 }
 
+
 .btn-dark {
   @include button-background($btn-dark-background-highlight, $btn-dark-background, #fff, 0 -1px 0 rgba(0, 0, 0, 0.85));
 }
@@ -57,5 +58,14 @@
 
 .btn-danger {
   @include button-background($btn-danger-background-highlight, $btn-danger-background, #fff, 0 -1px 0 rgba(0, 0, 0, 0.85));
+}
+
+.btn-success {
+  @include button-background($btn-success-background-highlight, $btn-success-background, #fff, 0 -1px 0 rgba(0, 0, 0, 0.85));
+}
+
+input[type=submit] {
+  @extend .btn;
+  @extend .btn-primary;
 }
 

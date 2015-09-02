@@ -198,13 +198,6 @@ h2.ipm-action-header {
       display: inline-block;
     }
   }
-  .button {
-    @include simple-color(hue(#2b90d2), saturation(#2b90d2), lightness(#2b90d2));
-    &:disabled {
-      @include simple-color(hue(#eeeeee), saturation(#eeeeee), lightness(#eeeeee));
-      color: #aaa;
-    }
-  }
   .policy-refresh {
     margin-left: 10px;
   }
@@ -216,19 +209,8 @@ h2.ipm-action-header {
     @include simple-color(hue(#eeeeee), saturation(#eeeeee), lightness(#eeeeee));
     color: #ccc;
   }
-  input[value=Confirm] {
-    @include simple-color(hue(#37a93c), saturation(#37a93c), lightness(#37a93c));
-  }
-  .form_actions {
-    margin: 10px 0 0 0;
-    a {
-      vertical-align: top;
-      display: inline-block;
-      text-decoration: none;
-      @include simple-color(hue($lightgray), saturation($lightgray), lightness($lightgray));
-    }
-  }
-  fieldset {
+  
+  fieldset:not(.bs) {
     border-top: darken($lightgray, 10) 1px solid;
     padding: 5px 0;
     margin: 0;
@@ -236,6 +218,14 @@ h2.ipm-action-header {
       margin-left: 12px;
       width: 70%;
     }
+
+    .form_actions {
+      margin: 15px 0;
+      a {
+        @extend .btn;
+      }
+    }
+
     h3 {
       @include font-size(18);
       @include emboss;
@@ -577,14 +567,6 @@ h2.ipm-action-header {
 #cancellation {
   fieldset li {
     margin: 5px 0;
-    input {
-      @include simple-color(hue(#2b90d2), saturation(#2b90d2), lightness(#2b90d2));
-      &:disabled {
-        @include simple-color(hue($lightgray), saturation($lightgray), lightness($lightgray));
-        color: $darkgray;
-        font-style: italic;
-      }
-    }
   }
 }
 

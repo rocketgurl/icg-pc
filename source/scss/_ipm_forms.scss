@@ -1,0 +1,33 @@
+.panel-title {
+  > a {
+    display: block;
+  }
+}
+
+legend {
+  font-size: 14px;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #999;
+}
+
+.labelRequired {
+  color: #444;
+  font-weight: bold;
+  &:after {
+    color: #752E2E;
+    content: ' *';
+  }
+}
+
+input[type=submit] {
+  @extend .btn;
+  @extend .btn-primary;
+}
+
+.form_actions {
+  margin: 15px 0;
+  a {
+    @extend .btn;
+  }
+}
