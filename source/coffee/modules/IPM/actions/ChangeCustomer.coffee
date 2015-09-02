@@ -95,14 +95,13 @@ define [
         insuredAddressFields = $(_.first(@$el.find(@makeId('InsuredMailingAddressLine1'))
                                            .parents('fieldset')))
 
-        insuredMailing = @$el.find(@makeId('InsuredMailingAddressLine1'))
-                             .parents('fieldset')
-                             .find('.collapsibleFieldContainer')
+        insuredPanel = @$el.find(@makeId('InsuredMailingAddressLine1'))
+                             .parents('.panel-collapse')
         # 100 = yes
         # 200 = no
         if $(e.currentTarget).val() == "200"
           insuredAddressFields.css('display', 'block')
-          insuredMailing.show()
+          insuredPanel.collapse 'show'
         else
           insuredAddressFields.css('display', 'none')
 
