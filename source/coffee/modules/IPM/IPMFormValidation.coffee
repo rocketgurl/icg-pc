@@ -22,7 +22,7 @@ define [
         if result
           @showErrorState(args[1])
         else
-          @removeErrorState(args)
+          @removeErrorState(args[1])
           
         result
 
