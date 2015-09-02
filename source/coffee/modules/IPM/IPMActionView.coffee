@@ -910,6 +910,11 @@ define [
     #
     displayInvalidFields : (errors) ->
       for error in errors
+        # bootstrap collapse
+        $panelCollapse = error.element.parents '.panel-collapse'
+        $panelCollapse.collapse 'show'
+
+        # old method
         $container = error.element.parents('.collapsibleFieldContainer')
         $fieldset = $container.parent()
         if $container.css('display') == 'none'
