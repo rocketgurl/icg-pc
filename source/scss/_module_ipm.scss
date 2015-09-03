@@ -247,14 +247,6 @@ h2.ipm-action-header {
         background: $lightgray;
       }
     }
-    .collapsibleFieldContainer {
-      margin: 5px 0 0 0;
-      padding: 0;
-      display: none;
-      &:hover {
-        background: none;
-      }
-    }
     label {
       @include font-size(14);
       color: darken($darkgray, 10);
@@ -364,7 +356,15 @@ h2.ipm-action-header {
       border: 0;
     }
   }
-  fieldset.defaultOpen {
+  .collapsibleFieldContainer {
+    margin: 5px 0 0 0;
+    padding: 0;
+    display: none;
+    &:hover {
+      background: none;
+    }
+  }
+  .defaultOpen {
     border-top: 0px;
   }
   .defaultOpen .collapsibleFieldContainer {

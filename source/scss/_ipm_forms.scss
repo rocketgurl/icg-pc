@@ -5,9 +5,39 @@ legend {
   color: #999;
 }
 
+.policy-overview {
+  display: none;
+}
+
 .panel-title {
   > a {
     display: block;
+  }
+}
+
+/* up/down arrows to indicate collapsed/collapsible panels */
+[data-toggle="collapse"] {
+  .glyphicon {
+    color: #999;
+  }
+
+  &:hover {
+    .glyphicon {
+      color: inherit;
+    }
+  }
+
+  .glyphicon-menu-down {
+    display: none;
+  }
+
+  &.collapsed {
+    .glyphicon-menu-up {
+      display: none;
+    }
+    .glyphicon-menu-down {
+      display: inline-block;
+    }
   }
 }
 
@@ -18,10 +48,6 @@ legend {
   }
 }
 
-.vendor-hide {
-  display: none;
-}
-
 .vendor-show {
-  display: block;
+  display: none;
 }
