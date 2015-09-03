@@ -2859,6 +2859,8 @@ legend { font-size: 14px; font-weight: 700; text-transform: uppercase; color: #9
 
 .vendor-show { display: none; }
 
+.vendor-hide { display: block; }
+
 #herald-container { background-color: rgba(0, 0, 0, 0.25); }
 
 .herald-modal { background-color: #fff !important; color: #333 !important; border: #ccc 1px solid; box-shadow: #666 0 0 10px; }
