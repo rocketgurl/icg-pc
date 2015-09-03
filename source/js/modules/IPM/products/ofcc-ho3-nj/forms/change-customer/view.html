@@ -1,418 +1,622 @@
 <!-- Product: OFCC HO3 New Jersey -->
-<form action="change_customer" method="get" accept-charset="utf-8" class="collapsedSections">
-    <div id="content">
-        <div id="content_header">
-            <h2>Change Customer for Policy {{policyId}}</h2>
-        </div>
+<form name="change_customer" class="form-horizontal">
+  <div class="content">
+    <h4>Change Customer for Policy {{policyId}}</h4>
 
-        <div class="content_body">
-
-            {{#policyOverview}}
-            <section class="policyOverview">
-                <h1>Policy Overview</h1>
-                <ul>
-                    <li>{{InsuredFirstName}} {{InsuredMiddleName}} {{InsuredLastName}}</li>
-                    <li>{{InsuredMailingAddressLine1}}</li>
-                    <li>{{InsuredMailingAddressLine2}}</li>
-                    <li>{{InsuredMailingAddressCity}}, {{InsuredMailingAddressState}} {{InsuredMailingAddressZip}}</li>
-                </ul>
-            </section>
-            {{/policyOverview}}
-
-            <fieldset>
-                <div>
-                    <label for="{{guid}}_reasonCode" class="labelRequired">Reason code</label>
-                    <select id="{{guid}}_reasonCode" name="reasonCode" required>
-                        {{#EnumsChangeCustomerReason}}
-                        <option value="{{value}}">{{label}}</option>
-                        {{/EnumsChangeCustomerReason}}
-                    </select>
-                </div>
-            </fieldset>
-
-            <fieldset class="defaultOpen">
-                <h3>Property Address <a data-alt-text="close">change</a></h3>
-                <div class="collapsibleFieldContainer">
-                    <fieldset>
-                        <div>
-                            <label for="{{guid}}_PropertyStreetNumber" class="labelRequired">Street Number <i>PropertyStreetNumber</i></label>
-                            <input type="text" id="{{guid}}_PropertyStreetNumber" name="PropertyStreetNumber" value="{{PropertyStreetNumber}}" required>
-                        </div>
-                        <div>
-                            <label for="{{guid}}_PropertyStreetName" class="labelRequired">Street Name <i>PropertyStreetName</i></label>
-                            <input type="text" id="{{guid}}_PropertyStreetName" name="PropertyStreetName" value="{{PropertyStreetName}}" required>
-                        </div>
-                        <div>
-                            <label for="{{guid}}_PropertyAddressLine2">Address Line 2 <i>PropertyAddressLine2</i></label>
-                            <input type="text" id="{{guid}}_PropertyAddressLine2" name="PropertyAddressLine2" value="{{PropertyAddressLine2}}">
-                        </div>
-                        <div>
-                            <label for="{{guid}}_PropertyCity" class="labelRequired">City <i>PropertyCity</i></label>
-                            <input type="text" id="{{guid}}_PropertyCity" name="PropertyCity" value="{{PropertyCity}}" required>
-                        </div>
-                        <div>
-                            <label for="{{guid}}_PropertyState" class="labelRequired">State <i>PropertyState</i></label>
-                            <select disabled="disabled" id="{{guid}}_PropertyState" name="InsuredMailingAddressState" data-value="{{PropertyState}}{{^PropertyState}}0{{/PropertyState}}" required>
-                                <option value="0">Select</option>
-                                <option value="AL">Alabama</option>
-                                <option value="AK">Alaska</option>
-                                <option value="AZ">Arizona</option>
-                                <option value="AR">Arkansas</option>
-                                <option value="CA">California</option>
-                                <option value="CO">Colorado</option>
-                                <option value="CT">Connecticut</option>
-                                <option value="DE">Delaware</option>
-                                <option value="DC">District Of Columbia</option>
-                                <option value="FL">Florida</option>
-                                <option value="GA">Georgia</option>
-                                <option value="HI">Hawaii</option>
-                                <option value="ID">Idaho</option>
-                                <option value="IL">Illinois</option>
-                                <option value="IN">Indiana</option>
-                                <option value="IA">Iowa</option>
-                                <option value="KS">Kansas</option>
-                                <option value="KY">Kentucky</option>
-                                <option value="LA">Louisiana</option>
-                                <option value="ME">Maine</option>
-                                <option value="MD">Maryland</option>
-                                <option value="MA">Massachusetts</option>
-                                <option value="MI">Michigan</option>
-                                <option value="MN">Minnesota</option>
-                                <option value="MS">Mississippi</option>
-                                <option value="MO">Missouri</option>
-                                <option value="MT">Montana</option>
-                                <option value="NE">Nebraska</option>
-                                <option value="NV">Nevada</option>
-                                <option value="NH">New Hampshire</option>
-                                <option value="NJ">New Jersey</option>
-                                <option value="NM">New Mexico</option>
-                                <option value="NY">New York</option>
-                                <option value="NC">North Carolina</option>
-                                <option value="ND">North Dakota</option>
-                                <option value="OH">Ohio</option>
-                                <option value="OK">Oklahoma</option>
-                                <option value="OR">Oregon</option>
-                                <option value="PA">Pennsylvania</option>
-                                <option value="RI">Rhode Island</option>
-                                <option value="SC">South Carolina</option>
-                                <option value="SD">South Dakota</option>
-                                <option value="TN">Tennessee</option>
-                                <option value="TX">Texas</option>
-                                <option value="UT">Utah</option>
-                                <option value="VT">Vermont</option>
-                                <option value="VA">Virginia</option>
-                                <option value="WA">Washington</option>
-                                <option value="WV">West Virginia</option>
-                                <option value="WI">Wisconsin</option>
-                                <option value="WY">Wyoming</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="{{guid}}_PropertyZipCode" class="labelRequired">Zip Code <i>PropertyZipCode</i></label>
-                            <input type="text" id="{{guid}}_PropertyZipCode" name="PropertyZipCode" value="{{PropertyZipCode}}" required>
-                        </div>
-                        <div>
-                            <label for="{{guid}}_PropertyZipCodePlusFour">Zip Code +4 <i>PropertyZipCodePlusFour</i></label>
-                            <input type="text" id="{{guid}}_PropertyZipCodePlusFour" name="PropertyZipCodePlusFour" value="{{PropertyZipCodePlusFour}}">
-                        </div>
-                        <div>
-                            <label for="{{guid}}_MailingEqualPropertyAddress" class="labelRequired">Mailing Address is the same as Property Address? <i>MailingEqualPropertyAddress</i></label>
-                            <select id="{{guid}}_MailingEqualPropertyAddress" name="MailingEqualPropertyAddress" data-value="{{MailingEqualPropertyAddress}}" required>
-                                {{#EnumsMailingEqualPropertyAddress}}
-                                <option value="{{value}}">{{label}}</option>
-                                {{/EnumsMailingEqualPropertyAddress}}
-                            </select>
-                        </div>
-
-                    </fieldset>
-                </div>
-            </fieldset>
-
-            <fieldset>
-                <h3>Insured <a data-alt-text="close">change</a></h3>
-                <div class="collapsibleFieldContainer">
-                    <fieldset>
-                        <legend>Name</legend>
-                        <div>
-                            <label for="{{guid}}_InsuredFirstName" class="labelRequired">First <i>InsuredFirstName</i></label>
-                            <input type="text" id="{{guid}}_InsuredFirstName" name="InsuredFirstName" value="{{InsuredFirstName}}" required>
-                        </div>
-                        <div>
-                            <label for="{{guid}}_InsuredMiddleName">Middle <i>InsuredMiddleName</i></label>
-                            <input type="text" id="{{guid}}_InsuredMiddleName" name="InsuredMiddleName" value="{{InsuredMiddleName}}">
-                        </div>
-                        <div>
-                            <label for="{{guid}}_InsuredLastName" class="labelRequired">Last <i>InsuredLastName</i></label>
-                            <input type="text" id="{{guid}}_InsuredLastName" name="InsuredLastName" value="{{InsuredLastName}}" required>
-                        </div>
-                    </fieldset>
-
-                    <fieldset {{#DisableMailingAddress}}style="display:none"{{/DisableMailingAddress}}>
-                        <legend>Mailing address</legend>
-
-                        <div>
-                            <label for="{{guid}}_InsuredMailingAddressLine1" class="labelRequired">Address line 1 <i>InsuredMailingAddressLine1</i></label>
-                            <input type="text" id="{{guid}}_InsuredMailingAddressLine1" name="InsuredMailingAddressLine1" value="{{InsuredMailingAddressLine1}}" required>
-                        </div>
-                        <div>
-                            <label for="{{guid}}_InsuredMailingAddressLine2">Address line 2 <i>InsuredMailingAddressLine2</i></label>
-                            <input type="text" id="{{guid}}_InsuredMailingAddressLine2" name="InsuredMailingAddressLine2" value="{{InsuredMailingAddressLine2}}">
-                        </div>
-
-                        <div>
-                            <label for="{{guid}}_InsuredMailingAddressCity" class="labelRequired">City <i>InsuredMailingAddressCity</i></label>
-                            <input type="text" id="{{guid}}_InsuredMailingAddressCity" name="InsuredMailingAddressCity" value="{{InsuredMailingAddressCity}}" required>
-                        </div>
-                        <div>
-                            <label for="{{guid}}_InsuredMailingAddressState" class="labelRequired">State <i>InsuredMailingAddressState</i></label>
-                            <select id="{{guid}}_InsuredMailingAddressState" name="InsuredMailingAddressState" data-value="{{InsuredMailingAddressState}}{{^InsuredMailingAddressState}}0{{/InsuredMailingAddressState}}" required>
-                                <option value="0">Select</option>
-                                <option value="AL">Alabama</option>
-                                <option value="AK">Alaska</option>
-                                <option value="AZ">Arizona</option>
-                                <option value="AR">Arkansas</option>
-                                <option value="CA">California</option>
-                                <option value="CO">Colorado</option>
-                                <option value="CT">Connecticut</option>
-                                <option value="DE">Delaware</option>
-                                <option value="DC">District Of Columbia</option>
-                                <option value="FL">Florida</option>
-                                <option value="GA">Georgia</option>
-                                <option value="HI">Hawaii</option>
-                                <option value="ID">Idaho</option>
-                                <option value="IL">Illinois</option>
-                                <option value="IN">Indiana</option>
-                                <option value="IA">Iowa</option>
-                                <option value="KS">Kansas</option>
-                                <option value="KY">Kentucky</option>
-                                <option value="LA">Louisiana</option>
-                                <option value="ME">Maine</option>
-                                <option value="MD">Maryland</option>
-                                <option value="MA">Massachusetts</option>
-                                <option value="MI">Michigan</option>
-                                <option value="MN">Minnesota</option>
-                                <option value="MS">Mississippi</option>
-                                <option value="MO">Missouri</option>
-                                <option value="MT">Montana</option>
-                                <option value="NE">Nebraska</option>
-                                <option value="NV">Nevada</option>
-                                <option value="NH">New Hampshire</option>
-                                <option value="NJ">New Jersey</option>
-                                <option value="NM">New Mexico</option>
-                                <option value="NY">New York</option>
-                                <option value="NC">North Carolina</option>
-                                <option value="ND">North Dakota</option>
-                                <option value="OH">Ohio</option>
-                                <option value="OK">Oklahoma</option>
-                                <option value="OR">Oregon</option>
-                                <option value="PA">Pennsylvania</option>
-                                <option value="RI">Rhode Island</option>
-                                <option value="SC">South Carolina</option>
-                                <option value="SD">South Dakota</option>
-                                <option value="TN">Tennessee</option>
-                                <option value="TX">Texas</option>
-                                <option value="UT">Utah</option>
-                                <option value="VT">Vermont</option>
-                                <option value="VA">Virginia</option>
-                                <option value="WA">Washington</option>
-                                <option value="WV">West Virginia</option>
-                                <option value="WI">Wisconsin</option>
-                                <option value="WY">Wyoming</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="{{guid}}_InsuredMailingAddressZip" class="labelRequired">Zip <i>InsuredMailingAddressZip</i></label>
-                            <input type="text" id="{{guid}}_InsuredMailingAddressZip" name="InsuredMailingAddressZip" maxlength="5" value="{{InsuredMailingAddressZip}}" size="5" required>
-                        </div>
-                        <div>
-                            <label for="{{guid}}_InsuredMailingAddressCountry">Country <i>InsuredMailingAddressCountry</i></label>
-                            <input type="text" id="{{guid}}_InsuredMailingAddressCountry" name="InsuredMailingAddressCountry" value="{{InsuredMailingAddressCountry}}" size="2">
-                        </div>
-                    </fieldset>
-                    <fieldset>
-                        <legend>Contact</legend>
-                        <div>
-                            <label for="{{guid}}_InsuredEmailAddress">Email address <i>InsuredEmailAddress</i></label>
-                            <input type="text" id="{{guid}}_InsuredEmailAddress" name="InsuredEmailAddress" value="{{InsuredEmailAddress}}">
-                        </div>
-
-                        <div>
-                            <label for="{{guid}}_InsuredPhoneNumber">Phone number <i>InsuredPhoneNumber</i></label>
-                            <input type="text" id="{{guid}}_InsuredPhoneNumber" name="InsuredPhoneNumber" value="{{InsuredPhoneNumber}}">
-                        </div>
-                    </fieldset>
-                    <fieldset>
-                        <legend>Personal info</legend>
-                        <div>
-                            <label for="{{guid}}_Insured1BirthDate" class="labelRequired">Birth date <i>Insured1BirthDate</i></label>
-                            <input type="text" id="{{guid}}_Insured1BirthDate" name="Insured1BirthDate" value="{{Insured1BirthDate}}" class="datepicker" data-year-range="-100:+0" required>
-                        </div>
-
-                        <div>
-                            <label for="{{guid}}_InsuredMaritalStatus">Marital status <i>InsuredMaritalStatus</i></label>
-                            <select id="{{guid}}_InsuredMaritalStatus" name="InsuredMaritalStatus" data-value="{{InsuredMaritalStatus}}">
-                                {{#EnumsInsuredMaritalStatus}}
-                                <option value="{{value}}">{{label}}</option>
-                                {{/EnumsInsuredMaritalStatus}}
-                            </select>
-                        </div>
-                    </fieldset>
-                    <fieldset>
-                        <legend>Insured 2</legend>
-                        <div>
-                            <label for="{{guid}}_Insured2FirstName">First <i>Insured2FirstName</i></label>
-                            <input type="text" id="{{guid}}_Insured2FirstName" name="Insured2FirstName" value="{{Insured2FirstName}}">
-                        </div>
-                        <div>
-                            <label for="{{guid}}_Insured2MiddleName">Middle <i>Insured2MiddleName</i></label>
-                            <input type="text" id="{{guid}}_Insured2MiddleName" name="Insured2MiddleName" value="{{Insured2MiddleName}}">
-                        </div>
-                        <div>
-                            <label for="{{guid}}_Insured2LastName">Last <i>Insured2LastName</i></label>
-                            <input type="text" id="{{guid}}_Insured2LastName" name="Insured2LastName" value="{{Insured2LastName}}">
-                        </div>
-                    </fieldset>
-                    <fieldset>
-                    <legend>Insured 3</legend>
-                    <div>
-                        <label for="{{guid}}_Insured3FirstName">First <i>Insured3FirstName</i></label>
-                        <input type="text" id="{{guid}}_Insured3FirstName" name="Insured3FirstName" value="{{Insured3FirstName}}">
-                    </div>
-                    <div>
-                        <label for="{{guid}}_Insured3MiddleName">Middle <i>Insured3MiddleName</i></label>
-                        <input type="text" id="{{guid}}_Insured3MiddleName" name="Insured3MiddleName" value="{{Insured3MiddleName}}">
-                    </div>
-                    <div>
-                        <label for="{{guid}}_Insured3LastName">Last <i>Insured3LastName</i></label>
-                        <input type="text" id="{{guid}}_Insured3LastName" name="Insured3LastName" value="{{Insured3LastName}}">
-                    </div>
-                </fieldset>
-                </div>
-            </fieldset>
-
-            {{#additionalInsured}}
-            <fieldset>
-                <h3>Additional Insured {{number}} <a data-alt-text="close">change</a></h3>
-                <div class="collapsibleFieldContainer">
-                    <fieldset>
-                        <legend>Name</legend>
-                        <div>
-                            <label for="{{guid}}_{{itemPrefix}}FirstName">First <i>{{itemPrefix}}FirstName</i></label>
-                            <input type="text" id="{{guid}}_{{itemPrefix}}FirstName" name="{{itemPrefix}}FirstName" value="{{FirstName}}">
-                        </div>
-                        <div>
-                            <label for="{{guid}}_{{itemPrefix}}LastName">Last <i>{{itemPrefix}}LastName</i></label>
-                            <input type="text" id="{{guid}}_{{itemPrefix}}LastName" name="{{itemPrefix}}LastName" value="{{LastName}}">
-                        </div>
-                    </fieldset>
-                    <fieldset>
-                        <legend>Mailing address</legend>
-
-                        <div>
-                            <label for="{{guid}}_{{itemPrefix}}AddressLine1">Address line 1 <i>{{itemPrefix}}AddressLine1</i></label>
-                            <input type="text" id="{{guid}}_{{itemPrefix}}AddressLine1" name="{{itemPrefix}}AddressLine1" value="{{AddressLine1}}">
-                        </div>
-                        <div>
-                            <label for="{{guid}}_{{itemPrefix}}AddressLine2">Address line 2 <i>{{itemPrefix}}AddressLine2</i></label>
-                            <input type="text" id="{{guid}}_{{itemPrefix}}AddressLine2" name="{{itemPrefix}}AddressLine2" value="{{AddressLine2}}">
-                        </div>
-
-                        <div>
-                            <label for="{{guid}}_{{itemPrefix}}AddressCity">City <i>{{itemPrefix}}AddressCity</i></label>
-                            <input type="text" id="{{guid}}_{{itemPrefix}}AddressCity" name="{{itemPrefix}}AddressCity" value="{{AddressCity}}">
-                        </div>
-                        <div>
-                            <label for="{{guid}}_{{itemPrefix}}AddressState">State <i>{{itemPrefix}}AddressState</i></label>
-                            <select id="{{guid}}_{{itemPrefix}}AddressState" name="{{itemPrefix}}AddressState" data-value="{{AddressState}}{{^AddressState}}0{{/AddressState}}">
-                                <option value="0">Select</option>
-                                <option value="AL">Alabama</option>
-                                <option value="AK">Alaska</option>
-                                <option value="AZ">Arizona</option>
-                                <option value="AR">Arkansas</option>
-                                <option value="CA">California</option>
-                                <option value="CO">Colorado</option>
-                                <option value="CT">Connecticut</option>
-                                <option value="DE">Delaware</option>
-                                <option value="DC">District Of Columbia</option>
-                                <option value="FL">Florida</option>
-                                <option value="GA">Georgia</option>
-                                <option value="HI">Hawaii</option>
-                                <option value="ID">Idaho</option>
-                                <option value="IL">Illinois</option>
-                                <option value="IN">Indiana</option>
-                                <option value="IA">Iowa</option>
-                                <option value="KS">Kansas</option>
-                                <option value="KY">Kentucky</option>
-                                <option value="LA">Louisiana</option>
-                                <option value="ME">Maine</option>
-                                <option value="MD">Maryland</option>
-                                <option value="MA">Massachusetts</option>
-                                <option value="MI">Michigan</option>
-                                <option value="MN">Minnesota</option>
-                                <option value="MS">Mississippi</option>
-                                <option value="MO">Missouri</option>
-                                <option value="MT">Montana</option>
-                                <option value="NE">Nebraska</option>
-                                <option value="NV">Nevada</option>
-                                <option value="NH">New Hampshire</option>
-                                <option value="NJ">New Jersey</option>
-                                <option value="NM">New Mexico</option>
-                                <option value="NY">New York</option>
-                                <option value="NC">North Carolina</option>
-                                <option value="ND">North Dakota</option>
-                                <option value="OH">Ohio</option>
-                                <option value="OK">Oklahoma</option>
-                                <option value="OR">Oregon</option>
-                                <option value="PA">Pennsylvania</option>
-                                <option value="RI">Rhode Island</option>
-                                <option value="SC">South Carolina</option>
-                                <option value="SD">South Dakota</option>
-                                <option value="TN">Tennessee</option>
-                                <option value="TX">Texas</option>
-                                <option value="UT">Utah</option>
-                                <option value="VT">Vermont</option>
-                                <option value="VA">Virginia</option>
-                                <option value="WA">Washington</option>
-                                <option value="WV">West Virginia</option>
-                                <option value="WI">Wisconsin</option>
-                                <option value="WY">Wyoming</option>
-                            </select>
-                        </div>
-                        <div>
-                            <label for="{{guid}}_{{itemPrefix}}AddressZip">Zip <i>{{itemPrefix}}AddressZip</i></label>
-                            <input type="text" id="{{guid}}_{{itemPrefix}}AddressZip" name="{{itemPrefix}}AddressZip" value="{{AddressZip}}" size="5">
-                        </div>
-                    </fieldset>
-                    <fieldset>
-                    <div>
-                        <label for="{{guid}}_{{itemPrefix}}ReferenceNumber">Reference Number <i>{{itemPrefix}}ReferenceNumber</i></label>
-                        <input type="text" id="{{guid}}_{{itemPrefix}}ReferenceNumber" name="{{itemPrefix}}ReferenceNumber" value="{{ReferenceNumber}}">
-                    </div>
-                    <div>
-                        <label for="{{guid}}_{{itemPrefix}}Type">Type <i>{{itemPrefix}}Type</i></label>
-                        <select id="{{guid}}_{{itemPrefix}}Type" name="{{itemPrefix}}Type" data-value="{{Type}}">
-                            {{#EnumsAdditionalInsuredTypes}}
-                            <option value="{{value}}">{{label}}</option>
-                            {{/EnumsAdditionalInsuredTypes}}
-                        </select>
-                    </div>
-                </fieldset>
-                </div>
-                
-            </fieldset>
-            {{/additionalInsured}}
-
-            <fieldset>
-                <div>
-                    <label for="{{guid}}_addNotes" class="noteslabel">Notes</label>
-                    <textarea cols="97" rows="7" id="{{guid}}_addNotes" name="addNotes" value=""></textarea>
-                </div>
-            </fieldset>
-            
-            <div class="form_actions">
-                <input type="submit" class="button" value="Confirm">
-                <a href="home">Nevermind, go back</a>
-            </div>
-        </div>
+    {{#policyOverview}}
+    <div class="panel panel-default policy-overview">
+      <div class="panel-heading">
+        <h3 class="panel-title">Policy Overview</h3>
+      </div>
+      <div class="panel-body">
+        <ul>
+          <li>{{InsuredFirstName}} {{InsuredMiddleName}} {{InsuredLastName}}</li>
+          <li>{{InsuredMailingAddressLine1}}</li>
+          <li>{{InsuredMailingAddressLine2}}</li>
+          <li>{{InsuredMailingAddressCity}}, {{InsuredMailingAddressState}} {{InsuredMailingAddressZip}}</li>
+        </ul>
+      </div>
     </div>
+    {{/policyOverview}}
+
+    <div class="form-group">
+      <label for="{{guid}}_reasonCode" class="control-label col-xs-3 label-required">Reason code</label>
+      <div class="col-xs-4">
+        <select id="{{guid}}_reasonCode" class="form-control" name="reasonCode" required>
+          {{#EnumsChangeCustomerReason}}
+          <option value="{{value}}" {{#vendorHide}}class="vendor-hide"{{/vendorHide}}>{{label}}</option>
+          {{/EnumsChangeCustomerReason}}
+        </select>
+      </div>
+    </div>
+
+    <div class="panel-group">
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab">
+          <h4 class="panel-title">
+            <a role="button" data-toggle="collapse" href="#{{guid}}_collapsePropertyAddress" aria-expanded="true" aria-controls="{{guid}}_collapsePropertyAddress">
+              Property Address
+              <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
+              <span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span>
+            </a>
+          </h4>
+        </div>
+        <div id="{{guid}}_collapsePropertyAddress" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+
+            <!-- SHOW DISABLED IN AGENT PORTAL -->
+            <div class="vendor-show">
+              <div class="form-group">
+                <label for="{{guid}}_PropertyStreetNumber" class="control-label col-xs-3 label-required" data-toggle="tooltip" data-placement="top" title="PropertyStreetNumber">Street Number</label>
+                <div class="col-xs-6">
+                  <input type="text" id="{{guid}}_PropertyStreetNumber" class="form-control" name="PropertyStreetNumber" value="{{PropertyStreetNumber}}" required disabled>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="{{guid}}_PropertyStreetName" class="control-label col-xs-3 label-required" data-toggle="tooltip" data-placement="top" title="PropertyStreetName">Street Name</label>
+                <div class="col-xs-6">
+                  <input type="text" id="{{guid}}_PropertyStreetName" class="form-control" name="PropertyStreetName" value="{{PropertyStreetName}}" required disabled>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="{{guid}}_PropertyAddressLine2" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="PropertyStreetName">Address Line 2</label>
+                <div class="col-xs-6">
+                  <input type="text" id="{{guid}}_PropertyAddressLine2" class="form-control" name="PropertyAddressLine2" value="{{PropertyAddressLine2}}" disabled>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="{{guid}}_PropertyCity"  class="control-label col-xs-3 label-required" data-toggle="tooltip" data-placement="top" title="PropertyCity">City</label>
+                <div class="col-xs-6">
+                  <input type="text" id="{{guid}}_PropertyCity" name="PropertyCity" class="form-control" value="{{PropertyCity}}" required disabled>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="{{guid}}_PropertyState" class="control-label col-xs-3 label-required" data-toggle="tooltip" data-placement="top" title="PropertyState">State</label>
+                <div class="col-xs-6">
+                  <select disabled="disabled" id="{{guid}}_PropertyState" class="form-control" name="InsuredMailingAddressState" data-value="{{PropertyState}}{{^PropertyState}}0{{/PropertyState}}" required disabled>
+                    <option value="0">Select</option>
+                    <option value="AL">Alabama</option>
+                    <option value="AK">Alaska</option>
+                    <option value="AZ">Arizona</option>
+                    <option value="AR">Arkansas</option>
+                    <option value="CA">California</option>
+                    <option value="CO">Colorado</option>
+                    <option value="CT">Connecticut</option>
+                    <option value="DE">Delaware</option>
+                    <option value="DC">District Of Columbia</option>
+                    <option value="FL">Florida</option>
+                    <option value="GA">Georgia</option>
+                    <option value="HI">Hawaii</option>
+                    <option value="ID">Idaho</option>
+                    <option value="IL">Illinois</option>
+                    <option value="IN">Indiana</option>
+                    <option value="IA">Iowa</option>
+                    <option value="KS">Kansas</option>
+                    <option value="KY">Kentucky</option>
+                    <option value="LA">Louisiana</option>
+                    <option value="ME">Maine</option>
+                    <option value="MD">Maryland</option>
+                    <option value="MA">Massachusetts</option>
+                    <option value="MI">Michigan</option>
+                    <option value="MN">Minnesota</option>
+                    <option value="MS">Mississippi</option>
+                    <option value="MO">Missouri</option>
+                    <option value="MT">Montana</option>
+                    <option value="NE">Nebraska</option>
+                    <option value="NV">Nevada</option>
+                    <option value="NH">New Hampshire</option>
+                    <option value="NJ">New Jersey</option>
+                    <option value="NM">New Mexico</option>
+                    <option value="NY">New York</option>
+                    <option value="NC">North Carolina</option>
+                    <option value="ND">North Dakota</option>
+                    <option value="OH">Ohio</option>
+                    <option value="OK">Oklahoma</option>
+                    <option value="OR">Oregon</option>
+                    <option value="PA">Pennsylvania</option>
+                    <option value="RI">Rhode Island</option>
+                    <option value="SC">South Carolina</option>
+                    <option value="SD">South Dakota</option>
+                    <option value="TN">Tennessee</option>
+                    <option value="TX">Texas</option>
+                    <option value="UT">Utah</option>
+                    <option value="VT">Vermont</option>
+                    <option value="VA">Virginia</option>
+                    <option value="WA">Washington</option>
+                    <option value="WV">West Virginia</option>
+                    <option value="WI">Wisconsin</option>
+                    <option value="WY">Wyoming</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="{{guid}}_PropertyZipCode" class="control-label col-xs-3 label-required" data-toggle="tooltip" data-placement="top" title="PropertyZipCode">Zip Code</label>
+                <div class="col-xs-6">
+                  <input type="text" id="{{guid}}_PropertyZipCode" class="form-control" name="PropertyZipCode" value="{{PropertyZipCode}}" required disabled>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="{{guid}}_PropertyZipCodePlusFour" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="PropertyZipCodePlusFour">Zip Code +4</label>
+                <div class="col-xs-6">
+                  <input type="text" id="{{guid}}_PropertyZipCodePlusFour" class="form-control" name="PropertyZipCodePlusFour" value="{{PropertyZipCodePlusFour}}" disabled>
+                </div>
+              </div>
+            </div>
+
+            <!-- SHOW ENABLED IN POLICY CENTRAL -->
+            <div class="vendor-hide">
+              <div class="form-group">
+                <label for="{{guid}}_PropertyStreetNumber" class="control-label col-xs-3 label-required" data-toggle="tooltip" data-placement="top" title="PropertyStreetNumber">Street Number</label>
+                <div class="col-xs-6">
+                  <input type="text" id="{{guid}}_PropertyStreetNumber" class="form-control" name="PropertyStreetNumber" value="{{PropertyStreetNumber}}" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="{{guid}}_PropertyStreetName" class="control-label col-xs-3 label-required" data-toggle="tooltip" data-placement="top" title="PropertyStreetName">Street Name</label>
+                <div class="col-xs-6">
+                  <input type="text" id="{{guid}}_PropertyStreetName" class="form-control" name="PropertyStreetName" value="{{PropertyStreetName}}" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="{{guid}}_PropertyAddressLine2" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="PropertyStreetName">Address Line 2</label>
+                <div class="col-xs-6">
+                  <input type="text" id="{{guid}}_PropertyAddressLine2" class="form-control" name="PropertyAddressLine2" value="{{PropertyAddressLine2}}">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="{{guid}}_PropertyCity"  class="control-label col-xs-3 label-required" data-toggle="tooltip" data-placement="top" title="PropertyCity">City</label>
+                <div class="col-xs-6">
+                  <input type="text" id="{{guid}}_PropertyCity" name="PropertyCity" class="form-control" value="{{PropertyCity}}" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="{{guid}}_PropertyState" class="control-label col-xs-3 label-required" data-toggle="tooltip" data-placement="top" title="PropertyState">State</label>
+                <div class="col-xs-6">
+                  <select disabled="disabled" id="{{guid}}_PropertyState" class="form-control" name="InsuredMailingAddressState" data-value="{{PropertyState}}{{^PropertyState}}0{{/PropertyState}}" required>
+                    <option value="0">Select</option>
+                    <option value="AL">Alabama</option>
+                    <option value="AK">Alaska</option>
+                    <option value="AZ">Arizona</option>
+                    <option value="AR">Arkansas</option>
+                    <option value="CA">California</option>
+                    <option value="CO">Colorado</option>
+                    <option value="CT">Connecticut</option>
+                    <option value="DE">Delaware</option>
+                    <option value="DC">District Of Columbia</option>
+                    <option value="FL">Florida</option>
+                    <option value="GA">Georgia</option>
+                    <option value="HI">Hawaii</option>
+                    <option value="ID">Idaho</option>
+                    <option value="IL">Illinois</option>
+                    <option value="IN">Indiana</option>
+                    <option value="IA">Iowa</option>
+                    <option value="KS">Kansas</option>
+                    <option value="KY">Kentucky</option>
+                    <option value="LA">Louisiana</option>
+                    <option value="ME">Maine</option>
+                    <option value="MD">Maryland</option>
+                    <option value="MA">Massachusetts</option>
+                    <option value="MI">Michigan</option>
+                    <option value="MN">Minnesota</option>
+                    <option value="MS">Mississippi</option>
+                    <option value="MO">Missouri</option>
+                    <option value="MT">Montana</option>
+                    <option value="NE">Nebraska</option>
+                    <option value="NV">Nevada</option>
+                    <option value="NH">New Hampshire</option>
+                    <option value="NJ">New Jersey</option>
+                    <option value="NM">New Mexico</option>
+                    <option value="NY">New York</option>
+                    <option value="NC">North Carolina</option>
+                    <option value="ND">North Dakota</option>
+                    <option value="OH">Ohio</option>
+                    <option value="OK">Oklahoma</option>
+                    <option value="OR">Oregon</option>
+                    <option value="PA">Pennsylvania</option>
+                    <option value="RI">Rhode Island</option>
+                    <option value="SC">South Carolina</option>
+                    <option value="SD">South Dakota</option>
+                    <option value="TN">Tennessee</option>
+                    <option value="TX">Texas</option>
+                    <option value="UT">Utah</option>
+                    <option value="VT">Vermont</option>
+                    <option value="VA">Virginia</option>
+                    <option value="WA">Washington</option>
+                    <option value="WV">West Virginia</option>
+                    <option value="WI">Wisconsin</option>
+                    <option value="WY">Wyoming</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="{{guid}}_PropertyZipCode" class="control-label col-xs-3 label-required" data-toggle="tooltip" data-placement="top" title="PropertyZipCode">Zip Code</label>
+                <div class="col-xs-6">
+                  <input type="text" id="{{guid}}_PropertyZipCode" class="form-control" name="PropertyZipCode" value="{{PropertyZipCode}}" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="{{guid}}_PropertyZipCodePlusFour" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="PropertyZipCodePlusFour">Zip Code +4</label>
+                <div class="col-xs-6">
+                  <input type="text" id="{{guid}}_PropertyZipCodePlusFour" class="form-control" name="PropertyZipCodePlusFour" value="{{PropertyZipCodePlusFour}}">
+                </div>
+              </div>
+            </div>
+
+            <!-- MAILING EQUAL PROPERTY ADDRESS -->
+            <div class="form-group">
+              <label for="{{guid}}_MailingEqualPropertyAddress" class="control-label col-xs-3 label-required" data-toggle="tooltip" data-placement="top" title="PropertyZipCodePlusFour">Mailing Address is the same as Property Address?</label>
+              <div class="col-xs-6">
+                <select id="{{guid}}_MailingEqualPropertyAddress" class="form-control" name="MailingEqualPropertyAddress" data-value="{{MailingEqualPropertyAddress}}" required>
+                  {{#EnumsMailingEqualPropertyAddress}}
+                  <option value="{{value}}">{{label}}</option>
+                  {{/EnumsMailingEqualPropertyAddress}}
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab">
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" href="#{{guid}}_collapseInsured" aria-expanded="false" aria-controls="{{guid}}_collapseInsured">
+              Insured
+              <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
+              <span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span>
+            </a>
+          </h4>
+        </div>
+        <div id="{{guid}}_collapseInsured" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+          <div class="panel-body">
+            <fieldset class="bs">
+              <legend>Name</legend>
+              <div class="form-group">
+                <label for="{{guid}}_InsuredFirstName" class="control-label col-xs-3 label-required" data-toggle="tooltip" data-placement="top" title="InsuredFirstName">First</label>
+                <div class="col-xs-6">
+                  <input type="text" id="{{guid}}_InsuredFirstName" class="form-control" name="InsuredFirstName" value="{{InsuredFirstName}}" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="{{guid}}_InsuredMiddleName" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="InsuredMiddleName">Middle</label>
+                <div class="col-xs-6">
+                  <input type="text" id="{{guid}}_InsuredMiddleName" class="form-control" name="InsuredMiddleName" value="{{InsuredMiddleName}}">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="{{guid}}_InsuredLastName" class="control-label col-xs-3 label-required" data-toggle="tooltip" data-placement="top" title="InsuredLastName">Last</label>
+                <div class="col-xs-6">
+                  <input type="text" id="{{guid}}_InsuredLastName" class="form-control" name="InsuredLastName" value="{{InsuredLastName}}" required>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset {{#DisableMailingAddress}}style="display:none"{{/DisableMailingAddress}} class="bs">
+              <legend>Mailing address</legend>
+              <div class="form-group">
+                <label for="{{guid}}_InsuredMailingAddressLine1" class="control-label col-xs-3 label-required" data-toggle="tooltip" data-placement="top" title="InsuredMailingAddressLine1">Address line 1</label>
+                <div class="col-xs-6">
+                  <input type="text" id="{{guid}}_InsuredMailingAddressLine1" class="form-control" name="InsuredMailingAddressLine1" value="{{InsuredMailingAddressLine1}}" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="{{guid}}_InsuredMailingAddressLine2" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="InsuredMailingAddressLine2">Address line 2</label>
+                <div class="col-xs-6">
+                  <input type="text" id="{{guid}}_InsuredMailingAddressLine2" class="form-control" name="InsuredMailingAddressLine2" value="{{InsuredMailingAddressLine2}}">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="{{guid}}_InsuredMailingAddressCity" class="control-label col-xs-3 label-required" data-toggle="tooltip" data-placement="top" title="InsuredMailingAddressCity">City</label>
+                <div class="col-xs-6">
+                  <input type="text" id="{{guid}}_InsuredMailingAddressCity" class="form-control" name="InsuredMailingAddressCity" value="{{InsuredMailingAddressCity}}" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="{{guid}}_InsuredMailingAddressState" class="control-label col-xs-3 label-required" data-toggle="tooltip" data-placement="top" title="InsuredMailingAddressState">State</label>
+                <div class="col-xs-6">
+                  <select id="{{guid}}_InsuredMailingAddressState" class="form-control" name="InsuredMailingAddressState" data-value="{{InsuredMailingAddressState}}{{^InsuredMailingAddressState}}0{{/InsuredMailingAddressState}}" required>
+                    <option value="0">Select</option>
+                    <option value="AL">Alabama</option>
+                    <option value="AK">Alaska</option>
+                    <option value="AZ">Arizona</option>
+                    <option value="AR">Arkansas</option>
+                    <option value="CA">California</option>
+                    <option value="CO">Colorado</option>
+                    <option value="CT">Connecticut</option>
+                    <option value="DE">Delaware</option>
+                    <option value="DC">District Of Columbia</option>
+                    <option value="FL">Florida</option>
+                    <option value="GA">Georgia</option>
+                    <option value="HI">Hawaii</option>
+                    <option value="ID">Idaho</option>
+                    <option value="IL">Illinois</option>
+                    <option value="IN">Indiana</option>
+                    <option value="IA">Iowa</option>
+                    <option value="KS">Kansas</option>
+                    <option value="KY">Kentucky</option>
+                    <option value="LA">Louisiana</option>
+                    <option value="ME">Maine</option>
+                    <option value="MD">Maryland</option>
+                    <option value="MA">Massachusetts</option>
+                    <option value="MI">Michigan</option>
+                    <option value="MN">Minnesota</option>
+                    <option value="MS">Mississippi</option>
+                    <option value="MO">Missouri</option>
+                    <option value="MT">Montana</option>
+                    <option value="NE">Nebraska</option>
+                    <option value="NV">Nevada</option>
+                    <option value="NH">New Hampshire</option>
+                    <option value="NJ">New Jersey</option>
+                    <option value="NM">New Mexico</option>
+                    <option value="NY">New York</option>
+                    <option value="NC">North Carolina</option>
+                    <option value="ND">North Dakota</option>
+                    <option value="OH">Ohio</option>
+                    <option value="OK">Oklahoma</option>
+                    <option value="OR">Oregon</option>
+                    <option value="PA">Pennsylvania</option>
+                    <option value="RI">Rhode Island</option>
+                    <option value="SC">South Carolina</option>
+                    <option value="SD">South Dakota</option>
+                    <option value="TN">Tennessee</option>
+                    <option value="TX">Texas</option>
+                    <option value="UT">Utah</option>
+                    <option value="VT">Vermont</option>
+                    <option value="VA">Virginia</option>
+                    <option value="WA">Washington</option>
+                    <option value="WV">West Virginia</option>
+                    <option value="WI">Wisconsin</option>
+                    <option value="WY">Wyoming</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="{{guid}}_InsuredMailingAddressZip" class="control-label col-xs-3 label-required" data-toggle="tooltip" data-placement="top" title="InsuredMailingAddressZip">Zip</label>
+                <div class="col-xs-6">
+                  <input type="text" id="{{guid}}_InsuredMailingAddressZip" class="form-control" name="InsuredMailingAddressZip" maxlength="5" value="{{InsuredMailingAddressZip}}" size="5" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="{{guid}}_InsuredMailingAddressCountry" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="InsuredMailingAddressCountry">Country</label>
+                <div class="col-xs-6">
+                  <input type="text" id="{{guid}}_InsuredMailingAddressCountry" class="form-control" name="InsuredMailingAddressCountry" value="{{InsuredMailingAddressCountry}}" size="2">
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset class="bs">
+              <legend>Contact</legend>
+              <div class="form-group">
+                <label for="{{guid}}_InsuredEmailAddress" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="InsuredEmailAddress">Email address</label>
+                <div class="col-xs-6">
+                  <input type="text" id="{{guid}}_InsuredEmailAddress" class="form-control" name="InsuredEmailAddress" value="{{InsuredEmailAddress}}">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="{{guid}}_InsuredPhoneNumber" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="InsuredPhoneNumber">Phone number</label>
+                <div class="col-xs-6">
+                  <input type="text" id="{{guid}}_InsuredPhoneNumber" class="form-control" name="InsuredPhoneNumber" value="{{InsuredPhoneNumber}}">
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset class="bs">
+              <legend>Personal info</legend>
+              <div class="form-group">
+                <label for="{{guid}}_Insured1BirthDate" class="control-label col-xs-3 label-required" data-toggle="tooltip" data-placement="top" title="InsuredBirthDate">Birth date</label>
+                <div class="col-xs-6">
+                  <input type="text" id="{{guid}}_Insured1BirthDate" class="form-control" name="Insured1BirthDate" value="{{Insured1BirthDate}}" class="datepicker" data-year-range="-100:+0" required>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="{{guid}}_InsuredMaritalStatus" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="InsuredMaritalStatus">Marital status</label>
+                <div class="col-xs-6">
+                  <select id="{{guid}}_InsuredMaritalStatus" class="form-control" name="InsuredMaritalStatus" data-value="{{InsuredMaritalStatus}}">
+                    {{#EnumsInsuredMaritalStatus}}
+                    <option value="{{value}}">{{label}}</option>
+                    {{/EnumsInsuredMaritalStatus}}
+                  </select>
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset class="bs">
+              <legend>Insured 2</legend>
+              <div class="form-group">
+                <label for="{{guid}}_Insured2FirstName" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="Insured2FirstName">First</label>
+                <div class="col-xs-6">
+                  <input type="text" id="{{guid}}_Insured2FirstName" class="form-control" name="Insured2FirstName" value="{{Insured2FirstName}}">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="{{guid}}_Insured2MiddleName" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="Insured2MiddleName">Middle</label>
+                <div class="col-xs-6">
+                  <input type="text" id="{{guid}}_Insured2MiddleName" class="form-control" name="Insured2MiddleName" value="{{Insured2MiddleName}}">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="{{guid}}_Insured2LastName" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="Insured2LastName">Last</label>
+                <div class="col-xs-6">
+                  <input type="text" id="{{guid}}_Insured2LastName" class="form-control" name="Insured2LastName" value="{{Insured2LastName}}">
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset class="bs">
+              <legend>Insured 3</legend>
+              <div class="form-group">
+                <label for="{{guid}}_Insured3FirstName" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="Insured3FirstName">First</label>
+                <div class="col-xs-6">
+                  <input type="text" id="{{guid}}_Insured3FirstName" class="form-control" name="Insured3FirstName" value="{{Insured3FirstName}}">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="{{guid}}_Insured3MiddleName" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="Insured3MiddleName">Middle</label>
+                <div class="col-xs-6">
+                  <input type="text" id="{{guid}}_Insured3MiddleName" class="form-control" name="Insured3MiddleName" value="{{Insured3MiddleName}}">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="{{guid}}_Insured3LastName" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="Insured3LastName">Last</label>
+                <div class="col-xs-6">
+                  <input type="text" id="{{guid}}_Insured3LastName" class="form-control" name="Insured3LastName" value="{{Insured3LastName}}">
+                </div>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+      </div>
+
+      {{#additionalInsured}}
+      <div class="panel panel-default">
+        <div class="panel-heading" role="tab">
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" href="#{{guid}}_collapse{{itemPrefix}}" aria-expanded="true" aria-controls="{{guid}}_collapse{{itemPrefix}}">
+              Additional Insured {{number}}
+              <span class="glyphicon glyphicon-menu-down" aria-hidden="true"></span>
+              <span class="glyphicon glyphicon-menu-up" aria-hidden="true"></span>
+            </a>
+          </h4>
+        </div>
+        <div id="{{guid}}_collapse{{itemPrefix}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body">
+            <fieldset class="bs">
+              <legend>Name</legend>
+              <div class="form-group">
+                <label for="{{guid}}_{{itemPrefix}}FirstName" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="{{itemPrefix}}FirstName">First</label>
+                <div class="col-xs-6">
+                  <input type="text" id="{{guid}}_{{itemPrefix}}FirstName" class="form-control" name="{{itemPrefix}}FirstName" value="{{FirstName}}">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="{{guid}}_{{itemPrefix}}LastName" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="{{itemPrefix}}LastName">Last</label>
+                <div class="col-xs-6">
+                  <input type="text" id="{{guid}}_{{itemPrefix}}LastName" class="form-control" name="{{itemPrefix}}LastName" value="{{LastName}}">
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset class="bs">
+              <legend>Mailing address</legend>
+              <div class="form-group">
+                <label for="{{guid}}_{{itemPrefix}}AddressLine1" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="{{itemPrefix}}AddressLine1">Address line 1</label>
+                <div class="col-xs-6">
+                  <input type="text" id="{{guid}}_{{itemPrefix}}AddressLine1" class="form-control" name="{{itemPrefix}}AddressLine1" value="{{AddressLine1}}">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="{{guid}}_{{itemPrefix}}AddressLine2" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="{{itemPrefix}}AddressLine2">Address line 2</label>
+                <div class="col-xs-6">
+                  <input type="text" id="{{guid}}_{{itemPrefix}}AddressLine2" class="form-control" name="{{itemPrefix}}AddressLine2" value="{{AddressLine2}}">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="{{guid}}_{{itemPrefix}}AddressCity" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="{{itemPrefix}}AddressCity">City</label>
+                <div class="col-xs-6">
+                  <input type="text" id="{{guid}}_{{itemPrefix}}AddressCity" class="form-control" name="{{itemPrefix}}AddressCity" value="{{AddressCity}}">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="{{guid}}_{{itemPrefix}}AddressState" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="{{itemPrefix}}AddressState">State</label>
+                <div class="col-xs-6">
+                  <select id="{{guid}}_{{itemPrefix}}AddressState" class="form-control" name="{{itemPrefix}}AddressState" data-value="{{AddressState}}{{^AddressState}}0{{/AddressState}}">
+                    <option value="0">Select</option>
+                    <option value="AL">Alabama</option>
+                    <option value="AK">Alaska</option>
+                    <option value="AZ">Arizona</option>
+                    <option value="AR">Arkansas</option>
+                    <option value="CA">California</option>
+                    <option value="CO">Colorado</option>
+                    <option value="CT">Connecticut</option>
+                    <option value="DE">Delaware</option>
+                    <option value="DC">District Of Columbia</option>
+                    <option value="FL">Florida</option>
+                    <option value="GA">Georgia</option>
+                    <option value="HI">Hawaii</option>
+                    <option value="ID">Idaho</option>
+                    <option value="IL">Illinois</option>
+                    <option value="IN">Indiana</option>
+                    <option value="IA">Iowa</option>
+                    <option value="KS">Kansas</option>
+                    <option value="KY">Kentucky</option>
+                    <option value="LA">Louisiana</option>
+                    <option value="ME">Maine</option>
+                    <option value="MD">Maryland</option>
+                    <option value="MA">Massachusetts</option>
+                    <option value="MI">Michigan</option>
+                    <option value="MN">Minnesota</option>
+                    <option value="MS">Mississippi</option>
+                    <option value="MO">Missouri</option>
+                    <option value="MT">Montana</option>
+                    <option value="NE">Nebraska</option>
+                    <option value="NV">Nevada</option>
+                    <option value="NH">New Hampshire</option>
+                    <option value="NJ">New Jersey</option>
+                    <option value="NM">New Mexico</option>
+                    <option value="NY">New York</option>
+                    <option value="NC">North Carolina</option>
+                    <option value="ND">North Dakota</option>
+                    <option value="OH">Ohio</option>
+                    <option value="OK">Oklahoma</option>
+                    <option value="OR">Oregon</option>
+                    <option value="PA">Pennsylvania</option>
+                    <option value="RI">Rhode Island</option>
+                    <option value="SC">South Carolina</option>
+                    <option value="SD">South Dakota</option>
+                    <option value="TN">Tennessee</option>
+                    <option value="TX">Texas</option>
+                    <option value="UT">Utah</option>
+                    <option value="VT">Vermont</option>
+                    <option value="VA">Virginia</option>
+                    <option value="WA">Washington</option>
+                    <option value="WV">West Virginia</option>
+                    <option value="WI">Wisconsin</option>
+                    <option value="WY">Wyoming</option>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="{{guid}}_{{itemPrefix}}AddressZip" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="{{itemPrefix}}AddressZip">Zip</label>
+                <div class="col-xs-6">
+                  <input type="text" id="{{guid}}_{{itemPrefix}}AddressZip" class="form-control" name="{{itemPrefix}}AddressZip" value="{{AddressZip}}" size="5">
+                </div>
+              </div>
+            </fieldset>
+
+            <fieldset class="bs">
+              <div class="form-group">
+                <label for="{{guid}}_{{itemPrefix}}ReferenceNumber" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="{{itemPrefix}}ReferenceNumber">Reference Number</label>
+                <div class="col-xs-6">
+                  <input type="text" id="{{guid}}_{{itemPrefix}}ReferenceNumber" class="form-control" name="{{itemPrefix}}ReferenceNumber" value="{{ReferenceNumber}}">
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="{{guid}}_{{itemPrefix}}Type" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="{{itemPrefix}}Type">Type</label>
+                <div class="col-xs-6">
+                  <select id="{{guid}}_{{itemPrefix}}Type" class="form-control" name="{{itemPrefix}}Type" data-value="{{Type}}">
+                    {{#EnumsAdditionalInsuredTypes}}
+                    <option value="{{value}}">{{label}}</option>
+                    {{/EnumsAdditionalInsuredTypes}}
+                  </select>
+                </div>
+              </div>
+            </fieldset>
+          </div>
+        </div>
+      </div>
+      {{/additionalInsured}}
+    </div>
+
+    <div class="form-group">
+      <label for="{{guid}}_addNotes" class="control-label col-xs-3">Notes</label>
+      <div class="col-xs-6">
+        <textarea rows="7" id="{{guid}}_addNotes" class="form-control" name="addNotes"></textarea>
+      </div>
+    </div>
+
+    <div class="form_actions">
+      <input type="submit" class="btn btn-primary" value="Confirm">
+      <a href="home" class="btn btn-default">Nevermind, go back</a>
+    </div>
+  </div>
 </form>
