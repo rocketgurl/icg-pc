@@ -19,7 +19,7 @@
     </div>
     {{/policyOverview}}
 
-    <div class="form-group">
+    <div class="form-group form-group-sm">
       <label for="{{guid}}_reasonCode" class="control-label col-xs-3 label-required">Reason code</label>
       <div class="col-xs-4">
         <select id="{{guid}}_reasonCode" class="form-control" name="reasonCode" required>
@@ -46,31 +46,31 @@
 
             <!-- SHOW DISABLED IN AGENT PORTAL -->
             <div class="vendor-show">
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                 <label for="{{guid}}_PropertyStreetNumber" class="control-label col-xs-3 label-required" data-toggle="tooltip" data-placement="top" title="PropertyStreetNumber">Street Number</label>
                 <div class="col-xs-6">
                   <input type="text" id="{{guid}}_PropertyStreetNumber" class="form-control" name="PropertyStreetNumber" value="{{PropertyStreetNumber}}" required disabled>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                 <label for="{{guid}}_PropertyStreetName" class="control-label col-xs-3 label-required" data-toggle="tooltip" data-placement="top" title="PropertyStreetName">Street Name</label>
                 <div class="col-xs-6">
                   <input type="text" id="{{guid}}_PropertyStreetName" class="form-control" name="PropertyStreetName" value="{{PropertyStreetName}}" required disabled>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                 <label for="{{guid}}_PropertyAddressLine2" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="PropertyStreetName">Address Line 2</label>
                 <div class="col-xs-6">
                   <input type="text" id="{{guid}}_PropertyAddressLine2" class="form-control" name="PropertyAddressLine2" value="{{PropertyAddressLine2}}" disabled>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                 <label for="{{guid}}_PropertyCity"  class="control-label col-xs-3 label-required" data-toggle="tooltip" data-placement="top" title="PropertyCity">City</label>
                 <div class="col-xs-6">
                   <input type="text" id="{{guid}}_PropertyCity" name="PropertyCity" class="form-control" value="{{PropertyCity}}" required disabled>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                 <label for="{{guid}}_PropertyState" class="control-label col-xs-3 label-required" data-toggle="tooltip" data-placement="top" title="PropertyState">State</label>
                 <div class="col-xs-6">
                   <select disabled="disabled" id="{{guid}}_PropertyState" class="form-control" name="InsuredMailingAddressState" data-value="{{PropertyState}}{{^PropertyState}}0{{/PropertyState}}" required disabled>
@@ -129,13 +129,13 @@
                   </select>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                 <label for="{{guid}}_PropertyZipCode" class="control-label col-xs-3 label-required" data-toggle="tooltip" data-placement="top" title="PropertyZipCode">Zip Code</label>
                 <div class="col-xs-6">
                   <input type="text" id="{{guid}}_PropertyZipCode" class="form-control" name="PropertyZipCode" value="{{PropertyZipCode}}" required disabled>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                 <label for="{{guid}}_PropertyZipCodePlusFour" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="PropertyZipCodePlusFour">Zip Code +4</label>
                 <div class="col-xs-6">
                   <input type="text" id="{{guid}}_PropertyZipCodePlusFour" class="form-control" name="PropertyZipCodePlusFour" value="{{PropertyZipCodePlusFour}}" disabled>
@@ -145,31 +145,31 @@
 
             <!-- SHOW ENABLED IN POLICY CENTRAL -->
             <div class="vendor-hide">
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                 <label for="{{guid}}_PropertyStreetNumber" class="control-label col-xs-3 label-required" data-toggle="tooltip" data-placement="top" title="PropertyStreetNumber">Street Number</label>
                 <div class="col-xs-6">
                   <input type="text" id="{{guid}}_PropertyStreetNumber" class="form-control" name="PropertyStreetNumber" value="{{PropertyStreetNumber}}" required>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                 <label for="{{guid}}_PropertyStreetName" class="control-label col-xs-3 label-required" data-toggle="tooltip" data-placement="top" title="PropertyStreetName">Street Name</label>
                 <div class="col-xs-6">
                   <input type="text" id="{{guid}}_PropertyStreetName" class="form-control" name="PropertyStreetName" value="{{PropertyStreetName}}" required>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                 <label for="{{guid}}_PropertyAddressLine2" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="PropertyStreetName">Address Line 2</label>
                 <div class="col-xs-6">
                   <input type="text" id="{{guid}}_PropertyAddressLine2" class="form-control" name="PropertyAddressLine2" value="{{PropertyAddressLine2}}">
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                 <label for="{{guid}}_PropertyCity"  class="control-label col-xs-3 label-required" data-toggle="tooltip" data-placement="top" title="PropertyCity">City</label>
                 <div class="col-xs-6">
                   <input type="text" id="{{guid}}_PropertyCity" name="PropertyCity" class="form-control" value="{{PropertyCity}}" required>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                 <label for="{{guid}}_PropertyState" class="control-label col-xs-3 label-required" data-toggle="tooltip" data-placement="top" title="PropertyState">State</label>
                 <div class="col-xs-6">
                   <select disabled="disabled" id="{{guid}}_PropertyState" class="form-control" name="InsuredMailingAddressState" data-value="{{PropertyState}}{{^PropertyState}}0{{/PropertyState}}" required>
@@ -228,13 +228,13 @@
                   </select>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                 <label for="{{guid}}_PropertyZipCode" class="control-label col-xs-3 label-required" data-toggle="tooltip" data-placement="top" title="PropertyZipCode">Zip Code</label>
                 <div class="col-xs-6">
                   <input type="text" id="{{guid}}_PropertyZipCode" class="form-control" name="PropertyZipCode" value="{{PropertyZipCode}}" required>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                 <label for="{{guid}}_PropertyZipCodePlusFour" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="PropertyZipCodePlusFour">Zip Code +4</label>
                 <div class="col-xs-6">
                   <input type="text" id="{{guid}}_PropertyZipCodePlusFour" class="form-control" name="PropertyZipCodePlusFour" value="{{PropertyZipCodePlusFour}}">
@@ -242,7 +242,7 @@
               </div>
             </div>
 
-            <div class="form-group">
+            <div class="form-group form-group-sm">
               <label for="{{guid}}_MailingEqualPropertyAddress" class="control-label col-xs-3 label-required" data-toggle="tooltip" data-placement="top" title="PropertyZipCodePlusFour">Mailing Address is the same as Property Address?</label>
               <div class="col-xs-6">
                 <select id="{{guid}}_MailingEqualPropertyAddress" class="form-control" name="MailingEqualPropertyAddress" data-value="{{MailingEqualPropertyAddress}}" required>
@@ -270,7 +270,7 @@
           <div class="panel-body">
             <fieldset class="bs">
               <legend>Name</legend>
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                 <label for="{{guid}}_InsuredByCorporation" class="control-label col-xs-3 label-required" data-toggle="tooltip" data-placement="top" title="InsuredByCorporation">Insured by Corporation, Partnership, etc.?</label>
                 <div class="col-xs-6">
                   <select id="{{guid}}_InsuredByCorporation" class="form-control" name="InsuredByCorporation" data-value="{{InsuredByCorporation}}" required>
@@ -280,25 +280,25 @@
                   </select>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                 <label for="{{guid}}_InsuredFirstName" class="control-label col-xs-3 label-required" data-toggle="tooltip" data-placement="top" title="InsuredFirstName">First</label>
                 <div class="col-xs-6">
                   <input type="text" id="{{guid}}_InsuredFirstName" class="form-control" name="InsuredFirstName" value="{{InsuredFirstName}}" required>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                 <label for="{{guid}}_InsuredMiddleName" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="InsuredMiddleName">Middle</label>
                 <div class="col-xs-6">
                   <input type="text" id="{{guid}}_InsuredMiddleName" class="form-control" name="InsuredMiddleName" value="{{InsuredMiddleName}}">
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                 <label for="{{guid}}_InsuredLastName" class="control-label col-xs-3 label-required" data-toggle="tooltip" data-placement="top" title="InsuredLastName">Last</label>
                 <div class="col-xs-6">
                   <input type="text" id="{{guid}}_InsuredLastName" class="form-control" name="InsuredLastName" value="{{InsuredLastName}}" required>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                 <label for="{{guid}}_InsuredName" class="label-required" data-toggle="tooltip" data-placement="top" title="InsuredName">Insured Name</label>
                 <div class="col-xs-6">
                   <input type="text" id="{{guid}}_InsuredName" class="form-control" name="InsuredName" value="{{InsuredName}}" required>
@@ -308,25 +308,25 @@
 
             <fieldset {{#DisableMailingAddress}}style="display:none"{{/DisableMailingAddress}} class="bs">
               <legend>Mailing address</legend>
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                 <label for="{{guid}}_InsuredMailingAddressLine1" class="control-label col-xs-3 label-required" data-toggle="tooltip" data-placement="top" title="InsuredMailingAddressLine1">Address line 1</label>
                 <div class="col-xs-6">
                   <input type="text" id="{{guid}}_InsuredMailingAddressLine1" class="form-control" name="InsuredMailingAddressLine1" value="{{InsuredMailingAddressLine1}}" required>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                 <label for="{{guid}}_InsuredMailingAddressLine2" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="InsuredMailingAddressLine2">Address line 2</label>
                 <div class="col-xs-6">
                   <input type="text" id="{{guid}}_InsuredMailingAddressLine2" class="form-control" name="InsuredMailingAddressLine2" value="{{InsuredMailingAddressLine2}}">
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                 <label for="{{guid}}_InsuredMailingAddressCity" class="control-label col-xs-3 label-required" data-toggle="tooltip" data-placement="top" title="InsuredMailingAddressCity">City</label>
                 <div class="col-xs-6">
                   <input type="text" id="{{guid}}_InsuredMailingAddressCity" class="form-control" name="InsuredMailingAddressCity" value="{{InsuredMailingAddressCity}}" required>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                 <label for="{{guid}}_InsuredMailingAddressState" class="control-label col-xs-3 label-required" data-toggle="tooltip" data-placement="top" title="InsuredMailingAddressState">State</label>
                 <div class="col-xs-6">
                   <select id="{{guid}}_InsuredMailingAddressState" class="form-control" name="InsuredMailingAddressState" data-value="{{InsuredMailingAddressState}}{{^InsuredMailingAddressState}}0{{/InsuredMailingAddressState}}" required>
@@ -385,13 +385,13 @@
                   </select>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                 <label for="{{guid}}_InsuredMailingAddressZip" class="control-label col-xs-3 label-required" data-toggle="tooltip" data-placement="top" title="InsuredMailingAddressZip">Zip</label>
                 <div class="col-xs-6">
                   <input type="text" id="{{guid}}_InsuredMailingAddressZip" class="form-control" name="InsuredMailingAddressZip" maxlength="5" value="{{InsuredMailingAddressZip}}" size="5" required>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                 <label for="{{guid}}_InsuredMailingAddressCountry" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="InsuredMailingAddressCountry">Country</label>
                 <div class="col-xs-6">
                   <input type="text" id="{{guid}}_InsuredMailingAddressCountry" class="form-control" name="InsuredMailingAddressCountry" value="{{InsuredMailingAddressCountry}}" size="2">
@@ -401,13 +401,13 @@
 
             <fieldset class="bs">
               <legend>Contact</legend>
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                 <label for="{{guid}}_InsuredEmailAddress" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="InsuredEmailAddress">Email address</label>
                 <div class="col-xs-6">
                   <input type="text" id="{{guid}}_InsuredEmailAddress" class="form-control" name="InsuredEmailAddress" value="{{InsuredEmailAddress}}">
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                 <label for="{{guid}}_InsuredPhoneNumber" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="InsuredPhoneNumber">Phone number</label>
                 <div class="col-xs-6">
                   <input type="text" id="{{guid}}_InsuredPhoneNumber" class="form-control" name="InsuredPhoneNumber" value="{{InsuredPhoneNumber}}">
@@ -417,13 +417,13 @@
 
             <fieldset class="bs">
               <legend>Personal info</legend>
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                 <label for="{{guid}}_Insured1BirthDate" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="InsuredBirthDate">Birth date</label>
                 <div class="col-xs-6">
                   <input type="text" id="{{guid}}_Insured1BirthDate" class="form-control" name="Insured1BirthDate" value="{{Insured1BirthDate}}" class="datepicker" data-year-range="-100:+0">
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                 <label for="{{guid}}_InsuredMaritalStatus" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="InsuredMaritalStatus">Marital status</label>
                 <div class="col-xs-6">
                   <select id="{{guid}}_InsuredMaritalStatus" class="form-control" name="InsuredMaritalStatus" data-value="{{InsuredMaritalStatus}}">
@@ -437,19 +437,19 @@
 
             <fieldset class="bs">
               <legend>Insured 2</legend>
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                 <label for="{{guid}}_Insured2FirstName" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="Insured2FirstName">First</label>
                 <div class="col-xs-6">
                   <input type="text" id="{{guid}}_Insured2FirstName" class="form-control" name="Insured2FirstName" value="{{Insured2FirstName}}">
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                 <label for="{{guid}}_Insured2MiddleName" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="Insured2MiddleName">Middle</label>
                 <div class="col-xs-6">
                   <input type="text" id="{{guid}}_Insured2MiddleName" class="form-control" name="Insured2MiddleName" value="{{Insured2MiddleName}}">
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                 <label for="{{guid}}_Insured2LastName" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="Insured2LastName">Last</label>
                 <div class="col-xs-6">
                   <input type="text" id="{{guid}}_Insured2LastName" class="form-control" name="Insured2LastName" value="{{Insured2LastName}}">
@@ -459,19 +459,19 @@
 
             <fieldset class="bs">
               <legend>Insured 3</legend>
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                 <label for="{{guid}}_Insured3FirstName" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="Insured3FirstName">First</label>
                 <div class="col-xs-6">
                   <input type="text" id="{{guid}}_Insured3FirstName" class="form-control" name="Insured3FirstName" value="{{Insured3FirstName}}">
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                 <label for="{{guid}}_Insured3MiddleName" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="Insured3MiddleName">Middle</label>
                 <div class="col-xs-6">
                   <input type="text" id="{{guid}}_Insured3MiddleName" class="form-control" name="Insured3MiddleName" value="{{Insured3MiddleName}}">
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                 <label for="{{guid}}_Insured3LastName" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="Insured3LastName">Last</label>
                 <div class="col-xs-6">
                   <input type="text" id="{{guid}}_Insured3LastName" class="form-control" name="Insured3LastName" value="{{Insured3LastName}}">
@@ -497,13 +497,13 @@
           <div class="panel-body">
             <fieldset class="bs">
               <legend>Name</legend>
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                 <label for="{{guid}}_{{itemPrefix}}FirstName" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="{{itemPrefix}}FirstName">First</label>
                 <div class="col-xs-6">
                   <input type="text" id="{{guid}}_{{itemPrefix}}FirstName" class="form-control" name="{{itemPrefix}}FirstName" value="{{FirstName}}">
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                 <label for="{{guid}}_{{itemPrefix}}LastName" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="{{itemPrefix}}LastName">Last</label>
                 <div class="col-xs-6">
                   <input type="text" id="{{guid}}_{{itemPrefix}}LastName" class="form-control" name="{{itemPrefix}}LastName" value="{{LastName}}">
@@ -513,25 +513,25 @@
 
             <fieldset class="bs">
               <legend>Mailing address</legend>
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                 <label for="{{guid}}_{{itemPrefix}}AddressLine1" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="{{itemPrefix}}AddressLine1">Address line 1</label>
                 <div class="col-xs-6">
                   <input type="text" id="{{guid}}_{{itemPrefix}}AddressLine1" class="form-control" name="{{itemPrefix}}AddressLine1" value="{{AddressLine1}}">
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                 <label for="{{guid}}_{{itemPrefix}}AddressLine2" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="{{itemPrefix}}AddressLine2">Address line 2</label>
                 <div class="col-xs-6">
                   <input type="text" id="{{guid}}_{{itemPrefix}}AddressLine2" class="form-control" name="{{itemPrefix}}AddressLine2" value="{{AddressLine2}}">
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                 <label for="{{guid}}_{{itemPrefix}}AddressCity" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="{{itemPrefix}}AddressCity">City</label>
                 <div class="col-xs-6">
                   <input type="text" id="{{guid}}_{{itemPrefix}}AddressCity" class="form-control" name="{{itemPrefix}}AddressCity" value="{{AddressCity}}">
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                 <label for="{{guid}}_{{itemPrefix}}AddressState" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="{{itemPrefix}}AddressState">State</label>
                 <div class="col-xs-6">
                   <select id="{{guid}}_{{itemPrefix}}AddressState" class="form-control" name="{{itemPrefix}}AddressState" data-value="{{AddressState}}{{^AddressState}}0{{/AddressState}}">
@@ -590,7 +590,7 @@
                   </select>
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                 <label for="{{guid}}_{{itemPrefix}}AddressZip" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="{{itemPrefix}}AddressZip">Zip</label>
                 <div class="col-xs-6">
                   <input type="text" id="{{guid}}_{{itemPrefix}}AddressZip" class="form-control" name="{{itemPrefix}}AddressZip" value="{{AddressZip}}" size="5">
@@ -599,13 +599,13 @@
             </fieldset>
 
             <fieldset class="bs">
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                 <label for="{{guid}}_{{itemPrefix}}ReferenceNumber" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="{{itemPrefix}}ReferenceNumber">Reference Number</label>
                 <div class="col-xs-6">
                   <input type="text" id="{{guid}}_{{itemPrefix}}ReferenceNumber" class="form-control" name="{{itemPrefix}}ReferenceNumber" value="{{ReferenceNumber}}">
                 </div>
               </div>
-              <div class="form-group">
+              <div class="form-group form-group-sm">
                 <label for="{{guid}}_{{itemPrefix}}Type" class="control-label col-xs-3" data-toggle="tooltip" data-placement="top" title="{{itemPrefix}}Type">Type</label>
                 <div class="col-xs-6">
                   <select id="{{guid}}_{{itemPrefix}}Type" class="form-control" name="{{itemPrefix}}Type" data-value="{{Type}}">
@@ -622,16 +622,18 @@
       {{/additionalInsured}}
     </div>
 
-    <div class="form-group">
+    <div class="form-group form-group-sm">
       <label for="{{guid}}_addNotes" class="control-label col-xs-3">Notes</label>
       <div class="col-xs-6">
         <textarea rows="7" id="{{guid}}_addNotes" class="form-control" name="addNotes"></textarea>
       </div>
     </div>
 
-    <div class="form_actions">
-      <input type="submit" class="btn btn-primary" value="Confirm">
-      <a href="home" class="btn btn-default">Nevermind, go back</a>
+    <div class="form-group form-group-sm form_actions">
+      <div class="col-xs-4">
+        <input type="submit" class="btn btn-primary btn-sm" value="Confirm">
+        <a href="home" class="btn btn-default btn-sm">Nevermind, go back</a>
+      </div>
     </div>
   </div>
 </form>
