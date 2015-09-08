@@ -325,6 +325,10 @@ define [
       <Comment>{{comment}}</Comment>
     """
 
+    cancel_insured : """
+      <ReasonCode>{{reasonCode}}</ReasonCode>
+    """
+
     non_renewal : """
       {{#reasonCode}}<ReasonCode>{{reasonCode}}</ReasonCode>{{/reasonCode}}
       <Comment>{{comment}}</Comment>

@@ -112,6 +112,10 @@
         {
           "label": "Generate document",
           "view": "GenerateDocument"
+        },
+        {
+          "label": "Cancel Insured",
+          "view": "CancelInsured"
         }
       ]
     }
