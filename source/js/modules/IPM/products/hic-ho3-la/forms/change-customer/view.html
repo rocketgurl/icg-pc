@@ -1,7 +1,6 @@
 <!-- Product: HIC HO3 Louisiana -->
 <form name="change_customer" class="form-horizontal">
   <div class="content">
-    <h4>Change Customer for Policy {{policyId}}</h4>
 
     {{#policyOverview}}
     <div class="panel panel-default policy-overview">
@@ -19,14 +18,23 @@
     </div>
     {{/policyOverview}}
 
-    <div class="form-group form-group-sm">
-      <label for="{{guid}}_reasonCode" class="control-label col-xs-3 label-required">Reason code</label>
-      <div class="col-xs-4">
-        <select id="{{guid}}_reasonCode" class="form-control" name="reasonCode" required>
-          {{#EnumsChangeCustomerReason}}
-          <option value="{{value}}" {{#vendorHide}}class="vendor-hide"{{/vendorHide}}>{{label}}</option>
-          {{/EnumsChangeCustomerReason}}
-        </select>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          Change Customer for Policy {{policyId}}
+        </h4>
+      </div>
+      <div class="panel-body">
+        <div class="form-group form-group-sm">
+          <label for="{{guid}}_reasonCode" class="control-label col-xs-3 label-required">Reason code</label>
+          <div class="col-xs-4">
+            <select id="{{guid}}_reasonCode" class="form-control" name="reasonCode" required>
+              {{#EnumsChangeCustomerReason}}
+              <option value="{{value}}" {{#vendorHide}}class="vendor-hide"{{/vendorHide}}>{{label}}</option>
+              {{/EnumsChangeCustomerReason}}
+            </select>
+          </div>
+        </div>
       </div>
     </div>
 

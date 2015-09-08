@@ -1,7 +1,6 @@
 <!-- Product: FNIC HO3 Alabama -->
 <form name="change_additional_interest" class="form-horizontal">
   <div class="content">
-    <h4>Change Additional Interest for Policy {{policyId}}</h4>
 
     {{#policyOverview}}
     <div class="panel panel-default policy-overview">
@@ -19,14 +18,23 @@
     </div>
     {{/policyOverview}}
 
-    <div class="form-group form-group-sm">
-      <label for="{{guid}}_reasonCode" class="control-label col-xs-3 label-required">Reason code</label>
-      <div class="col-xs-4">
-        <select id="{{guid}}_reasonCode" class="form-control" name="reasonCode" required>
-          {{#EnumsChangeAdditionalInterestReason}}
-          <option value="{{value}}"{{#vendorHide}} class="vendor-hide"{{/vendorHide}}>{{label}}</option>
-          {{/EnumsChangeAdditionalInterestReason}}
-        </select>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          Change Additional Interest for Policy {{policyId}}
+        </h4>
+      </div>
+      <div class="panel-body">
+        <div class="form-group form-group-sm">
+          <label for="{{guid}}_reasonCode" class="control-label col-xs-3 label-required">Reason code</label>
+          <div class="col-xs-4">
+            <select id="{{guid}}_reasonCode" class="form-control" name="reasonCode" required>
+              {{#EnumsChangeAdditionalInterestReason}}
+              <option value="{{value}}"{{#vendorHide}} class="vendor-hide"{{/vendorHide}}>{{label}}</option>
+              {{/EnumsChangeAdditionalInterestReason}}
+            </select>
+          </div>
+        </div>
       </div>
     </div>
 
