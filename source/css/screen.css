@@ -2639,7 +2639,7 @@ Module: Policy
 .lh-loader h2 { font-size: 18px; font-size: 1.8rem; color: #878787; margin: 20px 0; }
 .lh-loader h2 span { display: block; margin: 0 0 10px 0; }
 
-.ipm-container { padding: 0 1.8%; }
+.ipm-container { padding: 15px; }
 
 .ipm-header { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 18px; font-size: 1.8rem; text-shadow: 0 1px white; font-weight: bold; color: #165788; padding: 20px 10px; margin: 0; }
 
@@ -2684,7 +2684,6 @@ h2.ipm-action-header { font-size: 16px; font-size: 1.6rem; color: dimgrey; margi
 
 .ipm-loader h2 { margin-left: -100px; }
 
-.ipm-container #content { padding: 20px !important; }
 .ipm-container #content_header { padding: 0; }
 .ipm-container #content_header h2 { font-size: 18px; font-size: 1.8rem; line-height: 140%; margin: 0 0 5px 0; padding: 0 0 5px 0; text-shadow: 0 1px white; color: #165788; }
 .ipm-container .policyOverview { margin: 10px 0 20px 0; background: white; box-shadow: dimgrey 0px 0px 3px; padding: 10px; }
@@ -2729,7 +2728,7 @@ h2.ipm-action-header { font-size: 16px; font-size: 1.6rem; color: dimgrey; margi
 .ipm-container .preview fieldset label { display: block; padding: 10px 0; }
 
 .form_actions { margin: 15px 0; }
-.form_actions p { font-size: 14px; font-size: 1.4rem; padding: 10px 0; font-weight: bold; color: dimgrey; }
+.form_actions p { font-weight: bold; color: dimgrey; }
 
 .summary_table { background: white; border: lightgrey 1px solid; font-size: 14px; font-size: 1.4rem; }
 .summary_table tr:nth-child(even) { background: whitesmoke; }
@@ -2847,6 +2846,8 @@ legend { font-size: 14px; font-weight: 700; text-transform: uppercase; color: #9
 .policy-overview { display: none; }
 
 .panel-title > a { display: block; }
+
+.panel-body > .form-group:last-child { margin-bottom: 0; }
 
 /* up/down arrows to indicate collapsed/collapsible panels */
 [data-toggle="collapse"] .glyphicon { color: #999; }

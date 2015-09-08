@@ -15,6 +15,12 @@ legend {
   }
 }
 
+.panel-body {
+  > .form-group:last-child {
+    margin-bottom: 0;
+  }
+}
+
 /* up/down arrows to indicate collapsed/collapsible panels */
 [data-toggle="collapse"] {
   .glyphicon {
