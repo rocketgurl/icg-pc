@@ -121,17 +121,17 @@ define [
 
     logError : (collection, response) ->
       # Log a hopefully useful ajax error for TrackJS
-      eid = "#{@Helpers.formatDate(new Date(), 'YYYY-MM-DD')}"
-      info = {}
+      info = ""
       try
-        info["RequestURL #{eid}"] = collection.url
-        info["RequestParams #{eid}"] = $.param collection.getParams()
-        info["Status #{eid}"]     = response.status
-        info["StatusText #{eid}"] = response.statusText
-        info["ResponseHeaders #{eid}"] = response.getAllResponseHeaders()
-        throw new Error "ReferralQueue XMLHTTPResponse Error (#{response.status}) #{response.statusText}"
+        info = """
+ReferralQueue XMLHTTPResponse Error (#{response.status}) #{response.statusText}
+RequestURL: #{collection.url}
+RequestParams: #{$.param(collection.getParams())}
+ResponseHeaders: #{response.getAllResponseHeaders()}
+        """
+        throw new Error "IPM Action Error"
       catch ex
-        console.error info, ex
+        console.info info
 
     onPageChange : (e) ->
       @updatePage +e.currentTarget.value

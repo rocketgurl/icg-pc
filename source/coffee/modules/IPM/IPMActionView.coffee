@@ -631,21 +631,21 @@ define [
 
       # Log a hopefully useful ajax error for TrackJS
       eid = "#{@Helpers.formatDate(new Date(), 'YYYY-MM-DD')}"
-      info = {}
+      info = ""
       try
-        info["RequestURL #{eid}"] = @MODULE.POLICY.url()
-        info["IPMAction #{eid}"]  = @ChangeSet.ACTION
-        info["ErrorName #{eid}"]  = @errors.title
-        info["ErrorMessage #{eid}"] = @errors.desc
-        if @errors.details
-          details = $(@errors.details).text() or @errors.details
-          info["ErrorDetails #{eid}"] = details
-        info["Status #{eid}"]     = jqXHR.status
-        info["StatusText #{eid}"] = jqXHR.statusText
-        info["ResponseHeaders #{eid}"] = jqXHR.getAllResponseHeaders()
+        info = """
+IPM Action Error
+RequestURL: #{@MODULE.POLICY.url()}
+IPMAction: #{@ChangeSet.ACTION}
+ErrorName: #{@errors.title}
+ErrorMessage: #{@errors.desc}
+Status: #{jqXHR.status}
+StatusText: #{jqXHR.statusText}
+ResponseHeaders: #{jqXHR.getAllResponseHeaders()}
+        """
         throw new Error "IPM Action Error"
       catch ex
-        console.error info, ex
+        console.info info
     
     # **Notes field handling, post a notes ChangeSet**
     #

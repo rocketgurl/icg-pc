@@ -83,16 +83,16 @@ define [
           @policy_view.trigger 'error', response
 
           # Log a hopefully useful ajax error for TrackJS
-          eid = "#{Helpers.formatDate(new Date(), 'YYYY-MM-DD')}"
-          info = {}
+          info = ""
           try
-            info["RequestURL #{eid}"] = model.url()
-            info["Status #{eid}"]     = xhr.status
-            info["StatusText #{eid}"] = xhr.statusText
-            info["ResponseHeaders #{eid}"] = xhr.getAllResponseHeaders()
-            throw new Error "XMLHTTPResponse Error (#{xhr.status}) #{xhr.statusText}"
+            info = """
+XMLHTTPResponse Error (#{xhr.status}) #{xhr.statusText}
+RequestURL: #{model.url()}
+ResponseHeaders: #{xhr.getAllResponseHeaders()}
+            """
+            throw new Error "IPM Action Error"
           catch ex
-            console.error info, ex
+            console.info info
       })
 
       # When this tab is activated
