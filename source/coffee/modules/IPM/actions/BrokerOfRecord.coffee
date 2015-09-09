@@ -189,13 +189,15 @@ define [
             { 'X-Commit' : false }
           )
 
-      # Assemble the Transaction Request XML and send to server
+      requestPayload = @ChangeSet.getTransactionRequest(@values, @viewData)
+
+      # Assemble the ChangeSet XML and send to server
       @ChangeSet.commitChange(
-        @ChangeSet.getTransactionRequest(@values, @viewData),
-        callbackFunc,
-        @callbackError,
-        options
-      )
+          requestPayload
+          callbackFunc
+          @callbackError(requestPayload)
+          options
+        )
 
     # Get Agency record from ixDirectory
     #

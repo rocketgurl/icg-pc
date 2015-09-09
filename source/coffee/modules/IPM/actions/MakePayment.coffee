@@ -50,9 +50,11 @@ define [
       @values.formValues.paymentAmount = \
         -1 * @values.formValues.positivePaymentAmount
 
+      requestPayload = @ChangeSet.getPolicyChangeSet(@values)
+
       # Assemble the ChangeSet XML and send to server
       @ChangeSet.commitChange(
-          @ChangeSet.getPolicyChangeSet(@values)
+          requestPayload
           @callbackSuccess,
-          @callbackError
+          @callbackError(requestPayload)
         )

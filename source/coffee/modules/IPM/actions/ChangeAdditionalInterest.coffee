@@ -58,9 +58,11 @@ define [
         if @values.formValues[state] == "0"
           @values.formValues[state] = ""
 
+      requestPayload = @ChangeSet.getTransactionRequest(@values, @viewData)
+
       # Assemble the ChangeSet XML and send to server
       @ChangeSet.commitChange(
-          @ChangeSet.getTransactionRequest(@values, @viewData)
-          @callbackSuccess,
-          @callbackError
+          requestPayload
+          @callbackSuccess
+          @callbackError(requestPayload)
         )

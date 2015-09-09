@@ -99,9 +99,11 @@ define [
       # In order to allow Payment Plan Changes to be applied before Policy Inception
       @values.formValues.effectiveDate = @MODULE.POLICY.getEffectiveDate()
 
+      requestPayload = @ChangeSet.getTransactionRequest(@values, @viewData)
+
       # Assemble the ChangeSet XML and send to server
       @ChangeSet.commitChange(
-          @ChangeSet.getTransactionRequest(@values, @viewData),
-          @callbackSuccess,
-          @callbackError
+          requestPayload
+          @callbackSuccess
+          @callbackError(requestPayload)
         )

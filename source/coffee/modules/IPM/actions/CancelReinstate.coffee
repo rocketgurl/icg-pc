@@ -288,15 +288,14 @@ define [
       # Extend callback in  IPMActionView
       super data, status, jqXHR
 
-    # On error we need to get out of the sub-view.
-    callbackError : (jqXHR, status, error) =>
-
-      if _.has this, 'viewDataPrevious'
-        @viewData = _.deepClone @viewDataPrevious
-
-      @PARENT_VIEW.route 'Home'
-
-      super jqXHR, status, error
+    # Special trickery to pass requestPayload to error callback
+    callbackInstanceError : (requestPayload) =>
+      staticCallback = @callbackError requestPayload
+      (jqXHR, status, error) =>
+        if _.has this, 'viewDataPrevious'
+          @viewData = _.deepClone @viewDataPrevious
+        @PARENT_VIEW.route 'Home'
+        staticCallback jqXHR, status, error
 
     # **Process Form**
     # On submit we do some action specific processing and then send to the
@@ -344,11 +343,13 @@ define [
           options.headers =
             'X-Commit' : false
 
-      # Assemble the TransactionRequest XML and send to server
+      requestPayload = @ChangeSet.getTransactionRequest(@values, @viewData)
+
+      # Assemble the ChangeSet XML and send to server
       @ChangeSet.commitChange(
-          @ChangeSet.getTransactionRequest(@values, @viewData),
-          callbackFunc,
-          @callbackError,
+          requestPayload
+          callbackFunc
+          @callbackInstanceError(requestPayload)
           options
         )
 

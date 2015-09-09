@@ -153,9 +153,11 @@ define [
       @values.formValues.lineItemType    = \
         @values.formValues.reasonCodeLabel.toUpperCase().replace(/\s/g, '_')
 
+      requestPayload = @ChangeSet.getTransactionRequest(@values, @viewData)
+
       # Assemble the ChangeSet XML and send to server
       @ChangeSet.commitChange(
-          @ChangeSet.getTransactionRequest(@values, @viewData)
+          requestPayload
           @callbackSuccess
-          @callbackError
+          @callbackError(requestPayload)
         )
