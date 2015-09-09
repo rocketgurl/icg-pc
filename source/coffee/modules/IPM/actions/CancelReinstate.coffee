@@ -18,10 +18,7 @@ define [
         })
 
       @events =
-        "click input[name=cancel]" : "loadSubAction"
-        "click input[name=cancel_pending]" : "loadSubAction"
-        "click input[name=reinstate]" : "loadSubAction"
-        "click input[name=rescind]" : "loadSubAction"
+        "click .load-subaction"          : "loadSubAction"
         "change select[name=reasonCode]" : "handlePendingCancelReasonCodes"
 
       # Metadata about Cancellation types, used in views
@@ -273,7 +270,7 @@ define [
     #
     loadSubAction : (e) ->
       e.preventDefault()
-      if e.currentTarget.className != 'disabled'
+      unless e.currentTarget.className is 'disabled'
         action = $(e.currentTarget).attr('name') ? false
         if action?
           @CURRENT_SUBVIEW = action
