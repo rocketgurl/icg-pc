@@ -32,10 +32,10 @@
 
       <fieldset>
         <ul>
-          <li><input name="cancel" type="submit" value="Cancel" {{cancelDisabled}}></li>
-          <li><input name="cancel_pending" type="submit" value="Set pending cancel" {{pendingDisabled}}></li>
-          <li><input name="reinstate" type="submit" value="Reinstate" {{reinstateDisabled}}></li>
-          <li><input name="rescind" type="submit" value="Rescind pending cancel" {{rescindDisabled}}></li>
+          <li><button name="cancel" class="btn btn-primary load-subaction" {{cancelDisabled}}>Cancel</button></li>
+          <li><button name="cancel_pending" class="btn btn-primary load-subaction" {{pendingDisabled}}>Set pending cancel</button></li>
+          <li><button name="reinstate" class="btn btn-primary load-subaction" {{reinstateDisabled}}>Reinstate</button></li>
+          <li><button name="rescind" class="btn btn-primary load-subaction" {{rescindDisabled}}>Rescind pending cancel</button></li>
         </ul>
       </fieldset> 
       <div class="form_actions">

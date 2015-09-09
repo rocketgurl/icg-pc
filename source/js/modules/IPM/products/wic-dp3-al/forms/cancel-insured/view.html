@@ -98,61 +98,60 @@
       <div class="panel-heading">
         <h4 class="panel-title">Cancellation actions for policy {{policyId}}</h4>
       </div>
-      <div class="panel-body">
-        <table class="table" summary="Proposed action">
-          <caption>Proposed action</caption>
-          <tbody>
-            <tr>
-              <th scope="row">Action</th>
-              <td>{{Action}}</td>
-            </tr>
-            <tr>
-              <th scope="row">Cancellation Type</th>
-              <td>{{RateType}}</td>
-            </tr>
-            <tr>
-              <th scope="row">Cancellation Effective Date</th>
-              <td>{{EffectiveDate}}</td>
-            </tr>
-            <tr>
-              <th scope="row">Notice Days Until Cancellation</th>
-              <td>{{AdvanceNoticeDays}}</td>
-            </tr>
-            <tr>
-              <th scope="row">Cancellation Reason</th>
-              <td>{{ReasonCode}} - {{ReasonCodeLabel}}</td>
-            </tr>
-            {{#ChangeInPremium}}
-            <tr>
-              <th scope="row">Change in Premiums</th>
-              <td>{{ChangeInPremium}}</td>
-            </tr>
-            <tr>
-              <th scope="row">Changes in Fees</th>
-              <td>{{ChangeInFee}}</td>
-            </tr>
-            <tr>
-              <th scope="row">Change in Taxes</th>
-              <td>{{ChangeInTax}}</td>
-            </tr>
-            {{#ChangeInOthers}}
-            <tr>
-              <th scope="row">Change in Others</th>
-              <td>{{ChangeInOthers}}</td>
-            </tr>
-            {{/ChangeInOthers}}
-            <tr>
-              <th scope="row">Total Change</th>
-              <td>{{CancelAmount}}</td>
-            </tr>
-            {{/ChangeInPremium}}
-          </tbody>
-        </table>
-      </div>
+      <table class="table table-striped" summary="Proposed action">
+        <caption>Proposed action</caption>
+        <tbody>
+          <tr>
+            <th scope="row">Action</th>
+            <td>{{Action}}</td>
+          </tr>
+          <tr>
+            <th scope="row">Cancellation Type</th>
+            <td>{{RateType}}</td>
+          </tr>
+          <tr>
+            <th scope="row">Cancellation Effective Date</th>
+            <td>{{EffectiveDate}}</td>
+          </tr>
+          <tr>
+            <th scope="row">Notice Days Until Cancellation</th>
+            <td>{{AdvanceNoticeDays}}</td>
+          </tr>
+          <tr>
+            <th scope="row">Cancellation Reason</th>
+            <td>{{ReasonCode}} - {{ReasonCodeLabel}}</td>
+          </tr>
+          {{#ChangeInPremium}}
+          <tr>
+            <th scope="row">Change in Premiums</th>
+            <td>{{ChangeInPremium}}</td>
+          </tr>
+          <tr>
+            <th scope="row">Changes in Fees</th>
+            <td>{{ChangeInFee}}</td>
+          </tr>
+          <tr>
+            <th scope="row">Change in Taxes</th>
+            <td>{{ChangeInTax}}</td>
+          </tr>
+          {{#ChangeInOthers}}
+          <tr>
+            <th scope="row">Change in Others</th>
+            <td>{{ChangeInOthers}}</td>
+          </tr>
+          {{/ChangeInOthers}}
+          <tr>
+            <th scope="row">Total Change</th>
+            <td>{{CancelAmount}}</td>
+          </tr>
+          {{/ChangeInPremium}}
+        </tbody>
+      </table>
     </div>
 
     <div class="form-group form-group-sm form_actions">
       <div class="col-xs-6">
+        <p>Confirm this action?</p>
         <input type="submit" class="btn btn-primary btn-sm" value="Cancel this policy">
         <a href="home" class="btn btn-default btn-sm">Nevermind, go back</a>
       </div>
