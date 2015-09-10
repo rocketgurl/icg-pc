@@ -33,7 +33,7 @@
       "actions": [
         {
           "label": "Post Payment",
-          "view": "MakePayment"
+          "view": "PostPayment"
         },
         {
           "label": "Invoice",

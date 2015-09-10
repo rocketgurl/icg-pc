@@ -415,7 +415,7 @@ define [
       </EventHistory>
     """
 
-    make_payment : """
+    post_payment : """
       <Ledger>
         <LineItem value="{{paymentAmount}}" type="PAYMENT" timestamp="{{timestamp}}">
           <Memo></Memo>
