@@ -1,0 +1,91 @@
+<!-- Product: OFCC HO3 California -->
+<form name="make_payment" class="form-horizontal">
+  <div class="content">
+
+    {{#policyOverview}}
+    <div class="panel panel-default policy-overview">
+      <div class="panel-heading">
+        <h3 class="panel-title">Policy Overview</h3>
+      </div>
+      <div class="panel-body">
+      <ul>
+        <li>{{InsuredFirstName}} {{InsuredMiddleName}} {{InsuredLastName}}</li>
+        <li>{{InsuredMailingAddressLine1}}</li>
+        <li>{{InsuredMailingAddressLine2}}</li>
+        <li>{{InsuredMailingAddressCity}}, {{InsuredMailingAddressState}} {{InsuredMailingAddressZip}}</li>
+      </ul>
+      </div>
+    </div>
+    {{/policyOverview}}
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">Post a Payment on {{policyId}}</h4>
+      </div>
+      <div class="panel-body">
+        <div class="form-group form-group-sm">
+          <label for="{{guid}}_reasonCode" class="control-label col-xs-3 label-required">Applied Date</label>
+          <div class="col-xs-6">
+            <input type="text" id="{{guid}}_appliedDate" name="appliedDate" class="form-control datepicker" required>
+          </div>
+        </div>
+
+        <div class="form-group form-group-sm">
+          <label for="{{guid}}_amount" class="control-label col-xs-3 label-required">Amount</label>
+          <div class="col-xs-6">
+            <div class="input-group input-group-sm">
+              <span class="input-group-addon">$</span>
+              <input type="text" id="{{guid}}_paymentAmount" name="paymentAmount" class="form-control" required>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group form-group-sm">
+          <label for="{{guid}}_paymentReference" class="control-label col-xs-3">Reference</label>
+          <div class="col-xs-6">
+            <input type="text" id="{{guid}}_paymentReference" name="paymentReference" class="form-control">
+          </div>
+        </div>
+
+        <div class="form-group form-group-sm">
+          <label for="{{guid}}_paymentBatch" class="control-label col-xs-3">Batch</label>
+          <div class="col-xs-6">
+            <input type="text" id="{{guid}}_paymentBatch" name="paymentBatch" class="form-control">
+          </div>
+        </div>
+
+        <div class="form-group form-group-sm">
+          <label for="{{guid}}_postmarkDate" class="control-label col-xs-3">Postmark Date</label>
+          <div class="col-xs-6">
+            <input type="text" id="{{guid}}_postmarkDate" name="postmarkDate" class="form-control datepicker">
+          </div>
+        </div>
+
+        <div class="form-group form-group-sm">
+          <label for="{{guid}}_paymentMethod" class="control-label col-xs-3 label-required">Payment Method</label>
+          <div class="col-xs-6">
+            <select id="{{guid}}_paymentMethod" name="paymentMethod" class="form-control" required>
+              {{#EnumsPaymentMethod}}
+              <option value="{{value}}">{{label}}</option>
+              {{/EnumsPaymentMethod}}
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group form-group-sm">
+      <label for="{{guid}}_addNotes" class="control-label col-xs-3">Notes</label>
+      <div class="col-xs-6">
+        <textarea rows="7" id="{{guid}}_addNotes" class="form-control" name="addNotes"></textarea>
+      </div>
+    </div>
+
+    <div class="form-group form-group-sm form_actions">
+      <div class="col-xs-4">
+        <input type="submit" class="btn btn-primary btn-sm" value="Confirm">
+        <a href="home" class="btn btn-default btn-sm">Nevermind, go back</a>
+      </div>
+    </div>
+  </div>
+</form>
