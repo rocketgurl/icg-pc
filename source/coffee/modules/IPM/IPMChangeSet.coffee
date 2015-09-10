@@ -299,7 +299,7 @@ define [
     # Tempalte for data item insertion
     dataItemTemplate : """
       {{#intervalRequest}}
-      <DataItem name="{{key}}" value="{{{value}}}" />
+      <DataItem name="{{key}}" value="{{value}}" />
       {{/intervalRequest}}
     """
 
@@ -385,14 +385,14 @@ define [
       <PayeeChanges>
         <Set>
         {{#dataItems}}
-          <DataItem name="{{name}}" value="{{{value}}}" />
+          <DataItem name="{{name}}" value="{{value}}" />
         {{/dataItems}}
         </Set>
       </PayeeChanges>
       <EventHistory>
         <Event type="PayeeChange">
         {{#dataItems}}
-          <DataItem name="{{name}}" value="{{{value}}}" />
+          <DataItem name="{{name}}" value="{{value}}" />
         {{/dataItems}}
         </Event>
       </EventHistory>
@@ -402,14 +402,14 @@ define [
       <PayorChanges>
         <Set>
         {{#dataItems}}
-          <DataItem name="{{name}}" value="{{{value}}}" />
+          <DataItem name="{{name}}" value="{{value}}" />
         {{/dataItems}}
         </Set>
       </PayorChanges>
       <EventHistory>
         <Event type="PayorChange">
         {{#dataItems}}
-          <DataItem name="{{name}}" value="{{{value}}}" />
+          <DataItem name="{{name}}" value="{{value}}" />
         {{/dataItems}}
         </Event>
       </EventHistory>
