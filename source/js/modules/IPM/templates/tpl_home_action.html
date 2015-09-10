@@ -1,15 +1,16 @@
-<h1 class="ipm-header">Integrated Policy Management <button class="btn btn-primary policy-refresh">Refresh</button></h1>
-<div class="ipm-home-action-view">
-	<ul>
-		{{#ACTIONS}}
-		<li>
-			{{label}}
-			<ul>
-				{{#actions}}
-					<li><a href="{{view}}">{{label}}</a></li>
-				{{/actions}}
-			</ul>
-		</li>
-		{{/ACTIONS}}
-	</ul>
+<h3 class="ipm-header">
+  Integrated Policy Management
+  <button class="btn btn-primary policy-refresh">Refresh <span class="glyphicon glyphicon-repeat"></span></button>
+</h3>
+<div class="row ipm-home-action-view">
+  {{#ACTIONS}}
+  <div class="col-xs-4">
+    <h4>{{label}}</h4>
+    <ul>
+      {{#actions}}
+        <li><a href="{{view}}">{{label}}</a></li>
+      {{/actions}}
+    </ul>
+  </div>
+  {{/ACTIONS}}
 </div>

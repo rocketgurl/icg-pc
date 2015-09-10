@@ -2641,7 +2641,7 @@ Module: Policy
 
 .ipm-container { padding: 15px; }
 
-.ipm-header { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 18px; font-size: 1.8rem; text-shadow: 0 1px white; font-weight: bold; color: #165788; padding: 20px 10px; margin: 0; }
+.ipm-header { text-shadow: 0 1px white; color: #165788; margin-top: 0; }
 
 .ipm-flash { margin: 0; -webkit-border-radius: 0px; -moz-border-radius: 0px; -ms-border-radius: 0px; -o-border-radius: 0px; border-radius: 0px; box-shadow: none; width: 100%; padding: 0; margin-left: -1px; position: absolute; }
 .ipm-flash span { display: block; padding: 20px; }
@@ -2651,20 +2651,12 @@ Module: Policy
 
 .policy-module .flash-shim { padding: 20px; }
 
-.ipm-home-action-view { margin: 20px 0 0 0; text-align: center; font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; }
+.ipm-home-action-view ul > li, .ipm-action-links li { margin: 10px 0; }
 
-.ipm-home-action-view > ul { margin: 0 auto; text-align: left; }
+.ipm-home-action-view ul > li > a, .ipm-action-links li a { display: block; padding: 8px; border-radius: 4px; background: rgba(0, 0, 0, 0.1); }
+.ipm-home-action-view ul > li > a:hover, .ipm-home-action-view .policy-nav > ul > li > a.select, .ipm-action-links li a:hover, .ipm-action-links .policy-nav > ul > li > a.select { background-color: #165788; color: white; text-shadow: 0 1px #081f30; }
 
-.ipm-home-action-view ul li { font-size: 16px; font-size: 1.6rem; font-weight: bold; width: 33.333%; display: block; margin: 20px 0; padding: 0 10px; float: left; }
-
-.ipm-home-action-view ul li:nth-child(4n) { clear: left; }
-
-.ipm-home-action-view ul li ul { border: 0; margin: 10px 0 5px 0; }
-
-.ipm-home-action-view ul > li > ul > li, .ipm-action-links li { font-weight: normal; width: 100%; border: 0; margin: 5px 0; padding: 0; }
-
-.ipm-home-action-view ul > li > ul > li a, .ipm-action-links li a { text-decoration: none; display: block; padding: 8px; border-radius: 4px; background: #e7e7e7; color: #007ac9; text-shadow: 0 1px white; }
-.ipm-home-action-view ul > li > ul > li a:hover, .ipm-home-action-view ul > li.policy-nav > ul > li > a.select, .ipm-action-links li a:hover, .ipm-action-links .policy-nav > ul > li > a.select { background-color: #165788; color: white; text-shadow: 0 1px #081f30; }
+.ipm-home-action-view { margin-top: 20px; }
 
 .ipm-action-links li { font-size: 16px; font-size: 1.6rem; }
 

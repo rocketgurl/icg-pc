@@ -3,13 +3,9 @@
 }
 
 .ipm-header {
-  @include sans;
-  @include font-size(18);
   @include emboss;
-  font-weight: bold;
   color: $blue;
-  padding: 20px 10px;
-  margin: 0;
+  margin-top: 0;
 }
 
 .ipm-flash {
@@ -41,53 +37,16 @@
   padding: 20px;
 }
 
-.ipm-home-action-view {
-  margin: 20px 0 0 0;
-  text-align: center;
-  @include sans;
-}
-
-.ipm-home-action-view > ul {
-  margin: 0 auto;
-  text-align: left;
-}
-
-.ipm-home-action-view ul li {
-  @include font-size(16);
-  font-weight: bold;
-  width: 33.333%;
-  display: block;
-  margin: 20px 0;
-  padding: 0 10px;
-  float: left;
-}
-
-.ipm-home-action-view ul li:nth-child(4n) {
-  clear: left;
-}
-
-.ipm-home-action-view ul li ul {
-  border: 0;
-  margin: 10px 0 5px 0;
-}
-
 // We re-use these in other places in IPM views
 %ipm-action-link-li {
-  font-weight: normal;
-  width: 100%;
-  border: 0;
-  margin: 5px 0;
-  padding: 0;
+  margin: 10px 0;
 }
 
 %ipm-action-link-li-a {
-  text-decoration: none;
   display: block;
   padding: 8px;
   border-radius: 4px;
-  background: darken(#f4f4f4, 5);
-  color: $colblue;
-  @include emboss;
+  background: rgba(0, 0, 0, 0.1);
   &:hover {
     background-color: $blue;
     color: $white;
@@ -95,12 +54,16 @@
   }
 }
 
-.ipm-home-action-view ul > li > ul > li {
-  @extend %ipm-action-link-li;
-}
+.ipm-home-action-view {
+  margin-top: 20px;
 
-.ipm-home-action-view ul > li > ul > li a {
-  @extend %ipm-action-link-li-a;
+  ul > li {
+    @extend %ipm-action-link-li;
+
+    > a {
+      @extend %ipm-action-link-li-a;
+    }
+  }
 }
 
 .ipm-action-links li {
