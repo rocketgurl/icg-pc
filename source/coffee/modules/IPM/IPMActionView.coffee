@@ -664,14 +664,14 @@ ResponseHeaders: #{jqXHR.getAllResponseHeaders()}
         username = @MODULE.USER.get 'username'
           
         tpl = """
-<PolicyChangeSet schemaVersion="2.1" username="#{username}" description="Adding a note">
+<PolicyChangeSet schemaVersion="2.1" username="{{username}}" description="Adding a note">
   <Note>
     <Content><![CDATA[{{{notes}}}]]></Content>
   </Note>
 </PolicyChangeSet>
         """
 
-        xml = @Mustache.render tpl, {notes: notes}
+        xml = @Mustache.render tpl, {notes: notes, username: username}
         xmldoc  = $.parseXML(xml) #Parse xml w/jQuery
         payload_schema = "schema=#{@ChangeSet.getPayloadType(xmldoc)}.#{@ChangeSet.getSchemaVersion(xmldoc)}" 
       
