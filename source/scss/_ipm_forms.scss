@@ -1,63 +1,91 @@
-legend {
-  font-size: 14px;
-  font-weight: 700;
-  text-transform: uppercase;
-  color: #999;
-}
+/* BEGIN IPM Actions styles */
 
-.policy-overview {
-  display: none;
-}
-
-.panel-title {
-  > a {
-    display: block;
-  }
-}
-
-.panel-body {
-  > .form-group:last-child {
-    margin-bottom: 0;
-  }
-}
-
-/* up/down arrows to indicate collapsed/collapsible panels */
-[data-toggle="collapse"] {
-  .glyphicon {
-    color: #999;
-  }
-
-  &:hover {
-    .glyphicon {
-      color: inherit;
+.ipm-container {
+  fieldset {
+    legend {
+      font-size: 14px;
+      font-weight: 700;
+      text-transform: uppercase;
+      color: #999;
     }
   }
 
-  .glyphicon-menu-down {
+  .policy-overview {
     display: none;
   }
 
-  &.collapsed {
-    .glyphicon-menu-up {
-      display: none;
+  .panel-title {
+    > a {
+      display: block;
     }
-    .glyphicon-menu-down {
-      display: inline-block;
+
+    [data-toggle="collapse"] {
+      .glyphicon {
+        color: #999;
+      }
+
+      &:hover {
+        .glyphicon {
+          color: inherit;
+        }
+      }
+
+      .glyphicon-menu-down {
+        display: none;
+      }
+
+      &.collapsed {
+        .glyphicon-menu-up {
+          display: none;
+        }
+        .glyphicon-menu-down {
+          display: inline-block;
+        }
+      }
+    }
+  }
+
+  .panel-body {
+    > .form-group:last-child {
+      margin-bottom: 0;
+    }
+  }
+
+  .vendor-show {
+    display: none;
+  }
+
+  .vendor-hide {
+    display: block;
+  }
+
+  .label-required {
+    &:after {
+      color: #752E2E;
+      content: ' *';
     }
   }
 }
 
-.label-required {
-  &:after {
-    color: #752E2E;
-    content: ' *';
+.ipm-home-action-view {
+  margin-top: 20px;
+
+  ul > li {
+    margin: 10px 0;
+
+    > a {
+      display: block;
+      padding: 8px;
+      border-radius: 4px;
+      background: rgba(0, 0, 0, 0.1);
+      &:hover {
+        background-color: $blue;
+        color: $white;
+        @include emboss(darken($blue, 20));
+      }
+    }
   }
 }
 
-.vendor-show {
-  display: none;
-}
+/* END IPM Actions styles */
 
-.vendor-hide {
-  display: block;
-}

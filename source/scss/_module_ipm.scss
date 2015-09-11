@@ -54,18 +54,6 @@
   }
 }
 
-.ipm-home-action-view {
-  margin-top: 20px;
-
-  ul > li {
-    @extend %ipm-action-link-li;
-
-    > a {
-      @extend %ipm-action-link-li-a;
-    }
-  }
-}
-
 .ipm-action-links li {
   @include font-size(16);
   @extend %ipm-action-link-li;

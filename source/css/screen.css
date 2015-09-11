@@ -2651,12 +2651,10 @@ Module: Policy
 
 .policy-module .flash-shim { padding: 20px; }
 
-.ipm-home-action-view ul > li, .ipm-action-links li { margin: 10px 0; }
+.ipm-action-links li { margin: 10px 0; }
 
-.ipm-home-action-view ul > li > a, .ipm-action-links li a { display: block; padding: 8px; border-radius: 4px; background: rgba(0, 0, 0, 0.1); }
-.ipm-home-action-view ul > li > a:hover, .ipm-home-action-view .policy-nav > ul > li > a.select, .ipm-action-links li a:hover, .ipm-action-links .policy-nav > ul > li > a.select { background-color: #165788; color: white; text-shadow: 0 1px #081f30; }
-
-.ipm-home-action-view { margin-top: 20px; }
+.ipm-action-links li a { display: block; padding: 8px; border-radius: 4px; background: rgba(0, 0, 0, 0.1); }
+.ipm-action-links li a:hover, .ipm-action-links .policy-nav > ul > li > a.select { background-color: #165788; color: white; text-shadow: 0 1px #081f30; }
 
 .ipm-action-links li { font-size: 16px; font-size: 1.6rem; }
 
@@ -2833,27 +2831,26 @@ header.module-referrals .checkbox { padding: 0 10px; }
 .policyrep-list li > ul { margin: 0 0 0 20px; }
 .policyrep-list li > ul li { margin: 0 0 20px 20px; list-style-type: disc; font-size: 18px; font-size: 1.8rem; color: #a1a1a1; }
 
-legend { font-size: 14px; font-weight: 700; text-transform: uppercase; color: #999; }
+/* BEGIN IPM Actions styles */
+.ipm-container fieldset legend { font-size: 14px; font-weight: 700; text-transform: uppercase; color: #999; }
+.ipm-container .policy-overview { display: none; }
+.ipm-container .panel-title > a { display: block; }
+.ipm-container .panel-title [data-toggle="collapse"] .glyphicon { color: #999; }
+.ipm-container .panel-title [data-toggle="collapse"]:hover .glyphicon { color: inherit; }
+.ipm-container .panel-title [data-toggle="collapse"] .glyphicon-menu-down { display: none; }
+.ipm-container .panel-title [data-toggle="collapse"].collapsed .glyphicon-menu-up { display: none; }
+.ipm-container .panel-title [data-toggle="collapse"].collapsed .glyphicon-menu-down { display: inline-block; }
+.ipm-container .panel-body > .form-group:last-child { margin-bottom: 0; }
+.ipm-container .vendor-show { display: none; }
+.ipm-container .vendor-hide { display: block; }
+.ipm-container .label-required:after { color: #752E2E; content: ' *'; }
 
-.policy-overview { display: none; }
+.ipm-home-action-view { margin-top: 20px; }
+.ipm-home-action-view ul > li { margin: 10px 0; }
+.ipm-home-action-view ul > li > a { display: block; padding: 8px; border-radius: 4px; background: rgba(0, 0, 0, 0.1); }
+.ipm-home-action-view ul > li > a:hover, .ipm-home-action-view .policy-nav > ul > li > a.select { background-color: #165788; color: white; text-shadow: 0 1px #081f30; }
 
-.panel-title > a { display: block; }
-
-.panel-body > .form-group:last-child { margin-bottom: 0; }
-
-/* up/down arrows to indicate collapsed/collapsible panels */
-[data-toggle="collapse"] .glyphicon { color: #999; }
-[data-toggle="collapse"]:hover .glyphicon { color: inherit; }
-[data-toggle="collapse"] .glyphicon-menu-down { display: none; }
-[data-toggle="collapse"].collapsed .glyphicon-menu-up { display: none; }
-[data-toggle="collapse"].collapsed .glyphicon-menu-down { display: inline-block; }
-
-.label-required:after { color: #752E2E; content: ' *'; }
-
-.vendor-show { display: none; }
-
-.vendor-hide { display: block; }
-
+/* END IPM Actions styles */
 #herald-container { background-color: rgba(0, 0, 0, 0.25); }
 
 .herald-modal { background-color: #fff !important; color: #333 !important; border: #ccc 1px solid; box-shadow: #666 0 0 10px; }
