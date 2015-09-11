@@ -1,5 +1,5 @@
 <!-- Product: HIC HO3 Alabama -->
-<form name="make_payment" class="form-horizontal">
+<form name="post_payment" class="form-horizontal">
   <div class="content">
 
     {{#policyOverview}}
@@ -24,14 +24,14 @@
       </div>
       <div class="panel-body">
         <div class="form-group form-group-sm">
-          <label for="{{guid}}_reasonCode" class="control-label col-xs-3 label-required">Applied Date</label>
+          <label for="{{guid}}_appliedDate" class="control-label col-xs-3 label-required">Applied Date</label>
           <div class="col-xs-6">
             <input type="text" id="{{guid}}_appliedDate" name="appliedDate" class="form-control datepicker" required>
           </div>
         </div>
 
         <div class="form-group form-group-sm">
-          <label for="{{guid}}_amount" class="control-label col-xs-3 label-required">Amount</label>
+          <label for="{{guid}}_paymentAmount" class="control-label col-xs-3 label-required">Amount</label>
           <div class="col-xs-6">
             <div class="input-group input-group-sm">
               <span class="input-group-addon">$</span>
