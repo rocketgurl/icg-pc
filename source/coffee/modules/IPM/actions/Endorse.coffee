@@ -92,13 +92,15 @@ define [
           )
         override_validation_state = true
 
-      # Assemble the Transaction Request XML and send to server
+      requestPayload = @ChangeSet.getTransactionRequest(@values, @viewData)
+
+      # Assemble the ChangeSet XML and send to server
       @ChangeSet.commitChange(
-        @ChangeSet.getTransactionRequest(@values, @viewData),
-        callbackFunc,
-        @callbackError,
-        options
-      )
+          requestPayload
+          callbackFunc
+          @callbackError(requestPayload)
+          options
+        )
 
     # **Apply behaviors to default form after rendering**
     #

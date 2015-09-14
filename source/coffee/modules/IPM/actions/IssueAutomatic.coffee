@@ -50,9 +50,11 @@ define [
 
       @values.formValues = _.extend @values.formValues, formValues
 
+      requestPayload = @ChangeSet.getTransactionRequest(@values, @viewData)
+
       # Assemble the ChangeSet XML and send to server
       @ChangeSet.commitChange(
-          @ChangeSet.getTransactionRequest(@values, @viewData),
-          @callbackSuccess,
-          @callbackError
+          requestPayload
+          @callbackSuccess
+          @callbackError(requestPayload)
         )

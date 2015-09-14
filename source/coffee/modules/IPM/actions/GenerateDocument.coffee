@@ -77,9 +77,11 @@ define [
         @values.formValues.documentLabel = \
           "#{@values.formValues.documentLabel} #{labelStamp}"
 
+      requestPayload = @ChangeSet.getPolicyChangeSet(@values)
+
       # Assemble the ChangeSet XML and send to server
       @ChangeSet.commitChange(
-          @ChangeSet.getPolicyChangeSet(@values)
-          @callbackSuccess,
-          @callbackError
+          requestPayload
+          @callbackSuccess
+          @callbackError(requestPayload)
         )

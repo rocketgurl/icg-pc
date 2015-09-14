@@ -1,53 +1,71 @@
 <!-- Product: FNIC HO3 Alabama -->
-<form action="change_payment_plan" method="get" accept-charset="utf-8">
-    <div id="content">
-        <div id="content_header">
-            <h2>Change Payment Plan for {{ policyId }}</h2>
-        </div>
+<form name="change_payment_plan" class="form-horizontal">
+  <div class="content">
 
-        <div class="content_body">
-
-            {{#policyOverview}}
-            <section class="policyOverview">
-                <h1>Policy Overview</h1>
-                <ul>
-                    <li>{{InsuredFirstName}} {{InsuredMiddleName}} {{InsuredLastName}}</li>
-                    <li>{{InsuredMailingAddressLine1}}</li>
-                    <li>{{InsuredMailingAddressLine2}}</li>
-                    <li>{{InsuredMailingAddressCity}}, {{InsuredMailingAddressState}} {{InsuredMailingAddressZip}}</li>
-                </ul>
-            </section>
-            {{/policyOverview}}
-
-            <fieldset>
-                <div>
-                    <label for="{{guid}}_appliedDate" class="labelRequired">Applied Date</label>
-                    <input type="text" id="{{guid}}_appliedDate" name="appliedDate" value="" class="datepicker" required>
-                </div>
-                <div>
-                    <label for="{{guid}}_paymentPlanType" class="labelRequired">Payment Plan Type</label>
-                    <select id="{{guid}}_paymentPlanType" name="paymentPlanType" required>
-                        <option value=""></option>
-                        <option value="invoice">Invoice mortgagee</option>
-                        <option value="fullPay">Full Pay</option>
-                        <option value="twoPay">Two Pay</option>
-                        <option value="fourPay">Four Pay</option>
-                        <option value="tenPay">Ten Pay Recurring</option>
-                        <option value="tenPayInvoice">Ten Pay Direct</option>
-                    </select>
-                </div>
-                <div>
-                    <label for="{{guid}}_comment">Comment</label>
-                    <textarea id="{{guid}}_comment" name="comment"></textarea>
-                </div>
-                <div>
-                    <label for="{{guid}}_addNotes">Notes</label>
-                    <textarea cols="50" rows="7" id="{{guid}}_addNotes" name="addNotes" value=""></textarea>
-                </div>
-                <div class="form_actions">
-                    <input type="submit" class="button" value="Confirm"> <a href="home">Nevermind, go back</a>
-                </div>
-            </fieldset>
-        </div>
+    {{#policyOverview}}
+    <div class="panel panel-default policy-overview">
+      <div class="panel-heading">
+        <h3 class="panel-title">Policy Overview</h3>
+      </div>
+      <div class="panel-body">
+      <ul>
+        <li>{{InsuredFirstName}} {{InsuredMiddleName}} {{InsuredLastName}}</li>
+        <li>{{InsuredMailingAddressLine1}}</li>
+        <li>{{InsuredMailingAddressLine2}}</li>
+        <li>{{InsuredMailingAddressCity}}, {{InsuredMailingAddressState}} {{InsuredMailingAddressZip}}</li>
+      </ul>
+      </div>
     </div>
+    {{/policyOverview}}
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">Change Payment Plan for {{policyId}}</h4>
+      </div>
+      <div class="panel-body">
+        <div class="form-group form-group-sm">
+          <label for="{{guid}}_appliedDate" class="control-label col-xs-3 label-required">Applied Date</label>
+          <div class="col-xs-6">
+            <input type="text" id="{{guid}}_appliedDate" name="appliedDate" class="form-control datepicker" required>
+          </div>
+        </div>
+
+        <div class="form-group form-group-sm">
+          <label for="{{guid}}_paymentPlanType" class="control-label col-xs-3 label-required">Payment Plan Type</label>
+          <div class="col-xs-6">
+            <select id="{{guid}}_paymentPlanType" name="paymentPlanType" class="form-control" required>
+              <option value=""></option>
+              <option value="invoice">Invoice mortgagee</option>
+              <option value="fullPay">Full Pay</option>
+              <option value="twoPay">Two Pay</option>
+              <option value="fourPay">Four Pay</option>
+              <option value="tenPay">Ten Pay Recurring</option>
+              <option value="tenPayInvoice">Ten Pay Direct</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group form-group-sm">
+          <label for="{{guid}}_comment" class="control-label col-xs-3">Comment</label>
+          <div class="col-xs-6">
+            <textarea id="{{guid}}_comment" name="comment" class="form-control"></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group form-group-sm">
+      <label for="{{guid}}_addNotes" class="control-label col-xs-3">Notes</label>
+      <div class="col-xs-6">
+        <textarea rows="7" id="{{guid}}_addNotes" class="form-control" name="addNotes"></textarea>
+      </div>
+    </div>
+
+    <div class="form-group form-group-sm form_actions">
+      <div class="col-xs-4">
+        <input type="submit" class="btn btn-primary btn-sm" value="Confirm">
+        <a href="home" class="btn btn-default btn-sm">Nevermind, go back</a>
+      </div>
+    </div>
+  </div>
 </form>

@@ -18,10 +18,7 @@ define [
         })
 
       @events =
-        "click input[name=cancel]" : "loadSubAction"
-        "click input[name=cancel_pending]" : "loadSubAction"
-        "click input[name=reinstate]" : "loadSubAction"
-        "click input[name=rescind]" : "loadSubAction"
+        "click .load-subaction"          : "loadSubAction"
         "change select[name=reasonCode]" : "handlePendingCancelReasonCodes"
 
       # Metadata about Cancellation types, used in views
@@ -273,7 +270,7 @@ define [
     #
     loadSubAction : (e) ->
       e.preventDefault()
-      if e.currentTarget.className != 'disabled'
+      unless e.currentTarget.className is 'disabled'
         action = $(e.currentTarget).attr('name') ? false
         if action?
           @CURRENT_SUBVIEW = action
@@ -291,15 +288,14 @@ define [
       # Extend callback in  IPMActionView
       super data, status, jqXHR
 
-    # On error we need to get out of the sub-view.
-    callbackError : (jqXHR, status, error) =>
-
-      if _.has this, 'viewDataPrevious'
-        @viewData = _.deepClone @viewDataPrevious
-
-      @PARENT_VIEW.route 'Home'
-
-      super jqXHR, status, error
+    # Special trickery to pass requestPayload to error callback
+    callbackInstanceError : (requestPayload) =>
+      staticCallback = @callbackError requestPayload
+      (jqXHR, status, error) =>
+        if _.has this, 'viewDataPrevious'
+          @viewData = _.deepClone @viewDataPrevious
+        @PARENT_VIEW.route 'Home'
+        staticCallback jqXHR, status, error
 
     # **Process Form**
     # On submit we do some action specific processing and then send to the
@@ -347,11 +343,13 @@ define [
           options.headers =
             'X-Commit' : false
 
-      # Assemble the TransactionRequest XML and send to server
+      requestPayload = @ChangeSet.getTransactionRequest(@values, @viewData)
+
+      # Assemble the ChangeSet XML and send to server
       @ChangeSet.commitChange(
-          @ChangeSet.getTransactionRequest(@values, @viewData),
-          callbackFunc,
-          @callbackError,
+          requestPayload
+          callbackFunc
+          @callbackInstanceError(requestPayload)
           options
         )
 
@@ -469,9 +467,6 @@ define [
         $dateInputLabel = @$('label[for$="_effectiveDate"]')
         reasonCode = +e.currentTarget.value # coerce value to Number
         validators = @TRANSACTION_TYPES.cancel_pending.validators
-
-        @FormValidation.removeErrorState $(e.currentTarget)
-        @FormValidation.removeErrorState $dateInput
 
         switch reasonCode
           # The following reason codes should clear

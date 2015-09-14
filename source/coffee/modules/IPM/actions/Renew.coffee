@@ -168,7 +168,7 @@ define [
       @ChangeSet.commitChange(
         xml,
         callbackFunc,
-        @callbackError,
+        @callbackError(xml),
         options
       )
 

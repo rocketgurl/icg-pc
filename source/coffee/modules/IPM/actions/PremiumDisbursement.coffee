@@ -50,9 +50,11 @@ define [
       @values.formValues.amount = \
         @Helpers.formatMoney(@values.formValues.amount) ? null
 
+      requestPayload = @ChangeSet.getPolicyChangeSet(@values)
+
       # Assemble the ChangeSet XML and send to server
       @ChangeSet.commitChange(
-          @ChangeSet.getPolicyChangeSet(@values)
+          requestPayload
           @callbackSuccess,
-          @callbackError
+          @callbackError(requestPayload)
         )

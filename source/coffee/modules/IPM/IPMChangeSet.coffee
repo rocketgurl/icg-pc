@@ -299,7 +299,7 @@ define [
     # Tempalte for data item insertion
     dataItemTemplate : """
       {{#intervalRequest}}
-      <DataItem name="{{key}}" value="{{{value}}}" />
+      <DataItem name="{{key}}" value="{{value}}" />
       {{/intervalRequest}}
     """
 
@@ -323,6 +323,10 @@ define [
     cancel_reinstate : """
       <ReasonCode>{{reasonCode}}</ReasonCode>
       <Comment>{{comment}}</Comment>
+    """
+
+    cancel_insured : """
+      <ReasonCode>{{reasonCode}}</ReasonCode>
     """
 
     non_renewal : """
@@ -381,14 +385,14 @@ define [
       <PayeeChanges>
         <Set>
         {{#dataItems}}
-          <DataItem name="{{name}}" value="{{{value}}}" />
+          <DataItem name="{{name}}" value="{{value}}" />
         {{/dataItems}}
         </Set>
       </PayeeChanges>
       <EventHistory>
         <Event type="PayeeChange">
         {{#dataItems}}
-          <DataItem name="{{name}}" value="{{{value}}}" />
+          <DataItem name="{{name}}" value="{{value}}" />
         {{/dataItems}}
         </Event>
       </EventHistory>
@@ -398,20 +402,20 @@ define [
       <PayorChanges>
         <Set>
         {{#dataItems}}
-          <DataItem name="{{name}}" value="{{{value}}}" />
+          <DataItem name="{{name}}" value="{{value}}" />
         {{/dataItems}}
         </Set>
       </PayorChanges>
       <EventHistory>
         <Event type="PayorChange">
         {{#dataItems}}
-          <DataItem name="{{name}}" value="{{{value}}}" />
+          <DataItem name="{{name}}" value="{{value}}" />
         {{/dataItems}}
         </Event>
       </EventHistory>
     """
 
-    make_payment : """
+    post_payment : """
       <Ledger>
         <LineItem value="{{paymentAmount}}" type="PAYMENT" timestamp="{{timestamp}}">
           <Memo></Memo>

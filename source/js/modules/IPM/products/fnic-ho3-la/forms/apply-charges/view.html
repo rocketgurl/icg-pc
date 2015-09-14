@@ -1,46 +1,63 @@
 <!-- Product: FNIC HO3 Louisiana -->
-<form action="apply_charges" method="get" accept-charset="utf-8">
-    <div id="content">
-        <div id="content_header">
-            <h2>Apply Charges for {{policyId}}</h2>
-        </div>
+<form name="apply_charges" class="form-horizontal">
+  <div class="content">
 
-        <div class="content_body">
-
-            {{#policyOverview}}
-            <section class="policyOverview">
-                <h1>Policy Overview</h1>
-                <ul>
-                    <li>{{InsuredFirstName}} {{InsuredMiddleName}} {{InsuredLastName}}</li>
-                    <li>{{InsuredMailingAddressLine1}}</li>
-                    <li>{{InsuredMailingAddressLine2}}</li>
-                    <li>{{InsuredMailingAddressCity}}, {{InsuredMailingAddressState}} {{InsuredMailingAddressZip}}</li>
-                </ul>
-            </section>
-            {{/policyOverview}}
-
-            <fieldset>
-                <div>
-                    <label for="{{guid}}_reasonCode" class="labelRequired">Reason Code</label>
-                    <select id="{{guid}}_reasonCode" name="reasonCode" required>
-                        {{#EnumsChargesReason}}
-                        <option value="{{value}}">{{label}}</option>
-                        {{/EnumsChargesReason}}
-                    </select>
-                </div>
-
-                <div>
-                    <label for="{{guid}}_amount" class="labelRequired">Amount</label>
-                    <span class="moneyLabel">$</span> <input type="text" id="{{guid}}_amount" class="moneyInput" name="amount" value="" required>
-                </div>
-                <div>
-                    <label for="{{guid}}_addNotes">Notes</label>
-                    <textarea cols="50" rows="7" id="{{guid}}_addNotes" name="addNotes" value=""></textarea>
-                </div>            
-                <div class="form_actions">
-                    <input type="submit" class="button" value="Confirm"> <a href="home">Nevermind, go back</a>
-                </div>
-            </fieldset>
-        </div>
+    {{#policyOverview}}
+    <div class="panel panel-default policy-overview">
+      <div class="panel-heading">
+        <h3 class="panel-title">Policy Overview</h3>
+      </div>
+      <div class="panel-body">
+      <ul>
+        <li>{{InsuredFirstName}} {{InsuredMiddleName}} {{InsuredLastName}}</li>
+        <li>{{InsuredMailingAddressLine1}}</li>
+        <li>{{InsuredMailingAddressLine2}}</li>
+        <li>{{InsuredMailingAddressCity}}, {{InsuredMailingAddressState}} {{InsuredMailingAddressZip}}</li>
+      </ul>
+      </div>
     </div>
+    {{/policyOverview}}
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">Apply Charges for {{policyId}}</h4>
+      </div>
+      <div class="panel-body">
+        <div class="form-group form-group-sm">
+          <label for="{{guid}}_reasonCode" class="control-label col-xs-3 label-required">Reason code</label>
+          <div class="col-xs-6">
+            <select id="{{guid}}_reasonCode" name="reasonCode" class="form-control" data-value="{{reasonCode}}" required>
+              {{#EnumsChargesReason}}
+              <option value="{{value}}">{{label}}</option>
+              {{/EnumsChargesReason}}
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group form-group-sm">
+          <label for="{{guid}}_amount" class="control-label col-xs-3 label-required">Amount</label>
+          <div class="col-xs-6">
+            <div class="input-group input-group-sm">
+              <span class="input-group-addon">$</span>
+              <input type="text" id="{{guid}}_amount" class="form-control" name="amount" value="" required>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group form-group-sm">
+      <label for="{{guid}}_addNotes" class="control-label col-xs-3">Notes</label>
+      <div class="col-xs-6">
+        <textarea rows="7" id="{{guid}}_addNotes" class="form-control" name="addNotes"></textarea>
+      </div>
+    </div>
+
+    <div class="form-group form-group-sm form_actions">
+      <div class="col-xs-4">
+        <input type="submit" class="btn btn-primary btn-sm" value="Confirm">
+        <a href="home" class="btn btn-default btn-sm">Nevermind, go back</a>
+      </div>
+    </div>
+  </div>
 </form>
