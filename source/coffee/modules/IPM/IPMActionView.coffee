@@ -926,7 +926,8 @@ ResponseHeaders: #{jqXHR.getAllResponseHeaders()}
       for error in errors
         # bootstrap collapse
         $panelCollapse = error.element.parents '.panel-collapse'
-        $panelCollapse.collapse 'show'
+        if $panelCollapse.is ':hidden'
+          $panelCollapse.collapse 'show'
 
         # old method
         $container = error.element.parents('.collapsibleFieldContainer')
