@@ -18,7 +18,6 @@ define [
       @controller = options.controller
       @workspaceState = @controller.workspace_state
       @listenTo @workspaceState, 'change:history', @render
-      @render()
 
     render : ->
       data = {}
