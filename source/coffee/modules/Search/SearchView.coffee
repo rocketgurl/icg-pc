@@ -269,7 +269,7 @@ RequestURL: #{collection.url}
 RequestParams: #{$.param(collection.getParams())}
 ResponseHeaders: #{response.getAllResponseHeaders()}
         """
-        throw new Error "IPM Action Error"
+        throw new Error "Search Request Error"
       catch ex
         console.info info
 

@@ -635,7 +635,7 @@ define [
         info = ""
         try
           info = """
-IPM Action Error (#{jqXHR.status}) #{jqXHR.statusText}
+IPM Action XMLHTTPResponse Error (#{jqXHR.status}) #{jqXHR.statusText}
 IPMAction: #{@ChangeSet.ACTION}
 ErrorName: #{@errors.title}
 ErrorMessage: #{@errors.desc}
@@ -735,7 +735,7 @@ ResponseHeaders: #{jqXHR.getAllResponseHeaders()}
         info = ""
         try
           info = """
-Add Note Error (#{jqXHR.status}) #{jqXHR.statusText}
+IPM Add Note XMLHTTPResponse Error (#{jqXHR.status}) #{jqXHR.statusText}
 ErrorName: #{@errors.title}
 ErrorMessage: #{@errors.desc}
 RequestPayload: #{requestPayload}

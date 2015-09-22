@@ -65,8 +65,17 @@ define [
     # TODO: something here
     addDocumentError : (jqXHR, textStatus, errorThrown) ->
       @fileUploadLink.removeClass 'toggle'
-      # console.log errorThrown
-      # console.log @noteData
+      
+      # Log a hopefully useful ajax error for TrackJS
+      info = ""
+      try
+        info = """
+Add Document XMLHTTPResponse Error (#{jqXHR.status}) #{jqXHR.statusText}
+ResponseHeaders: #{jqXHR.getAllResponseHeaders()}
+        """
+        throw new Error "Add Document Error"
+      catch ex
+        console.info info
 
     uploadFile : (e) ->
       files = _.toArray e.currentTarget.files
