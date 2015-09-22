@@ -17,11 +17,6 @@ define [
       @renderContainer()
       homeCarousel = @$('#home-carousel').carousel()
 
-      @listenTo @CONTROLLER, "logout", =>
-        homeCarousel.carousel 'pause'
-        homeCarousel = null
-        @stopListening(@CONTROLLER)
-
       apUpdatesView = new APNoticesView
         el         : @$('#ap-notices')
         controller : @CONTROLLER
