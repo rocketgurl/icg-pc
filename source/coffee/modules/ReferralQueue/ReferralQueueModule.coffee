@@ -37,5 +37,10 @@ define [
     # Tell the Queue to render itself and the Collection of tasks to hit the
     # server for some XML
     render : ->
-      if @QUEUE_VIEW.render()
-        @TASKS.fetch()
+
+      if @controller.services.pxcentral
+        if @QUEUE_VIEW.render()
+          @TASKS.fetch()
+      else
+        errorMsg = 'Sorry, the Referral Queue could not be loaded'
+        @QUEUE_VIEW.render errorMsg
