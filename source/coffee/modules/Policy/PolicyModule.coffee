@@ -63,37 +63,45 @@ define [
       @messenger = new Messenger(@policy_view, @policy_view.cid)
       window.pol = @policy_model
 
-      @policy_model.fetch({
-        headers :
-          'Authorization'   : "Basic #{@digest}"
-        success : (model, response, options) =>
-          # console.log id, @app
-          # console.log model.toJSON()
-          @policy_view.trigger 'loaded'
-        error : (model, xhr, options) =>
-          @render({ flash_only : true })
-          @view.remove_loader()
+      # ONLY FETCH THE POLICY IF THERE'S A URLROOT
+      if not urlRoot
+        @render({ flash_only : true })
+        @view.remove_loader()
 
-          # Generate error message
-          if xhr.statusText == "error"
-            response = "There was a problem retrieving this policy."
-          else
-            response = "Sorry, policy #{model.id} could not be loaded - #{xhr.status} : #{xhr.statusText}"
+        message = "Sorry, policy #{@policy_model.id} could not be loaded"
+        @policy_view.trigger 'error', message
+      else
+        @policy_model.fetch({
+          headers :
+            'Authorization'   : "Basic #{@digest}"
+          success : (model, response, options) =>
+            # console.log id, @app
+            # console.log model.toJSON()
+            @policy_view.trigger 'loaded'
+          error : (model, xhr, options) =>
+            @render({ flash_only : true })
+            @view.remove_loader()
 
-          @policy_view.trigger 'error', response
+            # Generate error message
+            if xhr.statusText == "error"
+              response = "There was a problem retrieving this policy."
+            else
+              response = "Sorry, policy #{model.id} could not be loaded - #{xhr.status} : #{xhr.statusText}"
 
-          # Log a hopefully useful ajax error for TrackJS
-          info = ""
-          try
-            info = """
-XMLHTTPResponse Error (#{xhr.status}) #{xhr.statusText}
-RequestURL: #{model.url()}
-ResponseHeaders: #{xhr.getAllResponseHeaders()}
-            """
-            throw new Error "IPM Action Error"
-          catch ex
-            console.info info
-      })
+            @policy_view.trigger 'error', response
+
+            # Log a hopefully useful ajax error for TrackJS
+            info = ""
+            try
+              info = """
+  Policy Fetch XMLHTTPResponse Error (#{xhr.status}) #{xhr.statusText}
+  RequestURL: #{model.url()}
+  ResponseHeaders: #{xhr.getAllResponseHeaders()}
+              """
+              throw new Error "Policy Request Error"
+            catch ex
+              console.info info
+        })
 
       # When this tab is activated
       @on 'activate', ->
@@ -107,10 +115,21 @@ ResponseHeaders: #{xhr.getAllResponseHeaders()}
     # big error
     throwLoadError : (model) ->
       xhr = model.get('xhr')
-      console.log ['Policy Error', model, xhr]
-      if xhr.statusText?
+
+      if xhr?.statusText?
         msg = "Could not retrieve policy - #{xhr.statusText}"
         @policy_view.trigger 'error', msg
+
+      # Log a hopefully useful ajax error for TrackJS
+      info = ""
+      try
+        info = """
+Policy Load Error
+RequestURL: #{model.url()}
+        """
+        throw new Error "Policy Request Error"
+      catch ex
+        console.info info
       return false
 
     # Do whatever rendering animation needs to happen here

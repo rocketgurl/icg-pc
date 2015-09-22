@@ -345,7 +345,7 @@ define [
         view = @policyHistoryViews[id] = new PolicyHistoryView
           controller     : this
           el             : '#policy-history'
-      view.render()
+      view.render() if @services.pxcentral
 
     #### Get Configuration Files
     #

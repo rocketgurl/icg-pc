@@ -84,8 +84,16 @@ define [
 
     # TODO: something here
     addNoteError : (jqXHR, textStatus, errorThrown) ->
-      # console.log errorThrown
-      # console.log @noteData
+      # Log a hopefully useful ajax error for TrackJS
+      info = ""
+      try
+        info = """
+Add Note XMLHTTPResponse Error (#{jqXHR.status}) #{jqXHR.statusText}
+ResponseHeaders: #{jqXHR.getAllResponseHeaders()}
+        """
+        throw new Error "Add Note Error"
+      catch ex
+        console.info info
 
     deleteFileSuccess : (modelId) ->
       =>

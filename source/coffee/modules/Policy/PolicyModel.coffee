@@ -661,7 +661,7 @@ define [
           </PolicyChangeSet>
         """
 
-        xml = Mustache.render xml, noteData
+        xml = Mustache.render tpl, noteData
 
         # Assemble the AJAX params
         params =

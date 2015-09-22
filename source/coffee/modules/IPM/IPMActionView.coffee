@@ -635,7 +635,7 @@ define [
         info = ""
         try
           info = """
-IPM Action Error (#{jqXHR.status}) #{jqXHR.statusText}
+IPM Action XMLHTTPResponse Error (#{jqXHR.status}) #{jqXHR.statusText}
 IPMAction: #{@ChangeSet.ACTION}
 ErrorName: #{@errors.title}
 ErrorMessage: #{@errors.desc}
@@ -735,7 +735,7 @@ ResponseHeaders: #{jqXHR.getAllResponseHeaders()}
         info = ""
         try
           info = """
-Add Note Error (#{jqXHR.status}) #{jqXHR.statusText}
+IPM Add Note XMLHTTPResponse Error (#{jqXHR.status}) #{jqXHR.statusText}
 ErrorName: #{@errors.title}
 ErrorMessage: #{@errors.desc}
 RequestPayload: #{requestPayload}
@@ -926,7 +926,8 @@ ResponseHeaders: #{jqXHR.getAllResponseHeaders()}
       for error in errors
         # bootstrap collapse
         $panelCollapse = error.element.parents '.panel-collapse'
-        $panelCollapse.collapse 'show'
+        if $panelCollapse.is ':hidden'
+          $panelCollapse.collapse 'show'
 
         # old method
         $container = error.element.parents('.collapsibleFieldContainer')

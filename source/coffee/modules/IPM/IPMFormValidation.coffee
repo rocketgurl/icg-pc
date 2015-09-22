@@ -43,6 +43,7 @@ define [
     validateFields : (validate_fields) ->
       # Loop through array and test each field
       # Object || false
+      $('.panel-danger').removeClass 'panel-danger'
       fields = for el in validate_fields
                 @validateField(el, @validators, this)
       # filters out false values
@@ -129,10 +130,6 @@ define [
       unless $parent.length
         $parent = el.parent()
       $parent.removeClass 'has-error'
-
-      $panel = el.parents '.panel'
-      if $panel.length is 1
-        $panel.removeClass 'panel-danger'
 
     # Assemble the error message for the view
     #
