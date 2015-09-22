@@ -70,6 +70,8 @@ define [
       # Get changed form values and assemble into array suitable for templates
       dataItems = @getChangedDataItems(values, vocabTerms)
       unless _.isEmpty dataItems
+        _.each dataItems, (item) ->
+          item.value = Helpers.escapeInvalidXMLChars(item.value)
         context.intervalRequest = dataItems
 
       context
@@ -299,7 +301,7 @@ define [
     # Tempalte for data item insertion
     dataItemTemplate : """
       {{#intervalRequest}}
-      <DataItem name="{{key}}" value="{{value}}" />
+      <DataItem name="{{key}}" value="{{{value}}}" />
       {{/intervalRequest}}
     """
 
