@@ -26,8 +26,6 @@ define [
       data.baseRoute    = @controller.baseRoute
       data.historyStack = @workspaceState.getHistoryStack()
       data.id           = @workspaceState.id
-      _.each data.historyStack, (item) ->
-        if not item.params then console.log item
       if data.historyStack.length > 0
         @$el.html @template data
         @$el.removeClass 'hidden'
