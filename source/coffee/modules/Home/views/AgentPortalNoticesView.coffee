@@ -26,7 +26,7 @@ define [
       @collection.digest = @options.controller.APP_PC_AUTH
       @collection.config = @options.controller.services.agentPortalNotices
       @collection.on 'reset', @renderNotices
-      @collection.fetch() if @options.controller.services.agentPortalNoticesconfig
+      @collection.fetch() if @options.controller.services.agentPortalNotices?
 
     toggleNoticeItem : (e) ->
       $noticeItem = $(e.currentTarget).parents '.notice-item'
