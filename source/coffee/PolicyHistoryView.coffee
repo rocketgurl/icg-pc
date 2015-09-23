@@ -8,7 +8,9 @@ define [
     <h4>Recently Viewed</h4>
     <ul id="<%= id %>">
       <% _.each(historyStack, function (item) { %>
-      <li><a href="#<%= baseRoute %>/policy/<%= item.params.url %>" id="<%= item.app %>"><%= item.app_label %></a></li>
+        <% if (item.params) { %>
+        <li><a href="#<%= baseRoute %>/policy/<%= item.params.url %>" id="<%= item.app %>"><%= item.app_label %></a></li>
+        <% } %>
       <% }) %>
     </ul>
     """
@@ -24,6 +26,8 @@ define [
       data.baseRoute    = @controller.baseRoute
       data.historyStack = @workspaceState.getHistoryStack()
       data.id           = @workspaceState.id
+      _.each data.historyStack, (item) ->
+        if not item.params then console.log item
       if data.historyStack.length > 0
         @$el.html @template data
         @$el.removeClass 'hidden'
