@@ -136,6 +136,11 @@ define [
 
     # Remove tab and view
     destroy : ->
+      if @app.app is 'home'
+        # pause & destroy the carousel
+        @$('#home-carousel').carousel('pause')
+                            .remove()
+
       # Remove tab & nullify so GC can get it (?)
       if @$tabEl?
         @$navbarItem.removeClass 'active'

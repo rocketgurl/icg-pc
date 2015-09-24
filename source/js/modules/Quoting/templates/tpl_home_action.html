@@ -1,15 +1,13 @@
-<h1 class="ipm-header">Quoting</h1>
-<div class="ipm-home-action-view">
-	<ul>
-		{{#ACTIONS}}
-		<li>
-			{{label}}
-			<ul>
-				{{#actions}}
-					<li><a href="{{view}}">{{label}}</a></li>
-				{{/actions}}
-			</ul>
-		</li>
-		{{/ACTIONS}}
-	</ul>
+<h3 class="ipm-header">Quoting</h3>
+<div class="row ipm-home-action-view">
+  {{#ACTIONS}}
+  <div class="col-xs-4">
+    <h4>{{label}}</h4>
+    <ul class="list-unstyled">
+      {{#actions}}
+        <li><a href="{{view}}">{{label}}</a></li>
+      {{/actions}}
+    </ul>
+  </div>
+  {{/ACTIONS}}
 </div>

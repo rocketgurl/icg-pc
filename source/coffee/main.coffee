@@ -76,8 +76,10 @@ require
         deps: ['jquery']
       'collapse' :
         deps: ['transition']
+      'tooltip' :
+        deps: ['jquery']
       'popover' :
-        deps: ['jquery', 'tooltip']
+        deps: ['tooltip']
       'dropdown' :
         deps: ['jquery']
       'modal' :
@@ -97,6 +99,7 @@ require [
   'chosen'
   'dropdown'
   'modal'
+  'tooltip'
 ], ($, _, Backbone, WorkspaceController, u_string, u_policycentral, domReady) ->
 
   (->

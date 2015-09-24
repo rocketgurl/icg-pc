@@ -33,7 +33,7 @@
       "actions": [
         {
           "label": "Post Payment",
-          "view": "MakePayment"
+          "view": "PostPayment"
         },
         {
           "label": "Invoice",
@@ -112,6 +112,10 @@
         {
           "label": "Generate document",
           "view": "GenerateDocument"
+        },
+        {
+          "label": "Cancel Insured",
+          "view": "CancelInsured"
         }
       ]
     }

@@ -22,7 +22,7 @@ define [
         if result
           @showErrorState(args[1])
         else
-          @removeErrorState(args)
+          @removeErrorState(args[1])
           
         result
 
@@ -43,6 +43,7 @@ define [
     validateFields : (validate_fields) ->
       # Loop through array and test each field
       # Object || false
+      $('.panel-danger').removeClass 'panel-danger'
       fields = for el in validate_fields
                 @validateField(el, @validators, this)
       # filters out false values
@@ -103,20 +104,21 @@ define [
       required_fields
 
 
-    # Elements should show that they are required. We also attach an
-    # event so that if the element is 'changed' it is re-validated on the fly
+    # Elements should show that they are required.
     #
     # @param `el` _HTML Element_ Form element to be validated  
     # @param `scope` _this_ Optional scope element (callback village)      
     # @return _HTML Element_ 
     #
-    showErrorState : (el, scope) ->
-      scope = scope ? this
-      el.addClass('validation_error')
-        .parent()
-        .find('label')
-        .addClass('validation_error')
-      el
+    showErrorState : (el) ->
+      $parent = el.parents '.form-group'
+      unless $parent.length
+        $parent = el.parent()
+      $parent.addClass 'has-error'
+
+      $panel = el.parents '.panel'
+      if $panel.length is 1
+        $panel.addClass 'panel-danger'
 
     # Remove the error class from elements
     #
@@ -124,12 +126,10 @@ define [
     # @return _HTML Element_  
     #
     removeErrorState : (el) ->
-      if el.hasClass 'validation_error'
-        el.removeClass('validation_error')
-          .parent()
-          .find('label')
-          .removeClass('validation_error')
-      el
+      $parent = el.parents '.form-group'
+      unless $parent.length
+        $parent = el.parent()
+      $parent.removeClass 'has-error'
 
     # Assemble the error message for the view
     #
@@ -138,7 +138,10 @@ define [
     #  
     displayErrorMsg : (errors) ->
       details = _.map errors, (err) ->
-        $label = $(err.element).parent().find('label')
+        $errEl = $(err.element)
+        $label = $errEl.parent().find('label')
+        unless $label.length
+          $label = $errEl.parents('.form-group').find('label')
         $label.find('i').remove()
         "<li>#{$label.html()} - #{err.msg}</li>"
 

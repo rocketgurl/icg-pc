@@ -24,6 +24,15 @@ define [
     uc_first : (string) ->
       return string.substr(0,1).toUpperCase() + string.substr(1)
 
+    escapeInvalidXMLChars : (string) ->
+      if string
+        string = string.replace(/&/g, '&amp;')
+                       .replace(/</g, '&lt;')
+                       .replace(/>/g, '&gt;')
+                       .replace(/"/g, '&quot;')
+                       .replace(/'/g, '&apos;')
+      string
+
     # Unserialize a url-ready string into an object
     unserialize : (string) ->
       out = {}

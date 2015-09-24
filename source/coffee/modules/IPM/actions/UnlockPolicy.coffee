@@ -47,7 +47,7 @@ define [
       @ChangeSet.commitChange(
         xml,
         @callbackSuccess,
-        @callbackError
+        @callbackError(xml)
         url : pxserver
         headers :
           'Authorization' : "Basic #{@MODULE.CONTROLLER.IXVOCAB_AUTH}"

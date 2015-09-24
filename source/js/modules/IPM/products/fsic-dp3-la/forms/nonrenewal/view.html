@@ -32,10 +32,10 @@
 
       <fieldset>
         <ul>
-          <li><input class="load-subaction" name="nonrenew" type="submit" value="Non-Renew" {{nonrenewDisabled}}></li>
-          <li><input class="load-subaction" name="nonrenewpending" type="submit" value="Set pending non-renew" {{setPendingDisabled}}></li>
-          <li><input class="load-subaction" name="nonrenewreinstate" type="submit" value="Reinstate" {{reinstateDisabled}}></li>
-          <li><input class="load-subaction" name="nonrenewrescind" type="submit" value="Rescind pending non-renew" {{rescindPendingDisabled}}></li>
+          <li><button class="btn btn-primary load-subaction" name="nonrenew" {{nonrenewDisabled}}>Non-Renew</button></li>
+          <li><button class="btn btn-primary load-subaction" name="nonrenewpending" {{setPendingDisabled}}>Set pending non-renew</button></li>
+          <li><button class="btn btn-primary load-subaction" name="nonrenewreinstate" {{reinstateDisabled}}>Reinstate</button></li>
+          <li><button class="btn btn-primary load-subaction" name="nonrenewrescind" {{rescindPendingDisabled}}>Rescind pending non-renew</button></li>
         </ul>
       </fieldset>
       <div class="form_actions">

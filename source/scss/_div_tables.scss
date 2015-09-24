@@ -1,5 +1,3 @@
-/* Alternative "table" for when you need more control than a table can give */
-
 // Quick loop to define column widths up to the $table-max-columns for our div tables
 @mixin make-table-columns($table-max-columns) {
   @for $index from 1 through $table-max-columns {

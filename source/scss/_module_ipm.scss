@@ -1,15 +1,11 @@
 .ipm-container {
-  padding: 0 1.8%;
+  padding: 15px;
 }
 
 .ipm-header {
-  @include sans;
-  @include font-size(18);
   @include emboss;
-  font-weight: bold;
   color: $blue;
-  padding: 20px 10px;
-  margin: 0;
+  margin-top: 0;
 }
 
 .ipm-flash {
@@ -41,67 +37,21 @@
   padding: 20px;
 }
 
-.ipm-home-action-view {
-  margin: 20px 0 0 0;
-  text-align: center;
-  @include sans;
-}
-
-.ipm-home-action-view > ul {
-  margin: 0 auto;
-  text-align: left;
-}
-
-.ipm-home-action-view ul li {
-  @include font-size(16);
-  font-weight: bold;
-  width: 33.333%;
-  display: block;
-  margin: 20px 0;
-  padding: 0 10px;
-  float: left;
-}
-
-.ipm-home-action-view ul li:nth-child(4n) {
-  clear: left;
-}
-
-.ipm-home-action-view ul li ul {
-
-  border: 0;
-  margin: 10px 0 5px 0;
-}
-
 // We re-use these in other places in IPM views
 %ipm-action-link-li {
-  font-weight: normal;
-  width: 100%;
-  border: 0;
-  margin: 5px 0;
-  padding: 0;
+  margin: 10px 0;
 }
 
 %ipm-action-link-li-a {
-  text-decoration: none;
   display: block;
   padding: 8px;
   border-radius: 4px;
-  background: darken(#f4f4f4, 5);
-  color: $colblue;
-  @include emboss;
+  background: rgba(0, 0, 0, 0.1);
   &:hover {
     background-color: $blue;
     color: $white;
     @include emboss(darken($blue, 20));
   }
-}
-
-.ipm-home-action-view ul > li > ul > li {
-  @extend %ipm-action-link-li;
-}
-
-.ipm-home-action-view ul > li > ul > li a {
-  @extend %ipm-action-link-li-a;
 }
 
 .ipm-action-links li {
@@ -129,7 +79,7 @@
   margin: 20px 20px 20px 0;
 }
 
-section.policyOverview {
+.policyOverview {
   display: none;
 }
 
@@ -169,9 +119,6 @@ h2.ipm-action-header {
 }
 
 .ipm-container {
-  #content {
-    padding: 20px !important;
-  }
   #content_header {
     padding: 0;
     h2 {
@@ -198,13 +145,6 @@ h2.ipm-action-header {
       display: inline-block;
     }
   }
-  .button {
-    @include simple-color(hue(#2b90d2), saturation(#2b90d2), lightness(#2b90d2));
-    &:disabled {
-      @include simple-color(hue(#eeeeee), saturation(#eeeeee), lightness(#eeeeee));
-      color: #aaa;
-    }
-  }
   .policy-refresh {
     margin-left: 10px;
   }
@@ -216,19 +156,8 @@ h2.ipm-action-header {
     @include simple-color(hue(#eeeeee), saturation(#eeeeee), lightness(#eeeeee));
     color: #ccc;
   }
-  input[value=Confirm] {
-    @include simple-color(hue(#37a93c), saturation(#37a93c), lightness(#37a93c));
-  }
-  .form_actions {
-    margin: 10px 0 0 0;
-    a {
-      vertical-align: top;
-      display: inline-block;
-      text-decoration: none;
-      @include simple-color(hue($lightgray), saturation($lightgray), lightness($lightgray));
-    }
-  }
-  fieldset {
+  
+  fieldset:not(.bs) {
     border-top: darken($lightgray, 10) 1px solid;
     padding: 5px 0;
     margin: 0;
@@ -236,6 +165,7 @@ h2.ipm-action-header {
       margin-left: 12px;
       width: 70%;
     }
+
     h3 {
       @include font-size(18);
       @include emboss;
@@ -262,14 +192,6 @@ h2.ipm-action-header {
       padding: 10px 0 10px 0;
       &:hover {
         background: $lightgray;
-      }
-    }
-    .collapsibleFieldContainer {
-      margin: 5px 0 0 0;
-      padding: 0;
-      display: none;
-      &:hover {
-        background: none;
       }
     }
     label {
@@ -305,32 +227,36 @@ h2.ipm-action-header {
       }
     }
     label.labelRequired {
-      color: #444;
-      font-weight: bold;
       &:after {
         color: #752E2E;
         content: ' *';
       }
     }
-    label.validation_error {
-      color: #a00;
-    }
     label.noteslabel {
       margin-left: -5px;
+    }
+    .has-error {
+      label {
+        color: #a94442;
+      }
+      input,
+      select,
+      textarea {
+        border-color: #a94442;
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+      }
+      input:focus,
+      select:focus,
+      textarea:focus {
+        border-color: #843534;
+        box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 6px #ce8483;
+      }  
     }
     div > i {
       margin: 0 0 0 10px;
       padding: 5px 0 0 0;
       @include font-size(12);
       color: darken($darkgray, 10);
-    }
-    input.validation_error,
-    textarea.validation_error {
-      box-shadow: 0 0 5px rgba(160, 0, 0, 1);
-      background-color: lighten($red, 50);
-    }
-    select.validation_error {
-      background: #fcc;
     }
     input {
       vertical-align: top;
@@ -377,7 +303,15 @@ h2.ipm-action-header {
       border: 0;
     }
   }
-  fieldset.defaultOpen {
+  .collapsibleFieldContainer {
+    margin: 5px 0 0 0;
+    padding: 0;
+    display: none;
+    &:hover {
+      background: none;
+    }
+  }
+  .defaultOpen {
     border-top: 0px;
   }
   .defaultOpen .collapsibleFieldContainer {
@@ -410,13 +344,18 @@ h2.ipm-action-header {
 
 // Summary Data Table (Cancellation previews, etc)
 .form_actions {
+  margin: 15px 0;
+
   p {
-    @include font-size(14);
-    padding: 10px 0;
     font-weight: bold;
     color: $darkgray;
   }
+
+  a {
+    @extend .btn;
+  }
 }
+
 
 .summary_table {
   background: $white;
@@ -577,14 +516,6 @@ h2.ipm-action-header {
 #cancellation {
   fieldset li {
     margin: 5px 0;
-    input {
-      @include simple-color(hue(#2b90d2), saturation(#2b90d2), lightness(#2b90d2));
-      &:disabled {
-        @include simple-color(hue($lightgray), saturation($lightgray), lightness($lightgray));
-        color: $darkgray;
-        font-style: italic;
-      }
-    }
   }
 }
 
@@ -610,8 +541,6 @@ h2.ipm-action-header {
     color: $darkgray;
   }
   .labelRequired {
-    color: #444;
-    font-weight: bold;
     &:after {
       color: #752E2E;
       content: ' *';

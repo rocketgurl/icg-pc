@@ -1,0 +1,161 @@
+<!-- Product: OFCC HO6 South Carolina -->
+{{^preview}}
+<form name="change_additional_interest" class="form-horizontal">
+  <div class="content">
+
+    {{#msg}}
+    <div class="alert alert-info">
+      <h3 class="panel-title">{{msgHeading}}</h3>
+      {{#msgText}}
+      <p>{{{msgText}}}</p>
+      {{/msgText}}
+    </div>
+    {{/msg}}
+
+    {{#policyOverview}}
+    <div class="panel panel-default policy-overview">
+      <div class="panel-heading">
+        <h3 class="panel-title">Policy Overview</h3>
+      </div>
+      <div class="panel-body">
+      <ul>
+        <li>{{InsuredFirstName}} {{InsuredMiddleName}} {{InsuredLastName}}</li>
+        <li>{{InsuredMailingAddressLine1}}</li>
+        <li>{{InsuredMailingAddressLine2}}</li>
+        <li>{{InsuredMailingAddressCity}}, {{InsuredMailingAddressState}} {{InsuredMailingAddressZip}}</li>
+      </ul>
+      </div>
+    </div>
+    {{/policyOverview}}
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">Cancel policy {{policyId}}</h4>
+      </div>
+      <div class="panel-body">
+        <div class="form-group form-group-sm">
+          <label for="{{guid}}_reasonCode" class="control-label col-xs-3 label-required">Reason code</label>
+          <div class="col-xs-6">
+            <select id="{{guid}}_reasonCode" name="reasonCode" class="form-control" data-value="{{reasonCode}}" required>
+              {{#EnumsCancelReason}}
+              <option value="{{value}}">{{label}}</option>
+              {{/EnumsCancelReason}}
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group form-group-sm">
+          <label for="{{guid}}_effectiveDate" class="control-label col-xs-3 label-required">Effective date</label>
+          <div class="col-xs-6">
+            <input data-min-date="{{policyInceptionDate}}" data-max-date="{{policyExpirationDate}}" type="text" id="{{guid}}_effectiveDate" name="effectiveDate" value="{{cancellationEffectiveDate}}" class="form-control datepicker" required>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-group form-group-sm form_actions">
+      <div class="col-xs-4">
+        <input type="submit" class="btn btn-primary btn-sm" value="Preview">
+        <a href="home" class="btn btn-default btn-sm">Nevermind, go back</a>
+      </div>
+    </div>
+
+    <input type="hidden" id="{{guid}}_preview" name="preview" value="true"/>
+  </div>
+</form>
+{{/preview}}
+
+{{#preview}}
+<form name="change_additional_interest" class="form-horizontal">
+  <div class="content">
+
+    {{#msg}}
+    <div class="alert alert-info">
+      <h3 class="panel-title">{{msgHeading}}</h3>
+      {{#msgText}}
+      <p>{{{msgText}}}</p>
+      {{/msgText}}
+    </div>
+    {{/msg}}
+
+    {{#policyOverview}}
+    <div class="panel panel-default policy-overview">
+      <div class="panel-heading">
+        <h3 class="panel-title">Policy Overview</h3>
+      </div>
+      <div class="panel-body">
+      <ul>
+        <li>{{InsuredFirstName}} {{InsuredMiddleName}} {{InsuredLastName}}</li>
+        <li>{{InsuredMailingAddressLine1}}</li>
+        <li>{{InsuredMailingAddressLine2}}</li>
+        <li>{{InsuredMailingAddressCity}}, {{InsuredMailingAddressState}} {{InsuredMailingAddressZip}}</li>
+      </ul>
+      </div>
+    </div>
+    {{/policyOverview}}
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">Cancellation actions for policy {{policyId}}</h4>
+      </div>
+      <table class="table table-striped" summary="Proposed action">
+        <caption>Proposed action</caption>
+        <tbody>
+          <tr>
+            <th scope="row">Action</th>
+            <td>{{Action}}</td>
+          </tr>
+          <tr>
+            <th scope="row">Cancellation Type</th>
+            <td>{{RateType}}</td>
+          </tr>
+          <tr>
+            <th scope="row">Cancellation Effective Date</th>
+            <td>{{EffectiveDate}}</td>
+          </tr>
+          <tr>
+            <th scope="row">Notice Days Until Cancellation</th>
+            <td>{{AdvanceNoticeDays}}</td>
+          </tr>
+          <tr>
+            <th scope="row">Cancellation Reason</th>
+            <td>{{ReasonCode}} - {{ReasonCodeLabel}}</td>
+          </tr>
+          {{#ChangeInPremium}}
+          <tr>
+            <th scope="row">Change in Premiums</th>
+            <td>{{ChangeInPremium}}</td>
+          </tr>
+          <tr>
+            <th scope="row">Changes in Fees</th>
+            <td>{{ChangeInFee}}</td>
+          </tr>
+          <tr>
+            <th scope="row">Change in Taxes</th>
+            <td>{{ChangeInTax}}</td>
+          </tr>
+          {{#ChangeInOthers}}
+          <tr>
+            <th scope="row">Change in Others</th>
+            <td>{{ChangeInOthers}}</td>
+          </tr>
+          {{/ChangeInOthers}}
+          <tr>
+            <th scope="row">Total Change</th>
+            <td>{{CancelAmount}}</td>
+          </tr>
+          {{/ChangeInPremium}}
+        </tbody>
+      </table>
+    </div>
+
+    <div class="form-group form-group-sm form_actions">
+      <div class="col-xs-6">
+        <p>Confirm this action?</p>
+        <input type="submit" class="btn btn-primary btn-sm" value="Cancel this policy">
+        <a href="home" class="btn btn-default btn-sm">Nevermind, go back</a>
+      </div>
+    </div>
+  </div>
+</form>
+{{/preview}}
