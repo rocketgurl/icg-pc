@@ -322,4 +322,5 @@ define [
           requestPayload
           callbackFunc
           @callbackInstanceError(requestPayload)
+          options
         )
