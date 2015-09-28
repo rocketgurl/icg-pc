@@ -53,7 +53,7 @@ def read_version_txt
   prefix        = File.dirname(__FILE__)
   version_file  = file_join_safe(prefix, 'VERSION.txt')
   File.open(version_file).each do |line|
-    version = line[/(\d\.\d\.\d)/] if line =~ /^version/
+    version = line[/(\d+\.\d+\.\d+[-stage]*\d*)/] if line =~ /^version/
   end
   version
 end
