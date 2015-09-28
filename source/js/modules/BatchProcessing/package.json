@@ -14,12 +14,12 @@
     "d3": "^3.5.5",
     "envify": "^3.0.0",
     "extend": "^3.0.0",
-    "jest-cli": "^0.5.0",
     "moment": "^2.10.6",
     "node-qs-serialization": "0.0.2",
     "react-bootstrap": "^0.24.5",
     "react-datepicker": "^0.11.5",
     "reactify": "^0.15.2",
+    "tape": "^4.2.0",
     "uglify-js": "~2.4.24",
     "underscore": "^1.8.3",
     "watchify": "^2.6.2"
@@ -27,7 +27,7 @@
   "scripts": {
     "start": "watchify src/app.js -o public/bundle.js -v",
     "build": "browserify . -t [envify --NODE_ENV production] | uglifyjs -cm > public/bundle.min.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test" : "./node_modules/tape/bin/tape \"src/**/test/*.js\""
   },
   "browserify": {
     "transform": [
