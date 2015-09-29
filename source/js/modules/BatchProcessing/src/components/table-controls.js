@@ -93,11 +93,6 @@ export default React.createClass({
                   <span className="glyphicon glyphicon-repeat"/>
                 </button>
               </div>
-              <div className="col-xs-6">
-                <button className="btn btn-primary btn-block">
-                  <span className="glyphicon glyphicon-list"/>
-                </button>
-              </div>
             </div>
           </div>
         </div>
