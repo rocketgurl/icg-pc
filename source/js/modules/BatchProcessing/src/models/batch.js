@@ -9,6 +9,10 @@ export default BaseModel.extend({
     durationInMillis: 'number',
     endActivityId: 'string',
     endTime: 'string',
+    numberOfInstances: 'number',
+    numberOfActiveInstances: 'number',
+    numberOfErrorInstances: 'number',
+    numberOfSuccessInstances: 'number',
     processDefinitionId: 'string',
     processDefinitionUrl: 'string',
     startActivityId: 'string',
@@ -20,21 +24,17 @@ export default BaseModel.extend({
   },
 
   derived: {
-    processDefinitionKey: {
+    type: {
       deps: ['processDefinitionId'],
       fn: function () {
-        return this.processDefinitionId.split(':')[0];
-      }
-    },
-    numPolicyRefs: {
-      fn: function () {
-        const numRefs = this.findVariableWhere({name: 'numPolicyRefs'});
-        return numRefs && numRefs.value;
+        const processDefinitionKey = this.processDefinitionId.split(':')[0];
+        return processDefinitionKey.replace('batch', '');
       }
     }
   },
 
-  // updates the batchId query variable
+  // initializes the associated policies collection,
+  // and updates the batchId query variable
   initialize() {
     this.policies = new PoliciesCollection();
     this.policies.setBatchId(this.id);

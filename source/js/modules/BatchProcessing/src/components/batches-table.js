@@ -34,9 +34,6 @@ export default React.createClass({
       <div className="div-table table-striped table-hover table-scrollable table-sortable table-5-columns">
         <div className="thead">
           <div className="tr">
-            <div className="th">Status</div>
-            <div className="th">Batch ID</div>
-            <div className="th">Quantity</div>
             <div className="th">
               <a data-sortby="startTime"
                 className={sort === 'startTime' ? order : null}
@@ -44,7 +41,10 @@ export default React.createClass({
                 Time Started <span className="caret"/>
               </a>
             </div>
+            <div className="th">Quantity</div>
+            <div className="th">Batch ID</div>
             <div className="th">Initiator</div>
+            <div className="th">Status</div>
           </div>
         </div>
         <div className="tbody" style={{maxHeight: `${500}px`}}>
