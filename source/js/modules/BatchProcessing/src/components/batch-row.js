@@ -6,11 +6,11 @@ export default React.createClass({
     const {batch} = this.props;
     return (
       <a className="tr" href={`#policies/?bid=${batch.id}`}>
-        <div className="td"><span className="label label-default">Status</span></div>
-        <div className="td">{`${batch.processDefinitionKey} ${batch.id}`}</div>
-        <div className="td">{batch.numPolicyRefs}</div>
         <div className="td">{batch.startTime}</div>
+        <div className="td">{batch.numberOfInstances}</div>
+        <div className="td">{`${batch.type} ${batch.id}`}</div>
         <div className="td">{batch.startUserId}</div>
+        <div className="td"><span className="label label-default">Status</span></div>
       </a>
       );
   }
