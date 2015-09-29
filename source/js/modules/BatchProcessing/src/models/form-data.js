@@ -3,7 +3,15 @@ import _ from 'underscore';
 import app from 'ampersand-app';
 
 export default Model.extend({
-  url: '/batch/form/form-data',
+  url() {
+    if (this.batchType) {
+      return `/batch/icg/batch-processes/${this.batchType}`;
+    }
+    app.errors.add({
+      status: 'Error',
+      statusText: 'Batch type is required!'
+    });
+  },
 
   // set up the Auth header one time for all requests
   ajaxConfig() {
@@ -18,32 +26,27 @@ export default Model.extend({
     this.options = {parse: true};
     this.parameters = {};
     this.properties = [];
+    this.batchType = null;
 
     // errors are pushed to an Errors collection
     this.on('error', this._onXHRError);
   },
 
-  setProcessDefinitionId(id) {
-    this.parameters.processDefinitionId = id;
+  setBatchType(type) {
+    this.batchType = type;
   },
 
-  getProperty(id) {
+  getProperty(key) {
     return _.find(this.properties, prop => {
-      return id === prop.id;
+      return typeof prop[key] !== 'undefined';
     });
   },
 
-  // add a property object to the properties array.
+  // adds a singular property object to the properties array.
   // Properties should be unique, so if property
   // exists, overwrite it
-  addProperty(id, value) {
-    let property = this.getProperty(id);
-    if (property) {
-      property.value = value;
-    } else {
-      this.properties = this.properties || [];
-      this.properties.push({id, value});
-    }
+  addProperty(newProp) {
+    this.properties = [newProp];
   },
 
   // delete a specific property. Currently assumes
@@ -87,15 +90,17 @@ export default Model.extend({
   submit() {
     let options = {...this.options};
     options.attrs = {...this.parameters};
-    options.attrs.properties = [...this.properties];
-    options.success = (resp) => {
-      if (!this.set(this.parse(resp, options), options)) return false;
-      this.trigger('sync', this, resp, options);
-    };
-    options.error = (resp) => {
-      this.trigger('error', this, resp, options);
-    };
-    return this.sync('create', this, options);
+    _.each(this.properties, (prop) => {
+      options.attrs[prop.id] = prop.value;
+    });
+    // options.success = (resp) => {
+    //   if (!this.set(this.parse(resp, options), options)) return false;
+    //   this.trigger('sync', this, resp, options);
+    // };
+    // options.error = (resp) => {
+    //   this.trigger('error', this, resp, options);
+    // };
+    // return this.sync('create', this, options);
   },
 
   _onXHRError(collection, xhr) {

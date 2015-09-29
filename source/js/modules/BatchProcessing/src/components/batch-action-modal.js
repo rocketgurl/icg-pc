@@ -10,9 +10,9 @@ JKLXXXXXXXXX
 
 export default React.createClass({
   getInitialState() {
-    const {showModal, processDefinitionId} = this.props;
+    const {showModal, batchType} = this.props;
     return {
-      showModal: !!(showModal && processDefinitionId),
+      showModal: !!(showModal && batchType),
       invalidRefs: [],
       isRequesting: false
     };
@@ -31,14 +31,14 @@ export default React.createClass({
   },
 
   componentWillReceiveProps(props) {
-    const {showModal, processDefinitionId} = props;
+    const {showModal, batchType} = props;
     this.setState({
-      showModal: !!(showModal && processDefinitionId)
+      showModal: !!(showModal && batchType)
     });
-    formData.setProcessDefinitionId(processDefinitionId);
+    formData.setBatchType(batchType);
   },
 
-  // close the modal by navigating away from the modal route
+  // close the modal by clearing the modal route
   close() {
     this.props.router.navigate('/');
   },
@@ -102,7 +102,7 @@ export default React.createClass({
   _onSubmitClick(e) {
     const refsString = this.getPolicyRefsStr();
     if (refsString) {
-      formData.addProperty('policyRefsStr', refsString);
+      formData.addProperty({policyRefsStr: refsString});
       formData.submit();
     }
   },

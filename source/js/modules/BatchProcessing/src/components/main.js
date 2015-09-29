@@ -11,7 +11,7 @@ export default React.createClass({
   getDefaultProps() {
     return {
       showBatchActionModal: false,
-      processDefinitionId: null
+      batchType: null
     };
   },
 
@@ -51,21 +51,15 @@ export default React.createClass({
 
   render() {
     const {tab} = this.state;
-    const {
-      showBatchActionModal,
-      processDefinitionId,
-      actionName} = this.props;
+    const {showBatchActionModal, batchType, actionName} = this.props;
     return (
       <div>
         <div className="row action-row">
-          <BatchActionSelect
-            collection={app.processDefinitions}
-            processDefinitionId={processDefinitionId}
-            router={app.router}/>
+          <BatchActionSelect router={app.router}/>
           <BatchActionModal
             showModal={showBatchActionModal}
             actionName={actionName}
-            processDefinitionId={processDefinitionId}
+            batchType={batchType}
             router={app.router}/>
         </div>
         <div className="panel panel-default panel-nav">

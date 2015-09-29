@@ -1,26 +1,12 @@
 import React from 'react';
 
+const BATCH_ACTIONS = [
+  ['invoicing', 'Batch Invoicing'],
+  ['issuance', 'Batch Issuance'],
+  ['payment', 'Batch Payments']
+];
+
 export default React.createClass({
-  getInitialState() {
-    return {collection: this.props.collection};
-  },
-
-  componentWillMount() {
-    const {collection} = this.props;
-    collection.on('sync', this._onCollectionSync);
-    
-    // If the processDefinitions collection is empty,
-    // fetch a list of processDefinitions having keys
-    // that start with "batch..."
-    if (!collection.length) {
-      collection.fetch({data: {keyLike: 'batch%'}});
-    }
-  },
-
-  componentWillUnmount() {
-    this.state.collection.off();
-  },
-
   render() {
     return (
       <div className="col-xs-2">
@@ -29,10 +15,10 @@ export default React.createClass({
           onChange={this._onActionSelect}
           value={this.props.processDefinitionId || 'default'}>
           <option value="default">Select a Batch Action</option>
-          {this.state.collection.map(processDefinition => {
-            const {id, name} = processDefinition;
+          {BATCH_ACTIONS.map(action => {
+            const [type, name] = action;
             return (
-              <option key={id} value={`${id}/${name}`}>{name}</option>
+              <option key={type} value={`${type}/${name}`}>{name}</option>
               );
           })}
         </select>
@@ -40,7 +26,7 @@ export default React.createClass({
       );
   },
 
-  // Selecting an action sets the url to #modal/processDefinitionId,
+  // Selecting an action sets the url to #modal/processType,
   // triggering the batch action modal in the process
   // if the value is null, the url is set to the project root
   _onActionSelect(e) {
@@ -51,9 +37,5 @@ export default React.createClass({
     } else {
       router.navigate('/');
     }
-  },
-
-  _onCollectionSync(collection) {
-    this.setState({collection});
   }
 });

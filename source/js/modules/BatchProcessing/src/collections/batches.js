@@ -5,7 +5,7 @@ import BatchModel from '../models/batch';
 export default BaseCollection.extend({
   model: BatchModel,
 
-  url: '/batch/query/historic-process-instances',
+  url: '/batch/icg/batch-processes/query',
 
   parse(response) {
     this.total = response.total;
@@ -21,12 +21,6 @@ export default BaseCollection.extend({
       order: 'desc',
       includeProcessVariables: true,
     };
-
-    // HACK: This should only return "batch" processes
-    this.variables = [{
-      name: 'numPolicyRefs',
-      operation: 'greaterThan',
-      value: 0
-    }];
+    this.variables = [];
   }
 });
