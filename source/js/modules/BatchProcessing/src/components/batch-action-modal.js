@@ -102,7 +102,7 @@ export default React.createClass({
   _onSubmitClick(e) {
     const refsString = this.getPolicyRefsStr();
     if (refsString) {
-      formData.addProperty({policyRefsStr: refsString});
+      formData.setBody({policyRefsStr: refsString});
       formData.submit();
     }
   },

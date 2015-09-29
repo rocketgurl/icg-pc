@@ -9,7 +9,7 @@ export default Model.extend({
     }
     app.errors.add({
       status: 'Error',
-      statusText: 'Batch type is required!'
+      statusText: 'Batch type is not set!'
     });
   },
 
@@ -24,9 +24,8 @@ export default Model.extend({
 
   initialize() {
     this.options = {parse: true};
-    this.parameters = {};
-    this.properties = [];
     this.batchType = null;
+    this.body = null;
 
     // errors are pushed to an Errors collection
     this.on('error', this._onXHRError);
@@ -36,27 +35,9 @@ export default Model.extend({
     this.batchType = type;
   },
 
-  getProperty(key) {
-    return _.find(this.properties, prop => {
-      return typeof prop[key] !== 'undefined';
-    });
-  },
-
-  // adds a singular property object to the properties array.
-  // Properties should be unique, so if property
-  // exists, overwrite it
-  addProperty(newProp) {
-    this.properties = [newProp];
-  },
-
-  // delete a specific property. Currently assumes
-  // there is only one property of each name, and removes the
-  // first instance of that property found.
-  deleteProperty(id) {
-    const index = _.findIndex(this.properties, prop => {
-      return id === prop.id;
-    });
-    if (index > -1) this.properties.splice(index, 1);
+  // sets the request body to a given data payload
+  setBody(data) {
+    this.body = data;
   },
 
   // will trim & split any values separated
@@ -89,18 +70,15 @@ export default Model.extend({
   // and post to the activiti api
   submit() {
     let options = {...this.options};
-    options.attrs = {...this.parameters};
-    _.each(this.properties, (prop) => {
-      options.attrs[prop.id] = prop.value;
-    });
-    // options.success = (resp) => {
-    //   if (!this.set(this.parse(resp, options), options)) return false;
-    //   this.trigger('sync', this, resp, options);
-    // };
-    // options.error = (resp) => {
-    //   this.trigger('error', this, resp, options);
-    // };
-    // return this.sync('create', this, options);
+    options.attrs = this.body;
+    options.success = (resp) => {
+      if (!this.set(this.parse(resp, options), options)) return false;
+      this.trigger('sync', this, resp, options);
+    };
+    options.error = (resp) => {
+      this.trigger('error', this, resp, options);
+    };
+    return this.sync('create', this, options);
   },
 
   _onXHRError(collection, xhr) {
