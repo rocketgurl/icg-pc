@@ -2350,7 +2350,7 @@ ul:after { clear: both; }
 /* batch processing (wolf) components */
 .table-controls .td { display: flex; }
 .table-controls .td label { margin-right: 10px; line-height: 34px; white-space: nowrap; }
-.table-controls .td > .form-control, .table-controls .td > div { flex: 1; }
+.table-controls .td > .form-control, .table-controls .td > div:not([class^="col"]) { flex: 1; }
 
 .clearable .close { position: absolute; right: 18px; top: 13px; }
 

@@ -9,7 +9,7 @@
     }
 
     > .form-control,
-    > div {
+    > div:not([class^="col"]) {
       flex: 1;
     }
   }
