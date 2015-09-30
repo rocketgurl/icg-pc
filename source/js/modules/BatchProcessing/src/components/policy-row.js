@@ -1,4 +1,5 @@
 import React from 'react';
+import {OverlayTrigger, Popover} from 'react-bootstrap';
 import app from 'ampersand-app';
 
 export default React.createClass({
@@ -14,6 +15,14 @@ export default React.createClass({
 
   render() {
     const {policy} = this.props;
+    const errorMessage = `${policy.errorCode} - ${policy.errorMessage}`;
+    const infoPopover = (
+      <OverlayTrigger rootClose trigger="click" placement="left"
+        overlay={<Popover title={errorMessage}>
+        {policy.errorResponse}</Popover>}>
+        <span title="Click for more info" className="glyphicon glyphicon-info-sign info-toggle"></span>
+      </OverlayTrigger>);
+
     return (
       <div className="tr">
         <div className="td">
@@ -29,8 +38,8 @@ export default React.createClass({
         <div className="td">
           <span className={policy.status.className}>{policy.status.message}</span>
         </div>
-        <div className="td text-danger" title={policy.errorResponse}>
-          {policy.hasException ? `${policy.errorCode} - ${policy.errorMessage}` : null}
+        <div className="td text-danger">
+          {policy.hasException ? [errorMessage, ' ', infoPopover] : null}
         </div>
       </div>
       );
