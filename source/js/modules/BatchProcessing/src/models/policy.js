@@ -20,32 +20,32 @@ export default BaseModel.extend({
 
   derived: {
     batchId: {
-      fn: function () {
+      fn: function deriveBatchId() {
         return this.getVariableValue('batchId');
       }
     },
     errorCode: {
-      fn: function () {
+      fn: function defiveErrorCode() {
         return this.getVariableValue('errorCode');
       }
     },
     errorMessage: {
-      fn: function () {
+      fn: function deriveErrorMessage() {
         return this.getVariableValue('errorMessage');
       }
     },
     errorResponse: {
-      fn: function () {
+      fn: function deriveErrorResponse() {
         return this.getVariableValue('errorResponse');
       }
     },
     hasException: {
-      fn: function () {
+      fn: function deriveHasException() {
         return this.getVariableValue('hasException');
       }
     },
     policyLookup: {
-      fn: function () {
+      fn: function derivePolicyLookup() {
         return this.getVariableValue('policyLookup');
       }
     },
