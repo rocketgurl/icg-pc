@@ -53,7 +53,7 @@ def read_version_txt
   prefix        = File.dirname(__FILE__)
   version_file  = file_join_safe(prefix, 'VERSION.txt')
   File.open(version_file).each do |line|
-    version = line[/(\d+\.\d+\.\d+[-stage]*\d*)/] if line =~ /^version/
+    version = line[/(\d+\.\d+\.\d+(?:-stage-\d+)?)/] if line =~ /^version/
   end
   version
 end
@@ -93,7 +93,7 @@ def set_urlargs(version, file)
   new_file = []
   File.open(target_file, 'r').each do |line|
     if /urlArgs/ =~ line
-      new_file << line.gsub(/(\d\.\d\.\d)/, version)
+      new_file << line.gsub(/'.*'/, "'#{version}'")
     else
       new_file << line
     end
