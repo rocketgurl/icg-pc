@@ -26,9 +26,37 @@ export default BaseModel.extend({
   derived: {
     type: {
       deps: ['processDefinitionId'],
-      fn: function () {
-        const processDefinitionKey = this.processDefinitionId.split(':')[0];
-        return processDefinitionKey.replace('batch', '');
+      fn: function deriveType() {
+        const key = this.processDefinitionId.split(':')[0];
+        return key.replace('batch', '');
+      }
+    },
+    status: {
+      // derive a status label from the given information
+      // className corresponds to the bootstrap 3 label classes
+      fn: function deriveStatus() {
+        const {
+          numberOfInstances,
+          numberOfActiveInstances,
+          numberOfErrorInstances,
+          numberOfSuccessInstances} = this;
+        if (numberOfSuccessInstances === numberOfInstances) {
+          return {
+            className: 'label label-success',
+            message: `FINISHED: ${numberOfSuccessInstances} successfully run`
+          };
+        } else if (numberOfSuccessInstances +
+          numberOfErrorInstances === numberOfInstances) {
+          return {
+            className: 'label label-danger',
+            message: `FINISHED: ${numberOfErrorInstances} failed`
+          };
+        } else {
+          return {
+            className: 'label label-warning',
+            message: `IN PROGRESS: ${numberOfSuccessInstances} out of ${numberOfInstances} successfully run`
+          };
+        }
       }
     }
   },

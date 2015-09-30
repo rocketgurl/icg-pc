@@ -10,7 +10,9 @@ export default React.createClass({
         <div className="td">{batch.numberOfInstances}</div>
         <div className="td">{`${batch.type} ${batch.id}`}</div>
         <div className="td">{batch.startUserId}</div>
-        <div className="td"><span className="label label-default">Status</span></div>
+        <div className="td">
+          <span className={batch.status.className}>{batch.status.message}</span>
+        </div>
       </a>
       );
   }

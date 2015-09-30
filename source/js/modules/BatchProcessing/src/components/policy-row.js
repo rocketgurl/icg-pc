@@ -26,8 +26,10 @@ export default React.createClass({
         <div className="td">{policy.policyLookup}</div>
         <div className="td">{`${policy.processDefinitionKey} ${policy.batchId}`}</div>
         <div className="td">{policy.startUserId}</div>
-        <div className="td"><span className="label label-default">{policy.status}</span></div>
-        <div className="td" title={policy.errorResponse}>
+        <div className="td">
+          <span className={policy.status.className}>{policy.status.message}</span>
+        </div>
+        <div className="td text-danger" title={policy.errorResponse}>
           {policy.hasException ? `${policy.errorCode} - ${policy.errorMessage}` : null}
         </div>
       </div>

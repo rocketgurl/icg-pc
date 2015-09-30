@@ -56,9 +56,30 @@ export default BaseModel.extend({
       }
     },
     status: {
-      fn: function () {
-        const hasException = this.getVariableValue('hasException');
-        return `${hasException} ${this.endTime}`;
+      // derive a status label from the given information
+      // className corresponds to the bootstrap 3 label classes
+      fn: function deriveStatus() {
+        if (this.endActivityId === 'endEvent') {
+          return {
+            className: 'label label-success',
+            message: 'SUCCESS: COMPLETE'
+          };
+        } else if (this.endActivityId === 'endEventError') {
+          return {
+            className: 'label label-danger',
+            message: 'ERROR: COMPLETE'
+          };
+        } else if (this.endActivityId === null && this.getVariableValue('hasException')) {
+          return {
+            className: 'label label-warning',
+            message: 'ERROR: ACTION NEEDED'
+          }
+        } else {
+          return {
+            className: 'label label-info',
+            message: 'IN PROGRESS'
+          };
+        }
       }
     }
   }
