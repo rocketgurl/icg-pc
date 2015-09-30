@@ -1,3 +1,8 @@
+### 3.1.8 - Sep 30, 2015
+
+- Includes updates to IPM form templates to standard Bootstrap format
+- IPM Actions will now properly escape invalid characters for XML
+
 ### 3.1.7 - Sep 02, 2015
 
 - Fix blank details being displayed in 'Preview Cancellation for Policy' page
