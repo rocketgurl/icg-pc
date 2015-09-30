@@ -17,7 +17,7 @@ export default React.createClass({
     const {policy} = this.props;
     const errorMessage = `${policy.errorCode} - ${policy.errorMessage}`;
     const infoPopover = (
-      <OverlayTrigger rootClose trigger="click" placement="left"
+      <OverlayTrigger key="overlay" rootClose trigger="click" placement="left"
         overlay={<Popover title={errorMessage}>
         {policy.errorResponse}</Popover>}>
         <span title="Click for more info" className="glyphicon glyphicon-info-sign info-toggle"></span>
