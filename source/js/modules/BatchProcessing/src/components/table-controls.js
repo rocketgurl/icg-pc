@@ -30,6 +30,7 @@ export default React.createClass({
                 onChange={this._onSelectChange}>
                 <option value="default">All</option>
                 <option value="invoicing">Invoicing</option>
+                <option value="issuance">Issuance</option>
                 <option value="payments">Payments</option>
               </select>
             </div>
