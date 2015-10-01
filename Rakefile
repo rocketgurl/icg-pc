@@ -15,11 +15,6 @@ def file_join_safe(*paths)
   File.join(paths).gsub(File::SEPARATOR, File::ALT_SEPARATOR || File::SEPARATOR)
 end
 
-# Version Number information
-hash = `git rev-list --tags --max-count=1`
-VERSION = `git describe --tags #{hash.chomp!}`
-VERSION.chomp! # remove line breaks
-
 # Path to RquireJS build config
 RJS_CONFIG = file_join_safe('source', 'js', 'app.build.js')
 
@@ -53,6 +48,15 @@ PRUNE = {
   ]
 }
 
+def read_version_txt
+  version       = '0.0.0'
+  prefix        = File.dirname(__FILE__)
+  version_file  = file_join_safe(prefix, 'VERSION.txt')
+  File.open(version_file).each do |line|
+    version = line[/(\d+\.\d+\.\d+(?:-stage-\d+)?)/] if line =~ /^version/
+  end
+  version
+end
 
 # Update the version number in index.html
 def append_version_number(version, file)
@@ -73,7 +77,7 @@ def append_version_number(version, file)
 
   span = doc.css "#version-number"
   span.each do |s|
-    s.content = "#{version}"
+    s.content = version
   end
 
   File.open(target_file, 'w') { |f|
@@ -82,22 +86,19 @@ def append_version_number(version, file)
   puts ">> VERSION #{version} APPENDED"
 end
 
-# Set the urlArgs param in main.js before compilation. We set it to the current commit
-# so we can have build specific caching
+# Set the urlArgs param in main.js before compilation. We set it to
+# the current commit so we can have build specific caching
 def set_urlargs(version, file)
   target_file = file_join_safe(File.dirname(__FILE__), file)
-  new = []
-  f = File.open(target_file, 'r')
-  f.each do |l|
-    if l.match /urlArgs: '.*?',/
-      new << "    urlArgs: '#{version}',"
+  new_file = []
+  File.open(target_file, 'r').each do |line|
+    if /urlArgs/ =~ line
+      new_file << line.gsub(/'.*'/, "'#{version}'")
     else
-      new << l
+      new_file << line
     end
   end
-  File.open(target_file, 'w') { |f|
-    f.puts new
-  }
+  File.open(target_file, 'w') { |f| f.puts new_file }
   puts ">> URLARGS SET TO #{version}"
 end
 
@@ -199,10 +200,11 @@ task :test_release do
   run_unit_tests 'build'
 end
 
-# Append the latest commit hash to the footer of index.html
+# Append the latest version to the footer of index.html
 task :version do
-  append_version_number VERSION, "source/index.html"
-  set_urlargs VERSION, "source/js/main.js"
+  version = read_version_txt
+  append_version_number version, 'source/index.html'
+  set_urlargs version, 'source/js/main.js'
 end
 
 task :cleanup do

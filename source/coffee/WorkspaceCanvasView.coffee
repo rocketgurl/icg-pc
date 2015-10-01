@@ -136,6 +136,10 @@ define [
 
     # Remove tab and view
     destroy : ->
+      # pause the carousel on home view
+      if @app.app is 'home' and typeof $.fn.carousel is 'function'
+        @$('#home-carousel').carousel 'pause'
+
       # Remove tab & nullify so GC can get it (?)
       if @$tabEl?
         @$navbarItem.removeClass 'active'
@@ -143,7 +147,7 @@ define [
         @$tabEl = null
 
       # Remove content
-      @$el.html('').remove()
+      @$el.empty().remove()
 
       # Remove from the stack
       @options.controller.trigger 'stack_remove', @

@@ -5,7 +5,8 @@ define [
   'text!modules/ReferralQueue/templates/tpl_referral_container.html'
   'text!modules/ReferralQueue/templates/tpl_referral_task_row.html'
   'text!templates/tpl_pagination.html'
-], (BaseView, Helpers, Messenger, tpl_container, tpl_row, tpl_pagination) ->
+  'text!templates/tpl_view_error.html'
+], (BaseView, Helpers, Messenger, tpl_container, tpl_row, tpl_pagination, tpl_error) ->
 
   class ReferralQueueView extends BaseView
 
@@ -59,12 +60,16 @@ define [
       tbodyMaxHeight     = workspaceHeight - (headerHeight + theadHeight)
       @$tBody.css 'max-height', tbodyMaxHeight
 
-    render : ->
+    render : (errorMsg) ->
       # Setup flash module & main container
-      @$el.html(@baseTemplate({
-        cid        : @cid
-        pagination : @paginationTemplate @determinePagination()
-      }))
+      if errorMsg
+        html = @Mustache.render(tpl_error, { cid : @cid, msg : errorMsg })
+        @$el.html html
+      else
+        @$el.html(@baseTemplate({
+          cid        : @cid
+          pagination : @paginationTemplate @determinePagination()
+        }))
 
       @cacheElements()
       @setTbodyMaxHeight()
@@ -121,17 +126,17 @@ define [
 
     logError : (collection, response) ->
       # Log a hopefully useful ajax error for TrackJS
-      eid = "#{@Helpers.formatDate(new Date(), 'YYYY-MM-DD')}"
-      info = {}
+      info = ""
       try
-        info["RequestURL #{eid}"] = collection.url
-        info["RequestParams #{eid}"] = $.param collection.getParams()
-        info["Status #{eid}"]     = response.status
-        info["StatusText #{eid}"] = response.statusText
-        info["ResponseHeaders #{eid}"] = response.getAllResponseHeaders()
-        throw new Error "ReferralQueue XMLHTTPResponse Error (#{response.status}) #{response.statusText}"
+        info = """
+ReferralQueue XMLHTTPResponse Error (#{response.status}) #{response.statusText}
+RequestURL: #{collection.url()}
+RequestParams: #{$.param(collection.getParams())}
+ResponseHeaders: #{response.getAllResponseHeaders()}
+        """
+        throw new Error "Referral Queue Request Error"
       catch ex
-        console.error info, ex
+        console.info info
 
     onPageChange : (e) ->
       @updatePage +e.currentTarget.value

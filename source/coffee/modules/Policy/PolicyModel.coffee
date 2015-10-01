@@ -641,7 +641,7 @@ define [
         Attachments      : attachments
 
       if noteData.Content.length or noteData.Attachments.length
-        xml = """
+        tpl = """
           <PolicyChangeSet schemaVersion="2.1" username="{{{CreatedBy}}}" description="Added via Policy Central">
             {{#Content}}
             <Note>
@@ -661,6 +661,8 @@ define [
           </PolicyChangeSet>
         """
 
+        xml = Mustache.render tpl, noteData
+
         # Assemble the AJAX params
         params =
           url         :  @url()
@@ -668,7 +670,7 @@ define [
           dataType    : 'xml'
           contentType : 'application/xml; schema=policychangeset.2.1'
           context     : this
-          data        : Mustache.render xml, noteData
+          data        : xml
           headers     :
             'Authorization' : "Basic #{@get('digest')}"
             'Accept'        : 'application/vnd.ics360.insurancepolicy.2.8+xml'

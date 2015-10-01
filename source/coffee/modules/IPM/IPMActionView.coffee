@@ -180,7 +180,7 @@ define [
         $dp.datepicker(date_options)
 
       # Attach event listener to preview button
-      @$el.find('form input.button[type=submit]').on(
+      @$el.find('form input[type=submit]').on(
           'click',
           (e) =>
             e.preventDefault()
@@ -592,60 +592,59 @@ define [
     # @param `status` _String_ Status of callback
     # @param `error` _String_ Error
     #
-    callbackError : (jqXHR, status, error) =>
-      # If we don't get an XHR response, then something very bad has
-      # happened indeed.
-      if !jqXHR
-        @PARENT_VIEW.displayError(
-          'warning',
-          'Fatal: Error received with no response from server'
-        ).remove_loader()
+    callbackError : (requestPayload) =>
 
-        return false
+      # Returns a closure so we can catch the request Payload
+      # for better error handling
+      (jqXHR, status, error) =>
+        if !jqXHR
+          @PARENT_VIEW.displayError(
+            'warning',
+            'Fatal: Error received with no response from server'
+          ).remove_loader()
 
-      # Rate validation errors get special treatment
-      if @PARENT_VIEW.view_state == 'Endorse' && \
-        jqXHR.getResponseHeader('Rate-Validation-Failed')
-          return @displayRateValidationError()
+          return false
 
-      if jqXHR.responseText? and jqXHR.status isnt 0
-        regex = /\[(.*?)\]/g
-        json  = regex.exec(jqXHR.responseText)
+        # Rate validation errors get special treatment
+        if @PARENT_VIEW.view_state == 'Endorse' && \
+          jqXHR.getResponseHeader('Rate-Validation-Failed')
+            return @displayRateValidationError()
 
-        # If this is an endorse action and the response is JSON then there is
-        # a high chance this could be a rate validation error.
-        if json? && @PARENT_VIEW.view_state == 'Endorse'
-          @errors = @errorParseJSON(jqXHR, json)
+        if jqXHR.responseText? and jqXHR.status isnt 0
+          regex = /\[(.*?)\]/g
+          json  = regex.exec(jqXHR.responseText)
+
+          # If this is an endorse action and the response is JSON then there is
+          # a high chance this could be a rate validation error.
+          if json? && @PARENT_VIEW.view_state == 'Endorse'
+            @errors = @errorParseJSON(jqXHR, json)
+          else
+            @errors = @errorParseHTML(jqXHR)
+        else if jqXHR.status is 0
+          @errors =
+            title : "Timeout Error (#{jqXHR.status})"
+            desc  : "The server request has timed out with a status of (#{jqXHR.status})"
         else
-          @errors = @errorParseHTML(jqXHR)
-      else if jqXHR.status is 0
-        @errors =
-          title : "Timeout Error (#{jqXHR.status})"
-          desc  : "The server request has timed out with a status of (#{jqXHR.status})"
-      else
-        @errors =
-          title : "#{status.toUpperCase()} (#{jqXHR.status})"
-          desc  : "XMLHTTPRequest status: #{error} (#{jqXHR.status})"
+          @errors =
+            title : "#{status.toUpperCase()} (#{jqXHR.status})"
+            desc  : "XMLHTTPRequest status: #{error} (#{jqXHR.status})"
 
-      @displayError 'warning', @errors
+        @displayError 'warning', @errors
 
-      # Log a hopefully useful ajax error for TrackJS
-      eid = "#{@Helpers.formatDate(new Date(), 'YYYY-MM-DD')}"
-      info = {}
-      try
-        info["RequestURL #{eid}"] = @MODULE.POLICY.url()
-        info["IPMAction #{eid}"]  = @ChangeSet.ACTION
-        info["ErrorName #{eid}"]  = @errors.title
-        info["ErrorMessage #{eid}"] = @errors.desc
-        if @errors.details
-          details = $(@errors.details).text() or @errors.details
-          info["ErrorDetails #{eid}"] = details
-        info["Status #{eid}"]     = jqXHR.status
-        info["StatusText #{eid}"] = jqXHR.statusText
-        info["ResponseHeaders #{eid}"] = jqXHR.getAllResponseHeaders()
-        throw new Error "IPM Action Error"
-      catch ex
-        console.error info, ex
+        # Log a hopefully useful ajax error for TrackJS
+        info = ""
+        try
+          info = """
+IPM Action XMLHTTPResponse Error (#{jqXHR.status}) #{jqXHR.statusText}
+IPMAction: #{@ChangeSet.ACTION}
+ErrorName: #{@errors.title}
+ErrorMessage: #{@errors.desc}
+RequestPayload: #{requestPayload}
+ResponseHeaders: #{jqXHR.getAllResponseHeaders()}
+          """
+          throw new Error "IPM Action Error"
+        catch ex
+          console.info info
     
     # **Notes field handling, post a notes ChangeSet**
     #
@@ -664,15 +663,16 @@ define [
       if notes? and notes isnt ''
         username = @MODULE.USER.get 'username'
           
-        notexml = """
-          <PolicyChangeSet schemaVersion="2.1" username="#{username}" description="Adding a note">
-              <Note>
-                  <Content><![CDATA[#{notes}]]></Content>
-              </Note>
-          </PolicyChangeSet>
-        """         
-      
-        xmldoc  = $.parseXML(notexml) #Parse xml w/jQuery
+        tpl = """
+<PolicyChangeSet schemaVersion="2.1" username="{{username}}" description="Adding a note">
+  <Note>
+    <Content><![CDATA[{{{notes}}}]]></Content>
+  </Note>
+</PolicyChangeSet>
+        """
+
+        xml = @Mustache.render tpl, {notes: notes, username: username}
+        xmldoc  = $.parseXML(xml) #Parse xml w/jQuery
         payload_schema = "schema=#{@ChangeSet.getPayloadType(xmldoc)}.#{@ChangeSet.getSchemaVersion(xmldoc)}" 
       
         # Assemble the AJAX params
@@ -682,16 +682,15 @@ define [
           dataType    : 'xml'
           contentType : "application/xml; #{payload_schema}"
           context     : @
-          data        : notexml
+          data        : xml
           headers     :
               'Authorization' : "Basic #{policy.get('digest')}"
               'Accept'        : 'application/vnd.ics360.insurancepolicy.2.8+xml'
               'X-Commit'      : true
 
-
         # Post
         post = $.ajax(options)
-        $.when(post).then(@callbackNoteSuccess, @callbackNoteError)
+        $.when(post).then(@callbackNoteSuccess, @callbackNoteError(xml))
 
 
     # **Success handling from ChangeSet (Note Save)**
@@ -712,24 +711,39 @@ define [
     # @param `status` _String_ Status of callback
     # @param `error` _String_ Error
     #
-    callbackNoteError : (jqXHR, status, error) =>
+    callbackNoteError : (requestPayload) =>
+
+      (jqXHR, status, error) =>
+        # On a note save, we want to post the error to the screen as a
+        # secondary error warning if it fails
         
-      # On a note save, we want to post the error to the screen as a
-      # secondary error warning if it fails
-      
-      # If we don't get an XHR response, then something very bad has
-      # happened indeed.
-      if !jqXHR
-        @PARENT_VIEW.displayError(
-          'warning',
-          'Fatal: Error received with no response from server'
-        ).remove_loader()
+        # If we don't get an XHR response, then something very bad has
+        # happened indeed.
+        if !jqXHR
+          @PARENT_VIEW.displayError(
+            'warning',
+            'Fatal: Error received with no response from server'
+          ).remove_loader()
 
-        return false
+          return false
 
-      @errors = @errorParseHTML(jqXHR)
+        @errors = @errorParseHTML(jqXHR)
 
-      @displayError 'warning', @errors
+        @displayError 'warning', @errors
+
+        # Log a hopefully useful ajax error for TrackJS
+        info = ""
+        try
+          info = """
+IPM Add Note XMLHTTPResponse Error (#{jqXHR.status}) #{jqXHR.statusText}
+ErrorName: #{@errors.title}
+ErrorMessage: #{@errors.desc}
+RequestPayload: #{requestPayload}
+ResponseHeaders: #{jqXHR.getAllResponseHeaders()}
+          """
+          throw new Error "IPM Action Error"
+        catch ex
+          console.info info
       
         
 
@@ -910,6 +924,12 @@ define [
     #
     displayInvalidFields : (errors) ->
       for error in errors
+        # bootstrap collapse
+        $panelCollapse = error.element.parents '.panel-collapse'
+        if $panelCollapse.is ':hidden'
+          $panelCollapse.collapse 'show'
+
+        # old method
         $container = error.element.parents('.collapsibleFieldContainer')
         $fieldset = $container.parent()
         if $container.css('display') == 'none'

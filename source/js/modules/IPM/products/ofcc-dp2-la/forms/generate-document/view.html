@@ -1,56 +1,61 @@
 <!-- Product: OFCC DP1 Louisiana -->
-<form action="generate_document" method="get" accept-charset="utf-8">
-	<div id="content">
-		<div id="content_header">
-			{{^generating}}
-			<h2>Generate a Document for {{policyId}}</h2>
-			{{/generating}}
-			
-			{{#generating}}
-			<h2>Generating {{documentLabel}} for {{policyId}}...</h2>
-			{{/generating}}
-		</div>
-		<div class="content_body">
+<form name="generate_document" class="form-horizontal">
+  <div class="content">
 
-			{{^generating}}
-			{{#policyOverview}}
-			<section class="policyOverview">
-				<h1>Policy Overview</h1>
-				<ul>
-					<li>{{InsuredFirstName}} {{InsuredMiddleName}} {{InsuredLastName}}</li>
-					<li>{{InsuredMailingAddressLine1}}</li>
-					<li>{{InsuredMailingAddressLine2}}</li>
-					<li>{{InsuredMailingAddressCity}}, {{InsuredMailingAddressState}} {{InsuredMailingAddressZip}}</li>
-				</ul>
-			</section>
-			{{/policyOverview}}
-			
-			<fieldset class="columnActions">
-				{{#documentGroups}}
-				<div class="column">
-					<section>
-						<h1>{{label}}</h1>
-						<ul>
-							{{#enumerations}}
-							<li><input name="{{name}}" value="{{label}}" type="submit" class="button"></li>
-							{{/enumerations}}
-						</ul>
-					</section>
-				</div>
-				{{/documentGroups}}
-				
-				<input type="hidden" name="documentType" value="">
-				<input type="hidden" name="documentLabel" value="">
-			</fieldset>
-			
-			<div class="form_actions">				
-				<a href="home">Nevermind, go back</a>
-			</div>
-			{{/generating}}
-			
-			{{#generating}}
-			<p>This usually takes about 30 seconds</p>
-			{{/generating}}
-		</div>
-	</div>
+    {{#policyOverview}}
+    <div class="panel panel-default policy-overview">
+      <div class="panel-heading">
+        <h3 class="panel-title">Policy Overview</h3>
+      </div>
+      <div class="panel-body">
+      <ul>
+        <li>{{InsuredFirstName}} {{InsuredMiddleName}} {{InsuredLastName}}</li>
+        <li>{{InsuredMailingAddressLine1}}</li>
+        <li>{{InsuredMailingAddressLine2}}</li>
+        <li>{{InsuredMailingAddressCity}}, {{InsuredMailingAddressState}} {{InsuredMailingAddressZip}}</li>
+      </ul>
+      </div>
+    </div>
+    {{/policyOverview}}
+
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+        {{^generating}}Generate a Document for {{policyId}}{{/generating}}
+        {{#generating}}Generating {{documentLabel}} for {{policyId}}...{{/generating}}
+        </h4>
+      </div>
+      <div class="panel-body">
+        {{^generating}}
+        <fieldset class="bs">
+          <legend>Choose a Document Type</legend>
+          {{#documentGroups}}
+          <div class="form-group form-group-sm">
+            <label for="{{guid}}_{{name}}" class="control-label col-xs-3">{{label}}</label>
+            <div class="col-xs-6">
+              <select id="{{guid}}_{{name}}" name="{{name}}" class="form-control doc-type">
+                <option value="">Select</option>
+                {{#enumerations}}
+                <option value="{{name}}">{{label}}</option>
+                {{/enumerations}}
+              </select>
+            </div>
+          </div>
+          {{/documentGroups}}
+        </fieldset>
+        {{/generating}}
+
+        {{#generating}}
+        <p>This usually takes about 30 seconds</p>
+        {{/generating}}
+      </div>
+    </div>
+
+    <div class="form-group form-group-sm form_actions">
+      <div class="col-xs-6">
+        <input type="submit" class="btn btn-primary btn-sm" value="Generate Document">
+        <a href="home" class="btn btn-default btn-sm">Nevermind, go back</a>
+      </div>
+    </div>
+  </div>
 </form>

@@ -93,6 +93,9 @@ $btn-dark-background-highlight: lighten($btn-dark-background, 15%);
 $btn-danger-background: $alert-danger;
 $btn-danger-background-highlight: lighten($btn-danger-background, 15%);
 
+$btn-success-background: $alert-success;
+$btn-success-background-highlight: lighten($btn-success-background, 15%);
+
 // Core font stacks
 @mixin sans {
   font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -238,12 +241,17 @@ $btn-danger-background-highlight: lighten($btn-danger-background, 15%);
   @include clearfix;
 }
 
-select[readonly] > option:not(:checked) {
-  display: none;
+select[readonly] {
+  > option {
+    display: none;
+
+    &:checked {
+      display: block;
+    }
+  }
 }
 
 select[readonly],
-option[readonly],
 select[readonly] > option {
   color: graytext;
 }

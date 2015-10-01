@@ -1,27 +1,74 @@
-// ICG base styles & mixins
+/* ICG base styles, variables & mixins */
 @import "base";
+
+/* Bootstrap */
 @import "bootstrap";
 
-// Now begin importing our partials
+/* Proprietary ICG icons */
 @import "icg_icons";
+
+/* Universal page styles */
 @import "page";
+
+/* ICG specific button styles */
 @import "buttons";
+
+/* ICG specific alert styles */
 @import "alerts";
+
+/* Old(Deprecated) Modal styles. Please use Bootstrap modals going forward */
 @import "modal";
+
+/* Header nav styles */
 @import "header";
+
+/* Workspace styles */
 @import "workspace";
+
+/* Alternative "table" styles for when you need more control than a <table> can offer */
 @import "div_tables";
+
+/* Pagination styles */
 @import "pagination";
+
+/* Home screen styles */
 @import "module_home";
-@import "module_help_modal";
+
+/* Search styles */
 @import "module_search";
+
+/* Policy nav styles */
 @import "module_policy";
+
+/* Quickview styles */
 @import "module_quickview";
+
+/* Renewal underwriting (sidebar) styles */
 @import "module_renewalunderwriting";
+
+/* Loss History styles */
 @import "module_losshistory";
+
+/* Old(Deprecated) IPM Actions styles */
 @import "module_ipm";
+
+/* Zendesk styles */
 @import "module_zendesk";
+
+/* Referral Queue styles*/
 @import "module_referralqueue";
+
+/* Policy Representations styles */
 @import "module_policyrep";
+
+/* Help modal styles */
+@import "help_modal";
+
+/* IPM Actions styles */
+@import "ipm_forms";
+
+/* Herald styles */
 @import "herald";
+
+/* Utilities to show/hide SageSure/FedNat specific items */
 @import "business_utils";

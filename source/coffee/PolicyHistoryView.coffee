@@ -8,7 +8,9 @@ define [
     <h4>Recently Viewed</h4>
     <ul id="<%= id %>">
       <% _.each(historyStack, function (item) { %>
-      <li><a href="#<%= baseRoute %>/policy/<%= item.params.url %>" id="<%= item.app %>"><%= item.app_label %></a></li>
+        <% if (item.params) { %>
+        <li><a href="#<%= baseRoute %>/policy/<%= item.params.url %>" id="<%= item.app %>"><%= item.app_label %></a></li>
+        <% } %>
       <% }) %>
     </ul>
     """
@@ -18,7 +20,6 @@ define [
       @controller = options.controller
       @workspaceState = @controller.workspace_state
       @listenTo @workspaceState, 'change:history', @render
-      @render()
 
     render : ->
       data = {}

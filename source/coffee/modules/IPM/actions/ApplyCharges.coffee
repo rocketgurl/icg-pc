@@ -49,9 +49,13 @@ define [
         $("#{@makeId('reasonCode')} option[value=#{@values.formValues.reasonCode}]").html()
       @values.formValues.lineItemType    = \
         @values.formValues.reasonCodeLabel.toUpperCase().replace(/\s/g, '_')
+
+      requestPayload = @ChangeSet.getPolicyChangeSet(@values)
+
       # Assemble the ChangeSet XML and send to server
       @ChangeSet.commitChange(
-          @ChangeSet.getPolicyChangeSet(@values)
-          @callbackSuccess,
-          @callbackError
+          requestPayload
+          @callbackSuccess
+          @callbackError(requestPayload)
         )
+

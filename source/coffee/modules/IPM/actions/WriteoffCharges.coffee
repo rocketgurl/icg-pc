@@ -53,9 +53,11 @@ define [
       @values.formValues.reasonCodeLabel = \
         $("#{@makeId('reasonCode')} option[value=#{@values.formValues.reasonCode}]").html() ? null
 
+      requestPayload = @ChangeSet.getPolicyChangeSet(@values)
+
       # Assemble the ChangeSet XML and send to server
       @ChangeSet.commitChange(
-          @ChangeSet.getPolicyChangeSet(@values)
+          requestPayload
           @callbackSuccess,
-          @callbackError
+          @callbackError(requestPayload)
         )
