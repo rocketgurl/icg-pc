@@ -4,6 +4,7 @@ import PoliciesCollection from '../collections/policies';
 export default BaseModel.extend({
   props: {
     id: 'string',
+    batchType: 'string',
     businessKey: 'string',
     deleteReason: 'string',
     durationInMillis: 'number',
@@ -25,10 +26,9 @@ export default BaseModel.extend({
 
   derived: {
     type: {
-      deps: ['processDefinitionId'],
+      deps: ['batchType'],
       fn: function deriveType() {
-        const key = this.processDefinitionId.split(':')[0];
-        return key.replace('batch', '');
+        return this.batchType.replace('batch', '');
       }
     },
     status: {

@@ -2012,6 +2012,8 @@ a:hover, .policy-nav > ul > li > a.select, a:focus { text-decoration: inherit; }
 ul:before, ul:after { content: " "; display: table; }
 ul:after { clear: both; }
 
+.list-labeled label { text-align: right; }
+
 .scroll-wrapper { position: absolute; top: 0; right: 0; bottom: 0; left: 0; overflow: auto; padding: 10px; }
 
 .width-wrapper { min-width: 960px; }
