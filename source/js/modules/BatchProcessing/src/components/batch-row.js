@@ -9,7 +9,7 @@ export default React.createClass({
   render() {
     const {batch} = this.props;
     return (
-      <a className="tr" href={`#policies/?bid=${batch.id}`}>
+      <a className="tr" href={`#policies/bid/${batch.id}`}>
         <div className="td">{moment(batch.startTime).format(DATE_FORMAT)}</div>
         <div className="td">{batch.numberOfInstances}</div>
         <div className="td batch-id">{`${batch.type} ${batch.id}`}</div>

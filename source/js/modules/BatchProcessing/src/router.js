@@ -8,7 +8,7 @@ export default Router.extend({
     ''                         : 'main',
     'batches'                  : 'batches',
     'policies'                 : 'policies',
-    'policies/?*params'        : 'policies',
+    'policies/bid/:bid'        : 'policies',
     'batch-action/:type/:name' : 'batchActionModal',
     '*notFound'                : 'notFound'
   },
@@ -21,9 +21,8 @@ export default Router.extend({
     this.main({tab: 'batches'});
   },
 
-  policies(params) {
-    const {bid} = deparam(params);
-    const activeBatchId = bid ? `${bid}` : '0';
+  policies(batchId) {
+    const activeBatchId = batchId ? `${batchId}` : '0'; // default to id 0, which is all the policies
     this.main({activeBatchId, tab: 'policies'});
   },
 
