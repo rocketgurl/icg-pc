@@ -31,7 +31,7 @@ export default React.createClass({
                 <option value="default">All</option>
                 <option value="invoicing">Invoicing</option>
                 <option value="issuance">Issuance</option>
-                <option value="payments">Payments</option>
+                <option value="payment">Payment</option>
               </select>
             </div>
             <div className="td">
