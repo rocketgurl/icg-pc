@@ -1,17 +1,25 @@
 .table-controls {
+  .control-label {
+    margin-right: 10px;
+    padding-top: 7px;
+    white-space: nowrap;
+    text-align: right;
+  }
+
   .td {
     display: flex;
-
-    label {
-      margin-right: 10px;
-      line-height: 34px;
-      white-space: nowrap;
-    }
 
     > .form-control,
     > div:not([class^="col"]) {
       flex: 1;
     }
+  }
+}
+
+.table-condensed {
+  .control-label {
+    padding-top: 6px;
+    font-size: 12px;
   }
 }
 

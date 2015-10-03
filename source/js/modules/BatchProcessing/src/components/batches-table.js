@@ -45,7 +45,7 @@ export default React.createClass({
             onControlChange={this._onControlChange}
             onRefreshClick={this._onRefreshClick}/>
         </div>
-        <div className="div-table table-striped table-hover table-scrollable table-sortable table-5-columns">
+        <div className="div-table panel-table table-striped table-hover table-scrollable table-sortable table-5-columns">
           <div className="thead">
             <div className="tr">
               <div className="th">
