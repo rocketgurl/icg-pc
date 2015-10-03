@@ -2385,6 +2385,8 @@ ul:after { clear: both; }
 
 #bw .pc-nav { display: block; }
 
+.batch-id { text-transform: capitalize; }
+
 .action-row { margin-bottom: 47px; }
 
 .info-toggle { cursor: pointer; }
