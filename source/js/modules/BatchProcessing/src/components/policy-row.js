@@ -1,6 +1,10 @@
 import React from 'react';
 import {OverlayTrigger, Popover} from 'react-bootstrap';
 import app from 'ampersand-app';
+import moment from 'moment';
+
+// Jun 07, 2014 8:56 AM
+const DATE_FORMAT = 'MMM DD, YYYY h:mm A';
 
 export default React.createClass({
   getInitialState() {
@@ -18,9 +22,9 @@ export default React.createClass({
     const errorMessage = `${policy.errorCode} - ${policy.errorMessage}`;
     const infoPopover = (
       <OverlayTrigger key="overlay" rootClose trigger="click" placement="left"
-        overlay={<Popover title={errorMessage}>
-        {policy.errorResponse}</Popover>}>
-        <span title="Click for more info" className="glyphicon glyphicon-info-sign info-toggle"></span>
+        overlay={<Popover title={errorMessage}>{policy.errorResponse}</Popover>}>
+        <span title="Click for more info"
+          className="glyphicon glyphicon-info-sign info-toggle"></span>
       </OverlayTrigger>);
 
     return (
@@ -31,9 +35,9 @@ export default React.createClass({
             checked={this.state.isChecked}
             onChange={this._onCheckToggle}/>
         </div>
-        <div className="td">{policy.startTime}</div>
+        <div className="td">{moment(policy.startTime).format(DATE_FORMAT)}</div>
         <div className="td">{policy.policyLookup}</div>
-        <div className="td">{`${policy.processDefinitionKey} ${policy.batchId}`}</div>
+        <div className="td batch-id">{`${policy.processDefinitionKey} ${policy.batchId}`}</div>
         <div className="td">{policy.startUserId}</div>
         <div className="td">
           <span className={policy.status.className}>{policy.status.message}</span>
