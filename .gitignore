@@ -5,7 +5,11 @@ build/*
 source/js/*.js
 source/js/modules/*.js
 source/js/modules/*/*.js
-source/js/modules/*/*/*.js
+source/js/modules/Home/*/*.js
+source/js/modules/IPM/*/*.js
+source/js/modules/PolicyLinks/*/*.js
+source/js/modules/PolicyQuickView/*/*.js
+source/js/modules/Quoting/*/*.js
 node_modules/
 source/css/bootstrap/*
 source/css/react-datepicker/*
