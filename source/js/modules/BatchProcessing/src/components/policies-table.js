@@ -4,6 +4,12 @@ import sortableTableMixin from '../lib/sortable-table-mixin';
 import PolicyRow from './policy-row';
 import TableControls from './table-controls';
 
+const batchTypes = [
+  {name: 'Invoicing', value: 'invoicing'},
+  {name: 'Issuance', value: 'issuance'},
+  {name: 'Payments', value: 'payment'}
+];
+
 export default React.createClass({
   mixins: [sortableTableMixin], // mixin common methods for sortable tables
 
@@ -42,6 +48,7 @@ export default React.createClass({
       <div>
         <div className="tab-pane-heading">
           <TableControls {...this.state}
+            batchTypes={batchTypes}
             onControlChange={this._onControlChange}
             onRefreshClick={this._onRefreshClick}/>
         </div>

@@ -1,10 +1,15 @@
 import React from 'react';
-import DatePicker from 'react-datepicker';
+import _ from 'underscore';
 import moment from 'moment';
+import DatePicker from 'react-datepicker';
 
 const DATE_FORMAT = 'YYYY-MM-DD';
 
 export default React.createClass({
+  propTypes: {
+    batchTypes: React.PropTypes.array.isRequired
+  },
+
   getDefaultProps() {
     return {
       processDefinitionKey: null,
@@ -29,9 +34,9 @@ export default React.createClass({
                 className="form-control"
                 onChange={this._onSelectChange}>
                 <option value="default">All</option>
-                <option value="invoicing">Invoicing</option>
-                <option value="issuance">Issuance</option>
-                <option value="payment">Payment</option>
+                {_.map(this.props.batchTypes, (item, key) => {
+                  return <option key={key} value={item.value}>{item.name}</option>;
+                })}
               </select>
             </div>
             <div className="td">
@@ -51,7 +56,6 @@ export default React.createClass({
                 className="form-control"
                 onChange={this._onSelectChange}>
                 <option value="default">All</option>
-                <option>dev@icg360.com</option>
               </select>
             </div>
             <div className="td clearable">
