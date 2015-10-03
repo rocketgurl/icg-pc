@@ -41,7 +41,7 @@ export default React.createClass({
   render() {
     const {isRequesting} = this.state;
     return (
-      <Modal bsSize="large" show={this.state.showModal} onHide={this.close}>
+      <Modal show={this.state.showModal} onHide={this.close}>
         <Modal.Header closeButton>
           <Modal.Title>{this.props.actionName}</Modal.Title>
         </Modal.Header>
