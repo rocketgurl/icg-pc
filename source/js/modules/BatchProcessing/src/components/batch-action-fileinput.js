@@ -4,6 +4,9 @@ import moment from 'moment';
 import {Modal} from 'react-bootstrap';
 import Papa from 'papaparse';
 
+// 2015-09-09T00:00:00.000-04:00
+const DATE_FORMAT = 'YYYY-MM-DDThh:mm:ss.SSSZ'
+
 export default React.createClass({
   propTypes: {
     formData: React.PropTypes.object.isRequired,
@@ -16,16 +19,12 @@ export default React.createClass({
       paymentsList: [],
       data: [],
       errors: [],
-      meta: {}
+      meta: {},
+      totalBatchAmountExpected: 0,
+      totalBatchAmountActual: 0,
+      totalNumPaymentsExpected: 0,
+      totalNumPaymentsActual: 0
     };
-  },
-
-  getPolicyRefsStr() {
-    const policyRefsNode = this.refs.policyRefs.getDOMNode();
-    const policyRefsArray = this.props.formData.splitRefsStr(policyRefsNode.value);
-    const invalidRefs = this.props.formData.validateRefs(policyRefsArray);
-    this.setState({invalidRefs});
-    if (!invalidRefs.length) return policyRefsArray.join(',');
   },
 
   alertErrors() {
@@ -34,7 +33,7 @@ export default React.createClass({
         <div key={index} className="alert alert-danger form-horizontal">
           <ul className="list-unstyled list-labeled">
             <li className="clearfix">
-              <label className="col-xs-3">Error ({error.type}):</label>
+              <label className="col-xs-3">Error:</label>
               <div className="col-xs-9">{error.code}</div>
             </li>
             <li className="clearfix">
@@ -51,39 +50,18 @@ export default React.createClass({
     });
   },
 
-  buildTable() {
-    const {data, errors, meta} = this.state;
-    if (data.length > 0) {
-      return (
-        <table className="table table-condensed">
-          <thead>
-            <tr>
-              <th>#</th>
-              {_.map(meta.fields, (field, index) => {
-                return <th key={index}>{field}</th>;
-              })}
-            </tr>
-          </thead>
-          <tbody>
-            {_.map(data, (row, index) => {
-              return (
-                <tr key={index} className={row.Invalid ? 'danger' : null}>
-                  <th scope="row">{index+1}</th>
-                  {_.map(row, (col, index) => {
-                    return <td key={index}>{col}</td>
-                  })}
-                </tr>);
-            })}
-          </tbody>
-        </table>
-      );
-    }
-  },
-
   render() {
     const {isRequesting} = this.props;
     const hasErrors = this.state.errors.length > 0;
     const hasPayments = this.state.paymentsList.length > 0;
+
+    // compare expected values with actual values
+    const batchAmountMatch = (!hasPayments ||
+      (parseFloat(this.state.totalBatchAmountExpected) === this.state.totalBatchAmountActual));
+    const numPaymentsMatch = (!hasPayments ||
+      (parseFloat(this.state.totalNumPaymentsExpected) === this.state.totalNumPaymentsActual));
+    const hasMismatch = !batchAmountMatch || !numPaymentsMatch;
+
     return (
       <div className="file-upload">
         <Modal.Body>
@@ -98,7 +76,44 @@ export default React.createClass({
               onChange={this._onFileInputChange}
               disabled={isRequesting}/>
           </div>
-          {this.buildTable()}
+          <div className="row">
+            <div className={`form-group calc-group col-xs-6${batchAmountMatch ? '' : ' has-error'}`}>
+              <label
+                htmlFor="batch-amount"
+                className="control-label">Total Batch Amount</label>
+              <div className="input-group">
+                <div className="input-group-addon">$</div>
+                <input
+                  type="text"
+                  ref="totalBatchAmount"
+                  className="form-control"
+                  name="totalBatchAmountExpected"
+                  onChange={this._onTextInputChange}
+                  value={this.state.totalBatchAmountExpected}/>
+              </div>
+              <div className={`calculated text-danger${batchAmountMatch ? ' invisible' : ''}`}>
+                <strong>{this.state.totalBatchAmountActual}</strong> calculated from CSV
+              </div>
+            </div>
+            <div className={`form-group calc-group col-xs-6${numPaymentsMatch ? '' : ' has-error'}`}>
+              <label
+                htmlFor="num-payments"
+                className="control-label">Total Number of Payments</label>
+              <div className="input-group">
+                <div className="input-group-addon">#</div>
+                <input
+                  type="text"
+                  ref="totalNumPayments"
+                  className="form-control"
+                  name="totalNumPaymentsExpected"
+                  onChange={this._onTextInputChange}
+                  value={this.state.totalNumPaymentsExpected}/>
+              </div>
+              <div className={`calculated text-danger${numPaymentsMatch ? ' invisible' : ''}`}>
+                <strong>{this.state.totalNumPaymentsActual}</strong> calculated from CSV
+              </div>
+            </div>
+          </div>
         </Modal.Body>
         <Modal.Footer>
           <button
@@ -108,10 +123,10 @@ export default React.createClass({
             Cancel
           </button>
           <button
-            className={`btn ${hasErrors ? 'btn-danger' : 'btn-primary'}`}
-            disabled={!hasPayments || isRequesting || hasErrors}
+            className={`btn ${hasErrors || hasMismatch ? 'btn-danger' : 'btn-primary'}`}
+            disabled={!hasPayments || isRequesting || hasErrors || hasMismatch}
             onClick={this._onSubmitClick}>
-            {hasErrors ? 'Please Fix Errors' : 'Submit'}
+            {hasErrors || hasMismatch ? 'Please Fix Errors' : 'Submit'}
           </button>
         </Modal.Footer>
       </div>
@@ -132,17 +147,30 @@ export default React.createClass({
   // }]
   _processCSVData(results) {
     let paymentsList = [];
+
+    // initialize accumulator value
+    results.totalBatchAmountActual = 0;
+
+    // check for any missing columns
+    const missingFields = this.validateFields(results.meta.fields);
+    if (missingFields.length > 0) {
+      results.errors.push(this._formatError(
+        'Fields',
+        `The following field(s) are missing from the CSV:\n[${missingFields.join(', ')}]`,
+        0));
+    }
+
     if (results.errors.length === 0) {
       _.each(results.data, (row, index) => {
         try {
-          const policyLookup = this.validate(row.PolicyNumberBase, 'PolicyLookup');
-          const method = this.validate(row.PaymentMethod, 'PaymentMethod');
+          const policyLookup = this.validateString(row.PolicyNumberBase, 'PolicyNumberBase');
+          const method = this.validateString(row.PaymentMethod, 'PaymentMethod');
           const lockBoxReference = row.LockBoxReference.trim();
           const referenceNum = row.PaymentReference.trim();
-          const receivedDate = moment(row.PaymentDate, 'MM/DD/YYYY').format();
+          const receivedDate = moment(row.PaymentReceivedDate, 'MM/DD/YYYY').format(DATE_FORMAT);
           const amount = parseFloat(row.Amount.replace('$', ''));
           
-          // validation hurdles
+          // more validation hurdles
           if (policyLookup.indexOf('Error') > -1) {
             results.errors.push(this._formatError(
               'PolicyNumberBase',
@@ -159,19 +187,26 @@ export default React.createClass({
           }
           if (receivedDate === 'Invalid date') {
             results.errors.push(this._formatError(
-              'PaymentDate',
-              'PaymentDate must be a valid date and match format MM/DD/YYYY',
+              'PaymentReceivedDate',
+              'PaymentReceivedDate must be a valid date and match format MM/DD/YYYY',
               index+1));
             row.Invalid = true;
           }
+
+          // Verify amount is a number
+          // If so, add it to the total batch amount
           if (isNaN(amount)) {
             results.errors.push(this._formatError(
               'PaymentAmount',
               'Non-numeric characters detected in PaymentAmount',
               index+1));
             row.Invalid = true;
+          } else {
+            results.totalBatchAmountActual += amount;
           }
 
+          // push items onto an array of data objects
+          // formatted for api consumption
           paymentsList.push({
             policyLookup,
             method,
@@ -188,10 +223,24 @@ export default React.createClass({
         }
       });
     }
+    results.totalNumPaymentsActual = paymentsList.length;
     this.setState({paymentsList, ...results});
   },
 
-  validate(str="", type="") {
+  // CSV must contain at least the following fields
+  validateFields(actualFields) {
+    const expectedFields = [
+      'PaymentMethod',
+      'PaymentReceivedDate',
+      'LockBoxReference',
+      'Amount',
+      'PaymentReference',
+      'PolicyNumberBase'
+    ];
+    return _.difference(expectedFields, actualFields);
+  },
+
+  validateString(str="", type="") {
     const invalidChars = /[^A-Z0-9-]+/gi;
     str = str.trim();
     if (str.length === 0) {
@@ -208,6 +257,13 @@ export default React.createClass({
 
   _formatError(type, message, row) {
     return {code: `Invalid${type}`, type, message, row};
+  },
+
+  _onTextInputChange(e) {
+    const {name, value} = e.target;
+    const stateObj = {};
+    stateObj[name] = value.replace(/[$,]/g, '');
+    this.setState(stateObj);
   },
 
   // Clears the selected file & re-arms the onChange event.
@@ -231,7 +287,7 @@ export default React.createClass({
     const {formData} = this.props;
     const {paymentsList} = this.state;
     if (paymentsList.length) {
-      formData.setBody({paymentsList});
+      formData.setBody(paymentsList);
       formData.submit();
     }
   }
