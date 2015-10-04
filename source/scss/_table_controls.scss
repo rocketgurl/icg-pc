@@ -1,5 +1,6 @@
 .table-controls {
-  .control-label {
+  .control-label,
+  .page-count {
     margin-right: 10px;
     padding-top: 7px;
     white-space: nowrap;
@@ -17,7 +18,8 @@
 }
 
 .table-condensed {
-  .control-label {
+  .control-label,
+  .page-count {
     padding-top: 6px;
     font-size: 12px;
   }
@@ -27,6 +29,6 @@
   .close {
     position: absolute;
     right: 18px;
-    top: 13px;
+    top: 8px;
   }
 }

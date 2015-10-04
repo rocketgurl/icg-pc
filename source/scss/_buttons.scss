@@ -42,8 +42,14 @@
   &[disabled] {
     cursor: default;
     background-image: none;
-    @include opacity(65%);
+    border-color: #aaa;
+    @include opacity(.65);
     @include box-shadow(none);
+
+    &:hover {
+      border-color: #aaa;
+      background-color: #d5cdcd;
+    }
   }
 }
 

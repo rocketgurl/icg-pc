@@ -24,6 +24,18 @@
 .panel-table {
   margin-left: -15px;
   margin-right: -15px;
+
+  .tr {
+    > .td:first-child,
+    > .th:first-child {
+      padding-left: 15px;
+    }
+
+    > .td:last-child,
+    > .th:last-child {
+      padding-right: 15px;
+    }
+  }
 }
 
 .calc-group {
