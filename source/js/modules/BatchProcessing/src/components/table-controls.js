@@ -7,7 +7,14 @@ const DATE_FORMAT = 'YYYY-MM-DD';
 
 export default React.createClass({
   propTypes: {
-    batchTypes: React.PropTypes.array.isRequired
+    batchTypes: React.PropTypes.array.isRequired,
+    pageStart: React.PropTypes.number.isRequired,
+    pageEnd: React.PropTypes.number.isRequired,
+    totalItems: React.PropTypes.number.isRequired,
+    incrementPage: React.PropTypes.func.isRequired,
+    decrementPage: React.PropTypes.func.isRequired,
+    refreshPage: React.PropTypes.func.isRequired,
+    updateParameter: React.PropTypes.func.isRequired
   },
 
   getDefaultProps() {
@@ -21,45 +28,46 @@ export default React.createClass({
   },
 
   render() {
-    const {startedAfter, startedBefore} = this.props;
+    const {
+      startedAfter,
+      startedBefore,
+      pageStart,
+      pageEnd,
+      totalItems} = this.props;
     return (
-      <div className="div-table table-condensed table-6-columns table-controls">
+      <div className="div-table table-condensed table-7-columns table-controls">
         <div className="tbody">
           <div className="tr">
             <div className="td">
-              <label className="control-label" htmlFor="processDefinitionKey">Batch Types</label>
               <select
                 name="processDefinitionKey"
                 defaultValue={this.props.processDefinitionKey}
                 className="form-control input-sm"
                 onChange={this._onSelectChange}>
-                <option value="default">All</option>
+                <option value="default">Batch Types: All</option>
                 {_.map(this.props.batchTypes, (item, key) => {
                   return <option key={key} value={item.value}>{item.name}</option>;
                 })}
               </select>
             </div>
             <div className="td">
-              <label className="control-label" htmlFor="status">Status</label>
               <select
                 name="status"
                 defaultValue={this.props.status}
                 className="form-control input-sm">
-                <option value="default">All</option>
+                <option value="default">Status: All</option>
               </select>
             </div>
             <div className="td">
-              <label className="control-label" htmlFor="startedBy">Initiator</label>
               <select
                 name="startedBy"
                 defaultValue={this.props.startedBy}
                 className="form-control input-sm"
                 onChange={this._onSelectChange}>
-                <option value="default">All</option>
+                <option value="default">Initiator: All</option>
               </select>
             </div>
             <div className="td clearable">
-              <label className="control-label" htmlFor="startedAfter">From</label>
               <DatePicker
                 name="startedAfter"
                 selected={startedAfter ? moment(startedAfter) : null}
@@ -75,7 +83,6 @@ export default React.createClass({
                 </button> : null}
             </div>
             <div className="td clearable">
-              <label className="control-label" htmlFor="startedBefore">To</label>
               <DatePicker
                 name="startedBefore"
                 selected={startedBefore ? moment(startedBefore) : null}
@@ -91,12 +98,35 @@ export default React.createClass({
                 </button> : null}
             </div>
             <div className="td">
-              <div className="col-xs-6">
-                <button
-                  className="btn btn-primary btn-block btn-sm"
-                  onClick={this._onRefreshClick}>
-                  <span className="glyphicon glyphicon-repeat"/>
-                </button>
+              <div className="page-count">
+                <strong>{pageStart}-{pageEnd}</strong>
+                <span> of </span>
+                <strong>{totalItems.toLocaleString()}</strong>
+              </div>
+            </div>
+            <div className="td">
+              <div className="btn-toolbar">
+                <div className="btn-group">
+                  <button
+                    className="btn btn-default btn-sm"
+                    disabled={pageStart <= 1}
+                    onClick={this.props.decrementPage}>
+                    <span className="glyphicon glyphicon-menu-left"/>
+                  </button>
+                  <button
+                    className="btn btn-default btn-sm"
+                    disabled={pageEnd >= totalItems}
+                    onClick={this.props.incrementPage}>
+                    <span className="glyphicon glyphicon-menu-right"/>
+                  </button>
+                </div>
+                <div className="btn-group">
+                  <button
+                    className="btn btn-default btn-sm"
+                    onClick={this.props.refreshPage}>
+                    <span className="glyphicon glyphicon-refresh"/>
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -105,25 +135,24 @@ export default React.createClass({
     );
   },
 
-  _onRefreshClick() {
-    this.props.onRefreshClick();
-  },
-
   _onSelectChange(e) {
-    this.props.onControlChange(e.target.name, e.target.value);
+    this.props.updateParameter(e.target.name, e.target.value);
   },
 
   _onClearButtonClick(e) {
     const {value} = e.target.attributes['data-dismiss'];
-    this.props.onControlChange(value, 'default');
+    this.props.updateParameter(value, 'default');
   },
 
+  // closure to caputre the targetName of the particular field
+  // returns an anonymouse function that takes the particular
+  // instance of Moment as its arguments.
   _onDateChange(targetName) {
     return momentInstance => {
       if (targetName === 'startedBefore') {
         momentInstance.add(1, 'days');
       }
-      this.props.onControlChange(targetName, momentInstance.format());
+      this.props.updateParameter(targetName, momentInstance.format());
     }
   }
 });
