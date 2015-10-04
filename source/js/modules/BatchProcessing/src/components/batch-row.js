@@ -10,13 +10,13 @@ export default React.createClass({
     const {batch} = this.props;
     return (
       <a className="tr" href={`#policies/bid/${batch.id}`}>
-        <div className="td">{moment(batch.startTime).format(DATE_FORMAT)}</div>
-        <div className="td">{batch.numberOfInstances}</div>
-        <div className="td batch-id">{`${batch.type} ${batch.id}`}</div>
-        <div className="td">{batch.startUserId}</div>
         <div className="td">
           <span className={batch.status.className}>{batch.status.message}</span>
         </div>
+        <div className="td batch-id">{`${batch.type} ${batch.id}`}</div>
+        <div className="td">{batch.numberOfInstances}</div>
+        <div className="td">{moment(batch.startTime).format(DATE_FORMAT)}</div>
+        <div className="td">{batch.startUserId}</div>
       </a>
       );
   }
