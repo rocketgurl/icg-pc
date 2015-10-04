@@ -13,10 +13,21 @@ export default Collection.extend({
     };
   },
 
+  // calculate pagination properties
+  parse(response) {
+    this.pageStart  = response.start + 1;
+    this.pageEnd    = response.start + response.size;
+    this.totalItems = response.total;
+    return response.data;
+  },
+
   initialize() {
-    this.options = {};    // collection.sync options
+    this.options    = {}; // collection.sync options
     this.parameters = {}; // parameters passed in query
-    this.variables = [];  // process variables for activiti
+    this.variables  = []; // process variables for activiti
+    this.pageStart  = 0;
+    this.pageEnd    = 0;
+    this.totalItems = 0;
 
     // errors are pushed to an Errors collection
     this.on('error', this._onXHRError);
@@ -94,6 +105,22 @@ export default Collection.extend({
       this.trigger('error', this, resp, options);
     };
     return this.sync('create', this, options);
+  },
+
+  incrementPage() {
+    if (this.pageEnd < this.totalItems) {
+      this.updateParameter('start', this.pageEnd);
+      this.query();
+    }
+  },
+
+  decrementPage() {
+    const {start, size} = this.parameters;
+    const pageStart = start - size;
+    if (pageStart > -1) {
+      this.updateParameter('start', pageStart);
+      this.query();
+    }
   },
 
   _onXHRError(collection, xhr) {
