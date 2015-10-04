@@ -43,14 +43,19 @@ export default React.createClass({
   },
 
   render() {
-    const {sort, order} = this.state;
+    const {sort, order, collection} = this.state;
     return (
       <div>
         <div className="tab-pane-heading">
           <TableControls {...this.state}
             batchTypes={batchTypes}
-            onControlChange={this._onControlChange}
-            onRefreshClick={this._onRefreshClick}/>
+            pageStart={collection.pageStart}
+            pageEnd={collection.pageEnd}
+            totalItems={collection.totalItems}
+            incrementPage={this._onPageIncrement}
+            decrementPage={this._onPageDecrement}
+            refreshPage={this.makeQuery}
+            updateParameter={this._onParameterUpdate}/>
         </div>
         <div className="div-table panel-table table-striped table-hover table-scrollable table-sortable table-7-columns">
           <div className="thead">
@@ -92,8 +97,12 @@ export default React.createClass({
     );
   },
 
-  _onRefreshClick() {
-    this.props.collection.query();
+  _onPageIncrement() {
+    this.props.collection.incrementPage();
+  },
+
+  _onPageDecrement() {
+    this.props.collection.decrementPage();
   },
 
   _onSelectAllToggle(e) {
@@ -104,7 +113,7 @@ export default React.createClass({
     this.setState({collection});
   },
 
-  _onControlChange(name, value) {
+  _onParameterUpdate(name, value) {
     const {collection} = this.props;
     collection.updateParameter(name, value);
     this.setState({...collection.getParameters()});
