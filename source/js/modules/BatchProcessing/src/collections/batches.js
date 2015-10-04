@@ -7,20 +7,18 @@ export default BaseCollection.extend({
 
   url: '/batch/icg/batch-processes/query',
 
-  parse(response) {
-    this.total = response.total;
-    return response.data;
-  },
-
   initialize() {
     this.options = {parse: true};
     this.parameters = {
       start: 0,
-      size: 50,
+      size: 25,
       sort: 'startTime',
       order: 'desc',
       includeProcessVariables: true,
     };
-    this.variables = [];
+    this.pageStart  = 0; // these props are calculated on
+    this.pageEnd    = 0; // successful response in the parse 
+    this.totalItems = 0; // method of the BaseCollection
+    this.variables  = [];
   }
 });
