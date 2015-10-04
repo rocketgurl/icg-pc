@@ -92,7 +92,7 @@ export default React.createClass({
                   value={this.state.totalBatchAmountExpected}/>
               </div>
               <div className={`calculated text-danger${batchAmountMatch ? ' invisible' : ''}`}>
-                <strong>{this.state.totalBatchAmountActual}</strong> calculated from CSV
+                <strong>{this.state.totalBatchAmountActual.toLocaleString()}</strong> calculated from CSV
               </div>
             </div>
             <div className={`form-group calc-group col-xs-6${numPaymentsMatch ? '' : ' has-error'}`}>
@@ -110,7 +110,7 @@ export default React.createClass({
                   value={this.state.totalNumPaymentsExpected}/>
               </div>
               <div className={`calculated text-danger${numPaymentsMatch ? ' invisible' : ''}`}>
-                <strong>{this.state.totalNumPaymentsActual}</strong> calculated from CSV
+                <strong>{this.state.totalNumPaymentsActual.toLocaleString()}</strong> calculated from CSV
               </div>
             </div>
           </div>
