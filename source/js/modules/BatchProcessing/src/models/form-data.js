@@ -1,47 +1,42 @@
 import Model from 'ampersand-model';
-import _ from 'underscore';
 import app from 'ampersand-app';
 
-export default Model.extend({
-  url() {
-    if (this.batchType) {
-      return `/batch/icg/batch-processes/${this.batchType}`;
-    } else {
-      app.errors.add({
-        error: 'Batch Type Not Set',
-        exception: 'XMLHTTPRequestException',
-        message: 'Fatal error: batchType value is missing',
-        path: '/icg/batch-processes/${this.batchType}'
-      });
-    }
-  },
-
-  // set up the Auth header one time for all requests
-  ajaxConfig() {
-    return {
-      headers: {
-        'Authorization': app.user.getBasicAuth()
-      }
-    };
-  },
-
-  initialize() {
-    this.options = {parse: true};
+class FormData extends Model {
+  constructor() {
+    super();
     this.batchType = null;
     this.body = null;
 
     // errors are pushed to an Errors collection
     this.on('error', this._onXHRError);
-  },
+  }
+
+  url() {
+    if (!this.batchType) {
+      app.errors.add({
+        error: 'Batch Type Not Set',
+        exception: 'BatchTypeException',
+        message: 'Fatal error: batchType value is missing',
+        path: '/icg/batch-processes/${this.batchType}'
+      });
+    } else {
+      return `/batch/icg/batch-processes/${this.batchType}`;
+    }
+  }
+
+  // set up the Auth header one time for all requests
+  ajaxConfig() {
+    return {headers: {'Authorization': app.user.getBasicAuth()}};
+  }
 
   setBatchType(type) {
     this.batchType = type;
-  },
+  }
 
   // sets the request body to a given data payload
   setBody(data) {
     this.body = data;
-  },
+  }
 
   // Create options hash to match Collection.sync's requirements,
   // and post to the activiti api
@@ -56,10 +51,13 @@ export default Model.extend({
       this.trigger('error', this, resp, options);
     };
     return this.sync('create', this, options);
-  },
+  }
 
-  _onXHRError(collection, xhr) {
+  _onXHRError(model, xhr) {
     const {response} = xhr;
     app.errors.add({...JSON.parse(response), xhr});
   }
-});
+}
+
+export default FormData;
+
