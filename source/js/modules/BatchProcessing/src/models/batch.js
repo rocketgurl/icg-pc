@@ -43,13 +43,13 @@ export default BaseModel.extend({
         if (numberOfSuccessInstances === numberOfInstances) {
           return {
             className: 'label label-success',
-            message: `FINISHED: ${numberOfSuccessInstances} successfully run`
+            message: `FINISHED: ${numberOfSuccessInstances} out of ${numberOfInstances} successfully run`
           };
         } else if (numberOfSuccessInstances +
           numberOfErrorInstances === numberOfInstances) {
           return {
             className: 'label label-danger',
-            message: `FINISHED: ${numberOfErrorInstances} failed`
+            message: `FINISHED: ${numberOfErrorInstances} out of ${numberOfInstances} failed`
           };
         } else {
           return {
