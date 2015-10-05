@@ -1,4 +1,5 @@
 import React from 'react';
+import _ from 'underscore';
 import {Modal} from 'react-bootstrap';
 
 const placeHolder = `ABCXXXXXXXXX
@@ -22,8 +23,8 @@ export default React.createClass({
 
   getPolicyRefsStr() {
     const policyRefsNode = this.refs.policyRefs.getDOMNode();
-    const policyRefsArray = this.props.formData.splitRefsStr(policyRefsNode.value);
-    const invalidRefs = this.props.formData.validateRefs(policyRefsArray);
+    const policyRefsArray = this.splitRefsStr(policyRefsNode.value);
+    const invalidRefs = this.validateRefs(policyRefsArray);
     this.setState({invalidRefs});
     if (!invalidRefs.length) return policyRefsArray.join(',');
   },
@@ -71,6 +72,32 @@ export default React.createClass({
         </Modal.Footer>
       </div>
     );
+  },
+
+  // will trim & split any values separated
+  // by any number of whitespace chars
+  splitRefsStr(str) {
+    const trimmed = str.trim();
+    const split = trimmed.split(/\s+/);
+    return split;
+  },
+
+  // check an array of policy refs for any characters
+  // other than alpha-numeric.
+  // @returns an array of invalid refs with offending
+  // chars bracketed. If all refs are valid, returns
+  // an empty array
+  validateRefs(refsArray) {
+    const invalidChars = /[^A-Z0-9-]+/gi;
+    const invalidRefs = [];
+    _.each(refsArray, ref => {
+      if (invalidChars.test(ref)) {
+        invalidRefs.push(ref.replace(invalidChars, $1 => {
+          return `[${$1}]`;
+        }));
+      }
+    });
+    return invalidRefs;
   },
 
   _onSubmitClick(e) {
