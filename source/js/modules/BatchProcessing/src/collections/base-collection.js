@@ -30,11 +30,7 @@ class BaseCollection extends Collection {
 
   // set up the Auth header one time for all requests
   ajaxConfig() {
-    return {
-      headers: {
-        'Authorization': app.user.getBasicAuth()
-      }
-    };
+    return {headers: {'Authorization': app.user.getBasicAuth()}};
   }
 
   // calculate pagination properties
