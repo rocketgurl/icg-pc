@@ -4,7 +4,7 @@ import BatchModel from '../models/batch';
 class Batches extends BaseCollection {
   constructor() {
     super();
-    this.url = '/batch/icg/batch-processes/querys';
+    this.url = '/batch/icg/batch-processes/query';
     this.model = BatchModel;
   }
 }
