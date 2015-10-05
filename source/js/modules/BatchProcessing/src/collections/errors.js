@@ -1,16 +1,21 @@
 import Collection from 'ampersand-rest-collection';
 import ErrorModel from '../models/error';
 
-export default Collection.extend({
-  mainIndex: 'timestamp',
-
-  model: ErrorModel,
-
-  initialize() {
+class Errors extends Collection {
+  constructor() {
+    super();
+    this.mainIndex = 'timestamp';
     this.on('add', this._onErrorAdd);
-  },
-
-  _onErrorAdd(data, ...args) {
-    console.error(data.status, data.statusText, data, ...args);
   }
-});
+
+  _onErrorAdd(model) {
+    console.info(`error: ${model.error}
+status: ${model.status}
+exception: ${model.exception}
+message: ${model.message}
+path: ${model.path}
+    `);
+  }
+}
+
+export default Errors;
