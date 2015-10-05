@@ -1,11 +1,17 @@
 import Model from 'ampersand-model';
 
-export default Model.extend({
-  props: {
-    xhr: 'object',
-    message: 'string',
-    status: 'number',
-    statusText: 'string',
-    timestamp: ['number', true, +(new Date())]
+class ErrorModel extends Model {
+  constructor() {
+    super();
+    this.props = {
+      error: 'string',
+      exception: 'string',
+      message: 'string',
+      path: 'string',
+      status: 'number',
+      timestamp: ['number', true, +(new Date())]
+    };
   }
-});
+}
+
+export default ErrorModel;

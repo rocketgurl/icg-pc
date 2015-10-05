@@ -6,11 +6,14 @@ export default Model.extend({
   url() {
     if (this.batchType) {
       return `/batch/icg/batch-processes/${this.batchType}`;
+    } else {
+      app.errors.add({
+        error: 'Batch Type Not Set',
+        exception: 'XMLHTTPRequestException',
+        message: 'Fatal error: batchType value is missing',
+        path: '/icg/batch-processes/${this.batchType}'
+      });
     }
-    app.errors.add({
-      status: 'Error',
-      statusText: 'Batch type is not set!'
-    });
   },
 
   // set up the Auth header one time for all requests
@@ -56,7 +59,7 @@ export default Model.extend({
   },
 
   _onXHRError(collection, xhr) {
-    const {status, statusText} = xhr;
-    app.errors.add({status, statusText, xhr});
+    const {response} = xhr;
+    app.errors.add({...JSON.parse(response), xhr});
   }
 });
