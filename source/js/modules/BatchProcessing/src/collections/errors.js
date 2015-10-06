@@ -14,13 +14,23 @@ class Errors extends Collection {
     try {
       if (/application\/json/.test(contentType)) {
         this.add({...JSON.parse(response)});
+      } else if (statusCode === 0) {
+        this.add({
+          status: statusCode,
+          error: statusText || 'No Response',
+          exception: `(${statusCode}) No Server Response`,
+          message: `The server is currently unresponsive. Please contact
+the help desk if the problem persists.`,
+          path: ajaxSettings.url
+        });
       } else {
         this.add({
           status,
-          error: `${statusText}`,
-          exception: `${statusCode} ${statusText}`,
+          error: statusText,
+          exception: `(${statusCode}) ${statusText}`,
           message: `The server is temporarily unable to service your request
-due to maintenance downtime or capacity problems. Please try again later.`,
+due to maintenance downtime or capacity problems. Please contact the help
+desk if the problem persists.`,
           path: ajaxSettings.url
         });
       }
