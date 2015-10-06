@@ -40,13 +40,14 @@ export default React.createClass({
   // along with the <PoliciesTable/> node
   getPoliciesTable() {
     const {activeBatchId} = this.props;
+    let collection = app.allPolicies;
     if (app.batches.length) {
       const activeBatch = app.batches.get(activeBatchId);
-      const policies = activeBatch ?
+      collection = activeBatch ?
         activeBatch.policies :
         app.allPolicies;
-      return <PoliciesTable key={activeBatchId} collection={policies}/>;
     }
+    return <PoliciesTable key={activeBatchId} collection={collection}/>;
   },
 
   render() {
