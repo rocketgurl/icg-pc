@@ -163,12 +163,12 @@ export default React.createClass({
     if (results.errors.length === 0) {
       _.each(results.data, (row, index) => {
         try {
-          const policyLookup = this.validateString(row.PolicyNumberBase, 'PolicyNumberBase');
-          const method = this.validateString(row.PaymentMethod, 'PaymentMethod');
+          const policyLookup     = this.validateString(row.PolicyNumberBase, 'PolicyNumberBase');
+          const method           = this.validateString(row.PaymentMethod, 'PaymentMethod');
           const lockBoxReference = row.LockBoxReference.trim();
-          const referenceNum = row.PaymentReference.trim();
-          const receivedDate = moment(row.PaymentReceivedDate, 'MM/DD/YYYY').format(DATE_FORMAT);
-          const amount = parseFloat(row.Amount.replace('$', ''));
+          const referenceNum     = row.PaymentReference.trim();
+          const receivedDate     = moment(row.PaymentReceivedDate, 'MM/DD/YYYY').format(DATE_FORMAT);
+          const amount           = parseFloat(row.Amount.replace('$', ''));
           
           // more validation hurdles
           if (policyLookup.indexOf('Error') > -1) {
