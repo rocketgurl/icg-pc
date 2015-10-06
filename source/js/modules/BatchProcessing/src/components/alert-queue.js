@@ -20,13 +20,12 @@ export default React.createClass({
 
   render() {
     const {collection} = this.state;
-    const timeout = 10000;
     return (
       <div className="alert-queue">
         {collection.map((model, index) => {
           if (!model.hidden) {
             return (
-              <Alert key={index} bsStyle="danger" dismissAfter={timeout} onDismiss={this._onAlertDismiss(model)}>
+              <Alert key={index} bsStyle="danger" onDismiss={this._onAlertDismiss(model)}>
                 <h4>Error: ({model.status}) {model.error}</h4>
                 <p>{model.message}</p>
                 <p><small>{model.exception}</small></p>
