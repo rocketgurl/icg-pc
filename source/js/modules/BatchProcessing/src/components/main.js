@@ -1,6 +1,7 @@
 import React from 'react';
 import app from 'ampersand-app';
 import TabContent from './tab-content';
+import AlertQueue from './alert-queue';
 import BatchActionSelect from './batch-action-select';
 import BatchActionModal from './batch-action-modal';
 import BatchesTable from './batches-table';
@@ -55,6 +56,7 @@ export default React.createClass({
     const {showBatchActionModal, batchType, actionName} = this.props;
     return (
       <div>
+        <AlertQueue collection={app.errors}/>
         <div className="row action-row">
           <BatchActionSelect router={app.router}/>
           <BatchActionModal
