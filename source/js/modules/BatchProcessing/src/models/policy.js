@@ -59,6 +59,7 @@ export default BaseModel.extend({
     // derive a status label from the given information
     // className corresponds to the bootstrap 3 label classes
     status: {
+      deps: ['endActivityId'],
       fn: function deriveStatus() {
         const {endActivityId} = this;
         const hasException = this.getVariableValue('hasException');
