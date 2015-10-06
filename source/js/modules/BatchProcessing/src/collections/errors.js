@@ -8,6 +8,27 @@ class Errors extends Collection {
     this.on('add', this._onErrorAdd);
   }
 
+  parseError(xhr) {
+    const {ajaxSettings, headers, response, status, statusCode, statusText} = xhr;
+    const contentType = headers['content-type'];
+    try {
+      if (/application\/json/.test(contentType)) {
+        this.add({...JSON.parse(response)});
+      } else {
+        this.add({
+          status,
+          error: `${statusText}`,
+          exception: `${statusCode} ${statusText}`,
+          message: `The server is temporarily unable to service your request
+due to maintenance downtime or capacity problems. Please try again later.`,
+          path: ajaxSettings.url
+        });
+      }
+    } catch (ex) {
+      console.error(ex);
+    }
+  }
+
   _onErrorAdd(model) {
     console.info(`error: ${model.error}
 status: ${model.status}

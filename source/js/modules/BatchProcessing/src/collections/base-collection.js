@@ -132,8 +132,7 @@ class BaseCollection extends Collection {
   }
 
   _onXHRError(collection, xhr) {
-    const {response} = xhr;
-    app.errors.add({...JSON.parse(response), xhr});
+    app.errors.parseError(xhr);
   }
 }
 

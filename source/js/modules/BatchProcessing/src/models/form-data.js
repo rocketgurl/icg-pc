@@ -15,9 +15,10 @@ class FormData extends Model {
     if (!this.batchType) {
       app.errors.add({
         error: 'Batch Type Not Set',
+        status: 'BatchTypeException',
         exception: 'BatchTypeException',
         message: 'Fatal error: batchType value is missing',
-        path: '/icg/batch-processes/${this.batchType}'
+        path: `/icg/batch-processes/${this.batchType}`
       });
     } else {
       return `/batch/icg/batch-processes/${this.batchType}`;
@@ -54,8 +55,7 @@ class FormData extends Model {
   }
 
   _onXHRError(model, xhr) {
-    const {response} = xhr;
-    app.errors.add({...JSON.parse(response), xhr});
+    app.errors.parseError(xhr);
   }
 }
 
