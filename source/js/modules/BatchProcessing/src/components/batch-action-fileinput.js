@@ -126,7 +126,7 @@ export default React.createClass({
             className={`btn ${hasErrors || hasMismatch ? 'btn-danger' : 'btn-primary'}`}
             disabled={!hasPayments || isRequesting || hasErrors || hasMismatch}
             onClick={this._onSubmitClick}>
-            {hasErrors || hasMismatch ? 'Please Fix Errors' : 'Submit'}
+            {hasErrors || hasMismatch ? 'Please Fix Errors' : 'Run Job'}
           </button>
         </Modal.Footer>
       </div>
