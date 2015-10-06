@@ -2392,6 +2392,8 @@ ul:after { clear: both; }
 
 .batch-id { text-transform: capitalize; }
 
+.policy-lookup { text-transform: uppercase; }
+
 .action-row { margin-bottom: 47px; }
 
 .info-toggle { cursor: pointer; }
