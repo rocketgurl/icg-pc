@@ -17,6 +17,27 @@ export default React.createClass({
     this.setState({isChecked: newProps.itemShouldBeChecked});
   },
 
+  getStatusLabel(policy) {
+    const {status, endActivityId} = policy;
+    let className = 'label label-info';
+    let message   = 'IN PROGRESS';
+    switch (status) {
+      case 'end-success':
+        className = 'label label-success';
+        message   = 'ENDED: SUCCESS';
+        break;
+      case 'end-error':
+        className = 'label label-danger';
+        message   = 'ENDED: ERROR';
+        break;
+      case 'action-required':
+        className = 'label label-warning';
+        message   = 'ERROR: ACTION REQUIRED';
+        break;
+    }
+    return <span className={className}>{message}</span>;
+  },
+
   render() {
     const {policy} = this.props;
     const errorMessage = `${policy.errorCode} - ${policy.errorMessage}`;
@@ -30,17 +51,16 @@ export default React.createClass({
     return (
       <div className="tr">
         <div className="td">
-          <input
-            type="checkbox"
+          <input type="checkbox"
             checked={this.state.isChecked}
             onChange={this._onCheckToggle}/>
         </div>
         <div className="td">{moment(policy.startTime).format(DATE_FORMAT)}</div>
-        <div className="td">{policy.policyLookup}</div>
+        <div className="td policy-lookup">{policy.policyLookup}</div>
         <div className="td batch-id">{`${policy.processDefinitionKey} ${policy.batchId}`}</div>
         <div className="td">{policy.startUserId}</div>
         <div className="td">
-          <span className={policy.status.className}>{policy.status.message}</span>
+          {this.getStatusLabel(policy)}
         </div>
         <div className="td text-danger">
           {policy.hasException ? [errorMessage, ' ', infoPopover] : null}

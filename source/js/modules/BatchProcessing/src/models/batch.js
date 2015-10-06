@@ -31,32 +31,24 @@ export default BaseModel.extend({
         return this.batchType.replace('batch', '');
       }
     },
+
+    // derive a status label from the given information
+    // className corresponds to the bootstrap 3 label classes
     status: {
-      // derive a status label from the given information
-      // className corresponds to the bootstrap 3 label classes
+      deps: ['numberOfInstances', 'numberOfSuccessInstances', 'numberOfErrorInstances'],
       fn: function deriveStatus() {
         const {
           numberOfInstances,
-          numberOfActiveInstances,
           numberOfErrorInstances,
           numberOfSuccessInstances} = this;
         if (numberOfSuccessInstances === numberOfInstances) {
-          return {
-            className: 'label label-success',
-            message: `FINISHED: ${numberOfSuccessInstances} out of ${numberOfInstances} successfully run`
-          };
-        } else if (numberOfSuccessInstances +
-          numberOfErrorInstances === numberOfInstances) {
-          return {
-            className: 'label label-danger',
-            message: `FINISHED: ${numberOfErrorInstances} out of ${numberOfInstances} failed`
-          };
-        } else {
-          return {
-            className: 'label label-warning',
-            message: `IN PROGRESS: ${numberOfSuccessInstances} out of ${numberOfInstances} successfully run`
-          };
+          return 'finished-success';
         }
+        if (numberOfSuccessInstances +
+          numberOfErrorInstances === numberOfInstances) {
+          return 'finished-error';
+        }
+        return 'in-progress';
       }
     }
   },
