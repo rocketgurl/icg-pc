@@ -25,7 +25,7 @@ export default BaseModel.extend({
       }
     },
     errorCode: {
-      fn: function defiveErrorCode() {
+      fn: function deriveErrorCode() {
         return this.getVariableValue('errorCode');
       }
     },
