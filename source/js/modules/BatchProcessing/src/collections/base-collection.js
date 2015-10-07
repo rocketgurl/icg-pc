@@ -35,7 +35,7 @@ class BaseCollection extends Collection {
 
   // calculate pagination properties
   parse(response) {
-    this.pageStart  = response.start + 1;
+    this.pageStart  = response.start + (response.total > 0 ? 1 : 0);
     this.pageEnd    = response.start + response.size;
     this.totalItems = response.total;
     return response.data;
