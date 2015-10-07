@@ -1,6 +1,6 @@
 import _ from 'underscore';
 import Collection from 'ampersand-rest-collection';
-import Policy from '../models/policy';
+import Job from '../models/job';
 
 const CHANGE_EVENT = 'change';
 

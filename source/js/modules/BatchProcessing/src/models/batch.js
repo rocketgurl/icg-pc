@@ -1,5 +1,5 @@
 import BaseModel from './base-model';
-import PoliciesCollection from '../collections/policies';
+import JobsCollection from '../collections/jobs';
 
 export default BaseModel.extend({
   props: {
@@ -53,10 +53,10 @@ export default BaseModel.extend({
     }
   },
 
-  // initializes the associated policies collection,
+  // initializes the associated jobs collection,
   // and updates the batchId query variable
   initialize() {
-    this.policies = new PoliciesCollection();
-    this.policies.setBatchId(this.id);
+    this.jobs = new JobsCollection();
+    this.jobs.setBatchId(this.id);
   }
 });

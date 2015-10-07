@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import sortableTableMixin from '../lib/sortable-table-mixin';
-import PolicyRow from './policy-row';
+import JobRow from './job-row';
 import TableControls from './table-controls';
 
 const batchTypes = [
@@ -48,6 +48,7 @@ export default React.createClass({
       <div>
         <div className="tab-pane-heading">
           <TableControls {...this.state}
+            controlType="jobs"
             batchTypes={batchTypes}
             pageStart={collection.pageStart}
             pageEnd={collection.pageEnd}
@@ -83,11 +84,11 @@ export default React.createClass({
             </div>
           </div>
           <div className="tbody" style={{maxHeight: `${500}px`}}>
-            {this.state.collection.map(policy => {
+            {this.state.collection.map(job => {
               return (
-                <PolicyRow
-                  key={policy.id}
-                  policy={policy}
+                <JobRow
+                  key={job.id}
+                  job={job}
                   itemShouldBeChecked={this.state.shouldItemsBeChecked}/>
                 );
             })}

@@ -17,8 +17,8 @@ export default React.createClass({
     this.setState({isChecked: newProps.itemShouldBeChecked});
   },
 
-  getStatusLabel(policy) {
-    const {status, endActivityId} = policy;
+  getStatusLabel(job) {
+    const {status, endActivityId} = job;
     let className = 'label label-info';
     let message   = 'IN PROGRESS';
     switch (status) {
@@ -39,11 +39,11 @@ export default React.createClass({
   },
 
   render() {
-    const {policy} = this.props;
-    const errorMessage = `${policy.errorCode} - ${policy.errorMessage}`;
+    const {job} = this.props;
+    const errorMessage = `${job.errorCode} - ${job.errorMessage}`;
     const infoPopover = (
       <OverlayTrigger key="overlay" rootClose trigger="click" placement="left"
-        overlay={<Popover title={errorMessage}>{policy.errorResponse}</Popover>}>
+        overlay={<Popover title={errorMessage}>{job.errorResponse}</Popover>}>
         <span title="Click for more info"
           className="glyphicon glyphicon-info-sign info-toggle"></span>
       </OverlayTrigger>);
@@ -55,21 +55,21 @@ export default React.createClass({
             checked={this.state.isChecked}
             onChange={this._onCheckToggle}/>
         </div>
-        <div className="td">{moment(policy.startTime).format(DATE_FORMAT)}</div>
-        <div className="td policy-lookup">{policy.policyLookup}</div>
-        <div className="td batch-id">{`${policy.processDefinitionKey} ${policy.batchId}`}</div>
-        <div className="td">{policy.startUserId}</div>
+        <div className="td">{moment(job.startTime).format(DATE_FORMAT)}</div>
+        <div className="td policy-lookup">{job.policyLookup}</div>
+        <div className="td batch-id">{`${job.processDefinitionKey} ${job.batchId}`}</div>
+        <div className="td">{job.startUserId}</div>
         <div className="td">
-          {this.getStatusLabel(policy)}
+          {this.getStatusLabel(job)}
         </div>
         <div className="td text-danger">
-          {policy.hasException ? [errorMessage, ' ', infoPopover] : null}
+          {job.hasException ? [errorMessage, ' ', infoPopover] : null}
         </div>
       </div>
       );
   },
 
   _onCheckToggle(e) {
-    this.setState({isChecked: e.target.checked})
+    this.setState({isChecked: e.target.checked});
   },
 });

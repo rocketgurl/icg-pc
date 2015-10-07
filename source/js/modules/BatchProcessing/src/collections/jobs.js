@@ -1,12 +1,12 @@
 import BaseCollection from './base-collection';
-import PolicyModel from '../models/policy';
+import JobModel from '../models/job';
 
-class Policies extends BaseCollection {
+class Jobs extends BaseCollection {
   constructor() {
     super();
 
     this.url = '/batch/query/historic-process-instances';
-    this.model = PolicyModel;
+    this.model = JobModel;
 
     // HACK: This default query should
     // return all "non-batch" processes
@@ -25,4 +25,4 @@ class Policies extends BaseCollection {
   }
 }
 
-export default Policies;
+export default Jobs;

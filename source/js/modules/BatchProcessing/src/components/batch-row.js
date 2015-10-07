@@ -38,7 +38,7 @@ export default React.createClass({
   render() {
     const {batch} = this.props;
     return (
-      <a className="tr" href={`#policies/bid/${batch.id}`}>
+      <a className="tr" href={`#jobs/bid/${batch.id}`}>
         <div className="td">
           {this.getStatusLabel(batch)}
         </div>

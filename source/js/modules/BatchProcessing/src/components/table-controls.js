@@ -7,6 +7,7 @@ const DATE_FORMAT = 'YYYY-MM-DD';
 
 export default React.createClass({
   propTypes: {
+    controlType: React.PropTypes.string.isRequired,
     batchTypes: React.PropTypes.array.isRequired,
     pageStart: React.PropTypes.number.isRequired,
     pageEnd: React.PropTypes.number.isRequired,
@@ -120,6 +121,14 @@ export default React.createClass({
                     <span className="glyphicon glyphicon-menu-right"/>
                   </button>
                 </div>
+                {this.props.controlType === 'jobs' ?
+                <div className="btn-group">
+                  <button
+                    disabled={true}
+                    className="btn btn-default btn-sm">
+                    <span className="glyphicon glyphicon-stats"/>
+                  </button>
+                </div> : null}
                 <div className="btn-group">
                   <button
                     className="btn btn-default btn-sm"

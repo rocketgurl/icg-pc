@@ -5,7 +5,7 @@ import AlertQueue from './alert-queue';
 import BatchActionSelect from './batch-action-select';
 import BatchActionModal from './batch-action-modal';
 import BatchesTable from './batches-table';
-import PoliciesTable from './policies-table';
+import JobsTable from './jobs-table';
 import {Nav, NavItem, TabPane} from 'react-bootstrap';
 
 export default React.createClass({
@@ -40,18 +40,18 @@ export default React.createClass({
     app.errors.off();
   },
 
-  // Determine the correct collection of policies and return it
-  // along with the <PoliciesTable/> node
-  getPoliciesTable() {
+  // Determine the correct collection of jobs and return it
+  // along with the <JobsTable/> node
+  getJobsTable() {
     const {activeBatchId} = this.props;
-    let collection = app.allPolicies;
+    let collection = app.allJobs;
     if (app.batches.length) {
       const activeBatch = app.batches.get(activeBatchId);
       collection = activeBatch ?
-        activeBatch.policies :
-        app.allPolicies;
+        activeBatch.jobs :
+        app.allJobs;
     }
-    return <PoliciesTable key={activeBatchId} collection={collection}/>;
+    return <JobsTable key={activeBatchId} collection={collection}/>;
   },
 
   render() {
@@ -71,15 +71,15 @@ export default React.createClass({
         <div className="panel panel-default panel-nav">
           <Nav bsStyle="tabs" activeKey={tab}>
             <NavItem eventKey="batches" href="#batches">Batches</NavItem>
-            <NavItem eventKey="policies" href="#policies">Policies</NavItem>
+            <NavItem eventKey="jobs" href="#jobs">Jobs</NavItem>
           </Nav>
           <div className="panel-body">
             <TabContent activeKey={tab}>
               <TabPane key="batches">
                 <BatchesTable collection={this.state.batches}/>
               </TabPane>
-              <TabPane key="policies">
-                {this.getPoliciesTable()}
+              <TabPane key="jobs">
+                {this.getJobsTable()}
               </TabPane>
             </TabContent>
           </div>

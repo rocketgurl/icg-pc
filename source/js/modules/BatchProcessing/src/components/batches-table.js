@@ -41,6 +41,7 @@ export default React.createClass({
       <div>
         <div className="tab-pane-heading">
           <TableControls {...this.state}
+            controlType="batches"
             batchTypes={batchTypes}
             pageStart={collection.pageStart}
             pageEnd={collection.pageEnd}
