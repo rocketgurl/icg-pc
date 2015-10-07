@@ -2398,7 +2398,7 @@ ul:after { clear: both; }
 
 .info-toggle { cursor: pointer; }
 
-.panel-table { margin-left: -15px; margin-right: -15px; }
+.panel-table { margin-left: -15px; margin-right: -15px; margin-bottom: -15px; }
 .panel-table .tr > .td:first-child, .panel-table .tr > .th:first-child { padding-left: 15px; }
 .panel-table .tr > .td:last-child, .panel-table .tr > .th:last-child { padding-right: 15px; }
 
