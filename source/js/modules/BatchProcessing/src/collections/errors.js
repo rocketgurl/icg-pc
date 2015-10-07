@@ -4,6 +4,7 @@ import ErrorModel from '../models/error';
 class Errors extends Collection {
   constructor() {
     super();
+    this.model = ErrorModel;
     this.mainIndex = 'timestamp';
     this.on('add', this._onErrorAdd);
   }
