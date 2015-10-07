@@ -365,6 +365,11 @@ define [
 
     addOFCCCABehavhiors : ->
       rules = [
+        field: "GarageType"
+        condition: "> 1"
+        target: "SquareFootUnderRoofGarage"
+        effect: @apparatchik.showElement
+      ,
         field: "ConstructionType"
         condition: "== 100"
         target: "Cladding"
