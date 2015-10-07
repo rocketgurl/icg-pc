@@ -19,7 +19,8 @@ export default React.createClass({
   getInitialState() {
     return {
       tab: this.props.tab || 'batches',
-      batches: app.batches
+      batches: app.batches,
+      errors: app.errors
     };
   },
 
@@ -31,10 +32,12 @@ export default React.createClass({
 
   componentWillMount() {
     app.batches.on('sync', this._onBatchesSync);
+    app.errors.on('add remove', this._onErrorsUpdate);
   },
 
   componentWillUnmount() {
     app.batches.off();
+    app.errors.off();
   },
 
   // Determine the correct collection of policies and return it
@@ -52,11 +55,11 @@ export default React.createClass({
   },
 
   render() {
-    const {tab} = this.state;
+    const {tab, errors} = this.state;
     const {showBatchActionModal, batchType, actionName} = this.props;
     return (
       <div>
-        <AlertQueue collection={app.errors}/>
+        <AlertQueue collection={errors}/>
         <div className="row action-row">
           <BatchActionSelect router={app.router}/>
           <BatchActionModal
@@ -83,6 +86,10 @@ export default React.createClass({
         </div>
       </div>
     );
+  },
+
+  _onErrorsUpdate(error, errors) {
+    this.setState({errors});
   },
 
   _onBatchesSync(batches) {
