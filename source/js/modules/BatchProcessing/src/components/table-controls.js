@@ -58,7 +58,7 @@ export default React.createClass({
                 name="status"
                 defaultValue={this.props.status}
                 className="form-control input-sm"
-                onChange={this._onStatusChange}>
+                onChange={this.props.filterByStatus}>
                 <option value="default">Status: All</option>
                 {_.map(this.props.statuses, (item, key) => {
                   return <option key={key} value={item.value}>{item.name}</option>;
@@ -148,10 +148,6 @@ export default React.createClass({
         </div>
       </div>
     );
-  },
-
-  _onStatusChange(e) {
-    this.props.filterByStatus(e.target.value);
   },
 
   _onSelectChange(e) {

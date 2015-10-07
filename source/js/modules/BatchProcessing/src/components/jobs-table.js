@@ -119,10 +119,6 @@ export default React.createClass({
     this.setState({shouldItemsBeChecked: e.target.checked});
   },
 
-  _onCollectionSync(collection) {
-    this.setState({collection});
-  },
-
   _onParameterUpdate(name, value) {
     const {collection} = this.props;
     collection.updateParameter(name, value);
@@ -130,7 +126,11 @@ export default React.createClass({
     this.makeQuery();
   },
 
-  _onStatusChange(status) {
-    this.props.collection.filterByStatus(status);
+  _onStatusChange(e) {
+    this.props.collection.filterByStatus(e.target.value);
+  },
+
+  _onCollectionSync(collection) {
+    this.setState({collection});
   }
 });
