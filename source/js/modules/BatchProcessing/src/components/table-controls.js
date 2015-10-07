@@ -15,7 +15,9 @@ export default React.createClass({
     incrementPage: React.PropTypes.func.isRequired,
     decrementPage: React.PropTypes.func.isRequired,
     refreshPage: React.PropTypes.func.isRequired,
-    updateParameter: React.PropTypes.func.isRequired
+    updateParameter: React.PropTypes.func.isRequired,
+    statuses: React.PropTypes.array,
+    filterByStatus: React.PropTypes.func
   },
 
   getDefaultProps() {
@@ -55,8 +57,12 @@ export default React.createClass({
               <select
                 name="status"
                 defaultValue={this.props.status}
-                className="form-control input-sm">
+                className="form-control input-sm"
+                onChange={this._onStatusChange}>
                 <option value="default">Status: All</option>
+                {_.map(this.props.statuses, (item, key) => {
+                  return <option key={key} value={item.value}>{item.name}</option>;
+                })}
               </select>
             </div>
             <div className="td">
@@ -142,6 +148,10 @@ export default React.createClass({
         </div>
       </div>
     );
+  },
+
+  _onStatusChange(e) {
+    this.props.filterByStatus(e.target.value);
   },
 
   _onSelectChange(e) {

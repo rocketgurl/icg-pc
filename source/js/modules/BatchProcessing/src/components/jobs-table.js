@@ -10,6 +10,13 @@ const batchTypes = [
   {name: 'Payments', value: 'payment'}
 ];
 
+const statuses = [
+  {name: 'Ended: Success', value: 'end-success'},
+  {name: 'Ended: Error', value: 'end-error'},
+  {name: 'Error: Action Required', value: 'action-required'},
+  {name: 'In Progress', value: 'in-progress'}
+];
+
 export default React.createClass({
   mixins: [sortableTableMixin], // mixin common methods for sortable tables
 
@@ -49,6 +56,7 @@ export default React.createClass({
         <div className="tab-pane-heading">
           <TableControls {...this.state}
             controlType="jobs"
+            statuses={statuses}
             batchTypes={batchTypes}
             pageStart={collection.pageStart}
             pageEnd={collection.pageEnd}
@@ -56,7 +64,8 @@ export default React.createClass({
             incrementPage={this._onPageIncrement}
             decrementPage={this._onPageDecrement}
             refreshPage={this.makeQuery}
-            updateParameter={this._onParameterUpdate}/>
+            updateParameter={this._onParameterUpdate}
+            filterByStatus={this._onStatusChange}/>
         </div>
         <div className="div-table panel-table table-striped table-hover table-scrollable table-sortable table-7-columns">
           <div className="thead">
@@ -119,5 +128,9 @@ export default React.createClass({
     collection.updateParameter(name, value);
     this.setState({...collection.getParameters()});
     this.makeQuery();
+  },
+
+  _onStatusChange(status) {
+    this.props.collection.filterByStatus(status);
   }
 });
