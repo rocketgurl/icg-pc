@@ -40,10 +40,11 @@ export default React.createClass({
               <label className="col-xs-3">Message:</label>
               <div className="col-xs-9">{error.message}</div>
             </li>
+            {error.row ?
             <li className="clearfix">
               <label className="col-xs-3">Row:</label>
               <div className="col-xs-9">{error.row}</div>
-            </li>
+            </li> : null}
           </ul>
         </div>
       );
