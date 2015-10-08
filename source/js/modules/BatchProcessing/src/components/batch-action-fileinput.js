@@ -281,6 +281,7 @@ export default React.createClass({
     if (fileList.length > 0) {
       Papa.parse(fileList[0], {
         header: true,
+        skipEmptyLines: true,
         complete: this._processCSVData
       });
     }
