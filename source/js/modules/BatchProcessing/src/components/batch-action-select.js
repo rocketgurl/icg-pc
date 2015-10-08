@@ -9,7 +9,7 @@ const BATCH_ACTIONS = [
 export default React.createClass({
   render() {
     return (
-      <div className="col-xs-2">
+      <div className="col-sm-3 col-xs-4">
         <select
           className="form-control"
           onChange={this._onActionSelect}
