@@ -11,18 +11,18 @@ export default React.createClass({
            numberOfInstances,
            numberOfSuccessInstances,
            numberOfErrorInstances} = batch;
-    let className = 'label label-info';
+    let className = 'label label-block label-info';
     let message   = `IN PROGRESS: ${numberOfSuccessInstances}
                      out of ${numberOfInstances} complete`;
 
     switch (status) {
       case 'finished-success':
-        className = 'label label-success';
+        className = 'label label-block label-success';
         message   = `FINISHED: ${numberOfSuccessInstances}
                      out of ${numberOfInstances} complete`;
         break;
       case 'finished-error':
-        className = 'label label-danger';
+        className = 'label label-block label-danger';
         message   = `FINISHED: ${numberOfErrorInstances}
                      out of ${numberOfInstances} failed`;
         break;

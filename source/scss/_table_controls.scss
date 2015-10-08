@@ -7,21 +7,20 @@
     text-align: right;
   }
 
-  .td {
-    display: flex;
-
-    > .form-control,
-    > div:not([class^="col"]) {
-      flex: 1;
-    }
+  .control-wrapper {
+    padding: 8px;
   }
 }
 
-.table-condensed {
+.controls-condensed {
   .control-label,
   .page-count {
     padding-top: 6px;
     font-size: 12px;
+  }
+
+  .control-wrapper {
+    padding: 5px;
   }
 }
 

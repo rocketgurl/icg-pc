@@ -19,19 +19,19 @@ export default React.createClass({
 
   getStatusLabel(job) {
     const {status, endActivityId} = job;
-    let className = 'label label-info';
+    let className = 'label label-block label-info';
     let message   = 'IN PROGRESS';
     switch (status) {
       case 'end-success':
-        className = 'label label-success';
+        className = 'label label-block label-success';
         message   = 'ENDED: SUCCESS';
         break;
       case 'end-error':
-        className = 'label label-danger';
+        className = 'label label-block label-danger';
         message   = 'ENDED: ERROR';
         break;
       case 'action-required':
-        className = 'label label-warning';
+        className = 'label label-block label-warning';
         message   = 'ERROR: ACTION REQUIRED';
         break;
     }
