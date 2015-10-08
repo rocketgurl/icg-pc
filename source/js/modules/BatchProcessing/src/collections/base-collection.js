@@ -13,7 +13,7 @@ class BaseCollection extends Collection {
     // parameters passed in activity query
     this.parameters = {
       start: 0,
-      size: 25,
+      size: 50,
       sort: 'startTime',
       order: 'desc',
       includeProcessVariables: true,
