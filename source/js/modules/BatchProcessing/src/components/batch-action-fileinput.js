@@ -162,66 +162,52 @@ export default React.createClass({
     }
 
     if (results.errors.length === 0) {
-      _.each(results.data, (row, index) => {
-        try {
-          const policyLookup     = this.validateString(row.PolicyNumberBase, 'PolicyNumberBase');
-          const method           = this.validateString(row.PaymentMethod, 'PaymentMethod');
-          const lockBoxReference = row.LockBoxReference.trim();
-          const referenceNum     = row.PaymentReference.trim();
-          const receivedDate     = moment(row.PaymentReceivedDate, 'MM/DD/YYYY').format(DATE_FORMAT);
-          const amount           = parseFloat(row.Amount.replace('$', ''));
-          
-          // more validation hurdles
-          if (policyLookup.indexOf('Error') > -1) {
-            results.errors.push(this._formatError(
-              'PolicyNumberBase',
-              policyLookup,
-              index+1));
-            row.Invalid = true;
+      paymentsList = _.map(results.data, (row, index) => {
+        
+        // check each column in the row for invalid characters
+        // (except for the Date and Amount columns)
+        // push any invalid matches onto the errors array
+        let validated = {};
+        _.each(_.omit(row, 'PaymentReceivedDate', 'Amount'), (val, key) => {
+          val = this.validateString(val, key, /[^A-Z0-9-]+/gi);
+          if (val.indexOf('Error') > -1) {
+            results.errors.push(this._formatError(key, val, index+1));
           }
-          if (method.indexOf('Error') > -1) {
-            results.errors.push(this._formatError(
-              'PaymentMethod',
-              method,
-              index+1));
-            row.Invalid = true;
-          }
-          if (receivedDate === 'Invalid date') {
-            results.errors.push(this._formatError(
-              'PaymentReceivedDate',
-              'PaymentReceivedDate must be a valid date and match format MM/DD/YYYY',
-              index+1));
-            row.Invalid = true;
-          }
+          validated[key] = val;
+        });
 
-          // Verify amount is a number
-          // If so, add it to the total batch amount
-          if (isNaN(amount)) {
-            results.errors.push(this._formatError(
-              'PaymentAmount',
-              'Non-numeric characters detected in PaymentAmount',
-              index+1));
-            row.Invalid = true;
-          } else {
-            results.totalBatchAmountActual += amount;
-          }
-
-          // push items onto an array of data objects
-          // formatted for api consumption
-          paymentsList.push({
-            policyLookup,
-            method,
-            receivedDate,
-            lockBoxReference,
-            amount,
-            referenceNum
-          });
-        } catch (e) {
+        // delegate date validation for received date to moment
+        const receivedDate = moment(row.PaymentReceivedDate, 'MM/DD/YYYY');
+        if (receivedDate === 'Invalid date') {
           results.errors.push(this._formatError(
-            'Exception',
-            e.toString()));
-          console.error('FILE UPLOAD ERROR:', e);
+            'PaymentReceivedDate',
+            'PaymentReceivedDate must be a valid date and match format MM/DD/YYYY',
+            index+1));
         }
+
+        // verify amount is a number
+        // if so, add it to the total batch amount
+        let amount = row.Amount.replace(/[$,]/g, ''); // strip out any commas and $'s
+        amount = this.validateString(amount, 'Amount', /[^0-9\.]/g);
+        if (amount.indexOf('Error') > -1) {
+          results.errors.push(this._formatError(
+            'Amount',
+            amount,
+            index+1));
+        } else {
+          results.totalBatchAmountActual += parseFloat(amount);
+        }
+
+        // push items onto an array of data objects
+        // formatted for api consumption
+        return {
+          amount: parseFloat(amount),
+          receivedDate: receivedDate.format(DATE_FORMAT),
+          method: validated.PaymentMethod,
+          referenceNum: validated.PaymentReference,
+          policyLookup: validated.PolicyNumberBase,
+          lockBoxReference: validated.LockBoxReference
+        };
       });
     }
     results.totalNumPaymentsActual = paymentsList.length;
@@ -241,15 +227,14 @@ export default React.createClass({
     return _.difference(expectedFields, actualFields);
   },
 
-  validateString(str="", type="") {
-    const invalidChars = /[^A-Z0-9-]+/gi;
+  validateString(str="", type="", invalid=/[]/) {
     str = str.trim();
     if (str.length === 0) {
       return `Error: ${type} value is empty`;
     }
-    if (invalidChars.test(str)) {
-      str = str.replace(invalidChars, $1 => {
-        return `[${$1}]`;
+    if (invalid.test(str)) {
+      str = str.replace(invalid, $1 => {
+        return `[${$1}]`
       });
       return `Error: Invalid chars in ${type}: ${str}`;
     }
@@ -267,10 +252,27 @@ export default React.createClass({
     this.setState(stateObj);
   },
 
-  // Clears the selected file & re-arms the onChange event.
-  // Useful when a user must select the same file multiple times
-  // E.g. when fixing an error.
   _onFileInputClick(e) {
+    let errors = [];
+    let {totalBatchAmountExpected,
+      totalNumPaymentsExpected} = this.state;
+
+    // check that validation inputs have something greater than 0
+    if (totalBatchAmountExpected == 0) {
+      errors.push(this._formatError('TotalBatchAmount',
+        'Please enter expected total batch amount'));
+      e.preventDefault();
+    }
+    if (totalNumPaymentsExpected == 0) {
+      errors.push(this._formatError('TotalNumberOfPayments',
+        'Please enter expected total number of payments'));
+      e.preventDefault();
+    }
+    this.setState({errors});
+
+    // Clears the selected file & re-arms the onChange event.
+    // Useful when a user must select the same file multiple times
+    // E.g. when fixing an error.
     e.target.value = '';
   },
 
