@@ -23,6 +23,7 @@ class BaseCollection extends Collection {
     this.pageEnd    = 0;  // successful response in the parse 
     this.totalItems = 0;  // method of the BaseCollection
     this.variables  = []; // reserved for process variable queries
+    this.status     = 'default';
 
     // errors are pushed to an Errors collection
     this.on('error', this._onXHRError);

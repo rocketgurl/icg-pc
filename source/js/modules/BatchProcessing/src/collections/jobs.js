@@ -25,6 +25,7 @@ class Jobs extends BaseCollection {
 
   // enables filtering by the derived status of a job
   filterByStatus(status) {
+    this.status = status;
     switch (status) {
       case 'end-success':
         this.updateParameter('finished', true);

@@ -8,7 +8,7 @@ const DATE_FORMAT = 'YYYY-MM-DD';
 export default React.createClass({
   propTypes: {
     controlType: React.PropTypes.string.isRequired,
-    batchTypes: React.PropTypes.array.isRequired,
+    processDefinitionKeys: React.PropTypes.array.isRequired,
     pageStart: React.PropTypes.number.isRequired,
     pageEnd: React.PropTypes.number.isRequired,
     totalItems: React.PropTypes.number.isRequired,
@@ -16,7 +16,8 @@ export default React.createClass({
     decrementPage: React.PropTypes.func.isRequired,
     refreshPage: React.PropTypes.func.isRequired,
     updateParameter: React.PropTypes.func.isRequired,
-    statuses: React.PropTypes.array,
+    status: React.PropTypes.string.isRequired,
+    statusOpts: React.PropTypes.array,
     filterByStatus: React.PropTypes.func
   },
 
@@ -50,7 +51,7 @@ export default React.createClass({
                     className="form-control input-sm"
                     onChange={this._onSelectChange}>
                     <option value="default">Batch Types: All</option>
-                    {_.map(this.props.batchTypes, (item, key) => {
+                    {_.map(this.props.processDefinitionKeys, (item, key) => {
                       return <option key={key} value={item.value}>{item.name}</option>;
                     })}
                   </select>
@@ -62,7 +63,7 @@ export default React.createClass({
                     className="form-control input-sm"
                     onChange={this.props.filterByStatus}>
                     <option value="default">Status: All</option>
-                    {_.map(this.props.statuses, (item, key) => {
+                    {_.map(this.props.statusOpts, (item, key) => {
                       return <option key={key} value={item.value}>{item.name}</option>;
                     })}
                   </select>

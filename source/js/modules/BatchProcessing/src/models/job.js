@@ -69,10 +69,13 @@ export default BaseModel.extend({
         if (endActivityId === 'endEventError') {
           return 'end-error';
         }
-        if (!endActivityId && hasException) {
+        if (!endActivityId && hasException === true) {
           return 'action-required';
         }
-        return 'in-progress';
+        if (!endActivityId && hasException === false) {
+          return 'in-progress';
+        }
+        return 'started';
       }
     }
   }

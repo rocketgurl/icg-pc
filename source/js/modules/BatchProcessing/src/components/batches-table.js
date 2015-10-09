@@ -3,7 +3,7 @@ import sortableTableMixin from '../lib/sortable-table-mixin';
 import BatchRow from './batch-row';
 import TableControls from './table-controls';
 
-const batchTypes = [
+const processDefinitionKeys = [
   {name: 'Invoicing', value: 'batchInvoicing'},
   {name: 'Issuance', value: 'batchIssuance'},
   {name: 'Payments', value: 'batchPayment'}
@@ -42,7 +42,8 @@ export default React.createClass({
         <div className="tab-pane-heading">
           <TableControls {...this.state}
             controlType="batches"
-            batchTypes={batchTypes}
+            processDefinitionKeys={processDefinitionKeys}
+            status={collection.status}
             pageStart={collection.pageStart}
             pageEnd={collection.pageEnd}
             totalItems={collection.totalItems}
@@ -51,12 +52,12 @@ export default React.createClass({
             refreshPage={this.makeQuery}
             updateParameter={this._onParameterUpdate}/>
         </div>
-        <div className="div-table panel-table table-striped table-hover table-scrollable table-sortable table-5-columns">
+        <div className="div-table panel-table table-striped table-hover table-scrollable table-sortable table-6-columns">
           <div className="thead">
             <div className="tr">
-              <div className="th">Status</div>
+              <div className="th">ID</div>
+              <div className="th">Type</div>
               <div className="th">Quantity</div>
-              <div className="th">Batch ID</div>
               <div className="th">
                 <a data-sortby="startTime"
                   className={sort === 'startTime' ? order : null}
@@ -65,6 +66,7 @@ export default React.createClass({
                 </a>
               </div>
               <div className="th">Initiator</div>
+              <div className="th">Status</div>
             </div>
           </div>
           <div className="tbody" style={{maxHeight: `${500}px`}}>

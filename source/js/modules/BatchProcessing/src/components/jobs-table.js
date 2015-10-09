@@ -4,13 +4,13 @@ import sortableTableMixin from '../lib/sortable-table-mixin';
 import JobRow from './job-row';
 import TableControls from './table-controls';
 
-const batchTypes = [
+const processDefinitionKeys = [
   {name: 'Invoicing', value: 'invoicing'},
   {name: 'Issuance', value: 'issuance'},
   {name: 'Payments', value: 'payment'}
 ];
 
-const statuses = [
+const statusOpts = [
   {name: 'Ended: Success', value: 'end-success'},
   {name: 'Ended: Error', value: 'end-error'},
   {name: 'Error: Action Required', value: 'action-required'},
@@ -28,7 +28,8 @@ export default React.createClass({
           active: true,
           order: 'desc'
         }
-      }
+      },
+      status: null
     };
   },
 
@@ -56,8 +57,9 @@ export default React.createClass({
         <div className="tab-pane-heading">
           <TableControls {...this.state}
             controlType="jobs"
-            statuses={statuses}
-            batchTypes={batchTypes}
+            statusOpts={statusOpts}
+            processDefinitionKeys={processDefinitionKeys}
+            status={collection.status}
             pageStart={collection.pageStart}
             pageEnd={collection.pageEnd}
             totalItems={collection.totalItems}

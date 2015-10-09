@@ -19,8 +19,8 @@ export default React.createClass({
 
   getStatusLabel(job) {
     const {status, endActivityId} = job;
-    let className = 'label label-block label-info';
-    let message   = 'IN PROGRESS';
+    let className = 'label label-block label-default';
+    let message   = 'STARTED';
     switch (status) {
       case 'end-success':
         className = 'label label-block label-success';
@@ -34,6 +34,10 @@ export default React.createClass({
         className = 'label label-block label-warning';
         message   = 'ERROR: ACTION REQUIRED';
         break;
+      case 'in-progress':
+        className = 'label label-block label-info';
+        message   = 'IN PROGRESS';
+        break
     }
     return <span className={className}>{message}</span>;
   },
@@ -49,7 +53,7 @@ export default React.createClass({
       </OverlayTrigger>);
 
     return (
-      <div className="tr">
+      <div className="tr" id={job.id} title={`Process Instance ID ${job.id}`}>
         <div className="td">
           <input type="checkbox"
             checked={this.state.isChecked}
