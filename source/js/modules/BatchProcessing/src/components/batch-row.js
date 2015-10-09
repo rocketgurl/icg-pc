@@ -42,8 +42,8 @@ export default React.createClass({
         <div className="td">
           {this.getStatusLabel(batch)}
         </div>
-        <div className="td batch-id">{`${batch.type} ${batch.id}`}</div>
         <div className="td">{batch.numberOfInstances}</div>
+        <div className="td batch-id">{`${batch.type} ${batch.id}`}</div>
         <div className="td">{moment(batch.startTime).format(DATE_FORMAT)}</div>
         <div className="td">{batch.startUserId}</div>
       </a>

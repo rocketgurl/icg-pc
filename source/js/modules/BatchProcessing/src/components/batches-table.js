@@ -55,8 +55,8 @@ export default React.createClass({
           <div className="thead">
             <div className="tr">
               <div className="th">Status</div>
-              <div className="th">Batch ID</div>
               <div className="th">Quantity</div>
+              <div className="th">Batch ID</div>
               <div className="th">
                 <a data-sortby="startTime"
                   className={sort === 'startTime' ? order : null}
