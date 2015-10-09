@@ -8,12 +8,11 @@ class Jobs extends BaseCollection {
     this.url = '/batch/query/historic-process-instances';
     this.model = JobModel;
 
-    // HACK: This default query should
-    // return all "non-batch" processes
+    // This default query should return all "non-batch" processes
     this.variables = [{
-      name: 'batchId',
-      operation: 'notEquals',
-      value: '0'
+      name: 'isBatchInstance',
+      operation: 'equals',
+      value: false
     }];
   }
 
