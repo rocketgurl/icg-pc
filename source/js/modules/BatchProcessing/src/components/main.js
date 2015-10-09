@@ -12,6 +12,7 @@ export default React.createClass({
   getDefaultProps() {
     return {
       showBatchActionModal: false,
+      activeBatchId: '0',
       batchType: null
     };
   },
@@ -44,14 +45,13 @@ export default React.createClass({
   // along with the <JobsTable/> node
   getJobsTable() {
     const {activeBatchId} = this.props;
-    let collection = app.allJobs;
     if (app.batches.length) {
       const activeBatch = app.batches.get(activeBatchId);
-      collection = activeBatch ?
+      const collection = activeBatch ?
         activeBatch.jobs :
         app.allJobs;
+      return <JobsTable key={activeBatchId} collection={collection}/>
     }
-    return <JobsTable key={activeBatchId} collection={collection}/>;
   },
 
   render() {
