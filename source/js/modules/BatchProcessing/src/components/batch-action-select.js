@@ -1,9 +1,10 @@
 import React from 'react';
+import _ from 'underscore';
 
-const BATCH_ACTIONS = [
-  ['invoicing', 'Batch Invoicing'],
-  ['issuance', 'Batch Issuance'],
-  ['payment', 'Batch Payments']
+const batchActions = [
+  {type: 'invoicing', name: 'Batch Invoicing'},
+  {type: 'issuance', name: 'Batch Issuance'},
+  {type: 'payment', name: 'Batch Payments'}
 ];
 
 export default React.createClass({
@@ -15,11 +16,9 @@ export default React.createClass({
           onChange={this._onActionSelect}
           value={this.props.processDefinitionId || 'default'}>
           <option value="default">Select a Batch Action</option>
-          {BATCH_ACTIONS.map(action => {
-            const [type, name] = action;
-            return (
-              <option key={type} value={`${type}/${name}`}>{name}</option>
-              );
+          {_.map(batchActions, (item, key) => {
+            const {type, name} = item;
+            return <option key={key} value={`${type}/${name}`}>{name}</option>
           })}
         </select>
       </div>
