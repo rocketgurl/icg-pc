@@ -28,8 +28,7 @@ export default React.createClass({
           active: true,
           order: 'desc'
         }
-      },
-      status: null
+      }
     };
   },
 

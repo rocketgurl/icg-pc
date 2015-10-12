@@ -55,8 +55,9 @@ export default React.createClass({
         <div className="div-table panel-table table-striped table-hover table-scrollable table-sortable table-6-columns">
           <div className="thead">
             <div className="tr">
-              <div className="th">ID</div>
+              <div className="th">Status</div>
               <div className="th">Type</div>
+              <div className="th">ID</div>
               <div className="th">Quantity</div>
               <div className="th">
                 <a data-sortby="startTime"
@@ -66,7 +67,6 @@ export default React.createClass({
                 </a>
               </div>
               <div className="th">Initiator</div>
-              <div className="th">Status</div>
             </div>
           </div>
           <div className="tbody" style={{maxHeight: `${500}px`}}>
