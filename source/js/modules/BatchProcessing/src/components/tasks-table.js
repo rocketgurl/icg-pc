@@ -22,7 +22,7 @@ export default React.createClass({
 
   getInitialState() {
     return {
-      shouldItemsBeChecked: false,
+      checkAll: false,
       sortTable: {
         startTime: {
           active: true,
@@ -75,7 +75,7 @@ export default React.createClass({
                 <label className="checkbox-label">
                   <input
                     type="checkbox"
-                    checked={this.state.shouldItemsBeChecked}
+                    checked={this.state.checkAll}
                     onChange={this._onSelectAllToggle}/> Select All
                 </label>
               </div>
@@ -95,11 +95,13 @@ export default React.createClass({
           </div>
           <div className="tbody" style={{maxHeight: `${500}px`}}>
             {this.state.collection.map(task => {
+              // And individual item should only be checked if a currentTaskId exists
+              const checked = this.state.checkAll && !!task.currentTaskId;
               return (
                 <TaskRow
                   key={task.id}
                   task={task}
-                  itemShouldBeChecked={this.state.shouldItemsBeChecked}/>
+                  checked={checked}/>
                 );
             })}
           </div>
@@ -117,7 +119,7 @@ export default React.createClass({
   },
 
   _onSelectAllToggle(e) {
-    this.setState({shouldItemsBeChecked: e.target.checked});
+    this.setState({checkAll: e.target.checked});
   },
 
   _onParameterUpdate(name, value) {

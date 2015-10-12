@@ -9,12 +9,12 @@ const DATE_FORMAT = 'MMM DD, YYYY h:mm A';
 export default React.createClass({
   getInitialState() {
     return {
-      isChecked: this.props.itemShouldBeChecked
+      checked: this.props.checked
     };
   },
 
   componentWillReceiveProps(newProps) {
-    this.setState({isChecked: newProps.itemShouldBeChecked});
+    this.setState({checked: newProps.checked});
   },
 
   getStatusLabel(task) {
@@ -56,8 +56,10 @@ export default React.createClass({
       <div className="tr" id={task.id} title={`Process Instance ID ${task.id}`}>
         <div className="td">
           <input type="checkbox"
-            checked={this.state.isChecked}
+            checked={this.state.checked}
+            disabled={!task.currentTaskId}
             onChange={this._onCheckToggle}/>
+            {task.currentTaskId}
         </div>
         <div className="td">{moment(task.startTime).format(DATE_FORMAT)}</div>
         <div className="td policy-lookup">{task.policyLookup}</div>
@@ -74,6 +76,6 @@ export default React.createClass({
   },
 
   _onCheckToggle(e) {
-    this.setState({isChecked: e.target.checked});
+    this.setState({checked: e.target.checked});
   },
 });
