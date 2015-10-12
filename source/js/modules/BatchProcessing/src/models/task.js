@@ -24,6 +24,11 @@ export default BaseModel.extend({
         return this.getVariableValue('batchId');
       }
     },
+    currentTaskId: {
+      fn: function deriveCurrentTaskId() {
+        return this.getVariableValue('currentTaskId');
+      }
+    },
     errorCode: {
       fn: function deriveErrorCode() {
         return this.getVariableValue('errorCode');
