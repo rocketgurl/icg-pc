@@ -35,7 +35,13 @@ export default Router.extend({
     });
   },
 
-  notFound() {
-    console.log('NOT FOUND');
+  notFound(route) {
+    this.errors.add({
+      error: 'Route Not Found',
+      status: 'NotFound',
+      exception: null,
+      message: `"#${route}" not match any known route.`,
+      path: `#${route}`
+    });
   }
 });

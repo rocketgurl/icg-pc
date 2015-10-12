@@ -8,16 +8,14 @@ export default React.createClass({
     return (
       <div className="alert-queue">
         {collection.map((model, index) => {
-          if (!model.hidden) {
-            return (
-              <Alert key={index} bsStyle="danger" onDismiss={this._onAlertDismiss(model)}>
-                <h4>Error: ({model.status}) {model.error}</h4>
-                <p>{model.message}</p>
-                <p><small>{model.exception}</small></p>
-                <p><small><em>{model.path}</em></small></p>
-              </Alert>
-              );
-          }
+          return (
+            <Alert key={index} bsStyle="danger" onDismiss={this._onAlertDismiss(model)}>
+              <h4>Error: ({model.status}) {model.error}</h4>
+              {model.message ? <p>{model.message}</p> : null}
+              {model.exception ? <p><small>{model.exception}</small></p> : null}
+              {model.path ? <p><small><em>{model.path}</em></small></p> : null}
+            </Alert>
+            );
         })}
       </div>
     );

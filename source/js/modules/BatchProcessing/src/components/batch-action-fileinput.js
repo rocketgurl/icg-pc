@@ -7,6 +7,8 @@ import Papa from 'papaparse';
 // 2015-09-09T00:00:00.000-04:00
 const DATE_FORMAT = 'YYYY-MM-DDThh:mm:ss.SSSZ'
 
+// TODO: generalize this. Move form validation
+// and Payment-specific stuff into separate library
 export default React.createClass({
   propTypes: {
     formData: React.PropTypes.object.isRequired,
@@ -32,14 +34,16 @@ export default React.createClass({
       return (
         <div key={index} className="alert alert-danger form-horizontal">
           <ul className="list-unstyled list-labeled">
+            {error.code ?
             <li className="clearfix">
               <label className="col-xs-3">Error:</label>
               <div className="col-xs-9">{error.code}</div>
-            </li>
+            </li> : null}
+            {error.message ?
             <li className="clearfix">
               <label className="col-xs-3">Message:</label>
               <div className="col-xs-9">{error.message}</div>
-            </li>
+            </li> : null}
             {error.row ?
             <li className="clearfix">
               <label className="col-xs-3">Row:</label>
@@ -127,7 +131,7 @@ export default React.createClass({
             className={`btn ${hasErrors || hasMismatch ? 'btn-danger' : 'btn-primary'}`}
             disabled={!hasPayments || isRequesting || hasErrors || hasMismatch}
             onClick={this._onSubmitClick}>
-            {hasErrors || hasMismatch ? 'Please Fix Errors' : 'Run Job'}
+            {hasErrors || hasMismatch ? 'Please Fix Errors' : 'Run Tasks'}
           </button>
         </Modal.Footer>
       </div>
