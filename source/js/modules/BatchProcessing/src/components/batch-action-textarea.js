@@ -67,7 +67,7 @@ export default React.createClass({
             className="btn btn-primary"
             disabled={isRequesting}
             onClick={this._onSubmitClick}>
-            Run Job
+            Run Tasks
           </button>
         </Modal.Footer>
       </div>

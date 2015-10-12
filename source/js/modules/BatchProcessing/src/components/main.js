@@ -5,7 +5,7 @@ import AlertQueue from './alert-queue';
 import BatchActionSelect from './batch-action-select';
 import BatchActionModal from './batch-action-modal';
 import BatchesTable from './batches-table';
-import JobsTable from './jobs-table';
+import TasksTable from './tasks-table';
 import {Nav, NavItem, TabPane} from 'react-bootstrap';
 
 export default React.createClass({
@@ -41,16 +41,15 @@ export default React.createClass({
     app.errors.off();
   },
 
-  // Determine the correct collection of jobs and return it
-  // along with the <JobsTable/> node
-  getJobsTable() {
+  // Determine the correct collection of tasks and return it
+  // along with the <TasksTable/> node
+  getTasksTable() {
     const {activeBatchId} = this.props;
     if (app.batches.length) {
       const activeBatch = app.batches.get(activeBatchId);
       const collection = activeBatch ?
-        activeBatch.jobs :
-        app.allJobs;
-      return <JobsTable key={activeBatchId} collection={collection}/>
+        activeBatch.tasks : app.allTasks;
+      return <TasksTable key={activeBatchId} collection={collection}/>
     }
   },
 
@@ -71,15 +70,15 @@ export default React.createClass({
         <div className="panel panel-default panel-nav">
           <Nav bsStyle="tabs" activeKey={tab}>
             <NavItem eventKey="batches" href="#batches">Batches</NavItem>
-            <NavItem eventKey="jobs" href="#jobs">Jobs</NavItem>
+            <NavItem eventKey="tasks" href="#tasks">Tasks</NavItem>
           </Nav>
           <div className="panel-body">
             <TabContent activeKey={tab}>
               <TabPane key="batches">
                 <BatchesTable collection={this.state.batches}/>
               </TabPane>
-              <TabPane key="jobs">
-                {this.getJobsTable()}
+              <TabPane key="tasks">
+                {this.getTasksTable()}
               </TabPane>
             </TabContent>
           </div>

@@ -1,12 +1,12 @@
 import BaseCollection from './base-collection';
-import JobModel from '../models/job';
+import TaskModel from '../models/task';
 
-class Jobs extends BaseCollection {
+class Tasks extends BaseCollection {
   constructor() {
     super();
 
     this.url = '/batch/query/historic-process-instances';
-    this.model = JobModel;
+    this.model = TaskModel;
 
     // This default query should return all "non-batch" processes
     this.variables = [{
@@ -20,10 +20,11 @@ class Jobs extends BaseCollection {
   // this method will be invoked once by the model
   // to update the batchId in the query variables.
   setBatchId(batchId) {
-    this.updateProcessVariable('batchId', 'equals', batchId);
+    if (batchId !== '0')
+      this.updateProcessVariable('batchId', 'equals', batchId);
   }
 
-  // enables filtering by the derived status of a job
+  // enables filtering by the derived status of a task
   filterByStatus(status) {
     this.status = status;
     switch (status) {
@@ -52,4 +53,4 @@ class Jobs extends BaseCollection {
   }
 }
 
-export default Jobs;
+export default Tasks;

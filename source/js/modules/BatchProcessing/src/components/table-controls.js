@@ -128,7 +128,7 @@ export default React.createClass({
                   <span className="glyphicon glyphicon-menu-right"/>
                 </button>
               </div>
-              {this.props.controlType === 'jobs' ?
+              {this.props.controlType === 'tasks' ?
               <div className="btn-group">
                 <button
                   disabled={true}

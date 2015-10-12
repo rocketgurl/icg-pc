@@ -1,6 +1,6 @@
 import _ from 'underscore';
 import Collection from 'ampersand-rest-collection';
-import Job from '../models/job';
+import Task from '../models/task';
 
 const CHANGE_EVENT = 'change';
 

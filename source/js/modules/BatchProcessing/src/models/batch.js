@@ -1,5 +1,5 @@
 import BaseModel from './base-model';
-import JobsCollection from '../collections/jobs';
+import TasksCollection from '../collections/tasks';
 
 export default BaseModel.extend({
   props: {
@@ -53,10 +53,10 @@ export default BaseModel.extend({
     }
   },
 
-  // initializes the associated jobs collection,
+  // initializes the associated tasks collection,
   // and updates the batchId query variable
   initialize() {
-    this.jobs = new JobsCollection();
-    this.jobs.setBatchId(this.id);
+    this.tasks = new TasksCollection();
+    if (this.id !== '0') this.tasks.setBatchId(this.id);
   }
 });

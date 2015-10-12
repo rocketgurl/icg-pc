@@ -17,8 +17,8 @@ export default React.createClass({
     this.setState({isChecked: newProps.itemShouldBeChecked});
   },
 
-  getStatusLabel(job) {
-    const {status, endActivityId} = job;
+  getStatusLabel(task) {
+    const {status, endActivityId} = task;
     let className = 'label label-block label-default';
     let message   = 'STARTED';
     switch (status) {
@@ -43,31 +43,31 @@ export default React.createClass({
   },
 
   render() {
-    const {job} = this.props;
-    const errorMessage = `${job.errorCode} - ${job.errorMessage}`;
+    const {task} = this.props;
+    const errorMessage = `${task.errorCode} - ${task.errorMessage}`;
     const infoPopover = (
       <OverlayTrigger key="overlay" rootClose trigger="click" placement="left"
-        overlay={<Popover title={errorMessage}>{job.errorResponse}</Popover>}>
+        overlay={<Popover title={errorMessage}>{task.errorResponse}</Popover>}>
         <span title="Click for more info"
           className="glyphicon glyphicon-info-sign info-toggle"></span>
       </OverlayTrigger>);
 
     return (
-      <div className="tr" id={job.id} title={`Process Instance ID ${job.id}`}>
+      <div className="tr" id={task.id} title={`Process Instance ID ${task.id}`}>
         <div className="td">
           <input type="checkbox"
             checked={this.state.isChecked}
             onChange={this._onCheckToggle}/>
         </div>
-        <div className="td">{moment(job.startTime).format(DATE_FORMAT)}</div>
-        <div className="td policy-lookup">{job.policyLookup}</div>
-        <div className="td batch-id">{`${job.processDefinitionKey} ${job.batchId}`}</div>
-        <div className="td">{job.startUserId}</div>
+        <div className="td">{moment(task.startTime).format(DATE_FORMAT)}</div>
+        <div className="td policy-lookup">{task.policyLookup}</div>
+        <div className="td batch-id">{`${task.processDefinitionKey} ${task.batchId}`}</div>
+        <div className="td">{task.startUserId}</div>
         <div className="td">
-          {this.getStatusLabel(job)}
+          {this.getStatusLabel(task)}
         </div>
         <div className="td text-danger">
-          {job.hasException ? [errorMessage, ' ', infoPopover] : null}
+          {task.hasException ? [errorMessage, ' ', infoPopover] : null}
         </div>
       </div>
       );

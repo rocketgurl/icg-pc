@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 import sortableTableMixin from '../lib/sortable-table-mixin';
-import JobRow from './job-row';
+import TaskRow from './task-row';
 import TableControls from './table-controls';
 
 const processDefinitionKeys = [
@@ -55,7 +55,7 @@ export default React.createClass({
       <div>
         <div className="tab-pane-heading">
           <TableControls {...this.state}
-            controlType="jobs"
+            controlType="tasks"
             statusOpts={statusOpts}
             processDefinitionKeys={processDefinitionKeys}
             status={collection.status}
@@ -94,11 +94,11 @@ export default React.createClass({
             </div>
           </div>
           <div className="tbody" style={{maxHeight: `${500}px`}}>
-            {this.state.collection.map(job => {
+            {this.state.collection.map(task => {
               return (
-                <JobRow
-                  key={job.id}
-                  job={job}
+                <TaskRow
+                  key={task.id}
+                  task={task}
                   itemShouldBeChecked={this.state.shouldItemsBeChecked}/>
                 );
             })}

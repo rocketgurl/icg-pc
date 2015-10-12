@@ -2,7 +2,7 @@ import React from 'react';
 import {Modal} from 'react-bootstrap';
 import TextArea from './batch-action-textarea';
 import FileInput from './batch-action-fileinput';
-import {batches, allJobs, formData} from 'ampersand-app';
+import {batches, allTasks, formData} from 'ampersand-app';
 
 export default React.createClass({
   getInitialState() {
@@ -66,6 +66,6 @@ export default React.createClass({
     this.setState({isRequesting: false});
     this.close();
     batches.query();
-    allJobs.query();
+    allTasks.query();
   }
 });

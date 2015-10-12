@@ -3,7 +3,7 @@ import user from './user';
 import Router from './router';
 import ErrorsCollection from './collections/errors';
 import BatchesCollection from './collections/batches';
-import JobsCollection from './collections/jobs';
+import TasksCollection from './collections/tasks';
 import FormDataModel from './models/form-data';
 
 const userNameNode = document.getElementById('user-name');
@@ -13,9 +13,10 @@ app.extend({
     this.user = user.validate();
     this.errors = new ErrorsCollection();
     this.batches = new BatchesCollection();
-    this.allJobs = new JobsCollection();
+    this.allTasks = new TasksCollection();
     this.formData = new FormDataModel();
     this.router = new Router({});
+    this.router.errors = this.errors;
     this.router.history.start({
       pushState: false,
       root: '/batch-processing/'
