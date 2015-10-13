@@ -52,7 +52,7 @@ export default React.createClass({
             refreshPage={this.makeQuery}
             updateParameter={this._onParameterUpdate}/>
         </div>
-        <div className="div-table panel-table table-striped table-hover table-scrollable table-sortable table-6-columns">
+        <div className="div-table panel-table table-hover table-scrollable table-sortable table-6-columns">
           <div className="thead">
             <div className="tr">
               <div className="th">Status</div>

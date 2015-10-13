@@ -68,7 +68,7 @@ export default React.createClass({
             updateParameter={this._onParameterUpdate}
             filterByStatus={this._onStatusChange}/>
         </div>
-        <div className="div-table panel-table table-striped table-hover table-scrollable table-sortable table-7-columns">
+        <div className="div-table panel-table table-hover table-scrollable table-sortable table-7-columns">
           <div className="thead">
             <div className="tr">
               <div className="th">
@@ -95,12 +95,14 @@ export default React.createClass({
           </div>
           <div className="tbody" style={{maxHeight: `${500}px`}}>
             {this.state.collection.map(task => {
-              // And individual item should only be checked if a currentTaskId exists
-              const checked = this.state.checkAll && !!task.currentTaskId;
+              // And individual item can only be checked if a currentTaskId exists
+              const enabled = task.currentTaskId !== null;
+              const checked = this.state.checkAll && enabled;
               return (
                 <TaskRow
                   key={task.id}
                   task={task}
+                  enabled={enabled}
                   checked={checked}/>
                 );
             })}
