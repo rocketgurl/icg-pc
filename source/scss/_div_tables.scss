@@ -10,6 +10,26 @@
   }
 }
 
+@mixin table-row-variant($state, $background) {
+  // Exact selectors below required to override `.table-striped` and prevent
+  // inheritance to nested tables.
+  .div-table > .thead > .tr,
+  .div-table > .tbody > .tr,
+  .div-table > .tfoot > .tr {
+    &.#{$state} {
+      background-color: $background;
+    }
+  }
+
+  // Hover states for `.table-hover`
+  // Note: this is not available for cells or rows within `thead` or `tfoot`.
+  .table-hover > .tbody > .tr {
+    &.#{$state}:hover {
+      background-color: darken($background, 5%);
+    }
+  }
+}
+
 .div-table {
   background-color: $table-bg;
 
@@ -229,3 +249,11 @@
 
 // Calculate all our column widths for tables with up to 24 columns
 @include  make-table-columns(24);
+
+
+@include table-row-variant('active', $table-bg-active);
+@include table-row-variant('success', $state-success-bg);
+@include table-row-variant('info', $state-info-bg);
+@include table-row-variant('warning', $state-warning-bg);
+@include table-row-variant('danger', $state-danger-bg);
+

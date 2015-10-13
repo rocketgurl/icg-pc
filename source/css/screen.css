@@ -2362,6 +2362,26 @@ ul:after { clear: both; }
 
 .table-24-columns .th, .table-24-columns .td { width: 4.16667%; }
 
+.div-table > .thead > .tr.active, .div-table > .tbody > .tr.active, .div-table > .tfoot > .tr.active { background-color: rgba(255, 200, 255, 0.5); }
+
+.table-hover > .tbody > .tr.active:hover { background-color: rgba(255, 175, 255, 0.5); }
+
+.div-table > .thead > .tr.success, .div-table > .tbody > .tr.success, .div-table > .tfoot > .tr.success { background-color: #dff0d8; }
+
+.table-hover > .tbody > .tr.success:hover { background-color: #d0e9c6; }
+
+.div-table > .thead > .tr.info, .div-table > .tbody > .tr.info, .div-table > .tfoot > .tr.info { background-color: #d9edf7; }
+
+.table-hover > .tbody > .tr.info:hover { background-color: #c4e3f3; }
+
+.div-table > .thead > .tr.warning, .div-table > .tbody > .tr.warning, .div-table > .tfoot > .tr.warning { background-color: #fcf8e3; }
+
+.table-hover > .tbody > .tr.warning:hover { background-color: #faf2cc; }
+
+.div-table > .thead > .tr.danger, .div-table > .tbody > .tr.danger, .div-table > .tfoot > .tr.danger { background-color: #f2dede; }
+
+.table-hover > .tbody > .tr.danger:hover { background-color: #ebcccc; }
+
 /* batch processing (wolf) components */
 .table-controls .control-label, .table-controls .page-count { margin-right: 10px; padding-top: 7px; white-space: nowrap; text-align: right; }
 .table-controls .control-wrapper { padding: 8px; }
