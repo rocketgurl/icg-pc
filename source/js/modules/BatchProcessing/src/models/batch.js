@@ -28,7 +28,8 @@ export default BaseModel.extend({
     type: {
       deps: ['batchType'],
       fn: function deriveType() {
-        return this.batchType.replace('batch', '');
+        if (this.batchType !== undefined)
+          return this.batchType.replace('batch', '');
       }
     },
 
