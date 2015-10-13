@@ -8,9 +8,7 @@ const DATE_FORMAT = 'MMM DD, YYYY h:mm A';
 
 export default React.createClass({
   getInitialState() {
-    return {
-      checked: this.props.checked
-    };
+    return {checked: this.props.checked};
   },
 
   componentWillReceiveProps(newProps) {
@@ -57,9 +55,8 @@ export default React.createClass({
         <div className="td">
           <input type="checkbox"
             checked={this.state.checked}
-            disabled={!task.currentTaskId}
+            disabled={!this.props.enabled}
             onChange={this._onCheckToggle}/>
-            {task.currentTaskId}
         </div>
         <div className="td">{moment(task.startTime).format(DATE_FORMAT)}</div>
         <div className="td policy-lookup">{task.policyLookup}</div>
