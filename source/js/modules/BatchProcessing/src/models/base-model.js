@@ -10,6 +10,9 @@ export default Model.extend({
 
   getVariableValue(name) {
     const variableObj = this.findVariableWhere({name});
-    return variableObj && variableObj.value;
+    if (_.isObject(variableObj)) {
+      return variableObj.value;
+    }
+    return null;
   }
 });
