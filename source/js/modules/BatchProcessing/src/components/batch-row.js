@@ -23,8 +23,8 @@ export default React.createClass({
         break;
       case 'finished-error':
         className = 'label label-block label-danger';
-        message   = `FINISHED: ${numberOfErrorInstances}
-                     out of ${numberOfInstances} failed`;
+        message   = `FINISHED: ${numberOfSuccessInstances}
+                     out of ${numberOfInstances} complete`;
         break;
       case 'in-progress':
         if (numberOfErrorInstances > 0)

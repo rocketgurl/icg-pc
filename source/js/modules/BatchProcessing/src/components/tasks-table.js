@@ -88,7 +88,7 @@ export default React.createClass({
               </div>
               <div className="th">Policy #</div>
               <div className="th">Batch ID</div>
-              <div className="th">Initiator</div>
+              <div className="th">Assignee</div>
               <div className="th">Status</div>
               <div className="th">Message</div>
             </div>

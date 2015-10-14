@@ -68,21 +68,22 @@ export default React.createClass({
                     })}
                   </select>
                 </div>
+                {this.props.controlType === 'tasks' ?
                 <div className="td">
                   <select
                     name="startedBy"
                     defaultValue={this.props.startedBy}
                     className="form-control input-sm"
                     onChange={this._onSelectChange}>
-                    <option value="default">Initiator: All</option>
+                    <option value="default">Assignee: All</option>
                   </select>
-                </div>
+                </div> : null}
                 <div className="td clearable">
                   <DatePicker
                     name="startedAfter"
                     selected={startedAfter ? moment(startedAfter) : null}
                     onChange={this._onDateChange('startedAfter')}
-                    placeholderText="Started after&hellip;"
+                    placeholderText="From&hellip;"
                     className="form-control input-sm"/>
                   {startedAfter ?
                     <button
@@ -97,7 +98,7 @@ export default React.createClass({
                     name="startedBefore"
                     selected={startedBefore ? moment(startedBefore) : null}
                     onChange={this._onDateChange('startedBefore')}
-                    placeholderText="Started before&hellip;"
+                    placeholderText="To&hellip;"
                     className="form-control input-sm"/>
                   {startedBefore ?
                     <button

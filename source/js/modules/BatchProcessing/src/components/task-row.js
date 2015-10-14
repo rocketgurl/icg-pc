@@ -41,7 +41,8 @@ export default React.createClass({
   },
 
   render() {
-    const {task} = this.props;
+    const {task, enabled} = this.props;
+    const {checked} = this.state;
     const errorMessage = `${task.errorCode} - ${task.errorMessage}`;
     const infoPopover = (
       <OverlayTrigger key="overlay" rootClose trigger="click" placement="left"
@@ -51,17 +52,20 @@ export default React.createClass({
       </OverlayTrigger>);
 
     return (
-      <div className="tr" id={task.id} title={`Process Instance ID ${task.id}`}>
-        <div className="td">
+      <div id={task.id}
+        className={`tr${checked ? ' active' : ''}`}
+        onClick={this._onClick}
+        title={`Process Instance ID ${task.id}`}>
+        <div className="td task-select">
           <input type="checkbox"
-            checked={this.state.checked}
-            disabled={!this.props.enabled}
+            checked={checked}
+            disabled={!enabled}
             onChange={this._onCheckToggle}/>
         </div>
         <div className="td">{moment(task.startTime).format(DATE_FORMAT)}</div>
         <div className="td policy-lookup">{task.policyLookup}</div>
         <div className="td batch-id">{`${task.processDefinitionKey} ${task.batchId}`}</div>
-        <div className="td">{task.startUserId}</div>
+        <div className="td">{task.currentAssignee}</div>
         <div className="td">
           {this.getStatusLabel(task)}
         </div>
@@ -70,6 +74,11 @@ export default React.createClass({
         </div>
       </div>
       );
+  },
+
+  _onClick(e) {
+    if (this.props.enabled)
+      this.setState({checked: !this.state.checked});
   },
 
   _onCheckToggle(e) {
