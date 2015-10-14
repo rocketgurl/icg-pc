@@ -2421,9 +2421,15 @@ ul:after { clear: both; }
 
 .info-toggle { cursor: pointer; }
 
+.change-list > li > span { display: inline-block; }
+.change-list .row-num { width: 50px; text-align: right; }
+.change-list .rhs, .change-list .lhs { padding: 0 10px; font-weight: bold; }
+
 .panel-table { margin-left: -15px; margin-right: -15px; border-bottom: 1px solid #ddd; }
 .panel-table .tr > .td:first-child, .panel-table .tr > .th:first-child { padding-left: 15px; }
 .panel-table .tr > .td:last-child, .panel-table .tr > .th:last-child { padding-right: 15px; }
+
+.task-select input[type="checkbox"]:disabled { opacity: 0.5; }
 
 .calc-group { margin-bottom: 0; }
 
