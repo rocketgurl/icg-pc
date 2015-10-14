@@ -1,31 +1,25 @@
 import _ from 'underscore';
 import Cookie from './lib/cookie';
 
+// Login relies on the token cookie set by Policy Central
 const cookie = new Cookie();
-const token  = 'ZGV2QGljZzM2MC5jb206bW92aWVMdW5jaGVzRlRXMjAxNQ=' // cookie.get('ics360_PolicyCentral') || '';
+const str    = cookie.get('ics360_PolicyCentral') || '';
 
+// Some details about the user have
+// hopefully been persisted to session storage
 const userJSON = window.sessionStorage.getItem('user');
-let user = JSON.parse(userJSON) || {};
+const user = JSON.parse(userJSON) || {};
 
-function getBasicAuth() {
-  return `Basic ${token}`;
-}
+function User(name) {this.name = name}
+User.prototype.getBasic = function () {return `Basic ${str}`};
 
+// no token, no login
 function validate() {
-  if (!token.length ||
-      !_.has(user, 'email') ||
-      !_.has(user, 'name') ||
-      !_.has(user, 'username')) {
+  if (!str.length) {
     document.location = '/#login';
+    return null;
   }
-  return {
-    getBasicAuth,
-    name: user.name,
-    username: user.username,
-    email: user.email
-  };
+  return new User(user.name || user.username || user.email); // attempt to derive some kind of username
 }
 
-user.validate = validate;
-
-export default user;
+export default {validate};

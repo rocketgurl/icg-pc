@@ -11,6 +11,7 @@ const userNameNode = document.getElementById('user-name');
 app.extend({
   init() {
     this.user = user.validate();
+    this.baseURL = '/batch'; // 'https://stage-sagesure-svc.icg360.org/cru-4/batch';
     this.errors = new ErrorsCollection();
     this.batches = new BatchesCollection();
     this.allTasks = new TasksCollection();
@@ -21,7 +22,7 @@ app.extend({
       pushState: false,
       root: '/batch-processing/'
     });
-    userNameNode.textContent = user.name;
+    userNameNode.textContent = this.user.name;
     return this;
   }
 });
