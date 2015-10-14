@@ -29,6 +29,11 @@ export default BaseModel.extend({
         return this.getVariableValue('currentTaskId');
       }
     },
+    currentAssignee: {
+      fn: function deriveCurrentAssignee() {
+        return this.getVariableValue('currentAssignee');
+      }
+    },
     errorCode: {
       fn: function deriveErrorCode() {
         return this.getVariableValue('errorCode');
@@ -57,7 +62,8 @@ export default BaseModel.extend({
     processDefinitionKey: {
       deps: ['processDefinitionId'],
       fn: function () {
-        return this.processDefinitionId.split(':')[0];
+        const key = this.processDefinitionId.split(':')[0];
+        return key.charAt(0).toUpperCase() + key.slice(1);
       }
     },
 
@@ -71,7 +77,7 @@ export default BaseModel.extend({
         if (endActivityId === 'endEvent') {
           return 'end-success';
         }
-        if (endActivityId === 'endEventError') {
+        if (endActivityId === 'errorEndEvent') {
           return 'end-error';
         }
         if (!endActivityId && hasException === true) {
