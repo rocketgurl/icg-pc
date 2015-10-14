@@ -3,9 +3,19 @@ import _ from 'underscore';
 import moment from 'moment';
 import {Modal} from 'react-bootstrap';
 import Papa from 'papaparse';
+import {validateString, validatePolicyNum} from '../lib/validators';
 
 // 2015-09-09T00:00:00.000-04:00
 const DATE_FORMAT = 'YYYY-MM-DDThh:mm:ss.SSSZ'
+
+const CSV_COLUMNS = [
+  'PaymentMethod',
+  'PaymentReceivedDate',
+  'LockBoxReference',
+  'Amount',
+  'PaymentReference',
+  'PolicyNumberBase'
+];
 
 // TODO: generalize this. Move form validation
 // and Payment-specific stuff into separate library
@@ -22,6 +32,7 @@ export default React.createClass({
       data: [],
       errors: [],
       meta: {},
+      transformed: {},
       totalBatchAmountExpected: 0,
       totalBatchAmountActual: 0,
       totalNumPaymentsExpected: 0,
@@ -32,7 +43,7 @@ export default React.createClass({
   alertErrors() {
     return _.map(this.state.errors, (error, index) => {
       return (
-        <div key={index} className="alert alert-danger form-horizontal">
+        <div key={index} className="alert alert-danger">
           <ul className="list-unstyled list-labeled">
             {error.code ?
             <li className="clearfix">
@@ -55,6 +66,29 @@ export default React.createClass({
     });
   },
 
+  alertInfo() {
+    if (_.isEmpty(this.state.transformed)) return null;
+    return (
+      <div className="alert alert-info">
+        <h5>The following Policy IDs will be changed from the entered values:</h5>
+        <code>
+          <ul className="list-unstyled change-list">
+            {_.map(this.state.transformed, (item, row) => {
+              return (
+                <li key={row}>
+                  <span className="row-num">{`${row}.`}</span>
+                  <span className="lhs">{item.orig}</span>
+                  <span>to</span>
+                  <span className="rhs">{item.trans}</span>
+                </li>);
+            })}
+          </ul>
+        </code>
+        <em>To avoid this message in the future, format your Policy IDs as follows: ABC0123456</em>
+      </div>
+      );
+  },
+
   render() {
     const {isRequesting} = this.props;
     const hasErrors = this.state.errors.length > 0;
@@ -71,6 +105,7 @@ export default React.createClass({
       <div className="file-upload">
         <Modal.Body>
           {this.alertErrors()}
+          {this.alertInfo()}
           <p>Select a CSV File to Upload</p>
           <div className="well">
             <input
@@ -152,12 +187,13 @@ export default React.createClass({
   // }]
   _processCSVData(results) {
     let paymentsList = [];
+    let transformed  = {};
 
     // initialize accumulator value
     results.totalBatchAmountActual = 0;
 
     // check for any missing columns
-    const missingFields = this.validateFields(results.meta.fields);
+    const missingFields = _.difference(CSV_COLUMNS, results.meta.fields);
     if (missingFields.length > 0) {
       results.errors.push(this._formatError(
         'Fields',
@@ -173,26 +209,34 @@ export default React.createClass({
         // push any invalid matches onto the errors array
         let validated = {};
         _.each(_.omit(row, 'PaymentReceivedDate', 'Amount'), (val, key) => {
-          val = this.validateString(val, key, /[^A-Z0-9-]+/gi);
+          val = validateString(val, key, /[^A-Z0-9-]+/gi);
           if (val.indexOf('Error') > -1) {
             results.errors.push(this._formatError(key, val, index+1));
           }
           validated[key] = val;
         });
 
+        // validate the format of the Policy Number
+        const policyLookup = validatePolicyNum(validated.PolicyNumberBase)
+        if (policyLookup.indexOf('Error') > -1) {
+          results.errors.push(this._formatError('PolicyNumberBase', policyLookup, index+1));
+        } else if (policyLookup.length > 10) {
+            transformed[index+1] = {orig: policyLookup, trans: policyLookup.slice(0, 10)};
+        }
+
         // delegate date validation for received date to moment
         const receivedDate = moment(row.PaymentReceivedDate, 'MM/DD/YYYY');
-        if (receivedDate === 'Invalid date') {
+        if (receivedDate.format(DATE_FORMAT) === 'Invalid date') {
           results.errors.push(this._formatError(
             'PaymentReceivedDate',
-            'PaymentReceivedDate must be a valid date and match format MM/DD/YYYY',
+            'PaymentReceivedDate must be a valid date and match format MM/DD/YY',
             index+1));
         }
 
         // verify amount is a number
         // if so, add it to the total batch amount
         let amount = row.Amount.replace(/[$,]/g, ''); // strip out any commas and $'s
-        amount = this.validateString(amount, 'Amount', /[^0-9\.]/g);
+        amount = validateString(amount, 'Amount', /[^0-9\.]/g);
         if (amount.indexOf('Error') > -1) {
           results.errors.push(this._formatError(
             'Amount',
@@ -209,40 +253,13 @@ export default React.createClass({
           receivedDate: receivedDate.format(DATE_FORMAT),
           method: validated.PaymentMethod,
           referenceNum: validated.PaymentReference,
-          policyLookup: validated.PolicyNumberBase,
+          policyLookup: `${parseFloat(policyLookup.slice(3, 10))}`,
           lockBoxReference: validated.LockBoxReference
         };
       });
     }
     results.totalNumPaymentsActual = paymentsList.length;
-    this.setState({paymentsList, ...results});
-  },
-
-  // CSV must contain at least the following fields
-  validateFields(actualFields) {
-    const expectedFields = [
-      'PaymentMethod',
-      'PaymentReceivedDate',
-      'LockBoxReference',
-      'Amount',
-      'PaymentReference',
-      'PolicyNumberBase'
-    ];
-    return _.difference(expectedFields, actualFields);
-  },
-
-  validateString(str="", type="", invalid=/[]/) {
-    str = str.trim();
-    if (str.length === 0) {
-      return `Error: ${type} value is empty`;
-    }
-    if (invalid.test(str)) {
-      str = str.replace(invalid, $1 => {
-        return `[${$1}]`
-      });
-      return `Error: Invalid chars in ${type}: ${str}`;
-    }
-    return str;
+    this.setState({paymentsList, transformed, ...results});
   },
 
   _formatError(type, message, row) {
