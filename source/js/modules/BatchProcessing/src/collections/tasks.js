@@ -2,10 +2,13 @@ import BaseCollection from './base-collection';
 import TaskModel from '../models/task';
 
 class Tasks extends BaseCollection {
+  url() {
+    return `${this.baseURL}/query/historic-process-instances`;
+  }
+
   constructor() {
     super();
 
-    this.url = '/batch/query/historic-process-instances';
     this.model = TaskModel;
 
     // This default query should return all "non-batch" processes
