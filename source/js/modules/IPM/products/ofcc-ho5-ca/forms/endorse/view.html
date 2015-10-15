@@ -394,6 +394,56 @@
 		</div>
 
 		</fieldset>
+		<fieldset>
+				<legend id="{{guid}}_excluded_other_structures">Excluded Other Structures</legend>				
+
+		<div>
+			<label for="{{guid}}_ExcludedOtherStructure1Type" >1st Excluded Other Structure - Type <i>ExcludedOtherStructure1Type</i></label>
+			<select id="{{guid}}_ExcludedOtherStructure1Type" name="ExcludedOtherStructure1Type" data-value="{{ExcludedOtherStructure1Type}}"   >
+				{{#EnumsExcludedOtherStructure1Type}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsExcludedOtherStructure1Type}}
+			</select>
+		</div>
+
+
+		<div>
+			<label for="{{guid}}_ExcludedOtherStructure1Description" >1st Excluded Other Structure - Description <i>ExcludedOtherStructure1Description</i></label>
+			<input type="text" id="{{guid}}_ExcludedOtherStructure1Description" name="ExcludedOtherStructure1Description" value="{{ExcludedOtherStructure1Description}}"  >
+		</div>
+
+
+		<div>
+			<label for="{{guid}}_ExcludedOtherStructure2Type" >2nd Excluded Other Structure - Type <i>ExcludedOtherStructure2Type</i></label>
+			<select id="{{guid}}_ExcludedOtherStructure2Type" name="ExcludedOtherStructure2Type" data-value="{{ExcludedOtherStructure2Type}}"   >
+				{{#EnumsExcludedOtherStructure2Type}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsExcludedOtherStructure2Type}}
+			</select>
+		</div>
+
+
+		<div>
+			<label for="{{guid}}_ExcludedOtherStructure2Description" >2nd Excluded Other Structure - Description <i>ExcludedOtherStructure2Description</i></label>
+			<input type="text" id="{{guid}}_ExcludedOtherStructure2Description" name="ExcludedOtherStructure2Description" value="{{ExcludedOtherStructure2Description}}"  >
+		</div>
+
+
+		<div>
+			<label for="{{guid}}_ExcludedOtherStructure3Type" >3rd Excluded Other Structure - Type <i>ExcludedOtherStructure3Type</i></label>
+			<select id="{{guid}}_ExcludedOtherStructure3Type" name="ExcludedOtherStructure3Type" data-value="{{ExcludedOtherStructure3Type}}"   >
+				{{#EnumsExcludedOtherStructure3Type}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsExcludedOtherStructure3Type}}
+			</select>
+		</div>
+
+
+		<div>
+			<label for="{{guid}}_ExcludedOtherStructure3Description" >3rd Excluded Other Structure - Description <i>ExcludedOtherStructure3Description</i></label>
+			<input type="text" id="{{guid}}_ExcludedOtherStructure3Description" name="ExcludedOtherStructure3Description" value="{{ExcludedOtherStructure3Description}}"  >
+		</div>
+		</fieldset>
 			</div>
 		</fieldset>
 
@@ -408,8 +458,18 @@
 		</div>
 
 		<div>
+			<label for="{{guid}}_SquareFootUnderRoofRetrieved" >Square Footage Retrieved <i>SquareFootUnderRoofRetrieved</i></label>
+			<input type="text" id="{{guid}}_SquareFootUnderRoofRetrieved" name="SquareFootUnderRoofRetrieved" value="{{SquareFootUnderRoofRetrieved}}"  readonly>
+		</div>
+
+		<div>
 			<label for="{{guid}}_ConstructionYear" class="labelRequired">Construction Year - Dwelling <i>ConstructionYear</i></label>
 			<input type="text" id="{{guid}}_ConstructionYear" name="ConstructionYear" value="{{ConstructionYear}}" required >
+		</div>
+
+		<div>
+			<label for="{{guid}}_ConstructionYearRetrieved" >Construction Year - Dwelling Retrieved <i>ConstructionYearRetrieved</i></label>
+			<input type="text" id="{{guid}}_ConstructionYearRetrieved" name="ConstructionYearRetrieved" value="{{ConstructionYearRetrieved}}"  readonly>
 		</div>
 
 		<div>
@@ -501,6 +561,17 @@
 				{{#EnumsGarageType}}
 				<option value="{{value}}">{{label}}</option>
 				{{/EnumsGarageType}}
+			</select>
+		</div>
+
+
+
+		<div>
+			<label for="{{guid}}_SquareFootUnderRoofGarage" >Garage Square Footage <i>SquareFootUnderRoofGarage</i></label>
+			<select id="{{guid}}_SquareFootUnderRoofGarage" name="SquareFootUnderRoofGarage" data-value="{{SquareFootUnderRoofGarage}}"   >
+				{{#EnumsSquareFootUnderRoofGarage}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsSquareFootUnderRoofGarage}}
 			</select>
 		</div>
 
@@ -652,6 +723,17 @@
 
 
 		<div>
+			<label for="{{guid}}_NumberOfFullBathsRetrieved" >Number Of Full Bathrooms Retrieved <i>NumberOfFullBathsRetrieved</i></label>
+			<select id="{{guid}}_NumberOfFullBathsRetrieved" name="NumberOfFullBathsRetrieved" data-value="{{NumberOfFullBathsRetrieved}}"   disabled="disabled">
+				{{#EnumsNumberOfFullBathsRetrieved}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsNumberOfFullBathsRetrieved}}
+			</select>
+		</div>
+
+
+
+		<div>
 			<label for="{{guid}}_FullBathQuality" class="labelRequired">Full Bathroom Grade <i>FullBathQuality</i></label>
 			<select id="{{guid}}_FullBathQuality" name="FullBathQuality" data-value="{{FullBathQuality}}"  required >
 				{{#EnumsFullBathQuality}}
@@ -668,6 +750,17 @@
 				{{#EnumsNumberOfHalfBaths}}
 				<option value="{{value}}">{{label}}</option>
 				{{/EnumsNumberOfHalfBaths}}
+			</select>
+		</div>
+
+
+
+		<div>
+			<label for="{{guid}}_NumberOfHalfBathsRetrieved" >Number Of Half Bathrooms Retrieved <i>NumberOfHalfBathsRetrieved</i></label>
+			<select id="{{guid}}_NumberOfHalfBathsRetrieved" name="NumberOfHalfBathsRetrieved" data-value="{{NumberOfHalfBathsRetrieved}}"   disabled="disabled">
+				{{#EnumsNumberOfHalfBathsRetrieved}}
+				<option value="{{value}}">{{label}}</option>
+				{{/EnumsNumberOfHalfBathsRetrieved}}
 			</select>
 		</div>
 
