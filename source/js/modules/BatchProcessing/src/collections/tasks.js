@@ -3,7 +3,7 @@ import TaskModel from '../models/task';
 
 class Tasks extends BaseCollection {
   url() {
-    return `${this.baseURL}/query/historic-process-instances`;
+    return `${this.urlRoot}/query/historic-process-instances`;
   }
 
   constructor() {

@@ -3,7 +3,7 @@ import BatchModel from '../models/batch';
 
 class Batches extends BaseCollection {
   url() {
-    return `${this.baseURL}/icg/batch-processes/query`;
+    return `${this.urlRoot}/icg/batch-processes/query`;
   }
 
   constructor() {

@@ -7,7 +7,7 @@ class BaseCollection extends Collection {
   constructor() {
     super();
 
-    this.baseURL = app.baseURL;
+    this.urlRoot = app.urlRoot;
 
     // Collection.sync options
     this.options = {parse: true};
@@ -18,7 +18,7 @@ class BaseCollection extends Collection {
       size: 50,
       sort: 'startTime',
       order: 'desc',
-      includeProcessVariables: true,
+      includeProcessVariables: true
     };
 
     this.pageStart  = 0;  // these props are calculated on
@@ -33,7 +33,14 @@ class BaseCollection extends Collection {
 
   // set up the Auth header one time for all requests
   ajaxConfig() {
-    return {headers: {'Authorization': app.user.getBasic()}};
+    return {
+      xhrFields: {
+        timeout: 0 // override 5 second timeout
+      },
+      headers: {
+        Authorization: app.user.getBasic()
+      }
+    };
   }
 
   // calculate pagination properties

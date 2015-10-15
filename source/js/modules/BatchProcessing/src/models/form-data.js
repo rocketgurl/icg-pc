@@ -21,13 +21,20 @@ class FormData extends Model {
         path: `/icg/batch-processes/${this.batchType}`
       });
     } else {
-      return `${app.baseURL}/icg/batch-processes/${this.batchType}`;
+      return `${app.urlRoot}/icg/batch-processes/${this.batchType}`;
     }
   }
 
   // set up the Auth header one time for all requests
   ajaxConfig() {
-    return {headers: {'Authorization': app.user.getBasic()}};
+    return {
+      xhrFields: {
+        timeout: 0 // override 5 second timeout
+      },
+      headers: {
+        Authorization: app.user.getBasic()
+      }
+    };
   }
 
   setBatchType(type) {
