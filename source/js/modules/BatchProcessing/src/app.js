@@ -1,4 +1,5 @@
 import app from 'ampersand-app';
+import constants from './constants';
 import user from './user';
 import Router from './router';
 import ErrorsCollection from './collections/errors';
@@ -11,10 +12,11 @@ const userNameNode = document.getElementById('user-name');
 app.extend({
   init() {
     this.user = user.validate();
-    this.urlRoot = 'https://stage-sagesure-svc.icg360.org/cru-4/batch';
+    this.constants = constants;
     this.errors = new ErrorsCollection();
     this.batches = new BatchesCollection();
     this.allTasks = new TasksCollection();
+    this.activeTasks = new TasksCollection();
     this.formData = new FormDataModel();
     this.router = new Router({});
     this.router.errors = this.errors;

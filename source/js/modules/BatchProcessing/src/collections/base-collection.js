@@ -7,7 +7,7 @@ class BaseCollection extends Collection {
   constructor() {
     super();
 
-    this.urlRoot = app.urlRoot;
+    this.urlRoot = app.constants.APP_URL;
 
     // Collection.sync options
     this.options = {parse: true};

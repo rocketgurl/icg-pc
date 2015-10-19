@@ -1,9 +1,8 @@
 import React from 'react';
 import _ from 'underscore';
+import app from 'ampersand-app';
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
-
-const DATE_FORMAT = 'YYYY-MM-DD';
 
 export default React.createClass({
   propTypes: {
