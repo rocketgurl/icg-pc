@@ -4,6 +4,7 @@ import app from 'ampersand-app';
 class FormData extends Model {
   constructor() {
     super();
+    this.urlRoot = app.constants.APP_URL;
     this.batchType = null;
     this.body = null;
 
@@ -21,7 +22,7 @@ class FormData extends Model {
         path: `/icg/batch-processes/${this.batchType}`
       });
     } else {
-      return `${app.urlRoot}/icg/batch-processes/${this.batchType}`;
+      return `${this.urlRoot}/icg/batch-processes/${this.batchType}`;
     }
   }
 

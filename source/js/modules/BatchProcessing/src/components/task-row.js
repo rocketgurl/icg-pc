@@ -60,7 +60,7 @@ export default React.createClass({
             disabled={!enabled}
             onChange={this._onCheckToggle}/>
         </div>
-        <div className="td">{moment(task.startTime).format(DATE_FORMAT)}</div>
+        <div className="td">{moment(task.startTime).format(dateFormat)}</div>
         <div className="td policy-lookup">{task.policyLookup}</div>
         <div className="td batch-id">{`${task.processDefinitionKey} ${task.batchId}`}</div>
         <div className="td">{task.currentAssignee}</div>
