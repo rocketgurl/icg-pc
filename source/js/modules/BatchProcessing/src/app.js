@@ -1,3 +1,4 @@
+import {version} from '../package.json';
 import app from 'ampersand-app';
 import constants from './constants';
 import user from './user';
@@ -8,10 +9,12 @@ import TasksCollection from './collections/tasks';
 import FormDataModel from './models/form-data';
 
 const userNameNode = document.getElementById('user-name');
+const versionNode  = document.getElementById('version-number');
 
 app.extend({
   init() {
     this.user = user.validate();
+    this.VERSION = version;
     this.constants = constants;
     this.errors = new ErrorsCollection();
     this.batches = new BatchesCollection();
@@ -25,6 +28,7 @@ app.extend({
       root: '/batch-processing/'
     });
     userNameNode.textContent = this.user.name;
+    versionNode.textContent = version;
     return this;
   }
 });

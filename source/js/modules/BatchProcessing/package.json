@@ -1,6 +1,6 @@
 {
   "name": "batch-processing",
-  "version": "0.0.0",
+  "version": "0.0.23",
   "description": "",
   "main": "src/app.js",
   "author": "Liam Bowers",
@@ -20,15 +20,17 @@
     "react-bootstrap": "^0.24.5",
     "react-datepicker": "^0.11.5",
     "reactify": "^0.15.2",
+    "scriptjs": "^2.5.8",
     "tape": "^4.2.0",
     "uglify-js": "~2.4.24",
     "underscore": "^1.8.3",
     "watchify": "^2.6.2"
   },
   "scripts": {
-    "start": "watchify src/app.js -o public/bundle.js -v",
+    "loader": "browserify loader.js | uglifyjs -cm > public/loader.min.js",
+    "start": "watchify src/app.js -o public/build.${npm_package_version}.js -v",
     "build": "browserify . -t [envify --NODE_ENV production] | uglifyjs -cm > public/bundle.min.js",
-    "test" : "./node_modules/tape/bin/tape \"src/**/test/*.js\""
+    "test": "./node_modules/tape/bin/tape \"src/**/test/*.js\""
   },
   "browserify": {
     "transform": [
