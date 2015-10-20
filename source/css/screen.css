@@ -1989,6 +1989,11 @@ button.close { padding: 0; cursor: pointer; background: transparent; border: 0; 
 
 .affix { position: fixed; }
 
+/* Sticky footer styles */
+html.sticky-footer { position: relative; min-height: 100%; }
+html.sticky-footer body { margin-bottom: 60px; /* Margin bottom by footer height */ }
+html.sticky-footer .footer { position: absolute; bottom: 0; width: 100%; }
+
 /* Proprietary ICG icons */
 @font-face { font-family: 'ICG Icons'; src: url("/font/icg-icons.eot"); src: url("/font/icg-icons.eot?#iefix") format("embedded-opentype"), url("/font/icg-icons.woff") format("woff"), url("/font/icg-icons.ttf") format("truetype"), url("/font/icg-icons.svg#glyphicons_halflingsregular") format("svg"); }
 
