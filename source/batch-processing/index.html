@@ -94,6 +94,10 @@
       <li>Version <span id="version-number">0.0.0</span></li>
     </ul>
   </footer>
+  <script>
+    window.app = window.app || {};
+    window.app.ENV = /icg360\.com/i.test(window.location.host) ? 'PROD' : 'DEV';
+  </script>
   <script src="../js/modules/BatchProcessing/public/loader.min.js" async></script>
 </body>
 </html>
