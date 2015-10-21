@@ -27,7 +27,7 @@
     "watchify": "^2.6.2"
   },
   "scripts": {
-    "loader": "browserify loader.js | uglifyjs -cm > public/loader.min.js",
+    "loader": "browserify src/loader.js | uglifyjs -cm > public/loader.min.js",
     "start": "watchify src/app.js -o public/build.js -v",
     "build": "browserify . -t [envify --NODE_ENV production] | uglifyjs -cm > public/bundle.min.js",
     "test": "./node_modules/tape/bin/tape \"src/**/test/*.js\""
