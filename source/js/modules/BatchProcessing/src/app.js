@@ -1,19 +1,20 @@
 import {version} from '../package.json';
 import app from 'ampersand-app';
 import constants from './constants';
-import user from './user';
+import validateUser from './user';
+import getUrlRoot from './url';
 import Router from './router';
 import ErrorsCollection from './collections/errors';
 import BatchesCollection from './collections/batches';
 import TasksCollection from './collections/tasks';
 import FormDataModel from './models/form-data';
 
-const userNameNode = document.getElementById('user-name');
-const versionNode  = document.getElementById('version-number');
+const {APP_PATH, STAGE_BASE, PROD_BASE} = constants;
 
-app.extend({
+app.extend(window.app, {
   init() {
-    this.user = user.validate();
+    this.user = validateUser();
+    this.urlRoot = getUrlRoot(APP_PATH, STAGE_BASE, PROD_BASE);
     this.VERSION = version;
     this.constants = constants;
     this.errors = new ErrorsCollection();
@@ -27,10 +28,10 @@ app.extend({
       pushState: false,
       root: '/batch-processing/'
     });
-    userNameNode.textContent = this.user.name;
-    versionNode.textContent = version;
     return this;
   }
 });
 
 window.app = app.init();
+document.getElementById('user-name').textContent = app.user.name;
+document.getElementById('version-number').textContent = version;
