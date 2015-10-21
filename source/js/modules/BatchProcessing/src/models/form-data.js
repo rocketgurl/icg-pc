@@ -4,7 +4,7 @@ import app from 'ampersand-app';
 class FormData extends Model {
   constructor() {
     super();
-    this.urlRoot = app.constants.APP_URL;
+    this.urlRoot = app.urlRoot;
     this.batchType = null;
     this.body = null;
 
