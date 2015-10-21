@@ -10,11 +10,12 @@ import TasksCollection from './collections/tasks';
 import FormDataModel from './models/form-data';
 
 const {APP_PATH, STAGE_BASE, PROD_BASE} = constants;
+const {ENV} = window.app;
 
 app.extend(window.app, {
   init() {
     this.user = validateUser();
-    this.urlRoot = getUrlRoot(APP_PATH, STAGE_BASE, PROD_BASE);
+    this.urlRoot = getUrlRoot(ENV, APP_PATH, STAGE_BASE, PROD_BASE);
     this.VERSION = version;
     this.constants = constants;
     this.errors = new ErrorsCollection();
