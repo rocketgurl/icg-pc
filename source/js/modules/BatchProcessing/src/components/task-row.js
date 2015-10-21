@@ -9,7 +9,7 @@ export default React.createClass({
   },
 
   componentWillReceiveProps(newProps) {
-    this.setState({checked: newProps.checked});
+    this._handleCheckToggle(newProps.checked);
   },
 
   getStatusLabel(task) {
@@ -37,6 +37,11 @@ export default React.createClass({
     return <span className={className}>{message}</span>;
   },
 
+  _handleCheckToggle(checked) {
+    this.setState({checked});
+    app.selectedTasks[checked ? 'add' : 'remove'](this.props.task);
+  },
+
   render() {
     const {task, enabled} = this.props;
     const {checked} = this.state;
@@ -52,13 +57,13 @@ export default React.createClass({
     return (
       <div id={task.id}
         className={`tr${checked ? ' active' : ''}`}
-        onClick={this._onClick}
-        title={`Process Instance ID ${task.id}`}>
+        title={`Process Instance ID ${task.id}`}
+        onClick={this._onRowClick}>
         <div className="td task-select">
           <input type="checkbox"
             checked={checked}
             disabled={!enabled}
-            onChange={this._onCheckToggle}/>
+            onChange={app.noop}/>
         </div>
         <div className="td">{moment(task.startTime).format(dateFormat)}</div>
         <div className="td policy-lookup">{task.policyLookup}</div>
@@ -74,12 +79,14 @@ export default React.createClass({
       );
   },
 
-  _onClick(e) {
-    if (this.props.enabled)
-      this.setState({checked: !this.state.checked});
+  _handleCheckToggle(checked) {
+    if (this.props.enabled) {
+      this.setState({checked});
+      app.selectedTasks[checked ? 'add' : 'remove'](this.props.task);
+    }
   },
 
-  _onCheckToggle(e) {
-    this.setState({checked: e.target.checked});
-  },
+  _onRowClick() {
+    this._handleCheckToggle(!this.state.checked);
+  }
 });
