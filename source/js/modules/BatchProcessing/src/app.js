@@ -20,7 +20,7 @@ app.extend(window.app, {
     this.errors = new ErrorsCollection();
     this.batches = new BatchesCollection();
     this.allTasks = new TasksCollection();
-    this.activeTasks = new TasksCollection();
+    this.selectedTasks = new TasksCollection();
     this.formData = new FormDataModel();
     this.router = new Router({});
     this.router.errors = this.errors;
@@ -28,6 +28,7 @@ app.extend(window.app, {
       pushState: false,
       root: '/batch-processing/'
     });
+    this.noop = function () {};
     return this;
   }
 });
