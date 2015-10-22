@@ -95,15 +95,15 @@ export default React.createClass({
           </div>
           <div className="tbody" style={{maxHeight: `${500}px`}}>
             {this.state.collection.map(task => {
-              // And individual item can only be checked if a currentTaskId exists
+              // An individual item should only be checked if a currentTaskId exists
               const enabled = task.currentTaskId !== null;
-              const checked = this.state.checkAll && enabled;
+              const selected = this.state.checkAll && enabled;
               return (
                 <TaskRow
                   key={task.id}
                   task={task}
                   enabled={enabled}
-                  checked={checked}/>
+                  selected={selected}/>
                 );
             })}
           </div>

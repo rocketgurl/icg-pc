@@ -4,6 +4,7 @@ import TabContent from './tab-content';
 import AlertQueue from './alert-queue';
 import BatchActionSelect from './batch-action-select';
 import BatchActionModal from './batch-action-modal';
+import TaskActionSelect from './task-action-select';
 import BatchesTable from './batches-table';
 import TasksTable from './tasks-table';
 import {Nav, NavItem, TabPane} from 'react-bootstrap';
@@ -66,6 +67,7 @@ export default React.createClass({
             actionName={actionName}
             batchType={batchType}
             router={app.router}/>
+          <TaskActionSelect router={app.router}/>
         </div>
         <div className="panel panel-default panel-nav">
           <Nav bsStyle="tabs" activeKey={tab}>

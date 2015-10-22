@@ -5,11 +5,16 @@ import moment from 'moment';
 
 export default React.createClass({
   getInitialState() {
-    return {checked: this.props.checked};
+    return {selected: this.props.selected};
   },
 
   componentWillReceiveProps(newProps) {
-    this._handleCheckToggle(newProps.checked);
+    if (newProps.selected !== this.state.selected)
+      this._setSelected(newProps.selected);
+  },
+
+  componentWillUnmount() {
+    this._setSelected(false);
   },
 
   getStatusLabel(task) {
@@ -37,14 +42,9 @@ export default React.createClass({
     return <span className={className}>{message}</span>;
   },
 
-  _handleCheckToggle(checked) {
-    this.setState({checked});
-    app.selectedTasks[checked ? 'add' : 'remove'](this.props.task);
-  },
-
   render() {
     const {task, enabled} = this.props;
-    const {checked} = this.state;
+    const {selected} = this.state;
     const dateFormat = app.constants.dates.USER_FORMAT;
     const errorMessage = `${task.errorCode} - ${task.errorMessage}`;
     const infoPopover = (
@@ -56,12 +56,12 @@ export default React.createClass({
 
     return (
       <div id={task.id}
-        className={`tr${checked ? ' active' : ''}`}
+        className={`tr${selected ? ' active' : ''}`}
         title={`Process Instance ID ${task.id}`}
         onClick={this._onRowClick}>
         <div className="td task-select">
           <input type="checkbox"
-            checked={checked}
+            checked={selected}
             disabled={!enabled}
             onChange={app.noop}/>
         </div>
@@ -79,14 +79,15 @@ export default React.createClass({
       );
   },
 
-  _handleCheckToggle(checked) {
+  _setSelected(selected) {
     if (this.props.enabled) {
-      this.setState({checked});
-      app.selectedTasks[checked ? 'add' : 'remove'](this.props.task);
+      this.setState({selected});
+      app.selectedTasks[selected ? 'add' : 'remove'](this.props.task);
+      console.log(app.selectedTasks.length)
     }
   },
 
   _onRowClick() {
-    this._handleCheckToggle(!this.state.checked);
+    this._setSelected(!this.state.selected);
   }
 });
