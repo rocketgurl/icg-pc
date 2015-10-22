@@ -8,6 +8,7 @@ import ErrorsCollection from './collections/errors';
 import BatchesCollection from './collections/batches';
 import TasksCollection from './collections/tasks';
 import FormDataModel from './models/form-data';
+import TaskActionModel from './models/task-action';
 
 const {APP_PATH, STAGE_BASE, PROD_BASE} = constants;
 
@@ -22,6 +23,7 @@ app.extend(window.app, {
     this.allTasks = new TasksCollection();
     this.selectedTasks = new TasksCollection();
     this.formData = new FormDataModel();
+    this.taskAction = new TaskActionModel();
     this.router = new Router({});
     this.router.errors = this.errors;
     this.router.history.start({

@@ -1,5 +1,6 @@
 import BaseCollection from './base-collection';
 import TaskModel from '../models/task';
+import _ from 'underscore';
 
 class Tasks extends BaseCollection {
   url() {
@@ -25,6 +26,14 @@ class Tasks extends BaseCollection {
   setBatchId(batchId) {
     if (batchId !== '0')
       this.updateProcessVariable('batchId', 'equals', batchId);
+  }
+
+  // returns a list of all the current task ids, discarding any
+  // null values. E.g. from processes whose task is complete
+  getCurrentTaskIds() {
+    return _.compact(this.map(model => {
+      return model.currentTaskId;
+    }));
   }
 
   // enables filtering by the derived status of a task

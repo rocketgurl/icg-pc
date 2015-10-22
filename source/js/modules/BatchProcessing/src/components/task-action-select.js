@@ -4,9 +4,9 @@ import app from 'ampersand-app';
 import TaskActionModal from './task-action-modal';
 
 const taskActions = [
-  {type: 'assign', name: 'Assign To'},
-  {type: 'retry', name: 'Retry'},
-  {type: 'complete', name: 'Complete'}
+  {type: 'assign', name: 'Assign Tasks'},
+  {type: 'retry', name: 'Retry Tasks'},
+  {type: 'complete', name: 'Complete Tasks'}
 ];
 
 export default React.createClass({
@@ -52,12 +52,17 @@ export default React.createClass({
   },
 
   _onModalHide() {
-
+    this.setState({
+      showModal: false,
+      taskType: null,
+      actionName: null
+    });
   },
 
   _onActionSelect(e) {
     const [taskType, actionName] = e.target.value.split('/');
-    console.log(taskType, actionName)
+    const showModal = (taskType !== 'default');
+    this.setState({showModal, taskType, actionName});
   },
 
   _onSelectedTasksUpdate(task, selectedTasks) {
