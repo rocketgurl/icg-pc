@@ -25,7 +25,7 @@ export default React.createClass({
         break;
       case 'in-progress':
         if (numberOfErrorInstances > 0)
-          className = 'label label-warning';
+          className = 'label label-block label-warning';
         break;
     }
 
