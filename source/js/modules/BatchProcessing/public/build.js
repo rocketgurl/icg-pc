@@ -66080,7 +66080,7 @@ process.umask = function() { return 0; };
 },{}],1017:[function(require,module,exports){
 module.exports={
   "name": "batch-processing",
-  "version": "0.0.23",
+  "version": "0.0.24",
   "description": "",
   "main": "src/app.js",
   "author": "Liam Bowers",
