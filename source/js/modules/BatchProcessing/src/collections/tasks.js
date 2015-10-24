@@ -1,5 +1,6 @@
 import BaseCollection from './base-collection';
 import TaskModel from '../models/task';
+import _ from 'underscore';
 
 class Tasks extends BaseCollection {
   url() {

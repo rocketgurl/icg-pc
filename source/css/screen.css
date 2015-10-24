@@ -1989,6 +1989,11 @@ button.close { padding: 0; cursor: pointer; background: transparent; border: 0; 
 
 .affix { position: fixed; }
 
+/* Sticky footer styles */
+html.sticky-footer { position: relative; min-height: 100%; }
+html.sticky-footer body { margin-bottom: 60px; /* Margin bottom by footer height */ }
+html.sticky-footer .footer { position: absolute; bottom: 0; width: 100%; }
+
 /* Proprietary ICG icons */
 @font-face { font-family: 'ICG Icons'; src: url("/font/icg-icons.eot"); src: url("/font/icg-icons.eot?#iefix") format("embedded-opentype"), url("/font/icg-icons.woff") format("woff"), url("/font/icg-icons.ttf") format("truetype"), url("/font/icg-icons.svg#glyphicons_halflingsregular") format("svg"); }
 
@@ -2169,6 +2174,18 @@ ul:after { clear: both; }
 .pc-nav .renewal-review { display: none; }
 
 .is-cru .renewal-review { display: list-item; }
+
+/* Animation styles */
+.animate-spin { -animation: spin .7s infinite linear; -ms-animation: spin .7s infinite linear; -webkit-animation: spinw .7s infinite linear; -moz-animation: spinm .7s infinite linear; }
+
+@keyframes spin { from { transform: scale(1) rotate(0deg); }
+  to { transform: scale(1) rotate(360deg); } }
+
+@-webkit-keyframes spinw { from { -webkit-transform: rotate(0deg); }
+  to { -webkit-transform: rotate(360deg); } }
+
+@-moz-keyframes spinm { from { -moz-transform: rotate(0deg); }
+  to { -moz-transform: rotate(360deg); } }
 
 /* Workspace styles */
 #workspace { position: relative; }

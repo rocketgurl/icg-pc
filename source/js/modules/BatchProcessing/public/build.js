@@ -66078,17 +66078,71 @@ process.chdir = function (dir) {
 process.umask = function() { return 0; };
 
 },{}],1017:[function(require,module,exports){
+module.exports={
+  "name": "batch-processing",
+  "version": "0.0.24",
+  "description": "",
+  "main": "src/app.js",
+  "author": "Liam Bowers",
+  "devDependencies": {
+    "ampersand-app": "^1.0.4",
+    "ampersand-model": "^5.0.3",
+    "ampersand-rest-collection": "^4.0.0",
+    "ampersand-router": "^3.0.2",
+    "babelify": "^6.1.3",
+    "browserify": "^10.2.6",
+    "d3": "^3.5.5",
+    "envify": "^3.0.0",
+    "extend": "^3.0.0",
+    "moment": "^2.10.6",
+    "node-qs-serialization": "0.0.2",
+    "papaparse": "^4.1.2",
+    "react-bootstrap": "^0.24.5",
+    "react-datepicker": "^0.11.5",
+    "reactify": "^0.15.2",
+    "scriptjs": "^2.5.8",
+    "tape": "^4.2.0",
+    "uglify-js": "~2.4.24",
+    "underscore": "^1.8.3",
+    "watchify": "^2.6.2"
+  },
+  "scripts": {
+    "loader": "browserify src/loader.js | uglifyjs -cm > public/loader.min.js",
+    "start": "watchify src/app.js -o public/build.js -v",
+    "build": "browserify . -t [envify --NODE_ENV production] | uglifyjs -cm > public/bundle.min.js",
+    "test": "./node_modules/tape/bin/tape \"src/**/test/*.js\""
+  },
+  "browserify": {
+    "transform": [
+      "reactify",
+      "babelify",
+      "envify"
+    ]
+  }
+}
+
+},{}],1018:[function(require,module,exports){
 'use strict';
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _packageJson = require('../package.json');
 
 var _ampersandApp = require('ampersand-app');
 
 var _ampersandApp2 = _interopRequireDefault(_ampersandApp);
 
+var _constants = require('./constants');
+
+var _constants2 = _interopRequireDefault(_constants);
+
 var _user = require('./user');
 
 var _user2 = _interopRequireDefault(_user);
+
+var _url = require('./url');
+
+var _url2 = _interopRequireDefault(_url);
 
 var _router = require('./router');
 
@@ -66102,41 +66156,54 @@ var _collectionsBatches = require('./collections/batches');
 
 var _collectionsBatches2 = _interopRequireDefault(_collectionsBatches);
 
-var _collectionsProcessDefinitions = require('./collections/process-definitions');
+var _collectionsTasks = require('./collections/tasks');
 
-var _collectionsProcessDefinitions2 = _interopRequireDefault(_collectionsProcessDefinitions);
+var _collectionsTasks2 = _interopRequireDefault(_collectionsTasks);
 
-var _collectionsPolicies = require('./collections/policies');
+var _collectionsSelectedTasks = require('./collections/selected-tasks');
 
-var _collectionsPolicies2 = _interopRequireDefault(_collectionsPolicies);
+var _collectionsSelectedTasks2 = _interopRequireDefault(_collectionsSelectedTasks);
 
 var _modelsFormData = require('./models/form-data');
 
 var _modelsFormData2 = _interopRequireDefault(_modelsFormData);
 
-var userNameNode = document.getElementById('user-name');
+var _modelsTaskAction = require('./models/task-action');
 
-_ampersandApp2['default'].extend({
+var _modelsTaskAction2 = _interopRequireDefault(_modelsTaskAction);
+
+var APP_PATH = _constants2['default'].APP_PATH;
+var STAGE_BASE = _constants2['default'].STAGE_BASE;
+var PROD_BASE = _constants2['default'].PROD_BASE;
+
+_ampersandApp2['default'].extend(window.app, {
   init: function init() {
-    this.user = _user2['default'].validate();
+    this.user = (0, _user2['default'])();
+    this.urlRoot = (0, _url2['default'])(this.ENV, APP_PATH, STAGE_BASE, PROD_BASE);
+    this.VERSION = _packageJson.version;
+    this.constants = _constants2['default'];
     this.errors = new _collectionsErrors2['default']();
     this.batches = new _collectionsBatches2['default']();
-    this.processDefinitions = new _collectionsProcessDefinitions2['default']();
-    this.allPolicies = new _collectionsPolicies2['default']();
+    this.allTasks = new _collectionsTasks2['default']();
+    this.selectedTasks = new _collectionsSelectedTasks2['default']();
     this.formData = new _modelsFormData2['default']();
+    this.taskAction = new _modelsTaskAction2['default']();
     this.router = new _router2['default']({});
+    this.router.errors = this.errors;
     this.router.history.start({
       pushState: false,
       root: '/batch-processing/'
     });
-    userNameNode.textContent = _user2['default'].name;
+    this.noop = function () {};
     return this;
   }
 });
 
 window.app = _ampersandApp2['default'].init();
+document.getElementById('user-name').textContent = _ampersandApp2['default'].user.name;
+document.getElementById('version-number').textContent = _packageJson.version;
 
-},{"./collections/batches":1019,"./collections/errors":1020,"./collections/policies":1021,"./collections/process-definitions":1022,"./models/form-data":1040,"./router":1042,"./user":1043,"ampersand-app":1}],1018:[function(require,module,exports){
+},{"../package.json":1017,"./collections/batches":1020,"./collections/errors":1021,"./collections/selected-tasks":1022,"./collections/tasks":1023,"./constants":1040,"./models/form-data":1048,"./models/task-action":1049,"./router":1051,"./url":1052,"./user":1053,"ampersand-app":1}],1019:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -66145,9 +66212,17 @@ Object.defineProperty(exports, '__esModule', {
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) arr2[i] = arr[i]; return arr2; } else { return Array.from(arr); } }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var _underscore = require('underscore');
 
@@ -66161,123 +66236,200 @@ var _ampersandApp = require('ampersand-app');
 
 var _ampersandApp2 = _interopRequireDefault(_ampersandApp);
 
-exports['default'] = _ampersandRestCollection2['default'].extend({
+var BaseCollection = (function (_Collection) {
+  _inherits(BaseCollection, _Collection);
 
-  // set up the Auth header one time for all requests
-  ajaxConfig: function ajaxConfig() {
-    return {
-      headers: {
-        'Authorization': _ampersandApp2['default'].user.getBasicAuth()
-      }
+  function BaseCollection() {
+    _classCallCheck(this, BaseCollection);
+
+    _get(Object.getPrototypeOf(BaseCollection.prototype), 'constructor', this).call(this);
+
+    this.urlRoot = _ampersandApp2['default'].urlRoot;
+
+    // Collection.sync options
+    this.options = { parse: true };
+
+    // parameters passed in activity query
+    this.parameters = {
+      start: 0,
+      size: 50,
+      sort: 'startTime',
+      order: 'desc',
+      includeProcessVariables: true
     };
-  },
 
-  initialize: function initialize() {
-    this.options = {}; // collection.sync options
-    this.parameters = {}; // parameters passed in query
-    this.variables = []; // process variables for activiti
+    this.pageStart = 0; // these props are calculated on
+    this.pageEnd = 0; // successful response in the parse
+    this.totalItems = 0; // method of the BaseCollection
+    this.variables = []; // reserved for process variable queries
+    this.status = 'default';
 
     // errors are pushed to an Errors collection
     this.on('error', this._onXHRError);
-  },
-
-  // returns a copy of this.parameters to avoid
-  // any other parts of the app mutating the options obj
-  getParameters: function getParameters() {
-    return _extends({}, this.parameters);
-  },
-
-  // update JSON parameter as defined by activi
-  // http://www.activiti.org/userguide/#restHistoricProcessInstancesGet
-  //
-  // passing 'default' as the value will remove that query parameter
-  // and will the result set will be determined by the defaults set
-  // by the activiti api
-  //
-  // Note that process variables should be updated via `updateProcessVariables`
-  updateParameter: function updateParameter(name, value) {
-    if (value === 'default') {
-      this.parameters[name] = null;
-    } else {
-      this.parameters[name] = value;
-    }
-  },
-
-  getProcessVariable: function getProcessVariable(name) {
-    return _underscore2['default'].find(this.variables, function (v) {
-      return name === v.name;
-    });
-  },
-
-  addProcessVariable: function addProcessVariable(name, operation, value) {
-    this.variables.push({
-      name: name, operation: operation, value: value
-    });
-  },
-
-  // update or add JSON variables as defined by activi
-  // http://www.activiti.org/userguide/#_query_for_historic_process_instances
-  updateProcessVariable: function updateProcessVariable(name, operation, value) {
-    var variable = this.getProcessVariable(name);
-    if (variable) {
-      variable.operation = operation;
-      variable.value = value;
-    } else {
-      this.addProcessVariable(name, operation, value);
-    }
-  },
-
-  // delete a specific process variable. Currently assumes
-  // there is only one variable of each name, and removes the
-  // first instance of that variable found.
-  deleteProcessVariable: function deleteProcessVariable(name) {
-    var index = _underscore2['default'].findIndex(this.variables, function (v) {
-      return name === v.name;
-    });
-    if (index > -1) this.variables.splice(index, 1);
-  },
-
-  // Create options hash to match Collection.sync's requirements, and
-  // query the activiti api using a somewhat non-semantic 'create' (e.g. POST)
-  // request per activiti's specifications defined at:
-  // http://www.activiti.org/userguide/#_query_for_historic_process_instances
-  query: function query() {
-    var _this = this;
-
-    var options = _extends({}, this.options);
-    options.attrs = _extends({}, this.parameters);
-    options.attrs.variables = [].concat(_toConsumableArray(this.variables));
-    options.success = function (resp) {
-      _this.reset(resp, options);
-      _this.trigger('sync', _this, resp, options);
-    };
-    options.error = function (resp) {
-      _this.trigger('error', _this, resp, options);
-    };
-    return this.sync('create', this, options);
-  },
-
-  _onXHRError: function _onXHRError(collection, xhr) {
-    var status = xhr.status;
-    var statusText = xhr.statusText;
-
-    _ampersandApp2['default'].errors.add({ status: status, statusText: statusText, xhr: xhr });
   }
-});
+
+  // set up the Auth header one time for all requests
+
+  _createClass(BaseCollection, [{
+    key: 'ajaxConfig',
+    value: function ajaxConfig() {
+      return {
+        xhrFields: {
+          timeout: 0 // override 5 second timeout
+        },
+        beforeSend: function beforeSend(xhr) {
+          xhr.setRequestHeader('Authorization', _ampersandApp2['default'].user.getBasic());
+        }
+      };
+    }
+
+    // calculate pagination properties
+  }, {
+    key: 'parse',
+    value: function parse(response) {
+      this.pageStart = response.start + (response.total > 0 ? 1 : 0);
+      this.pageEnd = response.start + response.size;
+      this.totalItems = response.total;
+      return response.data;
+    }
+  }, {
+    key: 'incrementPage',
+    value: function incrementPage() {
+      if (this.pageEnd < this.totalItems) {
+        this.updateParameter('start', this.pageEnd);
+        this.query();
+      }
+    }
+  }, {
+    key: 'decrementPage',
+    value: function decrementPage() {
+      var _parameters = this.parameters;
+      var start = _parameters.start;
+      var size = _parameters.size;
+
+      var pageStart = start - size;
+      if (pageStart > -1) {
+        this.updateParameter('start', pageStart);
+        this.query();
+      }
+    }
+
+    // returns a copy of this.parameters to avoid
+    // any other parts of the app mutating the options obj
+  }, {
+    key: 'getParameters',
+    value: function getParameters() {
+      return _extends({}, this.parameters);
+    }
+
+    // update JSON parameter as defined by activi
+    // http://www.activiti.org/userguide/#restHistoricProcessInstancesGet
+    //
+    // passing 'default' as the value will remove that query parameter
+    // and will the result set will be determined by the defaults set
+    // by the activiti api
+    //
+    // Note that process variables should be updated via `updateProcessVariables`
+  }, {
+    key: 'updateParameter',
+    value: function updateParameter(name, value) {
+      if (value === 'default') {
+        this.parameters[name] = null;
+      } else {
+        this.parameters[name] = value;
+      }
+    }
+  }, {
+    key: 'getProcessVariable',
+    value: function getProcessVariable(name) {
+      return _underscore2['default'].find(this.variables, function (v) {
+        return name === v.name;
+      });
+    }
+  }, {
+    key: 'addProcessVariable',
+    value: function addProcessVariable(name, operation, value) {
+      this.variables.push({
+        name: name, operation: operation, value: value
+      });
+    }
+
+    // update or add JSON variables as defined by activi
+    // http://www.activiti.org/userguide/#_query_for_historic_process_instances
+  }, {
+    key: 'updateProcessVariable',
+    value: function updateProcessVariable(name, operation, value) {
+      var variable = this.getProcessVariable(name);
+      if (variable) {
+        variable.operation = operation;
+        variable.value = value;
+      } else {
+        this.addProcessVariable(name, operation, value);
+      }
+    }
+
+    // delete a specific process variable. Currently assumes
+    // there is only one variable of each name, and removes the
+    // first instance of that variable found.
+  }, {
+    key: 'deleteProcessVariable',
+    value: function deleteProcessVariable(name) {
+      var index = _underscore2['default'].findIndex(this.variables, function (v) {
+        return name === v.name;
+      });
+      if (index > -1) this.variables.splice(index, 1);
+    }
+
+    // Create options hash to match Collection.sync's requirements, and
+    // query the activiti api using a somewhat non-semantic 'create' (e.g. POST)
+    // request per activiti's specifications defined at:
+    // http://www.activiti.org/userguide/#_query_for_historic_process_instances
+  }, {
+    key: 'query',
+    value: function query() {
+      var _this = this;
+
+      var options = _extends({}, this.options);
+      options.attrs = _extends({}, this.parameters);
+      options.attrs.variables = [].concat(_toConsumableArray(this.variables));
+      options.success = function (resp) {
+        _this.reset(resp, options);
+        _this.trigger('sync', _this, resp, options);
+      };
+      options.error = function (resp) {
+        _this.trigger('error', _this, resp, options);
+      };
+      return this.sync('create', this, options);
+    }
+  }, {
+    key: '_onXHRError',
+    value: function _onXHRError(collection, xhr) {
+      _ampersandApp2['default'].errors.parseError(xhr);
+    }
+  }]);
+
+  return BaseCollection;
+})(_ampersandRestCollection2['default']);
+
+exports['default'] = BaseCollection;
 module.exports = exports['default'];
 
-},{"ampersand-app":1,"ampersand-rest-collection":215,"underscore":1015}],1019:[function(require,module,exports){
+},{"ampersand-app":1,"ampersand-rest-collection":215,"underscore":1015}],1020:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-var _underscore = require('underscore');
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
 
-var _underscore2 = _interopRequireDefault(_underscore);
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var _baseCollection = require('./base-collection');
 
@@ -66287,38 +66439,47 @@ var _modelsBatch = require('../models/batch');
 
 var _modelsBatch2 = _interopRequireDefault(_modelsBatch);
 
-exports['default'] = _baseCollection2['default'].extend({
-  model: _modelsBatch2['default'],
+var Batches = (function (_BaseCollection) {
+  _inherits(Batches, _BaseCollection);
 
-  url: '/batch/icg/batch-processes/query',
+  _createClass(Batches, [{
+    key: 'url',
+    value: function url() {
+      return this.urlRoot + '/icg/batch-processes/query';
+    }
+  }]);
 
-  parse: function parse(response) {
-    this.total = response.total;
-    return response.data;
-  },
+  function Batches() {
+    _classCallCheck(this, Batches);
 
-  initialize: function initialize() {
-    this.options = { parse: true };
-    this.parameters = {
-      start: 0,
-      size: 50,
-      sort: 'startTime',
-      order: 'desc',
-      includeProcessVariables: true
-    };
-    this.variables = [];
+    _get(Object.getPrototypeOf(Batches.prototype), 'constructor', this).call(this);
+    this.model = _modelsBatch2['default'];
   }
-});
+
+  return Batches;
+})(_baseCollection2['default']);
+
+exports['default'] = Batches;
 module.exports = exports['default'];
 
-},{"../models/batch":1038,"./base-collection":1018,"underscore":1015}],1020:[function(require,module,exports){
+},{"../models/batch":1046,"./base-collection":1019}],1021:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var _ampersandRestCollection = require('ampersand-rest-collection');
 
@@ -66328,85 +66489,255 @@ var _modelsError = require('../models/error');
 
 var _modelsError2 = _interopRequireDefault(_modelsError);
 
-exports['default'] = _ampersandRestCollection2['default'].extend({
-  mainIndex: 'timestamp',
+var Errors = (function (_Collection) {
+  _inherits(Errors, _Collection);
 
-  model: _modelsError2['default'],
+  function Errors() {
+    _classCallCheck(this, Errors);
 
-  initialize: function initialize() {
+    _get(Object.getPrototypeOf(Errors.prototype), 'constructor', this).call(this);
+    this.model = _modelsError2['default'];
+    this.mainIndex = 'timestamp';
     this.on('add', this._onErrorAdd);
-  },
-
-  _onErrorAdd: function _onErrorAdd(data) {
-    for (var _len = arguments.length, args = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-      args[_key - 1] = arguments[_key];
-    }
-
-    console.error.apply(console, [data.status, data.statusText, data].concat(args));
   }
-});
+
+  _createClass(Errors, [{
+    key: 'parseError',
+    value: function parseError(xhr) {
+      var ajaxSettings = xhr.ajaxSettings;
+      var headers = xhr.headers;
+      var response = xhr.response;
+      var status = xhr.status;
+      var statusCode = xhr.statusCode;
+      var statusText = xhr.statusText;
+
+      var contentType = headers['content-type'];
+      try {
+        if (/application\/json/.test(contentType)) {
+          this.add(_extends({}, JSON.parse(response)));
+        } else if (statusCode === 0) {
+          this.add({
+            status: statusCode,
+            error: statusText || 'No Response',
+            exception: '(' + statusCode + ') No Server Response',
+            message: 'The server is currently unresponsive. Please contact\nthe help desk if the problem persists.',
+            path: ajaxSettings.url
+          });
+        } else {
+          this.add({
+            status: status,
+            error: statusText,
+            exception: '(' + statusCode + ') ' + statusText,
+            message: 'The server is temporarily unable to service your request\ndue to maintenance downtime or capacity problems. Please contact the help\ndesk if the problem persists.',
+            path: ajaxSettings.url
+          });
+        }
+      } catch (ex) {
+        console.error(ex);
+      }
+    }
+  }, {
+    key: '_onErrorAdd',
+    value: function _onErrorAdd(model) {
+      console.info('error: ' + model.error + '\nstatus: ' + model.status + '\nexception: ' + model.exception + '\nmessage: ' + model.message + '\npath: ' + model.path + '\n    ');
+    }
+  }]);
+
+  return Errors;
+})(_ampersandRestCollection2['default']);
+
+exports['default'] = Errors;
 module.exports = exports['default'];
 
-},{"../models/error":1039,"ampersand-rest-collection":215}],1021:[function(require,module,exports){
+},{"../models/error":1047,"ampersand-rest-collection":215}],1022:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
 
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _ampersandRestCollection = require('ampersand-rest-collection');
+
+var _ampersandRestCollection2 = _interopRequireDefault(_ampersandRestCollection);
+
+var _moment = require('moment');
+
+var _moment2 = _interopRequireDefault(_moment);
 
 var _underscore = require('underscore');
 
 var _underscore2 = _interopRequireDefault(_underscore);
 
+var _ampersandApp = require('ampersand-app');
+
+var SelectedTasks = (function (_Collection) {
+  _inherits(SelectedTasks, _Collection);
+
+  function SelectedTasks() {
+    _classCallCheck(this, SelectedTasks);
+
+    _get(Object.getPrototypeOf(SelectedTasks.prototype), 'constructor', this).apply(this, arguments);
+  }
+
+  _createClass(SelectedTasks, [{
+    key: 'getCurrentTaskIds',
+    value: function getCurrentTaskIds() {
+      return this.map(function (model) {
+        return model.currentTaskId;
+      });
+    }
+  }, {
+    key: 'getProcessDefinitionKeys',
+    value: function getProcessDefinitionKeys() {
+      return this.map(function (model) {
+        return model.processDefinitionKey;
+      });
+    }
+  }, {
+    key: 'getPolicyLookups',
+    value: function getPolicyLookups() {
+      return this.map(function (model) {
+        var policyLookup = model.policyLookup || '';
+        if (_underscore2['default'].isString(policyLookup)) {
+          return policyLookup.trim();
+        }
+        return model.policyLookup;
+      });
+    }
+  }, {
+    key: 'getPaymentsData',
+    value: function getPaymentsData() {
+      return this.map(function (model) {
+        return {
+          policyNumberBase: model.policyLookup,
+          amount: model.getVariableValue('amount'),
+          method: model.getVariableValue('method'),
+          receivedDate: (0, _moment2['default'])(model.getVariableValue('receivedDate')).format(_ampersandApp.constants.dates.SYSTEM_FORMAT),
+          referenceNum: model.getVariableValue('referenceNum'),
+          lockBoxReference: model.getVariableValue('lockBoxReference')
+        };
+      });
+    }
+  }]);
+
+  return SelectedTasks;
+})(_ampersandRestCollection2['default']);
+
+exports['default'] = SelectedTasks;
+module.exports = exports['default'];
+
+},{"ampersand-app":1,"ampersand-rest-collection":215,"moment":705,"underscore":1015}],1023:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
 var _baseCollection = require('./base-collection');
 
 var _baseCollection2 = _interopRequireDefault(_baseCollection);
 
-var _modelsPolicy = require('../models/policy');
+var _modelsTask = require('../models/task');
 
-var _modelsPolicy2 = _interopRequireDefault(_modelsPolicy);
+var _modelsTask2 = _interopRequireDefault(_modelsTask);
 
-exports['default'] = _baseCollection2['default'].extend({
-  model: _modelsPolicy2['default'],
+var _underscore = require('underscore');
 
-  url: '/batch/query/historic-process-instances',
+var _underscore2 = _interopRequireDefault(_underscore);
 
-  parse: function parse(response) {
-    this.total = response.total;
-    return response.data;
-  },
+var Tasks = (function (_BaseCollection) {
+  _inherits(Tasks, _BaseCollection);
 
-  initialize: function initialize() {
-    this.options = { parse: true };
-    this.parameters = {
-      start: 0,
-      size: 50,
-      sort: 'startTime',
-      order: 'desc',
-      includeProcessVariables: true
-    };
+  _createClass(Tasks, [{
+    key: 'url',
+    value: function url() {
+      return this.urlRoot + '/query/historic-process-instances';
+    }
+  }]);
 
-    // HACK: This default query should
-    // return all "non-batch" processes
+  function Tasks() {
+    _classCallCheck(this, Tasks);
+
+    _get(Object.getPrototypeOf(Tasks.prototype), 'constructor', this).call(this);
+
+    this.model = _modelsTask2['default'];
+
+    // This default query should return all "non-batch" processes
     this.variables = [{
-      name: 'batchId',
-      operation: 'notEquals',
-      value: '0'
+      name: 'isBatchInstance',
+      operation: 'equals',
+      value: false
     }];
-  },
+  }
 
   // If this collection has a parent batch model
   // this method will be invoked once by the model
   // to update the batchId in the query variables.
-  setBatchId: function setBatchId(batchId) {
-    this.updateProcessVariable('batchId', 'equals', batchId);
-  }
-});
+
+  _createClass(Tasks, [{
+    key: 'setBatchId',
+    value: function setBatchId(batchId) {
+      if (batchId !== '0') this.updateProcessVariable('batchId', 'equals', batchId);
+    }
+
+    // enables filtering by the derived status of a task
+  }, {
+    key: 'filterByStatus',
+    value: function filterByStatus(status) {
+      this.status = status;
+      switch (status) {
+        case 'end-success':
+          this.updateParameter('finished', true);
+          this.updateProcessVariable('hasException', 'equals', false);
+          break;
+        case 'end-error':
+          this.updateParameter('finished', true);
+          this.updateProcessVariable('hasException', 'equals', true);
+          break;
+        case 'action-required':
+          this.updateParameter('finished', false);
+          this.updateProcessVariable('hasException', 'equals', true);
+          break;
+        case 'in-progress':
+          this.updateParameter('finished', false);
+          this.updateProcessVariable('hasException', 'equals', false);
+          break;
+        case 'default':
+          this.updateParameter('finished', 'default');
+          this.deleteProcessVariable('hasException');
+          break;
+      }
+      this.query();
+    }
+  }]);
+
+  return Tasks;
+})(_baseCollection2['default']);
+
+exports['default'] = Tasks;
 module.exports = exports['default'];
 
-},{"../models/policy":1041,"./base-collection":1018,"underscore":1015}],1022:[function(require,module,exports){
+},{"../models/task":1050,"./base-collection":1019,"underscore":1015}],1024:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -66415,21 +66746,36 @@ Object.defineProperty(exports, '__esModule', {
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-var _baseCollection = require('./base-collection');
+var _react = require('react');
 
-var _baseCollection2 = _interopRequireDefault(_baseCollection);
+var _react2 = _interopRequireDefault(_react);
 
-exports['default'] = _baseCollection2['default'].extend({
-  url: '/batch/repository/process-definitions',
+var _reactBootstrap = require('react-bootstrap');
 
-  parse: function parse(response) {
-    this.total = response.total;
-    return response.data;
+exports['default'] = _react2['default'].createClass({
+  displayName: 'alert-queue',
+
+  render: function render() {
+    var _this = this;
+
+    var collection = this.props.collection;
+
+    return _react2['default'].createElement("div", { className: "alert-queue" }, collection.map(function (model, index) {
+      return _react2['default'].createElement(_reactBootstrap.Alert, { key: index, bsStyle: "danger", onDismiss: _this._onAlertDismiss(model) }, _react2['default'].createElement("h4", null, "Error: (", model.status, ") ", model.error), model.message ? _react2['default'].createElement("p", null, model.message) : null, model.exception ? _react2['default'].createElement("p", null, _react2['default'].createElement("small", null, model.exception)) : null, model.path ? _react2['default'].createElement("p", null, _react2['default'].createElement("small", null, _react2['default'].createElement("em", null, model.path))) : null);
+    }));
+  },
+
+  _onAlertDismiss: function _onAlertDismiss(model) {
+    var collection = this.props.collection;
+
+    return function () {
+      collection.remove(model);
+    };
   }
 });
 module.exports = exports['default'];
 
-},{"./base-collection":1018}],1023:[function(require,module,exports){
+},{"react":1014,"react-bootstrap":778}],1025:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -66448,6 +66794,10 @@ var _underscore = require('underscore');
 
 var _underscore2 = _interopRequireDefault(_underscore);
 
+var _ampersandApp = require('ampersand-app');
+
+var _ampersandApp2 = _interopRequireDefault(_ampersandApp);
+
 var _moment = require('moment');
 
 var _moment2 = _interopRequireDefault(_moment);
@@ -66458,9 +66808,12 @@ var _papaparse = require('papaparse');
 
 var _papaparse2 = _interopRequireDefault(_papaparse);
 
-// 2015-09-09T00:00:00.000-04:00
-var DATE_FORMAT = 'YYYY-MM-DDThh:mm:ss.SSSZ';
+var _libValidators = require('../lib/validators');
 
+var paymentColumns = ['PaymentMethod', 'PaymentReceivedDate', 'LockBoxReference', 'Amount', 'PaymentReference', 'PolicyNumberBase'];
+
+// TODO: generalize this. Move form validation
+// and Payment-specific stuff into separate library
 exports['default'] = _react2['default'].createClass({
   displayName: 'batch-action-fileinput',
 
@@ -66476,6 +66829,7 @@ exports['default'] = _react2['default'].createClass({
       data: [],
       errors: [],
       meta: {},
+      transformed: {},
       totalBatchAmountExpected: 0,
       totalBatchAmountActual: 0,
       totalNumPaymentsExpected: 0,
@@ -66485,8 +66839,15 @@ exports['default'] = _react2['default'].createClass({
 
   alertErrors: function alertErrors() {
     return _underscore2['default'].map(this.state.errors, function (error, index) {
-      return _react2['default'].createElement("div", { key: index, className: "alert alert-danger form-horizontal" }, _react2['default'].createElement("ul", { className: "list-unstyled list-labeled" }, _react2['default'].createElement("li", { className: "clearfix" }, _react2['default'].createElement("label", { className: "col-xs-3" }, "Error:"), _react2['default'].createElement("div", { className: "col-xs-9" }, error.code)), _react2['default'].createElement("li", { className: "clearfix" }, _react2['default'].createElement("label", { className: "col-xs-3" }, "Message:"), _react2['default'].createElement("div", { className: "col-xs-9" }, error.message)), _react2['default'].createElement("li", { className: "clearfix" }, _react2['default'].createElement("label", { className: "col-xs-3" }, "Row:"), _react2['default'].createElement("div", { className: "col-xs-9" }, error.row))));
+      return _react2['default'].createElement("div", { key: index, className: "alert alert-danger" }, _react2['default'].createElement("ul", { className: "list-unstyled list-labeled" }, error.code ? _react2['default'].createElement("li", { className: "clearfix" }, _react2['default'].createElement("label", { className: "col-xs-3" }, "Error:"), _react2['default'].createElement("div", { className: "col-xs-9" }, error.code)) : null, error.message ? _react2['default'].createElement("li", { className: "clearfix" }, _react2['default'].createElement("label", { className: "col-xs-3" }, "Message:"), _react2['default'].createElement("div", { className: "col-xs-9" }, error.message)) : null, error.row ? _react2['default'].createElement("li", { className: "clearfix" }, _react2['default'].createElement("label", { className: "col-xs-3" }, "Row:"), _react2['default'].createElement("div", { className: "col-xs-9" }, error.row)) : null));
     });
+  },
+
+  alertInfo: function alertInfo() {
+    if (_underscore2['default'].isEmpty(this.state.transformed)) return null;
+    return _react2['default'].createElement("div", { className: "alert alert-info" }, _react2['default'].createElement("h5", null, "The following Policy IDs will be changed from the entered values:"), _react2['default'].createElement("code", null, _react2['default'].createElement("ul", { className: "list-unstyled change-list" }, _underscore2['default'].map(this.state.transformed, function (item, row) {
+      return _react2['default'].createElement("li", { key: row }, _react2['default'].createElement("span", { className: "row-num" }, row + '.'), _react2['default'].createElement("span", { className: "lhs" }, item.orig), _react2['default'].createElement("span", null, "to"), _react2['default'].createElement("span", { className: "rhs" }, item.trans));
+    }))), _react2['default'].createElement("em", null, "To avoid this message in the future, format your Policy IDs as follows: ABC0123456"));
   },
 
   render: function render() {
@@ -66500,7 +66861,7 @@ exports['default'] = _react2['default'].createClass({
     var numPaymentsMatch = !hasPayments || parseFloat(this.state.totalNumPaymentsExpected) === this.state.totalNumPaymentsActual;
     var hasMismatch = !batchAmountMatch || !numPaymentsMatch;
 
-    return _react2['default'].createElement("div", { className: "file-upload" }, _react2['default'].createElement(_reactBootstrap.Modal.Body, null, this.alertErrors(), _react2['default'].createElement("p", null, "Select a CSV File to Upload"), _react2['default'].createElement("div", { className: "well" }, _react2['default'].createElement("input", {
+    return _react2['default'].createElement("div", { className: "file-upload" }, _react2['default'].createElement(_reactBootstrap.Modal.Body, null, this.alertErrors(), this.alertInfo(), _react2['default'].createElement("p", null, "Select a CSV File to Upload"), _react2['default'].createElement("div", { className: "well" }, _react2['default'].createElement("input", {
       type: "file",
       accept: ".csv",
       ref: "fileInput",
@@ -66514,7 +66875,7 @@ exports['default'] = _react2['default'].createClass({
       className: "form-control",
       name: "totalBatchAmountExpected",
       onChange: this._onTextInputChange,
-      value: this.state.totalBatchAmountExpected })), _react2['default'].createElement("div", { className: 'calculated text-danger' + (batchAmountMatch ? ' invisible' : '') }, _react2['default'].createElement("strong", null, this.state.totalBatchAmountActual), " calculated from CSV")), _react2['default'].createElement("div", { className: 'form-group calc-group col-xs-6' + (numPaymentsMatch ? '' : ' has-error') }, _react2['default'].createElement("label", {
+      value: this.state.totalBatchAmountExpected })), _react2['default'].createElement("div", { className: 'calculated text-danger' + (batchAmountMatch ? ' invisible' : '') }, _react2['default'].createElement("strong", null, this.state.totalBatchAmountActual.toLocaleString()), " calculated from CSV")), _react2['default'].createElement("div", { className: 'form-group calc-group col-xs-6' + (numPaymentsMatch ? '' : ' has-error') }, _react2['default'].createElement("label", {
       htmlFor: "num-payments",
       className: "control-label" }, "Total Number of Payments"), _react2['default'].createElement("div", { className: "input-group" }, _react2['default'].createElement("div", { className: "input-group-addon" }, "#"), _react2['default'].createElement("input", {
       type: "text",
@@ -66522,13 +66883,13 @@ exports['default'] = _react2['default'].createClass({
       className: "form-control",
       name: "totalNumPaymentsExpected",
       onChange: this._onTextInputChange,
-      value: this.state.totalNumPaymentsExpected })), _react2['default'].createElement("div", { className: 'calculated text-danger' + (numPaymentsMatch ? ' invisible' : '') }, _react2['default'].createElement("strong", null, this.state.totalNumPaymentsActual), " calculated from CSV")))), _react2['default'].createElement(_reactBootstrap.Modal.Footer, null, _react2['default'].createElement("button", {
+      value: this.state.totalNumPaymentsExpected })), _react2['default'].createElement("div", { className: 'calculated text-danger' + (numPaymentsMatch ? ' invisible' : '') }, _react2['default'].createElement("strong", null, this.state.totalNumPaymentsActual.toLocaleString()), " calculated from CSV")))), _react2['default'].createElement(_reactBootstrap.Modal.Footer, null, _react2['default'].createElement("button", {
       className: "btn btn-default",
       disabled: isRequesting,
       onClick: this.props.parentClose }, "Cancel"), _react2['default'].createElement("button", {
       className: 'btn ' + (hasErrors || hasMismatch ? 'btn-danger' : 'btn-primary'),
       disabled: !hasPayments || isRequesting || hasErrors || hasMismatch,
-      onClick: this._onSubmitClick }, hasErrors || hasMismatch ? 'Please Fix Errors' : 'Submit')));
+      onClick: this._onSubmitClick }, hasErrors || hasMismatch ? 'Please Fix Errors' : 'Run Tasks')));
   },
 
   // Validate the data & match the following format
@@ -66545,92 +66906,72 @@ exports['default'] = _react2['default'].createClass({
   _processCSVData: function _processCSVData(results) {
     var _this = this;
 
+    var dateFormat = _ampersandApp2['default'].constants.dates.SYSTEM_FORMAT;
     var paymentsList = [];
+    var transformed = {};
 
     // initialize accumulator value
     results.totalBatchAmountActual = 0;
 
     // check for any missing columns
-    var missingFields = this.validateFields(results.meta.fields);
+    var missingFields = _underscore2['default'].difference(paymentColumns, results.meta.fields);
     if (missingFields.length > 0) {
       results.errors.push(this._formatError('Fields', 'The following field(s) are missing from the CSV:\n[' + missingFields.join(', ') + ']', 0));
     }
 
     if (results.errors.length === 0) {
-      _underscore2['default'].each(results.data, function (row, index) {
-        try {
-          var policyLookup = _this.validateString(row.PolicyNumberBase, 'PolicyNumberBase');
-          var method = _this.validateString(row.PaymentMethod, 'PaymentMethod');
-          var lockBoxReference = row.LockBoxReference.trim();
-          var referenceNum = row.PaymentReference.trim();
-          var receivedDate = (0, _moment2['default'])(row.PaymentReceivedDate, 'MM/DD/YYYY').format(DATE_FORMAT);
-          var amount = parseFloat(row.Amount.replace('$', ''));
+      paymentsList = _underscore2['default'].map(results.data, function (row, index) {
 
-          // more validation hurdles
-          if (policyLookup.indexOf('Error') > -1) {
-            results.errors.push(_this._formatError('PolicyNumberBase', policyLookup, index + 1));
-            row.Invalid = true;
+        // check each column in the row for invalid characters
+        // (except for the Date and Amount columns)
+        // push any invalid matches onto the errors array
+        var validated = {};
+        _underscore2['default'].each(_underscore2['default'].omit(row, 'PaymentReceivedDate', 'Amount'), function (val, key) {
+          val = (0, _libValidators.validateString)(val, key, /[^A-Z0-9-]+/gi);
+          if (val.indexOf('Error') > -1) {
+            results.errors.push(_this._formatError(key, val, index + 1));
           }
-          if (method.indexOf('Error') > -1) {
-            results.errors.push(_this._formatError('PaymentMethod', method, index + 1));
-            row.Invalid = true;
-          }
-          if (receivedDate === 'Invalid date') {
-            results.errors.push(_this._formatError('PaymentReceivedDate', 'PaymentReceivedDate must be a valid date and match format MM/DD/YYYY', index + 1));
-            row.Invalid = true;
-          }
+          validated[key] = val;
+        });
 
-          // Verify amount is a number
-          // If so, add it to the total batch amount
-          if (isNaN(amount)) {
-            results.errors.push(_this._formatError('PaymentAmount', 'Non-numeric characters detected in PaymentAmount', index + 1));
-            row.Invalid = true;
-          } else {
-            results.totalBatchAmountActual += amount;
-          }
-
-          // push items onto an array of data objects
-          // formatted for api consumption
-          paymentsList.push({
-            policyLookup: policyLookup,
-            method: method,
-            receivedDate: receivedDate,
-            lockBoxReference: lockBoxReference,
-            amount: amount,
-            referenceNum: referenceNum
-          });
-        } catch (e) {
-          results.errors.push(_this._formatError('Exception', e.toString()));
-          console.error('FILE UPLOAD ERROR:', e);
+        // validate the format of the Policy Number
+        var policyNumberBase = (0, _libValidators.validatePolicyNum)(validated.PolicyNumberBase);
+        if (policyNumberBase.indexOf('Error') > -1) {
+          results.errors.push(_this._formatError('PolicyNumberBase', policyNumberBase, index + 1));
+        } else if (policyNumberBase.length > 10) {
+          transformed[index + 1] = { orig: policyNumberBase, trans: policyNumberBase.slice(0, 10) };
         }
+
+        // delegate date validation for received date to moment
+        var receivedDate = (0, _moment2['default'])(row.PaymentReceivedDate, 'MM/DD/YYYY');
+        if (receivedDate.format(dateFormat) === 'Invalid date') {
+          results.errors.push(_this._formatError('PaymentReceivedDate', 'PaymentReceivedDate must be a valid date and match format MM/DD/YY', index + 1));
+        }
+
+        // verify amount is a number
+        // if so, add it to the total batch amount
+        var amount = row.Amount.replace(/[$,]/g, ''); // strip out any commas and $'s
+        amount = (0, _libValidators.validateString)(amount, 'Amount', /[^0-9\.]/g);
+        if (amount.indexOf('Error') > -1) {
+          results.errors.push(_this._formatError('Amount', amount, index + 1));
+        } else {
+          results.totalBatchAmountActual += parseFloat(amount);
+        }
+
+        // push items onto an array of data objects
+        // formatted for api consumption
+        return {
+          amount: parseFloat(amount),
+          receivedDate: receivedDate.format(dateFormat),
+          method: validated.PaymentMethod,
+          referenceNum: validated.PaymentReference,
+          policyNumberBase: '' + parseFloat(policyNumberBase.slice(3, 10)),
+          lockBoxReference: validated.LockBoxReference
+        };
       });
     }
     results.totalNumPaymentsActual = paymentsList.length;
-    this.setState(_extends({ paymentsList: paymentsList }, results));
-  },
-
-  // CSV must contain at least the following fields
-  validateFields: function validateFields(actualFields) {
-    var expectedFields = ['PaymentMethod', 'PaymentReceivedDate', 'LockBoxReference', 'Amount', 'PaymentReference', 'PolicyNumberBase'];
-    return _underscore2['default'].difference(expectedFields, actualFields);
-  },
-
-  validateString: function validateString() {
-    var str = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
-    var type = arguments.length <= 1 || arguments[1] === undefined ? "" : arguments[1];
-
-    var invalidChars = /[^A-Z0-9-]+/gi;
-    str = str.trim();
-    if (str.length === 0) {
-      return 'Error: ' + type + ' value is empty';
-    }
-    if (invalidChars.test(str)) {
-      str = str.replace(invalidChars, function ($1) {
-        return '[' + $1 + ']';
-      });
-      return 'Error: Invalid chars in ' + type + ': ' + str;
-    }
-    return str;
+    this.setState(_extends({ paymentsList: paymentsList, transformed: transformed }, results));
   },
 
   _formatError: function _formatError(type, message, row) {
@@ -66647,10 +66988,26 @@ exports['default'] = _react2['default'].createClass({
     this.setState(stateObj);
   },
 
-  // Clears the selected file & re-arms the onChange event.
-  // Useful when a user must select the same file multiple times
-  // E.g. when fixing an error.
   _onFileInputClick: function _onFileInputClick(e) {
+    var errors = [];
+    var _state = this.state;
+    var totalBatchAmountExpected = _state.totalBatchAmountExpected;
+    var totalNumPaymentsExpected = _state.totalNumPaymentsExpected;
+
+    // check that validation inputs have something greater than 0
+    if (totalBatchAmountExpected == 0) {
+      errors.push(this._formatError('TotalBatchAmount', 'Please enter expected total batch amount'));
+      e.preventDefault();
+    }
+    if (totalNumPaymentsExpected == 0) {
+      errors.push(this._formatError('TotalNumberOfPayments', 'Please enter expected total number of payments'));
+      e.preventDefault();
+    }
+    this.setState({ errors: errors });
+
+    // Clears the selected file & re-arms the onChange event.
+    // Useful when a user must select the same file multiple times
+    // E.g. when fixing an error.
     e.target.value = '';
   },
 
@@ -66659,6 +67016,7 @@ exports['default'] = _react2['default'].createClass({
     if (fileList.length > 0) {
       _papaparse2['default'].parse(fileList[0], {
         header: true,
+        skipEmptyLines: true,
         complete: this._processCSVData
       });
     }
@@ -66676,7 +67034,7 @@ exports['default'] = _react2['default'].createClass({
 });
 module.exports = exports['default'];
 
-},{"moment":705,"papaparse":709,"react":1014,"react-bootstrap":778,"underscore":1015}],1024:[function(require,module,exports){
+},{"../lib/validators":1044,"ampersand-app":1,"moment":705,"papaparse":709,"react":1014,"react-bootstrap":778,"underscore":1015}],1026:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -66762,19 +67120,17 @@ exports['default'] = _react2['default'].createClass({
     this.setState({ isRequesting: false });
     this.close();
     _ampersandApp.batches.query();
-    _ampersandApp.allPolicies.query();
+    _ampersandApp.allTasks.query();
   }
 });
 module.exports = exports['default'];
 
-},{"./batch-action-fileinput":1023,"./batch-action-textarea":1026,"ampersand-app":1,"react":1014,"react-bootstrap":778}],1025:[function(require,module,exports){
+},{"./batch-action-fileinput":1025,"./batch-action-textarea":1028,"ampersand-app":1,"react":1014,"react-bootstrap":778}],1027:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
   value: true
 });
-
-var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i['return']) _i['return'](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError('Invalid attempt to destructure non-iterable instance'); } }; })();
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
@@ -66782,22 +67138,24 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var BATCH_ACTIONS = [['invoicing', 'Batch Invoicing'], ['issuance', 'Batch Issuance'], ['payment', 'Batch Payments']];
+var _underscore = require('underscore');
+
+var _underscore2 = _interopRequireDefault(_underscore);
+
+var batchActions = [{ type: 'invoicing', name: 'Batch Invoicing' }, { type: 'issuance', name: 'Batch Issuance' }, { type: 'payment', name: 'Batch Payments' }];
 
 exports['default'] = _react2['default'].createClass({
   displayName: 'batch-action-select',
 
   render: function render() {
-    return _react2['default'].createElement("div", { className: "col-xs-2" }, _react2['default'].createElement("select", {
+    return _react2['default'].createElement("div", { className: "col-lg-2 col-sm-3 col-xs-4" }, _react2['default'].createElement("select", {
       className: "form-control",
       onChange: this._onActionSelect,
-      value: this.props.processDefinitionId || 'default' }, _react2['default'].createElement("option", { value: "default" }, "Select a Batch Action"), BATCH_ACTIONS.map(function (action) {
-      var _action = _slicedToArray(action, 2);
+      value: this.props.processDefinitionId || 'default' }, _react2['default'].createElement("option", { value: "default" }, "Select a Batch Action"), _underscore2['default'].map(batchActions, function (item, key) {
+      var type = item.type;
+      var name = item.name;
 
-      var type = _action[0];
-      var name = _action[1];
-
-      return _react2['default'].createElement("option", { key: type, value: type + '/' + name }, name);
+      return _react2['default'].createElement("option", { key: key, value: type + '/' + name }, name);
     })));
   },
 
@@ -66817,7 +67175,7 @@ exports['default'] = _react2['default'].createClass({
 });
 module.exports = exports['default'];
 
-},{"react":1014}],1026:[function(require,module,exports){
+},{"react":1014,"underscore":1015}],1028:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -66830,9 +67188,15 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _underscore = require('underscore');
+
+var _underscore2 = _interopRequireDefault(_underscore);
+
 var _reactBootstrap = require('react-bootstrap');
 
-var placeHolder = 'ABCXXXXXXXXX\nDEFXXXXXXXXX\nGHIXXXXXXXXX\nJKLXXXXXXXXX\n...';
+var _libValidators = require('../lib/validators');
+
+var placeHolder = 'ABC0123456\nDEF0123456\nGHI0123456\nJKL0123456\n...';
 
 exports['default'] = _react2['default'].createClass({
   displayName: 'batch-action-textarea',
@@ -66845,54 +67209,96 @@ exports['default'] = _react2['default'].createClass({
 
   getInitialState: function getInitialState() {
     return {
-      invalidRefs: []
+      invalidRefs: [],
+      transformedRefs: {},
+      joinedRefs: ''
     };
   },
 
-  getPolicyRefsStr: function getPolicyRefsStr() {
-    var policyRefsNode = this.refs.policyRefs.getDOMNode();
-    var policyRefsArray = this.props.formData.splitRefsStr(policyRefsNode.value);
-    var invalidRefs = this.props.formData.validateRefs(policyRefsArray);
-    this.setState({ invalidRefs: invalidRefs });
-    if (!invalidRefs.length) return policyRefsArray.join(',');
+  alertInvalid: function alertInvalid() {
+    return _react2['default'].createElement("div", { className: "alert alert-danger" }, _react2['default'].createElement("strong", null, "The following errors were detected:"), _react2['default'].createElement("code", null, _react2['default'].createElement("ol", null, this.state.invalidRefs.map(function (ref, index) {
+      return _react2['default'].createElement("li", { key: index }, ref);
+    }))));
   },
 
-  alertInvalid: function alertInvalid() {
-    return _react2['default'].createElement("div", { className: "alert alert-danger" }, _react2['default'].createElement("strong", null, "The following items contain 1 or more [invalid characters]:"), _react2['default'].createElement("ol", null, this.state.invalidRefs.map(function (ref, index) {
-      return _react2['default'].createElement("li", { key: index }, ref);
-    })));
+  alertInfo: function alertInfo() {
+    return _react2['default'].createElement("div", { className: "alert alert-info" }, _react2['default'].createElement("h5", null, "The following Policy IDs will be changed from the entered values:"), _react2['default'].createElement("code", null, _react2['default'].createElement("ul", { className: "list-unstyled change-list" }, _underscore2['default'].map(this.state.transformedRefs, function (item, row) {
+      return _react2['default'].createElement("li", { key: row }, _react2['default'].createElement("span", { className: "row-num" }, row + '.'), _react2['default'].createElement("span", { className: "lhs" }, item.orig), _react2['default'].createElement("span", null, "to"), _react2['default'].createElement("span", { className: "rhs" }, item.trans));
+    }))), _react2['default'].createElement("em", null, "To avoid this message in the future, format your Policy IDs as follows: ABC0123456"));
   },
 
   render: function render() {
     var isRequesting = this.props.isRequesting;
+    var _state = this.state;
+    var invalidRefs = _state.invalidRefs;
+    var transformedRefs = _state.transformedRefs;
+    var joinedRefs = _state.joinedRefs;
 
-    return _react2['default'].createElement("div", { className: "text-area" }, _react2['default'].createElement(_reactBootstrap.Modal.Body, null, _react2['default'].createElement("p", null, "Enter 1 Policy Number per Line"), this.state.invalidRefs.length ? this.alertInvalid() : null, _react2['default'].createElement("textarea", {
+    var isEmpty = !joinedRefs.length;
+    var hasErrors = invalidRefs.length;
+    return _react2['default'].createElement("div", { className: "text-area" }, _react2['default'].createElement(_reactBootstrap.Modal.Body, null, _react2['default'].createElement("p", null, "Enter 1 Policy Number per Line"), invalidRefs.length ? this.alertInvalid() : null, !_underscore2['default'].isEmpty(transformedRefs) ? this.alertInfo() : null, _react2['default'].createElement("textarea", {
       ref: "policyRefs",
       className: "form-control",
       rows: "10",
       disabled: isRequesting,
-      placeholder: placeHolder })), _react2['default'].createElement(_reactBootstrap.Modal.Footer, null, _react2['default'].createElement("button", {
+      placeholder: placeHolder,
+      onChange: this._onTextChange })), _react2['default'].createElement(_reactBootstrap.Modal.Footer, null, _react2['default'].createElement("button", {
       className: "btn btn-default",
       disabled: isRequesting,
       onClick: this.props.parentClose }, "Cancel"), _react2['default'].createElement("button", {
-      className: "btn btn-primary",
-      disabled: isRequesting,
-      onClick: this._onSubmitClick }, "Submit")));
+      className: 'btn ' + (hasErrors ? 'btn-danger' : 'btn-primary'),
+      disabled: isEmpty || isRequesting || hasErrors,
+      onClick: this._onSubmitClick }, hasErrors ? 'Please Fix Errors' : 'Run Tasks')));
+  },
+
+  // will trim & split any values separated
+  // by any number of whitespace chars
+  splitRefsStr: function splitRefsStr(str) {
+    var trimmed = str.trim();
+    var split = trimmed.split(/\s+/);
+    return split;
+  },
+
+  parsePolicyRefsStr: function parsePolicyRefsStr(refsStr) {
+    var policyRefsArray = this.splitRefsStr(refsStr);
+    var invalidRefs = [];
+    var transformedRefs = {};
+
+    // check policy refs for any characters other than alpha-numeric.
+    _underscore2['default'].each(policyRefsArray, function (ref, index) {
+      ref = (0, _libValidators.validateString)(ref, index + 1, /[^A-Z0-9-]+/gi);
+      if (ref.indexOf('Error') === -1) ref = (0, _libValidators.validatePolicyNum)(ref);
+      if (ref.indexOf('Error') > -1) {
+        invalidRefs.push(ref);
+      } else {
+        if (ref.length > 10) {
+          transformedRefs[index + 1] = { orig: ref, trans: ref.slice(0, 10) };
+        }
+        policyRefsArray[index] = '' + parseFloat(ref.slice(3, 10));
+      }
+    });
+
+    this.setState({
+      invalidRefs: invalidRefs,
+      transformedRefs: transformedRefs,
+      joinedRefs: policyRefsArray.join(',')
+    });
+  },
+
+  _onTextChange: function _onTextChange(e) {
+    this.parsePolicyRefsStr(e.target.value);
   },
 
   _onSubmitClick: function _onSubmitClick(e) {
     var formData = this.props.formData;
 
-    var refsString = this.getPolicyRefsStr();
-    if (refsString) {
-      formData.setBody({ policyRefsStr: refsString });
-      formData.submit();
-    }
+    formData.setBody({ policyRefsStr: this.state.joinedRefs });
+    formData.submit();
   }
 });
 module.exports = exports['default'];
 
-},{"react":1014,"react-bootstrap":778}],1027:[function(require,module,exports){
+},{"../lib/validators":1044,"react":1014,"react-bootstrap":778,"underscore":1015}],1029:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -66913,21 +67319,45 @@ var _moment = require('moment');
 
 var _moment2 = _interopRequireDefault(_moment);
 
-// Jun 07, 2014 8:56 AM
-var DATE_FORMAT = 'MMM DD, YYYY h:mm A';
-
 exports['default'] = _react2['default'].createClass({
   displayName: 'batch-row',
+
+  getStatusLabel: function getStatusLabel(batch) {
+    var status = batch.status;
+    var numberOfInstances = batch.numberOfInstances;
+    var numberOfSuccessInstances = batch.numberOfSuccessInstances;
+    var numberOfErrorInstances = batch.numberOfErrorInstances;
+
+    var className = 'label label-block label-info';
+    var message = 'IN PROGRESS: ' + numberOfSuccessInstances + '\n                     out of ' + numberOfInstances + ' complete';
+
+    switch (status) {
+      case 'finished-success':
+        className = 'label label-block label-success';
+        message = 'FINISHED: ' + numberOfSuccessInstances + '\n                     out of ' + numberOfInstances + ' complete';
+        break;
+      case 'finished-error':
+        className = 'label label-block label-danger';
+        message = 'FINISHED: ' + numberOfSuccessInstances + '\n                     out of ' + numberOfInstances + ' complete';
+        break;
+      case 'in-progress':
+        if (numberOfErrorInstances > 0) className = 'label label-block label-warning';
+        break;
+    }
+
+    return _react2['default'].createElement("span", { className: className }, message);
+  },
 
   render: function render() {
     var batch = this.props.batch;
 
-    return _react2['default'].createElement("a", { className: "tr", href: '#policies/?bid=' + batch.id }, _react2['default'].createElement("div", { className: "td" }, (0, _moment2['default'])(batch.startTime).format(DATE_FORMAT)), _react2['default'].createElement("div", { className: "td" }, batch.numberOfInstances), _react2['default'].createElement("div", { className: "td batch-id" }, batch.type + ' ' + batch.id), _react2['default'].createElement("div", { className: "td" }, batch.startUserId), _react2['default'].createElement("div", { className: "td" }, _react2['default'].createElement("span", { className: batch.status.className }, batch.status.message)));
+    var dateFormat = _ampersandApp2['default'].constants.dates.USER_FORMAT;
+    return _react2['default'].createElement("a", { className: "tr", href: '#tasks/bid/' + batch.id }, _react2['default'].createElement("div", { className: "td" }, this.getStatusLabel(batch)), _react2['default'].createElement("div", { className: "td batch-id" }, batch.type), _react2['default'].createElement("div", { className: "td batch-id" }, batch.id), _react2['default'].createElement("div", { className: "td" }, batch.numberOfInstances), _react2['default'].createElement("div", { className: "td" }, (0, _moment2['default'])(batch.startTime).format(dateFormat)), _react2['default'].createElement("div", { className: "td" }, batch.startUserId));
   }
 });
 module.exports = exports['default'];
 
-},{"ampersand-app":1,"moment":705,"react":1014}],1028:[function(require,module,exports){
+},{"ampersand-app":1,"moment":705,"react":1014}],1030:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -66950,6 +67380,12 @@ var _batchRow = require('./batch-row');
 
 var _batchRow2 = _interopRequireDefault(_batchRow);
 
+var _tableControls = require('./table-controls');
+
+var _tableControls2 = _interopRequireDefault(_tableControls);
+
+var processDefinitionKeys = [{ name: 'Invoicing', value: 'batchInvoicing' }, { name: 'Issuance', value: 'batchIssuance' }, { name: 'Payments', value: 'batchPayment' }];
+
 exports['default'] = _react2['default'].createClass({
   displayName: 'batches-table',
 
@@ -66957,6 +67393,7 @@ exports['default'] = _react2['default'].createClass({
 
   getInitialState: function getInitialState() {
     return {
+      isRequesting: false,
       sortTable: {
         startTime: {
           active: true,
@@ -66969,10 +67406,18 @@ exports['default'] = _react2['default'].createClass({
   componentWillMount: function componentWillMount() {
     var collection = this.props.collection;
 
+    collection.on({
+      request: this._onCollectionRequest,
+      sync: this._onCollectionSync
+    });
     this.setState(_extends({ collection: collection }, collection.getParameters()));
     if (!collection.length) {
       collection.query();
     }
+  },
+
+  componentWillUnmount: function componentWillUnmount() {
+    this.props.collection.off();
   },
 
   makeQuery: function makeQuery() {
@@ -66983,17 +67428,53 @@ exports['default'] = _react2['default'].createClass({
     var _state = this.state;
     var sort = _state.sort;
     var order = _state.order;
+    var collection = _state.collection;
+    var isRequesting = _state.isRequesting;
 
-    return _react2['default'].createElement("div", { className: "div-table table-striped table-hover table-scrollable table-sortable table-5-columns" }, _react2['default'].createElement("div", { className: "thead" }, _react2['default'].createElement("div", { className: "tr" }, _react2['default'].createElement("div", { className: "th" }, _react2['default'].createElement("a", { "data-sortby": "startTime",
+    return _react2['default'].createElement("div", null, _react2['default'].createElement("div", { className: "tab-pane-heading" }, _react2['default'].createElement(_tableControls2['default'], _react2['default'].__spread({}, this.state, { controlType: "batches",
+      isRequesting: isRequesting,
+      processDefinitionKeys: processDefinitionKeys,
+      status: collection.status,
+      pageStart: collection.pageStart,
+      pageEnd: collection.pageEnd,
+      totalItems: collection.totalItems,
+      incrementPage: this._onPageIncrement,
+      decrementPage: this._onPageDecrement,
+      refreshPage: this.makeQuery,
+      updateParameter: this._onParameterUpdate }))), _react2['default'].createElement("div", { className: "div-table panel-table table-hover table-scrollable table-sortable table-6-columns" }, _react2['default'].createElement("div", { className: "thead" }, _react2['default'].createElement("div", { className: "tr" }, _react2['default'].createElement("div", { className: "th" }, "Status"), _react2['default'].createElement("div", { className: "th" }, "Type"), _react2['default'].createElement("div", { className: "th" }, "ID"), _react2['default'].createElement("div", { className: "th" }, "Quantity"), _react2['default'].createElement("div", { className: "th" }, _react2['default'].createElement("a", { "data-sortby": "startTime",
       className: sort === 'startTime' ? order : null,
-      onClick: this._onHeaderClick }, "Time Started ", _react2['default'].createElement("span", { className: "caret" }))), _react2['default'].createElement("div", { className: "th" }, "Quantity"), _react2['default'].createElement("div", { className: "th" }, "Batch ID"), _react2['default'].createElement("div", { className: "th" }, "Initiator"), _react2['default'].createElement("div", { className: "th" }, "Status"))), _react2['default'].createElement("div", { className: "tbody", style: { maxHeight: 500 + 'px' } }, this.state.collection.map(function (batch) {
+      onClick: this._onHeaderClick }, "Time Started ", _react2['default'].createElement("span", { className: "caret" }))), _react2['default'].createElement("div", { className: "th" }, "Initiator"))), _react2['default'].createElement("div", { className: "tbody", style: { maxHeight: 500 + 'px' } }, this.state.collection.map(function (batch) {
       return _react2['default'].createElement(_batchRow2['default'], { key: batch.id, batch: batch });
-    })));
+    }))));
+  },
+
+  _onPageIncrement: function _onPageIncrement() {
+    this.props.collection.incrementPage();
+  },
+
+  _onPageDecrement: function _onPageDecrement() {
+    this.props.collection.decrementPage();
+  },
+
+  _onParameterUpdate: function _onParameterUpdate(name, value) {
+    var collection = this.props.collection;
+
+    collection.updateParameter(name, value);
+    this.setState(_extends({}, collection.getParameters()));
+    this.makeQuery();
+  },
+
+  _onCollectionSync: function _onCollectionSync() {
+    this.setState({ isRequesting: false });
+  },
+
+  _onCollectionRequest: function _onCollectionRequest() {
+    this.setState({ isRequesting: true });
   }
 });
 module.exports = exports['default'];
 
-},{"../lib/sortable-table-mixin":1036,"./batch-row":1027,"react":1014}],1029:[function(require,module,exports){
+},{"../lib/sortable-table-mixin":1043,"./batch-row":1029,"./table-controls":1033,"react":1014}],1031:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -67014,6 +67495,10 @@ var _tabContent = require('./tab-content');
 
 var _tabContent2 = _interopRequireDefault(_tabContent);
 
+var _alertQueue = require('./alert-queue');
+
+var _alertQueue2 = _interopRequireDefault(_alertQueue);
+
 var _batchActionSelect = require('./batch-action-select');
 
 var _batchActionSelect2 = _interopRequireDefault(_batchActionSelect);
@@ -67022,13 +67507,17 @@ var _batchActionModal = require('./batch-action-modal');
 
 var _batchActionModal2 = _interopRequireDefault(_batchActionModal);
 
+var _taskActionSelect = require('./task-action-select');
+
+var _taskActionSelect2 = _interopRequireDefault(_taskActionSelect);
+
 var _batchesTable = require('./batches-table');
 
 var _batchesTable2 = _interopRequireDefault(_batchesTable);
 
-var _policiesTable = require('./policies-table');
+var _tasksTable = require('./tasks-table');
 
-var _policiesTable2 = _interopRequireDefault(_policiesTable);
+var _tasksTable2 = _interopRequireDefault(_tasksTable);
 
 var _reactBootstrap = require('react-bootstrap');
 
@@ -67038,6 +67527,7 @@ exports['default'] = _react2['default'].createClass({
   getDefaultProps: function getDefaultProps() {
     return {
       showBatchActionModal: false,
+      activeBatchId: '0',
       batchType: null
     };
   },
@@ -67045,7 +67535,8 @@ exports['default'] = _react2['default'].createClass({
   getInitialState: function getInitialState() {
     return {
       tab: this.props.tab || 'batches',
-      batches: _ampersandApp2['default'].batches
+      batches: _ampersandApp2['default'].batches,
+      errors: _ampersandApp2['default'].errors
     };
   },
 
@@ -67057,36 +67548,44 @@ exports['default'] = _react2['default'].createClass({
 
   componentWillMount: function componentWillMount() {
     _ampersandApp2['default'].batches.on('sync', this._onBatchesSync);
+    _ampersandApp2['default'].errors.on('add remove', this._onErrorsUpdate);
   },
 
   componentWillUnmount: function componentWillUnmount() {
     _ampersandApp2['default'].batches.off();
+    _ampersandApp2['default'].errors.off();
   },
 
-  // Determine the correct collection of policies and return it
-  // along with the <PoliciesTable/> node
-  getPoliciesTable: function getPoliciesTable() {
+  // Determine the correct collection of tasks and return it
+  // along with the <TasksTable/> node
+  getTasksTable: function getTasksTable() {
     var activeBatchId = this.props.activeBatchId;
 
     if (_ampersandApp2['default'].batches.length) {
       var activeBatch = _ampersandApp2['default'].batches.get(activeBatchId);
-      var policies = activeBatch ? activeBatch.policies : _ampersandApp2['default'].allPolicies;
-      return _react2['default'].createElement(_policiesTable2['default'], { key: activeBatchId, collection: policies });
+      var collection = activeBatch ? activeBatch.tasks : _ampersandApp2['default'].allTasks;
+      return _react2['default'].createElement(_tasksTable2['default'], { key: activeBatchId, collection: collection });
     }
   },
 
   render: function render() {
-    var tab = this.state.tab;
+    var _state = this.state;
+    var tab = _state.tab;
+    var errors = _state.errors;
     var _props = this.props;
     var showBatchActionModal = _props.showBatchActionModal;
     var batchType = _props.batchType;
     var actionName = _props.actionName;
 
-    return _react2['default'].createElement("div", null, _react2['default'].createElement("div", { className: "row action-row" }, _react2['default'].createElement(_batchActionSelect2['default'], { router: _ampersandApp2['default'].router }), _react2['default'].createElement(_batchActionModal2['default'], {
+    return _react2['default'].createElement("div", null, _react2['default'].createElement(_alertQueue2['default'], { collection: errors }), _react2['default'].createElement("div", { className: "row action-row" }, _react2['default'].createElement(_batchActionSelect2['default'], { router: _ampersandApp2['default'].router }), _react2['default'].createElement(_batchActionModal2['default'], {
       showModal: showBatchActionModal,
       actionName: actionName,
       batchType: batchType,
-      router: _ampersandApp2['default'].router })), _react2['default'].createElement("div", { className: "panel panel-default panel-nav" }, _react2['default'].createElement(_reactBootstrap.Nav, { bsStyle: "tabs", activeKey: tab }, _react2['default'].createElement(_reactBootstrap.NavItem, { eventKey: "batches", href: "#batches" }, "Batches"), _react2['default'].createElement(_reactBootstrap.NavItem, { eventKey: "policies", href: "#policies" }, "Policies")), _react2['default'].createElement("div", { className: "panel-body" }, _react2['default'].createElement(_tabContent2['default'], { activeKey: tab }, _react2['default'].createElement(_reactBootstrap.TabPane, { key: "batches" }, _react2['default'].createElement(_batchesTable2['default'], { collection: this.state.batches })), _react2['default'].createElement(_reactBootstrap.TabPane, { key: "policies" }, this.getPoliciesTable())))));
+      router: _ampersandApp2['default'].router }), _react2['default'].createElement(_taskActionSelect2['default'], { router: _ampersandApp2['default'].router })), _react2['default'].createElement("div", { className: "panel panel-default panel-nav" }, _react2['default'].createElement(_reactBootstrap.Nav, { bsStyle: "tabs", activeKey: tab }, _react2['default'].createElement(_reactBootstrap.NavItem, { eventKey: "batches", href: "#batches" }, "Batches"), _react2['default'].createElement(_reactBootstrap.NavItem, { eventKey: "tasks", href: "#tasks" }, "Tasks")), _react2['default'].createElement("div", { className: "panel-body" }, _react2['default'].createElement(_tabContent2['default'], { activeKey: tab }, _react2['default'].createElement(_reactBootstrap.TabPane, { key: "batches" }, _react2['default'].createElement(_batchesTable2['default'], { collection: this.state.batches })), _react2['default'].createElement(_reactBootstrap.TabPane, { key: "tasks" }, this.getTasksTable())))));
+  },
+
+  _onErrorsUpdate: function _onErrorsUpdate(error, errors) {
+    this.setState({ errors: errors });
   },
 
   _onBatchesSync: function _onBatchesSync(batches) {
@@ -67095,175 +67594,7 @@ exports['default'] = _react2['default'].createClass({
 });
 module.exports = exports['default'];
 
-},{"./batch-action-modal":1024,"./batch-action-select":1025,"./batches-table":1028,"./policies-table":1030,"./tab-content":1032,"ampersand-app":1,"react":1014,"react-bootstrap":778}],1030:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _moment = require('moment');
-
-var _moment2 = _interopRequireDefault(_moment);
-
-var _libSortableTableMixin = require('../lib/sortable-table-mixin');
-
-var _libSortableTableMixin2 = _interopRequireDefault(_libSortableTableMixin);
-
-var _policyRow = require('./policy-row');
-
-var _policyRow2 = _interopRequireDefault(_policyRow);
-
-var _tableControls = require('./table-controls');
-
-var _tableControls2 = _interopRequireDefault(_tableControls);
-
-exports['default'] = _react2['default'].createClass({
-  displayName: 'policies-table',
-
-  mixins: [_libSortableTableMixin2['default']], // mixin common methods for sortable tables
-
-  getInitialState: function getInitialState() {
-    return {
-      shouldItemsBeChecked: false,
-      sortTable: {
-        startTime: {
-          active: true,
-          order: 'desc'
-        }
-      }
-    };
-  },
-
-  componentWillMount: function componentWillMount() {
-    var collection = this.props.collection;
-
-    collection.on('sync', this._onCollectionSync);
-    this.setState(_extends({ collection: collection }, collection.getParameters()));
-    if (!collection.length) {
-      this.makeQuery();
-    }
-  },
-
-  componentWillUnmount: function componentWillUnmount() {
-    this.props.collection.off();
-  },
-
-  makeQuery: function makeQuery() {
-    this.props.collection.query();
-  },
-
-  render: function render() {
-    var _this = this;
-
-    var _state = this.state;
-    var sort = _state.sort;
-    var order = _state.order;
-
-    return _react2['default'].createElement("div", null, _react2['default'].createElement("div", { className: "tab-pane-heading" }, _react2['default'].createElement(_tableControls2['default'], _react2['default'].__spread({}, this.state, { onControlChange: this._onControlChange,
-      onRefreshClick: this._onRefreshClick }))), _react2['default'].createElement("div", { className: "div-table table-striped table-hover table-scrollable table-sortable table-7-columns" }, _react2['default'].createElement("div", { className: "thead" }, _react2['default'].createElement("div", { className: "tr" }, _react2['default'].createElement("div", { className: "th" }, _react2['default'].createElement("label", { className: "checkbox-label" }, _react2['default'].createElement("input", {
-      type: "checkbox",
-      checked: this.state.shouldItemsBeChecked,
-      onChange: this._onSelectAllToggle }), " Select All")), _react2['default'].createElement("div", { className: "th" }, _react2['default'].createElement("a", { "data-sortby": "startTime",
-      className: sort === 'startTime' ? order : null,
-      onClick: this._onHeaderClick }, "Time Started ", _react2['default'].createElement("span", { className: "caret" }))), _react2['default'].createElement("div", { className: "th" }, "Policy #"), _react2['default'].createElement("div", { className: "th" }, "Batch ID"), _react2['default'].createElement("div", { className: "th" }, "Initiator"), _react2['default'].createElement("div", { className: "th" }, "Status"), _react2['default'].createElement("div", { className: "th" }, "Message"))), _react2['default'].createElement("div", { className: "tbody", style: { maxHeight: 500 + 'px' } }, this.state.collection.map(function (policy) {
-      return _react2['default'].createElement(_policyRow2['default'], {
-        key: policy.id,
-        policy: policy,
-        itemShouldBeChecked: _this.state.shouldItemsBeChecked });
-    }))));
-  },
-
-  _onRefreshClick: function _onRefreshClick() {
-    this.props.collection.query();
-  },
-
-  _onSelectAllToggle: function _onSelectAllToggle(e) {
-    this.setState({ shouldItemsBeChecked: e.target.checked });
-  },
-
-  _onCollectionSync: function _onCollectionSync(collection) {
-    this.setState({ collection: collection });
-  },
-
-  _onControlChange: function _onControlChange(name, value) {
-    var collection = this.props.collection;
-
-    collection.updateParameter(name, value);
-    this.setState(_extends({}, collection.getParameters()));
-    this.makeQuery();
-  }
-});
-module.exports = exports['default'];
-
-},{"../lib/sortable-table-mixin":1036,"./policy-row":1031,"./table-controls":1033,"moment":705,"react":1014}],1031:[function(require,module,exports){
-'use strict';
-
-Object.defineProperty(exports, '__esModule', {
-  value: true
-});
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
-
-var _react = require('react');
-
-var _react2 = _interopRequireDefault(_react);
-
-var _reactBootstrap = require('react-bootstrap');
-
-var _ampersandApp = require('ampersand-app');
-
-var _ampersandApp2 = _interopRequireDefault(_ampersandApp);
-
-var _moment = require('moment');
-
-var _moment2 = _interopRequireDefault(_moment);
-
-// Jun 07, 2014 8:56 AM
-var DATE_FORMAT = 'MMM DD, YYYY h:mm A';
-
-exports['default'] = _react2['default'].createClass({
-  displayName: 'policy-row',
-
-  getInitialState: function getInitialState() {
-    return {
-      isChecked: this.props.itemShouldBeChecked
-    };
-  },
-
-  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
-    this.setState({ isChecked: newProps.itemShouldBeChecked });
-  },
-
-  render: function render() {
-    var policy = this.props.policy;
-
-    var errorMessage = policy.errorCode + ' - ' + policy.errorMessage;
-    var infoPopover = _react2['default'].createElement(_reactBootstrap.OverlayTrigger, { key: "overlay", rootClose: true, trigger: "click", placement: "left",
-      overlay: _react2['default'].createElement(_reactBootstrap.Popover, { title: errorMessage }, policy.errorResponse) }, _react2['default'].createElement("span", { title: "Click for more info",
-      className: "glyphicon glyphicon-info-sign info-toggle" }));
-
-    return _react2['default'].createElement("div", { className: "tr" }, _react2['default'].createElement("div", { className: "td" }, _react2['default'].createElement("input", {
-      type: "checkbox",
-      checked: this.state.isChecked,
-      onChange: this._onCheckToggle })), _react2['default'].createElement("div", { className: "td" }, (0, _moment2['default'])(policy.startTime).format(DATE_FORMAT)), _react2['default'].createElement("div", { className: "td" }, policy.policyLookup), _react2['default'].createElement("div", { className: "td batch-id" }, policy.processDefinitionKey + ' ' + policy.batchId), _react2['default'].createElement("div", { className: "td" }, policy.startUserId), _react2['default'].createElement("div", { className: "td" }, _react2['default'].createElement("span", { className: policy.status.className }, policy.status.message)), _react2['default'].createElement("div", { className: "td text-danger" }, policy.hasException ? [errorMessage, ' ', infoPopover] : null));
-  },
-
-  _onCheckToggle: function _onCheckToggle(e) {
-    this.setState({ isChecked: e.target.checked });
-  }
-});
-module.exports = exports['default'];
-
-},{"ampersand-app":1,"moment":705,"react":1014,"react-bootstrap":778}],1032:[function(require,module,exports){
+},{"./alert-queue":1024,"./batch-action-modal":1026,"./batch-action-select":1027,"./batches-table":1030,"./tab-content":1032,"./task-action-select":1037,"./tasks-table":1039,"ampersand-app":1,"react":1014,"react-bootstrap":778}],1032:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -67315,7 +67646,7 @@ exports['default'] = _react2['default'].createClass({
 });
 module.exports = exports['default'];
 
-},{"../lib/selectable-parent-mixin":1035,"react":1014,"underscore":1015}],1033:[function(require,module,exports){
+},{"../lib/selectable-parent-mixin":1042,"react":1014,"underscore":1015}],1033:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -67328,18 +67659,40 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDatepicker = require('react-datepicker');
+var _underscore = require('underscore');
 
-var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
+var _underscore2 = _interopRequireDefault(_underscore);
+
+var _ampersandApp = require('ampersand-app');
+
+var _ampersandApp2 = _interopRequireDefault(_ampersandApp);
 
 var _moment = require('moment');
 
 var _moment2 = _interopRequireDefault(_moment);
 
-var DATE_FORMAT = 'YYYY-MM-DD';
+var _reactDatepicker = require('react-datepicker');
+
+var _reactDatepicker2 = _interopRequireDefault(_reactDatepicker);
 
 exports['default'] = _react2['default'].createClass({
   displayName: 'table-controls',
+
+  propTypes: {
+    controlType: _react2['default'].PropTypes.string.isRequired,
+    isRequesting: _react2['default'].PropTypes.bool.isRequired,
+    processDefinitionKeys: _react2['default'].PropTypes.array.isRequired,
+    pageStart: _react2['default'].PropTypes.number.isRequired,
+    pageEnd: _react2['default'].PropTypes.number.isRequired,
+    totalItems: _react2['default'].PropTypes.number.isRequired,
+    incrementPage: _react2['default'].PropTypes.func.isRequired,
+    decrementPage: _react2['default'].PropTypes.func.isRequired,
+    refreshPage: _react2['default'].PropTypes.func.isRequired,
+    updateParameter: _react2['default'].PropTypes.func.isRequired,
+    status: _react2['default'].PropTypes.string.isRequired,
+    statusOpts: _react2['default'].PropTypes.array,
+    filterByStatus: _react2['default'].PropTypes.func
+  },
 
   getDefaultProps: function getDefaultProps() {
     return {
@@ -67353,55 +67706,81 @@ exports['default'] = _react2['default'].createClass({
 
   render: function render() {
     var _props = this.props;
+    var isRequesting = _props.isRequesting;
     var startedAfter = _props.startedAfter;
     var startedBefore = _props.startedBefore;
+    var pageStart = _props.pageStart;
+    var pageEnd = _props.pageEnd;
+    var totalItems = _props.totalItems;
 
-    return _react2['default'].createElement("div", { className: "div-table table-6-columns table-controls" }, _react2['default'].createElement("div", { className: "tbody" }, _react2['default'].createElement("div", { className: "tr" }, _react2['default'].createElement("div", { className: "td" }, _react2['default'].createElement("label", { htmlFor: "processDefinitionKey" }, "Batch Types"), _react2['default'].createElement("select", {
+    return _react2['default'].createElement("div", { className: "row table-controls controls-condensed" }, _react2['default'].createElement("div", { className: "col-md-8" }, _react2['default'].createElement("div", { className: "div-table table-condensed table-5-columns" }, _react2['default'].createElement("div", { className: "tbody" }, _react2['default'].createElement("div", { className: "tr" }, _react2['default'].createElement("div", { className: "td" }, _react2['default'].createElement("select", {
       name: "processDefinitionKey",
+      disabled: isRequesting,
       defaultValue: this.props.processDefinitionKey,
-      className: "form-control",
-      onChange: this._onSelectChange }, _react2['default'].createElement("option", { value: "default" }, "All"), _react2['default'].createElement("option", { value: "invoicing" }, "Invoicing"), _react2['default'].createElement("option", { value: "issuance" }, "Issuance"), _react2['default'].createElement("option", { value: "payment" }, "Payment"))), _react2['default'].createElement("div", { className: "td" }, _react2['default'].createElement("label", { htmlFor: "status" }, "Status"), _react2['default'].createElement("select", {
+      className: "form-control input-sm",
+      onChange: this._onSelectChange }, _react2['default'].createElement("option", { value: "default" }, "Batch Types: All"), _underscore2['default'].map(this.props.processDefinitionKeys, function (item, key) {
+      return _react2['default'].createElement("option", { key: key, value: item.value }, item.name);
+    }))), _react2['default'].createElement("div", { className: "td" }, _react2['default'].createElement("select", {
       name: "status",
+      disabled: isRequesting,
       defaultValue: this.props.status,
-      className: "form-control" }, _react2['default'].createElement("option", { value: "default" }, "All"))), _react2['default'].createElement("div", { className: "td" }, _react2['default'].createElement("label", { htmlFor: "startedBy" }, "Initiator"), _react2['default'].createElement("select", {
+      className: "form-control input-sm",
+      onChange: this.props.filterByStatus }, _react2['default'].createElement("option", { value: "default" }, "Status: All"), _underscore2['default'].map(this.props.statusOpts, function (item, key) {
+      return _react2['default'].createElement("option", { key: key, value: item.value }, item.name);
+    }))), this.props.controlType === 'tasks' ? _react2['default'].createElement("div", { className: "td" }, _react2['default'].createElement("select", {
       name: "startedBy",
+      disabled: isRequesting,
       defaultValue: this.props.startedBy,
-      className: "form-control",
-      onChange: this._onSelectChange }, _react2['default'].createElement("option", { value: "default" }, "All"), _react2['default'].createElement("option", null, "dev@icg360.com"))), _react2['default'].createElement("div", { className: "td clearable" }, _react2['default'].createElement("label", { htmlFor: "startedAfter" }, "From"), _react2['default'].createElement(_reactDatepicker2['default'], {
+      className: "form-control input-sm",
+      onChange: this._onSelectChange }, _react2['default'].createElement("option", { value: "default" }, "Assignee: All"))) : null, _react2['default'].createElement("div", { className: "td clearable" }, _react2['default'].createElement(_reactDatepicker2['default'], {
       name: "startedAfter",
+      disabled: isRequesting,
       selected: startedAfter ? (0, _moment2['default'])(startedAfter) : null,
       onChange: this._onDateChange('startedAfter'),
-      placeholderText: "Started after…",
-      className: "form-control" }), startedAfter ? _react2['default'].createElement("button", {
+      placeholderText: "From…",
+      className: "form-control input-sm" }), startedAfter ? _react2['default'].createElement("button", {
       className: "close",
       "data-dismiss": "startedAfter",
-      onClick: this._onClearButtonClick }, "×") : null), _react2['default'].createElement("div", { className: "td clearable" }, _react2['default'].createElement("label", { htmlFor: "startedBefore" }, "To"), _react2['default'].createElement(_reactDatepicker2['default'], {
+      disabled: isRequesting,
+      onClick: this._onClearButtonClick }, "×") : null), _react2['default'].createElement("div", { className: "td clearable" }, _react2['default'].createElement(_reactDatepicker2['default'], {
       name: "startedBefore",
+      disabled: isRequesting,
       selected: startedBefore ? (0, _moment2['default'])(startedBefore) : null,
       onChange: this._onDateChange('startedBefore'),
-      placeholderText: "Started before…",
-      className: "form-control" }), startedBefore ? _react2['default'].createElement("button", {
+      placeholderText: "To…",
+      className: "form-control input-sm" }), startedBefore ? _react2['default'].createElement("button", {
       className: "close",
       "data-dismiss": "startedBefore",
-      onClick: this._onClearButtonClick }, "×") : null), _react2['default'].createElement("div", { className: "td" }, _react2['default'].createElement("div", { className: "col-xs-6" }, _react2['default'].createElement("button", {
-      className: "btn btn-primary btn-block",
-      onClick: this._onRefreshClick }, _react2['default'].createElement("span", { className: "glyphicon glyphicon-repeat" })))))));
-  },
-
-  _onRefreshClick: function _onRefreshClick() {
-    this.props.onRefreshClick();
+      disabled: isRequesting,
+      onClick: this._onClearButtonClick }, "×") : null))))), _react2['default'].createElement("div", { className: "col-md-4" }, _react2['default'].createElement("div", { className: "control-wrapper" }, _react2['default'].createElement("div", { className: "btn-toolbar pull-right" }, _react2['default'].createElement("div", { className: "btn-group" }, _react2['default'].createElement("button", {
+      className: "btn btn-default btn-sm",
+      disabled: pageStart <= 1 || isRequesting,
+      onClick: this.props.decrementPage }, _react2['default'].createElement("span", { className: "glyphicon glyphicon-menu-left" })), _react2['default'].createElement("button", {
+      className: "btn btn-default btn-sm",
+      disabled: pageEnd >= totalItems || isRequesting,
+      onClick: this.props.incrementPage }, _react2['default'].createElement("span", { className: "glyphicon glyphicon-menu-right" }))), this.props.controlType === 'tasks' ? _react2['default'].createElement("div", { className: "btn-group" }, _react2['default'].createElement("button", {
+      disabled: true,
+      className: "btn btn-default btn-sm" }, _react2['default'].createElement("span", { className: "glyphicon glyphicon-list" })), _react2['default'].createElement("button", {
+      disabled: true,
+      className: "btn btn-default btn-sm" }, _react2['default'].createElement("span", { className: "glyphicon glyphicon-stats" }))) : null, _react2['default'].createElement("div", { className: "btn-group" }, _react2['default'].createElement("button", {
+      className: "btn btn-default btn-sm",
+      disabled: isRequesting,
+      onClick: this.props.refreshPage }, _react2['default'].createElement("span", { className: 'glyphicon glyphicon-refresh' + (isRequesting ? ' animate-spin' : '') })))), _react2['default'].createElement("div", { className: "page-count pull-right" }, _react2['default'].createElement("strong", null, pageStart, "-", pageEnd), _react2['default'].createElement("span", null, " of "), _react2['default'].createElement("strong", null, totalItems.toLocaleString())))));
   },
 
   _onSelectChange: function _onSelectChange(e) {
-    this.props.onControlChange(e.target.name, e.target.value);
+    this.props.updateParameter(e.target.name, e.target.value);
   },
 
   _onClearButtonClick: function _onClearButtonClick(e) {
     var value = e.target.attributes['data-dismiss'].value;
 
-    this.props.onControlChange(value, 'default');
+    this.props.updateParameter(value, 'default');
   },
 
+  // closure to capture the targetName of the particular field
+  // returns an anonymouse function that takes the particular
+  // instance of Moment as its arguments.
   _onDateChange: function _onDateChange(targetName) {
     var _this = this;
 
@@ -67409,13 +67788,665 @@ exports['default'] = _react2['default'].createClass({
       if (targetName === 'startedBefore') {
         momentInstance.add(1, 'days');
       }
-      _this.props.onControlChange(targetName, momentInstance.format());
+      _this.props.updateParameter(targetName, momentInstance.format(_ampersandApp2['default'].constants.dates.SYSTEM_FORMAT));
     };
   }
 });
 module.exports = exports['default'];
 
-},{"moment":705,"react":1014,"react-datepicker":856}],1034:[function(require,module,exports){
+},{"ampersand-app":1,"moment":705,"react":1014,"react-datepicker":856,"underscore":1015}],1034:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _underscore = require('underscore');
+
+var _underscore2 = _interopRequireDefault(_underscore);
+
+var _reactBootstrap = require('react-bootstrap');
+
+exports['default'] = _react2['default'].createClass({
+  displayName: 'task-action-assign',
+
+  propTypes: {
+    selectedTasks: _react2['default'].PropTypes.object.isRequired,
+    taskAction: _react2['default'].PropTypes.object.isRequired,
+    isRequesting: _react2['default'].PropTypes.bool.isRequired,
+    parentClose: _react2['default'].PropTypes.func.isRequired
+  },
+
+  getInitialState: function getInitialState() {
+    return {
+      assignee: null
+    };
+  },
+
+  render: function render() {
+    var _props = this.props;
+    var isRequesting = _props.isRequesting;
+    var selectedTasks = _props.selectedTasks;
+    var assignee = this.state.assignee;
+
+    return _react2['default'].createElement("div", { className: "text-area" }, _react2['default'].createElement(_reactBootstrap.Modal.Body, null, _react2['default'].createElement("p", null, 'Assign ' + selectedTasks.length + ' selected tasks to:'), _react2['default'].createElement("input", {
+      type: "text",
+      ref: "assignee",
+      className: "form-control",
+      value: assignee,
+      disabled: isRequesting,
+      placeholder: "Enter assignee…",
+      onChange: this._onTextChange })), _react2['default'].createElement(_reactBootstrap.Modal.Footer, null, _react2['default'].createElement("button", {
+      className: "btn btn-default",
+      disabled: isRequesting,
+      onClick: this.props.parentClose }, "Cancel"), _react2['default'].createElement("button", {
+      className: "btn btn-primary",
+      disabled: !assignee || isRequesting,
+      onClick: this._onSubmitClick }, "Assign Tasks")));
+  },
+
+  _onTextChange: function _onTextChange(e) {
+    this.setState({ assignee: e.target.value });
+  },
+
+  _onSubmitClick: function _onSubmitClick(e) {
+    var _props2 = this.props;
+    var selectedTasks = _props2.selectedTasks;
+    var taskAction = _props2.taskAction;
+
+    var taskIds = selectedTasks.getCurrentTaskIds();
+    taskAction.setBody({
+      taskAction: 'claim',
+      taskIdList: taskIds.join(','),
+      taskAssignee: this.state.assignee
+    });
+    taskAction.submit();
+  }
+});
+module.exports = exports['default'];
+
+},{"react":1014,"react-bootstrap":778,"underscore":1015}],1035:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _underscore = require('underscore');
+
+var _underscore2 = _interopRequireDefault(_underscore);
+
+var _reactBootstrap = require('react-bootstrap');
+
+exports['default'] = _react2['default'].createClass({
+  displayName: 'task-action-complete',
+
+  propTypes: {
+    selectedTasks: _react2['default'].PropTypes.object.isRequired,
+    taskAction: _react2['default'].PropTypes.object.isRequired,
+    taskType: _react2['default'].PropTypes.string,
+    actionName: _react2['default'].PropTypes.string,
+    isRequesting: _react2['default'].PropTypes.bool.isRequired,
+    parentClose: _react2['default'].PropTypes.func.isRequired
+  },
+
+  getInitialState: function getInitialState() {
+    return {
+      batchType: null,
+      errors: []
+    };
+  },
+
+  componentWillMount: function componentWillMount() {
+    var uniqueKeys = _underscore2['default'].uniq(this.props.selectedTasks.getProcessDefinitionKeys());
+    var batchType = uniqueKeys.join(', ');
+    var errors = [];
+    if (uniqueKeys.length > 1) {
+      errors.push(this._formatError('Multiple Batch Types Selected', 'Selected tasks must all be of the same batch type.'));
+    }
+    this.setState({ batchType: batchType, errors: errors });
+  },
+
+  alertErrors: function alertErrors() {
+    return _underscore2['default'].map(this.state.errors, function (error, index) {
+      return _react2['default'].createElement("div", { key: index, className: "alert alert-danger" }, _react2['default'].createElement("ul", { className: "list-unstyled list-labeled" }, error.code ? _react2['default'].createElement("li", { className: "clearfix" }, _react2['default'].createElement("label", { className: "col-xs-3" }, "Error:"), _react2['default'].createElement("div", { className: "col-xs-9" }, error.code)) : null, error.message ? _react2['default'].createElement("li", { className: "clearfix" }, _react2['default'].createElement("label", { className: "col-xs-3" }, "Message:"), _react2['default'].createElement("div", { className: "col-xs-9" }, error.message)) : null));
+    });
+  },
+
+  render: function render() {
+    var _props = this.props;
+    var isRequesting = _props.isRequesting;
+    var actionName = _props.actionName;
+    var taskType = _props.taskType;
+    var selectedTasks = _props.selectedTasks;
+
+    var hasErrors = this.state.errors.length > 0;
+    return _react2['default'].createElement("div", { className: "file-upload" }, _react2['default'].createElement(_reactBootstrap.Modal.Body, null, this.alertErrors(), _react2['default'].createElement("table", { className: "table" }, _react2['default'].createElement("thead", null, _react2['default'].createElement("tr", null, _react2['default'].createElement("th", null, "Batch type"), _react2['default'].createElement("th", null, "# Tasks to ", taskType))), _react2['default'].createElement("tbody", null, _react2['default'].createElement("tr", null, _react2['default'].createElement("td", null, this.state.batchType), _react2['default'].createElement("td", null, selectedTasks.length))))), _react2['default'].createElement(_reactBootstrap.Modal.Footer, null, _react2['default'].createElement("button", {
+      className: "btn btn-default",
+      disabled: isRequesting,
+      onClick: this.props.parentClose }, "Cancel"), _react2['default'].createElement("button", {
+      className: 'btn ' + (hasErrors ? 'btn-danger' : 'btn-primary'),
+      disabled: isRequesting || hasErrors,
+      onClick: this._onSubmitClick }, hasErrors ? 'Please Fix Errors' : actionName)));
+  },
+
+  _getDataBody: function _getDataBody() {
+    var batchType = this.state.batchType;
+    var _props2 = this.props;
+    var selectedTasks = _props2.selectedTasks;
+    var taskType = _props2.taskType;
+
+    var currentTaskIds = selectedTasks.getCurrentTaskIds();
+    var policyLookups = selectedTasks.getPolicyLookups();
+    var body = {
+      taskAction: 'complete' + batchType,
+      resolution: taskType === 'retry',
+      taskIdList: currentTaskIds.join(',')
+    };
+
+    if (batchType === 'Payment') {
+      body.paymentsList = selectedTasks.getPaymentsData();
+    } else {
+      body.policyRefsStr = policyLookups.join(',');
+    }
+
+    console.log(JSON.stringify(body));
+
+    return body;
+  },
+
+  _formatError: function _formatError(type, message) {
+    return { code: type, message: message };
+  },
+
+  _onSubmitClick: function _onSubmitClick(e) {
+    var taskAction = this.props.taskAction;
+
+    taskAction.setBody(this._getDataBody());
+    taskAction.submit();
+  }
+});
+module.exports = exports['default'];
+
+},{"react":1014,"react-bootstrap":778,"underscore":1015}],1036:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactBootstrap = require('react-bootstrap');
+
+var _taskActionAssign = require('./task-action-assign');
+
+var _taskActionAssign2 = _interopRequireDefault(_taskActionAssign);
+
+var _taskActionComplete = require('./task-action-complete');
+
+var _taskActionComplete2 = _interopRequireDefault(_taskActionComplete);
+
+var _ampersandApp = require('ampersand-app');
+
+exports['default'] = _react2['default'].createClass({
+  displayName: 'task-action-modal',
+
+  propTypes: {
+    showModal: _react2['default'].PropTypes.bool.isRequired,
+    actionName: _react2['default'].PropTypes.string,
+    taskType: _react2['default'].PropTypes.string,
+    onHide: _react2['default'].PropTypes.func.isRequired
+  },
+
+  getInitialState: function getInitialState() {
+    var _props = this.props;
+    var showModal = _props.showModal;
+    var batchType = _props.batchType;
+
+    return {
+      showModal: !!(showModal && taskType),
+      isRequesting: false
+    };
+  },
+
+  componentDidMount: function componentDidMount() {
+    _ampersandApp.taskAction.on({
+      request: this._onRequest,
+      error: this._onComplete,
+      sync: this._onComplete
+    });
+  },
+
+  componentWillUnmount: function componentWillUnmount() {
+    _ampersandApp.taskAction.off();
+  },
+
+  componentWillReceiveProps: function componentWillReceiveProps(props) {
+    var showModal = props.showModal;
+    var taskType = props.taskType;
+
+    this.setState({
+      showModal: !!(showModal && taskType)
+    });
+  },
+
+  render: function render() {
+    var isRequesting = this.state.isRequesting;
+    var _props2 = this.props;
+    var onHide = _props2.onHide;
+    var actionName = _props2.actionName;
+    var taskType = _props2.taskType;
+
+    return _react2['default'].createElement(_reactBootstrap.Modal, { show: this.state.showModal, onHide: onHide }, _react2['default'].createElement(_reactBootstrap.Modal.Header, { closeButton: true }, _react2['default'].createElement(_reactBootstrap.Modal.Title, null, actionName)), this.props.taskType === 'assign' ? _react2['default'].createElement(_taskActionAssign2['default'], {
+      selectedTasks: _ampersandApp.selectedTasks,
+      taskAction: _ampersandApp.taskAction,
+      isRequesting: isRequesting,
+      parentClose: onHide }) : _react2['default'].createElement(_taskActionComplete2['default'], {
+      selectedTasks: _ampersandApp.selectedTasks,
+      taskAction: _ampersandApp.taskAction,
+      taskType: taskType,
+      actionName: actionName,
+      isRequesting: isRequesting,
+      parentClose: onHide }));
+  },
+
+  _onRequest: function _onRequest() {
+    this.setState({ isRequesting: true });
+  },
+
+  _onComplete: function _onComplete() {
+    this.setState({ isRequesting: false });
+    this.props.onHide();
+    _ampersandApp.batches.query();
+    _ampersandApp.allTasks.query();
+  }
+});
+module.exports = exports['default'];
+
+},{"./task-action-assign":1034,"./task-action-complete":1035,"ampersand-app":1,"react":1014,"react-bootstrap":778}],1037:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _slicedToArray = (function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i['return']) _i['return'](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError('Invalid attempt to destructure non-iterable instance'); } }; })();
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _underscore = require('underscore');
+
+var _underscore2 = _interopRequireDefault(_underscore);
+
+var _ampersandApp = require('ampersand-app');
+
+var _ampersandApp2 = _interopRequireDefault(_ampersandApp);
+
+var _taskActionModal = require('./task-action-modal');
+
+var _taskActionModal2 = _interopRequireDefault(_taskActionModal);
+
+var taskActions = [{ type: 'assign', name: 'Assign Tasks' }, { type: 'retry', name: 'Retry Tasks' }, { type: 'complete', name: 'Complete Tasks' }];
+
+exports['default'] = _react2['default'].createClass({
+  displayName: 'task-action-select',
+
+  getInitialState: function getInitialState() {
+    return {
+      selectedTasks: _ampersandApp2['default'].selectedTasks,
+      showModal: false,
+      actionName: null,
+      taskType: null
+    };
+  },
+
+  componentWillMount: function componentWillMount() {
+    _ampersandApp2['default'].selectedTasks.on('add remove', this._onSelectedTasksUpdate);
+  },
+
+  componentWillUnmount: function componentWillUnmount() {
+    _ampersandApp2['default'].selectedTasks.off();
+  },
+
+  render: function render() {
+    var _state = this.state;
+    var selectedTasks = _state.selectedTasks;
+    var showModal = _state.showModal;
+    var actionName = _state.actionName;
+    var taskType = _state.taskType;
+
+    return _react2['default'].createElement("div", { className: "col-lg-2 col-sm-3 col-xs-4" }, selectedTasks.length ? _react2['default'].createElement("select", {
+      className: "form-control",
+      onChange: this._onActionSelect,
+      value: taskType }, _react2['default'].createElement("option", { value: "default" }, "Select a Task Action"), _underscore2['default'].map(taskActions, function (item, key) {
+      var type = item.type;
+      var name = item.name;
+
+      return _react2['default'].createElement("option", { key: key, value: type + '/' + name }, name);
+    })) : null, _react2['default'].createElement(_taskActionModal2['default'], {
+      showModal: showModal,
+      actionName: actionName,
+      taskType: taskType,
+      onHide: this._onModalHide }));
+  },
+
+  _onModalHide: function _onModalHide() {
+    this.setState({
+      showModal: false,
+      taskType: null,
+      actionName: null
+    });
+  },
+
+  _onActionSelect: function _onActionSelect(e) {
+    var _e$target$value$split = e.target.value.split('/');
+
+    var _e$target$value$split2 = _slicedToArray(_e$target$value$split, 2);
+
+    var taskType = _e$target$value$split2[0];
+    var actionName = _e$target$value$split2[1];
+
+    var showModal = taskType !== 'default';
+    this.setState({ showModal: showModal, taskType: taskType, actionName: actionName });
+  },
+
+  _onSelectedTasksUpdate: function _onSelectedTasksUpdate(task, selectedTasks) {
+    this.setState({ selectedTasks: selectedTasks });
+  }
+});
+module.exports = exports['default'];
+
+},{"./task-action-modal":1036,"ampersand-app":1,"react":1014,"underscore":1015}],1038:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactBootstrap = require('react-bootstrap');
+
+var _ampersandApp = require('ampersand-app');
+
+var _ampersandApp2 = _interopRequireDefault(_ampersandApp);
+
+var _moment = require('moment');
+
+var _moment2 = _interopRequireDefault(_moment);
+
+exports['default'] = _react2['default'].createClass({
+  displayName: 'task-row',
+
+  getInitialState: function getInitialState() {
+    return { selected: this.props.selected };
+  },
+
+  componentWillReceiveProps: function componentWillReceiveProps(newProps) {
+    if (newProps.selected !== this.state.selected) this._setSelected(newProps.selected);
+  },
+
+  componentWillUnmount: function componentWillUnmount() {
+    this._setSelected(false);
+  },
+
+  getStatusLabel: function getStatusLabel(task) {
+    var status = task.status;
+    var endActivityId = task.endActivityId;
+
+    var className = 'label label-block label-default';
+    var message = 'STARTED';
+    switch (status) {
+      case 'end-success':
+        className = 'label label-block label-success';
+        message = 'ENDED: SUCCESS';
+        break;
+      case 'end-error':
+        className = 'label label-block label-danger';
+        message = 'ENDED: ERROR';
+        break;
+      case 'action-required':
+        className = 'label label-block label-warning';
+        message = 'ERROR: ACTION REQUIRED';
+        break;
+      case 'in-progress':
+        className = 'label label-block label-info';
+        message = 'IN PROGRESS';
+        break;
+    }
+    return _react2['default'].createElement("span", { className: className }, message);
+  },
+
+  render: function render() {
+    var _props = this.props;
+    var task = _props.task;
+    var enabled = _props.enabled;
+    var selected = this.state.selected;
+
+    var dateFormat = _ampersandApp2['default'].constants.dates.USER_FORMAT;
+    var errorMessage = task.errorCode + ' - ' + task.errorMessage;
+    var infoPopover = _react2['default'].createElement(_reactBootstrap.OverlayTrigger, { key: "overlay", rootClose: true, trigger: "click", placement: "left",
+      overlay: _react2['default'].createElement(_reactBootstrap.Popover, { title: errorMessage }, task.errorResponse) }, _react2['default'].createElement("span", { title: "Click for more info",
+      className: "glyphicon glyphicon-info-sign info-toggle" }));
+
+    return _react2['default'].createElement("div", { id: task.id,
+      className: 'tr' + (selected ? ' active' : ''),
+      title: 'Process Instance ID ' + task.id,
+      onClick: this._onRowClick }, _react2['default'].createElement("div", { className: "td task-select" }, _react2['default'].createElement("input", { type: "checkbox",
+      checked: selected,
+      disabled: !enabled,
+      onChange: _ampersandApp2['default'].noop })), _react2['default'].createElement("div", { className: "td" }, (0, _moment2['default'])(task.startTime).format(dateFormat)), _react2['default'].createElement("div", { className: "td policy-lookup" }, task.policyLookup), _react2['default'].createElement("div", { className: "td batch-id" }, task.processDefinitionKey + ' ' + task.batchId), _react2['default'].createElement("div", { className: "td" }, task.currentAssignee), _react2['default'].createElement("div", { className: "td" }, this.getStatusLabel(task)), _react2['default'].createElement("div", { className: "td text-danger" }, task.hasException ? [errorMessage, ' ', infoPopover] : null));
+  },
+
+  _setSelected: function _setSelected(selected) {
+    if (this.props.enabled) {
+      this.setState({ selected: selected });
+      _ampersandApp2['default'].selectedTasks[selected ? 'add' : 'remove'](this.props.task);
+    }
+  },
+
+  _onRowClick: function _onRowClick() {
+    this._setSelected(!this.state.selected);
+  }
+});
+module.exports = exports['default'];
+
+},{"ampersand-app":1,"moment":705,"react":1014,"react-bootstrap":778}],1039:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+var _react = require('react');
+
+var _react2 = _interopRequireDefault(_react);
+
+var _moment = require('moment');
+
+var _moment2 = _interopRequireDefault(_moment);
+
+var _libSortableTableMixin = require('../lib/sortable-table-mixin');
+
+var _libSortableTableMixin2 = _interopRequireDefault(_libSortableTableMixin);
+
+var _taskRow = require('./task-row');
+
+var _taskRow2 = _interopRequireDefault(_taskRow);
+
+var _tableControls = require('./table-controls');
+
+var _tableControls2 = _interopRequireDefault(_tableControls);
+
+var processDefinitionKeys = [{ name: 'Invoicing', value: 'invoicing' }, { name: 'Issuance', value: 'issuance' }, { name: 'Payments', value: 'payment' }];
+
+var statusOpts = [{ name: 'Ended: Success', value: 'end-success' }, { name: 'Ended: Error', value: 'end-error' }, { name: 'Error: Action Required', value: 'action-required' }, { name: 'In Progress', value: 'in-progress' }];
+
+exports['default'] = _react2['default'].createClass({
+  displayName: 'tasks-table',
+
+  mixins: [_libSortableTableMixin2['default']], // mixin common methods for sortable tables
+
+  getInitialState: function getInitialState() {
+    return {
+      checkAll: false,
+      isRequesting: false,
+      sortTable: {
+        startTime: {
+          active: true,
+          order: 'desc'
+        }
+      }
+    };
+  },
+
+  componentWillMount: function componentWillMount() {
+    var collection = this.props.collection;
+
+    collection.on({
+      request: this._onCollectionRequest,
+      sync: this._onCollectionSync
+    });
+    this.setState(_extends({ collection: collection }, collection.getParameters()));
+    if (!collection.length) {
+      this.makeQuery();
+    }
+  },
+
+  componentWillUnmount: function componentWillUnmount() {
+    this.props.collection.off();
+  },
+
+  makeQuery: function makeQuery() {
+    this.props.collection.query();
+  },
+
+  render: function render() {
+    var _this = this;
+
+    var _state = this.state;
+    var sort = _state.sort;
+    var order = _state.order;
+    var collection = _state.collection;
+    var isRequesting = _state.isRequesting;
+
+    return _react2['default'].createElement("div", null, _react2['default'].createElement("div", { className: "tab-pane-heading" }, _react2['default'].createElement(_tableControls2['default'], _react2['default'].__spread({}, this.state, { controlType: "tasks",
+      isRequesting: isRequesting,
+      statusOpts: statusOpts,
+      processDefinitionKeys: processDefinitionKeys,
+      status: collection.status,
+      pageStart: collection.pageStart,
+      pageEnd: collection.pageEnd,
+      totalItems: collection.totalItems,
+      incrementPage: this._onPageIncrement,
+      decrementPage: this._onPageDecrement,
+      refreshPage: this.makeQuery,
+      updateParameter: this._onParameterUpdate,
+      filterByStatus: this._onStatusChange }))), _react2['default'].createElement("div", { className: "div-table panel-table table-hover table-scrollable table-sortable table-7-columns" }, _react2['default'].createElement("div", { className: "thead" }, _react2['default'].createElement("div", { className: "tr" }, _react2['default'].createElement("div", { className: "th" }, _react2['default'].createElement("label", { className: "checkbox-label" }, _react2['default'].createElement("input", {
+      type: "checkbox",
+      checked: this.state.checkAll,
+      onChange: this._onSelectAllToggle }), " Select All")), _react2['default'].createElement("div", { className: "th" }, _react2['default'].createElement("a", { "data-sortby": "startTime",
+      className: sort === 'startTime' ? order : null,
+      onClick: this._onHeaderClick }, "Time Started ", _react2['default'].createElement("span", { className: "caret" }))), _react2['default'].createElement("div", { className: "th" }, "Policy #"), _react2['default'].createElement("div", { className: "th" }, "Batch ID"), _react2['default'].createElement("div", { className: "th" }, "Assignee"), _react2['default'].createElement("div", { className: "th" }, "Status"), _react2['default'].createElement("div", { className: "th" }, "Message"))), _react2['default'].createElement("div", { className: "tbody", style: { maxHeight: 500 + 'px' } }, this.state.collection.map(function (task) {
+      // An individual item should only be checked if a currentTaskId exists
+      var enabled = task.currentTaskId !== null;
+      var selected = _this.state.checkAll && enabled;
+      return _react2['default'].createElement(_taskRow2['default'], {
+        key: task.id,
+        task: task,
+        enabled: enabled,
+        selected: selected });
+    }))));
+  },
+
+  _onPageIncrement: function _onPageIncrement() {
+    this.props.collection.incrementPage();
+  },
+
+  _onPageDecrement: function _onPageDecrement() {
+    this.props.collection.decrementPage();
+  },
+
+  _onSelectAllToggle: function _onSelectAllToggle(e) {
+    this.setState({ checkAll: e.target.checked });
+  },
+
+  _onParameterUpdate: function _onParameterUpdate(name, value) {
+    var collection = this.props.collection;
+
+    collection.updateParameter(name, value);
+    this.setState(_extends({}, collection.getParameters()));
+    this.makeQuery();
+  },
+
+  _onStatusChange: function _onStatusChange(e) {
+    this.props.collection.filterByStatus(e.target.value);
+  },
+
+  _onCollectionSync: function _onCollectionSync(collection) {
+    this.setState({
+      collection: collection,
+      isRequesting: false,
+      checkAll: false
+    });
+  },
+
+  _onCollectionRequest: function _onCollectionRequest() {
+    this.setState({ isRequesting: true });
+  }
+});
+module.exports = exports['default'];
+
+},{"../lib/sortable-table-mixin":1043,"./table-controls":1033,"./task-row":1038,"moment":705,"react":1014}],1040:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+var constants = {
+  APP_PATH: '/batch',
+  STAGE_BASE: 'https://stage-sagesure-svc.icg360.org/cru-4',
+  PROD_BASE: 'https://services.sagesure.com/cru-4',
+  dates: {
+    SYSTEM_FORMAT: 'YYYY-MM-DDThh:mm:ss.SSSZ',
+    USER_FORMAT: 'MMM DD, YYYY h:mm A',
+    DATEPICKER_FORMAT: 'YYYY-MM-DD'
+  }
+};
+
+exports['default'] = constants;
+module.exports = exports['default'];
+
+},{}],1041:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -67485,7 +68516,7 @@ Cookie.prototype.remove = function (key) {
 exports['default'] = Cookie;
 module.exports = exports['default'];
 
-},{"underscore":1015}],1035:[function(require,module,exports){
+},{"underscore":1015}],1042:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -67538,7 +68569,7 @@ var selectableParentMixin = {
 exports['default'] = selectableParentMixin;
 module.exports = exports['default'];
 
-},{"react":1014,"underscore":1015}],1036:[function(require,module,exports){
+},{"react":1014,"underscore":1015}],1043:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -67593,7 +68624,51 @@ var sortableTableMixin = {
 exports['default'] = sortableTableMixin;
 module.exports = exports['default'];
 
-},{"react":1014,"underscore":1015}],1037:[function(require,module,exports){
+},{"react":1014,"underscore":1015}],1044:[function(require,module,exports){
+"use strict";
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+var _underscore = require('underscore');
+
+var _underscore2 = _interopRequireDefault(_underscore);
+
+var validators = {
+  validatePolicyNum: function validatePolicyNum(policyNum) {
+    var validPattern = /^[a-z]{3}\d{7,9}$/i;
+    if (!validPattern.test(policyNum)) {
+      return "Error: " + policyNum + " does not match the pattern ABC0123456";
+    }
+    return policyNum;
+  },
+
+  validateString: function validateString() {
+    var str = arguments.length <= 0 || arguments[0] === undefined ? "" : arguments[0];
+    var type = arguments.length <= 1 || arguments[1] === undefined ? "" : arguments[1];
+    var invalid = arguments.length <= 2 || arguments[2] === undefined ? /[]/ : arguments[2];
+
+    str = str.trim();
+    if (str.length === 0) {
+      return "Error: " + type + " value is empty";
+    }
+    if (invalid.test(str)) {
+      str = str.replace(invalid, function ($1) {
+        return "[" + $1 + "]";
+      });
+      return "Error: Invalid chars in " + type + ": " + str;
+    }
+    return str;
+  }
+};
+
+exports["default"] = validators;
+module.exports = exports["default"];
+
+},{"underscore":1015}],1045:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -67619,12 +68694,15 @@ exports['default'] = _ampersandModel2['default'].extend({
 
   getVariableValue: function getVariableValue(name) {
     var variableObj = this.findVariableWhere({ name: name });
-    return variableObj && variableObj.value;
+    if (_underscore2['default'].isObject(variableObj)) {
+      return variableObj.value;
+    }
+    return null;
   }
 });
 module.exports = exports['default'];
 
-},{"ampersand-model":45,"underscore":1015}],1038:[function(require,module,exports){
+},{"ampersand-model":45,"underscore":1015}],1046:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -67637,9 +68715,9 @@ var _baseModel = require('./base-model');
 
 var _baseModel2 = _interopRequireDefault(_baseModel);
 
-var _collectionsPolicies = require('../collections/policies');
+var _collectionsTasks = require('../collections/tasks');
 
-var _collectionsPolicies2 = _interopRequireDefault(_collectionsPolicies);
+var _collectionsTasks2 = _interopRequireDefault(_collectionsTasks);
 
 exports['default'] = _baseModel2['default'].extend({
   props: {
@@ -67668,48 +68746,40 @@ exports['default'] = _baseModel2['default'].extend({
     type: {
       deps: ['batchType'],
       fn: function deriveType() {
-        return this.batchType.replace('batch', '');
+        if (this.batchType !== undefined) return this.batchType.replace('batch', '');
       }
     },
+
+    // derive a status label from the given information
+    // className corresponds to the bootstrap 3 label classes
     status: {
-      // derive a status label from the given information
-      // className corresponds to the bootstrap 3 label classes
+      deps: ['numberOfInstances', 'numberOfSuccessInstances', 'numberOfErrorInstances'],
       fn: function deriveStatus() {
         var numberOfInstances = this.numberOfInstances;
-        var numberOfActiveInstances = this.numberOfActiveInstances;
         var numberOfErrorInstances = this.numberOfErrorInstances;
         var numberOfSuccessInstances = this.numberOfSuccessInstances;
 
         if (numberOfSuccessInstances === numberOfInstances) {
-          return {
-            className: 'label label-success',
-            message: 'FINISHED: ' + numberOfSuccessInstances + ' successfully run'
-          };
-        } else if (numberOfSuccessInstances + numberOfErrorInstances === numberOfInstances) {
-          return {
-            className: 'label label-danger',
-            message: 'FINISHED: ' + numberOfErrorInstances + ' failed'
-          };
-        } else {
-          return {
-            className: 'label label-warning',
-            message: 'IN PROGRESS: ' + numberOfSuccessInstances + ' out of ' + numberOfInstances + ' successfully run'
-          };
+          return 'finished-success';
         }
+        if (numberOfSuccessInstances + numberOfErrorInstances === numberOfInstances) {
+          return 'finished-error';
+        }
+        return 'in-progress';
       }
     }
   },
 
-  // initializes the associated policies collection,
+  // initializes the associated tasks collection,
   // and updates the batchId query variable
   initialize: function initialize() {
-    this.policies = new _collectionsPolicies2['default']();
-    this.policies.setBatchId(this.id);
+    this.tasks = new _collectionsTasks2['default']();
+    if (this.id !== '0') this.tasks.setBatchId(this.id);
   }
 });
 module.exports = exports['default'];
 
-},{"../collections/policies":1021,"./base-model":1037}],1039:[function(require,module,exports){
+},{"../collections/tasks":1023,"./base-model":1045}],1047:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -67723,17 +68793,11 @@ var _ampersandModel = require('ampersand-model');
 var _ampersandModel2 = _interopRequireDefault(_ampersandModel);
 
 exports['default'] = _ampersandModel2['default'].extend({
-  props: {
-    xhr: 'object',
-    message: 'string',
-    status: 'number',
-    statusText: 'string',
-    timestamp: ['number', true, +new Date()]
-  }
+  extraProperties: 'allow'
 });
 module.exports = exports['default'];
 
-},{"ampersand-model":45}],1040:[function(require,module,exports){
+},{"ampersand-model":45}],1048:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -67742,111 +68806,212 @@ Object.defineProperty(exports, '__esModule', {
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var _ampersandModel = require('ampersand-model');
 
 var _ampersandModel2 = _interopRequireDefault(_ampersandModel);
 
-var _underscore = require('underscore');
-
-var _underscore2 = _interopRequireDefault(_underscore);
-
 var _ampersandApp = require('ampersand-app');
 
 var _ampersandApp2 = _interopRequireDefault(_ampersandApp);
 
-exports['default'] = _ampersandModel2['default'].extend({
-  url: function url() {
-    if (this.batchType) {
-      return '/batch/icg/batch-processes/' + this.batchType;
-    }
-    _ampersandApp2['default'].errors.add({
-      status: 'Error',
-      statusText: 'Batch type is not set!'
-    });
-  },
+var FormData = (function (_Model) {
+  _inherits(FormData, _Model);
 
-  // set up the Auth header one time for all requests
-  ajaxConfig: function ajaxConfig() {
-    return {
-      headers: {
-        'Authorization': _ampersandApp2['default'].user.getBasicAuth()
-      }
-    };
-  },
+  function FormData() {
+    _classCallCheck(this, FormData);
 
-  initialize: function initialize() {
-    this.options = { parse: true };
+    _get(Object.getPrototypeOf(FormData.prototype), 'constructor', this).call(this);
+    this.urlRoot = _ampersandApp2['default'].urlRoot;
     this.batchType = null;
     this.body = null;
 
     // errors are pushed to an Errors collection
     this.on('error', this._onXHRError);
-  },
-
-  setBatchType: function setBatchType(type) {
-    this.batchType = type;
-  },
-
-  // sets the request body to a given data payload
-  setBody: function setBody(data) {
-    this.body = data;
-  },
-
-  // will trim & split any values separated
-  // by any number of whitespace chars
-  splitRefsStr: function splitRefsStr(str) {
-    var trimmed = str.trim();
-    var split = trimmed.split(/\s+/);
-    return split;
-  },
-
-  // check an array of policy refs for any characters
-  // other than alpha-numeric.
-  // @returns an array of invalid refs with offending
-  // chars bracketed. If all refs are valid, returns
-  // an empty array
-  validateRefs: function validateRefs(refsArray) {
-    var invalidChars = /[^A-Z0-9-]+/gi;
-    var invalidRefs = [];
-    _underscore2['default'].each(refsArray, function (ref) {
-      if (invalidChars.test(ref)) {
-        invalidRefs.push(ref.replace(invalidChars, function ($1) {
-          return '[' + $1 + ']';
-        }));
-      }
-    });
-    return invalidRefs;
-  },
-
-  // Create options hash to match Collection.sync's requirements,
-  // and post to the activiti api
-  submit: function submit() {
-    var _this = this;
-
-    var options = _extends({}, this.options);
-    options.attrs = this.body;
-    options.success = function (resp) {
-      if (!_this.set(_this.parse(resp, options), options)) return false;
-      _this.trigger('sync', _this, resp, options);
-    };
-    options.error = function (resp) {
-      _this.trigger('error', _this, resp, options);
-    };
-    return this.sync('create', this, options);
-  },
-
-  _onXHRError: function _onXHRError(collection, xhr) {
-    var status = xhr.status;
-    var statusText = xhr.statusText;
-
-    _ampersandApp2['default'].errors.add({ status: status, statusText: statusText, xhr: xhr });
   }
-});
+
+  _createClass(FormData, [{
+    key: 'url',
+    value: function url() {
+      if (!this.batchType) {
+        _ampersandApp2['default'].errors.add({
+          error: 'Batch Type Not Set',
+          status: 'BatchTypeException',
+          exception: 'BatchTypeException',
+          message: 'Fatal error: batchType value is missing',
+          path: '/icg/batch-processes/' + this.batchType
+        });
+      } else {
+        return this.urlRoot + '/icg/batch-processes/' + this.batchType;
+      }
+    }
+
+    // set up the Auth header one time for all requests
+  }, {
+    key: 'ajaxConfig',
+    value: function ajaxConfig() {
+      return {
+        xhrFields: {
+          timeout: 0 // override 5 second timeout
+        },
+        beforeSend: function beforeSend(xhr) {
+          xhr.setRequestHeader('Authorization', _ampersandApp2['default'].user.getBasic());
+        }
+      };
+    }
+  }, {
+    key: 'setBatchType',
+    value: function setBatchType(type) {
+      this.batchType = type;
+    }
+
+    // sets the request body to a given data payload
+  }, {
+    key: 'setBody',
+    value: function setBody(data) {
+      this.body = data;
+    }
+
+    // Create options hash to match Collection.sync's requirements,
+    // and post to the activiti api
+  }, {
+    key: 'submit',
+    value: function submit() {
+      var _this = this;
+
+      var options = _extends({}, this.options);
+      options.attrs = this.body;
+      options.success = function (resp) {
+        if (!_this.set(_this.parse(resp, options), options)) return false;
+        _this.trigger('sync', _this, resp, options);
+      };
+      options.error = function (resp) {
+        _this.trigger('error', _this, resp, options);
+      };
+      return this.sync('create', this, options);
+    }
+  }, {
+    key: '_onXHRError',
+    value: function _onXHRError(model, xhr) {
+      _ampersandApp2['default'].errors.parseError(xhr);
+    }
+  }]);
+
+  return FormData;
+})(_ampersandModel2['default']);
+
+exports['default'] = FormData;
 module.exports = exports['default'];
 
-},{"ampersand-app":1,"ampersand-model":45,"underscore":1015}],1041:[function(require,module,exports){
+},{"ampersand-app":1,"ampersand-model":45}],1049:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
+
+var _get = function get(_x, _x2, _x3) { var _again = true; _function: while (_again) { var object = _x, property = _x2, receiver = _x3; desc = parent = getter = undefined; _again = false; if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { _x = parent; _x2 = property; _x3 = receiver; _again = true; continue _function; } } else if ('value' in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } } };
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== 'function' && superClass !== null) { throw new TypeError('Super expression must either be null or a function, not ' + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _ampersandModel = require('ampersand-model');
+
+var _ampersandModel2 = _interopRequireDefault(_ampersandModel);
+
+var _ampersandApp = require('ampersand-app');
+
+var _ampersandApp2 = _interopRequireDefault(_ampersandApp);
+
+var TaskAction = (function (_Model) {
+  _inherits(TaskAction, _Model);
+
+  function TaskAction() {
+    _classCallCheck(this, TaskAction);
+
+    _get(Object.getPrototypeOf(TaskAction.prototype), 'constructor', this).call(this);
+    this.urlRoot = _ampersandApp2['default'].urlRoot;
+    this.body = null;
+
+    // errors are pushed to an Errors collection
+    this.on('error', this._onXHRError);
+  }
+
+  _createClass(TaskAction, [{
+    key: 'url',
+    value: function url() {
+      return this.urlRoot + '/icg/batch-processes/tasks/';
+    }
+
+    // set up the Auth header one time for all requests
+  }, {
+    key: 'ajaxConfig',
+    value: function ajaxConfig() {
+      return {
+        xhrFields: {
+          timeout: 0 // override 5 second timeout
+        },
+        beforeSend: function beforeSend(xhr) {
+          xhr.setRequestHeader('Authorization', _ampersandApp2['default'].user.getBasic());
+        }
+      };
+    }
+
+    // sets the request body to a given data payload
+  }, {
+    key: 'setBody',
+    value: function setBody(data) {
+      this.body = data;
+    }
+
+    // Create options hash to match Collection.sync's requirements,
+    // and post to the activiti api
+  }, {
+    key: 'submit',
+    value: function submit() {
+      var _this = this;
+
+      var options = _extends({}, this.options);
+      options.attrs = this.body;
+      options.success = function (resp) {
+        if (!_this.set(_this.parse(resp, options), options)) return false;
+        _this.trigger('sync', _this, resp, options);
+      };
+      options.error = function (resp) {
+        _this.trigger('error', _this, resp, options);
+      };
+      return this.sync('create', this, options);
+    }
+  }, {
+    key: '_onXHRError',
+    value: function _onXHRError(model, xhr) {
+      _ampersandApp2['default'].errors.parseError(xhr);
+    }
+  }]);
+
+  return TaskAction;
+})(_ampersandModel2['default']);
+
+exports['default'] = TaskAction;
+module.exports = exports['default'];
+
+},{"ampersand-app":1,"ampersand-model":45}],1050:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -67883,8 +69048,18 @@ exports['default'] = _baseModel2['default'].extend({
         return this.getVariableValue('batchId');
       }
     },
+    currentTaskId: {
+      fn: function deriveCurrentTaskId() {
+        return this.getVariableValue('currentTaskId');
+      }
+    },
+    currentAssignee: {
+      fn: function deriveCurrentAssignee() {
+        return this.getVariableValue('currentAssignee');
+      }
+    },
     errorCode: {
-      fn: function defiveErrorCode() {
+      fn: function deriveErrorCode() {
         return this.getVariableValue('errorCode');
       }
     },
@@ -67905,47 +69080,45 @@ exports['default'] = _baseModel2['default'].extend({
     },
     policyLookup: {
       fn: function derivePolicyLookup() {
-        return this.getVariableValue('policyLookup');
+        return this.getVariableValue('policyLookup') || this.getVariableValue('policyNumberBase');
       }
     },
     processDefinitionKey: {
       deps: ['processDefinitionId'],
       fn: function fn() {
-        return this.processDefinitionId.split(':')[0];
+        var key = this.processDefinitionId.split(':')[0];
+        return key.charAt(0).toUpperCase() + key.slice(1);
       }
     },
+
+    // derive a status label from the given information
+    // className corresponds to the bootstrap 3 label classes
     status: {
-      // derive a status label from the given information
-      // className corresponds to the bootstrap 3 label classes
+      deps: ['endActivityId'],
       fn: function deriveStatus() {
-        if (this.endActivityId === 'endEvent') {
-          return {
-            className: 'label label-success',
-            message: 'SUCCESS: COMPLETE'
-          };
-        } else if (this.endActivityId === 'endEventError') {
-          return {
-            className: 'label label-danger',
-            message: 'ERROR: COMPLETE'
-          };
-        } else if (this.endActivityId === null && this.getVariableValue('hasException')) {
-          return {
-            className: 'label label-warning',
-            message: 'ERROR: ACTION NEEDED'
-          };
-        } else {
-          return {
-            className: 'label label-info',
-            message: 'IN PROGRESS'
-          };
+        var endActivityId = this.endActivityId;
+
+        var hasException = this.getVariableValue('hasException');
+        if (endActivityId === 'endEvent') {
+          return 'end-success';
         }
+        if (endActivityId === 'errorEndEvent') {
+          return 'end-error';
+        }
+        if (!endActivityId && hasException === true) {
+          return 'action-required';
+        }
+        if (!endActivityId && hasException === false) {
+          return 'in-progress';
+        }
+        return 'started';
       }
     }
   }
 });
 module.exports = exports['default'];
 
-},{"./base-model":1037}],1042:[function(require,module,exports){
+},{"./base-model":1045}],1051:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -67972,8 +69145,8 @@ exports['default'] = _ampersandRouter2['default'].extend({
   routes: {
     '': 'main',
     'batches': 'batches',
-    'policies': 'policies',
-    'policies/?*params': 'policies',
+    'tasks': 'tasks',
+    'tasks/bid/:bid': 'tasks',
     'batch-action/:type/:name': 'batchActionModal',
     '*notFound': 'notFound'
   },
@@ -67988,13 +69161,9 @@ exports['default'] = _ampersandRouter2['default'].extend({
     this.main({ tab: 'batches' });
   },
 
-  policies: function policies(params) {
-    var _deparam = (0, _nodeQsSerialization.deparam)(params);
-
-    var bid = _deparam.bid;
-
-    var activeBatchId = bid ? '' + bid : '0';
-    this.main({ activeBatchId: activeBatchId, tab: 'policies' });
+  tasks: function tasks(batchId) {
+    var activeBatchId = batchId ? '' + batchId : '0'; // default to id '0', which is all the tasks
+    this.main({ activeBatchId: activeBatchId, tab: 'tasks' });
   },
 
   batchActionModal: function batchActionModal(batchType, actionName) {
@@ -68006,13 +69175,33 @@ exports['default'] = _ampersandRouter2['default'].extend({
     });
   },
 
-  notFound: function notFound() {
-    console.log('NOT FOUND');
+  notFound: function notFound(route) {
+    this.errors.add({
+      error: 'Route Not Found',
+      status: 'NotFound',
+      exception: null,
+      message: '"#' + route + '" not match any known route.',
+      path: '#' + route
+    });
   }
 });
 module.exports = exports['default'];
 
-},{"./components/main":1029,"ampersand-router":649,"node-qs-serialization":706,"react":1014}],1043:[function(require,module,exports){
+},{"./components/main":1031,"ampersand-router":649,"node-qs-serialization":706,"react":1014}],1052:[function(require,module,exports){
+'use strict';
+
+Object.defineProperty(exports, '__esModule', {
+  value: true
+});
+function getUrlRoot(ENV, APP_PATH, STAGE_BASE, PROD_BASE) {
+  var base = ENV === 'PROD' ? PROD_BASE : STAGE_BASE;
+  return '' + base + APP_PATH;
+}
+
+exports['default'] = getUrlRoot;
+module.exports = exports['default'];
+
+},{}],1053:[function(require,module,exports){
 'use strict';
 
 Object.defineProperty(exports, '__esModule', {
@@ -68021,39 +69210,35 @@ Object.defineProperty(exports, '__esModule', {
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
 
-var _underscore = require('underscore');
-
-var _underscore2 = _interopRequireDefault(_underscore);
-
 var _libCookie = require('./lib/cookie');
 
 var _libCookie2 = _interopRequireDefault(_libCookie);
 
+// Login relies on the token cookie set by Policy Central
 var cookie = new _libCookie2['default']();
-var token = 'ZGV2QGljZzM2MC5jb206bW92aWVMdW5jaGVzRlRXMjAxNQ='; // cookie.get('ics360_PolicyCentral') || '';
+var str = cookie.get('ics360_PolicyCentral') || '';
 
+// Some details about the user should have been persisted to session storage
 var userJSON = window.sessionStorage.getItem('user');
 var user = JSON.parse(userJSON) || {};
 
-function getBasicAuth() {
-  return 'Basic ' + token;
+function User(name) {
+  this.name = name;
 }
+User.prototype.getBasic = function getBasic() {
+  return 'Basic ' + str;
+};
 
-function validate() {
-  if (!token.length || !_underscore2['default'].has(user, 'email') || !_underscore2['default'].has(user, 'name') || !_underscore2['default'].has(user, 'username')) {
+// no token, no login
+function validateUser() {
+  if (!str.length) {
     document.location = '/#login';
+    return null;
   }
-  return {
-    getBasicAuth: getBasicAuth,
-    name: user.name,
-    username: user.username,
-    email: user.email
-  };
+  return new User(user.name || user.username || user.email); // attempt to derive some kind of username
 }
 
-user.validate = validate;
-
-exports['default'] = user;
+exports['default'] = validateUser;
 module.exports = exports['default'];
 
-},{"./lib/cookie":1034,"underscore":1015}]},{},[1017]);
+},{"./lib/cookie":1041}]},{},[1018]);

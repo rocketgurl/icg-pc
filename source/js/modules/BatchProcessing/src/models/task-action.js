@@ -1,11 +1,10 @@
 import Model from 'ampersand-model';
 import app from 'ampersand-app';
 
-class FormData extends Model {
+class TaskAction extends Model {
   constructor() {
     super();
     this.urlRoot = app.urlRoot;
-    this.batchType = null;
     this.body = null;
 
     // errors are pushed to an Errors collection
@@ -13,17 +12,7 @@ class FormData extends Model {
   }
 
   url() {
-    if (!this.batchType) {
-      app.errors.add({
-        error: 'Batch Type Not Set',
-        status: 'BatchTypeException',
-        exception: 'BatchTypeException',
-        message: 'Fatal error: batchType value is missing',
-        path: `/icg/batch-processes/${this.batchType}`
-      });
-    } else {
-      return `${this.urlRoot}/icg/batch-processes/${this.batchType}`;
-    }
+    return `${this.urlRoot}/icg/batch-processes/tasks/`;
   }
 
   // set up the Auth header one time for all requests
@@ -36,10 +25,6 @@ class FormData extends Model {
         xhr.setRequestHeader('Authorization', app.user.getBasic());
       }
     };
-  }
-
-  setBatchType(type) {
-    this.batchType = type;
   }
 
   // sets the request body to a given data payload
@@ -67,5 +52,5 @@ class FormData extends Model {
   }
 }
 
-export default FormData;
+export default TaskAction;
 

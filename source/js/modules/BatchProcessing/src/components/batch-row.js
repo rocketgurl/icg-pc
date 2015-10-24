@@ -2,9 +2,6 @@ import React from 'react';
 import app from 'ampersand-app';
 import moment from 'moment';
 
-// Jun 07, 2014 8:56 AM
-const DATE_FORMAT = 'MMM DD, YYYY h:mm A';
-
 export default React.createClass({
   getStatusLabel(batch) {
     const {status,
@@ -28,7 +25,7 @@ export default React.createClass({
         break;
       case 'in-progress':
         if (numberOfErrorInstances > 0)
-          className = 'label label-warning';
+          className = 'label label-block label-warning';
         break;
     }
 
@@ -37,13 +34,14 @@ export default React.createClass({
 
   render() {
     const {batch} = this.props;
+    const dateFormat = app.constants.dates.USER_FORMAT;
     return (
       <a className="tr" href={`#tasks/bid/${batch.id}`}>
         <div className="td">{this.getStatusLabel(batch)}</div>
         <div className="td batch-id">{batch.type}</div>
         <div className="td batch-id">{batch.id}</div>
         <div className="td">{batch.numberOfInstances}</div>
-        <div className="td">{moment(batch.startTime).format(DATE_FORMAT)}</div>
+        <div className="td">{moment(batch.startTime).format(dateFormat)}</div>
         <div className="td">{batch.startUserId}</div>
       </a>
       );

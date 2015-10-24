@@ -37,8 +37,8 @@ class BaseCollection extends Collection {
       xhrFields: {
         timeout: 0 // override 5 second timeout
       },
-      headers: {
-        Authorization: app.user.getBasic()
+      beforeSend(xhr) {
+        xhr.setRequestHeader('Authorization', app.user.getBasic());
       }
     };
   }

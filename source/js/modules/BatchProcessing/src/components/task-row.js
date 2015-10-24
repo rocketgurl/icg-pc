@@ -3,16 +3,18 @@ import {OverlayTrigger, Popover} from 'react-bootstrap';
 import app from 'ampersand-app';
 import moment from 'moment';
 
-// Jun 07, 2014 8:56 AM
-const DATE_FORMAT = 'MMM DD, YYYY h:mm A';
-
 export default React.createClass({
   getInitialState() {
-    return {checked: this.props.checked};
+    return {selected: this.props.selected};
   },
 
   componentWillReceiveProps(newProps) {
-    this.setState({checked: newProps.checked});
+    if (newProps.selected !== this.state.selected)
+      this._setSelected(newProps.selected);
+  },
+
+  componentWillUnmount() {
+    this._setSelected(false);
   },
 
   getStatusLabel(task) {
@@ -42,7 +44,8 @@ export default React.createClass({
 
   render() {
     const {task, enabled} = this.props;
-    const {checked} = this.state;
+    const {selected} = this.state;
+    const dateFormat = app.constants.dates.USER_FORMAT;
     const errorMessage = `${task.errorCode} - ${task.errorMessage}`;
     const infoPopover = (
       <OverlayTrigger key="overlay" rootClose trigger="click" placement="left"
@@ -53,16 +56,16 @@ export default React.createClass({
 
     return (
       <div id={task.id}
-        className={`tr${checked ? ' active' : ''}`}
-        onClick={this._onClick}
-        title={`Process Instance ID ${task.id}`}>
+        className={`tr${selected ? ' active' : ''}`}
+        title={`Process Instance ID ${task.id}`}
+        onClick={this._onRowClick}>
         <div className="td task-select">
           <input type="checkbox"
-            checked={checked}
+            checked={selected}
             disabled={!enabled}
-            onChange={this._onCheckToggle}/>
+            onChange={app.noop}/>
         </div>
-        <div className="td">{moment(task.startTime).format(DATE_FORMAT)}</div>
+        <div className="td">{moment(task.startTime).format(dateFormat)}</div>
         <div className="td policy-lookup">{task.policyLookup}</div>
         <div className="td batch-id">{`${task.processDefinitionKey} ${task.batchId}`}</div>
         <div className="td">{task.currentAssignee}</div>
@@ -76,12 +79,14 @@ export default React.createClass({
       );
   },
 
-  _onClick(e) {
-    if (this.props.enabled)
-      this.setState({checked: !this.state.checked});
+  _setSelected(selected) {
+    if (this.props.enabled) {
+      this.setState({selected});
+      app.selectedTasks[selected ? 'add' : 'remove'](this.props.task);
+    }
   },
 
-  _onCheckToggle(e) {
-    this.setState({checked: e.target.checked});
-  },
+  _onRowClick() {
+    this._setSelected(!this.state.selected);
+  }
 });

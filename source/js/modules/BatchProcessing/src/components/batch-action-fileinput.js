@@ -1,14 +1,12 @@
 import React from 'react';
 import _ from 'underscore';
+import app from 'ampersand-app';
 import moment from 'moment';
 import {Modal} from 'react-bootstrap';
 import Papa from 'papaparse';
 import {validateString, validatePolicyNum} from '../lib/validators';
 
-// 2015-09-09T00:00:00.000-04:00
-const DATE_FORMAT = 'YYYY-MM-DDThh:mm:ss.SSSZ'
-
-const CSV_COLUMNS = [
+const paymentColumns = [
   'PaymentMethod',
   'PaymentReceivedDate',
   'LockBoxReference',
@@ -186,6 +184,7 @@ export default React.createClass({
   //   "referenceNum": "12345"
   // }]
   _processCSVData(results) {
+    const dateFormat = app.constants.dates.SYSTEM_FORMAT;
     let paymentsList = [];
     let transformed  = {};
 
@@ -193,7 +192,7 @@ export default React.createClass({
     results.totalBatchAmountActual = 0;
 
     // check for any missing columns
-    const missingFields = _.difference(CSV_COLUMNS, results.meta.fields);
+    const missingFields = _.difference(paymentColumns, results.meta.fields);
     if (missingFields.length > 0) {
       results.errors.push(this._formatError(
         'Fields',
@@ -217,16 +216,16 @@ export default React.createClass({
         });
 
         // validate the format of the Policy Number
-        const policyLookup = validatePolicyNum(validated.PolicyNumberBase)
-        if (policyLookup.indexOf('Error') > -1) {
-          results.errors.push(this._formatError('PolicyNumberBase', policyLookup, index+1));
-        } else if (policyLookup.length > 10) {
-            transformed[index+1] = {orig: policyLookup, trans: policyLookup.slice(0, 10)};
+        const policyNumberBase = validatePolicyNum(validated.PolicyNumberBase);
+        if (policyNumberBase.indexOf('Error') > -1) {
+          results.errors.push(this._formatError('PolicyNumberBase', policyNumberBase, index+1));
+        } else if (policyNumberBase.length > 10) {
+            transformed[index+1] = {orig: policyNumberBase, trans: policyNumberBase.slice(0, 10)};
         }
 
         // delegate date validation for received date to moment
         const receivedDate = moment(row.PaymentReceivedDate, 'MM/DD/YYYY');
-        if (receivedDate.format(DATE_FORMAT) === 'Invalid date') {
+        if (receivedDate.format(dateFormat) === 'Invalid date') {
           results.errors.push(this._formatError(
             'PaymentReceivedDate',
             'PaymentReceivedDate must be a valid date and match format MM/DD/YY',
@@ -250,10 +249,10 @@ export default React.createClass({
         // formatted for api consumption
         return {
           amount: parseFloat(amount),
-          receivedDate: receivedDate.format(DATE_FORMAT),
+          receivedDate: receivedDate.format(dateFormat),
           method: validated.PaymentMethod,
           referenceNum: validated.PaymentReference,
-          policyLookup: `${parseFloat(policyLookup.slice(3, 10))}`,
+          policyNumberBase: `${parseFloat(policyNumberBase.slice(3, 10))}`,
           lockBoxReference: validated.LockBoxReference
         };
       });

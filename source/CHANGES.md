@@ -1,3 +1,7 @@
+### 3.1.9 - Oct 14, 2015
+
+- Updates to TX and CA IPM Endorse Forms
+
 ### 3.1.8 - Sep 30, 2015
 
 - Includes updates to IPM form templates to standard Bootstrap format
