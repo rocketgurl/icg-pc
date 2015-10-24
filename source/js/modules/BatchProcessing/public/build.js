@@ -67341,7 +67341,7 @@ exports['default'] = _react2['default'].createClass({
         message = 'FINISHED: ' + numberOfSuccessInstances + '\n                     out of ' + numberOfInstances + ' complete';
         break;
       case 'in-progress':
-        if (numberOfErrorInstances > 0) className = 'label label-warning';
+        if (numberOfErrorInstances > 0) className = 'label label-block label-warning';
         break;
     }
 
@@ -69194,8 +69194,7 @@ Object.defineProperty(exports, '__esModule', {
   value: true
 });
 function getUrlRoot(ENV, APP_PATH, STAGE_BASE, PROD_BASE) {
-  // const base = ENV === 'PROD' ? PROD_BASE : STAGE_BASE;
-  var base = '';
+  var base = ENV === 'PROD' ? PROD_BASE : STAGE_BASE;
   return '' + base + APP_PATH;
 }
 
