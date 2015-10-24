@@ -14,6 +14,7 @@ export default React.createClass({
 
   getInitialState() {
     return {
+      isRequesting: false,
       sortTable: {
         startTime: {
           active: true,
@@ -25,10 +26,18 @@ export default React.createClass({
 
   componentWillMount() {
     const {collection} = this.props;
+    collection.on({
+      request: this._onCollectionRequest,
+      sync: this._onCollectionSync
+    });
     this.setState({collection, ...collection.getParameters()});
     if (!collection.length) {
       collection.query();
     }
+  },
+
+  componentWillUnmount() {
+    this.props.collection.off();
   },
 
   makeQuery() {
@@ -36,12 +45,13 @@ export default React.createClass({
   },
 
   render() {
-    const {sort, order, collection} = this.state;
+    const {sort, order, collection, isRequesting} = this.state;
     return (
       <div>
         <div className="tab-pane-heading">
           <TableControls {...this.state}
             controlType="batches"
+            isRequesting={isRequesting}
             processDefinitionKeys={processDefinitionKeys}
             status={collection.status}
             pageStart={collection.pageStart}
@@ -92,5 +102,13 @@ export default React.createClass({
     collection.updateParameter(name, value);
     this.setState({...collection.getParameters()});
     this.makeQuery();
+  },
+
+  _onCollectionSync() {
+    this.setState({isRequesting: false});
+  },
+
+  _onCollectionRequest() {
+    this.setState({isRequesting: true});
   }
 });

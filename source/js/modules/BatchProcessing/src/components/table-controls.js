@@ -7,6 +7,7 @@ import DatePicker from 'react-datepicker';
 export default React.createClass({
   propTypes: {
     controlType: React.PropTypes.string.isRequired,
+    isRequesting: React.PropTypes.bool.isRequired,
     processDefinitionKeys: React.PropTypes.array.isRequired,
     pageStart: React.PropTypes.number.isRequired,
     pageEnd: React.PropTypes.number.isRequired,
@@ -32,6 +33,7 @@ export default React.createClass({
 
   render() {
     const {
+      isRequesting,
       startedAfter,
       startedBefore,
       pageStart,
@@ -46,6 +48,7 @@ export default React.createClass({
                 <div className="td">
                   <select
                     name="processDefinitionKey"
+                    disabled={isRequesting}
                     defaultValue={this.props.processDefinitionKey}
                     className="form-control input-sm"
                     onChange={this._onSelectChange}>
@@ -58,6 +61,7 @@ export default React.createClass({
                 <div className="td">
                   <select
                     name="status"
+                    disabled={isRequesting}
                     defaultValue={this.props.status}
                     className="form-control input-sm"
                     onChange={this.props.filterByStatus}>
@@ -71,6 +75,7 @@ export default React.createClass({
                 <div className="td">
                   <select
                     name="startedBy"
+                    disabled={isRequesting}
                     defaultValue={this.props.startedBy}
                     className="form-control input-sm"
                     onChange={this._onSelectChange}>
@@ -80,6 +85,7 @@ export default React.createClass({
                 <div className="td clearable">
                   <DatePicker
                     name="startedAfter"
+                    disabled={isRequesting}
                     selected={startedAfter ? moment(startedAfter) : null}
                     onChange={this._onDateChange('startedAfter')}
                     placeholderText="From&hellip;"
@@ -88,6 +94,7 @@ export default React.createClass({
                     <button
                       className="close"
                       data-dismiss="startedAfter"
+                      disabled={isRequesting}
                       onClick={this._onClearButtonClick}>
                       &times;
                     </button> : null}
@@ -95,6 +102,7 @@ export default React.createClass({
                 <div className="td clearable">
                   <DatePicker
                     name="startedBefore"
+                    disabled={isRequesting}
                     selected={startedBefore ? moment(startedBefore) : null}
                     onChange={this._onDateChange('startedBefore')}
                     placeholderText="To&hellip;"
@@ -103,6 +111,7 @@ export default React.createClass({
                     <button
                       className="close"
                       data-dismiss="startedBefore"
+                      disabled={isRequesting}
                       onClick={this._onClearButtonClick}>
                       &times;
                     </button> : null}
@@ -117,13 +126,13 @@ export default React.createClass({
               <div className="btn-group">
                 <button
                   className="btn btn-default btn-sm"
-                  disabled={pageStart <= 1}
+                  disabled={pageStart <= 1 || isRequesting}
                   onClick={this.props.decrementPage}>
                   <span className="glyphicon glyphicon-menu-left"/>
                 </button>
                 <button
                   className="btn btn-default btn-sm"
-                  disabled={pageEnd >= totalItems}
+                  disabled={pageEnd >= totalItems || isRequesting}
                   onClick={this.props.incrementPage}>
                   <span className="glyphicon glyphicon-menu-right"/>
                 </button>
@@ -144,8 +153,9 @@ export default React.createClass({
               <div className="btn-group">
                 <button
                   className="btn btn-default btn-sm"
+                  disabled={isRequesting}
                   onClick={this.props.refreshPage}>
-                  <span className="glyphicon glyphicon-refresh"/>
+                  <span className={`glyphicon glyphicon-refresh${isRequesting ? ' animate-spin' : ''}`}/>
                 </button>
               </div>
             </div>
@@ -169,7 +179,7 @@ export default React.createClass({
     this.props.updateParameter(value, 'default');
   },
 
-  // closure to caputre the targetName of the particular field
+  // closure to capture the targetName of the particular field
   // returns an anonymouse function that takes the particular
   // instance of Moment as its arguments.
   _onDateChange(targetName) {
@@ -177,7 +187,8 @@ export default React.createClass({
       if (targetName === 'startedBefore') {
         momentInstance.add(1, 'days');
       }
-      this.props.updateParameter(targetName, momentInstance.format());
+      this.props.updateParameter(
+        targetName, momentInstance.format(app.constants.dates.SYSTEM_FORMAT));
     }
   }
 });

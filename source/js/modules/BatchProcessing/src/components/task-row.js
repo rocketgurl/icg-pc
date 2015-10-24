@@ -83,7 +83,6 @@ export default React.createClass({
     if (this.props.enabled) {
       this.setState({selected});
       app.selectedTasks[selected ? 'add' : 'remove'](this.props.task);
-      console.log(app.selectedTasks.length)
     }
   },
 

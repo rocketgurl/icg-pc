@@ -88,7 +88,6 @@ export default React.createClass({
   },
 
   render() {
-    const dateFormat = app.constants.dates.SYSTEM_FORMAT;
     const {isRequesting} = this.props;
     const hasErrors = this.state.errors.length > 0;
     const hasPayments = this.state.paymentsList.length > 0;
@@ -185,6 +184,7 @@ export default React.createClass({
   //   "referenceNum": "12345"
   // }]
   _processCSVData(results) {
+    const dateFormat = app.constants.dates.SYSTEM_FORMAT;
     let paymentsList = [];
     let transformed  = {};
 
@@ -216,11 +216,11 @@ export default React.createClass({
         });
 
         // validate the format of the Policy Number
-        const policyLookup = validatePolicyNum(validated.PolicyNumberBase)
-        if (policyLookup.indexOf('Error') > -1) {
-          results.errors.push(this._formatError('PolicyNumberBase', policyLookup, index+1));
-        } else if (policyLookup.length > 10) {
-            transformed[index+1] = {orig: policyLookup, trans: policyLookup.slice(0, 10)};
+        const policyNumberBase = validatePolicyNum(validated.PolicyNumberBase);
+        if (policyNumberBase.indexOf('Error') > -1) {
+          results.errors.push(this._formatError('PolicyNumberBase', policyNumberBase, index+1));
+        } else if (policyNumberBase.length > 10) {
+            transformed[index+1] = {orig: policyNumberBase, trans: policyNumberBase.slice(0, 10)};
         }
 
         // delegate date validation for received date to moment
@@ -252,7 +252,7 @@ export default React.createClass({
           receivedDate: receivedDate.format(dateFormat),
           method: validated.PaymentMethod,
           referenceNum: validated.PaymentReference,
-          policyLookup: `${parseFloat(policyLookup.slice(3, 10))}`,
+          policyNumberBase: `${parseFloat(policyNumberBase.slice(3, 10))}`,
           lockBoxReference: validated.LockBoxReference
         };
       });

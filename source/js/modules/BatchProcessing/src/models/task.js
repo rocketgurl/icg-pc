@@ -56,7 +56,8 @@ export default BaseModel.extend({
     },
     policyLookup: {
       fn: function derivePolicyLookup() {
-        return this.getVariableValue('policyLookup');
+        return this.getVariableValue('policyLookup') ||
+          this.getVariableValue('policyNumberBase');
       }
     },
     processDefinitionKey: {

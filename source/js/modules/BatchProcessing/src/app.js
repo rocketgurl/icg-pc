@@ -7,6 +7,7 @@ import Router from './router';
 import ErrorsCollection from './collections/errors';
 import BatchesCollection from './collections/batches';
 import TasksCollection from './collections/tasks';
+import SelectedTasksCollection from './collections/selected-tasks';
 import FormDataModel from './models/form-data';
 import TaskActionModel from './models/task-action';
 
@@ -21,7 +22,7 @@ app.extend(window.app, {
     this.errors = new ErrorsCollection();
     this.batches = new BatchesCollection();
     this.allTasks = new TasksCollection();
-    this.selectedTasks = new TasksCollection();
+    this.selectedTasks = new SelectedTasksCollection();
     this.formData = new FormDataModel();
     this.taskAction = new TaskActionModel();
     this.router = new Router({});
