@@ -49,7 +49,7 @@ export default React.createClass({
     const errorMessage = `${task.errorCode} - ${task.errorMessage}`;
     const infoPopover = (
       <OverlayTrigger key="overlay" rootClose trigger="click" placement="left"
-        overlay={<Popover title={errorMessage}>{task.errorResponse}</Popover>}>
+        overlay={<Popover id={`task-${task.id}`} title={errorMessage}>{task.errorResponse}</Popover>}>
         <span title="Click for more info"
           className="glyphicon glyphicon-info-sign info-toggle"></span>
       </OverlayTrigger>);

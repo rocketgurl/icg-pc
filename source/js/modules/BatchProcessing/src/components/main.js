@@ -7,7 +7,7 @@ import BatchActionModal from './batch-action-modal';
 import TaskActionSelect from './task-action-select';
 import BatchesTable from './batches-table';
 import TasksTable from './tasks-table';
-import {Nav, NavItem, TabPane} from 'react-bootstrap';
+import {Nav, NavItem, Tab} from 'react-bootstrap';
 
 export default React.createClass({
   getDefaultProps() {
@@ -76,12 +76,12 @@ export default React.createClass({
           </Nav>
           <div className="panel-body">
             <TabContent activeKey={tab}>
-              <TabPane key="batches">
+              <Tab key="batches">
                 <BatchesTable collection={this.state.batches}/>
-              </TabPane>
-              <TabPane key="tasks">
+              </Tab>
+              <Tab key="tasks">
                 {this.getTasksTable()}
-              </TabPane>
+              </Tab>
             </TabContent>
           </div>
         </div>

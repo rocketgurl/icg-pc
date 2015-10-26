@@ -1,4 +1,5 @@
 import Router from 'ampersand-router';
+import ReactDOM from 'react-dom';
 import React from 'react';
 import Main from './components/main';
 import {deparam} from 'node-qs-serialization';
@@ -14,7 +15,7 @@ export default Router.extend({
   },
 
   main(props={}) {
-    React.render(<Main {...props}/>, document.getElementById('main'));
+    ReactDOM.render(<Main {...props}/>, document.getElementById('main'));
   },
 
   batches() {
