@@ -1,8 +1,13 @@
 import _ from 'underscore';
-import Collection from 'ampersand-rest-collection';
+import Collection from 'ampersand-collection';
+import lodashMixin from 'ampersand-collection-lodash-mixin';
+import restMixins from 'ampersand-collection-rest-mixin';
 import app from 'ampersand-app';
 
-class BaseCollection extends Collection {
+// grant magical XHR powers to the collection
+const RestCollection = Collection.extend(lodashMixin, restMixins);
+
+class BaseCollection extends RestCollection {
 
   constructor() {
     super();

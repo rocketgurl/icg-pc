@@ -1,4 +1,4 @@
-import Collection from 'ampersand-rest-collection';
+import Collection from 'ampersand-collection';
 import moment from 'moment';
 import _ from 'underscore';
 import {constants} from 'ampersand-app';

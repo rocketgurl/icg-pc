@@ -1,4 +1,4 @@
-import Collection from 'ampersand-rest-collection';
+import Collection from 'ampersand-collection';
 import ErrorModel from '../models/error';
 
 class Errors extends Collection {

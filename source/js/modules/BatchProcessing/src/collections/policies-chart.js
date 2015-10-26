@@ -1,5 +1,5 @@
 import _ from 'underscore';
-import Collection from 'ampersand-rest-collection';
+import Collection from 'ampersand-collection';
 import Task from '../models/task';
 
 const CHANGE_EVENT = 'change';
