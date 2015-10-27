@@ -58615,6 +58615,7 @@ var Tasks = (function (_BaseCollection) {
     _get(Object.getPrototypeOf(Tasks.prototype), 'constructor', this).call(this);
 
     this.model = _modelsTask2['default'];
+    this.assignee = null;
 
     // This default query should return all "non-batch" processes
     this.variables = [{
@@ -58632,6 +58633,12 @@ var Tasks = (function (_BaseCollection) {
     key: 'setBatchId',
     value: function setBatchId(batchId) {
       if (batchId !== '0') this.updateProcessVariable('batchId', 'equals', batchId);
+    }
+  }, {
+    key: 'filterByAssignee',
+    value: function filterByAssignee(assignee) {
+      if (!assignee) this.deleteProcessVariable('currentAssignee');else this.updateProcessVariable('currentAssignee', 'equals', assignee);
+      this.query();
     }
 
     // enables filtering by the derived status of a task
@@ -59130,7 +59137,7 @@ exports['default'] = _react2['default'].createClass({
           receivedDate: receivedDate.format(dateFormat),
           method: validated.PaymentMethod,
           referenceNum: validated.PaymentReference,
-          policyNumberBase: '' + parseFloat(policyNumberBase.slice(3, 10)),
+          policyNumberBase: 'CRU4Q-' + parseFloat(policyNumberBase.slice(3, 10)),
           lockBoxReference: validated.LockBoxReference
         };
       });
@@ -59582,7 +59589,9 @@ exports['default'] = _react2['default'].createClass({
   _onSubmitClick: function _onSubmitClick(e) {
     var formData = this.props.formData;
 
-    formData.setBody({ policyRefsStr: this.state.joinedRefs });
+    formData.setBody({
+      policyRefsStr: this.state.joinedRefs
+    });
     formData.submit();
   }
 });
@@ -60308,24 +60317,6 @@ exports['default'] = _react2['default'].createClass({
                 _react2['default'].createElement('span', { className: 'glyphicon glyphicon-menu-right' })
               )
             ),
-            this.props.controlType === 'tasks' ? _react2['default'].createElement(
-              'div',
-              { className: 'btn-group' },
-              _react2['default'].createElement(
-                'button',
-                {
-                  disabled: true,
-                  className: 'btn btn-default btn-sm' },
-                _react2['default'].createElement('span', { className: 'glyphicon glyphicon-list' })
-              ),
-              _react2['default'].createElement(
-                'button',
-                {
-                  disabled: true,
-                  className: 'btn btn-default btn-sm' },
-                _react2['default'].createElement('span', { className: 'glyphicon glyphicon-stats' })
-              )
-            ) : null,
             _react2['default'].createElement(
               'div',
               { className: 'btn-group' },
