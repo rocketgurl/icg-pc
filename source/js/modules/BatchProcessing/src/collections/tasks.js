@@ -30,7 +30,15 @@ class Tasks extends BaseCollection {
       this.updateProcessVariable('batchId', 'equals', batchId);
   }
 
-  // enables filtering by the derived status of a task
+  filterByAssignee(assignee) {
+    this.assignee = assignee;
+    if (assignee === 'default') {
+      this.deleteProcessVariable('currentAssignee');
+    } else {
+      this.updateProcessVariable('currentAssignee', 'equals', assignee);
+    }
+  }
+
   filterByStatus(status) {
     this.status = status;
     switch (status) {
@@ -55,7 +63,6 @@ class Tasks extends BaseCollection {
         this.deleteProcessVariable('hasException');
         break;
     }
-    this.query();
   }
 }
 
