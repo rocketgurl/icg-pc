@@ -18,16 +18,21 @@ export default React.createClass({
     updateParameter: React.PropTypes.func.isRequired,
     status: React.PropTypes.string.isRequired,
     statusOpts: React.PropTypes.array,
-    filterByStatus: React.PropTypes.func
+    filterByStatus: React.PropTypes.func,
+    filterByAssignee: React.PropTypes.func
   },
 
   getDefaultProps() {
     return {
       processDefinitionKey: null,
+      assignee: null,
       status: null,
-      startedBy: null,
+      pageStart: 0,
+      pageEnd: 0,
+      totalItems: 0,
       startedAfter: null,
-      startedBefore: null
+      startedBefore: null,
+      isRequesting: false,
     };
   },
 
@@ -58,6 +63,7 @@ export default React.createClass({
                     })}
                   </select>
                 </div>
+                {this.props.controlType === 'tasks' ?
                 <div className="td">
                   <select
                     name="status"
@@ -70,17 +76,16 @@ export default React.createClass({
                       return <option key={key} value={item.value}>{item.name}</option>;
                     })}
                   </select>
-                </div>
+                </div> : null}
                 {this.props.controlType === 'tasks' ?
                 <div className="td">
-                  <select
-                    name="startedBy"
+                  <input
+                    name="assignee"
                     disabled={isRequesting}
-                    defaultValue={this.props.startedBy}
+                    defaultValue={this.props.assignee}
                     className="form-control input-sm"
-                    onChange={this._onSelectChange}>
-                    <option value="default">Assignee: All</option>
-                  </select>
+                    onBlur={this.props.filterByAssignee}
+                    placeholder="Assignee&hellip;"/>
                 </div> : null}
                 <div className="td clearable">
                   <DatePicker

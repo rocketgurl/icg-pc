@@ -63,6 +63,7 @@ export default React.createClass({
             isRequesting={isRequesting}
             statusOpts={statusOpts}
             processDefinitionKeys={processDefinitionKeys}
+            assignee={collection.assignee}
             status={collection.status}
             pageStart={collection.pageStart}
             pageEnd={collection.pageEnd}
@@ -71,7 +72,8 @@ export default React.createClass({
             decrementPage={this._onPageDecrement}
             refreshPage={this.makeQuery}
             updateParameter={this._onParameterUpdate}
-            filterByStatus={this._onStatusChange}/>
+            filterByStatus={this._onStatusChange}
+            filterByAssignee={this._onAssigneeChange}/>
         </div>
         <div className="div-table panel-table table-hover table-scrollable table-sortable table-7-columns">
           <div className="thead">
@@ -138,6 +140,14 @@ export default React.createClass({
 
   _onStatusChange(e) {
     this.props.collection.filterByStatus(e.target.value);
+    this.makeQuery();
+  },
+
+  _onAssigneeChange(e) {
+    const assignee = e.target.value || 'default';
+    const {collection} = this.props;
+    this.props.collection.filterByAssignee(assignee);
+    this.makeQuery();
   },
 
   _onCollectionSync(collection) {
