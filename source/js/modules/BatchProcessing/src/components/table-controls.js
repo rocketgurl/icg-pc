@@ -137,19 +137,6 @@ export default React.createClass({
                   <span className="glyphicon glyphicon-menu-right"/>
                 </button>
               </div>
-              {this.props.controlType === 'tasks' ?
-              <div className="btn-group">
-                <button
-                  disabled={true}
-                  className="btn btn-default btn-sm">
-                  <span className="glyphicon glyphicon-list"/>
-                </button>
-                <button
-                  disabled={true}
-                  className="btn btn-default btn-sm">
-                  <span className="glyphicon glyphicon-stats"/>
-                </button>
-              </div> : null}
               <div className="btn-group">
                 <button
                   className="btn btn-default btn-sm"
