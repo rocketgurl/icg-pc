@@ -10,7 +10,9 @@ class Tasks extends BaseCollection {
   constructor() {
     super();
 
-    this.model = TaskModel;
+    this.model    = TaskModel;
+    this.status   = 'default';
+    this.assignee = 'default';
 
     // This default query should return all "non-batch" processes
     this.variables = [{
