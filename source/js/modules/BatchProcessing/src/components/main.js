@@ -7,6 +7,7 @@ import BatchActionModal from './batch-action-modal';
 import TaskActionSelect from './task-action-select';
 import BatchesTable from './batches-table';
 import TasksTable from './tasks-table';
+import Progress from './progress';
 import {Nav, NavItem, Tab} from 'react-bootstrap';
 
 export default React.createClass({
@@ -14,7 +15,8 @@ export default React.createClass({
     return {
       showBatchActionModal: false,
       activeBatchId: '0',
-      batchType: null
+      batchType: null,
+      working: false
     };
   },
 
@@ -33,6 +35,10 @@ export default React.createClass({
   },
 
   componentWillMount() {
+    app.on({
+      request: this._onAppRequest,
+      complete: this._onAppComplete
+    });
     app.batches.on('sync', this._onBatchesSync);
     app.errors.on('add remove', this._onErrorsUpdate);
   },
@@ -55,10 +61,11 @@ export default React.createClass({
   },
 
   render() {
-    const {tab, errors} = this.state;
+    const {tab, errors, working} = this.state;
     const {showBatchActionModal, batchType, actionName} = this.props;
     return (
       <div>
+        <Progress working={working}/>
         <AlertQueue collection={errors}/>
         <div className="row action-row">
           <BatchActionSelect router={app.router}/>
@@ -87,6 +94,14 @@ export default React.createClass({
         </div>
       </div>
     );
+  },
+
+  _onAppRequest() {
+    this.setState({working: true});
+  },
+
+  _onAppComplete() {
+    this.setState({working: false});
   },
 
   _onErrorsUpdate(error, errors) {

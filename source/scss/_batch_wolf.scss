@@ -7,6 +7,16 @@
   .pc-nav {
     display: block;
   }
+
+  .progress {
+    background: transparent;
+    position: fixed;
+    top: 0;
+    left: -5px;
+    right: -5px;
+    z-index: 10000;
+    height: 4px;
+  }
 }
 
 .batch-id {
