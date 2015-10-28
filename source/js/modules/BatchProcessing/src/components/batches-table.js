@@ -28,7 +28,8 @@ export default React.createClass({
     const {collection} = this.props;
     collection.on({
       request: this._onCollectionRequest,
-      sync: this._onCollectionSync
+      error: this._onCollectionComplete,
+      sync: this._onCollectionComplete
     });
     this.setState({collection, ...collection.getParameters()});
     if (!collection.length) {
@@ -104,7 +105,7 @@ export default React.createClass({
     this.makeQuery();
   },
 
-  _onCollectionSync() {
+  _onCollectionComplete() {
     this.setState({isRequesting: false});
   },
 
