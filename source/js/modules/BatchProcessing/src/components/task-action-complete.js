@@ -110,8 +110,6 @@ export default React.createClass({
       body.policyRefsStr = policyLookups.join(',');
     }
 
-    console.log(JSON.stringify(body))
-
     return body;
   },
 

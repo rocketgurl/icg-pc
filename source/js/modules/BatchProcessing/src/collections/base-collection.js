@@ -145,6 +145,7 @@ class BaseCollection extends RestCollection {
     options.error = (resp) => {
       this.trigger('error', this, resp, options);
     };
+    console.info(JSON.stringify(options));
     return this.sync('create', this, options);
   }
 
@@ -152,15 +153,14 @@ class BaseCollection extends RestCollection {
     app.trigger('request');
   }
 
-  _onSync(...args) {
+  _onSync() {
     app.trigger('complete');
   }
 
   // errors are pushed to an Errors collection
   _onXHRError(collection, xhr) {
-    xhr = xhr.rawRequest;
-    app.errors.parseError(xhr);
-    app.trigger('complete');
+    this._onSync();
+    app.errors.parseError(xhr.rawRequest);
   }
 }
 

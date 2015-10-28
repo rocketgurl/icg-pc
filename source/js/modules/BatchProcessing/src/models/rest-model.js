@@ -43,6 +43,7 @@ class RestModel extends Model {
     options.error = (resp) => {
       this.trigger('error', this, resp, options);
     };
+    console.info(JSON.stringify(options));
     return this.sync('create', this, options);
   }
 
@@ -56,8 +57,8 @@ class RestModel extends Model {
 
   // errors are pushed to an Errors collection
   _onXHRError(model, xhr) {
+    this._onSync();
     app.errors.parseError(xhr);
-    app.trigger('complete');
   }
 }
 
