@@ -312,7 +312,7 @@ export default React.createClass({
     const {paymentsList} = this.state;
     if (paymentsList.length) {
       formData.setBody(paymentsList);
-      formData.submit();
+      formData.query();
     }
   }
 });

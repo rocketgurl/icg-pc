@@ -10,29 +10,25 @@ class Errors extends Collection {
   }
 
   parseError(xhr) {
-    const {ajaxSettings, headers, response, status, statusCode, statusText} = xhr;
-    const contentType = headers['content-type'];
+    const {headers, response, status, statusText, url} = xhr;
     try {
-      if (/application\/json/.test(contentType)) {
+      if (/application\/json/.test(headers['content-type'])) {
         this.add({...JSON.parse(response)});
-      } else if (statusCode === 0) {
+      } else if (status === 0) {
         this.add({
-          status: statusCode,
+          status,
           error: statusText || 'No Response',
-          exception: `(${statusCode}) No Server Response`,
-          message: `The server is currently unresponsive. Please contact
-the help desk if the problem persists.`,
-          path: ajaxSettings.url
+          exception: `(${status}) No Server Response`,
+          message: app.constants.messages.errors.xhr[0],
+          path: url
         });
       } else {
         this.add({
           status,
           error: statusText,
-          exception: `(${statusCode}) ${statusText}`,
-          message: `The server is temporarily unable to service your request
-due to maintenance downtime or capacity problems. Please contact the help
-desk if the problem persists.`,
-          path: ajaxSettings.url
+          exception: `(${status}) ${statusText}`,
+          message: app.constants.messages.errors.xhr.DEFAULT,
+          path: url
         });
       }
     } catch (ex) {

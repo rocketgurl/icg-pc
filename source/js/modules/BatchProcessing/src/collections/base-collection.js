@@ -31,8 +31,11 @@ class BaseCollection extends RestCollection {
     this.totalItems = 0;  // method of the BaseCollection
     this.variables  = []; // reserved for process variable queries
 
-    // errors are pushed to an Errors collection
-    this.on('error', this._onXHRError);
+    this.on({
+      request: this._onRequest,
+      error:   this._onXHRError,
+      sync:    this._onSync
+    });
   }
 
   // set up the Auth header one time for all requests
@@ -145,8 +148,19 @@ class BaseCollection extends RestCollection {
     return this.sync('create', this, options);
   }
 
+  _onRequest() {
+    app.trigger('request');
+  }
+
+  _onSync(...args) {
+    app.trigger('complete');
+  }
+
+  // errors are pushed to an Errors collection
   _onXHRError(collection, xhr) {
+    xhr = xhr.rawRequest;
     app.errors.parseError(xhr);
+    app.trigger('complete');
   }
 }
 

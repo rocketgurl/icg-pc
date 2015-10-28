@@ -6,6 +6,14 @@ const constants = {
     SYSTEM_FORMAT: 'YYYY-MM-DDThh:mm:ss.SSSZ',
     USER_FORMAT: 'MMM DD, YYYY h:mm A',
     DATEPICKER_FORMAT: 'YYYY-MM-DD'
+  },
+  messages: {
+    errors: {
+      xhr: {
+        DEFAULT: 'The server is temporarily unable to service your request due to maintenance downtime or capacity problems. Please contact the help desk if the problem persists.',
+        0: 'The server is currently unresponsive. Please contact the help desk if the problem persists.'
+      }
+    }
   }
 };
 

@@ -122,6 +122,6 @@ export default React.createClass({
   _onSubmitClick(e) {
     const {taskAction} = this.props;
     taskAction.setBody(this._getDataBody());
-    taskAction.submit();
+    taskAction.query();
   }
 });

@@ -62,6 +62,6 @@ export default React.createClass({
       taskIdList: taskIds.join(','),
       taskAssignee: this.state.assignee
     });
-    taskAction.submit();
+    taskAction.query();
   }
 });

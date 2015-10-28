@@ -139,6 +139,6 @@ export default React.createClass({
   _onSubmitClick(e) {
     const {formData} = this.props;
     formData.setBody({policyRefsStr: this.state.joinedRefs});
-    formData.submit();
+    formData.query();
   }
 });
