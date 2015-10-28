@@ -16,7 +16,7 @@ export default React.createClass({
     decrementPage: React.PropTypes.func.isRequired,
     refreshPage: React.PropTypes.func.isRequired,
     updateParameter: React.PropTypes.func.isRequired,
-    status: React.PropTypes.string.isRequired,
+    status: React.PropTypes.string,
     statusOpts: React.PropTypes.array,
     filterByStatus: React.PropTypes.func,
     filterByAssignee: React.PropTypes.func
@@ -39,6 +39,7 @@ export default React.createClass({
   render() {
     const {
       isRequesting,
+      assignee,
       startedAfter,
       startedBefore,
       pageStart,
@@ -82,7 +83,7 @@ export default React.createClass({
                   <input
                     name="assignee"
                     disabled={isRequesting}
-                    defaultValue={this.props.assignee}
+                    defaultValue={assignee === 'default' ? null : assignee}
                     className="form-control input-sm"
                     onBlur={this.props.filterByAssignee}
                     placeholder="Assignee&hellip;"/>
