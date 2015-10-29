@@ -2473,6 +2473,9 @@ ul:after { clear: both; }
 .panel-table .tr > .td:first-child, .panel-table .tr > .th:first-child { padding-left: 15px; }
 .panel-table .tr > .td:last-child, .panel-table .tr > .th:last-child { padding-right: 15px; }
 
+.error-popover { max-width: none; }
+.error-popover .popover-content { max-width: 600px; max-height: 500px; overflow: auto; }
+
 .task-select input[type="checkbox"]:disabled { opacity: 0.5; }
 
 .calc-group { margin-bottom: 0; }
