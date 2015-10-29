@@ -1,7 +1,7 @@
 import test from 'tape';
 import BaseCollection from '../base-collection';
 
-test('collection.getParameters', assert => {
+test('baseCollection.getParameters', assert => {
   const collection = new BaseCollection();
   const actual = collection.getParameters();
   const expected = {
@@ -18,7 +18,7 @@ test('collection.getParameters', assert => {
 });
 
 
-test('collection.updateParameters', assert => {
+test('baseCollection.updateParameters', assert => {
   const collection = new BaseCollection();
   const testVal = 'testing';
   let actual;
@@ -40,7 +40,7 @@ test('collection.updateParameters', assert => {
   assert.end();
 });
 
-test('collection.incrementPage', assert => {
+test('baseCollection.incrementPage', assert => {
   const collection = new BaseCollection();
   let {start} = collection.getParameters();
   let actual;
