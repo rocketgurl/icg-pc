@@ -20,7 +20,8 @@ export default React.createClass({
     return {
       invalidRefs: [],
       transformedRefs: {},
-      joinedRefs: ''
+      origRefsStr: '',
+      truncRefsStr: ''
     };
   },
 
@@ -63,8 +64,8 @@ export default React.createClass({
 
   render() {
     const {isRequesting} = this.props;
-    const {invalidRefs, transformedRefs, joinedRefs} = this.state;
-    const isEmpty = !joinedRefs.length
+    const {invalidRefs, transformedRefs, truncRefsStr} = this.state;
+    const isEmpty = !truncRefsStr.length
     const hasErrors = invalidRefs.length;
     return (
       <div className="text-area">
@@ -109,9 +110,10 @@ export default React.createClass({
   parsePolicyRefsStr(refsStr) {
     let policyRefsArray = this.splitRefsStr(refsStr);
     let invalidRefs     = [];
+    let truncatedRefs   = [];
     let transformedRefs = {};
 
-    // check policy refs for any characters other than alpha-numeric.
+    // check policy ref for any characters other than alpha-numeric.
     _.each(policyRefsArray, (ref, index) => {
       ref = validateString(ref, index+1, /[^A-Z0-9-]+/gi);
       if (ref.indexOf('Error') === -1) ref = validatePolicyNum(ref);
@@ -121,14 +123,15 @@ export default React.createClass({
         if (ref.length > 10) {
           transformedRefs[index+1] = {orig: ref, trans: ref.slice(0, 10)};
         }
-        policyRefsArray[index] = `${parseFloat(ref.slice(3, 10))}`;
+        truncatedRefs.push(`${parseFloat(ref.slice(3, 10))}`);
       }
     });
 
     this.setState({
       invalidRefs,
       transformedRefs,
-      joinedRefs: policyRefsArray.join(',')
+      origRefsStr: policyRefsArray.join(','),
+      truncRefsStr: truncatedRefs.join(',')
     });
   },
 
@@ -138,7 +141,10 @@ export default React.createClass({
 
   _onSubmitClick(e) {
     const {formData} = this.props;
-    formData.setBody({policyRefsStr: this.state.joinedRefs});
+    formData.setBody({
+      origPolicyRefsStr: this.state.origRefsStr,
+      policyRefsStr: this.state.truncRefsStr
+    });
     formData.query();
   }
 });

@@ -97,7 +97,9 @@ export default React.createClass({
     const {batchType} = this.state;
     const {selectedTasks, taskType} = this.props;
     const currentTaskIds = selectedTasks.getCurrentTaskIds();
-    const policyLookups = selectedTasks.getPolicyLookups();
+    const policyLookups = selectedTasks.getValsForKey('policyLookup');
+    const origPolicyLookups = selectedTasks.getValsForKey('origPolicyLookup');
+
     let body = {
       taskAction: `complete${batchType}`,
       resolution: (taskType === 'retry'),
@@ -107,6 +109,7 @@ export default React.createClass({
     if (batchType === 'Payment') {
       body.paymentsList = selectedTasks.getPaymentsData();
     } else {
+      body.origPolicyRefsStr = origPolicyLookups.join(',');
       body.policyRefsStr = policyLookups.join(',');
     }
 

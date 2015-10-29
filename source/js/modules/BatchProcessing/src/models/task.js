@@ -54,10 +54,24 @@ export default BaseModel.extend({
         return this.getVariableValue('hasException');
       }
     },
+    origPolicyLookup: {
+      fn: function deriveOrigPolicyLookup() {
+        return this.getVariableValue('origPolicyLookup');
+      }
+    },
     policyLookup: {
       fn: function derivePolicyLookup() {
-        return this.getVariableValue('policyLookup') ||
-          this.getVariableValue('policyNumberBase');
+        return this.getVariableValue('policyLookup');
+      }
+    },
+    origPolicyNumberBase: {
+      fn: function deriveOrigPolicyNumberBase() {
+        return this.getVariableValue('origPolicyNumberBase');
+      }
+    },
+    policyNumberBase: {
+      fn: function derivePolicyNumberBase() {
+        return this.getVariableValue('policyNumberBase');
       }
     },
     processDefinitionKey: {

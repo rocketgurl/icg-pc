@@ -16,20 +16,21 @@ class SelectedTasks extends Collection {
     });
   }
 
-  getPolicyLookups() {
+  getValsForKey(key) {
     return this.map(model => {
-      let policyLookup = model.policyLookup || '';
-      if (isString(policyLookup)) {
-        return policyLookup.trim();
+      let val = model[key];
+      if (isString(val)) {
+        return val.trim();
       }
-      return model.policyLookup;
+      return val || 'null';
     });
   }
 
   getPaymentsData() {
     return this.map(model => {
       return {
-        policyNumberBase: model.policyLookup,
+        policyNumberBase: model.policyNumberBase,
+        origPolicyNumberBase: model.origPolicyNumberBase,
         amount: model.getVariableValue('amount'),
         method: model.getVariableValue('method'),
         receivedDate: moment(model.getVariableValue('receivedDate')).format(constants.dates.SYSTEM_FORMAT),

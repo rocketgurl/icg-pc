@@ -252,6 +252,7 @@ export default React.createClass({
           receivedDate: receivedDate.format(dateFormat),
           method: validated.PaymentMethod,
           referenceNum: validated.PaymentReference,
+          origPolicyNumberBase: policyNumberBase,
           policyNumberBase: `${parseFloat(policyNumberBase.slice(3, 10))}`,
           lockBoxReference: validated.LockBoxReference
         };
