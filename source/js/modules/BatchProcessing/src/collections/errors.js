@@ -37,12 +37,7 @@ class Errors extends Collection {
   }
 
   _onErrorAdd(model) {
-    console.info(`error: ${model.error}
-status: ${model.status}
-exception: ${model.exception}
-message: ${model.message}
-path: ${model.path}
-    `);
+    console.info(JSON.stringify(model.serialize()));
   }
 }
 
