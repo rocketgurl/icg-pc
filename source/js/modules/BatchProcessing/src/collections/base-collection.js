@@ -102,13 +102,7 @@ class BaseCollection extends RestCollection {
     });
   }
 
-  addProcessVariable(name, operation, value) {
-    this.variables.push({
-      name, operation, value
-    });
-  }
-
-  // update or add JSON variables as defined by activi
+  // update (mutate) or add process variables as defined by activi
   // http://www.activiti.org/userguide/#_query_for_historic_process_instances
   updateProcessVariable(name, operation, value) {
     let variable = this.getProcessVariable(name);
@@ -116,7 +110,7 @@ class BaseCollection extends RestCollection {
       variable.operation = operation;
       variable.value = value;
     } else {
-      this.addProcessVariable(name, operation, value);
+      this.variables.push({name, operation, value});
     }
   }
 
