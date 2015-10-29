@@ -1,6 +1,6 @@
 import Collection from 'ampersand-collection';
 import moment from 'moment';
-import _ from 'underscore';
+import {isString} from 'underscore';
 import {constants} from 'ampersand-app';
 
 class SelectedTasks extends Collection {
@@ -19,7 +19,7 @@ class SelectedTasks extends Collection {
   getPolicyLookups() {
     return this.map(model => {
       let policyLookup = model.policyLookup || '';
-      if (_.isString(policyLookup)) {
+      if (isString(policyLookup)) {
         return policyLookup.trim();
       }
       return model.policyLookup;
