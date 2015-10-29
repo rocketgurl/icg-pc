@@ -79,14 +79,22 @@ export default React.createClass({
                   </select>
                 </div> : null}
                 {this.props.controlType === 'tasks' ?
-                <div className="td">
+                <div className="td clearable">
                   <input
                     name="assignee"
                     disabled={isRequesting}
-                    defaultValue={assignee === 'default' ? null : assignee}
+                    value={assignee === 'default' ? null : assignee}
                     className="form-control input-sm"
                     onBlur={this.props.filterByAssignee}
                     placeholder="Assignee&hellip;"/>
+                  {assignee === 'default' ? null :
+                    <button
+                      value="default"
+                      className="close"
+                      disabled={isRequesting}
+                      onClick={this.props.filterByAssignee}>
+                      &times;
+                    </button>}
                 </div> : null}
                 <div className="td clearable">
                   <DatePicker
@@ -99,9 +107,9 @@ export default React.createClass({
                   {startedAfter ?
                     <button
                       className="close"
-                      data-dismiss="startedAfter"
+                      data-param="startedAfter"
                       disabled={isRequesting}
-                      onClick={this._onClearButtonClick}>
+                      onClick={this._onDateClear}>
                       &times;
                     </button> : null}
                 </div>
@@ -116,9 +124,9 @@ export default React.createClass({
                   {startedBefore ?
                     <button
                       className="close"
-                      data-dismiss="startedBefore"
+                      data-param="startedBefore"
                       disabled={isRequesting}
-                      onClick={this._onClearButtonClick}>
+                      onClick={this._onDateClear}>
                       &times;
                     </button> : null}
                 </div>
@@ -167,8 +175,8 @@ export default React.createClass({
     this.props.updateParameter(e.target.name, e.target.value);
   },
 
-  _onClearButtonClick(e) {
-    const {value} = e.target.attributes['data-dismiss'];
+  _onDateClear(e) {
+    const {value} = e.target.attributes['data-param'];
     this.props.updateParameter(value, 'default');
   },
 
