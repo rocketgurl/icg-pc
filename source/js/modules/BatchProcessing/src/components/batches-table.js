@@ -92,10 +92,12 @@ export default React.createClass({
 
   _onPageIncrement() {
     this.props.collection.incrementPage();
+    this.makeQuery();
   },
 
   _onPageDecrement() {
     this.props.collection.decrementPage();
+    this.makeQuery();
   },
 
   _onParameterUpdate(name, value) {

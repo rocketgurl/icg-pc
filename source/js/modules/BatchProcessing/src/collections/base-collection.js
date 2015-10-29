@@ -61,7 +61,6 @@ class BaseCollection extends RestCollection {
   incrementPage() {
     if (this.pageEnd < this.totalItems) {
       this.updateParameter('start', this.pageEnd);
-      this.query();
     }
   }
 
@@ -70,7 +69,6 @@ class BaseCollection extends RestCollection {
     const pageStart = start - size;
     if (pageStart > -1) {
       this.updateParameter('start', pageStart);
-      this.query();
     }
   }
 
