@@ -20,7 +20,7 @@ StackedAreaChart.prototype.update = function (data) {
       .interpolate('basis');
 
   xAxis.scale(x)
-      .orient("bottom")
+      .orient('bottom')
       .ticks(d3.time.day);
 
   yAxis.scale(y);
@@ -28,7 +28,7 @@ StackedAreaChart.prototype.update = function (data) {
   var stack = d3.layout.stack()
       .values(function(d) { return d.values; });
 
-  d3.tsv("./public/models/data.tsv", (error, data) => {
+  d3.tsv('./public/models/data.tsv', (error, data) => {
     if (error) throw error;
 
     data.forEach(function(d) {
@@ -39,7 +39,7 @@ StackedAreaChart.prototype.update = function (data) {
 
     x.domain(d3.extent(data, function(d) { return d.date; }));
     y.domain([0, d3.max(data, function(d) { return d.errors + d.successes; })]);
-    color.domain(d3.keys(data[0]).filter(function(key) { return key !== "date"; }));
+    color.domain(d3.keys(data[0]).filter(function(key) { return key !== 'date'; }));
 
     var browsers = stack(color.domain().map(function(name) {
       return {
@@ -50,23 +50,23 @@ StackedAreaChart.prototype.update = function (data) {
       };
     }));
 
-    var browser = svg.selectAll(".browser")
+    var browser = svg.selectAll('.browser')
         .data(browsers)
-      .enter().append("g")
-        .attr("class", "browser");
+      .enter().append('g')
+        .attr('class', 'browser');
 
-    browser.append("path")
-        .attr("class", "area")
-        .attr("d", function(d) { return area(d.values); })
-        .style("fill", function(d) { return color(d.name); });
+    browser.append('path')
+        .attr('class', 'area')
+        .attr('d', function(d) { return area(d.values); })
+        .style('fill', function(d) { return color(d.name); });
 
-    svg.append("g")
-        .attr("class", "x axis")
-        .attr("transform", "translate(0," + height + ")")
+    svg.append('g')
+        .attr('class', 'x axis')
+        .attr('transform', 'translate(0,' + height + ')')
         .call(xAxis);
 
-    svg.append("g")
-        .attr("class", "y axis")
+    svg.append('g')
+        .attr('class', 'y axis')
         .call(yAxis);
   });
 };

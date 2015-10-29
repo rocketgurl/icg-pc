@@ -9,7 +9,7 @@ const validators = {
     return policyNum;
   },
 
-  validateString(str="", type="", invalid=/[]/) {
+  validateString(str='', type='', invalid=/[]/) {
     str = str.trim();
     if (str.length === 0) {
       return `Error: ${type} value is empty`;
