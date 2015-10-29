@@ -11,9 +11,9 @@
     "ampersand-collection-rest-mixin": "^5.0.0",
     "ampersand-model": "^5.0.3",
     "ampersand-router": "^3.0.2",
-    "babel-tape-runner": "^1.2.0",
     "babelify": "^6.4.0",
     "browserify": "^12.0.0",
+    "coverify": "^1.4.1",
     "d3": "^3.5.5",
     "envify": "^3.0.0",
     "extend": "^3.0.0",
@@ -35,7 +35,7 @@
     "loader": "browserify src/loader.js | uglifyjs -cm > public/loader.min.js",
     "start": "watchify src/app.js -o public/build.js -v",
     "build": "browserify . -t [envify --NODE_ENV production] | uglifyjs -cm > public/bundle.min.js",
-    "test": "./node_modules/babel-tape-runner/bin/babel-tape-runner \"src/**/test/*.js\" | ./node_modules/faucet/bin/cmd.js"
+    "test": "browserify -t babelify ./src/**/test/*.js | node | faucet"
   },
   "browserify": {
     "transform": [
