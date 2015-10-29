@@ -33,9 +33,9 @@ test('baseCollection.updateParameters', assert => {
   collection.updateParameter('test', 'default');
 
   actual = collection.getParameters().test;
-  expected = undefined;
+  expected = null;
   assert.equal(actual, expected,
-    'setting parameter to default should remove the property');
+    'updating parameter to "default" should set the property to null');
 
   assert.end();
 });

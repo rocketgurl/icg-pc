@@ -81,14 +81,13 @@ class BaseCollection extends RestCollection {
   // update JSON parameter as defined by activi
   // http://www.activiti.org/userguide/#restHistoricProcessInstancesGet
   //
-  // passing 'default' as the value will remove that query parameter
-  // and will the result set will be determined by the defaults set
-  // by the activiti api
+  // passing 'default' as the value will set that query parameter to null,
+  // and the result set will be determined by the defaults set by the activiti api
   //
   // Note that process variables should be updated via `updateProcessVariables`
   updateParameter(name, value) {
     if (value === 'default') {
-      delete this.parameters[name];
+      this.parameters[name] = null;
     } else {
       this.parameters[name] = value;
     }
