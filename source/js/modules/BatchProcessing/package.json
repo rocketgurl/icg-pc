@@ -37,7 +37,8 @@
     "loader": "browserify src/loader.js | uglifyjs -cm > public/loader.min.js",
     "start": "watchify src/app.js -o public/build.js -v",
     "build": "browserify . -t [envify --NODE_ENV production] | uglifyjs -cm > public/bundle.min.js",
-    "test": "browserify -t babelify ./src/**/test/*.js | node | faucet"
+    "test": "browserify -t babelify ./src/**/test/*.js | node | faucet",
+    "lint": "eslint src"
   },
   "browserify": {
     "transform": [
