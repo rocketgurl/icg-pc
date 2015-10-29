@@ -10,7 +10,7 @@ export default React.createClass({
         {collection.map((model, index) => {
           return (
             <Alert key={index} bsStyle="danger" onDismiss={this._onAlertDismiss(model)}>
-              <h4>Error: ({model.status}) {model.error}</h4>
+              <h4>Error: {model.status ? `(${model.status})` : ''} {model.error}</h4>
               {model.message ? <p>{model.message}</p> : null}
               {model.exception ? <p><small>{model.exception}</small></p> : null}
               {model.path ? <p><small><em>{model.path}</em></small></p> : null}
