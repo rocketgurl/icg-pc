@@ -137,9 +137,9 @@ test('tasks.filterByStatus', assert => {
   tasks.filterByStatus(status);
 
   actual = tasks.getParameters().finished;
-  expected = null;
+  expected = undefined;
   assert.equal(actual, expected,
-    `when status == "${status}" parameter "finished" should be null`);
+    `when status == "${status}" parameter "finished" should not exist`);
 
   actual = tasks.getProcessVariable('hasException');
   expected = undefined

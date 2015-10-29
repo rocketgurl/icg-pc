@@ -90,7 +90,7 @@ class BaseCollection extends RestCollection {
   // Note that process variables should be updated via `updateProcessVariables`
   updateParameter(name, value) {
     if (value === 'default') {
-      this.parameters[name] = null;
+      delete this.parameters[name];
     } else {
       this.parameters[name] = value;
     }
