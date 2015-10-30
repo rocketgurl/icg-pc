@@ -1,3 +1,5 @@
+import React from 'react';
+import ReactDOM from 'react-dom';
 import {version} from '../package.json';
 import app from 'ampersand-app';
 import constants from './constants';
@@ -11,14 +13,16 @@ import SelectedTasksCollection from './collections/selected-tasks';
 import FormDataModel from './models/form-data';
 import TaskActionModel from './models/task-action';
 import ApiVersionModel from './models/api-version';
-
-const {APP_PATH, STAGE_BASE, PROD_BASE} = constants;
-const apiVersionModel = new ApiVersionModel();
+import HeaderNavbar from './components/header-navbar';
+import HeaderAdmin from './components/header-admin';
+import Footer from './components/footer';
 
 app.extend(window.app, {
   init() {
+    const {APP_PATH, STAGE_BASE, PROD_BASE} = constants;
     this.user = validateUser();
-    this.urlRoot = getUrlRoot(this.ENV, APP_PATH, STAGE_BASE, PROD_BASE);
+    this.urlRoot = getUrlRoot(this.ENV,
+      APP_PATH, STAGE_BASE, PROD_BASE);
     this.VERSION = version;
     this.constants = constants;
     this.errors = new ErrorsCollection();
@@ -34,19 +38,42 @@ app.extend(window.app, {
       root: '/batch-processing/'
     });
     this.noop = function () {};
-
-    this.listenTo(apiVersionModel, 'change:version', this.writeApiVersion);
-    apiVersionModel.fetch();
-
     return this;
   },
 
-  writeApiVersion(model, apiVersion) {
-    document.getElementById('api-version').textContent = apiVersion;
-    app.API_VERSION = apiVersion;
+  getApiVersion() {
+    const apiVersionModel = new ApiVersionModel();
+    this.listenToOnce(apiVersionModel, 'change:version', (model, apiVersion) => {
+        this.API_VERSION = apiVersion;
+        this.footer();
+    });
+    apiVersionModel.fetch();
+    return this;
+  },
+
+  headerNavbar() {
+    ReactDOM.render(<HeaderNavbar/>,
+      document.getElementById('header-navbar'));
+    return this;
+  },
+
+  headerAdmin() {
+    ReactDOM.render(<HeaderAdmin userName={this.user.name}/>,
+      document.getElementById('header-admin'));
+    return this;
+  },
+
+  footer() {
+    ReactDOM.render(<Footer apiVersion={this.API_VERSION} uiVersion={this.VERSION}/>,
+      document.getElementById('footer-main'));
+    return this;
   }
 });
 
-window.app = app.init();
-document.getElementById('user-name').textContent = app.user.name;
-document.getElementById('ui-version').textContent = version;
+window.app = app.init()
+                .getApiVersion()
+                .headerNavbar()
+                .headerAdmin()
+                .footer();
+
+
