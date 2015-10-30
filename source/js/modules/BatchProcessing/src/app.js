@@ -10,8 +10,10 @@ import TasksCollection from './collections/tasks';
 import SelectedTasksCollection from './collections/selected-tasks';
 import FormDataModel from './models/form-data';
 import TaskActionModel from './models/task-action';
+import ApiVersionModel from './models/api-version';
 
 const {APP_PATH, STAGE_BASE, PROD_BASE} = constants;
+const apiVersionModel = new ApiVersionModel();
 
 app.extend(window.app, {
   init() {
@@ -25,17 +27,26 @@ app.extend(window.app, {
     this.selectedTasks = new SelectedTasksCollection();
     this.formData = new FormDataModel();
     this.taskAction = new TaskActionModel();
-    this.router = new Router({});
+    this.router = new Router();
     this.router.errors = this.errors;
     this.router.history.start({
       pushState: false,
       root: '/batch-processing/'
     });
     this.noop = function () {};
+
+    this.listenTo(apiVersionModel, 'change:version', this.writeApiVersion);
+    apiVersionModel.fetch();
+
     return this;
+  },
+
+  writeApiVersion(model, apiVersion) {
+    document.getElementById('api-version').textContent = apiVersion;
+    app.API_VERSION = apiVersion;
   }
 });
 
 window.app = app.init();
 document.getElementById('user-name').textContent = app.user.name;
-document.getElementById('version-number').textContent = version;
+document.getElementById('ui-version').textContent = version;
