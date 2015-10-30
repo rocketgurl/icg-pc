@@ -14,6 +14,17 @@ const constants = {
         0: 'The server is currently unresponsive. Please contact the help desk if the problem persists.'
       }
     }
+  },
+  csv: {
+    PAYMENTS_FIELDS: [
+      'PaymentMethod',
+      'PaymentDate',
+      'PaymentBatch',
+      'LockBoxReference',
+      'Amount',
+      'PaymentReference',
+      'PolicyNumberBase'
+    ]
   }
 };
 

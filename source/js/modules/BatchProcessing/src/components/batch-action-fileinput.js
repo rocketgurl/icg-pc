@@ -6,15 +6,6 @@ import {Modal} from 'react-bootstrap';
 import Papa from 'papaparse';
 import {validateString, validatePolicyNum} from '../lib/validators';
 
-const paymentColumns = [
-  'PaymentMethod',
-  'PaymentReceivedDate',
-  'LockBoxReference',
-  'Amount',
-  'PaymentReference',
-  'PolicyNumberBase'
-];
-
 // TODO: generalize this. Move form validation
 // and Payment-specific stuff into separate library
 export default React.createClass({
@@ -178,7 +169,7 @@ export default React.createClass({
   // [{
   //   "policyLookup": "AKH042758600",
   //   "method": "ach",
-  //   "receivedDate": "2015-09-09T00:00:00.000-04:00",
+  //   "paymentDate": "2015-09-09T00:00:00.000-04:00",
   //   "lockBoxReference": "",
   //   "amount": 21.00,
   //   "referenceNum": "12345"
@@ -192,7 +183,7 @@ export default React.createClass({
     results.totalBatchAmountActual = 0;
 
     // check for any missing columns
-    const missingFields = _.difference(paymentColumns, results.meta.fields);
+    const missingFields = _.difference(app.constants.csv.PAYMENTS_FIELDS, results.meta.fields);
     if (missingFields.length > 0) {
       results.errors.push(this._formatError(
         'Fields',
@@ -207,7 +198,7 @@ export default React.createClass({
         // (except for the Date and Amount columns)
         // push any invalid matches onto the errors array
         let validated = {};
-        _.each(_.omit(row, 'PaymentReceivedDate', 'Amount'), (val, key) => {
+        _.each(_.omit(row, 'PaymentDate', 'Amount'), (val, key) => {
           val = validateString(val, key, /[^A-Z0-9-]+/gi);
           if (val.indexOf('Error') > -1) {
             results.errors.push(this._formatError(key, val, index+1));
@@ -224,11 +215,11 @@ export default React.createClass({
         }
 
         // delegate date validation for received date to moment
-        const receivedDate = moment(row.PaymentReceivedDate, 'MM/DD/YYYY');
-        if (receivedDate.format(dateFormat) === 'Invalid date') {
+        const paymentDate = moment(row.PaymentDate, 'MM/DD/YYYY');
+        if (paymentDate.format(dateFormat) === 'Invalid date') {
           results.errors.push(this._formatError(
-            'PaymentReceivedDate',
-            'PaymentReceivedDate must be a valid date and match format MM/DD/YY',
+            'PaymentDate',
+            'PaymentDate must be a valid date and match format MM/DD/YY',
             index+1));
         }
 
@@ -249,8 +240,9 @@ export default React.createClass({
         // formatted for api consumption
         return {
           amount: parseFloat(amount),
-          receivedDate: receivedDate.format(dateFormat),
+          batch: validated.PaymentBatch,
           method: validated.PaymentMethod,
+          receivedDate: paymentDate.format(dateFormat),
           referenceNum: validated.PaymentReference,
           origPolicyNumberBase: policyNumberBase,
           policyNumberBase: `${parseFloat(policyNumberBase.slice(3, 10))}`,
