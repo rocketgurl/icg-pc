@@ -248,9 +248,7 @@
 }
 
 // Calculate all our column widths for tables with up to 24 columns
-@include  make-table-columns(24);
-
-
+@include make-table-columns(24);
 @include table-row-variant('active', $table-bg-active);
 @include table-row-variant('success', $state-success-bg);
 @include table-row-variant('info', $state-info-bg);
