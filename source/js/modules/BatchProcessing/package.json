@@ -1,6 +1,6 @@
 {
   "name": "batch-processing",
-  "version": "0.0.25",
+  "version": "0.0.26",
   "description": "",
   "main": "src/app.js",
   "author": "Liam Bowers",
