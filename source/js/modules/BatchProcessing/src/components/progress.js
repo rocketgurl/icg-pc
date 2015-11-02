@@ -1,16 +1,7 @@
 import React from 'react';
 import app from 'ampersand-app';
 import {ProgressBar} from 'react-bootstrap';
-
-function clamp(n, min, max) {
-  if (n < min) return min;
-  if (n > max) return max;
-  return n;
-}
-
-function randBetween(min, max) {
-  return Math.floor(Math.random() * max) + min;
-}
+import {clamp, randBetween} from '../lib/helpers';
 
 export default React.createClass({
   getDefaultProps() {

@@ -1,4 +1,4 @@
-import Cookie from './lib/cookie';
+import {Cookie} from './lib';
 
 // Login relies on the token cookie set by Policy Central
 const cookie = new Cookie();
