@@ -1,7 +1,7 @@
 import React from 'react';
 import {Modal} from 'react-bootstrap';
 import TextArea from './batch-action-textarea';
-import FileInput from './batch-action-fileinput';
+import Payments from './batch-action-payments';
 import {batches, allTasks, formData} from 'ampersand-app';
 
 export default React.createClass({
@@ -46,7 +46,7 @@ export default React.createClass({
           <Modal.Title>{this.props.actionName}</Modal.Title>
         </Modal.Header>
         {this.props.batchType === 'payment' ?
-          <FileInput
+          <Payments
             isRequesting={isRequesting}
             formData={formData}
             parentClose={this.close}/> :
