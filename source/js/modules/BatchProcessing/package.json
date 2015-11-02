@@ -12,8 +12,11 @@
     "ampersand-model": "^5.0.3",
     "ampersand-router": "^3.0.2",
     "babel-eslint": "^4.1.3",
-    "babelify": "^6.4.0",
-    "browserify": "^12.0.0",
+    "babel-preset-es2015": "^6.0.15",
+    "babel-preset-react": "^6.0.15",
+    "babel-preset-stage-0": "^6.0.15",
+    "babelify": "^7.2.0",
+    "browserify": "^12.0.1",
     "d3": "^3.5.5",
     "envify": "^3.0.0",
     "eslint": "^1.7.3",
@@ -30,18 +33,26 @@
     "tape": "^4.2.0",
     "uglify-js": "~2.4.24",
     "underscore": "^1.8.3",
-    "watchify": "^2.6.2"
+    "watchify": "^3.6.0"
   },
   "scripts": {
     "loader": "browserify src/loader.js | uglifyjs -cm > public/loader.min.js",
     "start": "watchify src/app.js -o public/build.js -v",
     "build": "browserify . -t [envify --NODE_ENV production] | uglifyjs -cm > public/bundle.min.js",
-    "test": "browserify -t babelify ./src/**/test/*.js | node | faucet",
+    "test": "browserify ./src/**/test/*.js | node | faucet",
     "lint": "eslint src"
   },
   "browserify": {
     "transform": [
-      "babelify",
+      [
+        "babelify", {
+          "presets": [
+            "es2015",
+            "stage-0",
+            "react"
+          ]
+        }
+      ],
       "envify"
     ]
   }
