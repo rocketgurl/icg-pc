@@ -4,7 +4,8 @@ import {Cookie} from './lib';
 const cookie = new Cookie();
 const str    = cookie.get('ics360_PolicyCentral') || '';
 
-// Some details about the user should have been persisted to session storage
+// Some details about the user should have been
+// persisted to session storage from policy central
 const userJSON = window.sessionStorage.getItem('user');
 const user = JSON.parse(userJSON) || {};
 
