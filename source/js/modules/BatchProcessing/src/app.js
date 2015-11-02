@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import {version as VERSION} from '../package.json';
 import app from 'ampersand-app';
-import constants from './constants';
+import {APP_PATH, STAGE_BASE, PROD_BASE} from './constants';
 import validateUser from './user';
 import getUrlRoot from './url';
 import Router from './router';
@@ -19,12 +19,10 @@ import Footer from './components/footer';
 
 app.extend(window.app, {
   init() {
-    const {APP_PATH, STAGE_BASE, PROD_BASE} = constants;
     this.user = validateUser();
     this.urlRoot = getUrlRoot(this.ENV,
       APP_PATH, STAGE_BASE, PROD_BASE);
     this.VERSION = VERSION;
-    this.constants = constants;
     this.errors = new ErrorsCollection();
     this.batches = new BatchesCollection();
     this.allTasks = new TasksCollection();

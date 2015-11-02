@@ -1,5 +1,5 @@
 import React from 'react';
-import app from 'ampersand-app';
+import {dates} from '../constants';
 import moment from 'moment';
 
 export default React.createClass({
@@ -34,7 +34,7 @@ export default React.createClass({
 
   render() {
     const {batch} = this.props;
-    const dateFormat = app.constants.dates.USER_FORMAT;
+    const dateFormat = dates.USER_FORMAT;
     return (
       <a className="tr" href={`#tasks/bid/${batch.id}`}>
         <div className="td">{this.getStatusLabel(batch)}</div>

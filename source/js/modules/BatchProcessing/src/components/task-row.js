@@ -2,6 +2,7 @@ import React from 'react';
 import {OverlayTrigger, Popover} from 'react-bootstrap';
 import app from 'ampersand-app';
 import moment from 'moment';
+import {dates} from '../constants';
 
 export default React.createClass({
   getInitialState() {
@@ -45,7 +46,7 @@ export default React.createClass({
   render() {
     const {task, enabled} = this.props;
     const {selected} = this.state;
-    const dateFormat = app.constants.dates.USER_FORMAT;
+    const dateFormat = dates.USER_FORMAT;
     const errorMessage = `${task.errorCode} - ${task.errorMessage}`;
     const infoPopover = (
       <OverlayTrigger key="overlay" rootClose trigger="click" placement="left"

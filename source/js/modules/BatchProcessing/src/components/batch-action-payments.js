@@ -1,6 +1,6 @@
 import React from 'react';
 import {forEach, map, isEmpty, difference, omit} from 'underscore';
-import app from 'ampersand-app';
+import {dates, csv} from '../constants';
 import moment from 'moment';
 import {Modal} from 'react-bootstrap';
 import Papa from 'papaparse';
@@ -173,7 +173,7 @@ export default React.createClass({
   //   "referenceNum": "12345"
   // }]
   _processCSVData(results) {
-    const dateFormat = app.constants.dates.SYSTEM_FORMAT;
+    const dateFormat = dates.SYSTEM_FORMAT;
     let paymentsList = [];
     let transformed  = {};
 
@@ -181,7 +181,7 @@ export default React.createClass({
     results.totalBatchAmountActual = 0;
 
     // check for any missing columns
-    const missingFields = difference(app.constants.csv.PAYMENTS_FIELDS, results.meta.fields);
+    const missingFields = difference(csv.PAYMENTS_FIELDS, results.meta.fields);
     if (missingFields.length > 0) {
       results.errors.push(this._formatError(
         'Fields',

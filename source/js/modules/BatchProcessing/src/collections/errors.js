@@ -1,5 +1,6 @@
 import Collection from 'ampersand-collection';
 import ErrorModel from '../models/error';
+import {messages} from '../constants';
 
 class Errors extends Collection {
   constructor() {
@@ -19,7 +20,7 @@ class Errors extends Collection {
           status,
           error: statusText || 'No Response',
           exception: `(${status}) No Server Response`,
-          message: app.constants.messages.errors.xhr[0],
+          message: messages.errors.xhr[0],
           path: url
         });
       } else {
@@ -27,7 +28,7 @@ class Errors extends Collection {
           status,
           error: statusText,
           exception: `(${status}) ${statusText}`,
-          message: app.constants.messages.errors.xhr.DEFAULT,
+          message: messages.errors.xhr.DEFAULT,
           path: url
         });
       }

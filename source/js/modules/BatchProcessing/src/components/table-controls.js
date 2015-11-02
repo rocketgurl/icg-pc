@@ -1,6 +1,6 @@
 import React from 'react';
 import {map} from 'underscore';
-import app from 'ampersand-app';
+import {dates} from '../constants';
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
 
@@ -189,7 +189,7 @@ export default React.createClass({
         momentInstance.add(1, 'days');
       }
       this.props.updateParameter(
-        targetName, momentInstance.format(app.constants.dates.SYSTEM_FORMAT));
+        targetName, momentInstance.format(dates.SYSTEM_FORMAT));
     }
   }
 });

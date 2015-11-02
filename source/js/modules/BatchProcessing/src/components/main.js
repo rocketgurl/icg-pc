@@ -1,5 +1,7 @@
 import React from 'react';
 import app from 'ampersand-app';
+import {Nav, NavItem, Tab} from 'react-bootstrap';
+import {CONTROLS_HEIGHT} from '../constants';
 import TabContent from './tab-content';
 import AlertQueue from './alert-queue';
 import BatchActionSelect from './batch-action-select';
@@ -8,7 +10,6 @@ import TaskActionSelect from './task-action-select';
 import BatchesTable from './batches-table';
 import TasksTable from './tasks-table';
 import Progress from './progress';
-import {Nav, NavItem, Tab} from 'react-bootstrap';
 
 export default React.createClass({
   getDefaultProps() {
