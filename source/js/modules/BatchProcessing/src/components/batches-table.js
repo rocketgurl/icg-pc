@@ -1,5 +1,5 @@
 import React from 'react';
-import sortableTableMixin from '../lib/sortable-table-mixin';
+import {sortableTableMixin} from '../mixins';
 import BatchRow from './batch-row';
 import TableControls from './table-controls';
 

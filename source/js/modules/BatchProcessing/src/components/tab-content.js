@@ -1,6 +1,6 @@
 import React from 'react';
 import {map} from 'underscore';
-import selectableParentMixin from '../lib/selectable-parent-mixin';
+import {selectableParentMixin} from '../mixins';
 
 export default React.createClass({
   mixins: [selectableParentMixin],
