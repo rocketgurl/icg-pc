@@ -1,13 +1,11 @@
 import React from 'react';
-import _ from 'underscore';
+import {forEach, map, isEmpty, difference, omit} from 'underscore';
 import app from 'ampersand-app';
 import moment from 'moment';
 import {Modal} from 'react-bootstrap';
 import Papa from 'papaparse';
 import {validateString, validatePolicyNum} from '../lib/validators';
 
-// TODO: generalize this. Move form validation
-// and Payment-specific stuff into separate library
 export default React.createClass({
   propTypes: {
     formData: React.PropTypes.object.isRequired,
@@ -30,7 +28,7 @@ export default React.createClass({
   },
 
   alertErrors() {
-    return _.map(this.state.errors, (error, index) => {
+    return map(this.state.errors, (error, index) => {
       return (
         <div key={index} className="alert alert-danger">
           <ul className="list-unstyled list-labeled">
@@ -56,13 +54,13 @@ export default React.createClass({
   },
 
   alertInfo() {
-    if (_.isEmpty(this.state.transformed)) return null;
+    if (isEmpty(this.state.transformed)) return null;
     return (
       <div className="alert alert-info">
         <h5>The following Policy IDs will be changed from the entered values:</h5>
         <code>
           <ul className="list-unstyled change-list">
-            {_.map(this.state.transformed, (item, row) => {
+            {map(this.state.transformed, (item, row) => {
               return (
                 <li key={row}>
                   <span className="row-num">{`${row}.`}</span>
@@ -183,7 +181,7 @@ export default React.createClass({
     results.totalBatchAmountActual = 0;
 
     // check for any missing columns
-    const missingFields = _.difference(app.constants.csv.PAYMENTS_FIELDS, results.meta.fields);
+    const missingFields = difference(app.constants.csv.PAYMENTS_FIELDS, results.meta.fields);
     if (missingFields.length > 0) {
       results.errors.push(this._formatError(
         'Fields',
@@ -192,13 +190,13 @@ export default React.createClass({
     }
 
     if (results.errors.length === 0) {
-      paymentsList = _.map(results.data, (row, index) => {
+      paymentsList = map(results.data, (row, index) => {
         
         // check each column in the row for invalid characters
         // (except for the Date and Amount columns)
         // push any invalid matches onto the errors array
         let validated = {};
-        _.each(_.omit(row, 'PaymentDate', 'Amount'), (val, key) => {
+        forEach(omit(row, 'PaymentDate', 'Amount'), (val, key) => {
           val = validateString(val, key, /[^A-Z0-9-]+/gi);
           if (val.indexOf('Error') > -1) {
             results.errors.push(this._formatError(key, val, index+1));

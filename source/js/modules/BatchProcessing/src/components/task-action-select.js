@@ -1,5 +1,5 @@
 import React from 'react';
-import _ from 'underscore';
+import {map} from 'underscore';
 import app from 'ampersand-app';
 import TaskActionModal from './task-action-modal';
 
@@ -37,7 +37,7 @@ export default React.createClass({
           onChange={this._onActionSelect}
           value={taskType}>
           <option value="default">Select a Task Action</option>
-          {_.map(taskActions, (item, key) => {
+          {map(taskActions, (item, key) => {
             const {type, name} = item;
             return <option key={key} value={`${type}/${name}`}>{name}</option>
           })}

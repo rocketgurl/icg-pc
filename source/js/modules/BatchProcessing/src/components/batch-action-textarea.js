@@ -1,5 +1,5 @@
 import React from 'react';
-import _ from 'underscore';
+import {map, forEach, isEmpty} from 'underscore';
 import {Modal} from 'react-bootstrap';
 import {validateString, validatePolicyNum} from '../lib/validators';
 
@@ -46,7 +46,7 @@ export default React.createClass({
         <h5>The following Policy IDs will be changed from the entered values:</h5>
         <code>
           <ul className="list-unstyled change-list">
-            {_.map(this.state.transformedRefs, (item, row) => {
+            {map(this.state.transformedRefs, (item, row) => {
               return (
                 <li key={row}>
                   <span className="row-num">{`${row}.`}</span>
@@ -65,14 +65,13 @@ export default React.createClass({
   render() {
     const {isRequesting} = this.props;
     const {invalidRefs, transformedRefs, truncRefsStr} = this.state;
-    const isEmpty = !truncRefsStr.length
     const hasErrors = invalidRefs.length;
     return (
       <div className="text-area">
         <Modal.Body>
           <p>Enter 1 Policy Number per Line</p>
           {invalidRefs.length ? this.alertInvalid() : null}
-          {!_.isEmpty(transformedRefs) ? this.alertInfo() : null}
+          {!isEmpty(transformedRefs) ? this.alertInfo() : null}
           <textarea
             ref="policyRefs"
             className="form-control"
@@ -90,7 +89,7 @@ export default React.createClass({
           </button>
           <button
             className={`btn ${hasErrors ? 'btn-danger' : 'btn-primary'}`}
-            disabled={isEmpty || isRequesting || hasErrors}
+            disabled={isEmpty(truncRefsStr) || isRequesting || hasErrors}
             onClick={this._onSubmitClick}>
             {hasErrors ? 'Please Fix Errors' : 'Run Tasks'}
           </button>
@@ -114,7 +113,7 @@ export default React.createClass({
     let transformedRefs = {};
 
     // check policy ref for any characters other than alpha-numeric.
-    _.each(policyRefsArray, (ref, index) => {
+    forEach(policyRefsArray, (ref, index) => {
       ref = validateString(ref, index+1, /[^A-Z0-9-]+/gi);
       if (ref.indexOf('Error') === -1) ref = validatePolicyNum(ref);
       if (ref.indexOf('Error') > -1) {

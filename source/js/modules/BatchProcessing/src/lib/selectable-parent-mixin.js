@@ -1,10 +1,10 @@
 import React from 'react';
-import _ from 'underscore';
+import {forEach} from 'underscore';
 
 
 function getDefaultActiveKeyFromChildren(children) {
   let defaultActiveKey;
-  _.each(children, function (child) {
+  forEach(children, function (child) {
     if (defaultActiveKey == null) {
       defaultActiveKey = child.key;
     }

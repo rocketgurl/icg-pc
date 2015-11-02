@@ -1,5 +1,5 @@
 import React from 'react';
-import _ from 'underscore';
+import {map} from 'underscore';
 import app from 'ampersand-app';
 import moment from 'moment';
 import DatePicker from 'react-datepicker';
@@ -59,7 +59,7 @@ export default React.createClass({
                     className="form-control input-sm"
                     onChange={this._onSelectChange}>
                     <option value="default">Batch Types: All</option>
-                    {_.map(this.props.processDefinitionKeys, (item, key) => {
+                    {map(this.props.processDefinitionKeys, (item, key) => {
                       return <option key={key} value={item.value}>{item.name}</option>;
                     })}
                   </select>
@@ -73,7 +73,7 @@ export default React.createClass({
                     className="form-control input-sm"
                     onChange={this.props.filterByStatus}>
                     <option value="default">Status: All</option>
-                    {_.map(this.props.statusOpts, (item, key) => {
+                    {map(this.props.statusOpts, (item, key) => {
                       return <option key={key} value={item.value}>{item.name}</option>;
                     })}
                   </select>

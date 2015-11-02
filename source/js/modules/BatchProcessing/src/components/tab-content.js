@@ -1,5 +1,5 @@
 import React from 'react';
-import _ from 'underscore';
+import {map} from 'underscore';
 import selectableParentMixin from '../lib/selectable-parent-mixin';
 
 export default React.createClass({
@@ -15,7 +15,7 @@ export default React.createClass({
     var activeKey = this._getActiveKey();
     return (
       <div className="tab-content">
-        {_.map(this.props.children, this._renderChild)}
+        {map(this.props.children, this._renderChild)}
       </div>
     );
   },

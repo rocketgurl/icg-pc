@@ -1,4 +1,4 @@
-import _ from 'underscore';
+import {extend, defaults} from 'underscore';
 import d3 from 'd3';
 import StackedBarChart from './stacked-bar-chart';
 
@@ -25,7 +25,7 @@ function ChartFactory(type, data, options, DOMNode) {
     throw new Error(`${type} is not a valid chart!`);
   }
   if (!ChartFactory[type].prototype.initialize) {
-    _.extend(ChartFactory[type].prototype, ChartFactory.prototype);
+    extend(ChartFactory[type].prototype, ChartFactory.prototype);
   }
   let newChart = new ChartFactory[type]();
   newChart.initialize(data, options, DOMNode);
@@ -34,7 +34,7 @@ function ChartFactory(type, data, options, DOMNode) {
 
 // initial d3 setup, like merging options and defaults
 ChartFactory.prototype.initialize = function (data, options, DOMNode) {
-  var opts = this.options = _.defaults(options || {}, defaultOpts);
+  var opts = this.options = defaults(options || {}, defaultOpts);
 
   // set dimensions, translation offset for axes, etc. nothing related to data!
   this.height = opts.height - (opts.margin.top + opts.margin.bottom);

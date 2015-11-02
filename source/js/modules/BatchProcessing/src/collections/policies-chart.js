@@ -1,4 +1,4 @@
-import _ from 'underscore';
+import {pick} from 'underscore';
 import Collection from 'ampersand-collection';
 import Task from '../models/task';
 
@@ -17,7 +17,7 @@ export default Collection.extend({
 
   pick(...keys) {
     return this.map(d => {
-      return _.pick(d, 'date', ...keys); // always return the date prop
+      return pick(d, 'date', ...keys); // always return the date prop
     });
   }
 });

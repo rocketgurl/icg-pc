@@ -1,5 +1,3 @@
-import _ from 'underscore';
-
 function Cookie() {}
 
 Cookie.prototype.pluses = /\+/g;
@@ -19,7 +17,7 @@ Cookie.prototype.decoded = function(s) {
 Cookie.prototype.set = function(key, value, options) {
   var days, t;
   if ((value != null) && (options != null)) {
-    options = _.extend({}, this.defaults, options);
+    options = {...this.defaults, ...options};
     if (value == null) {
       options.expires = -1;
     }

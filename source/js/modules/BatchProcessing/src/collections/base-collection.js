@@ -1,4 +1,4 @@
-import _ from 'underscore';
+import {find, findIndex} from 'underscore';
 import Collection from 'ampersand-collection';
 import lodashMixin from 'ampersand-collection-lodash-mixin';
 import restMixins from 'ampersand-collection-rest-mixin';
@@ -94,7 +94,7 @@ class BaseCollection extends RestCollection {
   }
 
   getProcessVariable(name) {
-    return _.find(this.variables, v => {
+    return find(this.variables, v => {
       return name === v.name;
     });
   }
@@ -115,7 +115,7 @@ class BaseCollection extends RestCollection {
   // there is only one variable of each name, and removes the
   // first instance of that variable found.
   deleteProcessVariable(name) {
-    const index = _.findIndex(this.variables, v => {
+    const index = findIndex(this.variables, v => {
       return name === v.name;
     });
     if (index > -1) this.variables.splice(index, 1);

@@ -1,5 +1,5 @@
 import React from 'react';
-import _ from 'underscore';
+import {map} from 'underscore';
 
 const batchActions = [
   {type: 'invoicing', name: 'Batch Invoicing'},
@@ -16,7 +16,7 @@ export default React.createClass({
           onChange={this._onActionSelect}
           value={this.props.processDefinitionId || 'default'}>
           <option value="default">Select a Batch Action</option>
-          {_.map(batchActions, (item, key) => {
+          {map(batchActions, (item, key) => {
             const {type, name} = item;
             return <option key={key} value={`${type}/${name}`}>{name}</option>
           })}

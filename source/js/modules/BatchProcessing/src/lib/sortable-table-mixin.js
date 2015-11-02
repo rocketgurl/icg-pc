@@ -1,10 +1,10 @@
 import React from 'react';
-import _ from 'underscore';
+import {forEach} from 'underscore';
 
 const sortableTableMixin = {
   updateSortTable(sortBy) {
     const sortTable = {...this.state.sortTable};
-    _.each(sortTable, (item, key) => {
+    forEach(sortTable, (item, key) => {
       if (key === sortBy) {
         item.active = true;
         item.order = item.order === 'asc' ? 'desc' : 'asc';

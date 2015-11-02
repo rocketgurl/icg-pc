@@ -1,5 +1,5 @@
 import React from 'react';
-import _ from 'underscore';
+import {uniq, map} from 'underscore';
 import {Modal} from 'react-bootstrap';
 
 export default React.createClass({
@@ -20,7 +20,7 @@ export default React.createClass({
   },
 
   componentWillMount() {
-    const uniqueKeys = _.uniq(this.props.selectedTasks.getProcessDefinitionKeys());
+    const uniqueKeys = uniq(this.props.selectedTasks.getProcessDefinitionKeys());
     const batchType = uniqueKeys.join(', ');
     let errors = [];
     if (uniqueKeys.length > 1) {
@@ -33,7 +33,7 @@ export default React.createClass({
   },
 
   alertErrors() {
-    return _.map(this.state.errors, (error, index) => {
+    return map(this.state.errors, (error, index) => {
       return (
         <div key={index} className="alert alert-danger">
           <ul className="list-unstyled list-labeled">
