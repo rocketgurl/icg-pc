@@ -3,6 +3,7 @@ import moment from 'moment';
 import {sortableTableMixin} from '../mixins';
 import TaskRow from './task-row';
 import TableControls from './table-controls';
+import TableSpinner from './table-spinner';
 
 const processDefinitionKeys = [
   {name: 'Invoicing', value: 'invoicing'},
@@ -102,18 +103,21 @@ export default React.createClass({
             </div>
           </div>
           <div className="tbody" style={{maxHeight: `${500}px`}}>
-            {this.state.collection.map(task => {
-              // An individual item should only be checked if a currentTaskId exists
-              const enabled = task.currentTaskId !== null;
-              const selected = this.state.checkAll && enabled;
-              return (
-                <TaskRow
-                  key={task.id}
-                  task={task}
-                  enabled={enabled}
-                  selected={selected}/>
-                );
-            })}
+            {this.state.collection.length === 0 ?
+              <TableSpinner message="Loading Task Processes"/> :
+              this.state.collection.map(task => {
+                // An individual item should only be checked if a currentTaskId exists
+                const enabled = task.currentTaskId !== null;
+                const selected = this.state.checkAll && enabled;
+                return (
+                  <TaskRow
+                    key={task.id}
+                    task={task}
+                    enabled={enabled}
+                    selected={selected}/>
+                  );
+              })
+            }
           </div>
         </div>
       </div>

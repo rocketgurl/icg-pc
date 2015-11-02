@@ -8,6 +8,7 @@ import BatchActionSelect from './batch-action-select';
 import BatchActionModal from './batch-action-modal';
 import TaskActionSelect from './task-action-select';
 import BatchesTable from './batches-table';
+import TableSpinner from './table-spinner';
 import TasksTable from './tasks-table';
 import Progress from './progress';
 
@@ -88,7 +89,9 @@ export default React.createClass({
                 <BatchesTable collection={this.state.batches}/>
               </Tab>
               <Tab key="tasks">
-                {this.getTasksTable()}
+                {this.state.batches.length === 0 ?
+                  <TableSpinner message="Loading Batch Processes"/> :
+                  this.getTasksTable()}
               </Tab>
             </TabContent>
           </div>

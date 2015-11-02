@@ -2,6 +2,7 @@ import React from 'react';
 import {sortableTableMixin} from '../mixins';
 import BatchRow from './batch-row';
 import TableControls from './table-controls';
+import TableSpinner from './table-spinner';
 
 const processDefinitionKeys = [
   {name: 'Invoicing', value: 'batchInvoicing'},
@@ -81,9 +82,12 @@ export default React.createClass({
             </div>
           </div>
           <div className="tbody" style={{maxHeight: `${500}px`}}>
-            {this.state.collection.map(batch => {
-              return <BatchRow key={batch.id} batch={batch}/>;
-            })}
+            {this.state.collection.length === 0 ?
+              <TableSpinner message="Loading Batch Processes"/> :
+              this.state.collection.map(batch => {
+                return <BatchRow key={batch.id} batch={batch}/>;
+              })
+            }
           </div>
         </div>
       </div>

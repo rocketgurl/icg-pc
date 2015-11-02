@@ -2434,6 +2434,9 @@ ul:after { clear: both; }
 
 .clearable .close { position: absolute; right: 18px; top: 8px; }
 
+.table-spinner { padding: 15px; text-align: center; font-size: 18px; color: #999; }
+.table-spinner .glyphicon { margin-left: 10px; }
+
 .axis path, .axis line { fill: none; stroke: #000; shape-rendering: crispEdges; }
 .axis text { font-size: 10px; }
 
