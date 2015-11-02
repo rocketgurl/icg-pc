@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {version} from '../package.json';
+import {version as VERSION} from '../package.json';
 import app from 'ampersand-app';
 import constants from './constants';
 import validateUser from './user';
@@ -23,7 +23,7 @@ app.extend(window.app, {
     this.user = validateUser();
     this.urlRoot = getUrlRoot(this.ENV,
       APP_PATH, STAGE_BASE, PROD_BASE);
-    this.VERSION = version;
+    this.VERSION = VERSION;
     this.constants = constants;
     this.errors = new ErrorsCollection();
     this.batches = new BatchesCollection();

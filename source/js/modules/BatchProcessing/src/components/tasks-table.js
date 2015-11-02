@@ -1,6 +1,6 @@
 import React from 'react';
 import moment from 'moment';
-import sortableTableMixin from '../lib/sortable-table-mixin';
+import {sortableTableMixin} from '../mixins';
 import TaskRow from './task-row';
 import TableControls from './table-controls';
 
