@@ -114,6 +114,7 @@ export default React.createClass({
 
     // check policy ref for any characters other than alpha-numeric.
     forEach(policyRefsArray, (ref, index) => {
+      if (isEmpty(ref)) return;
       ref = validateString(ref, index+1, /[^A-Z0-9-]+/gi);
       if (ref.indexOf('Error') === -1) ref = validatePolicyNum(ref);
       if (ref.indexOf('Error') > -1) {
