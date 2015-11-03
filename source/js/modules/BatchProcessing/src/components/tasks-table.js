@@ -153,8 +153,10 @@ export default React.createClass({
   _onAssigneeChange(e) {
     const assignee = e.target.value || 'default';
     const {collection} = this.props;
-    this.props.collection.filterByAssignee(assignee);
-    this.makeQuery();
+    if (assignee !== collection.assignee) {
+      collection.filterByAssignee(assignee);
+      this.makeQuery();
+    }
   },
 
   _onCollectionComplete(collection) {
