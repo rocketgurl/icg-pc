@@ -67734,6 +67734,7 @@ exports.default = _react2.default.createClass({
 
     // check policy ref for any characters other than alpha-numeric.
     (0, _underscore.forEach)(policyRefsArray, function (ref, index) {
+      if ((0, _underscore.isEmpty)(ref)) return;
       ref = (0, _validators.validateString)(ref, index + 1, /[^A-Z0-9-]+/gi);
       if (ref.indexOf('Error') === -1) ref = (0, _validators.validatePolicyNum)(ref);
       if (ref.indexOf('Error') > -1) {
