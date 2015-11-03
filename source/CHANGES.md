@@ -1,3 +1,7 @@
+### 3.1.10 - Nov 4, 2015
+
+- Beta release of new tools for Batch Processing
+
 ### 3.1.9 - Oct 14, 2015
 
 - Updates to TX and CA IPM Endorse Forms
