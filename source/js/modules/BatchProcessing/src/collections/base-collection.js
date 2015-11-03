@@ -151,7 +151,7 @@ class BaseCollection extends RestCollection {
   // errors are pushed to an Errors collection
   _onXHRError(collection, xhr) {
     this._onSync();
-    app.errors.parseError(xhr.rawRequest || xhr);
+    app.errors.parseError(xhr.rawRequest || xhr || {});
   }
 }
 

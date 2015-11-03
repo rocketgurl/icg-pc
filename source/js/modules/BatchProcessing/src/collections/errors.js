@@ -11,7 +11,7 @@ class Errors extends Collection {
   }
 
   parseError(xhr) {
-    const {headers, response, status, statusText, url} = xhr;
+    const {headers, response, status, statusCode, statusText, url} = xhr;
     try {
       if (/application\/json/.test(headers['content-type'])) {
         this.add({...JSON.parse(response)});
@@ -20,6 +20,14 @@ class Errors extends Collection {
           status,
           error: statusText || 'No Response',
           exception: `(${status}) No Server Response`,
+          message: messages.errors.xhr[0],
+          path: url
+        });
+      }  else if (statusCode === 0) {
+        this.add({
+          status: statusCode,
+          error: statusText || 'No Response',
+          exception: `(${statusCode}) No Server Response`,
           message: messages.errors.xhr[0],
           path: url
         });
