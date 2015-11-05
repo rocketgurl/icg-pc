@@ -1,0 +1,502 @@
+[
+  {
+    "date": 1402139414066,
+    "errors": 12,
+    "successes": 117
+  },
+  {
+    "date": 1402138672250,
+    "errors": 1,
+    "successes": 214
+  },
+  {
+    "date": 1402130742188,
+    "errors": 3,
+    "successes": 63
+  },
+  {
+    "date": 1402122617099,
+    "errors": 18,
+    "successes": 127
+  },
+  {
+    "date": 1402119715942,
+    "errors": 9,
+    "successes": 162
+  },
+  {
+    "date": 1402106258315,
+    "errors": 16,
+    "successes": 72
+  },
+  {
+    "date": 1402101070587,
+    "errors": 3,
+    "successes": 218
+  },
+  {
+    "date": 1402099510647,
+    "errors": 9,
+    "successes": 122
+  },
+  {
+    "date": 1402097804103,
+    "errors": 16,
+    "successes": 26
+  },
+  {
+    "date": 1402091094963,
+    "errors": 10,
+    "successes": 205
+  },
+  {
+    "date": 1402086946481,
+    "errors": 16,
+    "successes": 189
+  },
+  {
+    "date": 1402085794637,
+    "errors": 15,
+    "successes": 48
+  },
+  {
+    "date": 1402084056706,
+    "errors": 0,
+    "successes": 78
+  },
+  {
+    "date": 1402081750095,
+    "errors": 4,
+    "successes": 86
+  },
+  {
+    "date": 1402079914443,
+    "errors": 13,
+    "successes": 194
+  },
+  {
+    "date": 1402079439469,
+    "errors": 6,
+    "successes": 126
+  },
+  {
+    "date": 1402071502261,
+    "errors": 14,
+    "successes": 31
+  },
+  {
+    "date": 1402066688250,
+    "errors": 9,
+    "successes": 202
+  },
+  {
+    "date": 1402063074962,
+    "errors": 15,
+    "successes": 104
+  },
+  {
+    "date": 1402052607526,
+    "errors": 1,
+    "successes": 63
+  },
+  {
+    "date": 1402050845884,
+    "errors": 7,
+    "successes": 113
+  },
+  {
+    "date": 1402049926812,
+    "errors": 8,
+    "successes": 214
+  },
+  {
+    "date": 1402048650616,
+    "errors": 17,
+    "successes": 42
+  },
+  {
+    "date": 1402046029966,
+    "errors": 12,
+    "successes": 49
+  },
+  {
+    "date": 1402039596586,
+    "errors": 1,
+    "successes": 22
+  },
+  {
+    "date": 1402038766476,
+    "errors": 18,
+    "successes": 163
+  },
+  {
+    "date": 1402037174724,
+    "errors": 5,
+    "successes": 80
+  },
+  {
+    "date": 1402035404874,
+    "errors": 11,
+    "successes": 170
+  },
+  {
+    "date": 1402028424680,
+    "errors": 7,
+    "successes": 101
+  },
+  {
+    "date": 1402018282044,
+    "errors": 4,
+    "successes": 83
+  },
+  {
+    "date": 1402006301934,
+    "errors": 14,
+    "successes": 219
+  },
+  {
+    "date": 1401996951063,
+    "errors": 14,
+    "successes": 173
+  },
+  {
+    "date": 1401994792494,
+    "errors": 3,
+    "successes": 191
+  },
+  {
+    "date": 1401993474390,
+    "errors": 3,
+    "successes": 198
+  },
+  {
+    "date": 1401988808790,
+    "errors": 1,
+    "successes": 63
+  },
+  {
+    "date": 1401979057782,
+    "errors": 0,
+    "successes": 176
+  },
+  {
+    "date": 1401965878092,
+    "errors": 8,
+    "successes": 217
+  },
+  {
+    "date": 1401957046567,
+    "errors": 13,
+    "successes": 82
+  },
+  {
+    "date": 1401954461417,
+    "errors": 15,
+    "successes": 213
+  },
+  {
+    "date": 1401952013913,
+    "errors": 11,
+    "successes": 46
+  },
+  {
+    "date": 1401945226486,
+    "errors": 17,
+    "successes": 40
+  },
+  {
+    "date": 1401937536342,
+    "errors": 19,
+    "successes": 164
+  },
+  {
+    "date": 1401930683034,
+    "errors": 15,
+    "successes": 137
+  },
+  {
+    "date": 1401921615854,
+    "errors": 17,
+    "successes": 76
+  },
+  {
+    "date": 1401913986752,
+    "errors": 15,
+    "successes": 134
+  },
+  {
+    "date": 1401910726637,
+    "errors": 8,
+    "successes": 58
+  },
+  {
+    "date": 1401909833241,
+    "errors": 10,
+    "successes": 133
+  },
+  {
+    "date": 1401907855153,
+    "errors": 17,
+    "successes": 184
+  },
+  {
+    "date": 1401902768753,
+    "errors": 2,
+    "successes": 196
+  },
+  {
+    "date": 1401900223057,
+    "errors": 17,
+    "successes": 152
+  },
+  {
+    "date": 1401889209532,
+    "errors": 13,
+    "successes": 61
+  },
+  {
+    "date": 1401882336304,
+    "errors": 18,
+    "successes": 91
+  },
+  {
+    "date": 1401879371259,
+    "errors": 2,
+    "successes": 112
+  },
+  {
+    "date": 1401870531531,
+    "errors": 12,
+    "successes": 96
+  },
+  {
+    "date": 1401865031959,
+    "errors": 19,
+    "successes": 85
+  },
+  {
+    "date": 1401852362547,
+    "errors": 13,
+    "successes": 106
+  },
+  {
+    "date": 1401849898977,
+    "errors": 0,
+    "successes": 154
+  },
+  {
+    "date": 1401839908702,
+    "errors": 2,
+    "successes": 148
+  },
+  {
+    "date": 1401835046902,
+    "errors": 11,
+    "successes": 211
+  },
+  {
+    "date": 1401826074602,
+    "errors": 19,
+    "successes": 89
+  },
+  {
+    "date": 1401819522842,
+    "errors": 7,
+    "successes": 156
+  },
+  {
+    "date": 1401810507242,
+    "errors": 10,
+    "successes": 98
+  },
+  {
+    "date": 1401800068968,
+    "errors": 19,
+    "successes": 193
+  },
+  {
+    "date": 1401797413173,
+    "errors": 4,
+    "successes": 114
+  },
+  {
+    "date": 1401796644809,
+    "errors": 1,
+    "successes": 182
+  },
+  {
+    "date": 1401792822664,
+    "errors": 3,
+    "successes": 158
+  },
+  {
+    "date": 1401787020024,
+    "errors": 11,
+    "successes": 133
+  },
+  {
+    "date": 1401776876748,
+    "errors": 4,
+    "successes": 156
+  },
+  {
+    "date": 1401772754580,
+    "errors": 5,
+    "successes": 165
+  },
+  {
+    "date": 1401771695304,
+    "errors": 16,
+    "successes": 46
+  },
+  {
+    "date": 1401765056840,
+    "errors": 6,
+    "successes": 47
+  },
+  {
+    "date": 1401754546574,
+    "errors": 10,
+    "successes": 151
+  },
+  {
+    "date": 1401747868958,
+    "errors": 18,
+    "successes": 175
+  },
+  {
+    "date": 1401738008138,
+    "errors": 13,
+    "successes": 107
+  },
+  {
+    "date": 1401734607233,
+    "errors": 1,
+    "successes": 180
+  },
+  {
+    "date": 1401732346513,
+    "errors": 0,
+    "successes": 185
+  },
+  {
+    "date": 1401727634703,
+    "errors": 18,
+    "successes": 136
+  },
+  {
+    "date": 1401719879424,
+    "errors": 9,
+    "successes": 43
+  },
+  {
+    "date": 1401715586892,
+    "errors": 9,
+    "successes": 186
+  },
+  {
+    "date": 1401711612292,
+    "errors": 3,
+    "successes": 102
+  },
+  {
+    "date": 1401708187444,
+    "errors": 11,
+    "successes": 112
+  },
+  {
+    "date": 1401706906780,
+    "errors": 13,
+    "successes": 173
+  },
+  {
+    "date": 1401694212100,
+    "errors": 10,
+    "successes": 219
+  },
+  {
+    "date": 1401691385107,
+    "errors": 13,
+    "successes": 135
+  },
+  {
+    "date": 1401686252299,
+    "errors": 3,
+    "successes": 185
+  },
+  {
+    "date": 1401678292901,
+    "errors": 1,
+    "successes": 184
+  },
+  {
+    "date": 1401675425333,
+    "errors": 14,
+    "successes": 180
+  },
+  {
+    "date": 1401668775668,
+    "errors": 11,
+    "successes": 214
+  },
+  {
+    "date": 1401661924912,
+    "errors": 6,
+    "successes": 195
+  },
+  {
+    "date": 1401648728962,
+    "errors": 1,
+    "successes": 124
+  },
+  {
+    "date": 1401646522414,
+    "errors": 11,
+    "successes": 43
+  },
+  {
+    "date": 1401642415228,
+    "errors": 7,
+    "successes": 172
+  },
+  {
+    "date": 1401635611048,
+    "errors": 13,
+    "successes": 123
+  },
+  {
+    "date": 1401629413148,
+    "errors": 9,
+    "successes": 113
+  },
+  {
+    "date": 1401627306138,
+    "errors": 19,
+    "successes": 29
+  },
+  {
+    "date": 1401621389298,
+    "errors": 19,
+    "successes": 217
+  },
+  {
+    "date": 1401620363904,
+    "errors": 15,
+    "successes": 104
+  },
+  {
+    "date": 1401608020199,
+    "errors": 3,
+    "successes": 142
+  },
+  {
+    "date": 1401607298882,
+    "errors": 15,
+    "successes": 75
+  },
+  {
+    "date": 1401593648807,
+    "errors": 6,
+    "successes": 65
+  }
+]

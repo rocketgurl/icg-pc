@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html class="sticky-footer">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="description" content="Policy Central | Batch Wolf">
+  <meta name="viewport" content="width=device-width">
+  <title>Policy Central | Batch Wolf</title>
+  <link href="/css/screen.css" media="screen, projection" rel="stylesheet" type="text/css" />
+
+  <!-- BEGIN TRACKJS -->
+  <script type="text/javascript">
+    window._trackJs = {
+      token: '76bc2e107fcd4007bdf4b17654b7d041',
+      application: 'policy_central',
+      enabled: /(icg360|sagesure)/.test(window.location.host)
+    };
+  </script>
+  <script type="text/javascript" src="//d2zah9y47r7bi2.cloudfront.net/releases/current/tracker.js" crossorigin="anonymous"></script>
+  <!-- END TRACKJS -->
+</head>
+<body id="bw">
+  <div id="header">
+    <div id="header-container">
+      <div class="header-group">
+        <div id="header-logo">
+          <a href="/" target="policy-central">
+            <img src="/img/logo_header.png" width="166" height="50" alt="Policy Central">
+          </a>
+        </div>
+        <div id="header-admin">
+          <ul>
+            <li>Welcome back <a id="user-name"></a></li>
+            <li><a href="/#logout">Logout</a></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div id="header-navbar" class="navbar navbar-static-top pc-nav" role="navigation">
+      <ul class="nav navbar-nav">
+        <li><a href="/#workspace/staging/cru/crunyho/policies_crunyho/home">Home</a></li>
+        <li><a href="/#workspace/staging/cru/crunyho/policies_crunyho/search">Search</a></li>
+        <li class="show-cru dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Servicing <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="/batch" target="_blank">Batch Wolf</a></li>
+            <li class="divider"></li>
+            <li>
+              <a href="/batch-processing" target="batch-processing">
+                Batch Processing
+                <span class="label label-info">New</span>
+              </a>
+            </li>
+          </ul>
+        </li>
+        <li class="dropdown">
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Underwriting <span class="caret"></span></a>
+          <ul class="dropdown-menu" role="menu">
+            <li><a href="#" data-route="underwriting/referrals">New Business Underwriting</a></li>
+            <li class="divider"></li>
+            <li class="renewal-review"><a href="#" data-route="underwriting/renewals">Renewal Underwriting</a></li>
+            <li class="divider renewal-review"></li>
+            <li><a href="#" data-toggle="modal" data-target="#assignee-list-modal">Manage Referral Assignees</a></li>
+          </ul>
+        </li>
+        <li class="show-cru"><a href="https://agencyadmin.icg360.com/" target="_blank">Agencies</a></li>
+        <li class="show-cru"><a href="https://ixreport.icg360.com/rfk/root/" target="_blank">Reports</a></li>
+      </ul>
+    </div>
+  </div>
+
+  <div id="workspace" class="out">
+    <section id="bw" class="bw-wrapper">
+      <div id="main"></div>
+    </section>
+  </div>
+
+  <footer id="footer-main" class="footer">
+    <ul>
+      <li>&copy; <script>document.write(new Date().getFullYear())</script> Insight Catastrophe Group</li>
+      <li>API <span id="api-version">0.0.0</span></li>
+      <li>UI <span id="ui-version">0.0.0</span></li>
+    </ul>
+  </footer>
+  <script>
+    window.name = 'batch-processing';
+    window.app = window.app || {};
+    window.app.ENV = /icg360\.com/i.test(window.location.host) ? 'PROD' : 'DEV';
+  </script>
+  <script src="../js/modules/BatchProcessing/public/loader.min.js" async></script>
+</body>
+</html>

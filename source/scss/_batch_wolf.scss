@@ -1,0 +1,96 @@
+.bw-wrapper {
+  @include clearfix;
+  padding: 15px;
+}
+
+#bw {
+  .pc-nav {
+    display: block;
+  }
+
+  .progress {
+    background: transparent;
+    position: fixed;
+    top: 0;
+    left: -5px;
+    right: -5px;
+    z-index: 10000;
+    height: 4px;
+  }
+}
+
+.batch-id {
+  text-transform: capitalize;
+}
+
+.policy-lookup {
+  text-transform: uppercase;
+}
+
+.action-row {
+  margin-bottom: 47px;
+}
+
+.info-toggle {
+  cursor: pointer;
+}
+
+.change-list {
+  > li > span {
+    display: inline-block;
+  }
+
+  .row-num {
+    width: 50px;
+    text-align: right;
+  }
+
+  .rhs,
+  .lhs {
+    padding: 0 10px;
+    font-weight: bold;
+  }
+}
+
+.panel-table {
+  margin-left: -15px;
+  margin-right: -15px;
+  border-bottom: 1px solid #ddd;
+
+  .tr {
+    > .td:first-child,
+    > .th:first-child {
+      padding-left: 15px;
+    }
+
+    > .td:last-child,
+    > .th:last-child {
+      padding-right: 15px;
+    }
+  }
+}
+
+.error-popover {
+  max-width: none;
+
+  .popover-content {
+    max-width: 600px;
+    max-height: 500px;
+    overflow: auto;
+  }
+}
+
+.task-select {
+  input[type="checkbox"]:disabled {
+    opacity: 0.5;
+  }
+}
+
+.calc-group {
+  margin-bottom: 0;
+}
+
+.calculated {
+  margin-top: 5px;
+  padding-left: 46px;
+}

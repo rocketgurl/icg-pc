@@ -4,6 +4,9 @@
 /* Bootstrap */
 @import "bootstrap";
 
+/* Sticky footer styles */
+@import "sticky_footer";
+
 /* Proprietary ICG icons */
 @import "icg_icons";
 
@@ -16,11 +19,17 @@
 /* ICG specific alert styles */
 @import "alerts";
 
+/* ICG specific label styles */
+@import "labels";
+
 /* Old(Deprecated) Modal styles. Please use Bootstrap modals going forward */
 @import "modal";
 
 /* Header nav styles */
 @import "header";
+
+/* Animation styles */
+@import "animations";
 
 /* Workspace styles */
 @import "workspace";
@@ -28,10 +37,21 @@
 /* Alternative "table" styles for when you need more control than a <table> can offer */
 @import "div_tables";
 
-/* Pagination styles */
+/* batch processing (wolf) components */
+@import "table_controls";
+@import "table_spinner";
+@import "charts";
+@import "panel_nav";
 @import "pagination";
+@import "batch_wolf";
 
-/* Home screen styles */
+/* checkbox labels */
+@import "checkbox_label";
+
+/* datepicker styles */
+@import "datepicker";
+
+/* Home styles */
 @import "module_home";
 
 /* Search styles */

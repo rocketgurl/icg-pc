@@ -22,6 +22,12 @@ ul {
   @extend .list-unstyled;
 }
 
+.list-labeled {
+  label {
+    text-align: right;
+  }
+}
+
 .scroll-wrapper {
   position: absolute;
   top: 0;

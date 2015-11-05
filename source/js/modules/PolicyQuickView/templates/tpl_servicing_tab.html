@@ -1,5 +1,5 @@
 <div {{#IsQuote}}class="col-xs-12"{{/IsQuote}}{{#IsNotQuote}}class="col-xs-6"{{/IsNotQuote}}>
-  <div class="alert alert-{{PolicyStateLabelClass}} policy-status">{{PolicyState}}</div>
+  <div class="alert alert-{{PolicyStateLabelClass}} pc-alert policy-status">{{PolicyState}}</div>
   
   <div class="section-holder">
     {{#OriginatingSystem}}
@@ -81,10 +81,10 @@
 {{#IsNotQuote}}
 <div class="col-xs-6">
   {{#BillingIsCurrent}}
-  <div class="alert alert-success policy-status">Billing: Current</div>
+  <div class="alert alert-success pc-alert policy-status">Billing: Current</div>
   {{/BillingIsCurrent}}
   {{#BillingIsPastDue}}
-  <div class="alert alert-danger policy-status">Billing: Past Due</div>
+  <div class="alert alert-danger pc-alert policy-status">Billing: Past Due</div>
   {{/BillingIsPastDue}}
 
   <div class="section-holder">

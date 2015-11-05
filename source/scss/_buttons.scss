@@ -42,11 +42,22 @@
   &[disabled] {
     cursor: default;
     background-image: none;
-    @include opacity(65%);
+    @include opacity(.65);
     @include box-shadow(none);
   }
 }
 
+.btn-default {
+  &.disabled,
+  &[disabled] {
+    border-color: #aaa;
+
+    &:hover {
+      border-color: #aaa;
+      background-color: #d5cdcd;
+    }
+  }
+}
 
 .btn-dark {
   @include button-background($btn-dark-background-highlight, $btn-dark-background, #fff, 0 -1px 0 rgba(0, 0, 0, 0.85));

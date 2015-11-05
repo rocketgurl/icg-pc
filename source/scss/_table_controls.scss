@@ -1,0 +1,33 @@
+.table-controls {
+  .control-label,
+  .page-count {
+    margin-right: 10px;
+    padding-top: 7px;
+    white-space: nowrap;
+    text-align: right;
+  }
+
+  .control-wrapper {
+    padding: 8px;
+  }
+}
+
+.controls-condensed {
+  .control-label,
+  .page-count {
+    padding-top: 6px;
+    font-size: 12px;
+  }
+
+  .control-wrapper {
+    padding: 5px;
+  }
+}
+
+.clearable {
+  .close {
+    position: absolute;
+    right: 18px;
+    top: 8px;
+  }
+}

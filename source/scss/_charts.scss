@@ -1,0 +1,34 @@
+.axis {
+  path,
+  line {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+  }
+
+  text {
+    font-size: 10px;
+  }
+}
+
+.bar {
+  stroke: #fff;
+  stroke-width: 1;
+
+  rect {
+    opacity: 0.75;
+  }
+}
+
+.y.axis {
+  path {
+    display: none;
+  }
+
+  .minor {
+    line {
+      stroke: #777;
+      stroke-dasharray: 2,2;
+    }
+  }
+}
