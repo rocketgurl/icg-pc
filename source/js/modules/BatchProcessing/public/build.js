@@ -65946,7 +65946,7 @@ module.exports = require('./lib/React');
 },{}],991:[function(require,module,exports){
 module.exports={
   "name": "batch-processing",
-  "version": "0.0.26",
+  "version": "0.1.0",
   "description": "",
   "main": "src/app.js",
   "author": "Liam Bowers",
