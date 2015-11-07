@@ -213,11 +213,11 @@ export default React.createClass({
         }
 
         // delegate date validation for received date to moment
-        const paymentDate = moment(row.PaymentDate, 'MM/DD/YYYY');
+        const paymentDate = moment(row.PaymentDate, dates.PAYMENT_FORMAT);
         if (paymentDate.format(dateFormat) === 'Invalid date') {
           results.errors.push(this._formatError(
             'PaymentDate',
-            'PaymentDate must be a valid date and match format MM/DD/YY',
+            `PaymentDate must be a valid date and match format ${dates.PAYMENT_FORMAT}`,
             index+1));
         }
 
