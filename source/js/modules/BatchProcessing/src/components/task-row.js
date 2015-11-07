@@ -48,9 +48,15 @@ export default React.createClass({
     const {selected} = this.state;
     const dateFormat = dates.USER_FORMAT;
     const errorMessage = `${task.errorCode} - ${task.errorMessage}`;
+    const policyId = task.policyId || task.policyLookup || task.policyNumberBase;
+
     const infoPopover = (
       <OverlayTrigger key="overlay" rootClose trigger="click" placement="left"
-        overlay={<Popover className="error-popover" id={`task-${task.id}`} title={errorMessage}>{task.errorResponse}</Popover>}>
+        overlay={<Popover className="error-popover"
+                      id={`task-${task.id}`}
+                      title={errorMessage}>
+                    {task.errorResponse}
+                  </Popover>}>
         <span title="Click for more info"
           className="glyphicon glyphicon-info-sign info-toggle"></span>
       </OverlayTrigger>);
@@ -67,7 +73,12 @@ export default React.createClass({
             onChange={app.noop}/>
         </div>
         <div className="td">{moment(task.startTime).format(dateFormat)}</div>
-        <div className="td policy-lookup">{task.origPolicyLookup || task.origPolicyNumberBase}</div>
+        <div className="td policy-lookup">
+          <a href={`/#workspace/staging/cru/crunyho/policies_crunyho/policy/${policyId}`}
+             target="policy-central">
+            {task.origPolicyLookup || task.origPolicyNumberBase}
+          </a>
+        </div>
         <div className="td batch-id">{`${task.processDefinitionKey} ${task.batchId}`}</div>
         <div className="td">{task.currentAssignee}</div>
         <div className="td">
