@@ -65946,7 +65946,7 @@ module.exports = require('./lib/React');
 },{}],991:[function(require,module,exports){
 module.exports={
   "name": "batch-processing",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "",
   "main": "src/app.js",
   "author": "Liam Bowers",
@@ -67405,9 +67405,9 @@ exports.default = _react2.default.createClass({
         }
 
         // delegate date validation for received date to moment
-        var paymentDate = (0, _moment2.default)(row.PaymentDate, 'MM/DD/YYYY');
+        var paymentDate = (0, _moment2.default)(row.PaymentDate, _constants.dates.PAYMENT_FORMAT);
         if (paymentDate.format(dateFormat) === 'Invalid date') {
-          results.errors.push(_this._formatError('PaymentDate', 'PaymentDate must be a valid date and match format MM/DD/YY', index + 1));
+          results.errors.push(_this._formatError('PaymentDate', 'PaymentDate must be a valid date and match format ' + _constants.dates.PAYMENT_FORMAT, index + 1));
         }
 
         // verify amount is a number
@@ -69405,12 +69405,16 @@ exports.default = _react2.default.createClass({
 
     var dateFormat = _constants.dates.USER_FORMAT;
     var errorMessage = task.errorCode + ' - ' + task.errorMessage;
+    var policyId = task.policyId || task.policyLookup || task.policyNumberBase;
+
     var infoPopover = _react2.default.createElement(
       _reactBootstrap.OverlayTrigger,
       { key: 'overlay', rootClose: true, trigger: 'click', placement: 'left',
         overlay: _react2.default.createElement(
           _reactBootstrap.Popover,
-          { className: 'error-popover', id: 'task-' + task.id, title: errorMessage },
+          { className: 'error-popover',
+            id: 'task-' + task.id,
+            title: errorMessage },
           task.errorResponse
         ) },
       _react2.default.createElement('span', { title: 'Click for more info',
@@ -69439,7 +69443,12 @@ exports.default = _react2.default.createClass({
       _react2.default.createElement(
         'div',
         { className: 'td policy-lookup' },
-        task.origPolicyLookup || task.origPolicyNumberBase
+        _react2.default.createElement(
+          'a',
+          { href: '/#workspace/staging/cru/crunyho/policies_crunyho/policy/' + policyId,
+            target: 'policy-central' },
+          task.origPolicyLookup || task.origPolicyNumberBase
+        )
       ),
       _react2.default.createElement(
         'div',
@@ -69715,6 +69724,7 @@ Object.defineProperty(exports, "__esModule", {
 var SYSTEM_FORMAT = exports.SYSTEM_FORMAT = 'YYYY-MM-DDThh:mm:ss.SSSZ';
 var USER_FORMAT = exports.USER_FORMAT = 'MMM DD, YYYY h:mm A';
 var DATEPICKER_FORMAT = exports.DATEPICKER_FORMAT = 'YYYY-MM-DD';
+var PAYMENT_FORMAT = exports.PAYMENT_FORMAT = 'MM/DD/YY';
 
 },{}],1023:[function(require,module,exports){
 'use strict';
